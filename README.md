@@ -1,7 +1,7 @@
 # psf-guard-docs
 
 The website for [PSF Guard](https://github.com/theatrus/psf-guard), served at
-**[psf-guard.com](https://psf-guard.com)** via GitHub Pages.
+**[psf-guard.com](https://psf-guard.com)**.
 
 ## Structure
 
@@ -13,15 +13,14 @@ index.html          Splash / landing page
 docs/               Documentation pages (shared sidebar nav)
 css/site.css        The one stylesheet (dark astro theme)
 assets/             Logo/favicon (hand-authored SVG) + screenshots
-CNAME               Custom domain (psf-guard.com)
-.nojekyll           Serve files as-is, no Jekyll pass
+404.html            Not-found page (uses root-absolute paths)
 ```
 
 ## Publishing
 
-Pushes to `main` deploy automatically through GitHub Pages (branch `main`,
-root). DNS: `psf-guard.com` → GitHub Pages (A/ALIAS records per
-[GitHub's docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
+`main` is the deployed content — the site is plain static files served
+as-is from the repo root (no build step), published to psf-guard.com by
+external infrastructure.
 
 ## Updating content
 
