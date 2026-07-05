@@ -26,7 +26,7 @@
   <h4>Documentation</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
-    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="workflows.html" class="active">Rejects &amp; Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
@@ -72,7 +72,7 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># restores everyth
       the original path is occupied, the file is restored beside it with a
       <code>.restored</code> suffix.</li>
     <li><strong>Still visible</strong> — archived frames remain findable in the
-      web UI; the file index covers the <code>REJECT/</code> subtree.</li>
+      grader UI; the file index covers the <code>REJECT/</code> subtree.</li>
     <li><strong>Configurable</strong> — <code>--reject-segment</code>,
       <code>--reject-depth</code>, and <code>--sidecar-exts</code> flags, or a
       per-database <code>reject_archive</code> block in the registry.</li>
@@ -123,7 +123,7 @@ psf-guard sync pull --from telescope.sqlite --to my-db
 <span class="c"># 2. Screen the night automatically, write rejections</span>
 psf-guard screen-fits /images/2026-06-30/LIGHT --regrade-db my-db
 
-<span class="c"># 3. Review borderline frames in the web grader</span>
+<span class="c"># 3. Review borderline frames in the grader UI</span>
 psf-guard server
 
 <span class="c"># 4. Archive rejects out of the stacking tree</span>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Grader UI — PSF Guard</title>
+  <meta name="description" content="Grade astrophotography subs visually: grid view, side-by-side comparison, keyboard shortcuts, and scheduler write-back.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=2">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="grader.html" class="active">The Grader UI</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>The Grader UI</h1>
+  <p class="lede">
+    A fast, keyboard-driven UI for reviewing and grading subs. It's the same
+    UI everywhere: the desktop app ships it built in (no server or browser
+    needed), and <code>psf-guard server</code> serves the identical interface
+    to any browser for NAS and remote setups. Grades are written straight to
+    the Target Scheduler database, so acquired-image counts stay accurate and
+    rejected frames get re-shot.
+  </p>
+
+  <h2 id="overview">Overview dashboard</h2>
+  <figure>
+    <img src="../assets/overview.png" alt="Overview dashboard showing projects, targets, and grading progress">
+    <figcaption>Projects, targets, image counts, and color-coded grading progress —
+    merged across every configured database.</figcaption>
+  </figure>
+  <p>The overview aggregates all your configured scheduler databases: project and
+  target statistics, completion percentages, real-time file discovery status, and
+  filter usage. Click through any project or target to land in its grid.</p>
+
+  <h2 id="grid">Image grid</h2>
+  <figure>
+    <img src="../assets/image_grid.jpg" alt="Image grid with filtering and batch operations">
+    <figcaption>Filter by project, target, status, and date; select in bulk; grade instantly.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Smart filtering</strong> — project, target, grading status, date range.</li>
+    <li><strong>Batch operations</strong> — multi-select with Shift+Click / Ctrl+Click,
+      then accept, reject, or unmark the whole selection.</li>
+    <li><strong>Metadata on every card</strong> — HFR, star counts, acquisition details.</li>
+    <li><strong>Smart loading</strong> — fast previews first, full resolution on zoom.
+      Previews generate on demand in the background, so a fresh install is browsable
+      immediately; a "Generating…" badge shows while the queue works.</li>
+  </ul>
+
+  <h2 id="compare">Comparison mode</h2>
+  <figure>
+    <img src="../assets/compare.jpg" alt="Side-by-side comparison with synchronized zoom">
+    <figcaption>Synchronized zoom and pan; grade either or both frames without leaving the view.</figcaption>
+  </figure>
+  <p>Put two frames side by side with synchronized (or independent) zoom and pan —
+  ideal for judging a borderline frame against a known-good neighbor. Accept,
+  reject, or unmark both images at once.</p>
+
+  <h2 id="sequence">Sequence view</h2>
+  <figure>
+    <img src="../assets/sequence-analysis.png" alt="Sequence analysis with per-frame quality scores">
+    <figcaption>Per-frame quality scores with cloud/occlusion classification and one-click scanning.</figcaption>
+  </figure>
+  <p>The Sequence view plots per-frame quality over a night: HFR, star counts, and
+  — once you press <strong>Scan Occlusion</strong> — the spatial and photometric
+  screening signals. Flagged runs are classified (occlusion, clouds, sky
+  brightening) and can be bulk-selected for rejection. See
+  <a href="screening.html">Quality Screening</a> for how the signals work.</p>
+
+  <h2 id="shortcuts">Keyboard shortcuts</h2>
+  <table class="kbd-table">
+    <tr><th>Key</th><th>Action</th><th>Key</th><th>Action</th></tr>
+    <tr><td>K / →</td><td>Next image</td><td>A</td><td>Accept</td></tr>
+    <tr><td>J / ←</td><td>Previous image</td><td>X</td><td>Reject</td></tr>
+    <tr><td>C</td><td>Compare</td><td>U</td><td>Unmark</td></tr>
+    <tr><td>S</td><td>Stars overlay</td><td>+ / −</td><td>Zoom</td></tr>
+    <tr><td>Ctrl+Z</td><td>Undo</td><td>Ctrl+Y</td><td>Redo</td></tr>
+  </table>
+
+  <h2 id="write-back">Where grades go</h2>
+  <p>Every action updates <code>gradingStatus</code> in the Target Scheduler
+  database (with undo/redo tracked in the UI). Because the scheduler counts
+  accepted images against each exposure plan, rejecting bad frames means the
+  scheduler queues replacements on the next imaging run — closing the loop
+  between grading and acquisition.</p>
+
+  <nav class="next-prev">
+    <a href="./">← Getting Started</a>
+    <a href="screening.html">Quality Screening →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
