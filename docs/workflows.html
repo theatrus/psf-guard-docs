@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rejects &amp; Sync — PSF Guard</title>
+  <meta name="description" content="Archive rejected frames out of your stacking tree reversibly, and sync grades and captures between a telescope machine and a grading machine.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html" class="active">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>Rejects &amp; Sync</h1>
+  <p class="lede">
+    Two workflows that close the loop after grading: getting rejected files out
+    of your stacking software's way — reversibly — and moving grades and
+    captures between machines.
+  </p>
+
+  <h2 id="rejects">Managing rejected files</h2>
+  <p>Stacking tools like PixInsight happily load everything under your lights
+  directory — including frames you've rejected. <code>move-rejects</code>
+  archives rejected frames (and their sidecars: <code>.xisf</code>,
+  <code>.json</code>, <code>.txt</code>) into a <code>REJECT/</code> subtree so
+  they're out of the scan path but never lost:</p>
+  <pre><code><span class="c"># Move rejects to &lt;image_dir&gt;/&lt;Project&gt;/REJECT/... with their sidecars.
+# Idempotent; every move is recorded for restore.</span>
+psf-guard move-rejects --db my-db [--dry-run]
+
+<span class="c"># Changed your mind? Un-reject frames in the UI, then:</span>
+psf-guard restore-rejects --db my-db          <span class="c"># restores only un-rejected files</span>
+psf-guard restore-rejects --db my-db --all    <span class="c"># restores everything</span></code></pre>
+  <ul>
+    <li><strong>Recorded</strong> — every move lands in an archive table in the
+      database (plus a redundant manifest in each archive root for disaster
+      recovery), so restores are exact.</li>
+    <li><strong>Reversible</strong> — <code>restore-rejects</code> by default
+      restores only files whose grade is no longer Rejected (you un-rejected them
+      in the UI); <code>--all</code> restores everything. It never overwrites: if
+      the original path is occupied, the file is restored beside it with a
+      <code>.restored</code> suffix.</li>
+    <li><strong>Still visible</strong> — archived frames remain findable in the
+      web UI; the file index covers the <code>REJECT/</code> subtree.</li>
+    <li><strong>Configurable</strong> — <code>--reject-segment</code>,
+      <code>--reject-depth</code>, and <code>--sidecar-exts</code> flags, or a
+      per-database <code>reject_archive</code> block in the registry.</li>
+  </ul>
+  <div class="callout info">
+    Requires Target Scheduler plugin schema v22+ (the stable image GUID). Older
+    databases are refused with a pointer at the legacy
+    <code>filter-rejected</code> command, which still works but leaves files in
+    the same tree.
+  </div>
+
+  <h2 id="sync">Syncing between machines</h2>
+  <p>Grade on one machine while the telescope keeps capturing on another.
+  <code>sync</code> moves state between two scheduler databases — registry slugs
+  or <code>.sqlite</code> paths — matching images by their stable GUID:</p>
+  <pre><code><span class="c"># Mirror projects, targets and captured images FROM the telescope INTO your DB.
+# Your local grading is preserved; new images arrive with the telescope's grade.</span>
+psf-guard sync pull --from telescope.sqlite --to my-db --dry-run
+
+<span class="c"># Push your grading decisions back TO the telescope (one-way, source wins).</span>
+psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
+  <p>Use them as a loop — <strong>pull</strong> to refresh, grade locally,
+  <strong>push grades</strong> back:</p>
+  <ul>
+    <li><strong><code>sync pull</code></strong> mirrors structure (projects,
+      targets, exposure plans, templates) and captured images into your local
+      database. Telescope wins for structure; your local grading is preserved —
+      an existing image keeps its grade unless it's still Pending, in which case
+      it adopts the telescope's.</li>
+    <li><strong><code>sync grades</code></strong> pushes grading status and
+      reject reasons one-way (source wins), with
+      <code>--status</code>/<code>--project</code>/<code>--target</code> filters
+      to scope what moves.</li>
+    <li>Both open the source read-only, refuse same-path source/dest, run in a
+      single transaction, and report exactly what changed (matched, changed,
+      unchanged, unmatched).</li>
+  </ul>
+  <div class="callout">
+    Don't reverse the directions — pulling grades <em>from</em> the telescope
+    over your local decisions, or pushing structure <em>to</em> it, would
+    overwrite work. The two commands are deliberately one-way and complementary.
+  </div>
+
+  <h2 id="full-loop">The full loop, end to end</h2>
+  <pre><code><span class="c"># 1. Bring the night's captures over from the telescope</span>
+psf-guard sync pull --from telescope.sqlite --to my-db
+
+<span class="c"># 2. Screen the night automatically, write rejections</span>
+psf-guard screen-fits /images/2026-06-30/LIGHT --regrade-db my-db
+
+<span class="c"># 3. Review borderline frames in the web grader</span>
+psf-guard server
+
+<span class="c"># 4. Archive rejects out of the stacking tree</span>
+psf-guard move-rejects --db my-db
+
+<span class="c"># 5. Push final grades back so the scheduler re-captures</span>
+psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
+
+  <nav class="next-prev">
+    <a href="screening.html">← Quality Screening</a>
+    <a href="cli.html">CLI Reference →</a>
+  </nav>
+</main>
+</div>
+
+</body>
+</html>

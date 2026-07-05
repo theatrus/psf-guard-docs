@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLI Reference — PSF Guard</title>
+  <meta name="description" content="Every PSF Guard command: serving, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html" class="active">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>CLI Reference</h1>
+  <p class="lede">
+    One binary, many tools. <code>psf-guard --help</code> lists everything and
+    every subcommand has a detailed <code>--help</code>; this page is the
+    guided tour.
+  </p>
+
+  <h2 id="server">Serving the web grader</h2>
+  <pre><code><span class="c"># Serve (registers the DB in the shared registry on first run)</span>
+psf-guard server &lt;database&gt; &lt;image-dirs...&gt; [--port 3000]
+
+<span class="c"># TOML config for server knobs (port, cache, pre-generation, worker ratios)</span>
+psf-guard server --config psf-guard.toml
+
+<span class="c"># Throwaway session that doesn't touch your real registry</span>
+psf-guard server --registry /tmp/scratch.json &lt;db&gt; &lt;dirs...&gt;
+
+<span class="c"># Bind localhost only (default binds 0.0.0.0)</span>
+psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
+  <p>Multiple image directories are scanned in priority order (first hit wins).
+  The server manages every database in the registry, not just the one passed on
+  the command line — see <a href="configuration.html">Configuration</a>.</p>
+
+  <h2 id="screening">Quality screening</h2>
+  <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
+psf-guard screen-fits ./lights --annotate ./diag      <span class="c"># diagnostic PNGs</span>
+psf-guard screen-fits ./lights --regrade-db my-db --dry-run
+psf-guard screen-fits ./lights --format json          <span class="c"># or table, csv</span></code></pre>
+  <p>Details and tuning: <a href="screening.html">Quality Screening</a>.</p>
+
+  <h2 id="rejects">Reject archival</h2>
+  <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]
+psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--dry-run]</code></pre>
+  <p>Details: <a href="workflows.html#rejects">Rejects &amp; Sync</a>.</p>
+
+  <h2 id="sync">Two-database sync</h2>
+  <pre><code>psf-guard sync pull --from telescope.sqlite --to my-db
+psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
+  <p>Details: <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
+
+  <h2 id="analysis">Star detection &amp; PSF analysis</h2>
+  <pre><code><span class="c"># Detect stars and compare against database values</span>
+psf-guard analyze-fits image.fits [--detector nina|hocusfocus] [--compare-all]
+
+<span class="c"># Annotated star map</span>
+psf-guard annotate-stars image.fits [--max-stars 50]
+
+<span class="c"># PSF fit residuals — single star or a grid</span>
+psf-guard visualize-psf image.fits [--star-index N]
+psf-guard visualize-psf-multi image.fits [--num-stars 25]
+
+<span class="c"># PSF fitting performance benchmark</span>
+psf-guard benchmark-psf image.fits</code></pre>
+  <figure>
+    <img src="../assets/psf-visualization.jpg" alt="PSF visualization grid: observed, fitted, residual" loading="lazy">
+    <figcaption><code>visualize-psf-multi</code>: observed / fitted / residual grids
+    with Moffat &amp; Gaussian models.</figcaption>
+  </figure>
+
+  <h2 id="fits">FITS utilities</h2>
+  <pre><code>psf-guard stretch-to-png image.fits -o output.png    <span class="c"># MTF auto-stretch</span>
+psf-guard read-fits image.fits                       <span class="c"># header/metadata dump</span></code></pre>
+
+  <h2 id="db">Database queries &amp; manual grading</h2>
+  <pre><code>psf-guard list-projects -d database.sqlite
+psf-guard list-targets "Project Name" -d database.sqlite
+psf-guard dump-grading -d database.sqlite [--project NAME]
+psf-guard show-images &lt;IDS&gt; -d database.sqlite
+psf-guard update-grade &lt;ID&gt; rejected -d database.sqlite
+psf-guard regrade database.sqlite [--dry-run]        <span class="c"># statistical re-grading</span></code></pre>
+  <p>Batch commands also support statistical outlier detection
+  (<code>--enable-statistical</code>): per-target/filter HFR and star-count
+  distribution analysis plus sequence-based cloud detection. Details in
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md">docs/STATISTICAL_GRADING.md</a>.</p>
+
+  <nav class="next-prev">
+    <a href="workflows.html">← Rejects &amp; Sync</a>
+    <a href="configuration.html">Configuration &amp; API →</a>
+  </nav>
+</main>
+</div>
+
+</body>
+</html>

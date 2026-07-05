@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quality Screening — PSF Guard</title>
+  <meta name="description" content="Automatically screen light frames for occlusion, small clouds, thin veils, and stray light — with annotated diagnostics explaining every verdict.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="screening.html" class="active">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>Quality Screening</h1>
+  <p class="lede">
+    Screen light frames for problems that ruin integrations but slip past
+    conventional grading: occlusion from trees or a dome edge, small clouds,
+    thin veils, errant light, and static glow. Every verdict can be rendered
+    as an annotated diagnostic showing exactly which part of the frame drove
+    the decision.
+  </p>
+  <p>All detections are classical statistics — no machine learning, no training
+  data, no network access. Thresholds were calibrated against real sessions
+  (measured clean-frame envelopes across multiple nights and filters) and each
+  detector carries regression tests pinning its behavior.</p>
+
+  <h2 id="why">Why global metrics are not enough</h2>
+  <p>Star count and HFR — what conventional graders use — barely move when a
+  frame is partially ruined. Measured on a real session where a tree line
+  progressively occluded the field:</p>
+  <ul>
+    <li>Frames with a visibly occluded corner kept <strong>star counts within
+      normal variation</strong> — the rest of the field is fine.</li>
+    <li><strong>HFR stayed flat (~2.6) until the frame was more than 60%
+      occluded</strong> — the surviving stars are still in focus.</li>
+    <li>A thin cloud veil dimmed every star by 37% while star count, HFR, and
+      background all looked normal — the frame was Accepted by the capture
+      software's own grader.</li>
+    <li>N.I.N.A.'s rolling star-count baseline <em>adapts to</em> slow
+      occlusions: on the measured session it Accepted 31 of 33 occluded frames,
+      including one that was 90% blocked.</li>
+  </ul>
+  <p>The screening stack answers with signals that are <strong>local</strong>
+  (per grid cell), <strong>photometric</strong> (flux ratios, not counts), and
+  <strong>temporal</strong> (each cell compared to its own history) — with
+  baselines that refuse to normalize slow-growing problems away.</p>
+
+  <h2 id="stack">The detection stack</h2>
+  <table>
+    <tr><th>Signal</th><th>Catches</th><th>How</th></tr>
+    <tr><td><strong>Dead cells</strong></td><td>Occlusion (trees, dome, dew shield)</td>
+        <td>Fraction of 8×6 grid cells whose star density collapsed vs the frame's own median cell</td></tr>
+    <tr><td><strong>Transparency</strong></td><td>Thin uniform veils</td>
+        <td>Median flux ratio of stars matched against a per-sequence reference catalog; 0.7 = whole frame ~0.4 mag dimmer</td></tr>
+    <tr><td><strong>Localized extinction</strong></td><td>Small clouds</td>
+        <td>Per-cell flux ratios ÷ global transparency; a passing cloud is a coherent dip in one patch of stars</td></tr>
+    <tr><td><strong>Star-share drops</strong></td><td>Small opaque clouds</td>
+        <td>Each cell's <em>share</em> of the frame's stars vs that cell's own temporal median (Poisson-aware)</td></tr>
+    <tr><td><strong>Background rise</strong></td><td>Errant light (headlights, flashlights)</td>
+        <td>Per-cell background vs the cell's own history, after subtracting the frame's gradient (robust plane fit)</td></tr>
+    <tr><td><strong>Background fall</strong></td><td>Dark occluders, cloud shadow</td>
+        <td>Same, downward: something blocking skyglow reads <em>darker</em>, not milky</td></tr>
+    <tr><td><strong>Static glow</strong></td><td>Corner haze, lit occluder edges</td>
+        <td>Cells brighter than the frame's own gradient model — catches problems present from a session's <em>first</em> frame, which temporal baselines can never see</td></tr>
+  </table>
+  <p>The signals feed a sequence analyzer that scores every frame 0–1 relative to
+  its session (same target, filter, and exposure; sessions split on 60-minute
+  gaps) and classifies the likely cause. Verdicts: <strong>OK</strong>,
+  <strong>WARN</strong> (recoverable or review-worthy — e.g. gradients that
+  flat-ish processing can remove, glow that stacks into artifacts),
+  <strong>REJECT</strong> (clouds and occlusion).</p>
+
+  <h2 id="quick-start">Quick start</h2>
+  <pre><code><span class="c"># Screen a night of lights (no database needed)</span>
+psf-guard screen-fits "/path/to/2026-06-30/LIGHT"
+
+<span class="c"># Render an annotated diagnostic PNG for every WARN/REJECT frame</span>
+psf-guard screen-fits "/path/to/LIGHT" --annotate /tmp/diagnostics
+
+<span class="c"># Write [Auto] rejections into the Target Scheduler database</span>
+<span class="c"># (dry-run first; frames matched by filename AND capture timestamp)</span>
+psf-guard screen-fits "/path/to/LIGHT" --regrade-db my-db-slug --dry-run
+psf-guard screen-fits "/path/to/LIGHT" --regrade-db my-db-slug
+
+<span class="c"># Then archive the rejected files out of your stacking tree</span>
+psf-guard move-rejects --db my-db-slug</code></pre>
+  <p>From the <strong>web UI</strong>: open a target's Sequence view and press
+  <strong>Scan Occlusion</strong>. The scan runs server-side in the background
+  (progress shown live), results persist across restarts, and coverage badges
+  and classifications appear on affected frames — "Select Clouded" bulk-selects
+  flagged runs for rejection.</p>
+
+  <h2 id="diagnostics">Reading the diagnostics</h2>
+  <p><code>--annotate</code> renders each flagged frame with the analysis grid
+  overlaid. Cells are marked by the signal that fired; the caption strip carries
+  the verdict, score, per-frame metrics, and the classifier's explanation.</p>
+  <table>
+    <tr><th>Marking</th><th>Meaning</th></tr>
+    <tr><td>red fill</td><td>dead cell — star density collapsed (occlusion)</td></tr>
+    <tr><td>orange fill</td><td>localized extinction — stars dimmed (small cloud), labeled with the cell's flux ratio</td></tr>
+    <tr><td>magenta fill</td><td>transient drop in the cell's share of stars</td></tr>
+    <tr><td>yellow border</td><td>transient background rise (errant light)</td></tr>
+    <tr><td>blue border</td><td>transient background fall (dark occluder / cloud shadow)</td></tr>
+    <tr><td>cyan fill</td><td>static glow above the frame's own gradient model</td></tr>
+  </table>
+
+  <h3>Occlusion arriving</h3>
+  <figure>
+    <img src="../assets/screening-onset.jpg" alt="Occlusion onset: red cells trace the tree line" loading="lazy">
+    <figcaption>25% of the field's cells have lost their stars; the red region traces
+    the visible out-of-focus occluder exactly. Transparency is 1.01 — the
+    <em>surviving</em> field is photometrically perfect, which is why global metrics
+    miss frames like this.</figcaption>
+  </figure>
+
+  <h3>Heavy occlusion with a stray-lit edge</h3>
+  <figure>
+    <img src="../assets/screening-occlusion.jpg" alt="Heavy occlusion with a yellow-bordered stray-lit cell" loading="lazy">
+    <figcaption>Half the field is dead and a yellow border marks a cell whose
+    background rose above its own temporal baseline — the occluder's stray-lit edge
+    bleeding into a live cell.</figcaption>
+  </figure>
+
+  <h3>The advancing frontier</h3>
+  <figure>
+    <img src="../assets/screening-frontier.jpg" alt="Blue cells darker than history, yellow lit fringe" loading="lazy">
+    <figcaption>Late in the same session: blue borders mark cells reading
+    <em>darker</em> than their own history (the dark occluder blocking skyglow as it
+    advances), yellow marks its lit fringe.</figcaption>
+  </figure>
+
+  <h3>Thin cloud veil — pure photometry</h3>
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/screening-veil-clean.jpg" alt="Clean frame: 2973 stars, transparency 1.05" loading="lazy">
+      <figcaption>Clean frame: 2,973 stars, transparency 1.05.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/screening-veil.jpg" alt="Veiled frame: 1417 stars, transparency 0.63, REJECT" loading="lazy">
+      <figcaption>Same field 13 minutes later: 1,417 stars, transparency 0.63
+      (~0.5 mag of uniform extinction). REJECT.</figcaption>
+    </figure>
+  </div>
+  <p>No cell is tinted because nothing is <em>locally</em> wrong — only the
+  matched-star flux ratios see it. This frame was Accepted by conventional
+  grading.</p>
+
+  <h3>Static corner glow</h3>
+  <figure>
+    <img src="../assets/screening-glow.jpg" alt="Cyan cells sitting on corner haze at 4.7% above the gradient plane" loading="lazy">
+    <figcaption>A haze present from the session's <em>first</em> frame — every
+    temporal detector is structurally blind to it. The static glow signal compares
+    each cell against the frame's own gradient model instead: the cyan cells sit
+    exactly on the haze at 4.7% above the plane.</figcaption>
+  </figure>
+
+  <h2 id="tuning">Tuning</h2>
+  <p>Defaults were calibrated against measured clean-frame envelopes (42+ frames,
+  4 nights, multiple filters). The main knobs:</p>
+  <table>
+    <tr><th>Knob</th><th>Default</th><th>Notes</th></tr>
+    <tr><td><code>--min-score</code></td><td>0.35</td><td>Composite score below which a frame is rejected</td></tr>
+    <tr><td><code>--dead-cell-rise</code></td><td>0.08</td><td>Occlusion onset sensitivity; clean-frame jitter is ≤0.04, so 0.08 is a 2× margin</td></tr>
+    <tr><td><code>--session-gap</code></td><td>60 min</td><td>Splits sequences into sessions</td></tr>
+    <tr><td>glow threshold</td><td>2.5% of sky <strong>and</strong> &gt;30 ADU</td><td>The ADU floor keeps real narrowband nebulosity (measured 19–22 ADU) from false-flagging; true haze measured 48–103 ADU. Rig-specific.</td></tr>
+    <tr><td>transparency threshold</td><td>0.80</td><td>Global veil rejection level</td></tr>
+  </table>
+
+  <h3 id="safety">Safety properties</h3>
+  <ul>
+    <li><strong>Regrade matching is double-keyed</strong>: filename <em>and</em>
+      capture timestamp (±10 min) must agree, so screening the wrong directory can
+      never regrade the wrong row. Already-Rejected rows are never touched.</li>
+    <li><strong>Bounded baselines</strong>: a long run of anomalous frames is
+      eventually accepted as a new steady state, so a permanent condition change
+      (moonrise, light dome) cannot condemn the rest of a night. Occluded frames
+      stay penalized through the absolute spatial term regardless.</li>
+    <li><strong>Sparse-field abstention</strong>: star-grid metrics abstain on
+      legitimately star-poor frames (narrowband, short subs on slow optics)
+      instead of reporting phantom dead cells.</li>
+    <li><strong>Single-frame blips don't reject</strong>: rise-based occlusion
+      needs an adjacent frame to corroborate; photometric small-cloud calls rest
+      on multi-star flux evidence and may be single-frame (clouds move).</li>
+  </ul>
+
+  <h2 id="limitations">Limitations</h2>
+  <ul>
+    <li>Photometry requires the default HocusFocus detector (the N.I.N.A.
+      detector port does not measure flux).</li>
+    <li>The photometric reference requires stars present in ≥50% of a session's
+      frames, so it is blind to regions occluded for <em>most</em> of a sequence —
+      by design; that case belongs to the dead-cell metric.</li>
+    <li>Monochrome FITS only (as with the rest of PSF Guard).</li>
+    <li>The glow ADU floor is rig- and exposure-profile-specific.</li>
+  </ul>
+  <p>The full technical document lives in the repository:
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md">docs/SCREENING.md</a>.</p>
+
+  <nav class="next-prev">
+    <a href="web-grader.html">← The Web Grader</a>
+    <a href="workflows.html">Rejects &amp; Sync →</a>
+  </nav>
+</main>
+</div>
+
+</body>
+</html>

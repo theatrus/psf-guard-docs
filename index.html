@@ -3,20 +3,225 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>psf-guard — documentation</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-           max-width: 42rem; margin: 15vh auto; padding: 0 1.25rem; line-height: 1.6; }
-    h1 { font-size: 2rem; margin-bottom: 0.25rem; }
-    .muted { opacity: 0.7; }
-    code { background: rgba(127,127,127,0.15); padding: 0.1em 0.35em; border-radius: 4px; }
-  </style>
+  <title>PSF Guard — image grading &amp; quality screening for N.I.N.A. astrophotography</title>
+  <meta name="description" content="Grade your subs visually, screen whole nights for clouds and occlusion automatically, and write every decision back to the N.I.N.A. Target Scheduler.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/site.css">
+  <meta property="og:title" content="PSF Guard">
+  <meta property="og:description" content="Image grading and quality screening for N.I.N.A. astrophotography with the Target Scheduler plugin.">
+  <meta property="og:image" content="https://psf-guard.com/assets/overview.png">
+  <meta property="og:url" content="https://psf-guard.com/">
+  <meta property="og:type" content="website">
 </head>
 <body>
-  <h1>psf-guard</h1>
-  <p class="muted">Astrophotography subframe selection &amp; database management.</p>
-  <p>Documentation site — coming soon.</p>
-  <p class="muted"><small>Served from <code>psf-guard-docs</code>.</small></p>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="./"><img src="assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="docs/" class="keep">Docs</a>
+      <a href="docs/screening.html">Screening</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
+    <h1>Keep the frames that matter.<br><span class="grad">Reject the ones that don't.</span></h1>
+    <p class="lede">
+      PSF Guard is an image grading and quality screening tool for
+      <a href="https://nighttime-imaging.eu/">N.I.N.A.</a> astrophotography with the
+      Target Scheduler plugin. Grade subs visually in a fast web UI, screen whole
+      nights for clouds and occlusion automatically, and write every decision back
+      to the scheduler — so it re-captures what you rejected.
+    </p>
+    <div class="btn-row">
+      <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+      <a class="btn" href="docs/">Get started</a>
+      <a class="btn" href="https://github.com/theatrus/psf-guard">Source on GitHub</a>
+    </div>
+  </div>
+  <figure class="hero-shot">
+    <img src="assets/image_grid.png" alt="PSF Guard image grid with filtering and batch grading" width="1200">
+    <figcaption>The grading grid: filter, multi-select, accept/reject — written straight to the scheduler database.</figcaption>
+  </figure>
+</section>
+
+<div class="strip">
+  <p class="strip-inner">
+    <strong>Star count and HFR miss ruined frames.</strong> Measured on a real session:
+    a tree line occluding the field left star counts within normal variation, and HFR
+    stayed flat until the frame was <strong>more than 60% blocked</strong>. A thin cloud
+    veil dimmed every star by 37% — and the frame was still Accepted by conventional
+    grading. PSF Guard screens with signals that are <strong>local, photometric, and
+    temporal</strong> — classical statistics calibrated on real sessions. No machine
+    learning, no training data, no network access.
+  </p>
+</div>
+
+<section class="section" id="features">
+  <h2>Everything between capture and stacking</h2>
+  <div class="features">
+    <div class="card">
+      <div class="icon">🖼️</div>
+      <h3>Fast visual grader</h3>
+      <p>Web UI or desktop app with auto-stretched previews, zoom and pan,
+      side-by-side comparison with synchronized zoom, batch operations,
+      keyboard-driven workflow, and full undo/redo.</p>
+    </div>
+    <div class="card">
+      <div class="icon">☁️</div>
+      <h3>Automatic quality screening</h3>
+      <p>Grid-based spatial metrics and cross-frame differential photometry catch
+      occlusion, small clouds, thin veils, and errant light — with annotated
+      diagnostic images explaining every verdict.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔁</div>
+      <h3>Scheduler write-back</h3>
+      <p>Every grade lands in the Target Scheduler database, so acquired-image
+      counts stay accurate and the scheduler re-shoots what you rejected.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🗂️</div>
+      <h3>Safe reject archival</h3>
+      <p>Move rejected frames and their sidecars out of the directory tree your
+      stacking software scans. Idempotent, recorded, and fully reversible —
+      restore never overwrites.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔭</div>
+      <h3>Two-machine workflows</h3>
+      <p>Sync projects, captured images, and grades between the telescope's
+      database and your grading machine — pull to refresh, grade locally,
+      push grades back.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⭐</div>
+      <h3>Star detection &amp; PSF analysis</h3>
+      <p>A port of N.I.N.A.'s detector plus the HocusFocus detector, with
+      Gaussian/Moffat PSF fitting, annotated star maps, and residual
+      visualizations.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="screening">
+  <h2>Screening that sees what global metrics can't</h2>
+  <p class="sub">
+    Every flagged frame can be rendered as an annotated diagnostic: the analysis
+    grid is overlaid on the image, colored by the signal that fired, with the
+    verdict and metrics in the caption. You never have to trust a black box.
+  </p>
+  <div class="shot-pair">
+    <figure>
+      <img src="assets/screening-onset.jpg" alt="Annotated diagnostic showing occlusion arriving: red cells trace a tree line" loading="lazy">
+      <figcaption>Occlusion arriving — red cells trace the tree line exactly.
+      Transparency of the surviving field: 1.01, which is why global metrics miss it.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/screening-veil.jpg" alt="Annotated diagnostic of a thin cloud veil detected photometrically" loading="lazy">
+      <figcaption>Thin veil — nothing is locally wrong, but matched-star photometry
+      reads transparency 0.63 (~0.5 mag). Conventional grading accepted this frame.</figcaption>
+    </figure>
+  </div>
+  <div class="shot-pair">
+    <figure>
+      <img src="assets/screening-frontier.jpg" alt="Advancing occluder frontier: blue cells darker than history, yellow lit fringe" loading="lazy">
+      <figcaption>An advancing occluder: blue cells read <em>darker</em> than their own
+      history (blocked skyglow), yellow marks the lit fringe.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/screening-glow.jpg" alt="Static corner glow detected against the frame's own gradient model" loading="lazy">
+      <figcaption>Static corner glow, present from the session's first frame — invisible
+      to temporal baselines, caught against the frame's own gradient model.</figcaption>
+    </figure>
+  </div>
+  <p><a class="btn" href="docs/screening.html">How screening works →</a></p>
+</section>
+
+<section class="section" id="tour">
+  <h2>A quick tour</h2>
+  <div class="gallery">
+    <figure>
+      <img src="assets/overview.png" alt="Overview dashboard with project statistics" loading="lazy">
+      <figcaption>Overview: projects, targets, completion, and grading progress across every database.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/compare.png" alt="Side-by-side comparison with synchronized zoom" loading="lazy">
+      <figcaption>Side-by-side comparison with synchronized zoom and pan.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/sequence-analysis.png" alt="Sequence analysis with per-frame quality scores" loading="lazy">
+      <figcaption>Sequence view: per-frame quality scores, cloud/occlusion classification, one-click occlusion scan.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/annotated-stars.jpg" alt="Annotated star detection output" loading="lazy">
+      <figcaption>HocusFocus star detection with annotated output.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/psf-visualization.jpg" alt="PSF fitting residual grids" loading="lazy">
+      <figcaption>Observed / fitted / residual PSF grids with Moffat &amp; Gaussian models.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="install">
+  <h2>Install it your way</h2>
+  <p class="sub">Desktop app, Docker container, standalone binary, or Fedora RPM —
+  one tool, wherever your images live.</p>
+  <div class="install-grid">
+    <div class="card">
+      <h3>🖥️ Desktop app</h3>
+      <p>Native installers for Windows (<code>.msi</code> / NSIS setup with CLI on
+      PATH), macOS (<code>.dmg</code>, Apple Silicon), and Linux
+      (<code>.deb</code> / AppImage).</p>
+      <p><a href="https://github.com/theatrus/psf-guard/releases/latest">Download the latest release →</a></p>
+    </div>
+    <div class="card">
+      <h3>🐳 Docker</h3>
+      <p>For NAS boxes and home servers. The database mount must be writable —
+      grading writes back to it.</p>
+      <pre><code>docker run -d -p 3000:3000 \
+  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/images:/images:ro \
+  ghcr.io/theatrus/psf-guard:latest</code></pre>
+    </div>
+    <div class="card">
+      <h3>⌨️ Standalone CLI</h3>
+      <p>Single binary for scripting and servers. Screen a night in one command:</p>
+      <pre><code>psf-guard screen-fits ./LIGHT --annotate ./diag
+psf-guard server schedulerdb.sqlite ./images</code></pre>
+      <p><a href="docs/#standalone-cli-binaries">Downloads &amp; platform notes →</a></p>
+    </div>
+    <div class="card">
+      <h3>📦 Fedora RPM</h3>
+      <p>Prebuilt packages for Fedora 43/44 with a <code>psf-guard.service</code>
+      systemd unit for running the grader as a daemon.</p>
+      <pre><code>sudo dnf install ./psf-guard-*.x86_64.rpm</code></pre>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:2rem">
+    <strong>Back up your Target Scheduler database before first use.</strong>
+    PSF Guard writes grades into it, and its <code>sync</code> commands can merge
+    entire databases between machines. It's careful — dry-run flags everywhere —
+    but it's also young software.
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>PSF Guard — Apache License 2.0</span>
+    <a href="docs/">Documentation</a>
+    <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+    <a href="https://github.com/theatrus/psf-guard/releases/latest">Releases</a>
+    <a href="https://github.com/theatrus/psf-guard/issues">Issues</a>
+  </div>
+</footer>
+
 </body>
 </html>

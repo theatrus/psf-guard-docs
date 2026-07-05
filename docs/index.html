@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting Started — PSF Guard</title>
+  <meta name="description" content="Install PSF Guard as a desktop app, Docker container, standalone binary, or Fedora RPM, and serve your first grading session.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./" class="active">Getting Started</a></li>
+    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>Getting Started</h1>
+  <p class="lede">
+    PSF Guard points at your N.I.N.A. Target Scheduler database and image folders
+    and gives you a visual grader, automatic quality screening, and safe file
+    management — with every grade written back to the scheduler.
+  </p>
+
+  <div class="callout">
+    <strong>Back up your Target Scheduler database before first use.</strong>
+    PSF Guard writes grades into it, and its <code>sync</code> commands can merge
+    entire databases between machines. It's careful (dry-run flags everywhere),
+    but it's also young software.
+  </div>
+
+  <h2 id="requirements">What you need</h2>
+  <ul>
+    <li><strong>N.I.N.A. with the Target Scheduler plugin</strong> — images are
+      located through the scheduler database, not by walking N.I.N.A.'s standard
+      file layout. On Windows the database lives at
+      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
+    <li><strong>Monochrome FITS files</strong> — color/OSC frames are not
+      debayered yet.</li>
+  </ul>
+
+  <h2 id="desktop-app">Desktop app (Windows / macOS / Linux)</h2>
+  <p>Grab the installer for your platform from the
+  <a href="https://github.com/theatrus/psf-guard/releases/latest">latest release</a>:</p>
+  <table>
+    <tr><th>Platform</th><th>Asset</th></tr>
+    <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code> or the NSIS <code>-setup.exe</code></td></tr>
+    <tr><td>macOS (Apple Silicon)</td><td><code>PSF.Guard_&lt;version&gt;_aarch64.dmg</code></td></tr>
+    <tr><td>Linux x64</td><td><code>PSF.Guard_&lt;version&gt;_amd64.deb</code> or <code>.AppImage</code></td></tr>
+  </table>
+  <p>Install, launch, and point the settings panel at your scheduler database and
+  image directories. The Windows NSIS installer also installs a console
+  <code>psf-guard-cli.exe</code> and adds it to your user <code>PATH</code>, so
+  the full CLI works from any terminal.</p>
+
+  <h2 id="docker">Docker (Linux servers / NAS)</h2>
+  <pre><code>docker run -d -p 3000:3000 \
+  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/images:/images:ro \
+  ghcr.io/theatrus/psf-guard:latest</code></pre>
+  <p>Then open <code>http://localhost:3000/</code>. The database mount must be
+  <strong>writable</strong> — grading writes back to it. To tune the port, cache,
+  or preview pre-generation, mount a TOML config at <code>/data/config.toml</code>
+  and append <code>server --config /data/config.toml /data/database.sqlite
+  /images</code> (see <a href="configuration.html">Configuration</a>).</p>
+
+  <h2 id="standalone-cli-binaries">Standalone CLI binaries</h2>
+  <p>Version-independent links, always pointing at the latest release:</p>
+  <table>
+    <tr><th>Platform</th><th>Download</th><th>Notes</th></tr>
+    <tr>
+      <td>Linux x64</td>
+      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td>
+      <td>Needs system OpenCV — Docker is easier</td>
+    </tr>
+    <tr>
+      <td>macOS</td>
+      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td>
+      <td>Needs Homebrew OpenCV</td>
+    </tr>
+    <tr>
+      <td>Windows x64</td>
+      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe"><code>psf-guard-windows-x64.exe</code></a></td>
+      <td>Static binary, no dependencies</td>
+    </tr>
+  </table>
+  <pre><code><span class="c"># Linux / macOS</span>
+chmod +x psf-guard-*
+./psf-guard-linux-x64 server schedulerdb.sqlite /path/to/images/</code></pre>
+  <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
+copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup.sqlite
+psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
+  <p>Then open <code>http://localhost:3000/</code>.</p>
+
+  <h2 id="fedora-rpm">Fedora RPM</h2>
+  <p>Releases attach prebuilt RPMs for Fedora 43 and 44:</p>
+  <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
+  <p>The package installs the CLI/server plus a <code>psf-guard.service</code>
+  systemd unit for running the web grader as a daemon. To build your own, see
+  <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md">packaging/rpm/README.md</a>.</p>
+
+  <h2 id="from-source">Build from source</h2>
+  <pre><code>git clone https://github.com/theatrus/psf-guard.git
+cd psf-guard
+cargo build --release
+./target/release/psf-guard server schedulerdb.sqlite /path/to/images/</code></pre>
+  <p>You'll need Rust, Node.js/npm (the React frontend is embedded at build
+  time), and OpenCV with clang. OpenCV is the painful one — the
+  <a href="https://github.com/theatrus/psf-guard/tree/main/.github/workflows">CI workflows</a>
+  are the authoritative package lists per platform (vcpkg on Windows, Homebrew on
+  macOS, <code>libopencv-dev</code> on Debian/Ubuntu).</p>
+
+  <h2 id="first-run">Your first session</h2>
+  <ol>
+    <li>Serve your database: <code>psf-guard server schedulerdb.sqlite /path/to/images/</code>
+      — this registers it in PSF Guard's database registry, so later runs pick it
+      up automatically.</li>
+    <li>Open <code>http://localhost:3000/</code> and browse the overview.</li>
+    <li>Open a project's grid and start grading — see
+      <a href="web-grader.html">The Web Grader</a> for the keyboard workflow.</li>
+    <li>Try an automatic pass: open a target's Sequence view and press
+      <strong>Scan Occlusion</strong>, or run
+      <code>psf-guard screen-fits</code> on a night of lights — see
+      <a href="screening.html">Quality Screening</a>.</li>
+    <li>When you're done, archive the rejects out of your stacking tree —
+      see <a href="workflows.html">Rejects &amp; Sync</a>.</li>
+  </ol>
+
+  <nav class="next-prev">
+    <span></span>
+    <a href="web-grader.html">The Web Grader →</a>
+  </nav>
+</main>
+</div>
+
+</body>
+</html>

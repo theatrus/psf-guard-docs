@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuration &amp; API — PSF Guard</title>
+  <meta name="description" content="The database registry, the server TOML, and the REST API.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="web-grader.html">The Web Grader</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html" class="active">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>Configuration &amp; API</h1>
+  <p class="lede">
+    Two pieces of configuration — the database <strong>registry</strong> (which
+    databases and image folders) and the server <strong>TOML</strong> (how the
+    server runs) — plus a REST API for everything the UI can do.
+  </p>
+
+  <h2 id="registry">Databases: the registry</h2>
+  <p>The server manages any number of scheduler databases. The list lives in a
+  JSON registry at the platform config location — not in the TOML:</p>
+  <table>
+    <tr><th>Platform</th><th>Registry path</th></tr>
+    <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
+    <tr><td>macOS</td><td><code>~/Library/Application Support/psf-guard/config.json</code></td></tr>
+    <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
+  </table>
+  <p><code>psf-guard server &lt;db&gt; &lt;dirs...&gt;</code>
+  <strong>registers</strong> that database on first run and reuses it afterwards;
+  you can also manage the list from the desktop app's Settings panel or the
+  <code>/api/databases</code> endpoints. For a one-off session that shouldn't
+  touch your real config, pass <code>--registry /tmp/scratch.json</code>.</p>
+  <p>The default N.I.N.A. scheduler database on Windows lives at
+  <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</p>
+
+  <h2 id="toml">Server knobs: the TOML</h2>
+  <pre><code>cp psf-guard.toml.example psf-guard.toml
+psf-guard server --config psf-guard.toml</code></pre>
+  <pre><code>[server]
+port = 3000
+host = "0.0.0.0"
+<span class="c"># Optional: fraction of CPU cores for parallel work (both default sensibly).
+# Interactive jobs (occlusion scans, on-demand previews) get scan_worker_ratio;
+# background pre-generation gets background_worker_ratio and pauses entirely
+# while an interactive job runs.</span>
+#scan_worker_ratio = 0.5
+#background_worker_ratio = 0.25
+
+[cache]
+directory = "./cache"
+file_ttl = "5m"        <span class="c"># 30s, 5m, 1h, 2h30m, 1d ...</span>
+directory_ttl = "5m"
+
+[pregeneration]        <span class="c"># optional background preview warming</span>
+enabled = true
+screen = true          <span class="c"># 1200px previews</span>
+large = false          <span class="c"># 2000px previews</span></code></pre>
+  <p>Command-line arguments override the config file. A legacy
+  <code>[database]</code>/<code>[images]</code> section is still parsed but
+  ignored in server mode — databases come from the registry.</p>
+
+  <h2 id="api">REST API</h2>
+  <p>Per-database endpoints are nested under <code>/api/db/{db_id}/</code>;
+  <code>GET /api/databases</code> lists the configured databases and their ids.</p>
+  <pre><code><span class="c"># List images with filters</span>
+curl "localhost:3000/api/db/my-db/images?project_id=2&amp;status=pending"
+
+<span class="c"># Update a grade</span>
+curl -X PUT localhost:3000/api/db/my-db/images/123/grade \
+  -H "Content-Type: application/json" \
+  -d '{"status": "accepted"}'
+
+<span class="c"># Fetch processed images</span>
+curl "localhost:3000/api/db/my-db/images/123/preview?size=large" -o preview.png
+curl "localhost:3000/api/db/my-db/images/123/annotated" -o stars.png</code></pre>
+  <p>Preview and annotated images generate asynchronously: a cache miss returns
+  HTTP 202 (<code>{"state": "generating"}</code>) and a batch
+  <code>generation-status</code> endpoint reports readiness — the UI uses this to
+  show its "Generating…" badges without long-lived requests.</p>
+  <p>Database management endpoints (<code>POST/PUT/DELETE /api/databases</code>)
+  are disabled unless the server runs with
+  <code>--allow-database-management</code>, since they let any reachable client
+  edit your configured database list. The desktop app always enables them for
+  its own local server.</p>
+
+  <h2 id="limitations">Known limitations</h2>
+  <ul>
+    <li><strong>Monochrome only.</strong> Color/OSC FITS files are not debayered
+      and will do weird things. Sample FITS files for color support are welcome
+      at <a href="mailto:psf-guard@theatr.us">psf-guard@theatr.us</a>.</li>
+    <li><strong>Target Scheduler required.</strong> Images are located via the
+      scheduler database, not by walking N.I.N.A.'s standard file layout (yet).</li>
+    <li><strong>Path assumptions.</strong> Directory layouts matching
+      <code>%DATEMINUS12%/%TARGETNAME%/%DATEMINUS12%/LIGHT/...</code> (with or
+      without the leading date) are detected reliably; other patterns may not be.
+      Happy to support more —
+      <a href="https://github.com/theatrus/psf-guard/issues">open an issue</a>.</li>
+    <li><strong>Make backups.</strong> Of the scheduler database always, and of
+      your FITS files before using file-moving commands.</li>
+  </ul>
+
+  <nav class="next-prev">
+    <a href="cli.html">← CLI Reference</a>
+    <span></span>
+  </nav>
+</main>
+</div>
+
+</body>
+</html>
