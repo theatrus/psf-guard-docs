@@ -35,6 +35,7 @@
     <li><a href="astrometry.html" class="active" aria-current="page">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -157,10 +158,15 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
       scale), then the installed blind index if the hint is missing or stale.</li>
     <li>A successful solve enables the overlay automatically. Press
       <code>O</code> again to toggle it while you zoom, pan, or grade.</li>
+    <li>With orbital elements cached, press <code>T</code> to identify and draw
+      satellites predicted to cross the solved sensor during the exposure.</li>
   </ol>
   <p>The panel labels the result <strong>Embedded WCS</strong>,
   <strong>Hinted solve</strong>, or <strong>Blind solve</strong>, and shows the
   solved center, pixel scale, and whether the scheduled target is in frame.</p>
+  <p>Satellite projection adds the exposure time and observing site to that
+  WCS. See <a href="satellites.html">Satellite Tracks</a> for timing headers,
+  offline elements, the evidence boundary, and grading behavior.</p>
 
   <h2 id="cache">Solution cache and concurrency</h2>
   <p>Pixel-derived solutions are stored per database under

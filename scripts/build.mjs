@@ -18,6 +18,7 @@ const docsNavigation = [
   ["astrometry.html", "Sky Context & Solver"],
   ["screening.html", "Quality Screening"],
   ["astrometry-quality.html", "Astrometry Quality"],
+  ["satellites.html", "Satellite Tracks"],
   ["workflows.html", "Rejects & Sync"],
   ["cli.html", "CLI Reference"],
   ["configuration.html", "Configuration & API"],
