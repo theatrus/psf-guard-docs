@@ -80,12 +80,20 @@
   <h2 id="flags">How flags affect grading</h2>
   <table>
     <tr><th>Flag</th><th>Evidence</th><th>Score / recommendation</th></tr>
-    <tr><td><strong>Off Target</strong></td><td>Target is outside the solved footprint, or center offset is at least 20% of the short field dimension</td><td>Pointing score 0; total capped at 0.20; rejection recommended</td></tr>
-    <tr><td><strong>Pointing Jump</strong></td><td>One center leaves the robust dither envelope and adjacent solved frames return</td><td>Total capped at 0.30; rejection recommended</td></tr>
-    <tr><td><strong>Pointing Drift</strong></td><td>Robust sequence trend exceeds the field/scatter threshold</td><td>Affected tail capped at 0.30; rejection recommended</td></tr>
+    <tr><td><strong>Off Target</strong></td><td>Target is outside the solved footprint, or a short/unclustered departure is at least 20% of the short field dimension</td><td>Pointing score 0; total capped at 0.20; rejection recommended</td></tr>
+    <tr><td><strong>Stable Offset</strong></td><td>At least three consecutive solves form a stable deliberate framing cluster while the target remains in frame</td><td>Advisory only; no score cap or automatic rejection</td></tr>
+    <tr><td><strong>Pointing Jump</strong></td><td>A short run leaves one framing cluster and later returns to it</td><td>Total capped at 0.30; rejection recommended</td></tr>
+    <tr><td><strong>Pointing Drift</strong></td><td>Robust trend within one contiguous framing segment exceeds the field/scatter threshold</td><td>Affected tail capped at 0.30; rejection recommended</td></tr>
     <tr><td><strong>Plate Solve Failed</strong></td><td>Pixels decoded, but the field did not solve or too few stars were detected</td><td>Modest penalty; rejection only with independent degradation</td></tr>
     <tr><td><strong>Solve Unavailable</strong></td><td>Catalog/index, decode, cancellation, or internal/resource failure</td><td>Operational error; no quality flag or automatic grade</td></tr>
   </table>
+
+  <p>Solved centers are clustered before offset, jump, or drift decisions. A
+  sustained <code>A → B</code> reframing step (or <code>A → B → C</code> mosaic)
+  becomes a new stable segment instead of making later frames look off target
+  or manufacturing a session-wide drift. A short <code>A → B → A</code>
+  excursion is a pointing jump. Drift is fitted separately inside each
+  contiguous segment.</p>
 
   <div class="callout info">
     <strong>Fresh pixels are the evidence.</strong> Embedded FITS WCS is useful

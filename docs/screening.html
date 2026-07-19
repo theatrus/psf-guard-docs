@@ -102,7 +102,7 @@
     <tr><td><strong>Static glow</strong></td><td>Corner haze, lit occluder edges</td>
         <td>Cells brighter than the frame's own gradient model — catches problems present from a session's <em>first</em> frame, which temporal baselines can never see</td></tr>
     <tr><td><strong>Fresh plate solution</strong></td><td>Off-target frames, pointing jumps/drift, deterministic no-solves</td>
-        <td>Seiza solves the current pixels; solved centers are compared with the authoritative target and robust sequence envelope</td></tr>
+        <td>Seiza solves the current pixels; solved centers are compared with the authoritative target, stable framing clusters, and within-segment drift</td></tr>
   </table>
   <p>The signals feed a sequence analyzer that scores every frame 0–1 relative to
   its session (same target, filter, and exposure; sessions split on 60-minute
