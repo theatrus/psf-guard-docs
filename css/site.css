@@ -205,6 +205,21 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   font-size: .86rem; color: var(--text-dim); margin-top: .5rem; text-align: center;
 }
 
+.feature-shot { margin: 1.8rem 0; }
+.feature-shot img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 20px 70px -24px rgba(94, 234, 212, 0.18);
+}
+.feature-shot figcaption {
+  color: var(--text-dim);
+  font-size: .87rem;
+  margin-top: .55rem;
+  text-align: center;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

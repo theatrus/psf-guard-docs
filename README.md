@@ -11,6 +11,7 @@ the repo is what's served.
 ```
 index.html          Splash / landing page
 docs/               Documentation pages (shared sidebar nav)
+docs/astrometry.html Seiza catalog setup, on-demand solving, and sky overlays
 css/site.css        The one stylesheet (dark astro theme)
 assets/             Logo/favicon (hand-authored SVG) + screenshots
 404.html            Not-found page (uses root-absolute paths)

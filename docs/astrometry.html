@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sky Context &amp; Plate Solving — PSF Guard</title>
+  <meta name="description" content="Install Seiza catalogs, solve FITS images on demand, and display catalog labels, outlines, coordinates, and target offsets in PSF Guard.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=2">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+
+<div class="docs-wrap">
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html" class="active">Sky Context &amp; Solver</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration &amp; API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+
+<main class="docs-main">
+  <h1>Sky Context &amp; Plate Solving</h1>
+  <p class="lede">
+    Identify the objects expected around a frame, solve its pixels on demand
+    with Seiza, and inspect catalog labels, object outlines, an RA/Dec grid,
+    solved scale, and pointing offset without leaving the grader.
+  </p>
+
+  <figure>
+    <img src="../assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and the Sky context panel">
+    <figcaption>A hinted solve of the Cocoon Nebula. The overlay and side panel share the same pixel-derived WCS and catalog provenance.</figcaption>
+  </figure>
+
+  <h2 id="layers">Context, solution, and overlay are different layers</h2>
+  <table>
+    <tr><th>Layer</th><th>What it tells you</th><th>What it needs</th></tr>
+    <tr>
+      <td>Catalog context</td>
+      <td>Objects expected near the FITS or Target Scheduler coordinates. This is pointing context, not proof that an object is visible in the pixels.</td>
+      <td><code>objects.bin</code> and approximate coordinates</td>
+    </tr>
+    <tr>
+      <td>WCS solution</td>
+      <td>The image's measured center, scale, rotation, parity, and target offset. A supported embedded TAN WCS is accepted immediately; otherwise PSF Guard solves the pixels.</td>
+      <td>A star catalog, or a supported embedded WCS</td>
+    </tr>
+    <tr>
+      <td>Sky overlay</td>
+      <td>RA/Dec grid, target marker, labels, extents, and source-qualified catalog outlines projected into the image.</td>
+      <td>A WCS solution plus <code>objects.bin</code> for object annotations</td>
+    </tr>
+  </table>
+
+  <h2 id="install">1. Install the Seiza catalogs</h2>
+  <p>PSF Guard embeds Seiza 0.8.0's solver, but the catalog bundle is kept
+  separate because the complete set is several gigabytes. Install the
+  <code>seiza</code> CLI from the
+  <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a>, or
+  install the matching CLI with Cargo:</p>
+  <pre><code>cargo install seiza-cli --version 0.8.0</code></pre>
+  <p>Then use either the guided setup or the non-interactive prebuilt download:</p>
+  <pre><code><span class="c"># Recommended: choose a bundle for your available storage and use case.</span>
+seiza setup
+
+<span class="c"># Or download the complete, SHA-256-verified prebuilt bundle.</span>
+seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
+  <p>The complete bundle includes every resource. If you install individual
+  files, these three roles matter to PSF Guard:</p>
+  <table>
+    <tr><th>File</th><th>Feature</th></tr>
+    <tr><td><code>objects.bin</code></td><td>Coordinate-only object context plus solved labels and catalog outlines</td></tr>
+    <tr><td><code>stars-lite-tycho2.bin</code>, <code>stars-gaia.bin</code>, or <code>stars-deep-gaia17.bin</code></td><td>Hinted solving; Seiza selects the deepest installed catalog</td></tr>
+    <tr><td><code>blind-gaia16.idx</code></td><td>Blind fallback when the pointing hint is absent or stale</td></tr>
+  </table>
+
+  <h2 id="configure">2. Let PSF Guard find the bundle</h2>
+  <p><code>seiza setup</code> writes to Seiza's platform-standard catalog
+  directory, which PSF Guard searches automatically. Restart PSF Guard after
+  installing or changing catalogs.</p>
+  <p>For a custom location, set <code>SEIZA_CATALOG_DIR</code> before starting
+  PSF Guard, or merge this top-level fragment into the existing PSF Guard JSON
+  registry:</p>
+  <pre><code>"astrometry": {
+  "data_dir": "/path/to/seiza-data"
+}</code></pre>
+  <p>Keep the registry's existing <code>databases</code> entries. The registry
+  lives here:</p>
+  <table>
+    <tr><th>Platform</th><th>Registry path</th></tr>
+    <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
+    <tr><td>macOS</td><td><code>~/Library/Application Support/psf-guard/config.json</code></td></tr>
+    <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
+  </table>
+
+  <h3 id="docker">Docker</h3>
+  <p>Mount the catalog directory read-only and expose its location to the
+  embedded Seiza library:</p>
+  <pre><code>docker run -d -p 3000:3000 \
+  -e SEIZA_CATALOG_DIR=/catalogs \
+  -v /path/to/seiza-data:/catalogs:ro \
+  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/images:/images:ro \
+  ghcr.io/theatrus/psf-guard:latest</code></pre>
+
+  <h2 id="verify">3. Verify the running setup</h2>
+  <p>The capability endpoint reports every resolved path and which features are
+  available. The validation endpoint deliberately opens and fully reads each
+  configured catalog, so it can take time on the deep bundle:</p>
+  <pre><code>curl http://localhost:3000/api/astrometry/capabilities
+curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
+  <div class="callout info">
+    <strong>Catalog objects but no Solve field?</strong> You have
+    <code>objects.bin</code>, but no usable star catalog. A solver needs one of
+    the <code>stars-*.bin</code> files; the blind index is optional and only
+    provides fallback when the hint cannot solve the field.
+  </div>
+
+  <h2 id="use">4. Solve and inspect a frame</h2>
+  <ol>
+    <li>Open an image in the detail grader. The <strong>Sky context</strong>
+      panel loads header and catalog context without running a solve.</li>
+    <li>If a supported WCS is embedded, use <strong>Sky overlay</strong>
+      immediately. Otherwise choose <strong>Solve field</strong> or press
+      <code>O</code>.</li>
+    <li>PSF Guard tries a hinted solve first (using FITS/mount position and
+      scale), then the installed blind index if the hint is missing or stale.</li>
+    <li>A successful solve enables the overlay automatically. Press
+      <code>O</code> again to toggle it while you zoom, pan, or grade.</li>
+  </ol>
+  <p>The panel labels the result <strong>Embedded WCS</strong>,
+  <strong>Hinted solve</strong>, or <strong>Blind solve</strong>, and shows the
+  solved center, pixel scale, and whether the scheduled target is in frame.</p>
+
+  <h2 id="cache">Solution cache and concurrency</h2>
+  <p>Pixel-derived solutions are stored per database under
+  <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code>. They are reused
+  on later visits and invalidated when the source FITS file, relevant catalog,
+  or Seiza version changes. PSF Guard runs one memory-heavy solve per database
+  at a time; repeated requests for the same frame reuse the completed cache.</p>
+
+  <h2 id="api">Image astrometry API</h2>
+  <pre><code><span class="c"># Header/catalog context or a valid cached/embedded solution; never launches a solve.</span>
+curl http://localhost:3000/api/db/my-db/images/123/astrometry
+
+<span class="c"># Decode pixels and solve on demand.</span>
+curl -X POST http://localhost:3000/api/db/my-db/images/123/astrometry</code></pre>
+
+  <nav class="next-prev">
+    <a href="grader.html">← The Grader UI</a>
+    <a href="screening.html">Quality Screening →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

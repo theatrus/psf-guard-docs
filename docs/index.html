@@ -27,6 +27,7 @@
   <ul>
     <li><a href="./" class="active">Getting Started</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context &amp; Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="workflows.html">Rejects &amp; Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
@@ -45,8 +46,9 @@
   <h1>Getting Started</h1>
   <p class="lede">
     PSF Guard points at your N.I.N.A. Target Scheduler database and image folders
-    and gives you a visual grader, automatic quality screening, and safe file
-    management — with every grade written back to the scheduler.
+    and gives you a visual grader, Seiza sky context and plate solving,
+    automatic quality screening, and safe file management — with every grade
+    written back to the scheduler.
   </p>
 
   <div class="callout">
@@ -145,6 +147,9 @@ cargo build --release
     <li>Open <code>http://localhost:3000/</code> and browse the overview.</li>
     <li>Open a project's grid and start grading — see
       <a href="grader.html">The Grader UI</a> for the keyboard workflow.</li>
+    <li>Optionally install the Seiza catalog bundle, then open a frame and press
+      <code>O</code> to solve it and show the sky overlay — see
+      <a href="astrometry.html">Sky Context &amp; Plate Solving</a>.</li>
     <li>Try an automatic pass: open a target's Sequence view and press
       <strong>Scan Occlusion</strong>, or run
       <code>psf-guard screen-fits</code> on a night of lights — see

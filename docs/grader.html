@@ -27,6 +27,7 @@
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="grader.html" class="active">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context &amp; Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="workflows.html">Rejects &amp; Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
@@ -86,6 +87,15 @@
   ideal for judging a borderline frame against a known-good neighbor. Accept,
   reject, or unmark both images at once.</p>
 
+  <h2 id="sky-context">Sky context and plate solving</h2>
+  <p>Open a frame to see catalog objects expected near its FITS or Target
+  Scheduler coordinates. If it has no embedded WCS, choose
+  <strong>Solve field</strong> or press <code>O</code> to run Seiza against the
+  pixels. A successful solution enables the sky overlay with catalog labels,
+  outlines, an RA/Dec grid, solved scale, and target offset. See
+  <a href="astrometry.html">Sky Context &amp; Plate Solving</a> for catalog setup,
+  Docker configuration, validation, and the API.</p>
+
   <h2 id="sequence">Sequence view</h2>
   <figure>
     <img src="../assets/sequence-analysis.png" alt="Sequence analysis with per-frame quality scores">
@@ -104,6 +114,7 @@
     <tr><td>J / ←</td><td>Previous image</td><td>X</td><td>Reject</td></tr>
     <tr><td>C</td><td>Compare</td><td>U</td><td>Unmark</td></tr>
     <tr><td>S</td><td>Stars overlay</td><td>+ / −</td><td>Zoom</td></tr>
+    <tr><td>O</td><td>Solve / sky overlay</td><td></td><td></td></tr>
     <tr><td>Ctrl+Z</td><td>Undo</td><td>Ctrl+Y</td><td>Redo</td></tr>
   </table>
 
@@ -116,7 +127,7 @@
 
   <nav class="next-prev">
     <a href="./">← Getting Started</a>
-    <a href="screening.html">Quality Screening →</a>
+    <a href="astrometry.html">Sky Context &amp; Solver →</a>
   </nav>
 </main>
 </div>
