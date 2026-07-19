@@ -10,28 +10,34 @@
 </head>
 <body>
 
+<!-- site-header:start -->
 <header class="site-header">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
+      <a href="screening.html">Screening</a>
+      <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
   </nav>
 </header>
+<!-- site-header:end -->
 
 <div class="docs-wrap">
+<!-- docs-nav:start -->
 <aside class="docs-nav">
   <h4>Documentation</h4>
   <ul>
-    <li><a href="./" class="active">Getting Started</a></li>
+    <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context &amp; Solver</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
-    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
-    <li><a href="configuration.html">Configuration &amp; API</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
   </ul>
   <h4>Project</h4>
   <ul>
@@ -41,6 +47,7 @@
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
 </aside>
+<!-- docs-nav:end -->
 
 <main class="docs-main">
   <h1>Getting Started</h1>
@@ -151,9 +158,10 @@ cargo build --release
       <code>O</code> to solve it and show the sky overlay — see
       <a href="astrometry.html">Sky Context &amp; Plate Solving</a>.</li>
     <li>Try an automatic pass: open a target's Sequence view and press
-      <strong>Scan Occlusion</strong>, or run
+      <strong>Scan Quality</strong>, or run
       <code>psf-guard screen-fits</code> on a night of lights — see
-      <a href="screening.html">Quality Screening</a>.</li>
+      <a href="screening.html">Quality Screening</a> and
+      <a href="astrometry-quality.html">Astrometry Quality</a>.</li>
     <li>When you're done, archive the rejects out of your stacking tree —
       see <a href="workflows.html">Rejects &amp; Sync</a>.</li>
   </ol>

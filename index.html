@@ -15,12 +15,12 @@
 </head>
 <body>
 
+<!-- site-header:start -->
 <header class="site-header">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <a class="brand" href="./"><img src="assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="docs/" class="keep">Docs</a>
-      <a href="docs/astrometry.html">Sky</a>
       <a href="docs/screening.html">Screening</a>
       <a href="#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
@@ -28,6 +28,7 @@
     </div>
   </nav>
 </header>
+<!-- site-header:end -->
 
 <section class="hero">
   <div>
@@ -37,9 +38,10 @@
       PSF Guard is an image grading and quality screening tool for
       <a href="https://nighttime-imaging.eu/">N.I.N.A.</a> astrophotography with the
       Target Scheduler plugin. Grade subs visually in a fast UI — desktop app or
-      browser — plate-solve and annotate their sky context, screen whole
-      nights for clouds and occlusion automatically, and write every decision back
-      to the scheduler — so it re-captures what you rejected.
+      browser — plate-solve and annotate their sky context, screen whole nights
+      for clouds, occlusion, off-target pointing, and lost tracking automatically,
+      and write every decision back to the scheduler — so it re-captures what you
+      rejected.
     </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -77,9 +79,9 @@
     <div class="card">
       <div class="icon">☁️</div>
       <h3>Automatic quality screening</h3>
-      <p>Grid-based spatial metrics and cross-frame differential photometry catch
-      occlusion, small clouds, thin veils, and errant light — with annotated
-      diagnostic images explaining every verdict.</p>
+      <p>Spatial metrics, cross-frame photometry, and fresh plate solutions catch
+      occlusion, clouds, thin veils, errant light, off-target frames, and tracking
+      loss — with evidence explaining every verdict.</p>
     </div>
     <div class="card">
       <div class="icon">🌌</div>
@@ -179,8 +181,8 @@
       <figcaption>Side-by-side comparison with synchronized zoom and pan.</figcaption>
     </figure>
     <figure>
-      <img src="assets/sequence-analysis.png" alt="Sequence analysis with per-frame quality scores" loading="lazy">
-      <figcaption>Sequence view: per-frame quality scores, cloud/occlusion classification, one-click occlusion scan.</figcaption>
+      <img src="assets/sequence-quality-astrometry.png" alt="Sequence analysis with per-frame quality scores and solved-center scatter" loading="lazy">
+      <figcaption>Sequence view: image-condition scores, solved-center scatter, and off-target/tracking evidence.</figcaption>
     </figure>
     <figure>
       <img src="assets/annotated-stars.jpg" alt="Annotated star detection output" loading="lazy">
