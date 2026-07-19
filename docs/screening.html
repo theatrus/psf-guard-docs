@@ -133,6 +133,10 @@ psf-guard screen-fits "/path/to/LIGHT" --regrade-db my-db-slug
   on affected frames. Selectors focus Clouded, Off Target, Unsolved, or all
   Recommended frames; a review opens before rejection. See
   <a href="astrometry-quality.html">Astrometry Quality</a>.</p>
+  <p>When orbital elements are already cached, the same quality scan projects
+  satellite crossings and tests a narrow pixel corridor around each path.
+  Prediction-only candidates warn; only a pixel-aligned high-risk trail can
+  recommend rejection. See <a href="satellites.html">Satellite Tracks</a>.</p>
 
   <h2 id="diagnostics">Reading the diagnostics</h2>
   <p><code>--annotate</code> renders each flagged frame with the analysis grid

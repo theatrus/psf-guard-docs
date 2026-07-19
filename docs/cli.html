@@ -85,7 +85,9 @@ psf-guard screen-fits ./lights --format json          <span class="c"># or table
   through the same grader. Details: <a href="screening.html">Quality Screening</a>
   and <a href="astrometry-quality.html">Astrometry Quality</a>. When orbital
   elements are already cached, it also applies the cache-only
-  <a href="satellites.html">Satellite Tracks</a> risk analysis.</p>
+  <a href="satellites.html">Satellite Tracks</a> prediction and pixel-alignment
+  analysis. Prediction alone warns; a reviewed rejection requires a matched
+  high-risk trail.</p>
 
   <h2 id="rejects">Reject archival</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]

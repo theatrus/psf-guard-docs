@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Satellite Tracks — PSF Guard</title>
-  <meta name="description" content="Project named satellite crossings onto solved astronomy images and include high-risk predictions in sequence grading.">
+  <meta name="description" content="Project named satellite crossings, align nearby trails in solved astronomy images, and grade only when pixel evidence supports the prediction.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=2">
 </head>
@@ -53,23 +53,23 @@
 <main class="docs-main">
   <h1>Satellite Tracks</h1>
   <p class="lede">
-    PSF Guard uses Seiza to solve an exposure, then projects cached orbital
-    elements through its exact observing interval and site. The Image Details
-    overlay names every in-frame prediction; the sequence grader surfaces
-    likely bright crossings for review.
+    PSF Guard uses Seiza to solve an exposure, projects cached orbital elements
+    through its exact observing interval and site, then tests the nearby FITS
+    pixels for a matching trail. The overlay keeps prediction and pixel
+    evidence separate; the sequence grader rejects only when both support a
+    potentially bright crossing.
   </p>
 
   <div class="shot-pair">
     <figure>
-      <img src="../assets/satellite-hercules-overlay.png" alt="Predicted HULIANWANG DIGUI-167 path offset from the visible trail in the solved Hercules Globular Cluster image" loading="lazy">
-      <figcaption>The red path is a named orbital prediction. It is offset
-      from the visible diagonal trail here, so this is not a confirmed
-      identification.</figcaption>
+      <img src="../assets/satellite-california-overlay.png" alt="California Nebula exposure with dashed orbital candidates and solid green pixel-aligned satellite trails" loading="lazy">
+      <figcaption>Dashed risk-colored paths are orbital predictions. Solid
+      green paths are independently aligned to trails in the FITS pixels.</figcaption>
     </figure>
     <figure>
-      <img src="../assets/satellite-hercules-sequence.png" alt="Hercules frame marked satellite high risk in Sequence Analysis" loading="lazy">
-      <figcaption>The same cached prediction caps the quality score at 0.35 and
-      joins the normal review-before-reject workflow.</figcaption>
+      <img src="../assets/satellite-california-sequence.png" alt="California Nebula frame marked for a pixel-aligned satellite trail in Sequence Analysis" loading="lazy">
+      <figcaption>The matched trail caps the quality score at 0.35 and joins
+      the normal review-before-reject workflow.</figcaption>
     </figure>
   </div>
 
@@ -78,16 +78,19 @@
     <li>Open an image and find <strong>Satellite tracks</strong>.</li>
     <li>Choose <strong>Identify satellite tracks</strong>, or press <kbd>T</kbd>.
       PSF Guard solves the pixels first when no valid WCS is cached.</li>
-    <li>Toggle <strong>Track identifiers</strong> to compare the projected path
-      with the image. Red is high risk, yellow possible, and cyan low.</li>
+    <li>Toggle <strong>Track identifiers</strong> to compare the paths. Red,
+      yellow, and cyan dashed lines are high, possible, and low-risk orbital
+      predictions. A solid green line marks the fitted pixel path.</li>
     <li>Select a named result to open its external satellite information page
       for orbital and launch details.</li>
   </ol>
 
   <div class="callout info">
-    <strong>Prediction is not detection.</strong> A line means a cataloged
-    object should have crossed the solved footprint. It does not claim that a
-    trail was detected in the pixels or that the named object was visible.
+    <strong>Keep the evidence boundary.</strong> A dashed line means a cataloged
+    object should have crossed the solved footprint. A solid green line means
+    a nearby linear pixel feature passed the contrast and continuity checks.
+    Even then, the cataloged identity remains a candidate association rather
+    than proof that the object caused the trail.
   </div>
 
   <h2 id="metadata">Timing and observing site</h2>
@@ -102,34 +105,48 @@
   orbital elements makes the analysis abstain instead of calling the frame
   clean.</p>
 
-  <h2 id="hercules">The Hercules example</h2>
-  <p>These screenshots use a real 60-second B-filter exposure of the Hercules
-  Globular Cluster from 2026-05-21. Seiza 0.9 matched 85 stars at 1.73 arcsec
-  RMS. A historical TLE snapshot near the exposure epoch predicts one fully
-  illuminated crossing by <strong>HULIANWANG DIGUI-167 [68659]</strong>:</p>
+  <h2 id="validation">Real exposure validation</h2>
+  <p>These screenshots use a real 60-second G-filter California Nebula
+  exposure from October 2025. Seiza 0.9 matched 101 stars at 1.90 arcsec RMS.
+  A historical TLE snapshot from the
+  <a href="https://satchecker.readthedocs.io/en/latest/tools_tle.html">IAU SatChecker archive</a>
+  predicted four high-risk crossings:</p>
   <ul>
-    <li>centered shutter interval: 07:13:15.355–07:14:15.355 UTC;</li>
-    <li>site: FITS observing-site headers, independently checked;</li>
-    <li>clipped path: about 7,672 pixels;</li>
-    <li>minimum range: about 1,174 km;</li>
-    <li>heuristic risk: 0.96, classified high.</li>
+    <li><strong>CZ-4B R/B [48624]</strong>: matched at 55.5 sigma and 100%
+      path continuity, about 26 sensor pixels from the raw prediction;</li>
+    <li><strong>STARLINK-3093 [49141]</strong>: matched at 4.1 sigma and 100%
+      continuity, about 76 pixels from the raw prediction;</li>
+    <li>two additional high-risk predictions did not match a pixel trail and
+      remain prediction-only warnings.</li>
   </ul>
-  <p>The visible diagonal trail is roughly 800–1,200 full-resolution pixels
-  from the red path. Checking the observing address moved the prediction by
-  only 25–38 pixels because the FITS site was already within about 0.2 km of
-  the independent geocode. The candidate name is therefore not a positive
-  identification of the visible trail. The difference could come from orbital
-  uncertainty for this recently launched object, a different object, or
-  another timing/site input error. See the external
-  <a href="https://www.n2yo.com/satellite/?s=68659">NORAD 68659 information page</a>
-  when following up on the candidate.</p>
+  <p>A fainter exposure from the preceding night independently matched
+  <strong>STARLINK-5450 [54778]</strong> at 5.8 sigma and 99.8% continuity,
+  roughly 41 pixels from the orbital path. Both dry-run regrade checks reject
+  the affected frame for a pixel-aligned bright trail. Named candidates link
+  to their external satellite information pages for follow-up.</p>
+
+  <h2 id="alignment">How pixel alignment works</h2>
+  <p>PSF Guard downsamples the frame once to at most 2,048 pixels on its long
+  axis, estimates local noise, and performs a coarse-to-fine matched-filter
+  search only in a narrow corridor normal to each predicted path. A match
+  requires at least 2.0 sigma robust line contrast and 65% path continuity.
+  It records the fitted segment, offsets, angle delta, ADU contrast,
+  significance, continuity, and search radius without modifying the original
+  orbital path.</p>
+  <p>On the 9,576 × 6,388 validation frame, release-build measurements were
+  24 ms for the shared working image and 133 ms for four candidate searches.
+  The work scales with predicted candidates rather than every possible line
+  in the full frame.</p>
 
   <h2 id="grading">Risk and grading</h2>
   <p>The risk is a conservative 0–1 geometry and illumination heuristic using
   sunlight fraction, range, elevation, and clipped path length. It is not an
-  apparent magnitude. A possible risk caps the quality score at 0.75. A high
-  risk caps it at 0.35 and proposes an <code>[Auto]</code> rejection, which is
-  still shown for per-image review and explicit confirmation.</p>
+  apparent magnitude. Possible and high orbital predictions cap the quality
+  score at 0.75 for review. Prediction alone never proposes rejection. A
+  high-risk candidate must also have a pixel-aligned trail before the score is
+  capped at 0.35 and an <code>[Auto] Pixel-aligned bright satellite trail</code>
+  rejection is proposed. Every rejection still requires per-image review and
+  explicit confirmation.</p>
 
   <h2 id="cache">Offline and reproducible use</h2>
   <p>The explicit on-demand action may refresh CelesTrak data. Background
@@ -141,8 +158,9 @@
   "satellite_elements": "historical.tle"
 }</code></pre>
   <p>Per-image results retain the FITS fingerprint, exact WCS, timing and site
-  headers, orbital source, and Seiza dependency versions. Replacing the image,
-  solution, or software invalidates the cached prediction.</p>
+  headers, orbital source, alignment version, and Seiza dependency versions.
+  Replacing the image, solution, or alignment software invalidates the cached
+  result.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="astrometry-quality.html">← Astrometry Quality</a>

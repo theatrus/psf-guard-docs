@@ -134,9 +134,10 @@ psf-guard screen-fits /path/to/lights --regrade-db my-db</code></pre>
   solving. An isolated no-solve is reported and lowers the score, but is not
   automatically rejected. Operational solver errors always abstain.</p>
   <p>When orbital elements are already configured or cached, the same solve
-  also projects satellite crossings. A likely bright trail can lower the score
-  and propose a reviewed rejection; see <a href="satellites.html">Satellite
-  Tracks</a>.</p>
+  also projects satellite crossings and tests the nearby pixels for a matching
+  trail. Predictions lower the score for review; only a high-risk candidate
+  with pixel alignment can propose rejection. See
+  <a href="satellites.html">Satellite Tracks</a>.</p>
 
   <p>The implementation-level details live in
     <a href="https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md">docs/ASTROMETRY_QUALITY.md</a>.</p>
