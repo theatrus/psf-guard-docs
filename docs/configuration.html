@@ -27,6 +27,7 @@
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context &amp; Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="workflows.html">Rejects &amp; Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
@@ -65,6 +66,19 @@
   touch your real config, pass <code>--registry /tmp/scratch.json</code>.</p>
   <p>The default N.I.N.A. scheduler database on Windows lives at
   <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</p>
+
+  <h2 id="astrometry">Seiza catalogs and plate solving</h2>
+  <p>PSF Guard uses Seiza's standard catalog discovery. Data installed by
+  <code>seiza setup</code> is found automatically; a custom bundle directory can
+  be selected with <code>SEIZA_CATALOG_DIR</code> or the registry's top-level
+  <code>astrometry.data_dir</code> field:</p>
+  <pre><code>"astrometry": {
+  "data_dir": "/path/to/seiza-data"
+}</code></pre>
+  <p>Restart PSF Guard after changing this process-global setting. See
+  <a href="astrometry.html">Sky Context &amp; Plate Solving</a> for the download
+  commands, required files, Docker mount, capability validation, UI workflow,
+  and solution cache behavior.</p>
 
   <h2 id="toml">Server knobs: the TOML</h2>
   <pre><code>cp psf-guard.toml.example psf-guard.toml
@@ -105,7 +119,12 @@ curl -X PUT localhost:3000/api/db/my-db/images/123/grade \
 
 <span class="c"># Fetch processed images</span>
 curl "localhost:3000/api/db/my-db/images/123/preview?size=large" -o preview.png
-curl "localhost:3000/api/db/my-db/images/123/annotated" -o stars.png</code></pre>
+curl "localhost:3000/api/db/my-db/images/123/annotated" -o stars.png
+
+<span class="c"># Catalog capability diagnostics and on-demand plate solving</span>
+curl "localhost:3000/api/astrometry/capabilities"
+curl "localhost:3000/api/db/my-db/images/123/astrometry"
+curl -X POST "localhost:3000/api/db/my-db/images/123/astrometry"</code></pre>
   <p>Preview and annotated images generate asynchronously: a cache miss returns
   HTTP 202 (<code>{"state": "generating"}</code>) and a batch
   <code>generation-status</code> endpoint reports readiness — the UI uses this to

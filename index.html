@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PSF Guard — image grading &amp; quality screening for N.I.N.A. astrophotography</title>
-  <meta name="description" content="Grade your subs visually, screen whole nights for clouds and occlusion automatically, and write every decision back to the N.I.N.A. Target Scheduler.">
+  <meta name="description" content="Grade your subs visually, plate-solve and annotate their sky context, screen whole nights for clouds and occlusion, and write every decision back to N.I.N.A.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/site.css?v=2">
   <meta property="og:title" content="PSF Guard">
-  <meta property="og:description" content="Image grading and quality screening for N.I.N.A. astrophotography with the Target Scheduler plugin.">
-  <meta property="og:image" content="https://psf-guard.com/assets/overview.png">
+  <meta property="og:description" content="Image grading, Seiza sky context and plate solving, and quality screening for N.I.N.A. astrophotography.">
+  <meta property="og:image" content="https://psf-guard.com/assets/sky-context.jpg">
   <meta property="og:url" content="https://psf-guard.com/">
   <meta property="og:type" content="website">
 </head>
@@ -20,6 +20,7 @@
     <a class="brand" href="./"><img src="assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="docs/" class="keep">Docs</a>
+      <a href="docs/astrometry.html">Sky</a>
       <a href="docs/screening.html">Screening</a>
       <a href="#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
@@ -36,7 +37,7 @@
       PSF Guard is an image grading and quality screening tool for
       <a href="https://nighttime-imaging.eu/">N.I.N.A.</a> astrophotography with the
       Target Scheduler plugin. Grade subs visually in a fast UI — desktop app or
-      browser — screen whole
+      browser — plate-solve and annotate their sky context, screen whole
       nights for clouds and occlusion automatically, and write every decision back
       to the scheduler — so it re-captures what you rejected.
     </p>
@@ -81,6 +82,13 @@
       diagnostic images explaining every verdict.</p>
     </div>
     <div class="card">
+      <div class="icon">🌌</div>
+      <h3>Sky context &amp; plate solving</h3>
+      <p>See expected catalog objects from known coordinates, solve image pixels
+      on demand with Seiza, and overlay labels, object outlines, an RA/Dec grid,
+      and the measured target offset.</p>
+    </div>
+    <div class="card">
       <div class="icon">🔁</div>
       <h3>Scheduler write-back</h3>
       <p>Every grade lands in the Target Scheduler database, so acquired-image
@@ -108,6 +116,21 @@
       visualizations.</p>
     </div>
   </div>
+</section>
+
+<section class="section" id="sky-context">
+  <h2>Know exactly where every frame landed</h2>
+  <p class="sub">
+    Header coordinates provide immediate catalog context. When the frame has no
+    embedded WCS, choose <strong>Solve field</strong> or press <code>O</code>:
+    PSF Guard tries a fast hinted solve, falls back to the blind index when
+    installed, caches the result, and turns on the shared Seiza overlay.
+  </p>
+  <figure class="feature-shot">
+    <img src="assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and target offset" loading="lazy">
+    <figcaption>A pixel-derived hinted solve: catalog labels and outlines, RA/Dec grid, solved scale, and a target only 32 arcseconds from center.</figcaption>
+  </figure>
+  <p><a class="btn" href="docs/astrometry.html">Set up catalogs and plate solving →</a></p>
 </section>
 
 <section class="section" id="screening">
