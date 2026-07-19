@@ -10,28 +10,34 @@
 </head>
 <body>
 
+<!-- site-header:start -->
 <header class="site-header">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
+      <a href="screening.html">Screening</a>
+      <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
   </nav>
 </header>
+<!-- site-header:end -->
 
 <div class="docs-wrap">
+<!-- docs-nav:start -->
 <aside class="docs-nav">
   <h4>Documentation</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context &amp; Solver</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
-    <li><a href="workflows.html">Rejects &amp; Sync</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
-    <li><a href="configuration.html" class="active">Configuration &amp; API</a></li>
+    <li><a href="configuration.html" class="active" aria-current="page">Configuration & API</a></li>
   </ul>
   <h4>Project</h4>
   <ul>
@@ -41,6 +47,7 @@
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
 </aside>
+<!-- docs-nav:end -->
 
 <main class="docs-main">
   <h1>Configuration &amp; API</h1>
@@ -117,6 +124,12 @@ curl -X PUT localhost:3000/api/db/my-db/images/123/grade \
   -H "Content-Type: application/json" \
   -d '{"status": "accepted"}'
 
+<span class="c"># Start and inspect a target-aware quality scan</span>
+curl -X POST localhost:3000/api/db/my-db/analysis/quality-scan \
+  -H "Content-Type: application/json" \
+  -d '{"target_id": 42}'
+curl localhost:3000/api/db/my-db/analysis/quality-scan
+
 <span class="c"># Fetch processed images</span>
 curl "localhost:3000/api/db/my-db/images/123/preview?size=large" -o preview.png
 curl "localhost:3000/api/db/my-db/images/123/annotated" -o stars.png
@@ -129,6 +142,11 @@ curl -X POST "localhost:3000/api/db/my-db/images/123/astrometry"</code></pre>
   HTTP 202 (<code>{"state": "generating"}</code>) and a batch
   <code>generation-status</code> endpoint reports readiness — the UI uses this to
   show its "Generating…" badges without long-lived requests.</p>
+  <p>The quality scan first computes spatial/photometric metrics, then fresh
+  pixel-derived plate solutions. Results persist in the per-database cache and
+  feed the sequence-analysis endpoint. See
+  <a href="astrometry-quality.html">Astrometry Quality</a> for target provenance,
+  failure semantics, and regrade safety.</p>
   <p>Database management endpoints (<code>POST/PUT/DELETE /api/databases</code>)
   are disabled unless the server runs with
   <code>--allow-database-management</code>, since they let any reachable client

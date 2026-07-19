@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astrometry Quality — PSF Guard</title>
+  <meta name="description" content="Use fresh plate solutions and sequence analysis to find off-target frames, pointing jumps, tracking drift, and meaningful solve failures.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=2">
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="screening.html">Screening</a>
+      <a href="../#install">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry-quality.html" class="active" aria-current="page">Astrometry Quality</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Astrometry Quality</h1>
+  <p class="lede">
+    A quality scan solves the current FITS pixels with Seiza, compares every
+    solved center with the intended Target Scheduler field and its sequence,
+    and adds auditable pointing evidence to the same 0–1 quality score used for
+    cloud, occlusion, photometry, guiding, and PSF grading.
+  </p>
+
+  <figure>
+    <img src="../assets/sequence-quality-astrometry.png" alt="Sequence quality analysis with solved-center scatter and one off-target frame">
+    <figcaption>The pointing scatter plot, field-relative offsets, and badges make
+    the bad frame visible without replacing the existing image-quality evidence.</figcaption>
+  </figure>
+
+  <h2 id="run">Run a quality scan</h2>
+  <ol>
+    <li>Open a Target Scheduler target and switch to <strong>Sequence Analysis</strong>.</li>
+    <li>Press <strong>Scan Quality</strong>. Spatial/photometric analysis runs first,
+      followed by a fresh plate solve of each frame.</li>
+    <li>Inspect the pointing scatter and per-image evidence. Use
+      <strong>Select Off Target</strong>, <strong>Select Unsolved</strong>, or
+      <strong>Select Recommended</strong> to focus the review.</li>
+  </ol>
+  <p>Results are cached per database, but reuse is tied to the FITS size and
+  modification time plus the solver resource fingerprints. Replacing a FITS
+  file under the same name cannot reuse stale WCS.</p>
+
+  <h2 id="flags">How flags affect grading</h2>
+  <table>
+    <tr><th>Flag</th><th>Evidence</th><th>Score / recommendation</th></tr>
+    <tr><td><strong>Off Target</strong></td><td>Target is outside the solved footprint, or center offset is at least 20% of the short field dimension</td><td>Pointing score 0; total capped at 0.20; rejection recommended</td></tr>
+    <tr><td><strong>Pointing Jump</strong></td><td>One center leaves the robust dither envelope and adjacent solved frames return</td><td>Total capped at 0.30; rejection recommended</td></tr>
+    <tr><td><strong>Pointing Drift</strong></td><td>Robust sequence trend exceeds the field/scatter threshold</td><td>Affected tail capped at 0.30; rejection recommended</td></tr>
+    <tr><td><strong>Plate Solve Failed</strong></td><td>Pixels decoded, but the field did not solve or too few stars were detected</td><td>Modest penalty; rejection only with independent degradation</td></tr>
+    <tr><td><strong>Solve Unavailable</strong></td><td>Catalog/index, decode, cancellation, or internal/resource failure</td><td>Operational error; no quality flag or automatic grade</td></tr>
+  </table>
+
+  <div class="callout info">
+    <strong>Fresh pixels are the evidence.</strong> Embedded FITS WCS is useful
+    for display, but is not trusted for grading. Coordinate-only catalog matches
+    are also kept separate from a pixel-derived plate solution.
+  </div>
+
+  <h2 id="target">Finding the intended target</h2>
+  <p>PSF Guard reads the Target Scheduler database without changing its schema.
+  Current target RA/Dec fields are preferred; compatible target metadata and
+  capture-specific intended coordinates are fallbacks. Absolute Off Target
+  grading runs only when an authoritative supported-epoch coordinate is
+  available.</p>
+  <p>Without a target coordinate, solved centers still support relative pointing
+  jump and drift detection. PSF Guard does not invent an Off Target verdict.</p>
+
+  <h2 id="review">Review before write-back</h2>
+  <figure>
+    <img src="../assets/sequence-quality-review.png" alt="Review dialog showing a proposed astrometry rejection and evidence" loading="lazy">
+    <figcaption>Reject Selected opens a per-image review with the exact score,
+    proposed <code>[Auto]</code> reason, and supporting evidence.</figcaption>
+  </figure>
+  <p>Nothing changes until <strong>Confirm rejection</strong> is pressed. Existing
+  rejected images remain untouched, and UI changes use the normal undo/redo
+  stack. Example reasons remain specific enough to audit later:</p>
+  <pre><code>[Auto] Astrometry: Off target - score 0.20; offset 36% of field
+[Auto] Astrometry: Tracking lost - score 0.30; pointing jump 420 arcsec</code></pre>
+
+  <h2 id="cli">CLI and regrade workflows</h2>
+  <pre><code><span class="c"># Preview every proposed database write</span>
+psf-guard screen-fits /path/to/lights --regrade-db my-db --dry-run
+
+<span class="c"># Apply supported recommendations</span>
+psf-guard screen-fits /path/to/lights --regrade-db my-db</code></pre>
+  <p><code>--regrade-db</code> matches each frame by basename and capture time
+  (within 10 minutes), loads its intended target, and enables fresh plate
+  solving. An isolated no-solve is reported and lowers the score, but is not
+  automatically rejected. Operational solver errors always abstain.</p>
+
+  <p>The implementation-level details live in
+    <a href="https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md">docs/ASTROMETRY_QUALITY.md</a>.</p>
+
+  <nav class="next-prev">
+    <a href="screening.html">← Quality Screening</a>
+    <a href="workflows.html">Rejects &amp; Sync →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
