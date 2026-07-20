@@ -112,31 +112,32 @@
   <a href="https://satchecker.readthedocs.io/en/latest/tools_tle.html">IAU SatChecker archive</a>
   predicted four high-risk crossings:</p>
   <ul>
-    <li><strong>CZ-4B R/B [48624]</strong>: matched at 55.5 sigma and 100%
-      path continuity, about 26 sensor pixels from the raw prediction;</li>
-    <li><strong>STARLINK-3093 [49141]</strong>: matched at 4.1 sigma and 100%
+    <li><strong>CZ-4B R/B [48624]</strong>: matched at 57.8 sigma and 100%
+      path continuity, about 30 sensor pixels from the raw prediction;</li>
+    <li><strong>STARLINK-3093 [49141]</strong>: matched at 4.2 sigma and 100%
       continuity, about 76 pixels from the raw prediction;</li>
     <li>two additional high-risk predictions did not match a pixel trail and
       remain prediction-only warnings.</li>
   </ul>
   <p>A fainter exposure from the preceding night independently matched
-  <strong>STARLINK-5450 [54778]</strong> at 5.8 sigma and 99.8% continuity,
-  roughly 41 pixels from the orbital path. Both dry-run regrade checks reject
+  <strong>STARLINK-5450 [54778]</strong> at 5.8 sigma and 99.7% continuity,
+  roughly 43 pixels from the orbital path. Both dry-run regrade checks reject
   the affected frame for a pixel-aligned bright trail. Named candidates link
   to their external satellite information pages for follow-up.</p>
 
   <h2 id="alignment">How pixel alignment works</h2>
-  <p>PSF Guard downsamples the frame once to at most 2,048 pixels on its long
-  axis, estimates local noise, and performs a coarse-to-fine matched-filter
-  search only in a narrow corridor normal to each predicted path. A match
-  requires at least 2.0 sigma robust line contrast and 65% path continuity.
-  It records the fitted segment, offsets, angle delta, ADU contrast,
-  significance, continuity, and search radius without modifying the original
-  orbital path.</p>
-  <p>On the 9,576 × 6,388 validation frame, release-build measurements were
-  24 ms for the shared working image and 133 ms for four candidate searches.
-  The work scales with predicted candidates rather than every possible line
-  in the full frame.</p>
+  <p>The shared Seiza matcher downsamples the frame once to at most 2,048
+  pixels on its long axis, estimates local noise, and performs a
+  coarse-to-fine matched-filter search only in a narrow corridor around the
+  full clipped prediction polyline. A match requires at least 2.0 sigma robust
+  line contrast, 65% path continuity, and 50% usable sample coverage. Tracks
+  without enough sideband evidence are reported as not evaluated rather than
+  clean non-detections.</p>
+  <p>It records the fitted polyline segments, offsets, angle delta,
+  physical-ADU contrast, significance, continuity, coverage, and search
+  radius without modifying the original orbital path. The working image is
+  shared across candidates, so work scales with the predicted crossings rather
+  than every possible line in the full frame.</p>
 
   <h2 id="grading">Risk and grading</h2>
   <p>The risk is a conservative 0–1 geometry and illumination heuristic using
@@ -149,18 +150,21 @@
   explicit confirmation.</p>
 
   <h2 id="cache">Offline and reproducible use</h2>
-  <p>The explicit on-demand action may refresh CelesTrak data. Background
-  quality scans and <code>screen-fits --regrade-db</code> are cache-only and
-  never download orbital data. For historical or reproducible analysis,
-  configure a local OMM JSON or TLE file:</p>
+  <p>The explicit on-demand action may refresh CelesTrak data. Timestamped
+  snapshots are retained for historical re-tracing up to a 5 GiB default
+  bound. Background quality scans and
+  <code>screen-fits --regrade-db</code> are cache-only, never download orbital
+  data, and select the retained snapshot closest to each exposure. For a
+  fixed historical or reproducible input, configure a local OMM JSON or TLE
+  file:</p>
   <pre><code>"astrometry": {
   "data_dir": "/var/lib/psf-guard/seiza",
   "satellite_elements": "historical.tle"
 }</code></pre>
   <p>Per-image results retain the FITS fingerprint, exact WCS, timing and site
-  headers, orbital source, alignment version, and Seiza dependency versions.
-  Replacing the image, solution, or alignment software invalidates the cached
-  result.</p>
+  headers, orbital source and payload SHA-256, alignment version, and Seiza
+  dependency versions. Replacing the image, solution, or alignment software
+  invalidates the cached result.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="astrometry-quality.html">← Astrometry Quality</a>
