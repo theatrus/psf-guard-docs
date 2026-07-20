@@ -35,6 +35,7 @@
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html" class="active" aria-current="page">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -82,7 +83,11 @@ psf-guard screen-fits ./lights --format json          <span class="c"># or table
   <code>--regrade-db</code> additionally loads the intended Target Scheduler
   coordinates, runs fresh Seiza plate solves, and sends supported recommendations
   through the same grader. Details: <a href="screening.html">Quality Screening</a>
-  and <a href="astrometry-quality.html">Astrometry Quality</a>.</p>
+  and <a href="astrometry-quality.html">Astrometry Quality</a>. When orbital
+  elements are already cached, it also applies the cache-only
+  <a href="satellites.html">Satellite Tracks</a> prediction and pixel-alignment
+  analysis. Prediction alone warns; a reviewed rejection requires a matched
+  high-risk trail.</p>
 
   <h2 id="rejects">Reject archival</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]
