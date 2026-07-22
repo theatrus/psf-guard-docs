@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stack Previews — PSF Guard</title>
+  <meta name="description" content="Live stack previews inside the grader: per-channel Seiza integrations, LRGB and narrowband color composition, background extraction, deconvolution, and export for your stacking pipeline.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=2">
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="screening.html">Screening</a>
+      <a href="../#install">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html" class="active" aria-current="page">Stack Previews</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Stack Previews</h1>
+  <p class="sub">Check an integration before committing hours to calibration:
+  PSF Guard live-stacks the graded frames of a target right inside the grader —
+  per channel, in color, and with the same quality decisions you just made.</p>
+
+  <h2 id="mono">Per-channel previews from graded frames</h2>
+  <p>From a project's stack panel, PSF Guard integrates the selected or visible
+  frames per exact target and filter with Seiza registration. The selection
+  policy is the whole point: scheduler rejects and current sequence-analysis
+  regrade recommendations are excluded <em>before</em> registration, so the
+  preview shows what your accepted data actually stacks into. The latest
+  successful result for each channel is kept durably in the cache; rebuilding
+  one channel never discards its siblings.</p>
+
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/stack-preview.png" alt="A three-frame B-channel project stack preview card" loading="lazy">
+      <figcaption>On-demand, uncalibrated integration grouped by exact target
+      and channel, with live phase progress.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/stack-preview-decisions.png" alt="Per-frame Seiza registration and admission details" loading="lazy">
+      <figcaption>Every input's quality exclusion, reference choice, match
+      count, registration RMS, and admission decision is retained with the
+      result.</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="inspect">Inspect at full resolution, stretch, download</h2>
+  <p>The preview opens in the same inspector the grader uses — zoom, pan, fit,
+  and one-pixel-per-pixel — and the display stretch is a parameterized Seiza
+  stretch you can adjust or revert without recomputing the integration. The
+  cached result stays linear: download it as FITS and drop it straight into
+  your processing workflow.</p>
+
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/stack-preview-inspection.png" alt="Native-resolution stack inspection with zoom and pan" loading="lazy">
+      <figcaption>Familiar zoom, pan, fit, and 1:1 controls on the
+      full-resolution result.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/stack-preview-stretch.png" alt="Parameterized Seiza display stretch controls on a stack preview" loading="lazy">
+      <figcaption>Apply or revert display stretches; the cached integration
+      underneath remains linear.</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="color">Color composition: LRGB and narrowband palettes</h2>
+  <p>When the required channel stacks exist, combine them without rebuilding
+  the integrations. PSF Guard discovers unambiguous L/R/G/B and
+  Ha/OIII/SII roles from the durable mono stacks, registers filters onto the
+  luminance or H-alpha reference, and calls Seiza's color combiners. Available
+  palettes are SHO, SOH, HSO, HOS, OSH, OHS, and HOO plus Foraxx-SHO and
+  Foraxx-HOO; targets without SII automatically expose only the HOO
+  variants.</p>
+
+  <figure>
+    <img src="../assets/stack-color-real-previews.jpg" alt="Real Gulf of Mexico Foraxx SHO preview built from PSF Guard channel stacks" loading="lazy">
+    <figcaption>A real Gulf of Mexico (NGC&nbsp;7000) Foraxx SHO preview from
+    six accepted acquisitions — two each in H-alpha, OIII, and SII.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="../assets/stack-narrowband-sho-real.jpg" alt="The same channel stacks combined as standard SHO" loading="lazy">
+    <figcaption>The same three linear channel stacks recombined as standard
+    SHO — switching palettes never re-integrates.</figcaption>
+  </figure>
+
+  <p>Rebuilt source channels mark remembered color results stale without
+  hiding them, so you always know when a combination no longer reflects the
+  freshest channel data. Color outputs are cached with full provenance
+  (source jobs, palette, policy, Seiza revision) as screen and native PNG plus
+  an RGB 32-bit-float FITS whose header records the palette and
+  linear-versus-display transfer semantics.</p>
+
+  <h2 id="background">Background extraction and processing controls</h2>
+  <p>Color previews fit and subtract each input channel's background before
+  cross-filter registration, using Seiza background extraction with
+  per-channel fit diagnostics. The editable processing stack exposes additive
+  or multiplicative correction controls and ordered per-input and output
+  stretch stacks — with complete phase progress while a job runs.</p>
+
+  <figure>
+    <img src="../assets/stack-background-real.jpg" alt="Background extraction controls and per-channel fit diagnostics from a real narrowband preview" loading="lazy">
+    <figcaption>Resolved fit evidence and the editable background model: this
+    real run accepted 73/96 H-alpha, 78/96 OIII, and 95/96 SII sample
+    locations while rejecting noisy or source-contaminated fits.</figcaption>
+  </figure>
+
+  <h2 id="deconvolution">Opt-in deconvolution</h2>
+  <p>Stack previews can apply Seiza deconvolution as an opt-in processing
+  step, sharpening the preview without touching the cached linear
+  integration. Like the display stretch, it is a reversible view decision —
+  toggle it, compare, and download either representation.</p>
+
+  <h2 id="takeout">Take the data out for real stacking</h2>
+  <p>When the preview convinces you the data is worth a full run, export the
+  non-rejected lights straight into your stacking pipeline. Rejects are never
+  exported; ungraded frames are opt-in.</p>
+  <ul>
+    <li><strong>Desktop app:</strong> the <em>Export</em> action on any
+    project or target opens a folder picker and places files locally —
+    hardlinks when the destination is on the same filesystem (instant, no
+    extra disk), copies otherwise.</li>
+    <li><strong>Browser:</strong> the same action downloads a streaming,
+    store-mode zip.</li>
+    <li><strong>CLI:</strong> <code>psf-guard export &lt;db&gt; --dest
+    ./stacking [--include-pending] [--link]</code>.</li>
+  </ul>
+  <p>All three produce the same WBPP-style layout —
+  <code>&lt;target&gt;/LIGHT/&lt;filter&gt;/</code> — that PixInsight WBPP and
+  Siril group automatically, and re-runs only add new subs, so an export
+  folder can be topped up after every session.</p>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="satellites.html">← Satellite Tracks</a>
+    <a href="workflows.html">Rejects &amp; Sync →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js"></script>
+</body>
+</html>

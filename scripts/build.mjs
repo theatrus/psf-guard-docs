@@ -19,6 +19,7 @@ const docsNavigation = [
   ["screening.html", "Quality Screening"],
   ["astrometry-quality.html", "Astrometry Quality"],
   ["satellites.html", "Satellite Tracks"],
+  ["stacking.html", "Stack Previews"],
   ["workflows.html", "Rejects & Sync"],
   ["cli.html", "CLI Reference"],
   ["configuration.html", "Configuration & API"],
