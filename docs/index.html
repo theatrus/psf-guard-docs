@@ -16,7 +16,6 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="screening.html">Screening</a>
       <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -28,16 +27,22 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
-  <h4>Documentation</h4>
+  <h4>Start</h4>
   <ul>
     <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
     <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -55,31 +60,58 @@
 <main class="docs-main">
   <h1>Getting Started</h1>
   <p class="lede">
-    PSF Guard points at your N.I.N.A. Target Scheduler database and image folders
-    and gives you a visual grader, Seiza sky context and plate solving,
-    automatic quality screening, named satellite-track predictions with pixel
-    alignment, and safe file management — with every grade written back to the
-    scheduler.
+    If N.I.N.A. already tracks your images, the quickest setup is the desktop
+    app: add the Target Scheduler database and its image folders in Settings,
+    then open a project. You do not need the CLI, an import, or a second
+    database for this path.
   </p>
 
   <div class="callout">
     <strong>Back up your Target Scheduler database before first use.</strong>
-    PSF Guard writes grades into it, and its <code>sync</code> commands can merge
-    entire databases between machines. It's careful (dry-run flags everywhere),
-    but it's also young software.
+    Grading writes to it. Import and sync make wider changes, but both provide a
+    preview before they write.
   </div>
 
-  <h2 id="requirements">What you need</h2>
-  <ul>
-    <li><strong>A Target Scheduler database or folders of FITS lights.</strong>
-      PSF Guard can use N.I.N.A.'s existing database or build a compatible one
-      from image headers. On Windows the N.I.N.A. database lives at
-      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
-    <li><strong>Monochrome FITS files</strong> — color/OSC frames are not
-      debayered yet.</li>
-  </ul>
+  <h2 id="choose">Choose your path</h2>
+  <div class="workflow-routes">
+    <a class="workflow-callout simple" href="#existing-database">
+      <span class="workflow-tag">Simple</span>
+      <span class="workflow-copy"><strong>Open one existing scheduler database</strong><small>Use Settings in the desktop app. Review and grade without a terminal.</small></span>
+      <span class="workflow-arrow" aria-hidden="true">Start here →</span>
+    </a>
+    <a class="workflow-callout import" href="importing.html">
+      <span class="workflow-tag">From FITS</span>
+      <span class="workflow-copy"><strong>Create a database from image folders</strong><small>Read headers first, then add pixel quality work in the background.</small></span>
+      <span class="workflow-arrow" aria-hidden="true">Import guide →</span>
+    </a>
+    <a class="workflow-callout cli" href="cli.html#server">
+      <span class="workflow-tag">CLI / NAS</span>
+      <span class="workflow-copy"><strong>Serve the grader or run batch tools</strong><small>Use this for Docker, a NAS, automation, or command-line screening.</small></span>
+      <span class="workflow-arrow" aria-hidden="true">CLI guide →</span>
+    </a>
+    <a class="workflow-callout sync" href="workflows.html#sync">
+      <span class="workflow-tag">Two DBs</span>
+      <span class="workflow-copy"><strong>Sync a telescope and grading copy</strong><small>Pull captures to the grading machine; push plans and grades back.</small></span>
+      <span class="workflow-arrow" aria-hidden="true">Sync guide →</span>
+    </a>
+  </div>
 
-  <h2 id="desktop-app">Desktop app (Windows / macOS / Linux)</h2>
+  <h2 id="existing-database">The simple path: open one database</h2>
+  <ol>
+    <li>Install the desktop app for your platform.</li>
+    <li>Open <strong>Settings → Add Database</strong>.</li>
+    <li>Select the Target Scheduler SQLite file and add the folders that hold
+      its FITS images. On Windows, the usual database path is
+      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
+    <li>Choose a project on Overview, then open Images or Sequence.</li>
+  </ol>
+  <div class="callout info">
+    PSF Guard does not copy your FITS files. The image folders can stay
+    read-only, but the scheduler database must be writable if you want to save
+    grades or planning changes.
+  </div>
+
+  <h2 id="desktop-app">Install the desktop app</h2>
   <p>Grab the installer for your platform from the
   <a href="https://github.com/theatrus/psf-guard/releases/latest">latest release</a>:</p>
   <table>
@@ -93,7 +125,27 @@
   <code>psf-guard-cli.exe</code> and adds it to your user <code>PATH</code>, so
   the full CLI works from any terminal.</p>
 
-  <h2 id="docker">Docker (Linux servers / NAS)</h2>
+  <h2 id="first-review">Review the first project</h2>
+  <ol>
+    <li>Use Overview to check projects, targets, completion, and file status.</li>
+    <li>Open Images. Filter by status or channel, move with the arrow keys, and
+      press Space to build a selection.</li>
+    <li>Accept or reject frames, or open Sequence to review a whole session.</li>
+    <li>Run <strong>Scan Quality</strong> only when you want fresh pixel-based
+      cloud, obstruction, and pointing evidence.</li>
+  </ol>
+  <p>Continue with <a href="grader.html">The Grader UI</a>. Plate solving,
+  satellite tracks, stack previews, import, and sync are optional guides in the
+  sidebar; they are not setup requirements.</p>
+
+  <h2 id="server">Server, NAS, and CLI setups</h2>
+  <a class="workflow-callout cli" href="cli.html">
+    <span class="workflow-tag">CLI</span>
+    <span class="workflow-copy"><strong>Use the command line only when the setup needs it</strong><small>The desktop app covers the common one-database review flow. The CLI adds server hosting, batch screening, import, export, and automation.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">Full reference →</span>
+  </a>
+
+  <h3 id="docker">Docker on a Linux server or NAS</h3>
   <pre><code>docker run -d -p 3000:3000 \
   -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
@@ -104,74 +156,59 @@
   and append <code>server --config /data/config.toml /data/database.sqlite
   /images</code> (see <a href="configuration.html">Configuration</a>).</p>
 
-  <h2 id="standalone-cli-binaries">Standalone CLI binaries</h2>
-  <p>Version-independent links, always pointing at the latest release:</p>
-  <table>
-    <tr><th>Platform</th><th>Download</th><th>Notes</th></tr>
-    <tr>
-      <td>Linux x64</td>
-      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td>
-      <td>Self-contained binary</td>
-    </tr>
-    <tr>
-      <td>macOS</td>
-      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td>
-      <td>Self-contained binary</td>
-    </tr>
-    <tr>
-      <td>Windows x64</td>
-      <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe"><code>psf-guard-windows-x64.exe</code></a></td>
-      <td>Static binary, no dependencies</td>
-    </tr>
-  </table>
-  <pre><code><span class="c"># Linux / macOS</span>
+  <details id="standalone-cli-binaries">
+    <summary>Standalone CLI binaries</summary>
+    <p>These version-independent links point at the latest release:</p>
+    <table>
+      <tr><th>Platform</th><th>Download</th></tr>
+      <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td></tr>
+      <tr><td>macOS</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td></tr>
+      <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe"><code>psf-guard-windows-x64.exe</code></a></td></tr>
+    </table>
+    <pre><code><span class="c"># Linux / macOS</span>
 chmod +x psf-guard-*
 ./psf-guard-linux-x64 server schedulerdb.sqlite /path/to/images/</code></pre>
-  <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
+    <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
 copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup.sqlite
 psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
-  <p>Then open <code>http://localhost:3000/</code>.</p>
+    <p>Then open <code>http://localhost:3000/</code>.</p>
+  </details>
 
-  <h2 id="fedora-rpm">Fedora RPM</h2>
-  <p>Releases attach prebuilt RPMs for Fedora 43 and 44:</p>
-  <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
-  <p>The package installs the CLI/server plus a <code>psf-guard.service</code>
-  systemd unit for running the PSF Guard server as a daemon. To build your own, see
-  <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md">packaging/rpm/README.md</a>.</p>
+  <details id="fedora-rpm">
+    <summary>Fedora RPM</summary>
+    <p>Releases attach prebuilt RPMs for Fedora 43 and 44:</p>
+    <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
+    <p>The package installs the CLI/server and a <code>psf-guard.service</code>
+    systemd unit. To build your own, see
+    <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md">packaging/rpm/README.md</a>.</p>
+  </details>
 
-  <h2 id="from-source">Build from source</h2>
-  <pre><code>git clone https://github.com/theatrus/psf-guard.git
+  <details id="from-source">
+    <summary>Build from source</summary>
+    <pre><code>git clone https://github.com/theatrus/psf-guard.git
 cd psf-guard
 cargo build --release
 ./target/release/psf-guard server schedulerdb.sqlite /path/to/images/</code></pre>
-  <p>You'll need Rust and Node.js/npm; the React frontend is embedded at build
-  time. Image processing uses the published pure-Rust Seiza crates, so no
-  system OpenCV install is required.</p>
+    <p>You need Rust and Node.js/npm; the React frontend is embedded at build
+    time. Image processing uses the published pure-Rust Seiza crates.</p>
+  </details>
 
-  <h2 id="first-run">Your first session</h2>
-  <ol>
-    <li>Serve an existing database with <code>psf-guard server schedulerdb.sqlite
-      /path/to/images/</code>, or start a trusted local management server with
-      <code>psf-guard server --host 127.0.0.1 --allow-database-management</code>
-      and <a href="importing.html">build a database from FITS folders</a>.</li>
-    <li>Open <code>http://localhost:3000/</code> and browse the overview.</li>
-    <li>Open a project's grid and start grading — see
-      <a href="grader.html">The Grader UI</a> for the keyboard workflow.</li>
-    <li>Optionally install the Seiza catalog bundle, then open a frame and press
-      <code>O</code> to solve it and show the sky overlay — see
-      <a href="astrometry.html">Sky Context &amp; Plate Solving</a>.</li>
-    <li>Try an automatic pass: open a target's Sequence view and press
-      <strong>Scan Quality</strong>, or run
-      <code>psf-guard screen-fits</code> on a night of lights — see
-      <a href="screening.html">Quality Screening</a> and
-      <a href="astrometry-quality.html">Astrometry Quality</a>.</li>
-    <li>When you're done, archive the rejects out of your stacking tree —
-      see <a href="workflows.html">Rejects &amp; Sync</a>.</li>
-  </ol>
+  <h2 id="two-machines">Two-machine setups</h2>
+  <a class="workflow-callout sync" href="workflows.html#sync">
+    <span class="workflow-tag">Sync</span>
+    <span class="workflow-copy"><strong>Keep the telescope database and a grading copy</strong><small>Pull full projects and captures to the grading machine. Push only edited plans and grades back to the telescope.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">Sync workflow →</span>
+  </a>
+  <p>Do not set up sync when the desktop app can open the telescope database
+  directly. Sync is for two separate database files that must exchange state.</p>
+
+  <h2 id="requirements">Current image limits</h2>
+  <p>PSF Guard reads monochrome FITS files. It does not yet debayer color or OSC
+  frames.</p>
 
   <nav class="next-prev">
     <span></span>
-    <a href="importing.html">Import &amp; Plan →</a>
+    <a href="grader.html">The Grader UI →</a>
   </nav>
 </main>
 </div>

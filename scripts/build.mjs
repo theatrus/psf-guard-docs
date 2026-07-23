@@ -13,17 +13,32 @@ const docsPages = fs
 const pages = ["index.html", "404.html", ...docsPages.map((name) => `docs/${name}`)];
 
 const docsNavigation = [
-  ["index.html", "Getting Started"],
-  ["importing.html", "Import & Plan"],
-  ["grader.html", "The Grader UI"],
-  ["astrometry.html", "Sky Context & Solver"],
-  ["screening.html", "Quality Screening"],
-  ["astrometry-quality.html", "Astrometry Quality"],
-  ["satellites.html", "Satellite Tracks"],
-  ["stacking.html", "Stack Previews"],
-  ["workflows.html", "Rejects & Sync"],
-  ["cli.html", "CLI Reference"],
-  ["configuration.html", "Configuration & API"],
+  {
+    label: "Start",
+    pages: [
+      ["index.html", "Getting Started"],
+      ["grader.html", "The Grader UI"],
+      ["importing.html", "Import & Plan"],
+    ],
+  },
+  {
+    label: "Analyze",
+    pages: [
+      ["screening.html", "Quality Screening"],
+      ["astrometry.html", "Sky Context & Solver"],
+      ["astrometry-quality.html", "Astrometry Quality"],
+      ["satellites.html", "Satellite Tracks"],
+      ["stacking.html", "Stack Previews"],
+    ],
+  },
+  {
+    label: "Operate",
+    pages: [
+      ["workflows.html", "Rejects & Sync"],
+      ["cli.html", "CLI Reference"],
+      ["configuration.html", "Configuration & API"],
+    ],
+  },
 ];
 
 function pageLinks(file) {
@@ -32,7 +47,6 @@ function pageLinks(file) {
       home: "/",
       logo: "/assets/logo.svg",
       docs: "/docs/",
-      screening: "/docs/screening.html",
       install: "/#install",
     };
   }
@@ -41,7 +55,6 @@ function pageLinks(file) {
       home: "../",
       logo: "../assets/logo.svg",
       docs: "./",
-      screening: "screening.html",
       install: "../#install",
     };
   }
@@ -49,7 +62,6 @@ function pageLinks(file) {
     home: "./",
     logo: "assets/logo.svg",
     docs: "docs/",
-    screening: "docs/screening.html",
     install: "#install",
   };
 }
@@ -62,7 +74,6 @@ function header(file) {
     <a class="brand" href="${links.home}"><img src="${links.logo}" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="${links.docs}" class="keep">Docs</a>
-      <a href="${links.screening}">Screening</a>
       <a href="${links.install}">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -74,19 +85,19 @@ function header(file) {
 
 function sidebar(file) {
   const activePage = path.basename(file);
-  const links = docsNavigation
-    .map(([href, label]) => {
-      const active = href === activePage ? ' class="active" aria-current="page"' : "";
-      return `    <li><a href="${href === "index.html" ? "./" : href}"${active}>${label}</a></li>`;
+  const groups = docsNavigation
+    .map(({ label, pages }) => {
+      const links = pages.map(([href, pageLabel]) => {
+        const active = href === activePage ? ' class="active" aria-current="page"' : "";
+        return `    <li><a href="${href === "index.html" ? "./" : href}"${active}>${pageLabel}</a></li>`;
+      }).join("\n");
+      return `  <h4>${label}</h4>\n  <ul>\n${links}\n  </ul>`;
     })
     .join("\n");
 
   return `<!-- docs-nav:start -->
 <aside class="docs-nav">
-  <h4>Documentation</h4>
-  <ul>
-${links}
-  </ul>
+${groups}
   <h4>Project</h4>
   <ul>
     <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>

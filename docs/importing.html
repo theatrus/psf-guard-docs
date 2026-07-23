@@ -16,7 +16,6 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="screening.html">Screening</a>
       <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -28,16 +27,22 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
-  <h4>Documentation</h4>
+  <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
-    <li><a href="importing.html" class="active" aria-current="page">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="importing.html" class="active" aria-current="page">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
     <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -60,6 +65,12 @@
     costly quality evidence in the background.
   </p>
 
+  <a class="workflow-callout import" href="#create">
+    <span class="workflow-tag">From FITS</span>
+    <span class="workflow-copy"><strong>Use this path for a FITS-only archive or missing frames.</strong><small>Import reads headers first and leaves quality work for later.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">↓</span>
+  </a>
+
   <h2 id="create">Create a database from images</h2>
   <p>The desktop app always allows database changes. For the web server, bind
   to a trusted interface and opt in:</p>
@@ -75,6 +86,11 @@
   <p>The UI puts the SQLite file in <code>databases/</code> beside PSF Guard's
   registry and shows the exact path on the database card. Reused names get a
   numeric suffix. The CLI creates the file at the path you give it:</p>
+  <a class="workflow-callout cli" href="cli.html#import">
+    <span class="workflow-tag">CLI / NAS</span>
+    <span class="workflow-copy"><strong>Automate the same import.</strong><small>Use <code>create-db</code> for a new archive or <code>import</code> to add frames.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">→</span>
+  </a>
   <pre><code>psf-guard create-db ./archive.sqlite /data/lights /data/more-lights \
   --name "Archive"</code></pre>
   <p>Use <code>--dry-run</code> to preview a CLI import without keeping the new
@@ -150,6 +166,11 @@ psf-guard import archive ./new-lights</code></pre>
   fields, add a plan, or correct imported project and target grouping.</p>
 
   <h2 id="sync">Sync with the telescope</h2>
+  <a class="workflow-callout sync" href="workflows.html#sync">
+    <span class="workflow-tag">Two DBs</span>
+    <span class="workflow-copy"><strong>Sync only when grading and capture use separate database files.</strong><small>Preview each change before applying it.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">→</span>
+  </a>
   <p>Add both databases in Settings, then expand <strong>Scheduler database
   sync</strong>. Both UI actions show a dry preview before Apply:</p>
   <ul>
@@ -168,8 +189,8 @@ psf-guard sync grades --from archive.sqlite --to telescope.sqlite --dry-run</cod
   then push planning and grades to the telescope.</div>
 
   <nav class="next-prev">
-    <a href="./">← Getting Started</a>
-    <a href="grader.html">The Grader UI →</a>
+    <a href="grader.html">← The Grader UI</a>
+    <a href="screening.html">Quality Screening →</a>
   </nav>
 </main>
 </div>

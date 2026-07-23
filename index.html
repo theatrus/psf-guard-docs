@@ -21,7 +21,6 @@
     <a class="brand" href="./"><img src="assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="docs/" class="keep">Docs</a>
-      <a href="docs/screening.html">Screening</a>
       <a href="#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -137,7 +136,7 @@
 </section>
 
 <section class="section" id="sky-context">
-  <h2>Know exactly where every frame landed</h2>
+  <h2>Know where every frame landed</h2>
   <p class="sub">
     Header coordinates provide immediate catalog context. When the frame has no
     embedded WCS, choose <strong>Solve field</strong> or press <code>O</code>:
@@ -156,7 +155,8 @@
   <p class="sub">
     Every flagged frame can be rendered as an annotated diagnostic: the analysis
     grid is overlaid on the image, colored by the signal that fired, with the
-    verdict and metrics in the caption. You never have to trust a black box.
+    verdict and metrics in the caption. The diagnostic shows which rule fired
+    and why.
   </p>
   <div class="shot-pair">
     <figure>
@@ -266,8 +266,8 @@ psf-guard server schedulerdb.sqlite ./images</code></pre>
   <div class="callout" style="margin-top:2rem">
     <strong>Back up your Target Scheduler database before first use.</strong>
     PSF Guard writes grades into it, and its <code>sync</code> commands can merge
-    entire databases between machines. It's careful — dry-run flags everywhere —
-    but it's also young software.
+    databases between machines. Preview import and sync changes before you
+    apply them.
   </div>
 </section>
 
