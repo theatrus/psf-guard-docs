@@ -8,10 +8,13 @@ const stylesheetVersion = 3;
 
 const docsPages = fs
   .readdirSync(path.join(root, "docs"))
-  .filter((name) => name.endsWith(".html") && name !== "web-grader.html")
+  .filter((name) => name.endsWith(".html"))
   .sort();
 
-const pages = ["index.html", "404.html", ...docsPages.map((name) => `docs/${name}`)];
+const pages = ["index.html", "404.html", ...docsPages
+  .filter((name) => name !== "web-grader.html")
+  .map((name) => `docs/${name}`)];
+const trackedPages = ["index.html", "404.html", ...docsPages.map((name) => `docs/${name}`)];
 
 const docsNavigation = [
   {
@@ -86,6 +89,20 @@ function header(file) {
 <!-- site-header:end -->`;
 }
 
+function googleTag() {
+  return `<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+</script>
+<!-- google-tag:end -->`;
+}
+
 function sidebar(file) {
   const activePage = path.basename(file);
   const groups = docsNavigation
@@ -119,19 +136,31 @@ function replaceGeneratedBlock(html, name, fallback, generated, file) {
   throw new Error(`${file}: could not find ${name} block`);
 }
 
+function replaceOrInsertGeneratedBlock(html, name, generated, file) {
+  const marker = new RegExp(`<!-- ${name}:start -->[\\s\\S]*?<!-- ${name}:end -->`);
+  if (marker.test(html)) return html.replace(marker, generated);
+  if (/<\/head>/.test(html)) return html.replace(/<\/head>/, `${generated}\n</head>`);
+  throw new Error(`${file}: could not find </head> for ${name} block`);
+}
+
 const stale = [];
-for (const file of pages) {
+const generatedPages = new Set(pages);
+for (const file of trackedPages) {
   const fullPath = path.join(root, file);
   const original = fs.readFileSync(fullPath, "utf8");
-  let generated = replaceGeneratedBlock(
-    original,
-    "site-header",
-    /<header class="site-header">[\s\S]*?<\/header>/,
-    header(file),
-    file,
-  );
+  let generated = original;
 
-  if (file.startsWith("docs/")) {
+  if (generatedPages.has(file)) {
+    generated = replaceGeneratedBlock(
+      generated,
+      "site-header",
+      /<header class="site-header">[\s\S]*?<\/header>/,
+      header(file),
+      file,
+    );
+  }
+
+  if (generatedPages.has(file) && file.startsWith("docs/")) {
     generated = replaceGeneratedBlock(
       generated,
       "docs-nav",
@@ -140,6 +169,13 @@ for (const file of pages) {
       file,
     );
   }
+
+  generated = replaceOrInsertGeneratedBlock(
+    generated,
+    "google-tag",
+    googleTag(),
+    file,
+  );
 
   generated = generated.replace(
     /(css\/site\.css)\?v=\d+/g,
@@ -160,6 +196,6 @@ if (checkOnly && stale.length > 0) {
 
 console.log(
   checkOnly
-    ? `Checked ${pages.length} generated HTML pages.`
-    : `Generated shared navigation in ${pages.length} checked-in HTML pages.`,
+    ? `Checked ${trackedPages.length} generated HTML pages.`
+    : `Generated shared elements in ${trackedPages.length} checked-in HTML pages.`,
 );
