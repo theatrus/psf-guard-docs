@@ -44,6 +44,7 @@
   </ul>
   <h4>Operate</h4>
   <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html" class="active" aria-current="page">Configuration & API</a></li>
@@ -157,6 +158,9 @@ curl -X POST "localhost:3000/api/db/my-db/images/123/astrometry"
 <span class="c"># Cached or on-demand satellite prediction</span>
 curl "localhost:3000/api/db/my-db/images/123/satellites"
 curl -X POST "localhost:3000/api/db/my-db/images/123/satellites"</code></pre>
+  <p>Export has a read-only streaming ZIP route and a management-gated
+  server-local folder route. See <a href="exporting.html#api">Export for
+  Stacking</a> for request options and examples.</p>
   <p>Preview and annotated images generate asynchronously: a cache miss returns
   HTTP 202 (<code>{"state": "generating"}</code>) and a batch
   <code>generation-status</code> endpoint reports readiness — the UI uses this to

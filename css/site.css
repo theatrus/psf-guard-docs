@@ -78,6 +78,14 @@ table {
 }
 th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; vertical-align: top; }
 th { background: rgba(148,163,184,.08); font-weight: 600; }
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.2rem 0;
+}
+.table-wrap table {
+  min-width: 42rem;
+  margin: 0;
+}
 
 /* ---------- Header / nav ---------- */
 .site-header {
