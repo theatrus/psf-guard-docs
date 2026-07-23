@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PSF Guard — image grading &amp; quality screening for N.I.N.A. astrophotography</title>
-  <meta name="description" content="Grade your subs visually, plate-solve and annotate their sky context, screen whole nights for clouds and occlusion, and write every decision back to N.I.N.A.">
+  <title>PSF Guard — astrophotography image catalog, grading, and quality control</title>
+  <meta name="description" content="Catalog FITS images in place, inspect and grade frames, find quality problems, preview stacks, and export clean data. Target Scheduler is optional.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/site.css?v=3">
+  <link rel="stylesheet" href="css/site.css?v=4">
   <meta property="og:title" content="PSF Guard">
-  <meta property="og:description" content="Image grading, Seiza sky context and plate solving, and quality screening for N.I.N.A. astrophotography.">
+  <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Build from FITS folders or open a Target Scheduler database.">
   <meta property="og:image" content="https://psf-guard.com/assets/sky-context.jpg">
   <meta property="og:url" content="https://psf-guard.com/">
   <meta property="og:type" content="website">
@@ -53,13 +53,11 @@
     <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
     <h1>Keep the frames that matter.<br><span class="grad">Reject the ones that don't.</span></h1>
     <p class="lede">
-      PSF Guard is an image grading and quality screening tool for
-      <a href="https://nighttime-imaging.eu/">N.I.N.A.</a> astrophotography with the
-      Target Scheduler plugin. Grade subs visually in a fast UI — desktop app or
-      browser — plate-solve and annotate their sky context, screen whole nights
-      for clouds, occlusion, off-target pointing, and lost tracking automatically,
-      and write every decision back to the scheduler — so it re-captures what you
-      rejected.
+      Turn folders of FITS files into an organized image catalog, or open an
+      existing N.I.N.A. Target Scheduler database. Browse frames by target,
+      session, and filter; inspect and grade them; find clouds, obstructions,
+      tracking loss, and bad pointing; build stack previews; and export clean
+      data for processing. Your image files stay where they are.
     </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -74,6 +72,16 @@
   </figure>
 </section>
 
+<section class="section compact">
+  <div class="callout info">
+    <strong>Like Lightroom Classic, but for astrophotography data.</strong>
+    PSF Guard catalogs files in place instead of moving them into a managed
+    library. It reads FITS metadata and stores its image map, plans, and grades
+    in a catalog based on the Target Scheduler database structure. Target
+    Scheduler integration is optional.
+  </div>
+</section>
+
 <div class="strip">
   <p class="strip-inner">
     <strong>Star count and HFR miss ruined frames.</strong> Measured on a real session:
@@ -86,8 +94,15 @@
 </div>
 
 <section class="section" id="features">
-  <h2>Everything between capture and stacking</h2>
+  <h2>Your astrophotography image catalog</h2>
   <div class="features">
+    <div class="card">
+      <div class="icon">🗃️</div>
+      <h3>Organize every frame</h3>
+      <p>Build a catalog from FITS folders or open an existing Target Scheduler
+      database. Browse by target, session, filter, date, and grade while the
+      source files stay in place.</p>
+    </div>
     <div class="card">
       <div class="icon">🖼️</div>
       <h3>Fast visual grader</h3>
@@ -119,16 +134,17 @@
     </div>
     <div class="card">
       <div class="icon">🔁</div>
-      <h3>Scheduler write-back</h3>
-      <p>Every grade lands in the Target Scheduler database, so acquired-image
-      counts stay accurate and the scheduler re-shoots what you rejected.</p>
+      <h3>Optional scheduler link</h3>
+      <p>Open a Target Scheduler database or sync a separate telescope copy.
+      Reviewed grades keep its acquired-image counts accurate, so it can
+      replace rejected frames.</p>
     </div>
     <div class="card">
       <div class="icon">📥</div>
-      <h3>Import &amp; plan</h3>
-      <p>Build a Target Scheduler database from plain FITS folders, derive
-      projects, coordinates, shared exposure templates, and plans from headers,
-      then backfill quality in the background and sync plans with the telescope.</p>
+      <h3>Catalog &amp; plan</h3>
+      <p>Build a catalog from plain FITS folders, derive projects, coordinates,
+      shared exposure templates, and plans from headers, then add quality data
+      in the background.</p>
     </div>
     <div class="card">
       <div class="icon">🗂️</div>
@@ -208,7 +224,7 @@
   <h2>Preview the stack before you commit to it</h2>
   <p class="sub">
     Live-stack the accepted frames of a target right inside the grader — the
-    same quality decisions you just made select the inputs. Combine cached
+    your current grades and sequence checks select the inputs. Combine cached
     channel stacks into LRGB or narrowband color with Seiza background
     extraction, editable processing, and opt-in deconvolution; then export the
     non-rejected lights into a WBPP-ready folder, zip download, or instant
@@ -229,7 +245,7 @@
   <div class="gallery">
     <figure>
       <img src="assets/overview.png" alt="Overview dashboard with project statistics" loading="lazy">
-      <figcaption>Overview: projects, targets, completion, and grading progress across every database.</figcaption>
+      <figcaption>Overview: projects, targets, completion, and grading progress across every catalog.</figcaption>
     </figure>
     <figure>
       <img src="assets/compare.jpg" alt="Side-by-side comparison with synchronized zoom" loading="lazy">
@@ -264,10 +280,10 @@
     </div>
     <div class="card">
       <h3>🐳 Docker</h3>
-      <p>For NAS boxes and home servers. The database mount must be writable —
-      grading writes back to it.</p>
+      <p>For NAS boxes and home servers. The catalog mount must be writable so
+      grades and plans can be saved.</p>
       <pre><code>docker run -d -p 3000:3000 \
-  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/catalog.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
   ghcr.io/theatrus/psf-guard:latest</code></pre>
     </div>
@@ -275,7 +291,7 @@
       <h3>⌨️ Standalone CLI</h3>
       <p>Single binary for scripting and servers. Screen a night in one command:</p>
       <pre><code>psf-guard screen-fits ./LIGHT --annotate ./diag
-psf-guard server schedulerdb.sqlite ./images</code></pre>
+psf-guard server catalog.sqlite ./images</code></pre>
       <p><a href="docs/install.html#standalone-cli">Downloads &amp; platform notes →</a></p>
     </div>
     <div class="card">
@@ -286,10 +302,10 @@ psf-guard server schedulerdb.sqlite ./images</code></pre>
     </div>
   </div>
   <div class="callout" style="margin-top:2rem">
-    <strong>Back up your Target Scheduler database before first use.</strong>
-    PSF Guard writes grades into it, and its <code>sync</code> commands can merge
-    databases between machines. Preview import and sync changes before you
-    apply them.
+    <strong>Opening an existing Target Scheduler database?</strong> Back it up
+    before the first write. PSF Guard can save grades into it, and sync can
+    copy state between database files. Preview import and sync changes before
+    applying them.
   </div>
 </section>
 

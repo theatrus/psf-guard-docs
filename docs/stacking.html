@@ -6,7 +6,7 @@
   <title>Stack Previews — PSF Guard</title>
   <meta name="description" content="Live stack previews inside the grader: per-channel Seiza integrations, LRGB and narrowband color composition, background extraction, deconvolution, and export for your stacking pipeline.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,6 +78,17 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
@@ -82,12 +96,12 @@
   <h1>Stack Previews</h1>
   <p class="lede">Check an integration before committing hours to calibration:
   PSF Guard live-stacks the graded frames of a target right inside the grader —
-  per channel, in color, and with the same quality decisions you just made.</p>
+  per channel, in color, and with your current grades and sequence checks.</p>
 
   <h2 id="mono">Per-channel previews from graded frames</h2>
   <p>From a project's stack panel, PSF Guard integrates the selected or visible
   frames per exact target and filter with Seiza registration. The selection
-  policy is the whole point: scheduler rejects and current sequence-analysis
+  selection policy runs before registration: catalog rejects and current sequence-analysis
   regrade recommendations are excluded <em>before</em> registration, so the
   preview shows what your accepted data actually stacks into. The latest
   successful result for each channel is kept durably in the cache; rebuilding
@@ -193,6 +207,6 @@
 </main>
 </div>
 
-<script src="../js/lightbox.js"></script>
+<script src="../js/lightbox.js?v=1" defer></script>
 </body>
 </html>

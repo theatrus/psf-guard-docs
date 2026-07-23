@@ -54,6 +54,10 @@ a:hover { text-decoration: underline; }
 img { max-width: 100%; height: auto; }
 code, pre { font-family: var(--mono); font-size: 0.92em; }
 code { background: rgba(148,163,184,.12); padding: .12em .4em; border-radius: 5px; }
+p code, li code, td code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 pre {
   background: #0a1120;
   border: 1px solid var(--border);
@@ -278,6 +282,11 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   background: rgba(94, 234, 212, 0.06);
 }
 
+.section.compact {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 /* Workflow notes separate the common UI path from optional CLI and sync work. */
 .workflow-routes {
   display: grid;
@@ -328,6 +337,7 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   top: 4.4rem;
   font-size: .93rem;
 }
+.docs-menu > summary { display: none; }
 .docs-nav h4 {
   margin: 1.1rem 0 .35rem;
   font-size: .78rem;
@@ -365,6 +375,13 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   .hero { grid-template-columns: 1fr; padding-top: 3rem; }
   .docs-wrap { grid-template-columns: 1fr; gap: 1.4rem; }
   .docs-nav { position: static; border: 1px solid var(--border); border-radius: 10px; padding: .8rem 1rem; }
+  .docs-menu > summary {
+    display: list-item;
+    color: var(--teal);
+    cursor: pointer;
+    font-weight: 650;
+  }
+  .docs-menu[open] > summary { margin-bottom: .75rem; }
   .shot-pair { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
@@ -372,6 +389,11 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   .nav-links a:not(.cta):not(.keep) { display: none; }
   .workflow-note { grid-template-columns: 1fr; gap: .25rem; }
   .workflow-link { margin-top: .2rem; }
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }
 
 /* ---------- Lightbox ---------- */

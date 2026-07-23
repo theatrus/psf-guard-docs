@@ -6,7 +6,7 @@
   <title>Quality Screening — PSF Guard</title>
   <meta name="description" content="Automatically screen light frames for occlusion, clouds, stray light, off-target pointing, tracking loss, and meaningful solve failures.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,6 +78,17 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
@@ -275,19 +289,22 @@ psf-guard move-rejects --db my-db-slug</code></pre>
 
   <h2 id="limitations">Limitations</h2>
   <ul>
-    <li>Photometry requires the default HocusFocus-inspired detector (the N.I.N.A.
-      detector port does not measure flux).</li>
+    <li>The server scan uses N.I.N.A. Fast for Scheduler-compatible star count
+      and HFR. Its full-resolution aperture also supplies flux for photometry.
+      <code>screen-fits</code> supports flux photometry with either detector.</li>
     <li>The photometric reference requires stars present in ≥50% of a session's
       frames, so it is blind to regions occluded for <em>most</em> of a sequence —
       by design; that case belongs to the dead-cell metric.</li>
-    <li>Monochrome FITS only (as with the rest of PSF Guard).</li>
+    <li>Raw one-shot-color FITS files need a recognized
+      <code>BAYERPAT</code> header. PSF Guard debayers them to luminance for
+      quality measurements; diagnostics remain luminance views.</li>
     <li>The glow ADU floor is rig- and exposure-profile-specific.</li>
   </ul>
   <p>The full technical document lives in the repository:
   <a href="https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md">docs/SCREENING.md</a>.</p>
 
   <nav class="next-prev">
-    <a href="importing.html">← Import &amp; Plan</a>
+    <a href="importing.html">← Add Images &amp; Plan</a>
     <a href="astrometry.html">Sky Context &amp; Solver →</a>
   </nav>
 </main>

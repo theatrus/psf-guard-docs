@@ -6,7 +6,7 @@
   <title>Astrometry Quality — PSF Guard</title>
   <meta name="description" content="Use fresh plate solutions and sequence analysis to find off-target frames, pointing jumps, tracking drift, and meaningful solve failures.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,6 +78,17 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
@@ -82,7 +96,7 @@
   <h1>Astrometry Quality</h1>
   <p class="lede">
     A quality scan solves the current FITS pixels with Seiza, compares every
-    solved center with the intended Target Scheduler field and its sequence,
+    solved center with the intended catalog target and its sequence,
     and adds auditable pointing evidence to the same 0–1 quality score used for
     cloud, occlusion, photometry, guiding, and PSF grading.
   </p>
@@ -95,7 +109,7 @@
 
   <h2 id="run">Run a quality scan</h2>
   <ol>
-    <li>Open a Target Scheduler target and switch to <strong>Sequence Analysis</strong>.</li>
+    <li>Open a catalog target and switch to <strong>Sequence Analysis</strong>.</li>
     <li>Press <strong>Scan Quality</strong>. Spatial/photometric analysis runs first,
       followed by a fresh plate solve of each frame.</li>
     <li>Inspect the pointing scatter and per-image evidence. Use
@@ -131,11 +145,10 @@
   </div>
 
   <h2 id="target">Finding the intended target</h2>
-  <p>PSF Guard reads the Target Scheduler database without changing its schema.
-  Current target RA/Dec fields are preferred; compatible target metadata and
-  capture-specific intended coordinates are fallbacks. Absolute Off Target
-  grading runs only when an authoritative supported-epoch coordinate is
-  available.</p>
+  <p>PSF Guard reads the catalog without changing its schema. Target RA/Dec
+  fields are preferred; compatible target metadata and capture-specific
+  intended coordinates are fallbacks. Absolute Off Target grading runs only
+  when an authoritative supported-epoch coordinate is available.</p>
   <p>Without a target coordinate, solved centers still support relative pointing
   jump and drift detection. PSF Guard does not invent an Off Target verdict.</p>
 
