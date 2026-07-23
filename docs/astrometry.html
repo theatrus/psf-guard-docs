@@ -93,12 +93,22 @@
   </table>
 
   <h2 id="install">1. Install the Seiza catalogs</h2>
-  <p>PSF Guard embeds Seiza 0.8.0's solver, but the catalog bundle is kept
-  separate because the complete set is several gigabytes. Install the
-  <code>seiza</code> CLI from the
+  <p>PSF Guard embeds Seiza 0.12.0's solver, but does not bundle its
+  multi-gigabyte catalogs. Open <strong>Settings → Seiza Catalogs</strong> in
+  the desktop app to install or update them. A browser gets the same controls
+  when the server starts with <code>--allow-database-management</code>.</p>
+  <p>Settings reports which features are ready, offers additive packages, keeps
+  download progress across page reloads, and validates installed files.
+  <strong>Blind solving</strong> is the recommended default.</p>
+  <figure>
+    <img src="../assets/settings-catalog-quality.png" alt="Settings showing Seiza catalog readiness, package selection, validation, and database quality actions">
+    <figcaption>Catalog status and database quality work share one Settings
+    view. Validation checks the installed files before a solve needs them.</figcaption>
+  </figure>
+  <p>For a manual or headless install, get the <code>seiza</code> CLI from the
   <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a>, or
   install the matching CLI with Cargo:</p>
-  <pre><code>cargo install seiza-cli --version 0.8.0</code></pre>
+  <pre><code>cargo install seiza-cli --version 0.12.0</code></pre>
   <p>Then use either the guided setup or the non-interactive prebuilt download:</p>
   <pre><code><span class="c"># Recommended: choose a bundle for your available storage and use case.</span>
 seiza setup
