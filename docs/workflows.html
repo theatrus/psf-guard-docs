@@ -16,7 +16,6 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="screening.html">Screening</a>
       <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -28,16 +27,22 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
-  <h4>Documentation</h4>
+  <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
     <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
     <li><a href="workflows.html" class="active" aria-current="page">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -55,17 +60,27 @@
 <main class="docs-main">
   <h1>Rejects &amp; Sync</h1>
   <p class="lede">
-    Two workflows that close the loop after grading: getting rejected files out
-    of your stacking software's way — reversibly — and moving grades and
-    captures between machines.
+    Optional tools for moving rejected files out of a stacking tree and copying
+    grades, plans, and captures between two database files.
   </p>
 
+  <a class="workflow-callout sync" href="#sync">
+    <span class="workflow-tag">Two DBs</span>
+    <span class="workflow-copy"><strong>Use sync only when the telescope and grading machine have separate copies.</strong><small>A direct desktop connection does not need it.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">↓</span>
+  </a>
+
   <h2 id="rejects">Managing rejected files</h2>
-  <p>Stacking tools like PixInsight happily load everything under your lights
+  <a class="workflow-callout cli" href="cli.html#rejects">
+    <span class="workflow-tag">CLI</span>
+    <span class="workflow-copy"><strong>Archive files after grading.</strong><small>Preview the move with <code>--dry-run</code>, then restore from the recorded paths if needed.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">→</span>
+  </a>
+  <p>Stacking tools such as PixInsight load everything under your lights
   directory — including frames you've rejected. <code>move-rejects</code>
   archives rejected frames (and their sidecars: <code>.xisf</code>,
   <code>.json</code>, <code>.txt</code>) into a <code>REJECT/</code> subtree so
-  they're out of the scan path but never lost:</p>
+  they're out of the scan path while the archive records where they came from:</p>
   <pre><code><span class="c"># Move rejects to &lt;image_dir&gt;/&lt;Project&gt;/REJECT/... with their sidecars.
 # Idempotent; every move is recorded for restore.</span>
 psf-guard move-rejects --db my-db [--dry-run]
@@ -135,7 +150,7 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
     before Apply.
   </div>
 
-  <h2 id="full-loop">The full loop, end to end</h2>
+  <h2 id="full-loop">End-to-end workflow</h2>
   <pre><code><span class="c"># 1. Bring the night's captures over from the telescope</span>
 psf-guard sync pull --from telescope.sqlite --to my-db
 

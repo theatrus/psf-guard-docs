@@ -16,7 +16,6 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="screening.html">Screening</a>
       <a href="../#install">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
@@ -28,16 +27,22 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
-  <h4>Documentation</h4>
+  <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html" class="active" aria-current="page">The Grader UI</a></li>
-    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
     <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -62,6 +67,12 @@
     the Target Scheduler database, so acquired-image counts stay accurate and
     rejected frames get re-shot.
   </p>
+
+  <a class="workflow-callout simple" href="./#existing-database">
+    <span class="workflow-tag">Simple</span>
+    <span class="workflow-copy"><strong>Open one existing database.</strong><small>The desktop app needs no CLI, import, or sync step.</small></span>
+    <span class="workflow-arrow" aria-hidden="true">→</span>
+  </a>
 
   <h2 id="overview">Overview dashboard</h2>
   <figure>
@@ -153,12 +164,11 @@
   <p>Every action updates <code>gradingStatus</code> in the Target Scheduler
   database (with undo/redo tracked in the UI). Because the scheduler counts
   accepted images against each exposure plan, rejecting bad frames means the
-  scheduler queues replacements on the next imaging run — closing the loop
-  between grading and acquisition.</p>
+  scheduler queues replacement frames on the next imaging run.</p>
 
   <nav class="next-prev">
-    <a href="importing.html">← Import &amp; Plan</a>
-    <a href="astrometry.html">Sky Context &amp; Solver →</a>
+    <a href="./">← Getting Started</a>
+    <a href="importing.html">Import &amp; Plan →</a>
   </nav>
 </main>
 </div>
