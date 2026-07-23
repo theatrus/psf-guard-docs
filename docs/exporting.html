@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Export for Stacking — PSF Guard</title>
+  <meta name="description" content="Export accepted astrophotography lights from PSF Guard into a WBPP- and Siril-ready target, LIGHT, and filter folder tree.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=3">
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html" class="active" aria-current="page">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Export for Stacking</h1>
+  <p class="lede">
+    Turn reviewed lights into a clean stacking input without moving or
+    changing the source files. Export one project or target from Overview,
+    download a ZIP in a browser, or use the CLI for repeatable batch exports.
+  </p>
+
+  <div class="workflow-note simple">
+    <div class="workflow-tag">Export</div>
+    <div class="workflow-copy"><strong>Accepted lights in; rejects always out</strong><p>Every mode uses the same selection and WBPP-style folder layout.</p></div>
+    <a class="workflow-link" href="#overview">Start in Overview ↓</a>
+  </div>
+
+  <h2 id="modes">Choose an export mode</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Where</th><th>Result</th><th>Best for</th></tr>
+      <tr><td>Desktop app</td><td>Local folder, hardlinked when possible</td><td>Fast export on the grading machine with little extra disk use</td></tr>
+      <tr><td>Browser</td><td>Streaming ZIP download</td><td>Remote servers and NAS installs</td></tr>
+      <tr><td>CLI</td><td>Local folder, copy or hardlink</td><td>Automation, filters, dry runs, and repeat exports</td></tr>
+      <tr><td>HTTP API</td><td>Streaming ZIP or server-local folder</td><td>Custom tools and scheduled jobs</td></tr>
+    </table>
+  </div>
+
+  <h2 id="selection">What PSF Guard exports</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Grade</th><th>Default</th><th>Optional</th></tr>
+      <tr><td>Accepted</td><td>Exported</td><td>Can be scoped by project, target, or filter</td></tr>
+      <tr><td>Pending</td><td>Skipped</td><td>Add with <code>--include-pending</code> or the API option</td></tr>
+      <tr><td>Rejected</td><td>Never exported</td><td>Cannot be enabled</td></tr>
+    </table>
+  </div>
+  <p>Export reads the grade and FITS basename from the Target Scheduler
+  database, then resolves the file through the database's configured image
+  folders. It does not change grades, edit FITS files, or move anything out of
+  the source library.</p>
+  <div class="callout info">
+    PSF Guard currently exports light frames only. Add flats, darks, and bias
+    frames to the stacking job separately.
+  </div>
+
+  <h2 id="layout">Output layout</h2>
+  <p>Desktop, browser, CLI, and API exports all use the same tree:</p>
+  <pre><code>destination/
+├── California Nebula/
+│   └── LIGHT/
+│       ├── HA/
+│       │   ├── frame-001.fits
+│       │   └── frame-002.fits
+│       └── OIII/
+│           └── frame-003.fits
+└── Flaming Star/
+    └── LIGHT/
+        └── SII/
+            └── frame-004.fits</code></pre>
+  <p>PixInsight WBPP and Siril can group this
+  <code>&lt;target&gt;/LIGHT/&lt;filter&gt;/</code> layout directly. PSF Guard
+  keeps each source basename. If two selected files would land at the same
+  path, later names gain a numeric suffix instead of overwriting the first.</p>
+
+  <h2 id="overview">Export from Overview</h2>
+  <ol>
+    <li>Finish grading the frames you want to stack.</li>
+    <li>Return to <strong>Overview</strong> and expand the project.</li>
+    <li>Choose <strong>⬇ Export</strong> on the project to export all its
+      accepted targets, or on one target to narrow the result.</li>
+    <li>In the desktop app, choose a destination folder. In a browser, save the
+      ZIP download.</li>
+  </ol>
+  <p>The action appears only when that project or target has at least one
+  accepted frame and PSF Guard has found its image files. If it is missing,
+  check the accepted count and refresh file discovery in Settings.</p>
+
+  <h3>Desktop app</h3>
+  <p>The desktop app places files straight into the chosen folder. It tries a
+  hardlink first, which is instant and uses no extra data blocks when source
+  and destination share a filesystem. If the link cannot be made, PSF Guard
+  copies the file. A summary reports linked, copied, already present, missing,
+  and failed files.</p>
+
+  <h3>Browser or remote server</h3>
+  <p>The browser action streams an uncompressed ZIP without staging a second
+  copy on the server. FITS data is already hard to compress, so store mode
+  avoids wasted CPU and starts the download at once. The ZIP endpoint reads
+  files only; it cannot write to an arbitrary path on the server.</p>
+
+  <h2 id="cli">Export from the CLI</h2>
+  <pre><code><span class="c"># Preview the plan, then copy accepted lights</span>
+psf-guard export my-db --dest ./stacking --dry-run
+psf-guard export my-db --dest ./stacking
+
+<span class="c"># One target and filter; hardlink when possible</span>
+psf-guard export my-db --dest ./stacking \
+  --target "California Nebula" --filter HA --link
+
+<span class="c"># Include ungraded frames as well as Accepted</span>
+psf-guard export my-db --dest ./stacking --include-pending
+
+<span class="c"># A raw SQLite path needs its image search roots</span>
+psf-guard export schedulerdb.sqlite --dest ./stacking \
+  --image-dirs /data/lights,/archive/lights</code></pre>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>Effect</th></tr>
+      <tr><td><code>--project NAME</code></td><td>Project-name substring match</td></tr>
+      <tr><td><code>--target NAME</code></td><td>Target-name substring match</td></tr>
+      <tr><td><code>--filter NAME</code></td><td>Exact filter match, ignoring case</td></tr>
+      <tr><td><code>--include-pending</code></td><td>Add Pending frames; Rejected still stay out</td></tr>
+      <tr><td><code>--link</code></td><td>Try hardlinks, then fall back to copying</td></tr>
+      <tr><td><code>--dry-run</code></td><td>Print the plan without writing files</td></tr>
+      <tr><td><code>--image-dirs DIRS</code></td><td>Comma-separated search roots for a raw database path</td></tr>
+    </table>
+  </div>
+
+  <h2 id="repeat">Repeat exports safely</h2>
+  <p>Export is designed to top up a stacking folder after each session.</p>
+  <ul>
+    <li>A destination file with the expected size is counted as already
+      present and skipped.</li>
+    <li>Newly accepted frames are added on the next run.</li>
+    <li>Source files and database grades are never changed.</li>
+    <li>Files that cannot be found are reported and do not stop other local
+      files from exporting.</li>
+  </ul>
+  <div class="callout">
+    Export does not remove a file that you reject after an earlier export.
+    Start with a new destination or remove that exported copy before the final
+    stacking run.
+  </div>
+
+  <h2 id="api">Automate with the HTTP API</h2>
+  <pre><code><span class="c"># Stream Accepted lights for one target as a ZIP</span>
+curl "http://localhost:3000/api/db/my-db/export?target_id=42" \
+  --output psf-guard-export.zip
+
+<span class="c"># Preview a folder export on the server's own filesystem</span>
+curl -X POST "http://localhost:3000/api/db/my-db/export/local" \
+  -H "Content-Type: application/json" \
+  -d '{"dest":"/data/stacking","project_id":7,"dry_run":true}'</code></pre>
+  <p>The ZIP route is read-only. The server-local route can write arbitrary
+  paths and therefore requires <code>--allow-database-management</code>.
+  Query/body options are <code>project_id</code>, <code>target_id</code>,
+  <code>include_pending</code>, and <code>filter_name</code>; the local route
+  also accepts <code>link</code> and <code>dry_run</code>.</p>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Symptom</th><th>Check</th></tr>
+      <tr><td>No Export action</td><td>The scope needs an Accepted frame and a FITS file found under the configured image folders.</td></tr>
+      <tr><td><code>nothing to export</code></td><td>Check the project/target/filter scope, grades, image directories, and filename metadata. Add Pending only when intended.</td></tr>
+      <tr><td>Hardlinks became copies</td><td>Hardlinks require source and destination on the same filesystem and a filesystem that supports links.</td></tr>
+      <tr><td>ZIP stops or will not open</td><td>A source became unreadable during streaming. Check file access, then download again.</td></tr>
+      <tr><td>Expected calibration frames are absent</td><td>Export currently selects lights only; add calibration data in the stacking tool.</td></tr>
+    </table>
+  </div>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="stacking.html">← Stack Previews</a>
+    <a href="workflows.html">Rejects &amp; Sync →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
