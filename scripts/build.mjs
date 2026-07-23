@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
+const stylesheetVersion = 3;
 
 const docsPages = fs
   .readdirSync(path.join(root, "docs"))
@@ -17,6 +18,7 @@ const docsNavigation = [
     label: "Start",
     pages: [
       ["index.html", "Getting Started"],
+      ["install.html", "Installation"],
       ["grader.html", "The Grader UI"],
       ["importing.html", "Import & Plan"],
     ],
@@ -47,7 +49,7 @@ function pageLinks(file) {
       home: "/",
       logo: "/assets/logo.svg",
       docs: "/docs/",
-      install: "/#install",
+      install: "/docs/install.html",
     };
   }
   if (file.startsWith("docs/")) {
@@ -55,14 +57,14 @@ function pageLinks(file) {
       home: "../",
       logo: "../assets/logo.svg",
       docs: "./",
-      install: "../#install",
+      install: "install.html",
     };
   }
   return {
     home: "./",
     logo: "assets/logo.svg",
     docs: "docs/",
-    install: "#install",
+    install: "docs/install.html",
   };
 }
 
@@ -137,6 +139,11 @@ for (const file of pages) {
       file,
     );
   }
+
+  generated = generated.replace(
+    /(css\/site\.css)\?v=\d+/g,
+    `$1?v=${stylesheetVersion}`,
+  );
 
   if (generated !== original) {
     stale.push(file);

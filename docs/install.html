@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Installation — PSF Guard</title>
+  <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or source build.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=3">
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html" class="active" aria-current="page">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Installation</h1>
+  <p class="lede">
+    Install the desktop app unless you need a server or command-line workflow.
+    You do not need to choose or create a database until PSF Guard is running.
+  </p>
+
+  <h2 id="desktop">Desktop app</h2>
+  <p>Download the installer for your platform from the
+  <a href="https://github.com/theatrus/psf-guard/releases/latest">latest release</a>:</p>
+  <table>
+    <tr><th>Platform</th><th>Asset</th></tr>
+    <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code> or the NSIS <code>-setup.exe</code></td></tr>
+    <tr><td>macOS (Apple Silicon)</td><td><code>PSF.Guard_&lt;version&gt;_aarch64.dmg</code></td></tr>
+    <tr><td>Linux x64</td><td><code>PSF.Guard_&lt;version&gt;_amd64.deb</code> or <code>.AppImage</code></td></tr>
+  </table>
+  <p>Install and launch the app. The Windows NSIS installer also installs
+  <code>psf-guard-cli.exe</code> and adds it to your user <code>PATH</code>.</p>
+  <p>Next, return to <a href="./#existing-database">Getting Started</a> to add
+  an existing Target Scheduler database, or use
+  <a href="importing.html">Import &amp; Plan</a> to start from FITS folders.</p>
+
+  <h2 id="server">Docker on a Linux server or NAS</h2>
+  <div class="workflow-note cli">
+    <div class="workflow-tag">CLI / NAS</div>
+    <div class="workflow-copy"><strong>Use this path for browser access on another machine</strong><p>The database mount must be writable. FITS folders can stay read-only.</p></div>
+    <a class="workflow-link" href="cli.html#server">CLI reference →</a>
+  </div>
+  <pre><code>docker run -d -p 3000:3000 \
+  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/images:/images:ro \
+  ghcr.io/theatrus/psf-guard:latest</code></pre>
+  <p>Open <code>http://localhost:3000/</code>. To tune the port, cache, or
+  preview pre-generation, mount a TOML config at <code>/data/config.toml</code>
+  and append <code>server --config /data/config.toml /data/database.sqlite
+  /images</code>. See <a href="configuration.html">Configuration &amp; API</a>.</p>
+
+  <h2 id="standalone-cli">Standalone CLI binaries</h2>
+  <p>These version-independent links point at the latest release:</p>
+  <table>
+    <tr><th>Platform</th><th>Download</th></tr>
+    <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td></tr>
+    <tr><td>macOS</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td></tr>
+    <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe"><code>psf-guard-windows-x64.exe</code></a></td></tr>
+  </table>
+  <pre><code><span class="c"># Linux / macOS</span>
+chmod +x psf-guard-*
+./psf-guard-linux-x64 server schedulerdb.sqlite /path/to/images/</code></pre>
+  <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
+copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup.sqlite
+psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
+
+  <h2 id="fedora-rpm">Fedora RPM</h2>
+  <p>Releases attach prebuilt RPMs for Fedora 43 and 44:</p>
+  <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
+  <p>The package installs the CLI/server and a <code>psf-guard.service</code>
+  systemd unit. Build instructions live in
+  <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md">packaging/rpm/README.md</a>.</p>
+
+  <h2 id="source">Build from source</h2>
+  <pre><code>git clone https://github.com/theatrus/psf-guard.git
+cd psf-guard
+cargo build --release
+./target/release/psf-guard server schedulerdb.sqlite /path/to/images/</code></pre>
+  <p>The build needs Rust and Node.js/npm. It embeds the React frontend and uses
+  the published pure-Rust Seiza crates for image processing.</p>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="./">← Getting Started</a>
+    <a href="grader.html">The Grader UI →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

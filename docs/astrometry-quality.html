@@ -6,7 +6,7 @@
   <title>Astrometry Quality — PSF Guard</title>
   <meta name="description" content="Use fresh plate solutions and sequence analysis to find off-target frames, pointing jumps, tracking drift, and meaningful solve failures.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=2">
+  <link rel="stylesheet" href="../css/site.css?v=3">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="../#install">Install</a>
+      <a href="install.html">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
@@ -30,6 +30,7 @@
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="importing.html">Import & Plan</a></li>
   </ul>
@@ -131,11 +132,11 @@
 [Auto] Astrometry: Tracking lost - score 0.30; pointing jump 420 arcsec</code></pre>
 
   <h2 id="cli">CLI and regrade workflows</h2>
-  <a class="workflow-callout cli" href="cli.html#screening">
-    <span class="workflow-tag">CLI / NAS</span>
-    <span class="workflow-copy"><strong>Run the same checks over a FITS folder.</strong><small>Use <code>--dry-run</code> before any database write.</small></span>
-    <span class="workflow-arrow" aria-hidden="true">→</span>
-  </a>
+  <div class="workflow-note cli">
+    <div class="workflow-tag">CLI / NAS</div>
+    <div class="workflow-copy"><strong>Run the same checks over a FITS folder</strong><p>Use <code>--dry-run</code> before any database write.</p></div>
+    <a class="workflow-link" href="cli.html#screening">CLI reference →</a>
+  </div>
   <pre><code><span class="c"># Preview every proposed database write</span>
 psf-guard screen-fits /path/to/lights --regrade-db my-db --dry-run
 

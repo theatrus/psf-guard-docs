@@ -270,34 +270,28 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   background: rgba(94, 234, 212, 0.06);
 }
 
-/* Workflow routes separate the common UI path from optional CLI and sync work. */
+/* Workflow notes separate the common UI path from optional CLI and sync work. */
 .workflow-routes {
   display: grid;
   gap: .7rem;
   margin: 1.3rem 0 1.8rem;
 }
-.workflow-callout {
+.workflow-note {
   --route: var(--teal);
   display: grid;
   grid-template-columns: 6.2rem minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: center;
-  color: var(--text);
   background: color-mix(in srgb, var(--route) 7%, var(--bg-raised));
   border: 1px solid color-mix(in srgb, var(--route) 30%, transparent);
   border-left: 4px solid var(--route);
   border-radius: 9px;
   padding: .8rem 1rem;
 }
-.workflow-callout:hover {
-  color: var(--text);
-  border-color: color-mix(in srgb, var(--route) 55%, transparent);
-  text-decoration: none;
-}
-.workflow-callout.simple { --route: #86efac; }
-.workflow-callout.import { --route: var(--teal); }
-.workflow-callout.cli { --route: var(--violet); }
-.workflow-callout.sync { --route: var(--amber); }
+.workflow-note.simple { --route: #86efac; }
+.workflow-note.import { --route: var(--teal); }
+.workflow-note.cli { --route: var(--violet); }
+.workflow-note.sync { --route: var(--amber); }
 .workflow-tag {
   color: var(--route);
   font-family: var(--mono);
@@ -308,8 +302,8 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
 }
 .workflow-copy { display: grid; gap: .1rem; }
 .workflow-copy strong { font-size: .98rem; }
-.workflow-copy small { color: var(--text-dim); font-size: .88rem; line-height: 1.45; }
-.workflow-arrow { color: var(--route); font-weight: 600; white-space: nowrap; }
+.workflow-copy p { color: var(--text-dim); font-size: .88rem; line-height: 1.45; margin: 0; }
+.workflow-link { color: var(--route); font-weight: 600; white-space: nowrap; }
 
 /* ---------- Docs layout ---------- */
 .docs-wrap {
@@ -368,8 +362,8 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
 @media (max-width: 560px) {
   .nav-links { gap: .8rem; }
   .nav-links a:not(.cta):not(.keep) { display: none; }
-  .workflow-callout { grid-template-columns: 1fr; gap: .25rem; }
-  .workflow-arrow { margin-top: .2rem; }
+  .workflow-note { grid-template-columns: 1fr; gap: .25rem; }
+  .workflow-link { margin-top: .2rem; }
 }
 
 /* ---------- Lightbox ---------- */
