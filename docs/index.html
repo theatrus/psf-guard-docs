@@ -31,6 +31,7 @@
   <h4>Documentation</h4>
   <ul>
     <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
@@ -70,9 +71,9 @@
 
   <h2 id="requirements">What you need</h2>
   <ul>
-    <li><strong>N.I.N.A. with the Target Scheduler plugin</strong> — images are
-      located through the scheduler database, not by walking N.I.N.A.'s standard
-      file layout. On Windows the database lives at
+    <li><strong>A Target Scheduler database or folders of FITS lights.</strong>
+      PSF Guard can use N.I.N.A.'s existing database or build a compatible one
+      from image headers. On Windows the N.I.N.A. database lives at
       <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
     <li><strong>Monochrome FITS files</strong> — color/OSC frames are not
       debayered yet.</li>
@@ -110,12 +111,12 @@
     <tr>
       <td>Linux x64</td>
       <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td>
-      <td>Needs system OpenCV — Docker is easier</td>
+      <td>Self-contained binary</td>
     </tr>
     <tr>
       <td>macOS</td>
       <td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td>
-      <td>Needs Homebrew OpenCV</td>
+      <td>Self-contained binary</td>
     </tr>
     <tr>
       <td>Windows x64</td>
@@ -143,17 +144,16 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
 cd psf-guard
 cargo build --release
 ./target/release/psf-guard server schedulerdb.sqlite /path/to/images/</code></pre>
-  <p>You'll need Rust, Node.js/npm (the React frontend is embedded at build
-  time), and OpenCV with clang. OpenCV is the painful one — the
-  <a href="https://github.com/theatrus/psf-guard/tree/main/.github/workflows">CI workflows</a>
-  are the authoritative package lists per platform (vcpkg on Windows, Homebrew on
-  macOS, <code>libopencv-dev</code> on Debian/Ubuntu).</p>
+  <p>You'll need Rust and Node.js/npm; the React frontend is embedded at build
+  time. Image processing uses the published pure-Rust Seiza crates, so no
+  system OpenCV install is required.</p>
 
   <h2 id="first-run">Your first session</h2>
   <ol>
-    <li>Serve your database: <code>psf-guard server schedulerdb.sqlite /path/to/images/</code>
-      — this registers it in PSF Guard's database registry, so later runs pick it
-      up automatically.</li>
+    <li>Serve an existing database with <code>psf-guard server schedulerdb.sqlite
+      /path/to/images/</code>, or start a trusted local management server with
+      <code>psf-guard server --host 127.0.0.1 --allow-database-management</code>
+      and <a href="importing.html">build a database from FITS folders</a>.</li>
     <li>Open <code>http://localhost:3000/</code> and browse the overview.</li>
     <li>Open a project's grid and start grading — see
       <a href="grader.html">The Grader UI</a> for the keyboard workflow.</li>
@@ -171,7 +171,7 @@ cargo build --release
 
   <nav class="next-prev">
     <span></span>
-    <a href="grader.html">The Grader UI →</a>
+    <a href="importing.html">Import &amp; Plan →</a>
   </nav>
 </main>
 </div>

@@ -31,6 +31,7 @@
   <h4>Documentation</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
@@ -75,6 +76,21 @@ psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
   The server manages every database in the registry, not just the one passed on
   the command line — see <a href="configuration.html">Configuration</a>.</p>
 
+  <h2 id="import">Import FITS libraries</h2>
+  <pre><code><span class="c"># Build and register a fresh Target Scheduler database</span>
+psf-guard create-db archive.sqlite ./lights ./more-lights --name "Archive"
+
+<span class="c"># Preview and then import new frames into an existing database</span>
+psf-guard import archive ./new-lights --dry-run
+psf-guard import archive ./new-lights
+
+<span class="c"># Preview removal of projects made by an import</span>
+psf-guard remove-imported archive --dry-run</code></pre>
+  <p>The first pass reads headers only and leaves frames Pending. It derives
+  projects, targets, shared exposure templates, and plans without waiting for
+  star detection or plate solving. See <a href="importing.html">Import &amp;
+  Plan</a> for grouping, quality backfill, database paths, and UI controls.</p>
+
   <h2 id="screening">Quality screening</h2>
   <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
 psf-guard screen-fits ./lights --annotate ./diag      <span class="c"># diagnostic PNGs</span>
@@ -97,6 +113,7 @@ psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--dry-run]</
 
   <h2 id="sync">Two-database sync</h2>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to my-db
+psf-guard sync planning --from my-db --to telescope.sqlite
 psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
   <p>Details: <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
 

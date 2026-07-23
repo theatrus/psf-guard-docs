@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Import &amp; Plan — PSF Guard</title>
+  <meta name="description" content="Build a Target Scheduler database from FITS folders, derive projects and exposure plans, backfill quality data, and sync planning with the telescope.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=2">
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="screening.html">Screening</a>
+      <a href="../#install">Install</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+  <h4>Documentation</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="importing.html" class="active" aria-current="page">Import & Plan</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Import FITS folders and plan the project</h1>
+  <p class="lede">
+    Start from plain FITS folders, build a Target Scheduler-compatible database,
+    review the projects and plans PSF Guard derives from the headers, then add
+    costly quality evidence in the background.
+  </p>
+
+  <h2 id="create">Create a database from images</h2>
+  <p>The desktop app always allows database changes. For the web server, bind
+  to a trusted interface and opt in:</p>
+  <pre><code>psf-guard server --host 127.0.0.1 --allow-database-management</code></pre>
+  <p>Open <strong>Settings → New Database from Images</strong>, add one or more
+  absolute image directories, and choose <strong>Create &amp; Import</strong>.
+  Invalid paths stay in the form and the error names the missing directory.</p>
+  <figure>
+    <img src="../assets/import-from-images.png" alt="New Database from Images form with header-only import and optional background quality analysis">
+    <figcaption>The first pass reads FITS headers only. Quality analysis stays
+    off by default and can run later.</figcaption>
+  </figure>
+  <p>The UI puts the SQLite file in <code>databases/</code> beside PSF Guard's
+  registry and shows the exact path on the database card. Reused names get a
+  numeric suffix. The CLI creates the file at the path you give it:</p>
+  <pre><code>psf-guard create-db ./archive.sqlite /data/lights /data/more-lights \
+  --name "Archive"</code></pre>
+  <p>Use <code>--dry-run</code> to preview a CLI import without keeping the new
+  file, or <code>--no-register</code> to keep it out of the shared registry.</p>
+
+  <h2 id="derived">What PSF Guard derives</h2>
+  <p>PSF Guard writes a full Target Scheduler schema. Imported frames begin as
+  Pending. Header data becomes projects, targets, shared exposure templates,
+  exposure plans, and acquired-image rows:</p>
+  <ul>
+    <li><code>OBJECT</code> names define targets. Each target gets one project
+      by default, even across many nights.</li>
+    <li>Different telescope, camera, focal length, or binning signatures never
+      share a project.</li>
+    <li>Panel-style targets share a mosaic project only when the name root,
+      coordinates, and dates agree. The default date window is 14 days and the
+      center limit is five degrees.</li>
+    <li>The median header position becomes the target coordinate. Target
+      Scheduler stores RA in decimal hours and Dec in degrees.</li>
+    <li>Filter, gain, offset, binning, and numeric readout mode define a shared
+      exposure template. Its most common exposure length becomes the default.</li>
+    <li>Each template and exposure length becomes a plan. Frame counts seed the
+      desired and acquired counts.</li>
+  </ul>
+  <figure>
+    <img src="../assets/project-plan-narrowband.png" alt="B, G, HA, L, OIII, R, and SII exposure templates for a real narrowband project">
+    <figcaption>A real narrowband plan shows the same fields import fills:
+    filter, default exposure, capture settings, and scheduling limits.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/target-plan-narrowband.png" alt="Target coordinates and seven derived exposure plans for Golf of Mexico">
+    <figcaption>Coordinates and filter plans remain editable from Overview →
+    Plan &amp; coordinates.</figcaption>
+  </figure>
+  <div class="callout info">
+    Header import does not plate-solve folders or treat the FITS object name as
+    pixel proof. Run quality analysis later to add fresh star measurements,
+    photometry, spatial screening, and solved pointing evidence.
+  </div>
+
+  <h2 id="top-up">Import more frames</h2>
+  <p>Choose <strong>Import</strong> on a configured database. PSF Guard first
+  shows a dry preview. It skips basenames already present, attaches new frames
+  to an existing target by object name or coordinates within 0.5 degrees, and
+  creates new structure only for unmatched frames. Confirm the preview to
+  write it.</p>
+  <pre><code>psf-guard import archive ./new-lights --dry-run
+psf-guard import archive ./new-lights</code></pre>
+  <p>The settings page reads job state from the server when it opens. Closing or
+  reloading the page does not hide a running import; the progress view resumes.
+  One import can run per database.</p>
+
+  <h2 id="quality">Backfill quality later</h2>
+  <p>Each database card has two low-priority actions:</p>
+  <ul>
+    <li><strong>Analyze Missing Quality</strong> keeps valid cached evidence and
+      fills gaps.</li>
+    <li><strong>Rescan All Quality</strong> recomputes star counts and every
+      cached quality signal.</li>
+  </ul>
+  <p>The job works one target at a time, reports progress, and yields to
+  interactive preview or scan work. The N.I.N.A. Fast detector supplies star
+  count and HFR, so new measurements stay comparable with Target Scheduler.
+  Full-star data also feeds flux-based photometry; the pass adds spatial cloud
+  and obstruction metrics plus fresh pointing evidence. A server restart stops
+  the in-memory job, but the persistent cache lets the next run skip completed
+  work.</p>
+
+  <h2 id="plan">Review and edit the plan</h2>
+  <p>Open <strong>Overview → Plan &amp; coordinates</strong> to inspect project
+  state and limits, target name and coordinates, rotation, ROI, shared
+  templates, and filter plans. With database management enabled, edit those
+  fields, add a plan, or correct imported project and target grouping.</p>
+
+  <h2 id="sync">Sync with the telescope</h2>
+  <p>Add both databases in Settings, then expand <strong>Scheduler database
+  sync</strong>. Both UI actions show a dry preview before Apply:</p>
+  <ul>
+    <li><strong>Full pull</strong> copies new or changed projects, targets,
+      templates, plans, captures, and grades from the telescope into the local
+      database. Local reviewed grades win.</li>
+    <li><strong>Planning push</strong> sends projects, targets, templates,
+      plans, and rule weights back to the telescope. It leaves telescope image
+      rows, capture counts, and grades alone.</li>
+  </ul>
+  <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
+psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run
+psf-guard sync grades --from archive.sqlite --to telescope.sqlite --dry-run</code></pre>
+  <div class="callout"><strong>Back up both databases before the first
+  write.</strong> Keep the named directions: pull captures to the grading copy,
+  then push planning and grades to the telescope.</div>
+
+  <nav class="next-prev">
+    <a href="./">← Getting Started</a>
+    <a href="grader.html">The Grader UI →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
