@@ -36,6 +36,7 @@ const docsNavigation = [
   {
     label: "Operate",
     pages: [
+      ["exporting.html", "Export for Stacking"],
       ["workflows.html", "Rejects & Sync"],
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],

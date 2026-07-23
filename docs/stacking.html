@@ -44,6 +44,7 @@
   </ul>
   <h4>Operate</h4>
   <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
@@ -158,25 +159,17 @@
   <h2 id="takeout">Take the data out for real stacking</h2>
   <p>When the preview convinces you the data is worth a full run, export the
   non-rejected lights straight into your stacking pipeline. Rejects are never
-  exported; ungraded frames are opt-in.</p>
-  <ul>
-    <li><strong>Desktop app:</strong> the <em>Export</em> action on any
-    project or target opens a folder picker and places files locally —
-    hardlinks when the destination is on the same filesystem (instant, no
-    extra disk), copies otherwise.</li>
-    <li><strong>Browser:</strong> the same action downloads a streaming,
-    store-mode zip.</li>
-    <li><strong>CLI:</strong> <code>psf-guard export &lt;db&gt; --dest
-    ./stacking [--include-pending] [--link]</code>.</li>
-  </ul>
-  <p>All three produce the same WBPP-style layout —
+  exported; ungraded frames are opt-in. Desktop, browser, CLI, and API modes
+  all produce the same WBPP-style layout —
   <code>&lt;target&gt;/LIGHT/&lt;filter&gt;/</code> — that PixInsight WBPP and
-  Siril group automatically, and re-runs only add new subs, so an export
-  folder can be topped up after every session.</p>
+  Siril group automatically.</p>
+  <p><a href="exporting.html">Open the Export for Stacking guide →</a> for
+  desktop and browser steps, CLI filters, repeat-export behavior, API examples,
+  and troubleshooting.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="satellites.html">← Satellite Tracks</a>
-    <a href="workflows.html">Rejects &amp; Sync →</a>
+    <a href="exporting.html">Export for Stacking →</a>
   </nav>
 </main>
 </div>
