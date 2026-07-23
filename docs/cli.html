@@ -6,7 +6,7 @@
   <title>CLI Reference — PSF Guard</title>
   <meta name="description" content="Every PSF Guard command: serving, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=2">
+  <link rel="stylesheet" href="../css/site.css?v=3">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="../#install">Install</a>
+      <a href="install.html">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
@@ -30,6 +30,7 @@
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="importing.html">Import & Plan</a></li>
   </ul>
@@ -65,11 +66,11 @@
     not need them.
   </p>
 
-  <a class="workflow-callout cli" href="./#server">
-    <span class="workflow-tag">CLI / NAS</span>
-    <span class="workflow-copy"><strong>Run PSF Guard on a server or in scripts.</strong><small>Start with <code>psf-guard --help</code>; each command has its own help.</small></span>
-    <span class="workflow-arrow" aria-hidden="true">→</span>
-  </a>
+  <div class="workflow-note cli">
+    <div class="workflow-tag">CLI / NAS</div>
+    <div class="workflow-copy"><strong>Run PSF Guard on a server or in scripts</strong><p>Start with <code>psf-guard --help</code>; each command has its own help.</p></div>
+    <a class="workflow-link" href="install.html#server">Installation →</a>
+  </div>
 
   <h2 id="server">Serving the grader UI</h2>
   <pre><code><span class="c"># Serve (registers the DB in the shared registry on first run)</span>

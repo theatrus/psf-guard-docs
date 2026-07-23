@@ -6,7 +6,7 @@
   <title>Configuration &amp; API — PSF Guard</title>
   <meta name="description" content="The database registry, the server TOML, and the REST API.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=2">
+  <link rel="stylesheet" href="../css/site.css?v=3">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
-      <a href="../#install">Install</a>
+      <a href="install.html">Install</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
@@ -30,6 +30,7 @@
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="importing.html">Import & Plan</a></li>
   </ul>
@@ -64,11 +65,11 @@
     runtime settings. The REST API exposes the same operations as the UI.
   </p>
 
-  <a class="workflow-callout cli" href="cli.html#server">
-    <span class="workflow-tag">CLI / NAS</span>
-    <span class="workflow-copy"><strong>This page is for server and API setups.</strong><small>Most desktop users can manage databases in Settings and stop there.</small></span>
-    <span class="workflow-arrow" aria-hidden="true">→</span>
-  </a>
+  <div class="workflow-note cli">
+    <div class="workflow-tag">CLI / NAS</div>
+    <div class="workflow-copy"><strong>This page is for server and API setups</strong><p>Most desktop users can manage databases in Settings and stop there.</p></div>
+    <a class="workflow-link" href="cli.html#server">CLI reference →</a>
+  </div>
 
   <h2 id="registry">Databases: the registry</h2>
   <p>The server manages any number of scheduler databases. The list lives in a
