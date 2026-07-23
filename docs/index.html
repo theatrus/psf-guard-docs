@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Getting Started — PSF Guard</title>
-  <meta name="description" content="Install PSF Guard as a desktop app, Docker container, standalone binary, or Fedora RPM, and serve your first grading session.">
+  <meta name="description" content="Build a PSF Guard image catalog from FITS folders or open a Target Scheduler database, then review and grade your first project.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,15 +78,26 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
 <main class="docs-main">
   <h1>Getting Started</h1>
   <p class="lede">
-    Install PSF Guard first. For most users, the next step is to add one Target
-    Scheduler database and its image folders in the desktop app, then open a
-    project. That path needs no CLI, import, or sync setup.
+    Install PSF Guard, then build an image catalog from FITS folders or open an
+    existing N.I.N.A. Target Scheduler database. Both paths keep the image
+    files where they are and need no command line.
   </p>
 
   <h2 id="install">1. Install PSF Guard</h2>
@@ -95,14 +109,14 @@
   <h2 id="choose">2. Choose your setup</h2>
   <div class="workflow-routes">
     <div class="workflow-note simple">
-      <div class="workflow-tag">Simple</div>
-      <div class="workflow-copy"><strong>Open one existing scheduler database</strong><p>Use Settings in the desktop app. Review and grade without a terminal.</p></div>
-      <a class="workflow-link" href="#existing-database">Start here →</a>
+      <div class="workflow-tag">From FITS</div>
+      <div class="workflow-copy"><strong>Build a catalog from image folders</strong><p>Read headers first, then add pixel quality work in the background.</p></div>
+      <a class="workflow-link" href="importing.html">Catalog guide →</a>
     </div>
     <div class="workflow-note import">
-      <div class="workflow-tag">From FITS</div>
-      <div class="workflow-copy"><strong>Create or extend a database from image folders</strong><p>Read headers first, then add pixel quality work in the background.</p></div>
-      <a class="workflow-link" href="importing.html">Import guide →</a>
+      <div class="workflow-tag">Existing DB</div>
+      <div class="workflow-copy"><strong>Open a Target Scheduler catalog</strong><p>Add its database and FITS folders in Settings, then start reviewing.</p></div>
+      <a class="workflow-link" href="#existing-database">Scheduler setup →</a>
     </div>
     <div class="workflow-note cli">
       <div class="workflow-tag">CLI / NAS</div>
@@ -116,7 +130,21 @@
     </div>
   </div>
 
-  <h2 id="existing-database">3. Add one existing database</h2>
+  <div class="callout info">
+    <strong>Like Lightroom Classic, but for astrophotography data:</strong>
+    PSF Guard catalogs files where they already live. It uses the Target
+    Scheduler database structure for its image map, plans, and grades, but does
+    not require Target Scheduler.
+  </div>
+
+  <h2 id="first-catalog">3. Start a catalog</h2>
+  <p>Choose <strong>Settings → New Database from Images</strong>, select the
+  FITS folders, and review the header-only import before creating the catalog.
+  PSF Guard groups the images and derives plans without waiting for pixel
+  analysis. See <a href="importing.html">Add Images &amp; Plan</a> for the full
+  flow.</p>
+
+  <h2 id="existing-database">Or open a Target Scheduler database</h2>
   <div class="callout">
     <strong>Back up the Target Scheduler database before the first write.</strong>
     Grading updates it. Import and sync preview wider changes before applying
@@ -167,9 +195,11 @@
   <p>Do not set up sync when the desktop app can open the telescope database
   directly. Sync is for two separate database files that must exchange state.</p>
 
-  <h2 id="requirements">Current image limits</h2>
-  <p>PSF Guard reads monochrome FITS files. It does not yet debayer color or OSC
-  frames.</p>
+  <h2 id="requirements">Current image handling</h2>
+  <p>PSF Guard reads monochrome FITS directly. It also debayers raw
+  one-shot-color FITS files with a recognized <code>BAYERPAT</code> header,
+  then uses luminance for grading and quality measurements. The single-frame
+  grader does not yet render an OSC exposure in full color.</p>
 
   <nav class="next-prev">
     <span></span>

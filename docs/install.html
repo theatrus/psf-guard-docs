@@ -6,7 +6,7 @@
   <title>Installation — PSF Guard</title>
   <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or source build.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html" class="active" aria-current="page">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,6 +78,17 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
@@ -96,9 +110,8 @@
   </table>
   <p>Install and launch the app. The Windows NSIS installer also installs
   <code>psf-guard-cli.exe</code> and adds it to your user <code>PATH</code>.</p>
-  <p>Next, return to <a href="./#existing-database">Getting Started</a> to add
-  an existing Target Scheduler database, or use
-  <a href="importing.html">Import &amp; Plan</a> to start from FITS folders.</p>
+  <p>Next, return to <a href="./#choose">Getting Started</a> to build a catalog
+  from FITS folders or open an existing Target Scheduler database.</p>
 
   <h2 id="server">Docker on a Linux server or NAS</h2>
   <div class="workflow-note cli">
@@ -107,7 +120,7 @@
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
   <pre><code>docker run -d -p 3000:3000 \
-  -v /path/to/schedulerdb.sqlite:/data/database.sqlite \
+  -v /path/to/catalog.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
   ghcr.io/theatrus/psf-guard:latest</code></pre>
   <p>Open <code>http://localhost:3000/</code>. To tune the port, cache, or
@@ -125,7 +138,7 @@
   </table>
   <pre><code><span class="c"># Linux / macOS</span>
 chmod +x psf-guard-*
-./psf-guard-linux-x64 server schedulerdb.sqlite /path/to/images/</code></pre>
+./psf-guard-linux-x64 server catalog.sqlite /path/to/images/</code></pre>
   <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
 copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup.sqlite
 psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
@@ -141,7 +154,7 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
   <pre><code>git clone https://github.com/theatrus/psf-guard.git
 cd psf-guard
 cargo build --release
-./target/release/psf-guard server schedulerdb.sqlite /path/to/images/</code></pre>
+./target/release/psf-guard server catalog.sqlite /path/to/images/</code></pre>
   <p>The build needs Rust and Node.js/npm. It embeds the React frontend and uses
   the published pure-Rust Seiza crates for image processing.</p>
 

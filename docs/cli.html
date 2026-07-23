@@ -6,7 +6,7 @@
   <title>CLI Reference — PSF Guard</title>
   <meta name="description" content="Every PSF Guard command: serving, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,15 +78,25 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
 <main class="docs-main">
   <h1>CLI Reference</h1>
   <p class="lede">
-    The command-line tools serve the UI, import FITS libraries, screen images,
-    and sync database copies. Desktop users who open one existing database do
-    not need them.
+    The command-line tools serve the UI, add FITS libraries, screen images,
+    and sync database copies. Most desktop catalog work does not need them.
   </p>
 
   <div class="workflow-note cli">
@@ -109,7 +122,7 @@ psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
   the command line — see <a href="configuration.html">Configuration</a>.</p>
 
   <h2 id="import">Import FITS libraries</h2>
-  <pre><code><span class="c"># Build and register a fresh Target Scheduler database</span>
+  <pre><code><span class="c"># Build and register a compatible image catalog</span>
 psf-guard create-db archive.sqlite ./lights ./more-lights --name "Archive"
 
 <span class="c"># Preview and then import new frames into an existing database</span>
@@ -120,8 +133,9 @@ psf-guard import archive ./new-lights
 psf-guard remove-imported archive --dry-run</code></pre>
   <p>The first pass reads headers only and leaves frames Pending. It derives
   projects, targets, shared exposure templates, and plans without waiting for
-  star detection or plate solving. See <a href="importing.html">Import &amp;
-  Plan</a> for grouping, quality backfill, database paths, and UI controls.</p>
+  star detection or plate solving. See <a href="importing.html">Add Images
+  &amp; Plan</a> for grouping, quality backfill, database paths, and UI
+  controls.</p>
 
   <h2 id="screening">Quality screening</h2>
   <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
@@ -129,7 +143,7 @@ psf-guard screen-fits ./lights --annotate ./diag      <span class="c"># diagnost
 psf-guard screen-fits ./lights --regrade-db my-db --dry-run
 psf-guard screen-fits ./lights --format json          <span class="c"># or table, csv</span></code></pre>
   <p>The database-free command runs spatial and photometric screening.
-  <code>--regrade-db</code> additionally loads the intended Target Scheduler
+  <code>--regrade-db</code> additionally loads the intended catalog target
   coordinates, runs fresh Seiza plate solves, and sends supported recommendations
   through the same grader. Details: <a href="screening.html">Quality Screening</a>
   and <a href="astrometry-quality.html">Astrometry Quality</a>. When orbital

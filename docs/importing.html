@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Import &amp; Plan — PSF Guard</title>
-  <meta name="description" content="Build a Target Scheduler database from FITS folders, derive projects and exposure plans, backfill quality data, and sync planning with the telescope.">
+  <title>Add Images &amp; Plan — PSF Guard</title>
+  <meta name="description" content="Build a PSF Guard image catalog from FITS folders, derive projects and exposure plans, add quality data, and optionally sync planning with Target Scheduler.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html" class="active" aria-current="page">Import & Plan</a></li>
+    <li><a href="importing.html" class="active" aria-current="page">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,13 +78,24 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Import FITS folders and plan the project</h1>
+  <h1>Add FITS folders and plan the project</h1>
   <p class="lede">
-    Start from plain FITS folders, build a Target Scheduler-compatible database,
+    Start from plain FITS folders, build a Target Scheduler-compatible catalog,
     review the projects and plans PSF Guard derives from the headers, then add
     costly quality evidence in the background.
   </p>
@@ -89,10 +103,10 @@
   <div class="workflow-note import">
     <div class="workflow-tag">From FITS</div>
     <div class="workflow-copy"><strong>Use this path for a FITS-only archive or missing frames</strong><p>Import reads headers first and leaves quality work for later.</p></div>
-    <a class="workflow-link" href="#create">Create a database ↓</a>
+    <a class="workflow-link" href="#create">Create a catalog ↓</a>
   </div>
 
-  <h2 id="create">Create a database from images</h2>
+  <h2 id="create">Create a catalog from images</h2>
   <p>The desktop app always allows database changes. For the web server, bind
   to a trusted interface and opt in:</p>
   <pre><code>psf-guard server --host 127.0.0.1 --allow-database-management</code></pre>
@@ -118,9 +132,11 @@
   file, or <code>--no-register</code> to keep it out of the shared registry.</p>
 
   <h2 id="derived">What PSF Guard derives</h2>
-  <p>PSF Guard writes a full Target Scheduler schema. Imported frames begin as
-  Pending. Header data becomes projects, targets, shared exposure templates,
-  exposure plans, and acquired-image rows:</p>
+  <p>PSF Guard writes a full Target Scheduler-compatible schema. This inherited
+  mapping lets it open an existing Scheduler database, but Target Scheduler is
+  not required. Imported frames begin as Pending. Header data becomes projects,
+  targets, shared exposure templates, exposure plans, and acquired-image
+  rows:</p>
   <ul>
     <li><code>OBJECT</code> names define targets. Each target gets one project
       by default, even across many nights.</li>

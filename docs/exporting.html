@@ -6,7 +6,7 @@
   <title>Export for Stacking — PSF Guard</title>
   <meta name="description" content="Export accepted astrophotography lights from PSF Guard into a WBPP- and Siril-ready target, LIGHT, and filter folder tree.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,6 +78,17 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
@@ -112,10 +126,10 @@
       <tr><td>Rejected</td><td>Never exported</td><td>Cannot be enabled</td></tr>
     </table>
   </div>
-  <p>Export reads the grade and FITS basename from the Target Scheduler
-  database, then resolves the file through the database's configured image
-  folders. It does not change grades, edit FITS files, or move anything out of
-  the source library.</p>
+  <p>Export reads the grade and FITS basename from the active catalog, then
+  resolves the file through that catalog's configured image folders. It does
+  not change grades, edit FITS files, or move anything out of the source
+  library.</p>
   <div class="callout info">
     PSF Guard currently exports light frames only. Add flats, darks, and bias
     frames to the stacking job separately.

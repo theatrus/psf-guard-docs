@@ -6,7 +6,7 @@
   <title>Configuration &amp; API — PSF Guard</title>
   <meta name="description" content="The database registry, the server TOML, and the REST API.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=3">
+  <link rel="stylesheet" href="../css/site.css?v=4">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
@@ -46,12 +46,15 @@
 <div class="docs-wrap">
 <!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Import & Plan</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
   </ul>
   <h4>Analyze</h4>
   <ul>
@@ -75,25 +78,37 @@
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->
 
 <main class="docs-main">
   <h1>Configuration &amp; API</h1>
   <p class="lede">
-    The registry lists databases and image folders. The server TOML controls
+    The registry lists catalogs and image folders. The server TOML controls
     runtime settings. The REST API exposes the same operations as the UI.
   </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>This page is for server and API setups</strong><p>Most desktop users can manage databases in Settings and stop there.</p></div>
+    <div class="workflow-copy"><strong>This page is for server and API setups</strong><p>Most desktop users can manage catalogs in Settings and stop there.</p></div>
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
 
-  <h2 id="registry">Databases: the registry</h2>
-  <p>The server manages any number of scheduler databases. The list lives in a
-  JSON registry at the platform config location — not in the TOML:</p>
+  <h2 id="registry">Catalogs: the registry</h2>
+  <p>The server manages any number of image catalogs. Each uses the inherited
+  Target Scheduler database mapping. The list lives in a JSON registry at the
+  platform config location — not in the TOML:</p>
   <table>
     <tr><th>Platform</th><th>Registry path</th></tr>
     <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
@@ -197,18 +212,17 @@ curl -X POST "localhost:3000/api/db/my-db/images/123/satellites"</code></pre>
 
   <h2 id="limitations">Known limitations</h2>
   <ul>
-    <li><strong>Monochrome only.</strong> Color/OSC FITS files are not debayered
-      and will do weird things. Sample FITS files for color support are welcome
-      at <a href="mailto:psf-guard@theatr.us">psf-guard@theatr.us</a>.</li>
-    <li><strong>Target Scheduler required.</strong> Images are located via the
-      scheduler database, not by walking N.I.N.A.'s standard file layout (yet).</li>
+    <li><strong>OSC display is luminance-first.</strong> Raw one-shot-color FITS
+      files with a recognized <code>BAYERPAT</code> header are debayered, then
+      reduced to luminance for grading and quality measurements. The
+      single-frame grader does not yet render them in full color.</li>
     <li><strong>Path assumptions.</strong> Directory layouts matching
       <code>%DATEMINUS12%/%TARGETNAME%/%DATEMINUS12%/LIGHT/...</code> (with or
       without the leading date) are detected reliably; other patterns may not be.
       Happy to support more —
       <a href="https://github.com/theatrus/psf-guard/issues">open an issue</a>.</li>
-    <li><strong>Make backups.</strong> Of the scheduler database always, and of
-      your FITS files before using file-moving commands.</li>
+    <li><strong>Make backups.</strong> Back up any catalog before broad edits,
+      and back up your FITS files before using file-moving commands.</li>
   </ul>
 
   <nav class="next-prev">

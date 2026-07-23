@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
-const stylesheetVersion = 3;
+const stylesheetVersion = 4;
 
 const docsPages = fs
   .readdirSync(path.join(root, "docs"))
@@ -23,7 +23,7 @@ const docsNavigation = [
       ["index.html", "Getting Started"],
       ["install.html", "Installation"],
       ["grader.html", "The Grader UI"],
-      ["importing.html", "Import & Plan"],
+      ["importing.html", "Add Images & Plan"],
     ],
   },
   {
@@ -125,6 +125,9 @@ function sidebar(file) {
 
   return `<!-- docs-nav:start -->
 <aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
 ${groups}
   <h4>Project</h4>
   <ul>
@@ -133,6 +136,17 @@ ${groups}
     <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
 </aside>
 <!-- docs-nav:end -->`;
 }
