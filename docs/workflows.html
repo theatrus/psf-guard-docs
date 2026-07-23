@@ -31,6 +31,7 @@
   <h4>Documentation</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html">The Grader UI</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
@@ -102,10 +103,14 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># restores everyth
 # Your local grading is preserved; new images arrive with the telescope's grade.</span>
 psf-guard sync pull --from telescope.sqlite --to my-db --dry-run
 
+<span class="c"># Push edited projects, targets, templates, plans, and rule weights.
+# Telescope captures, counts, images, and grades stay unchanged.</span>
+psf-guard sync planning --from my-db --to telescope.sqlite --dry-run
+
 <span class="c"># Push your grading decisions back TO the telescope (one-way, source wins).</span>
 psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
-  <p>Use them as a loop — <strong>pull</strong> to refresh, grade locally,
-  <strong>push grades</strong> back:</p>
+  <p>Use them as a loop — <strong>pull</strong> to refresh, plan and grade
+  locally, then push <strong>planning</strong> and <strong>grades</strong> back:</p>
   <ul>
     <li><strong><code>sync pull</code></strong> mirrors structure (projects,
       targets, exposure plans, templates) and captured images into your local
@@ -116,14 +121,18 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
       reject reasons one-way (source wins), with
       <code>--status</code>/<code>--project</code>/<code>--target</code> filters
       to scope what moves.</li>
-    <li>Both open the source read-only, refuse same-path source/dest, run in a
+    <li><strong><code>sync planning</code></strong> pushes project and target
+      settings, shared templates, exposure plans, and rule weights without
+      changing capture counts, image rows, or grades on the telescope.</li>
+    <li>All three open the source read-only, refuse same-path source/dest, run in a
       single transaction, and report exactly what changed (matched, changed,
       unchanged, unmatched).</li>
   </ul>
   <div class="callout">
-    Don't reverse the directions — pulling grades <em>from</em> the telescope
-    over your local decisions, or pushing structure <em>to</em> it, would
-    overwrite work. The two commands are deliberately one-way and complementary.
+    Keep the named directions. Full pull protects local reviewed grades;
+    planning push cannot change telescope capture history; grades push changes
+    only grading state. The Settings panel previews full pull and planning push
+    before Apply.
   </div>
 
   <h2 id="full-loop">The full loop, end to end</h2>
@@ -140,6 +149,7 @@ psf-guard server
 psf-guard move-rejects --db my-db
 
 <span class="c"># 5. Push final grades back so the scheduler re-captures</span>
+psf-guard sync planning --from my-db --to telescope.sqlite
 psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
 
   <nav class="next-prev">

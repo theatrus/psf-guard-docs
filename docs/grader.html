@@ -31,6 +31,7 @@
   <h4>Documentation</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="importing.html">Import & Plan</a></li>
     <li><a href="grader.html" class="active" aria-current="page">The Grader UI</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="screening.html">Quality Screening</a></li>
@@ -74,18 +75,32 @@
 
   <h2 id="grid">Image grid</h2>
   <figure>
-    <img src="../assets/image_grid.jpg" alt="Image grid with filtering and batch operations">
-    <figcaption>Filter by project, target, status, and date; select in bulk; grade instantly.</figcaption>
+    <img src="../assets/grid-flaming-star-narrowband.png" alt="Wide desktop grid showing real Flaming Star H-alpha frames and the compact controls">
+    <figcaption>Real Flaming Star H-alpha frames in the cleaned desktop grid.
+    The compact toolbar keeps every review control in stable rows.</figcaption>
   </figure>
   <ul>
-    <li><strong>Smart filtering</strong> — project, target, grading status, date range.</li>
+    <li><strong>Smart filtering</strong> — project, target, grading status,
+      filter, date range, search, image size, and filter/date/session grouping.</li>
     <li><strong>Batch operations</strong> — multi-select with Shift+Click / Ctrl+Click,
-      then accept, reject, or unmark the whole selection.</li>
+      or move the cursor with arrows and press Space. Accept, reject, or unmark
+      the whole selection.</li>
+    <li><strong>Stable review position</strong> — preview generation, stack
+      status, and database refreshes preserve the first visible image instead
+      of moving the page.</li>
     <li><strong>Metadata on every card</strong> — HFR, star counts, acquisition details.</li>
     <li><strong>Smart loading</strong> — fast previews first, full resolution on zoom.
       Previews generate on demand in the background, so a fresh install is browsable
       immediately; a "Generating…" badge shows while the queue works.</li>
   </ul>
+  <details>
+    <summary>Responsive narrow-window layout</summary>
+    <figure>
+      <img src="../assets/grid-flaming-star-responsive.png" alt="Flaming Star H-alpha grid with the controls wrapped for a narrow window">
+      <figcaption>The same controls wrap into short rows without hiding the
+      image cursor or grading state.</figcaption>
+    </figure>
+  </details>
 
   <h2 id="compare">Comparison mode</h2>
   <figure>
@@ -126,7 +141,9 @@
     <tr><th>Key</th><th>Action</th><th>Key</th><th>Action</th></tr>
     <tr><td>K / →</td><td>Next image</td><td>A</td><td>Accept</td></tr>
     <tr><td>J / ←</td><td>Previous image</td><td>X</td><td>Reject</td></tr>
-    <tr><td>C</td><td>Compare</td><td>U</td><td>Unmark</td></tr>
+    <tr><td>↑ / ↓</td><td>Nearest grid row</td><td>Space</td><td>Toggle selection</td></tr>
+    <tr><td>Enter</td><td>Open image</td><td>C</td><td>Compare</td></tr>
+    <tr><td>Esc</td><td>Clear / close</td><td>U</td><td>Unmark</td></tr>
     <tr><td>S</td><td>Stars overlay</td><td>+ / −</td><td>Zoom</td></tr>
     <tr><td>O</td><td>Solve / sky overlay</td><td></td><td></td></tr>
     <tr><td>Ctrl+Z</td><td>Undo</td><td>Ctrl+Y</td><td>Redo</td></tr>
@@ -140,7 +157,7 @@
   between grading and acquisition.</p>
 
   <nav class="next-prev">
-    <a href="./">← Getting Started</a>
+    <a href="importing.html">← Import &amp; Plan</a>
     <a href="astrometry.html">Sky Context &amp; Solver →</a>
   </nav>
 </main>

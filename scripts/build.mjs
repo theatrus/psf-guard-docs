@@ -14,6 +14,7 @@ const pages = ["index.html", "404.html", ...docsPages.map((name) => `docs/${name
 
 const docsNavigation = [
   ["index.html", "Getting Started"],
+  ["importing.html", "Import & Plan"],
   ["grader.html", "The Grader UI"],
   ["astrometry.html", "Sky Context & Solver"],
   ["screening.html", "Quality Screening"],
