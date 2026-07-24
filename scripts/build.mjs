@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
-const stylesheetVersion = 4;
+const stylesheetVersion = 5;
 
 const docsPages = fs
   .readdirSync(path.join(root, "docs"))
@@ -81,6 +81,7 @@ function header(file) {
     <div class="nav-links">
       <a href="${links.docs}" class="keep">Docs</a>
       <a href="${links.install}">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab">Live demo</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
     </div>
