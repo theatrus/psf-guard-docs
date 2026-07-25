@@ -101,6 +101,7 @@ function googleTag() {
   gtag('js', new Date());
 
   gtag('config', 'AW-1059723840');
+  gtag('config', 'G-X468EMVSSP');
 </script>
 <!-- Event snippet for Page view conversion page -->
 <script>
