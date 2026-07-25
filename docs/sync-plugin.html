@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>N.I.N.A. Sync Plugin — PSF Guard</title>
+  <meta name="description" content="Install the PSF Guard Sync plugin for N.I.N.A. from the psf-guard.com plugin registry — push captures and sync Target Scheduler plans and grades with a PSF Guard server.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1059723840"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+</script>
+<!-- Event snippet for Page view conversion page -->
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-1059723840/OW-PCInwpNUcEMC0qPkD',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html" class="active" aria-current="page">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>N.I.N.A. Sync Plugin</h1>
+  <p class="lede">
+    <strong>PSF Guard Sync</strong> is a N.I.N.A. plugin that keeps a live Target
+    Scheduler catalog in step with a PSF Guard server — pushing each capture as it
+    lands and syncing plans and grades on demand, without the two-database CLI
+    <a href="workflows.html#sync">sync</a> dance.
+  </p>
+
+  <div class="callout">
+    <strong>Preview / beta.</strong> The plugin is published on the beta channel
+    (v0.1.0.0) and speaks the versioned <code>/api/sync/v1</code> protocol. The PSF
+    Guard server side of that protocol is still being built, so capture pushes
+    return <code>404</code> until it ships — install it now to try the N.I.N.A.
+    side and follow along.
+  </div>
+
+  <h2 id="install">Install it in N.I.N.A.</h2>
+  <p>PSF Guard hosts its own N.I.N.A. plugin repository. Add it as a plugin source
+  and PSF Guard Sync installs and updates like any other plugin:</p>
+  <ol>
+    <li>In N.I.N.A., open <strong>Options &rarr; Plugins</strong>.</li>
+    <li>Add this repository URL:
+      <pre><code>https://nina-plugins.psf-guard.com/</code></pre></li>
+    <li>Turn on <strong>&ldquo;Include beta versions&rdquo;</strong> &mdash; PSF Guard
+      Sync ships on the beta channel.</li>
+    <li>Find <strong>PSF Guard Sync</strong> in the Available list, install it, and
+      restart N.I.N.A.</li>
+  </ol>
+  <div class="callout info">
+    Requires <strong>Windows x64</strong>, N.I.N.A. <strong>3.2.0.9001</strong> or
+    newer, and Target Scheduler schema <strong>22+</strong>. The registry lives at
+    <a href="https://nina-plugins.psf-guard.com/">nina-plugins.psf-guard.com</a>.
+  </div>
+
+  <h2 id="how">How it works</h2>
+  <p>The plugin subscribes to N.I.N.A.'s image-saved event. For each saved light
+  frame it waits briefly for Target Scheduler to commit the matching
+  <code>acquiredimage</code> row, builds a schema-preserving bundle of that capture
+  plus its project, target, and plan dependencies, and drops it in a durable retry
+  queue. <strong>Network work never blocks the image-save pipeline</strong> &mdash; if
+  the server is unreachable, bundles wait and retry.</p>
+  <ul>
+    <li><strong>Automatic capture push</strong> &mdash; every light frame is queued to
+      the PSF Guard catalog right after Target Scheduler records it.</li>
+    <li><strong>Durable, idempotent queue</strong> &mdash; bundles live under
+      <code>%LOCALAPPDATA%\NINA\PsfGuardSync</code>, survive restarts, and re-send
+      safely.</li>
+    <li><strong>Two-way, on demand</strong> &mdash; manual full merge, planning push,
+      and reviewed-grade push, plus planning and grade <em>pull</em> back into Target
+      Scheduler.</li>
+    <li><strong>Stable identity</strong> &mdash; matches images by GUID, remaps parent
+      IDs for projects, targets, templates, and plans, and preserves the
+      telescope-side <code>acquired</code>/<code>accepted</code> counters. Grade pulls
+      touch only <code>gradingStatus</code> and <code>rejectreason</code>.</li>
+    <li><strong>Optional thumbnails</strong> &mdash; transfer Target Scheduler
+      thumbnails alongside the capture.</li>
+  </ul>
+
+  <h2 id="configure">Configure it</h2>
+  <p>Open <strong>Plugins &rarr; Installed &rarr; PSF Guard Sync</strong> and set:</p>
+  <ol>
+    <li>The PSF Guard <strong>server URL</strong>.</li>
+    <li>The destination PSF Guard <strong>catalog ID</strong>.</li>
+    <li>An <strong>API token</strong> (stored in Windows Credential Manager).</li>
+    <li>The Target Scheduler <strong>database path</strong> (default
+      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>).</li>
+    <li>Your <strong>capture-push and preview-apply policy</strong>.</li>
+  </ol>
+  <p>Use <strong>Test connection</strong> before enabling automatic pushes.</p>
+
+  <h2 id="sequencer">Sequencer instructions</h2>
+  <p>The plugin also contributes instructions under <strong>PSF Guard Sync</strong> in
+  the advanced sequencer:</p>
+  <ul>
+    <li><strong>Check PSF Guard connection</strong> &mdash; verifies the server, API
+      token, and selected catalog. Place it near the start of a session so a remote
+      outage follows the instruction's configured error behavior.</li>
+    <li><strong>Pull PSF Guard planning</strong> &mdash; applies remote projects,
+      targets, templates, and plans to Target Scheduler. Run it <em>before</em> a
+      Target Scheduler container starts; a running container may keep its in-memory
+      plan.</li>
+    <li><strong>Pull PSF Guard grades</strong> &mdash; applies reviewed grades and
+      rejection reasons by unambiguous acquired-image GUID.</li>
+  </ul>
+
+  <div class="callout info">
+    Working from one machine, or syncing two SQLite files directly? The CLI
+    <a href="workflows.html#sync"><code>psf-guard sync</code></a> commands do the same
+    job between database files, without the plugin.
+  </div>
+
+  <nav class="next-prev">
+    <a href="workflows.html">&larr; Rejects &amp; Sync</a>
+    <a href="cli.html">CLI Reference &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

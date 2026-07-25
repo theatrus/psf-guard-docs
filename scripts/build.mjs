@@ -41,6 +41,7 @@ const docsNavigation = [
     pages: [
       ["exporting.html", "Export for Stacking"],
       ["workflows.html", "Rejects & Sync"],
+      ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],
     ],

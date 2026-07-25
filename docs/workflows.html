@@ -69,6 +69,7 @@
   <ul>
     <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html" class="active" aria-current="page">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
   </ul>
@@ -184,6 +185,11 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
     planning push cannot change telescope capture history; grades push changes
     only grading state. The Settings panel previews full pull and planning push
     before Apply.
+  </div>
+  <div class="callout info">
+    Rather than sync two SQLite files by hand, the
+    <a href="sync-plugin.html">PSF Guard Sync plugin for N.I.N.A.</a> pushes each
+    capture live and pulls plans and grades from inside N.I.N.A.
   </div>
 
   <h2 id="full-loop">End-to-end workflow</h2>
