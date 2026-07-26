@@ -18,7 +18,9 @@
   gtag('config', 'AW-1059723840');
   gtag('config', 'GT-WPLWLB7B');
 </script>
-<!-- Event snippet for Download conversion; call gtag_report_conversion(url) from a Download link's onclick -->
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
 <script>
 function gtag_report_conversion(url) {
   var done = false;
@@ -28,13 +30,20 @@ function gtag_report_conversion(url) {
     if (typeof(url) !== 'undefined') { window.location = url; }
   };
   gtag('event', 'conversion', {
-      'send_to': 'AW-1059723840/Vo2_COiszNYcEMC0qPkD',
+      'send_to': 'AW-18350477381/u1hMCOmu_dYcEMWgmK5E',
       'value': 1.0,
       'currency': 'USD',
       'event_callback': go
   });
   setTimeout(go, 1000);
   return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350477381/Y9ieCMyE6dYcEMWgmK5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
 }
 </script>
 <!-- google-tag:end -->
@@ -48,8 +57,8 @@ function gtag_report_conversion(url) {
     <div class="nav-links">
       <a href="./" class="keep">Docs</a>
       <a href="install.html">Install</a>
-      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab">Live demo</a>
-      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
     </div>
   </nav>
@@ -87,9 +96,9 @@ function gtag_report_conversion(url) {
   </ul>
   <h4>Project</h4>
   <ul>
-    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
-    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
-    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
   </div>
@@ -115,7 +124,7 @@ function gtag_report_conversion(url) {
 
   <h2 id="desktop">Desktop app</h2>
   <p>Download the installer for your platform from the
-  <a href="https://github.com/theatrus/psf-guard/releases/latest">latest release</a>:</p>
+  <a href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">latest release</a>:</p>
   <table>
     <tr><th>Platform</th><th>Asset</th></tr>
     <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code> or the NSIS <code>-setup.exe</code></td></tr>
@@ -146,9 +155,9 @@ function gtag_report_conversion(url) {
   <p>These version-independent links point at the latest release:</p>
   <table>
     <tr><th>Platform</th><th>Download</th></tr>
-    <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64"><code>psf-guard-linux-x64</code></a></td></tr>
-    <tr><td>macOS</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64"><code>psf-guard-macos-x64</code></a></td></tr>
-    <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe"><code>psf-guard-windows-x64.exe</code></a></td></tr>
+    <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64')"><code>psf-guard-linux-x64</code></a></td></tr>
+    <tr><td>macOS</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64')"><code>psf-guard-macos-x64</code></a></td></tr>
+    <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe')"><code>psf-guard-windows-x64.exe</code></a></td></tr>
   </table>
   <pre><code><span class="c"># Linux / macOS</span>
 chmod +x psf-guard-*
@@ -162,7 +171,7 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
   <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
   <p>The package installs the CLI/server and a <code>psf-guard.service</code>
   systemd unit. Build instructions live in
-  <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md">packaging/rpm/README.md</a>.</p>
+  <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md')">packaging/rpm/README.md</a>.</p>
 
   <h2 id="source">Build from source</h2>
   <pre><code>git clone https://github.com/theatrus/psf-guard.git

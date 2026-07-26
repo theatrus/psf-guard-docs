@@ -16,7 +16,9 @@
   gtag('config', 'AW-1059723840');
   gtag('config', 'GT-WPLWLB7B');
 </script>
-<!-- Event snippet for Download conversion; call gtag_report_conversion(url) from a Download link's onclick -->
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
 <script>
 function gtag_report_conversion(url) {
   var done = false;
@@ -26,13 +28,20 @@ function gtag_report_conversion(url) {
     if (typeof(url) !== 'undefined') { window.location = url; }
   };
   gtag('event', 'conversion', {
-      'send_to': 'AW-1059723840/Vo2_COiszNYcEMC0qPkD',
+      'send_to': 'AW-18350477381/u1hMCOmu_dYcEMWgmK5E',
       'value': 1.0,
       'currency': 'USD',
       'event_callback': go
   });
   setTimeout(go, 1000);
   return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350477381/Y9ieCMyE6dYcEMWgmK5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
 }
 </script>
 <!-- google-tag:end -->

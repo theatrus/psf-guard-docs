@@ -84,8 +84,8 @@ function header(file) {
     <div class="nav-links">
       <a href="${links.docs}" class="keep">Docs</a>
       <a href="${links.install}">Install</a>
-      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab">Live demo</a>
-      <a href="https://github.com/theatrus/psf-guard">GitHub</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
       <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
     </div>
   </nav>
@@ -105,7 +105,9 @@ function googleTag() {
   gtag('config', 'AW-1059723840');
   gtag('config', 'GT-WPLWLB7B');
 </script>
-<!-- Event snippet for Download conversion; call gtag_report_conversion(url) from a Download link's onclick -->
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
 <script>
 function gtag_report_conversion(url) {
   var done = false;
@@ -115,13 +117,20 @@ function gtag_report_conversion(url) {
     if (typeof(url) !== 'undefined') { window.location = url; }
   };
   gtag('event', 'conversion', {
-      'send_to': 'AW-1059723840/Vo2_COiszNYcEMC0qPkD',
+      'send_to': 'AW-18350477381/u1hMCOmu_dYcEMWgmK5E',
       'value': 1.0,
       'currency': 'USD',
       'event_callback': go
   });
   setTimeout(go, 1000);
   return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350477381/Y9ieCMyE6dYcEMWgmK5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
 }
 </script>
 <!-- google-tag:end -->`;
@@ -147,9 +156,9 @@ function sidebar(file) {
 ${groups}
   <h4>Project</h4>
   <ul>
-    <li><a href="https://github.com/theatrus/psf-guard">GitHub</a></li>
-    <li><a href="https://github.com/theatrus/psf-guard/releases">Releases</a></li>
-    <li><a href="https://github.com/theatrus/psf-guard/issues">Report an issue</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
     <li><a href="https://theatr.us/software">More at theatr.us</a></li>
   </ul>
   </div>
