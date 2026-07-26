@@ -125,15 +125,28 @@ function gtag_report_conversion(url) {
 
   <h2 id="overview">Overview dashboard</h2>
   <figure>
-    <img src="../assets/overview.png" alt="Overview dashboard showing projects, targets, and grading progress">
-    <figcaption>Projects, targets, image counts, and color-coded grading progress —
-    merged across every configured database.</figcaption>
+    <img src="../assets/overview.png" alt="Overview showing recent projects and real narrowband frames">
+    <figcaption>Recent projects and frames, targets, image counts, and grading
+    progress across every configured database.</figcaption>
   </figure>
   <p>The overview aggregates all your configured catalogs: project and
   target statistics, completion percentages, real-time file discovery status, and
   filter usage. Click through any project or target to land in its grid. After
   grading, use <strong>⬇ Export</strong> on a project or target to build clean
   stacking input; see <a href="exporting.html">Export for Stacking</a>.</p>
+
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/overview-project-activity.png" alt="Compact project card with a newest-frame marker and relative capture time" loading="lazy">
+      <figcaption>Recent projects group by capture date and mark the newest
+      frame, with a relative capture time on every thumbnail.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/project-search-menu.png" alt="Unified project and target picker with type-ahead search" loading="lazy">
+      <figcaption>The header picker searches projects and targets, groups
+      recent work first, and expands each project into its targets.</figcaption>
+    </figure>
+  </div>
 
   <h2 id="grid">Image grid</h2>
   <figure>
@@ -181,6 +194,11 @@ function gtag_report_conversion(url) {
   outlines, an RA/Dec grid, solved scale, and target offset. See
   <a href="astrometry.html">Sky Context &amp; Plate Solving</a> for catalog setup,
   Docker configuration, validation, and the API.</p>
+  <figure>
+    <img src="../assets/settings-seiza-catalogs.png" alt="Settings showing installed Seiza catalogs and available sky features" loading="lazy">
+    <figcaption>Settings shows which catalog features work and installs or
+    validates the Seiza sky data when database management is enabled.</figcaption>
+  </figure>
 
   <h2 id="sequence">Sequence view</h2>
   <figure>

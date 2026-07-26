@@ -227,15 +227,22 @@ psf-guard import archive ./new-lights</code></pre>
     <div class="workflow-copy"><strong>Sync only when grading and capture use separate database files</strong><p>Preview each change before applying it.</p></div>
     <a class="workflow-link" href="workflows.html#sync">Sync workflow →</a>
   </div>
-  <p>Add both databases in Settings, then expand <strong>Scheduler database
-  sync</strong>. Both UI actions show a dry preview before Apply:</p>
+  <p>Add both databases in Settings, then use <strong>Data Transfer</strong>.
+  Every action requires a dry preview before Apply:</p>
+  <figure>
+    <img src="../assets/data-transfer.png" alt="Data Transfer workspace with named source and destination catalogs" loading="lazy">
+    <figcaption>Choose a direction and action, then review the server-owned
+    preview before Apply becomes available.</figcaption>
+  </figure>
   <ul>
-    <li><strong>Full pull</strong> copies new or changed projects, targets,
+    <li><strong>Merge catalogs</strong> copies new or changed projects, targets,
       templates, plans, captures, and grades from the telescope into the local
       database. Local reviewed grades win.</li>
-    <li><strong>Planning push</strong> sends projects, targets, templates,
+    <li><strong>Send planning</strong> sends projects, targets, templates,
       plans, and rule weights back to the telescope. It leaves telescope image
       rows, capture counts, and grades alone.</li>
+    <li><strong>Send reviewed grades</strong> sends Accepted and Rejected
+      grades for matching image GUIDs. Pending grades stay local.</li>
   </ul>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
 psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run
