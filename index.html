@@ -23,6 +23,25 @@
   gtag('config', 'AW-1059723840');
   gtag('config', 'G-X468EMVSSP');
 </script>
+<!-- Event snippet for Download conversion; call gtag_report_conversion(url) from a Download link's onclick -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-1059723840/Vo2_COiszNYcEMC0qPkD',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+</script>
 <!-- google-tag:end -->
 <!-- Home-page-only conversion (hand-placed; not part of the generated google-tag block) -->
 <!-- Event snippet for Page view conversion page -->
@@ -45,7 +64,7 @@
       <a href="docs/install.html">Install</a>
       <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab">Live demo</a>
       <a href="https://github.com/theatrus/psf-guard">GitHub</a>
-      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
     </div>
   </nav>
 </header>
@@ -63,7 +82,7 @@
       data for processing. Your image files stay where they are.
     </p>
     <div class="btn-row">
-      <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest">Download</a>
+      <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
       <a class="btn" href="docs/">Get started</a>
       <a class="btn" href="https://github.com/theatrus/psf-guard">Source on GitHub</a>
     </div>
@@ -279,7 +298,7 @@
       <p>Native installers for Windows (<code>.msi</code> / NSIS setup with CLI on
       PATH), macOS (<code>.dmg</code>, Apple Silicon), and Linux
       (<code>.deb</code> / AppImage).</p>
-      <p><a href="https://github.com/theatrus/psf-guard/releases/latest">Download the latest release →</a></p>
+      <p><a href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download the latest release →</a></p>
     </div>
     <div class="card">
       <h3>🐳 Docker</h3>

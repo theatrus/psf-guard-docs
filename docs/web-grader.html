@@ -16,6 +16,25 @@
   gtag('config', 'AW-1059723840');
   gtag('config', 'G-X468EMVSSP');
 </script>
+<!-- Event snippet for Download conversion; call gtag_report_conversion(url) from a Download link's onclick -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-1059723840/Vo2_COiszNYcEMC0qPkD',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+</script>
 <!-- google-tag:end -->
 </head>
 <body>
