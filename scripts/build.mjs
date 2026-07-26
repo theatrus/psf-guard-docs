@@ -103,14 +103,6 @@ function googleTag() {
   gtag('config', 'AW-1059723840');
   gtag('config', 'G-X468EMVSSP');
 </script>
-<!-- Event snippet for Page view conversion page -->
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-1059723840/OW-PCInwpNUcEMC0qPkD',
-      'value': 1.0,
-      'currency': 'USD'
-  });
-</script>
 <!-- google-tag:end -->`;
 }
 
