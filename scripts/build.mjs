@@ -1,10 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
 const stylesheetVersion = 5;
+const siteUrl = "https://psf-guard.com";
 
 const docsPages = fs
   .readdirSync(path.join(root, "docs"))
@@ -165,6 +167,46 @@ ${groups}
 <!-- docs-nav:end -->`;
 }
 
+// robots.txt + a generated sitemap.xml. The sitemap enumerates every indexable
+// page (all of `pages` except 404.html), so adding/removing a page and rebuilding
+// keeps it current — no hand-maintained URL list. lastmod comes from each file's
+// last git commit (stable; changes only when the page changes).
+function pageUrl(file) {
+  if (file === "index.html") return `${siteUrl}/`;
+  if (file === "docs/index.html") return `${siteUrl}/docs/`;
+  return `${siteUrl}/${file}`;
+}
+
+function lastmod(file) {
+  try {
+    const d = execSync(`git log -1 --format=%cs -- "${file}"`, {
+      cwd: root,
+      stdio: ["ignore", "pipe", "ignore"],
+    }).toString().trim();
+    return d || null;
+  } catch {
+    return null;
+  }
+}
+
+function sitemapXml() {
+  const urls = pages
+    .filter((f) => f !== "404.html")
+    .map((file) => {
+      const lm = lastmod(file);
+      return `  <url>\n    <loc>${pageUrl(file)}</loc>\n` +
+        (lm ? `    <lastmod>${lm}</lastmod>\n` : "") +
+        `  </url>`;
+    });
+  return `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    `${urls.join("\n")}\n</urlset>\n`;
+}
+
+function robotsTxt() {
+  return `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
+}
+
 function replaceGeneratedBlock(html, name, fallback, generated, file) {
   const marker = new RegExp(`<!-- ${name}:start -->[\\s\\S]*?<!-- ${name}:end -->`);
   if (marker.test(html)) return html.replace(marker, generated);
@@ -224,14 +266,27 @@ for (const file of trackedPages) {
   }
 }
 
+// Generated site-wide files: sitemap.xml + robots.txt.
+for (const [name, content] of [
+  ["sitemap.xml", sitemapXml()],
+  ["robots.txt", robotsTxt()],
+]) {
+  const p = path.join(root, name);
+  const current = fs.existsSync(p) ? fs.readFileSync(p, "utf8") : null;
+  if (current !== content) {
+    stale.push(name);
+    if (!checkOnly) fs.writeFileSync(p, content);
+  }
+}
+
 if (checkOnly && stale.length > 0) {
-  console.error(`Generated HTML is stale: ${stale.join(", ")}`);
-  console.error("Run npm run build and commit the resulting HTML.");
+  console.error(`Generated output is stale: ${stale.join(", ")}`);
+  console.error("Run npm run build and commit the resulting files.");
   process.exit(1);
 }
 
 console.log(
   checkOnly
-    ? `Checked ${trackedPages.length} generated HTML pages.`
-    : `Generated shared elements in ${trackedPages.length} checked-in HTML pages.`,
+    ? `Checked ${trackedPages.length} generated HTML pages + sitemap.xml/robots.txt.`
+    : `Generated shared elements in ${trackedPages.length} pages + sitemap.xml/robots.txt.`,
 );
