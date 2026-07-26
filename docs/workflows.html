@@ -163,6 +163,11 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># restores everyth
   <p>Grade on one machine while the telescope keeps capturing on another.
   <code>sync</code> moves state between two scheduler databases — registry slugs
   or <code>.sqlite</code> paths — matching images by their stable GUID:</p>
+  <figure>
+    <img src="../assets/data-transfer.png" alt="Data Transfer workspace with merge, planning, and reviewed-grade actions" loading="lazy">
+    <figcaption>The Settings workspace names both catalogs and requires a
+    server-owned preview before any merge or push.</figcaption>
+  </figure>
   <pre><code><span class="c"># Mirror projects, targets and captured images FROM the telescope INTO your DB.
 # Your local grading is preserved; new images arrive with the telescope's grade.</span>
 psf-guard sync pull --from telescope.sqlite --to my-db --dry-run
@@ -195,8 +200,8 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   <div class="callout">
     Keep the named directions. Full pull protects local reviewed grades;
     planning push cannot change telescope capture history; grades push changes
-    only grading state. The Settings panel previews full pull and planning push
-    before Apply.
+    only grading state. The Settings panel previews all three actions before
+    Apply.
   </div>
   <div class="callout info">
     Rather than sync two SQLite files by hand, the
