@@ -46,6 +46,7 @@ const docsNavigation = [
       ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],
+      ["authentication.html", "Server Accounts"],
     ],
   },
 ];
