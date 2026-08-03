@@ -93,6 +93,7 @@ function gtag_report_demo() {
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
   </ul>
   <h4>Project</h4>
   <ul>
@@ -176,6 +177,13 @@ function gtag_report_demo() {
   <strong>WARN</strong> (recoverable or review-worthy — e.g. gradients that
   flat-ish processing can remove, glow that stacks into artifacts),
   <strong>REJECT</strong> (clouds and occlusion).</p>
+
+  <p>A score is only ever built from evidence that exists. When an optional
+  scan has not run, the analyzer renormalizes across what it does have rather
+  than counting the gap against the frame &mdash; so a night you have not
+  spatially scanned is not quietly marked down for it, and the same frame reads
+  the same whether you look at it from one session, another, or across every
+  project at once.</p>
 
   <h2 id="quick-start">Quick start</h2>
   <div class="workflow-note simple">

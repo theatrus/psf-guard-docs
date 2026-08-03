@@ -93,6 +93,7 @@ function gtag_report_demo() {
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
   </ul>
   <h4>Project</h4>
   <ul>
@@ -124,7 +125,7 @@ function gtag_report_demo() {
   <h2 id="mono">Per-channel previews from graded frames</h2>
   <p>From a project's stack panel, PSF Guard integrates the selected or visible
   frames per exact target and filter with Seiza registration. The selection
-  selection policy runs before registration: catalog rejects and current sequence-analysis
+  policy runs before registration: catalog rejects and current sequence-analysis
   regrade recommendations are excluded <em>before</em> registration, so the
   preview shows what your accepted data actually stacks into. The latest
   successful result for each channel is kept durably in the cache; rebuilding
@@ -143,6 +144,33 @@ function gtag_report_demo() {
       result.</figcaption>
     </figure>
   </div>
+
+  <h2 id="queue">Build a whole night without babysitting it</h2>
+  <p>Build buttons stay live while a build runs. Each click queues a channel
+  behind the one working, every card shows its own queued or running state, and
+  the status line counts what is waiting. <strong>Stop</strong> ends the build
+  in front; once a queue forms it becomes <strong>Stop all</strong>. A stop
+  lands between frames, between channels, and between calibration masters, so
+  it takes effect within about one frame's work rather than instantly. Nothing
+  half-finished is ever published: a channel stopped before its FITS and preview
+  are written leaves no artifact, and channels that already finished keep
+  theirs.</p>
+
+  <p>Because a queue makes rebuilding cheap, a rebuild that only <em>added</em>
+  frames resumes from where the last one finished instead of integrating the
+  night again, and the card counts the restored work. A checkpoint is reused
+  only when it is provably an ancestor of the new set &mdash; identical source
+  fingerprints for every recorded frame, the same calibration, the same
+  Accepted-only policy, the same pipeline. Anything else restacks from scratch
+  and the card says which of those changed, so a slow full rebuild is never a
+  mystery.</p>
+
+  <p>A build belongs to the server, not to the tab that started it. The header
+  carries a <strong>Stacking</strong> indicator while any mono or color build is
+  queued or running &mdash; in every view and across databases &mdash; and the
+  panels re-attach to a running job when they mount. Leave the grid, reload the
+  page, come back: the work is still there. Superseded artifacts are swept from
+  the cache behind you.</p>
 
   <h2 id="inspect">Inspect at full resolution, stretch, download</h2>
   <p>The preview opens in the same inspector the grader uses — zoom, pan, fit,
@@ -163,6 +191,22 @@ function gtag_report_demo() {
       underneath remains linear.</figcaption>
     </figure>
   </div>
+
+  <h2 id="orientation">Every channel the same way up</h2>
+  <p>A German equatorial mount turns the field 180&deg; when it flips, and
+  registration matches star triangles at any angle &mdash; so both halves of
+  such a night stack cleanly, but the reference frame alone would decide which
+  way up the result comes out. Shoot filters in blocks across the meridian and
+  two channels of one target could face opposite ways.</p>
+
+  <p>PSF Guard anchors that choice to the sky instead. A cached plate solve or a
+  valid embedded WCS on the reference frame says which way north points, and the
+  stack is published with north in the upper half of the frame. Failing that it
+  reads the frame's <code>PIERSIDE</code>, interpreted through what a solved
+  channel in the same build already taught it about which side faces which way.
+  Failing both, it follows whichever way most of that stack's own exposure
+  faced. No plate solve is run for this, and it is only ever a half turn &mdash;
+  your camera angle is kept, and nothing is resampled.</p>
 
   <h2 id="color">Color composition: LRGB and narrowband palettes</h2>
   <p>When the required channel stacks exist, combine them without rebuilding
@@ -192,6 +236,22 @@ function gtag_report_demo() {
   an RGB 32-bit-float FITS whose header records the palette and
   linear-versus-display transfer semantics.</p>
 
+  <h2 id="edges">Trim the edges registration leaves behind</h2>
+  <p>Registering one channel onto another leaves blank margins where that frame
+  did not reach. Each color card now carries an <strong>Edges</strong> picker:
+  keep them, trim to the box the covered pixels span, or trim to the largest
+  rectangle every channel covers in full. The default is unchanged, so results
+  you already have stay valid.</p>
+
+  <p>The choice is part of the job identity, so each one keeps its own cached
+  artifact and applying a processing stack retains the crop the card is showing.
+  The crop happens before normalization, so every channel is scaled from the
+  same patch of sky, and <code>CRPIX</code> moves onto the cropped grid so the
+  FITS keeps its plate solution. A finished card reports the kept size and the
+  share of the grid retained &mdash; and when one channel's coverage sits far
+  from the others, which is a pointing error rather than dither, it names the
+  channel that bounded the crop.</p>
+
   <h2 id="background">Background extraction and processing controls</h2>
   <p>Color previews fit and subtract each input channel's background before
   cross-filter registration, using Seiza background extraction with
@@ -211,6 +271,29 @@ function gtag_report_demo() {
   step, sharpening the preview without touching the cached linear
   integration. Like the display stretch, it is a reversible view decision —
   toggle it, compare, and download either representation.</p>
+
+  <h2 id="artifact">Find which frame left that mark</h2>
+  <p>A stack makes a satellite trail, a reflection, a dust shadow, or a hot
+  region far easier to see than any single sub does. Open the full-size
+  inspector, choose <strong>Find source artifact</strong>, and drag a box around
+  the suspect area: PSF Guard maps that region back through each frame's own
+  registration and ranks the source frames by how far each one departs from its
+  peers there.</p>
+
+  <figure>
+    <img src="../assets/stack-artifact-finder.png" alt="A selected stack region ranked across the source frames that contributed it" loading="lazy">
+    <figcaption>The selected region, cropped from every contributing frame and
+    ranked by how far each departs from the others.</figcaption>
+  </figure>
+
+  <p>Results carry the peak sigma, the direction &mdash; bright or dark &mdash;
+  and a cautious shape label: compact spot, diagonal trail, defocused ring,
+  broad dark shadow. Low-evidence results stay unclassified rather than
+  guessing. The search never grades anything for you; it points, and you decide.
+  It cannot isolate a defect that lands in the same registered place in every
+  frame, because that defect becomes part of the baseline it compares against.
+  A region must be at least 8 pixels a side, and dragging past 512 stops the box
+  at 512 rather than clearing it.</p>
 
   <h2 id="takeout">Take the data out for real stacking</h2>
   <p>When the preview convinces you the data is worth a full run, export the

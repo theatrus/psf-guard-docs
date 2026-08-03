@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Server Accounts — PSF Guard</title>
+  <meta name="description" content="Require a login when PSF Guard runs as a web server: what an account-less server hands out, editor and read-only roles, managing users from Settings or the CLI, and what remote sync keeps.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html" class="active" aria-current="page">Server Accounts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Server Accounts</h1>
+  <p class="lede">Run PSF Guard as a web server and it can ask who is calling.
+  Authentication is off by default, and the desktop app never uses it — but the
+  moment a server listens past your own machine, it stops handing out the
+  catalog to anyone who finds the port.</p>
+
+  <h2 id="bind">The bind address decides</h2>
+  <p>Reaching a loopback server already means reaching the machine, so nothing
+  changes there. Any other address is a different question, and a server with no
+  accounts on one now answers every API request with 401 — reads included.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Bind address</th><th>With no accounts configured</th></tr>
+      <tr><td><code>127.0.0.1</code>, <code>::1</code>, <code>localhost</code></td><td>Full access. This is the desktop app and local development.</td></tr>
+      <tr><td>Anything else, including the <code>0.0.0.0</code> default</td><td>Every API request answers 401 until an account exists.</td></tr>
+    </table>
+  </div>
+
+  <p><code>--allow-database-management</code> goes further: on a network address
+  the server refuses to start until an account exists, because those routes name
+  filesystem paths the server then reads and writes. Once one does, only an
+  editor may use them.</p>
+
+  <div class="callout">
+    <strong>Upgrading a server that already listens on the network?</strong>
+    It will stop serving until you add a user. <code>psf-guard users add editor
+    --role read-write</code> is the short path;
+    <code>--allow-anonymous-access</code> is the escape hatch below.
+  </div>
+
+  <h2 id="anonymous">Keeping a network server open on purpose</h2>
+  <p><code>--allow-anonymous-access</code> gives every caller on a network
+  address what a localhost server gives them — no accounts, no login — and logs
+  what it is handing out.</p>
+
+  <pre><code>psf-guard server --host 0.0.0.0 --allow-anonymous-access</code></pre>
+
+  <p>It is meant for a network you trust as much as the machine itself, and for
+  upgrading a deployment without an outage. It grants full editor access —
+  grading, imports, and with <code>--allow-database-management</code> the
+  registry itself — to anyone who can reach the port. Treat it as temporary: add
+  accounts, then drop the flag.</p>
+
+  <h2 id="roles">Editors and read-only users</h2>
+  <p>A read-only user can read catalogs, images, quality results, exports, and
+  cached analysis. By default they cannot <em>start</em> the expensive work —
+  stack builds, plate solves, satellite predictions, view processing — though
+  every cached result stays available to them. Set
+  <code>allow_read_only_compute = true</code> to let them start those jobs too;
+  that suits a trusted private server and not a public demo, where repeated jobs
+  eat CPU, bandwidth, and cache.</p>
+
+  <p>An editor can also grade with undo and redo, edit projects, targets,
+  coordinates, and exposure plans, start scans and imports, write exports, apply
+  sync previews, and — when the matching server gate is on — manage databases,
+  peers, catalogs, and calibration records.</p>
+
+  <p>The server enforces the role itself, so a client calling the API directly
+  gains nothing. The UI marks a read-only session <strong>Read only</strong>,
+  hides Settings, and disables the grading controls.</p>
+
+  <h2 id="users">Managing users</h2>
+  <p>An editor signed in to a web server gets a <strong>Users</strong> tab in
+  Settings: add an account, record an optional email, change a role or password,
+  remove someone. Changes take effect at once. Changing access or a password
+  signs out that account's existing sessions; changing only an email does not.
+  The UI will not remove the account you are signed in with, nor leave the
+  server without an editor.</p>
+
+  <figure>
+    <img src="../assets/server-users.png" alt="The Users tab in PSF Guard Settings, listing an editor and a read-only reviewer" loading="lazy">
+    <figcaption>Editors manage browser accounts from Settings. The desktop app
+    does not show the tab — its localhost server does not use logins.</figcaption>
+  </figure>
+
+  <p>The CLI does the same job on a headless box, and prompts twice without
+  echoing when no password file is given:</p>
+
+  <pre><code>psf-guard users add viewer --role read-only --email viewer@example.com
+psf-guard users add editor --role read-write --password-file /run/secrets/editor
+psf-guard users list
+psf-guard users remove viewer</code></pre>
+
+  <p>Passwords are stored as salted Argon2 hashes in <code>auth.json</code>
+  beside the database registry, mode <code>0600</code> on Unix; the password
+  itself never is. Use <code>--replace</code> to change a role or password.
+  Restart the server after a CLI change — active sessions stay valid until you
+  do.</p>
+
+  <h2 id="signing-in">Signing in</h2>
+  <p>Once <code>auth.json</code> holds a user, the browser gets a login page. A
+  successful login sets an HttpOnly, SameSite=Strict session cookie. Sessions
+  live in server memory, expire after <code>session_hours</code>, and end when
+  the server restarts.</p>
+
+  <figure>
+    <img src="../assets/server-login.png" alt="The PSF Guard server login page" loading="lazy">
+    <figcaption>The login page appears only when the server has accounts.</figcaption>
+  </figure>
+
+  <pre><code>[server.auth]
+session_hours = 168
+secure_cookie = true
+allow_read_only_compute = false</code></pre>
+
+  <p>Secure cookies are the default. Only set <code>secure_cookie = false</code>
+  for a direct HTTP development server — a browser will not send a Secure cookie
+  over plain HTTP.</p>
+
+  <h2 id="sync">What keeps working without a login</h2>
+  <p>Remote image upload and scheduler sync carry their own
+  <code>Authorization: Bearer</code> keys, scoped to the database they were
+  issued for. Those routes keep working on a server with no browser accounts at
+  all, which is how a headless intake box runs while a person grades elsewhere.</p>
+
+  <p>Scripts that drive the ordinary UI API log in with a cookie jar instead:</p>
+
+  <pre><code>curl -c psf-guard.cookies -H "Content-Type: application/json" \
+  -d '{"username":"editor","password":"..."}' \
+  https://guard.example/api/auth/login
+
+curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
+
+  <h2 id="deployment">Deployment notes</h2>
+  <ul>
+    <li>Put a public server behind HTTPS. Login passwords otherwise cross the
+      network in clear text.</li>
+    <li>Seed an account from an existing secret with
+      <code>--password-file</code>; only the hash is written.</li>
+    <li>Keep <code>--allow-database-management</code> off unless you need
+      browser-side database management. An editor login does not override that
+      gate, and the gate does not override the login — on a network address a
+      server needs both.</li>
+    <li>Signing out revokes that session. Restarting the server revokes every
+      browser session.</li>
+  </ul>
+
+  <div class="callout info">
+    Full reference, including the registry paths used by a custom
+    <code>--registry</code>, lives in
+    <a href="https://github.com/theatrus/psf-guard/blob/main/docs/AUTHENTICATION.md">docs/AUTHENTICATION.md</a>
+    in the main repository.
+  </div>
+
+  <nav class="next-prev">
+    <a href="configuration.html">&larr; Configuration &amp; API</a>
+    <a href="cli.html">CLI Reference &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
