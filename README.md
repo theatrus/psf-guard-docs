@@ -12,8 +12,9 @@ what's in the repo is exactly what's served.
 ```
 index.html          Splash / landing page
 docs/               Documentation pages (shared sidebar nav)
-docs/importing.html  FITS import, quality backfill, planning, and scheduler sync
+docs/importing.html  FITS/XISF import, quality backfill, planning, and scheduler sync
 docs/astrometry.html Seiza catalog setup, on-demand solving, and sky overlays
+docs/calibration.html Calibration libraries, safe matching, masters, and export
 css/site.css        The one stylesheet (dark astro theme)
 assets/             Logo/favicon (hand-authored SVG) + screenshots
 scripts/build.mjs   Shared top bar and docs navigation generator

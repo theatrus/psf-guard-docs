@@ -36,6 +36,7 @@ const docsNavigation = [
       ["astrometry-quality.html", "Astrometry Quality"],
       ["satellites.html", "Satellite Tracks"],
       ["stacking.html", "Stack Previews"],
+      ["calibration.html", "Calibration Libraries"],
     ],
   },
   {

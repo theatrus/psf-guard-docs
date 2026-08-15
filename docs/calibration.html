@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calibration Libraries — PSF Guard</title>
+  <meta name="description" content="Import bias, dark, dark-flat, and flat frames into PSF Guard; understand safe matching, on-demand masters, stack calibration modes, and calibration-aware exports.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="calibration.html" class="active" aria-current="page">Calibration Libraries</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Calibration Libraries</h1>
+  <p class="lede">
+    Catalog bias, dark, dark-flat, and flat frames beside the lights they serve.
+    PSF Guard matches them conservatively, builds masters only when a stack needs
+    them, and keeps the raw frames and generated FITS files on disk.
+  </p>
+
+  <div class="workflow-note import">
+    <div class="workflow-tag">Calibrate</div>
+    <div class="workflow-copy"><strong>Add calibration folders to the same catalog as the lights</strong><p>Import reads the headers; stack previews build and cache safe masters on demand.</p></div>
+    <a class="workflow-link" href="#add">Add frames ↓</a>
+  </div>
+
+  <h2 id="add">Add calibration frames</h2>
+  <ol>
+    <li>In <strong>Settings &rarr; Databases</strong>, add the folders holding the
+      calibration files to the catalog's image directories.</li>
+    <li>Choose <strong>Import</strong> and inspect the dry preview before applying
+      it. New-database creation and the CLI use the same header-only scan.</li>
+    <li>Open the database's calibration summary and choose
+      <strong>Manage</strong> to inspect coverage by rig and frame type.</li>
+  </ol>
+  <p>PSF Guard recognizes the usual <code>IMAGETYP</code> values:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Library type</th><th>Recognized header values</th></tr>
+      <tr><td>Bias</td><td><code>BIAS</code>, <code>OFFSET</code></td></tr>
+      <tr><td>Dark</td><td><code>DARK</code></td></tr>
+      <tr><td>Dark flat</td><td><code>DARK FLAT</code>, <code>DARKFLAT</code>, <code>FLATDARK</code></td></tr>
+      <tr><td>Flat</td><td><code>FLAT</code></td></tr>
+    </table>
+  </div>
+  <p>Calibration records stay in PSF Guard-owned tables inside the catalog.
+  Pixels and master blobs do not: raw paths and file fingerprints point back to
+  the image library, while generated masters live in the cache. Reading an
+  untouched Target Scheduler database does not create the calibration tables,
+  and a dry run rolls its temporary catalog changes back.</p>
+
+  <h2 id="rigs">Rigs and library management</h2>
+  <p>A stable rig identity combines telescope, camera, sensor dimensions, and
+  binning; N.I.N.A. profile IDs are recorded separately. A copied database
+  therefore carries the calibration catalog without tying it to one local row
+  number or profile.</p>
+  <p>The library manager filters by rig and frame type, marks paths that no
+  longer exist, and shows the settings used for matching. An editor with
+  database management enabled can rescan the configured folders, forget a bad
+  catalog record without deleting its file, or clear generated masters while
+  retaining all raw frames. Forgetting an input invalidates every dependent
+  master automatically.</p>
+
+  <h2 id="matching">How safe matching works</h2>
+  <p>A candidate must agree with every hard setting the light records. If the
+  light knows a value and the calibration frame omits it, the candidate does
+  not match; wholly unknown sensors never match. Safe candidates are ordered by
+  capture-time distance and limited to 64 inputs per master.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Master</th><th>Required agreement</th></tr>
+      <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, and Bayer layout</td></tr>
+      <tr><td>Dark</td><td>Bias fields, exposure within 0.05 seconds, and temperature within 3 °C</td></tr>
+      <tr><td>Dark flat</td><td>Flat sensor settings, exposure, and temperature</td></tr>
+      <tr><td>Flat</td><td>Bias fields, filter, telescope, and focal length within 1 mm</td></tr>
+    </table>
+  </div>
+  <p>Inputs to one master must also cohere with each other. Temperature groups
+  stay within 1 °C, and flats come from one capture session so a fresh dust map
+  is not mixed with a months-old one. PSF Guard chooses the nearest complete
+  cluster rather than letting one stray frame orphan a usable set.</p>
+
+  <h2 id="stacking">Calibrate stack previews</h2>
+  <p>The stack panel's <strong>Calibration</strong> control has three modes:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Mode</th><th>Behavior</th></tr>
+      <tr><td><strong>Auto</strong></td><td>Default. Apply only masters whose matching and dependency chain are safe.</td></tr>
+      <tr><td><strong>Force on</strong></td><td>Use every master that can be built, including a flat without a trusted pedestal estimate; the card warns about the risk.</td></tr>
+      <tr><td><strong>Off</strong></td><td>Skip matching and integrate the raw lights.</td></tr>
+    </table>
+  </div>
+  <p>The project-level choice is remembered, and each target/filter card can
+  override it. Turn one channel off when its flat is bad without discarding
+  calibration for the rest. A result built under another mode is marked out of
+  date.</p>
+  <p>Multi-night stacks may need different flats or darks. PSF Guard partitions
+  the lights into calibration sessions, swaps the appropriate masters as it
+  integrates each group, and reports the session count on the card. Resume
+  checkpoints and source-artifact searches include the exact per-session master
+  identity, so changed calibration always forces the safe amount of rebuilding.</p>
+  <div class="callout info">
+    A master that fails to build does not fail the stack. The affected lights
+    continue without it, and the card names the skipped master and full reason.
+    A dependent master is skipped rather than built from a failed input.
+  </div>
+
+  <h2 id="flats">Flat-field safeguards</h2>
+  <p>A flat divides correctly only after the light's pedestal is removed. A
+  bias or dark master provides that subtraction. With a flats-only library,
+  PSF Guard can fit the pedestal from the lights when the field provides enough
+  vignetting and the estimate passes consistency guardrails. The card reports
+  the fitted value; an untrustworthy fit leaves the flat unused in Auto mode
+  and explains why.</p>
+  <p>Flat masters receive a spatial defect pass because a hot pixel repeats in
+  every flat and survives across-frame clipping. Darks retain their hot pixels
+  so they can subtract the lights' own. If no dark master exists, calibrated
+  lights receive the same impulse filter before integration.</p>
+  <div class="callout">
+    <strong>Let stars move between sky flats.</strong> Dither or let the sky drift.
+    Tracking the same star onto the same flat pixels lets it survive statistical
+    clipping, and a star image is wider than the pixel-defect pass is meant to
+    remove.
+  </div>
+
+  <h2 id="masters">Master cache and provenance</h2>
+  <p>Each master needs at least two inputs. Seiza uses a two-pass,
+  leave-one-out sigma-clipped mean and writes the input count and clipping
+  provenance into the FITS. Cached filenames are content-addressed from the
+  input frame identities and fingerprints, dependency masters, and processing
+  versions. Changing a bias invalidates dark and flat masters that used it; a
+  valid unchanged master is reused.</p>
+  <pre><code>&lt;cache&gt;/&lt;database&gt;/calibration-masters/</code></pre>
+
+  <h2 id="export">Export lights with their calibration data</h2>
+  <p>Project and target exports add the raw calibration frames safely matched to
+  each selected light. The default target-grouped layout keeps flats beside the
+  target they serve. The optional <strong>WBPP</strong> layout uses PixInsight's
+  frame-type roots, puts dark flats beside darks, and includes
+  <code>run-wbpp.sh</code> and <code>run-wbpp.cmd</code> to load the export into
+  WeightedBatchPreprocessing.</p>
+  <p><a href="exporting.html">Open Export for Stacking →</a> for both trees, UI
+  and CLI controls, the generated WBPP handoff, and repeat-export behavior.</p>
+
+  <h2 id="transfer">Moving a catalog</h2>
+  <p><strong>Merge catalogs</strong> and <code>sync pull</code> copy rigs, profile
+  bindings, and raw calibration-frame records. They intentionally do not copy
+  generated master rows or cached FITS files. The destination resolves stale
+  raw paths by basename under its own configured image folders and builds its
+  own masters.</p>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Symptom</th><th>Check</th></tr>
+      <tr><td>No calibration summary</td><td>Add the calibration folder to the catalog and run Import; confirm <code>IMAGETYP</code> identifies the frame.</td></tr>
+      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout, exposure, temperature, filter, telescope, and focal-length metadata.</td></tr>
+      <tr><td>Master build warning</td><td>Open the card details for the skipped master and full cause. The light stack continues with the masters that built safely.</td></tr>
+      <tr><td>Flat makes edges brighter</td><td>Use Auto and import bias or dark frames. Force on can apply a flat whose pedestal could not be removed.</td></tr>
+      <tr><td>Stars in a sky-flat master</td><td>Dither or allow drift between flats; fixed-position stars cannot be clipped away.</td></tr>
+      <tr><td>Old master reused</td><td>Changed input fingerprints invalidate it automatically. Use Clear masters only when you explicitly need every valid master rebuilt.</td></tr>
+    </table>
+  </div>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="stacking.html">← Stack Previews</a>
+    <a href="exporting.html">Export for Stacking →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
