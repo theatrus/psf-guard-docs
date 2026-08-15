@@ -119,7 +119,7 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>CLI Reference</h1>
   <p class="lede">
-    The command-line tools serve the UI, add FITS libraries, screen images,
+    The command-line tools serve the UI, add FITS/XISF libraries, screen images,
     and sync database copies. Most desktop catalog work does not need them.
   </p>
 
@@ -145,7 +145,7 @@ psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
   The server manages every database in the registry, not just the one passed on
   the command line — see <a href="configuration.html">Configuration</a>.</p>
 
-  <h2 id="import">Import FITS libraries</h2>
+  <h2 id="import">Import FITS and XISF libraries</h2>
   <pre><code><span class="c"># Build and register a compatible image catalog</span>
 psf-guard create-db archive.sqlite ./lights ./more-lights --name "Archive"
 
@@ -157,7 +157,9 @@ psf-guard import archive ./new-lights
 psf-guard remove-imported archive --dry-run</code></pre>
   <p>The first pass reads headers only and leaves frames Pending. It derives
   projects, targets, shared exposure templates, and plans without waiting for
-  star detection or plate solving. See <a href="importing.html">Add Images
+  star detection or plate solving. Scans accept <code>.fits</code>,
+  <code>.fit</code>, <code>.fts</code>, and monolithic <code>.xisf</code> files.
+  See <a href="importing.html">Add Images
   &amp; Plan</a> for grouping, quality backfill, database paths, and UI
   controls.</p>
 
@@ -218,6 +220,9 @@ psf-guard benchmark-psf image.fits</code></pre>
     <figcaption><code>visualize-psf-multi</code>: observed / fitted / residual grids
     with Moffat &amp; Gaussian models.</figcaption>
   </figure>
+  <p>The analysis commands also accept XISF paths. Annotated star maps label
+  each detection with its measured HFR; use <code>--max-stars</code> to trade
+  label density for field coverage.</p>
 
   <h2 id="fits">FITS utilities</h2>
   <pre><code>psf-guard stretch-to-png image.fits -o output.png    <span class="c"># MTF auto-stretch</span>

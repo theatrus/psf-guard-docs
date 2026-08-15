@@ -185,6 +185,24 @@ function gtag_report_demo() {
   the same whether you look at it from one session, another, or across every
   project at once.</p>
 
+  <h2 id="scoring">Score guardrails and penalty controls</h2>
+  <p>A low relative score alone does not name a fault or recommend rejection.
+  PSF Guard attaches a cause only when the corresponding detector has enough
+  evidence, and reviewed rejection recommendations use that cause rather than
+  the number by itself.</p>
+  <p>One absolute guardrail is deliberate: a light frame whose star measurement
+  found <strong>zero stars</strong> receives a condemned score and a
+  <strong>No Stars Detected</strong> cause, even without sequence peers. A frame
+  with no measurement at all is not capped; missing optional analysis is not
+  evidence of a bad image.</p>
+  <p>Open <strong>Penalties</strong> in the Sequence view to scale how strongly
+  satellite trails, pointing failures, and temporal anomalies lower the score.
+  Each runs from 0% (ignore that evidence) through the calibrated 100% default
+  to 200% (double the hit). The remembered choice applies to the Sequence view,
+  grid badges, and detail panel together. The zero-star guardrail never scales.
+  Setting satellite or pointing evidence to 0% also stops that evidence from
+  driving a reject recommendation.</p>
+
   <h2 id="quick-start">Quick start</h2>
   <div class="workflow-note simple">
     <div class="workflow-tag">In the app</div>
@@ -326,7 +344,7 @@ psf-guard move-rejects --db my-db-slug</code></pre>
     <li>The photometric reference requires stars present in ≥50% of a session's
       frames, so it is blind to regions occluded for <em>most</em> of a sequence —
       by design; that case belongs to the dead-cell metric.</li>
-    <li>Raw one-shot-color FITS files need a recognized
+    <li>Raw one-shot-color FITS or XISF files need a recognized
       <code>BAYERPAT</code> header. PSF Guard debayers them to luminance for
       quality measurements; diagnostics remain luminance views.</li>
     <li>The glow ADU floor is rig- and exposure-profile-specific.</li>
