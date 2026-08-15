@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Add Images &amp; Plan — PSF Guard</title>
-  <meta name="description" content="Build a PSF Guard image catalog from FITS folders, derive projects and exposure plans, add quality data, and optionally sync planning with Target Scheduler.">
+  <meta name="description" content="Build a PSF Guard image catalog from FITS or XISF folders, derive projects and exposure plans, add measured quality, and optionally sync planning with Target Scheduler.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -117,16 +117,16 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Add FITS folders and plan the project</h1>
+  <h1>Add image folders and plan the project</h1>
   <p class="lede">
-    Start from plain FITS folders, build a Target Scheduler-compatible catalog,
-    review the projects and plans PSF Guard derives from the headers, then add
-    costly quality evidence in the background.
+    Start from plain FITS or XISF folders, build a Target Scheduler-compatible
+    catalog, review the projects and plans PSF Guard derives from the headers,
+    then add costly quality evidence in the background.
   </p>
 
   <div class="workflow-note import">
-    <div class="workflow-tag">From FITS</div>
-    <div class="workflow-copy"><strong>Use this path for a FITS-only archive or missing frames</strong><p>Import reads headers first and leaves quality work for later.</p></div>
+    <div class="workflow-tag">From images</div>
+    <div class="workflow-copy"><strong>Use this path for a FITS/XISF archive or missing frames</strong><p>Import reads headers first and leaves quality work for later.</p></div>
     <a class="workflow-link" href="#create">Create a catalog ↓</a>
   </div>
 
@@ -139,7 +139,7 @@ function gtag_report_demo() {
   Invalid paths stay in the form and the error names the missing directory.</p>
   <figure>
     <img src="../assets/import-from-images.png" alt="New Database from Images form with header-only import and optional background quality analysis">
-    <figcaption>The first pass reads FITS headers only. Quality analysis stays
+    <figcaption>The first pass reads image headers only. Quality analysis stays
     off by default and can run later.</figcaption>
   </figure>
   <p>The UI puts the SQLite file in <code>databases/</code> beside PSF Guard's
@@ -154,6 +154,17 @@ function gtag_report_demo() {
   --name "Archive"</code></pre>
   <p>Use <code>--dry-run</code> to preview a CLI import without keeping the new
   file, or <code>--no-register</code> to keep it out of the shared registry.</p>
+
+  <h2 id="formats">Supported image formats</h2>
+  <p>A folder scan picks up <code>.fits</code>, <code>.fit</code>,
+  <code>.fts</code>, and <code>.xisf</code>, in any letter case. Monolithic XISF
+  files written by PixInsight carry the same astronomy keywords, so they group,
+  grade, preview, screen, and stack like FITS frames. Sidecar files are ignored.</p>
+  <p>PixInsight commonly stores floating-point XISF samples between 0 and 1.
+  When the file declares those bounds, PSF Guard maps the samples onto a 16-bit
+  physical scale while reading them. Background and star flux then remain
+  comparable with camera-written frames in the same sequence; the source file
+  is never changed.</p>
 
   <h2 id="derived">What PSF Guard derives</h2>
   <p>PSF Guard writes a full Target Scheduler-compatible schema. This inherited
@@ -224,6 +235,11 @@ psf-guard import archive ./new-lights</code></pre>
   and obstruction metrics plus fresh pointing evidence. A server restart stops
   the in-memory job, but the persistent cache lets the next run skip completed
   work.</p>
+  <p><strong>Write star count and HFR into image metadata</strong> controls whether
+  those measured values also fill empty fields in the catalog. It is on by
+  default and remembered for import-time analysis, Analyze Missing Quality, and
+  Rescan All Quality. Existing N.I.N.A./Target Scheduler measurements win, and
+  PSF Guard never writes into the FITS or XISF file itself.</p>
 
   <h2 id="plan">Review and edit the plan</h2>
   <p>Open <strong>Overview → Plan &amp; coordinates</strong> to inspect project

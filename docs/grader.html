@@ -129,7 +129,7 @@ function gtag_report_demo() {
 
   <div class="workflow-note simple">
     <div class="workflow-tag">Simple</div>
-    <div class="workflow-copy"><strong>Build or open a catalog</strong><p>Start from FITS folders or an existing Target Scheduler database.</p></div>
+    <div class="workflow-copy"><strong>Build or open a catalog</strong><p>Start from FITS/XISF folders or an existing Target Scheduler database.</p></div>
     <a class="workflow-link" href="./#choose">Getting started →</a>
   </div>
 
@@ -186,6 +186,17 @@ function gtag_report_demo() {
       image cursor or grading state.</figcaption>
     </figure>
   </details>
+
+  <h2 id="stars">Star overlays and measured HFR</h2>
+  <p>Open a frame and press <code>S</code> to toggle the live star overlay. The
+  annotated-star image uses the same measurements and labels every detection
+  with its HFR beside the circle. Limit the maximum star count when a dense
+  field would make the labels too crowded; label size follows the preview size
+  so the values remain legible.</p>
+  <p>HocusFocus detection automatically uses the frame's focal length and pixel
+  size when both headers are available. Wide-field images keep smaller stars;
+  long-focal-length images use a stricter structure preset. Missing scale
+  headers retain the standard detector behavior.</p>
 
   <h2 id="compare">Comparison mode</h2>
   <figure>
