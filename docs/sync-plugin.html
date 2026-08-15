@@ -120,17 +120,16 @@ function gtag_report_demo() {
   <h1>N.I.N.A. Sync Plugin</h1>
   <p class="lede">
     <strong>PSF Guard Sync</strong> is a N.I.N.A. plugin that keeps a live Target
-    Scheduler catalog in step with a PSF Guard server — pushing each capture as it
-    lands and syncing plans and grades on demand, without the two-database CLI
-    <a href="workflows.html#sync">sync</a> dance.
+    Scheduler catalog in step with a PSF Guard server: upload each saved light,
+    push scheduler captures as they land, and exchange plans and reviewed grades
+    without the two-database CLI <a href="workflows.html#sync">sync</a> dance.
   </p>
 
   <div class="callout">
-    <strong>Preview / beta.</strong> The plugin is published on the beta channel
-    (v0.1.0.0) and speaks the versioned <code>/api/sync/v1</code> protocol. The PSF
-    Guard server side of that protocol is still being built, so capture pushes
-    return <code>404</code> until it ships — install it now to try the N.I.N.A.
-    side and follow along.
+    <strong>Beta channel, working end to end.</strong> PSF Guard Sync 0.2.0.0
+    speaks the versioned <code>/api/sync/v1</code> protocol implemented by PSF
+    Guard 0.6.1 and newer. Both direct image upload and Target Scheduler catalog
+    synchronization are available now.
   </div>
 
   <h2 id="install">Install it in N.I.N.A.</h2>
@@ -147,20 +146,50 @@ function gtag_report_demo() {
   </ol>
   <div class="callout info">
     Requires <strong>Windows x64</strong>, N.I.N.A. <strong>3.2.0.9001</strong> or
-    newer, and Target Scheduler schema <strong>22+</strong>. The registry lives at
+    newer, and PSF Guard <strong>0.6.1+</strong>. Target Scheduler schema
+    <strong>22+</strong> is required for catalog sync, but not for direct FITS
+    upload. The registry lives at
     <a href="https://nina-plugins.psf-guard.com/">nina-plugins.psf-guard.com</a>.
   </div>
 
+  <h2 id="server">Prepare the PSF Guard server</h2>
+  <ol>
+    <li>Open <strong>Settings &rarr; Databases</strong> and edit the destination
+      catalog.</li>
+    <li>Choose <strong>Generate</strong> beside <strong>Remote API key</strong>,
+      then copy the key while it is visible.</li>
+    <li>Enable <strong>Remote scheduler sync</strong>. If the plugin will upload
+      image files directly, also enable <strong>Remote image uploads</strong> and
+      choose one of that catalog's configured image directories.</li>
+    <li>Save the catalog and record its ID from the database list or its
+      <code>?db=</code> URL value.</li>
+  </ol>
+  <p>The server keeps only a salted digest of an incoming key, so it cannot show
+  the key again. Generating a replacement invalidates the old value. Scheduler
+  sync and image upload are separate grants even though they use the same
+  catalog-scoped key.</p>
+  <div class="callout info">
+    A browser-managed server needs database management enabled and an editor
+    login to change this catalog configuration. See
+    <a href="authentication.html">Server Accounts</a> for the network-server
+    access model.
+  </div>
+
   <h2 id="how">How it works</h2>
-  <p>The plugin subscribes to N.I.N.A.'s image-saved event. For each saved light
-  frame it waits briefly for Target Scheduler to commit the matching
-  <code>acquiredimage</code> row, builds a schema-preserving bundle of that capture
-  plus its project, target, and plan dependencies, and drops it in a durable retry
-  queue. <strong>Network work never blocks the image-save pipeline</strong> &mdash; if
-  the server is unreachable, bundles wait and retry.</p>
+  <p>The plugin subscribes to N.I.N.A.'s image-saved event and can use either of
+  two capture paths. Direct image mode queues the saved light itself; PSF Guard
+  verifies its digest and imports it from the FITS headers. Target Scheduler
+  mode waits briefly for the matching <code>acquiredimage</code> row, then queues a
+  schema-preserving bundle containing the capture and its project, target, and
+  plan dependencies. <strong>Network work never blocks the image-save
+  pipeline</strong> &mdash; an unavailable server simply leaves work in the durable
+  retry queue.</p>
   <ul>
-    <li><strong>Automatic capture push</strong> &mdash; every light frame is queued to
-      the PSF Guard catalog right after Target Scheduler records it.</li>
+    <li><strong>Direct image upload</strong> &mdash; send saved FITS lights without
+      installing Target Scheduler.</li>
+    <li><strong>Automatic catalog push</strong> &mdash; queue each light after Target
+      Scheduler records it, including the scheduler metadata PSF Guard needs to
+      preserve the plan.</li>
     <li><strong>Durable, idempotent queue</strong> &mdash; bundles live under
       <code>%LOCALAPPDATA%\NINA\PsfGuardSync</code>, survive restarts, and re-send
       safely.</li>
@@ -180,12 +209,15 @@ function gtag_report_demo() {
   <ol>
     <li>The PSF Guard <strong>server URL</strong>.</li>
     <li>The destination PSF Guard <strong>catalog ID</strong>.</li>
-    <li>An <strong>API token</strong> (stored in Windows Credential Manager).</li>
-    <li>The Target Scheduler <strong>database path</strong> (default
+    <li>The <strong>Remote API key</strong> copied from PSF Guard. The plugin stores
+      it in Windows Credential Manager.</li>
+    <li>For catalog sync, the Target Scheduler <strong>database path</strong> (default
       <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>).</li>
-    <li>Your <strong>capture-push and preview-apply policy</strong>.</li>
+    <li>Choose direct FITS upload, Target Scheduler catalog push, or both, plus
+      the preview-apply policy for catalog changes.</li>
   </ol>
-  <p>Use <strong>Test connection</strong> before enabling automatic pushes.</p>
+  <p>Use <strong>Test connection</strong> before enabling automatic work. It checks
+  the URL, API key, selected catalog, protocol version, and server grants.</p>
 
   <h2 id="sequencer">Sequencer instructions</h2>
   <p>The plugin also contributes instructions under <strong>PSF Guard Sync</strong> in
@@ -200,7 +232,29 @@ function gtag_report_demo() {
       plan.</li>
     <li><strong>Pull PSF Guard grades</strong> &mdash; applies reviewed grades and
       rejection reasons by unambiguous acquired-image GUID.</li>
+    <li><strong>Reconcile PSF Guard catalog</strong> &mdash; pushes a fresh full
+      scheduler snapshot, waits for PSF Guard's preview, and optionally applies
+      it. This is useful at the end of a session.</li>
+    <li><strong>Reconcile current target with PSF Guard</strong> &mdash; does the
+      same for only the enclosing target. Place it near the end of that target's
+      container; ambiguous Target Scheduler target names are refused instead of
+      guessed.</li>
   </ul>
+  <p>Reconciliation instructions wait for final Target Scheduler transactions
+  and then wait for the server preview, so they are real sequence barriers.
+  Automatic per-capture pushes keep retrying independently in the background.</p>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Result</th><th>Check</th></tr>
+      <tr><td>401 or &ldquo;Bearer token required&rdquo;</td><td>The plugin has no Remote API key. Copy or replace it, then run Test connection.</td></tr>
+      <tr><td>403 invalid key or wrong catalog</td><td>The key is catalog-scoped. Confirm the destination catalog ID and generate a new key if the old one was replaced.</td></tr>
+      <tr><td>403 scheduler sync disabled</td><td>Enable Remote scheduler sync on that PSF Guard catalog. Image upload permission alone does not grant catalog changes.</td></tr>
+      <tr><td>404 under <code>/api/sync/v1</code></td><td>Upgrade the PSF Guard server to 0.6.1 or newer. A 404 for an older preview can also mean its 30-minute lifetime ended or it was already applied.</td></tr>
+      <tr><td>Queued work does not drain</td><td>Run Test connection, confirm N.I.N.A. can reach the server URL, then leave the plugin running; its durable queues resume automatically.</td></tr>
+    </table>
+  </div>
 
   <div class="callout info">
     Working from one machine, or syncing two SQLite files directly? The CLI
