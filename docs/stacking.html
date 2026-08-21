@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stack Previews — PSF Guard</title>
-  <meta name="description" content="Live calibrated stack previews inside the grader: per-channel Seiza integrations, LRGB and narrowband color, named processing setups, source-artifact search, and export.">
+  <meta name="description" content="Build calibrated mono and color stack previews, measure signal-to-noise growth with depth, inspect processing, and export linear results from PSF Guard.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -195,6 +195,42 @@ function gtag_report_demo() {
   panels re-attach to a running job when they mount. Leave the grid, reload the
   page, come back: the work is still there. Superseded artifacts are swept from
   the cache behind you.</p>
+
+  <h2 id="snr">See when more frames stop helping</h2>
+  <p>Every mono build measures <strong>Signal-to-noise vs depth</strong> while
+  the stack accumulator is already passing each depth. The solid curve is the
+  measured integration. When every accepted frame has the same known exposure,
+  a dashed square-root line shows the improvement perfect averaging would give.
+  Mixed or missing exposures keep the measurements but withhold that comparison
+  and its projections.</p>
+  <figure>
+    <img src="../assets/stack-snr-curve.png" alt="A 90-frame H-alpha stack with measured signal-to-noise by depth and an ideal square-root comparison" loading="lazy">
+    <figcaption>This quality-ordered 90-frame H-alpha stack starts with its
+    strongest frames, then shows how the measured curve approaches the ideal as
+    weaker frames join it.</figcaption>
+  </figure>
+  <p>The <strong>Order</strong> control changes the question:</p>
+  <ul>
+    <li><strong>Capture sequence</strong> follows the night after a fixed,
+      high-quality registration reference. Use it to ask whether another night
+      of similar data should still help.</li>
+    <li><strong>Quality</strong> puts the strongest catalog-ranked frames first.
+      Use it to see where weaker frames stop earning their place. This order
+      restacks from the beginning because a later frame can sort into the
+      middle.</li>
+  </ul>
+  <p>With enough consistent depths, the card reads the curve as
+  <strong>Still improving</strong>, <strong>Diminishing returns</strong>,
+  <strong>Plateau</strong>, or <strong>Getting worse</strong>, and estimates
+  what another five or ten percent would cost. Inconclusive data keeps its
+  exact measurements without forcing a verdict. Fold the chart from its own
+  heading; the remembered heading still shows the order and verdict.</p>
+  <p>The result survives reloads and resumed builds. PSF Guard writes it to the
+  stack sidecar, resume checkpoint, and <code>SNRORDER</code>,
+  <code>SNRNOISE</code>, <code>SNRVALUE</code>, <code>SNRSLOPE</code>, and
+  <code>SNRVERDT</code> FITS cards. Use
+  <a href="cli.html#snr"><code>stack-snr</code></a> to run the same measurement
+  over a folder without a catalog.</p>
 
   <h2 id="inspect">Inspect at full resolution, stretch, download</h2>
   <p>The preview opens in the same inspector the grader uses — zoom, pan, fit,

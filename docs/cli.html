@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CLI Reference — PSF Guard</title>
-  <meta name="description" content="Every PSF Guard command: serving, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
+  <meta name="description" content="Every PSF Guard command: serving, import, export, stack SNR, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -191,6 +191,20 @@ psf-guard export my-db --dest ./stacking \
   <a href="exporting.html">Export for Stacking</a> for desktop/browser use,
   Pending-frame opt-in, raw database paths, repeat-export behavior, and API
   examples.</p>
+
+  <h2 id="snr">Measure stack depth without a catalog</h2>
+  <pre><code><span class="c"># Measure a folder in capture order</span>
+psf-guard stack-snr ./lights
+
+<span class="c"># Put the strongest frames first and save the exact curve</span>
+psf-guard stack-snr ./lights --order quality --csv curve.csv --json curve.json</code></pre>
+  <p>The command recursively reads FITS and XISF frames, stacks them raw, and
+  measures signal-to-noise at increasing depths. Capture order asks whether
+  more frames like this night still help. Quality order ranks frames by detected
+  star count and sharpness to ask which are worth keeping; use
+  <code>--threads</code> to bound that detection work. A curve needs at least
+  three frames. See <a href="stacking.html#snr">Stack Previews</a> for the
+  measured curve, ideal comparison, verdicts, and projections.</p>
 
   <h2 id="rejects">Reject archival</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]

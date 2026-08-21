@@ -135,8 +135,9 @@ function gtag_report_demo() {
   <ol>
     <li>In <strong>Settings &rarr; Databases</strong>, add the folders holding the
       calibration files to the catalog's image directories.</li>
-    <li>Choose <strong>Import</strong> and inspect the dry preview before applying
-      it. New-database creation and the CLI use the same header-only scan.</li>
+    <li>Choose <strong>Import</strong>, select <strong>Calibration only</strong>
+      when appropriate, and inspect the dry preview before applying it.
+      New-database creation and the CLI use the same header-only scan.</li>
     <li>Open the database's calibration summary and choose
       <strong>Manage</strong> to inspect coverage by rig and frame type.</li>
   </ol>
@@ -168,6 +169,17 @@ function gtag_report_demo() {
   retaining all raw frames. Forgetting an input invalidates every dependent
   master automatically.</p>
 
+  <h2 id="coverage">Check a project's calibration coverage</h2>
+  <p>Choose <strong>Calibration</strong> on a project card in Overview. The
+  report uses the same matcher as a real stack, so it shows what would apply
+  rather than merely counting files in the library.</p>
+  <p>Each frame kind lists its matching frames, capture sessions, and newest
+  date. A night-and-filter table then names the flat session selected for each
+  group of lights, its age, and whether it came from the same night. Warnings
+  call out missing kinds, nights without their own flats, stale flats, and
+  source light files that could not be resolved. Use the report before a long
+  build to find holes while there is still time to shoot them.</p>
+
   <h2 id="matching">How safe matching works</h2>
   <p>A candidate must agree with every hard setting the light records. If the
   light knows a value and the calibration frame omits it, the candidate does
@@ -177,15 +189,20 @@ function gtag_report_demo() {
     <table>
       <tr><th>Master</th><th>Required agreement</th></tr>
       <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, and Bayer layout</td></tr>
-      <tr><td>Dark</td><td>Bias fields, exposure within 0.05 seconds, and temperature within 3 °C</td></tr>
+      <tr><td>Dark</td><td>Bias fields, exposure within the larger of 0.1% or 0.05 seconds, and temperature within 3 °C</td></tr>
       <tr><td>Dark flat</td><td>Flat sensor settings, exposure, and temperature</td></tr>
-      <tr><td>Flat</td><td>Bias fields, filter, telescope, and focal length within 1 mm</td></tr>
+      <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within 1 mm, and rotator angle within 1° when both frames record it</td></tr>
     </table>
   </div>
   <p>Inputs to one master must also cohere with each other. Temperature groups
   stay within 1 °C, and flats come from one capture session so a fresh dust map
   is not mixed with a months-old one. PSF Guard chooses the nearest complete
   cluster rather than letting one stray frame orphan a usable set.</p>
+  <p>Before integration, Seiza also checks that the chosen inputs form one
+  coherent set. A frame from the wrong filter, camera, gain, or readout mode is
+  set aside instead of costing the whole master. The calibration warning names
+  the rejected frame class and count; the remaining safe inputs still build
+  the master.</p>
 
   <h2 id="stacking">Calibrate stack previews</h2>
   <p>The stack panel's <strong>Calibration</strong> control has three modes:</p>
@@ -261,7 +278,7 @@ function gtag_report_demo() {
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
       <tr><td>No calibration summary</td><td>Add the calibration folder to the catalog and run Import; confirm <code>IMAGETYP</code> identifies the frame.</td></tr>
-      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout, exposure, temperature, filter, telescope, and focal-length metadata.</td></tr>
+      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout, exposure, temperature, filter, telescope, focal length, and recorded rotator angle.</td></tr>
       <tr><td>Master build warning</td><td>Open the card details for the skipped master and full cause. The light stack continues with the masters that built safely.</td></tr>
       <tr><td>Flat makes edges brighter</td><td>Use Auto and import bias or dark frames. Force on can apply a flat whose pedestal could not be removed.</td></tr>
       <tr><td>Stars in a sky-flat master</td><td>Dither or allow drift between flats; fixed-position stars cannot be clipped away.</td></tr>

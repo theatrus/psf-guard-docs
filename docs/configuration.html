@@ -147,6 +147,19 @@ function gtag_report_demo() {
   touch your real config, pass <code>--registry /tmp/scratch.json</code>.</p>
   <p>The default N.I.N.A. scheduler database on Windows lives at
   <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</p>
+  <p>Each registry entry can also set <code>export_dir</code> to an absolute
+  server-side destination:</p>
+  <pre><code>{
+  "id": "archive",
+  "name": "Archive",
+  "db_path": "/data/archive.sqlite",
+  "image_dirs": ["/data/images"],
+  "export_dir": "/data/stacking-exports"
+}</code></pre>
+  <p>Overview exports then run as background jobs below that directory. The
+  caller chooses a project or target and layout, not an arbitrary path. Set the
+  same field through <strong>Settings &rarr; Databases &rarr; Edit</strong>; an empty
+  value disables server export.</p>
 
   <h2 id="astrometry">Seiza catalogs and plate solving</h2>
   <p>PSF Guard uses Seiza's standard catalog discovery. Data installed by
@@ -217,9 +230,12 @@ curl -X POST "localhost:3000/api/db/my-db/images/123/astrometry"
 <span class="c"># Cached or on-demand satellite prediction</span>
 curl "localhost:3000/api/db/my-db/images/123/satellites"
 curl -X POST "localhost:3000/api/db/my-db/images/123/satellites"</code></pre>
-  <p>Export has a read-only streaming ZIP route and a management-gated
-  server-local folder route. See <a href="exporting.html#api">Export for
-  Stacking</a> for request options and examples.</p>
+  <p>Export has a read-only streaming ZIP route, a management-gated arbitrary
+  local-path route, and <code>GET/POST
+  /api/db/{db_id}/export/server</code> for progress and writes below the
+  operator-configured <code>export_dir</code>. See
+  <a href="exporting.html#api">Export for Stacking</a> for request options and
+  examples.</p>
   <p>Preview and annotated images generate asynchronously: a cache miss returns
   HTTP 202 (<code>{"state": "generating"}</code>) and a batch
   <code>generation-status</code> endpoint reports readiness — the UI uses this to
