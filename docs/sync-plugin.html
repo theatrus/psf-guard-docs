@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>N.I.N.A. Sync Plugin — PSF Guard</title>
-  <meta name="description" content="Install the PSF Guard Sync plugin for N.I.N.A. from the psf-guard.com plugin registry — push captures and sync Target Scheduler plans and grades with a PSF Guard server.">
+  <meta name="description" content="Pair the PSF Guard Sync plugin with a PSF Guard server, upload lights and calibration frames, and review Target Scheduler plans, captures, and grades before applying them.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -121,16 +121,17 @@ function gtag_report_demo() {
   <h1>N.I.N.A. Sync Plugin</h1>
   <p class="lede">
     <strong>PSF Guard Sync</strong> is a N.I.N.A. plugin that keeps a live Target
-    Scheduler catalog in step with a PSF Guard server: upload each saved light,
-    push scheduler captures as they land, and exchange plans and reviewed grades
-    without the two-database CLI <a href="workflows.html#sync">sync</a> dance.
+    Scheduler catalog in step with a PSF Guard server: upload saved lights and
+    calibration frames, push scheduler captures as they land, and exchange plans
+    and reviewed grades without the two-database CLI
+    <a href="workflows.html#sync">sync</a> dance.
   </p>
 
   <div class="callout">
-    <strong>Beta channel, working end to end.</strong> PSF Guard Sync 0.2.0.0
-    speaks the versioned <code>/api/sync/v1</code> protocol implemented by PSF
-    Guard 0.6.1 and newer. Both direct image upload and Target Scheduler catalog
-    synchronization are available now.
+    <strong>Beta channel, working end to end.</strong> Current builds pair with a
+    one-time code, upload FITS or XISF images, and move Target Scheduler data
+    through the versioned <code>/api/sync/v1</code> protocol. Older 0.6.1+
+    servers and clients can still use the manual API-key setup below.
   </div>
 
   <h2 id="install">Install it in N.I.N.A.</h2>
@@ -153,47 +154,75 @@ function gtag_report_demo() {
     <a href="https://nina-plugins.psf-guard.com/">nina-plugins.psf-guard.com</a>.
   </div>
 
-  <h2 id="server">Prepare the PSF Guard server</h2>
+  <h2 id="server">Pair N.I.N.A. with a catalog</h2>
   <ol>
     <li>Open <strong>Settings &rarr; Databases</strong> and edit the destination
       catalog.</li>
-    <li>Choose <strong>Generate</strong> beside <strong>Remote API key</strong>,
-      then copy the key while it is visible.</li>
-    <li>Enable <strong>Remote scheduler sync</strong>. If the plugin will upload
-      image files directly, also enable <strong>Remote image uploads</strong> and
-      choose one of that catalog's configured image directories.</li>
-    <li>Save the catalog and record its ID from the database list or its
-      <code>?db=</code> URL value.</li>
+    <li>If N.I.N.A. will upload image files, enable <strong>Remote image
+      uploads</strong>, choose one configured image directory as the receive
+      directory, and save the catalog.</li>
+    <li>Choose <strong>Generate pairing code</strong> beside
+      <strong>Pair a client</strong>, then copy the code.</li>
+    <li>In the plugin, enter the PSF Guard server URL, paste the pairing code,
+      and connect. The server returns the catalog ID and a credential for this
+      N.I.N.A. install in one step.</li>
+    <li>Run <strong>Test connection</strong>, then choose the upload and catalog
+      sync behavior you want.</li>
   </ol>
-  <p>The server keeps only a salted digest of an incoming key, so it cannot show
-  the key again. Generating a replacement invalidates the old value. Scheduler
-  sync and image upload are separate grants even though they use the same
-  catalog-scoped key.</p>
+  <p>A pairing code works once and expires after one hour. Each successful
+  pairing creates a separate catalog-scoped credential. PSF Guard stores only
+  its digest, and the plugin stores the credential in Windows Credential
+  Manager. Pairing enables scheduler sync for that catalog. It does not enable
+  image upload or choose a receive directory.</p>
+  <p>The same catalog editor shows <strong>Paired clients</strong>. Revoke one
+  install there without disconnecting any other paired client.</p>
   <div class="callout info">
-    A browser-managed server needs database management enabled and an editor
-    login to change this catalog configuration. See
+    Creating a pairing code and revoking a client are database-management
+    actions. A browser-managed server needs database management enabled and an
+    editor login. See
     <a href="authentication.html">Server Accounts</a> for the network-server
     access model.
   </div>
 
+  <h3 id="manual-key">Manual API-key fallback</h3>
+  <p>A client that does not support pairing can still use the original setup:</p>
+  <ol>
+    <li>Enable <strong>Remote scheduler sync</strong> on the catalog. Enable
+      <strong>Remote image uploads</strong> separately when needed.</li>
+    <li>Choose <strong>Generate</strong> beside <strong>Remote API key</strong>,
+      copy the key while it is visible, and save the catalog.</li>
+    <li>Copy the catalog ID from the database list or its <code>?db=</code> URL,
+      then enter the URL, ID, and key in the client.</li>
+  </ol>
+  <p>Replacing this manual key invalidates the previous manual key. It does not
+  revoke paired clients. Revoking a paired client likewise leaves the manual
+  key and other clients working.</p>
+
   <h2 id="how">How it works</h2>
   <p>The plugin subscribes to N.I.N.A.'s image-saved event and can use either of
-  two capture paths. Direct image mode queues the saved light itself; PSF Guard
-  verifies its digest and imports it from the FITS headers. Target Scheduler
-  mode waits briefly for the matching <code>acquiredimage</code> row, then queues a
-  schema-preserving bundle containing the capture and its project, target, and
-  plan dependencies. <strong>Network work never blocks the image-save
-  pipeline</strong> &mdash; an unavailable server simply leaves work in the durable
-  retry queue.</p>
+  two capture paths. Direct image mode queues the saved FITS or XISF file; PSF
+  Guard verifies its digest and imports it from the image headers. Target
+  Scheduler mode waits briefly for a light's matching
+  <code>acquiredimage</code> row, then queues a schema-preserving bundle with the
+  capture and its project, target, and plan dependencies. <strong>Network work
+  never blocks the image-save pipeline</strong> &mdash; an unavailable server
+  simply leaves work in the durable retry queue.</p>
   <ul>
-    <li><strong>Direct image upload</strong> &mdash; send saved FITS lights without
-      installing Target Scheduler.</li>
+    <li><strong>Direct image upload</strong> &mdash; send FITS or XISF lights,
+      bias frames, darks, dark-flats, and flats without installing Target
+      Scheduler. Calibration frames enter PSF Guard's calibration library and
+      never create Target Scheduler image rows.</li>
     <li><strong>Automatic catalog push</strong> &mdash; queue each light after Target
       Scheduler records it, including the scheduler metadata PSF Guard needs to
       preserve the plan.</li>
     <li><strong>Durable, idempotent queue</strong> &mdash; bundles live under
       <code>%LOCALAPPDATA%\NINA\PsfGuardSync</code>, survive restarts, and re-send
-      safely.</li>
+      safely. Repeating the same image basename and digest does not create a
+      second catalog entry.</li>
+    <li><strong>Proxy-safe previews</strong> &mdash; large catalog pushes start a
+      background preview job. The plugin polls its token-scoped job while PSF
+      Guard materializes the source and compares it with the destination, so a
+      reverse proxy does not need to hold one long request open.</li>
     <li><strong>Two-way, on demand</strong> &mdash; manual full merge, planning push,
       and reviewed-grade push, plus planning and grade <em>pull</em> back into Target
       Scheduler.</li>
@@ -203,30 +232,61 @@ function gtag_report_demo() {
       touch only <code>gradingStatus</code> and <code>rejectreason</code>.</li>
     <li><strong>Optional thumbnails</strong> &mdash; transfer Target Scheduler
       thumbnails alongside the capture.</li>
+    <li><strong>Verified pulls</strong> &mdash; PSF Guard hashes the exact response
+      bytes and returns that SHA-256 in <code>X-Content-SHA256</code>. The plugin
+      verifies those bytes before it changes Target Scheduler. The digest inside
+      the JSON bundle remains advisory because different JSON writers do not
+      produce identical bytes.</li>
   </ul>
 
-  <h2 id="configure">Configure it</h2>
-  <p>Open <strong>Plugins &rarr; Installed &rarr; PSF Guard Sync</strong> and set:</p>
+  <h2 id="previews">Review staged catalog changes</h2>
+  <p>Every catalog push creates a server-owned preview before it can write the
+  destination. Open <strong>Settings &rarr; Sync</strong> and find
+  <strong>Staged previews</strong>. The list includes previews made in this
+  browser and previews a remote N.I.N.A. client left for review.</p>
+  <p>Each row names the catalog, operation, source, inserted and updated counts,
+  grade counts, and expiry. Expand <strong>What would change</strong> for exact
+  lines such as <code>update project &quot;Caldwell 49&quot;: state: 1 &rarr; 3</code>.
+  It also lists each grade transition with its reason and each project, target,
+  plan, or image insertion or update, capped at 400 lines.</p>
+  <ul>
+    <li><strong>Apply</strong> writes the reviewed preview.</li>
+    <li><strong>Refresh</strong> compares the saved source bundle with the
+      destination again. Use it after the destination changed.</li>
+    <li><strong>Discard</strong> removes the staged preview without changing the
+      catalog.</li>
+  </ul>
+  <div class="callout">
+    Nothing changes the destination until Apply. If the plugin is configured to
+    apply remote previews automatically, it applies the same frozen preview it
+    just created; otherwise the row remains in Staged previews until you act or
+    it expires.
+  </div>
+
+  <h2 id="configure">Choose sync and upload behavior</h2>
+  <p>After pairing, open <strong>Plugins &rarr; Installed &rarr; PSF Guard
+    Sync</strong> and choose:</p>
   <ol>
-    <li>The PSF Guard <strong>server URL</strong>.</li>
-    <li>The destination PSF Guard <strong>catalog ID</strong>.</li>
-    <li>The <strong>Remote API key</strong> copied from PSF Guard. The plugin stores
-      it in Windows Credential Manager.</li>
     <li>For catalog sync, the Target Scheduler <strong>database path</strong> (default
       <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>).</li>
-    <li>Choose direct FITS upload, Target Scheduler catalog push, or both, plus
-      the preview-apply policy for catalog changes.</li>
+    <li>Whether to upload each saved light directly.</li>
+    <li>Whether to <strong>also upload calibration frames</strong>: bias, dark,
+      dark-flat, and flat saves.</li>
+    <li>Whether to push each saved light's Target Scheduler row.</li>
+    <li>Whether catalog previews should apply automatically or wait in PSF Guard
+      for review.</li>
   </ol>
   <p>Use <strong>Test connection</strong> before enabling automatic work. It checks
-  the URL, API key, selected catalog, protocol version, and server grants.</p>
+  the URL, paired or manual credential, selected catalog, protocol version, and
+  server grants.</p>
 
   <h2 id="sequencer">Sequencer instructions</h2>
   <p>The plugin also contributes instructions under <strong>PSF Guard Sync</strong> in
   the advanced sequencer:</p>
   <ul>
-    <li><strong>Check PSF Guard connection</strong> &mdash; verifies the server, API
-      token, and selected catalog. Place it near the start of a session so a remote
-      outage follows the instruction's configured error behavior.</li>
+    <li><strong>Check PSF Guard connection</strong> &mdash; verifies the server,
+      credential, and selected catalog. Place it near the start of a session so
+      a remote outage follows the instruction's configured error behavior.</li>
     <li><strong>Pull PSF Guard planning</strong> &mdash; applies remote projects,
       targets, templates, and plans to Target Scheduler. Run it <em>before</em> a
       Target Scheduler container starts; a running container may keep its in-memory
@@ -240,6 +300,10 @@ function gtag_report_demo() {
       same for only the enclosing target. Place it near the end of that target's
       container; ambiguous Target Scheduler target names are refused instead of
       guessed.</li>
+    <li><strong>PSF Guard image upload</strong> &mdash; waits for the completed
+      save, then uploads the selected lights, calibration frames, or both. It
+      works without Target Scheduler and can replace profile-wide automatic
+      uploads for one sequence.</li>
   </ul>
   <p>Reconciliation instructions wait for final Target Scheduler transactions
   and then wait for the server preview, so they are real sequence barriers.
@@ -249,10 +313,14 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Result</th><th>Check</th></tr>
-      <tr><td>401 or &ldquo;Bearer token required&rdquo;</td><td>The plugin has no Remote API key. Copy or replace it, then run Test connection.</td></tr>
-      <tr><td>403 invalid key or wrong catalog</td><td>The key is catalog-scoped. Confirm the destination catalog ID and generate a new key if the old one was replaced.</td></tr>
+      <tr><td>Pairing code is unknown, expired, or already used</td><td>Generate a new code from the destination catalog. A code works once and lasts one hour.</td></tr>
+      <tr><td>401 or &ldquo;Bearer token required&rdquo;</td><td>The plugin has no saved credential, or its paired client was revoked. Pair it again, or configure the manual key fallback, then run Test connection.</td></tr>
+      <tr><td>403 invalid key or wrong catalog</td><td>A credential is catalog-scoped. Pair with the intended catalog, or confirm both the manual key and catalog ID.</td></tr>
       <tr><td>403 scheduler sync disabled</td><td>Enable Remote scheduler sync on that PSF Guard catalog. Image upload permission alone does not grant catalog changes.</td></tr>
+      <tr><td>Image upload is unavailable</td><td>Enable Remote image uploads and choose a receive directory on that catalog. Pairing does not enable this separate grant.</td></tr>
       <tr><td>404 under <code>/api/sync/v1</code></td><td>Upgrade the PSF Guard server to 0.6.1 or newer. A 404 for an older preview can also mean its 30-minute lifetime ended or it was already applied.</td></tr>
+      <tr><td>Large preview times out at a proxy</td><td>Upgrade both sides so the client requests background preview jobs and polls them to completion.</td></tr>
+      <tr><td>&ldquo;Bundle digest is missing or invalid&rdquo;</td><td>Upgrade both sides so pulls verify the raw response against <code>X-Content-SHA256</code> instead of re-serializing the JSON bundle.</td></tr>
       <tr><td>Queued work does not drain</td><td>Run Test connection, confirm N.I.N.A. can reach the server URL, then leave the plugin running; its durable queues resume automatically.</td></tr>
     </table>
   </div>

@@ -174,7 +174,7 @@ function gtag_report_demo() {
   <p>An editor can also grade with undo and redo, edit projects, targets,
   coordinates, and exposure plans, start scans and imports, write exports, apply
   sync previews, and — when the matching server gate is on — manage databases,
-  peers, catalogs, and calibration records.</p>
+  pair or revoke remote clients, peers, catalogs, and calibration records.</p>
 
   <p>The server enforces the role itself, so a client calling the API directly
   gains nothing. The UI marks a read-only session <strong>Read only</strong>,
@@ -228,11 +228,38 @@ allow_read_only_compute = false</code></pre>
   for a direct HTTP development server — a browser will not send a Secure cookie
   over plain HTTP.</p>
 
-  <h2 id="sync">What keeps working without a login</h2>
+  <h2 id="sync">Remote clients do not use browser sessions</h2>
   <p>Remote image upload and scheduler sync carry their own
-  <code>Authorization: Bearer</code> keys, scoped to the database they were
-  issued for. Those routes keep working on a server with no browser accounts at
-  all, which is how a headless intake box runs while a person grades elsewhere.</p>
+  <code>Authorization: Bearer</code> credentials, scoped to one catalog. Those
+  routes keep working without a browser login, which is how a headless intake
+  box runs while a person grades elsewhere.</p>
+
+  <p>The default setup starts behind the normal management gate. An editor opens
+  <strong>Settings &rarr; Databases</strong>, edits a catalog, and generates a
+  <strong>Pair a client</strong> code. The code is the whole authorization for
+  one exchange: it works once and expires after one hour. The client receives
+  that catalog's ID and its own durable credential. PSF Guard stores only a
+  digest; the N.I.N.A. plugin stores the credential in Windows Credential
+  Manager.</p>
+
+  <p>Each install appears separately under <strong>Paired clients</strong>.
+  Revoking one stops only that install. It does not sign out browser users,
+  revoke other paired clients, or invalidate the legacy manual API key.
+  Pairing enables scheduler sync, but image upload remains a separate catalog
+  setting with its own receive directory.</p>
+
+  <div class="callout info">
+    Pairing and revocation require database management because they grant or
+    remove catalog access. Once paired, ordinary sync and upload requests need
+    only the client's catalog-scoped bearer credential. Use HTTPS whenever the
+    client connects across a network you do not fully trust.
+  </div>
+
+  <p>Older clients can still use a manually generated Remote API key plus the
+  catalog ID. Replacing that manual key invalidates only the previous manual
+  key; paired clients keep their own credentials. See the
+  <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin setup</a> for both
+  paths.</p>
 
   <p>Scripts that drive the ordinary UI API log in with a cookie jar instead:</p>
 
