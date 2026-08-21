@@ -150,19 +150,29 @@ psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
   <pre><code><span class="c"># Build and register a compatible image catalog</span>
 psf-guard create-db archive.sqlite ./lights ./more-lights --name "Archive"
 
-<span class="c"># Preview and then import new frames into an existing database</span>
-psf-guard import archive ./new-lights --dry-run
-psf-guard import archive ./new-lights
+<span class="c"># Preview and then import lights and calibration frames</span>
+psf-guard import archive ./new-frames --dry-run
+psf-guard import archive ./new-frames
+
+<span class="c"># Scope the run to one frame kind</span>
+psf-guard import archive ./new-lights --lights-only
+psf-guard import archive ./new-flats --calibration-only
+
+<span class="c"># Ignore integration masters and calibrated/registered intermediates</span>
+psf-guard import archive ./processing-tree --skip-processed
 
 <span class="c"># Preview removal of projects made by an import</span>
 psf-guard remove-imported archive --dry-run</code></pre>
-  <p>The first pass reads headers only and leaves frames Pending. It derives
-  projects, targets, shared exposure templates, and plans without waiting for
-  star detection or plate solving. Scans accept <code>.fits</code>,
-  <code>.fit</code>, <code>.fts</code>, and monolithic <code>.xisf</code> files.
-  See <a href="importing.html">Add Images
-  &amp; Plan</a> for grouping, quality backfill, database paths, and UI
-  controls.</p>
+  <p>The first pass reads headers only. Light frames become Pending catalog
+  images and derive projects, targets, shared exposure templates, and plans.
+  Bias, dark, dark-flat, and flat frames become calibration-library records,
+  not Target Scheduler image rows. <code>--lights-only</code> and
+  <code>--calibration-only</code> are mutually exclusive;
+  <code>--skip-processed</code> works with either. Scans accept
+  <code>.fits</code>, <code>.fit</code>, <code>.fts</code>, and monolithic
+  <code>.xisf</code> files. See <a href="importing.html">Add Images &amp;
+  Plan</a> for the UI's frame-kind selector, folder checkboxes, safe preview
+  workflow, grouping rules, and quality backfill.</p>
 
   <h2 id="screening">Quality screening</h2>
   <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
