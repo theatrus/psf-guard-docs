@@ -85,6 +85,7 @@ function gtag_report_demo() {
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
@@ -178,6 +179,25 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># restores everyth
     <figcaption>The Settings workspace names both catalogs and requires a
     server-owned preview before any merge or push.</figcaption>
   </figure>
+  <h3 id="staged-previews">Review every staged preview</h3>
+  <p><strong>Settings &rarr; Sync &rarr; Staged previews</strong> lists every
+  transfer waiting on the server, including a push the N.I.N.A. plugin created
+  in the background. Each row shows the destination catalog, operation, source,
+  inserted and updated counts, grade counts, and expiry.</p>
+  <p>Expand <strong>What would change</strong> to see each field change. The
+  list includes grade transitions and their reasons, plus each project,
+  target, plan, or image that will be inserted or updated. It shows at most
+  400 lines.</p>
+  <ul>
+    <li><strong>Apply</strong> writes the reviewed preview.</li>
+    <li><strong>Refresh</strong> compares its saved source with the current
+      destination again.</li>
+    <li><strong>Discard</strong> removes it without changing the destination.</li>
+  </ul>
+  <p>Nothing changes until you select Apply. For a large remote push, the server
+  builds the preview in the background. The client checks progress while the
+  server loads the source data and compares it with the destination. This
+  avoids keeping one HTTP request open through a reverse proxy.</p>
   <pre><code><span class="c"># Mirror projects, targets and captured images FROM the telescope INTO your DB.
 # Your local grading is preserved; new images arrive with the telescope's grade.</span>
 psf-guard sync pull --from telescope.sqlite --to my-db --dry-run

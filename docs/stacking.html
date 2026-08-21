@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stack Previews — PSF Guard</title>
-  <meta name="description" content="Live stack previews inside the grader: per-channel Seiza integrations, LRGB and narrowband color composition, background extraction, deconvolution, and export for your stacking pipeline.">
+  <meta name="description" content="Build calibrated mono and color stack previews, measure signal-to-noise growth with depth, inspect processing, and export linear results from PSF Guard.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -85,6 +85,7 @@ function gtag_report_demo() {
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html" class="active" aria-current="page">Stack Previews</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
@@ -118,9 +119,10 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Stack Previews</h1>
-  <p class="lede">Check an integration before committing hours to calibration:
+  <p class="lede">Check an integration before committing hours to processing:
   PSF Guard live-stacks the graded frames of a target right inside the grader —
-  per channel, in color, and with your current grades and sequence checks.</p>
+  safely calibrated, per channel, in color, and with your current grades and
+  sequence checks.</p>
 
   <h2 id="mono">Per-channel previews from graded frames</h2>
   <p>From a project's stack panel, PSF Guard integrates the selected or visible
@@ -134,8 +136,8 @@ function gtag_report_demo() {
   <div class="shot-pair">
     <figure>
       <img src="../assets/stack-preview.png" alt="A three-frame B-channel project stack preview card" loading="lazy">
-      <figcaption>On-demand, uncalibrated integration grouped by exact target
-      and channel, with live phase progress.</figcaption>
+      <figcaption>On-demand integration grouped by exact target and channel,
+      with live calibration and registration progress.</figcaption>
     </figure>
     <figure>
       <img src="../assets/stack-preview-decisions.png" alt="Per-frame Seiza registration and admission details" loading="lazy">
@@ -144,6 +146,28 @@ function gtag_report_demo() {
       result.</figcaption>
     </figure>
   </div>
+
+  <h2 id="calibration">Choose calibration per stack or channel</h2>
+  <p>The stack panel can build bias, dark, dark-flat, and flat masters from the
+  catalog's safely matched library. <strong>Auto</strong> applies only masters
+  with a sound dependency chain; <strong>Force on</strong> applies every master
+  it can build and warns about risky cases; <strong>Off</strong> integrates raw
+  lights. The project choice is remembered, while each target/filter card can
+  override it independently.</p>
+  <p>Multi-night stacks divide themselves into calibration sessions when the
+  lights need different flats or darks, then swap masters as each group is
+  integrated. A failed master no longer fails the stack: the card names what
+  was skipped and why, continues with the safe masters, and keeps the exact
+  applied set in its resume and provenance identity.</p>
+  <p><a href="calibration.html">Open Calibration Libraries →</a> for import,
+  hard matching rules, flats-only pedestal handling, hot-pixel safeguards,
+  master caching, and sky-flat advice.</p>
+  <figure>
+    <img src="../assets/stack-calibration-controls.png" alt="Stack preview panel with project-wide Auto calibration and a completed HOO color preview" loading="lazy">
+    <figcaption>A real project with project-wide <strong>Auto</strong>
+    calibration selected. The same panel builds mono channels and the finished
+    HOO color preview while preserving each result independently.</figcaption>
+  </figure>
 
   <h2 id="queue">Build a whole night without babysitting it</h2>
   <p>Build buttons stay live while a build runs. Each click queues a channel
@@ -171,6 +195,48 @@ function gtag_report_demo() {
   panels re-attach to a running job when they mount. Leave the grid, reload the
   page, come back: the work is still there. Superseded artifacts are swept from
   the cache behind you.</p>
+
+  <h2 id="snr">See when more frames stop helping</h2>
+  <p>Each mono build measures <strong>Signal-to-noise vs depth</strong> at
+  several stack sizes. The solid line shows the measured SNR. If all accepted
+  frames have the same known exposure, a dashed square-root line shows the gain
+  expected from ideal averaging. If exposures differ or are missing, PSF Guard
+  shows only the measured curve and does not estimate future gains.</p>
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/stack-snr-analysis.png" alt="Two completed mono stack cards with measured signal-to-noise curves, ideal trends, verdicts, and frame projections" loading="lazy">
+      <figcaption>Completed stack cards show the curve, verdict, averaging
+      rate, and estimated frames needed for more signal.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/stack-snr-curve.png" alt="A 90-frame H-alpha stack with measured signal-to-noise by depth and an ideal square-root comparison" loading="lazy">
+      <figcaption>This quality-ordered 90-frame H-alpha stack starts with its
+      strongest frames, then shows how the measured curve approaches the ideal
+      as weaker frames join it.</figcaption>
+    </figure>
+  </div>
+  <p>The <strong>Order</strong> control changes the question:</p>
+  <ul>
+    <li><strong>Capture sequence</strong> adds frames in capture order and uses
+      one fixed, high-quality frame for registration. Use it to estimate
+      whether similar data from another night will improve the stack.</li>
+    <li><strong>Quality</strong> adds the highest-ranked frames first. Use it to
+      see whether lower-quality frames still improve the stack. PSF Guard
+      rebuilds the stack because a new frame may belong earlier in the
+      ranking.</li>
+  </ul>
+  <p>With enough measurements, the card reports
+  <strong>Still improving</strong>, <strong>Diminishing returns</strong>,
+  <strong>Plateau</strong>, or <strong>Getting worse</strong>. It also estimates
+  how many more frames may be needed to improve SNR by 5% or 10%. If the
+  evidence is not clear, the card shows the measurements without a verdict.
+  You can collapse the chart; its heading still shows the order and verdict.</p>
+  <p>PSF Guard saves the result in the stack sidecar and resume checkpoint. It
+  also writes <code>SNRORDER</code>,
+  <code>SNRNOISE</code>, <code>SNRVALUE</code>, <code>SNRSLOPE</code>, and
+  <code>SNRVERDT</code> to the FITS header. Use
+  <a href="cli.html#snr"><code>stack-snr</code></a> to measure a folder without
+  a catalog.</p>
 
   <h2 id="inspect">Inspect at full resolution, stretch, download</h2>
   <p>The preview opens in the same inspector the grader uses — zoom, pan, fit,
@@ -273,6 +339,23 @@ function gtag_report_demo() {
   integration. Like the display stretch, it is a reversible view decision —
   toggle it, compare, and download either representation.</p>
 
+  <h2 id="setups">Reuse named processing setups</h2>
+  <p>Both <strong>View processing</strong> and the color
+  <strong>Processing stack</strong> can save their parameters under a name.
+  Choose a built-in or saved setup, inspect the values it fills into the editor,
+  then run <strong>Apply processing</strong>; selecting a setup never starts an
+  expensive render by itself.</p>
+  <p>A view setup contains its display stretch and optional deconvolution. A
+  color setup contains background extraction, per-channel input processing,
+  and output stretches. Applying a color setup to another target matches its
+  channels by name and leaves deconvolution opt-in for channels the setup did
+  not explicitly name.</p>
+  <p>Saved setups are global across every configured database. Manage, delete,
+  import, or export them in <strong>Settings &rarr; Setups</strong>; exports can
+  contain one setup or the whole collection. Viewers on an authenticated server
+  may list, apply, and export setups, while saving, deleting, and importing need
+  an editor.</p>
+
   <h2 id="artifact">Find which frame left that mark</h2>
   <p>A stack makes a satellite trail, a reflection, a dust shadow, or a hot
   region far easier to see than any single sub does. Open the full-size
@@ -298,18 +381,17 @@ function gtag_report_demo() {
 
   <h2 id="takeout">Take the data out for real stacking</h2>
   <p>When the preview convinces you the data is worth a full run, export the
-  non-rejected lights straight into your stacking pipeline. Rejects are never
-  exported; ungraded frames are opt-in. Desktop, browser, CLI, and API modes
-  all produce the same WBPP-style layout —
-  <code>&lt;target&gt;/LIGHT/&lt;filter&gt;/</code> — that PixInsight WBPP and
-  Siril group automatically.</p>
+  non-rejected lights and their safely matched calibration frames straight
+  into your stacking pipeline. Rejects are never exported; ungraded frames are
+  opt-in. Keep the default target-grouped tree, or choose the WBPP layout and
+  use its generated PixInsight handoff scripts.</p>
   <p><a href="exporting.html">Open the Export for Stacking guide →</a> for
   desktop and browser steps, CLI filters, repeat-export behavior, API examples,
   and troubleshooting.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="satellites.html">← Satellite Tracks</a>
-    <a href="exporting.html">Export for Stacking →</a>
+    <a href="calibration.html">Calibration Libraries →</a>
   </nav>
 </main>
 </div>

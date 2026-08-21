@@ -85,6 +85,7 @@ function gtag_report_demo() {
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
@@ -170,9 +171,9 @@ function gtag_report_demo() {
   that suits a trusted private server and not a public demo, where repeated jobs
   eat CPU, bandwidth, and cache.</p>
 
-  <p>An editor can also grade with undo and redo, edit projects, targets,
-  coordinates, and exposure plans, start scans and imports, write exports, apply
-  sync previews, and — when the matching server gate is on — manage databases,
+  <p>An editor can grade images, edit projects and plans, start scans and
+  imports, write exports, and apply sync previews. If database management is
+  enabled on the server, an editor can also manage databases, remote clients,
   peers, catalogs, and calibration records.</p>
 
   <p>The server enforces the role itself, so a client calling the API directly
@@ -227,11 +228,37 @@ allow_read_only_compute = false</code></pre>
   for a direct HTTP development server — a browser will not send a Secure cookie
   over plain HTTP.</p>
 
-  <h2 id="sync">What keeps working without a login</h2>
+  <h2 id="sync">Remote clients do not use browser sessions</h2>
   <p>Remote image upload and scheduler sync carry their own
-  <code>Authorization: Bearer</code> keys, scoped to the database they were
-  issued for. Those routes keep working on a server with no browser accounts at
-  all, which is how a headless intake box runs while a person grades elsewhere.</p>
+  <code>Authorization: Bearer</code> credentials, scoped to one catalog. Those
+  routes keep working without a browser login, which is how a headless intake
+  box runs while a person grades elsewhere.</p>
+
+  <p>By default, pairing requires database-management permission. An editor
+  opens <strong>Settings &rarr; Databases</strong>, edits a catalog, and creates
+  a <strong>Pair a client</strong> code. The code works once and expires after
+  one hour. After pairing, the client receives the catalog ID and its own saved
+  credential. PSF Guard stores only a digest of that credential. The N.I.N.A.
+  plugin stores the credential in Windows Credential Manager.</p>
+
+  <p>Each install appears separately under <strong>Paired clients</strong>.
+  Revoking one stops only that install. It does not sign out browser users,
+  revoke other paired clients, or invalidate the legacy manual API key.
+  Pairing enables scheduler sync, but image upload remains a separate catalog
+  setting with its own receive directory.</p>
+
+  <div class="callout info">
+    Pairing and revocation require database management because they grant or
+    remove catalog access. Once paired, ordinary sync and upload requests need
+    only the client's catalog-scoped bearer credential. Use HTTPS whenever the
+    client connects across a network you do not fully trust.
+  </div>
+
+  <p>Older clients can still use a manually generated Remote API key plus the
+  catalog ID. Replacing that manual key invalidates only the previous manual
+  key; paired clients keep their own credentials. See the
+  <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin setup</a> for both
+  paths.</p>
 
   <p>Scripts that drive the ordinary UI API log in with a cookie jar instead:</p>
 

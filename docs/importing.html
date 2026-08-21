@@ -85,6 +85,7 @@ function gtag_report_demo() {
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
     <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
@@ -169,9 +170,9 @@ function gtag_report_demo() {
   <h2 id="derived">What PSF Guard derives</h2>
   <p>PSF Guard writes a full Target Scheduler-compatible schema. This inherited
   mapping lets it open an existing Scheduler database, but Target Scheduler is
-  not required. Imported frames begin as Pending. Header data becomes projects,
-  targets, shared exposure templates, exposure plans, and acquired-image
-  rows:</p>
+  not required. Imported light frames begin as Pending. Their header data
+  becomes projects, targets, shared exposure templates, exposure plans, and
+  acquired-image rows:</p>
   <ul>
     <li><code>OBJECT</code> names define targets. Each target gets one project
       by default, even across many nights.</li>
@@ -187,6 +188,10 @@ function gtag_report_demo() {
     <li>Each template and exposure length becomes a plan. Frame counts seed the
       desired and acquired counts.</li>
   </ul>
+  <p>Bias, dark, dark-flat, and flat frames follow a separate path. They become
+  calibration-library records in PSF Guard-owned tables, never projects or
+  Target Scheduler <code>acquiredimage</code> rows. PSF Guard records their paths
+  and fingerprints while leaving every source file in place.</p>
   <figure>
     <img src="../assets/project-plan-narrowband.png" alt="B, G, HA, L, OIII, R, and SII exposure templates for a real narrowband project">
     <figcaption>A real narrowband plan shows the same fields import fills:
@@ -205,12 +210,45 @@ function gtag_report_demo() {
 
   <h2 id="top-up">Import more frames</h2>
   <p>Choose <strong>Import</strong> on a configured database. PSF Guard first
-  shows a dry preview. It skips basenames already present, attaches new frames
-  to an existing target by object name or coordinates within 0.5 degrees, and
-  creates new structure only for unmatched frames. Confirm the preview to
-  write it.</p>
-  <pre><code>psf-guard import archive ./new-lights --dry-run
-psf-guard import archive ./new-lights</code></pre>
+  shows a dry preview. Before applying it, choose exactly what the next scan
+  should include:</p>
+  <ul>
+    <li><strong>Import</strong> selects <strong>Lights and calibration</strong>
+      (the default), <strong>Lights only</strong>, or
+      <strong>Calibration only</strong>. Frames outside the selected kind are
+      counted and left alone. A calibration-only run can rebuild the library
+      without touching scheduler image rows.</li>
+    <li><strong>Folders</strong> shows each configured image root and two levels
+      of subfolders. Select a whole root, or deselect it and choose only the
+      night or processing folders you need. Choosing a subfolder inside a
+      configured root does not require extra database-management permission.</li>
+    <li><strong>Skip processing artifacts</strong> leaves out integration masters
+      and PixInsight calibrated or registered intermediates. This is off by
+      default; enable it when a processing tree repeats the same exposures under
+      new basenames.</li>
+  </ul>
+  <div class="callout info">
+    Changing a scope or folder does not change the catalog. Choose
+    <strong>Update preview</strong> to run the dry preview again, review the new
+    counts, and only then confirm the import.
+  </div>
+  <p>The importer skips basenames already present, attaches a new light to an
+  existing target by object name or coordinates within 0.5 degrees, and creates
+  new structure only for unmatched lights. Calibration frames are deduplicated
+  by canonical path and file fingerprint.</p>
+  <pre><code><span class="c"># Preview, then import lights and calibration frames</span>
+psf-guard import archive ./new-frames --dry-run
+psf-guard import archive ./new-frames
+
+<span class="c"># Rebuild only the calibration library</span>
+psf-guard import archive ./new-flats --calibration-only
+
+<span class="c"># Leave derived processing files out of the catalog</span>
+psf-guard import archive ./processing-tree --skip-processed</code></pre>
+  <p><code>--lights-only</code> and <code>--calibration-only</code> select one
+  frame kind and cannot be combined. <code>--skip-processed</code> applies to
+  either scope. Use <code>--no-attach</code> when every imported light should
+  create new catalog structure instead of joining a matching target.</p>
   <p>The settings page reads job state from the server when it opens. Closing or
   reloading the page does not hide a running import; the progress view resumes.
   One import can run per database.</p>
@@ -246,6 +284,19 @@ psf-guard import archive ./new-lights</code></pre>
   state and limits, target name and coordinates, rotation, ROI, shared
   templates, and filter plans. With database management enabled, edit those
   fields, add a plan, or correct imported project and target grouping.</p>
+  <p>Open <strong>Scheduling limits</strong> to edit Target Scheduler's
+  <strong>Flats handling</strong> rule:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Choice</th><th>When Target Scheduler takes flats</th></tr>
+      <tr><td>Off</td><td>Do not schedule flats for this project</td></tr>
+      <tr><td>Every 1–7 sessions</td><td>Take flats after the selected number of capture sessions</td></tr>
+      <tr><td>Target completion</td><td>Take flats when the target completes</td></tr>
+      <tr><td>Immediate</td><td>Request flats immediately</td></tr>
+    </table>
+  </div>
+  <p>This is Target Scheduler planning state. It does not override PSF Guard's
+  calibration-frame matching or a stack preview's Calibration mode.</p>
 
   <h2 id="sync">Sync with the telescope</h2>
   <div class="workflow-note sync">
