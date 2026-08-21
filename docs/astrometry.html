@@ -241,7 +241,10 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
   </ol>
   <p>The panel labels the result <strong>Embedded WCS</strong>,
   <strong>Hinted solve</strong>, or <strong>Blind solve</strong>, and shows the
-  solved center, pixel scale, and whether the scheduled target is in frame.</p>
+  solved center, pixel scale, and whether the scheduled target is in frame.
+  Its <strong>Rotation</strong> row gives the direction of celestial north from
+  image up, measured positive toward image right. A <strong>mirrored</strong>
+  label marks reversed field parity.</p>
   <p>Satellite projection adds the exposure time and observing site to that
   WCS. Dashed orbital paths and solid pixel-aligned paths remain separate. See
   <a href="satellites.html">Satellite Tracks</a> for timing headers, offline

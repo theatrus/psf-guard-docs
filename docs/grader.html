@@ -169,8 +169,12 @@ function gtag_report_demo() {
     <li><strong>Smart filtering</strong> — project, target, grading status,
       filter, date range, search, image size, and filter/date/session grouping.</li>
     <li><strong>Batch operations</strong> — multi-select with Shift+Click / Ctrl+Click,
-      or move the cursor with arrows and press Space. Accept, reject, or unmark
+      or move the cursor with arrows and press Space. Hold Shift with an arrow
+      key to extend the selection from the keyboard. Accept, reject, or unmark
       the whole selection.</li>
+    <li><strong>Visible selection state</strong> — an accepted or rejected card
+      keeps its grade-colored border when selected. An outer ring and checkmark
+      show the selection without hiding the grade.</li>
     <li><strong>Stable review position</strong> — preview generation, stack
       status, and database refreshes preserve the first visible image instead
       of moving the page.</li>
@@ -188,6 +192,29 @@ function gtag_report_demo() {
     </figure>
   </details>
 
+  <h2 id="review-preferences">Review preferences and score chips</h2>
+  <p>Open <strong>Settings → Review</strong> to set review behavior for this
+  browser. Under <strong>Grading</strong>, the option <strong>Move to the next
+  image after accept, reject, or pending</strong> controls whether a grade
+  advances the cursor. Hold Shift while you accept, reject, or unmark to do the
+  opposite for that one grade.</p>
+  <p>Under <strong>Score chips</strong>, choose either or both comparison
+  badges:</p>
+  <ul>
+    <li><strong>Night-session score chip</strong> — the moon badge ranks the
+      frame within its own capture session.</li>
+    <li><strong>All-sessions score chip</strong> — the stacked-layers badge
+      ranks the frame against every comparable stack candidate for that target
+      and filter. It appears only when more than one session can be compared.</li>
+  </ul>
+  <p>The Grid and Sequence toolbars repeat these choices as compact moon and
+  stacked-layers toggles. One browser setting controls both views, so a frame
+  keeps the same score context as you move through the grader. The grading
+  preference also applies in image detail. The large score badge remains the
+  score for the active comparison; its tooltip says whether it is a
+  <strong>Pixel-assisted score</strong> or <strong>Catalog-relative
+  score</strong>.</p>
+
   <h2 id="stars">Star overlays and measured HFR</h2>
   <p>Open a frame and press <code>S</code> to toggle the live star overlay. The
   annotated-star image uses the same measurements and labels every detection
@@ -203,6 +230,25 @@ function gtag_report_demo() {
     <figcaption>Press <code>S</code> in the image inspector to compare the
     frame with the detector's star positions and per-star HFR measurements.</figcaption>
   </figure>
+
+  <h2 id="tilt">Sensor tilt and aberration inspector</h2>
+  <p>Open a frame and press <code>I</code> to open <strong>Sensor tilt and
+  aberration inspection</strong>. The inspector places nine 1:1 crops in a
+  3×3 mosaic and reports the median HFR, eccentricity, and star count for each
+  region. Pane borders compare softness with the sharpest region. A line through
+  a pane shows the mean star-elongation direction; a thicker line means the
+  stars agree more strongly.</p>
+  <p>The summary reports <strong>Tilt</strong>, <strong>Field curvature</strong>,
+  and <strong>Center HFR</strong>. One soft side opposite a sharp side suggests
+  sensor tilt. Soft corners around a sharper center suggest field curvature.
+  A shared elongation direction across the whole sensor points more often to
+  guiding or wind. Seeing can imitate all of these patterns, so confirm a
+  diagnosis on several frames.</p>
+  <div class="callout info">
+    <strong>Missing regional measurements?</strong> If the inspector says the
+    star analysis predates region support, run <strong>Analyze Quality</strong>
+    again or reopen the frame after its star cache refreshes.
+  </div>
 
   <h2 id="compare">Comparison mode</h2>
   <figure>
@@ -260,10 +306,12 @@ function gtag_report_demo() {
     <tr><td>K / →</td><td>Next image</td><td>A</td><td>Accept</td></tr>
     <tr><td>J / ←</td><td>Previous image</td><td>X</td><td>Reject</td></tr>
     <tr><td>↑ / ↓</td><td>Nearest grid row</td><td>Space</td><td>Toggle selection</td></tr>
+    <tr><td>Shift + arrow</td><td>Extend grid selection</td><td>Shift + A / X / U</td><td>Invert grade advance once</td></tr>
     <tr><td>Enter</td><td>Open image</td><td>C</td><td>Compare</td></tr>
     <tr><td>Esc</td><td>Clear / close</td><td>U</td><td>Unmark</td></tr>
-    <tr><td>S</td><td>Stars overlay</td><td>+ / −</td><td>Zoom</td></tr>
+    <tr><td>S</td><td>Stars overlay</td><td>I</td><td>Tilt inspector</td></tr>
     <tr><td>O</td><td>Solve / sky overlay</td><td></td><td></td></tr>
+    <tr><td>+ / −</td><td>Zoom</td><td></td><td></td></tr>
     <tr><td>Ctrl+Z</td><td>Undo</td><td>Ctrl+Y</td><td>Redo</td></tr>
   </table>
 
