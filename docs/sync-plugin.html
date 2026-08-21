@@ -120,11 +120,11 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>N.I.N.A. Sync Plugin</h1>
   <p class="lede">
-    <strong>PSF Guard Sync</strong> is a N.I.N.A. plugin that keeps a live Target
-    Scheduler catalog in step with a PSF Guard server: upload saved lights and
-    calibration frames, push scheduler captures as they land, and exchange plans
-    and reviewed grades without the two-database CLI
-    <a href="workflows.html#sync">sync</a> dance.
+    <strong>PSF Guard Sync</strong> connects a live Target Scheduler catalog to
+    a PSF Guard server. It can upload saved lights and calibration frames, push
+    scheduler captures, and exchange plans and reviewed grades. You do not need
+    to run CLI <a href="workflows.html#sync">sync</a> commands between two
+    database files.
   </p>
 
   <div class="callout">
@@ -199,14 +199,12 @@ function gtag_report_demo() {
   key and other clients working.</p>
 
   <h2 id="how">How it works</h2>
-  <p>The plugin subscribes to N.I.N.A.'s image-saved event and can use either of
-  two capture paths. Direct image mode queues the saved FITS or XISF file; PSF
-  Guard verifies its digest and imports it from the image headers. Target
-  Scheduler mode waits briefly for a light's matching
-  <code>acquiredimage</code> row, then queues a schema-preserving bundle with the
-  capture and its project, target, and plan dependencies. <strong>Network work
-  never blocks the image-save pipeline</strong> &mdash; an unavailable server
-  simply leaves work in the durable retry queue.</p>
+  <p>The plugin listens for N.I.N.A.'s image-saved event and supports two
+  capture paths. Direct image mode queues the saved FITS or XISF file. Target
+  Scheduler mode waits for the light's matching <code>acquiredimage</code> row,
+  then queues a bundle that preserves the capture, project, target, and plan
+  fields. Uploads run in the background. If the server is unavailable, the
+  work stays in the retry queue.</p>
   <ul>
     <li><strong>Direct image upload</strong> &mdash; send FITS or XISF lights,
       bias frames, darks, dark-flats, and flats without installing Target
@@ -215,28 +213,27 @@ function gtag_report_demo() {
     <li><strong>Automatic catalog push</strong> &mdash; queue each light after Target
       Scheduler records it, including the scheduler metadata PSF Guard needs to
       preserve the plan.</li>
-    <li><strong>Durable, idempotent queue</strong> &mdash; bundles live under
-      <code>%LOCALAPPDATA%\NINA\PsfGuardSync</code>, survive restarts, and re-send
-      safely. Repeating the same image basename and digest does not create a
-      second catalog entry.</li>
-    <li><strong>Proxy-safe previews</strong> &mdash; large catalog pushes start a
-      background preview job. The plugin polls its token-scoped job while PSF
-      Guard materializes the source and compares it with the destination, so a
-      reverse proxy does not need to hold one long request open.</li>
+    <li><strong>Durable retry queue</strong> &mdash; bundles stay under
+      <code>%LOCALAPPDATA%\NINA\PsfGuardSync</code> and survive restarts.
+      Retrying the same basename and digest does not create another catalog
+      entry.</li>
+    <li><strong>Background previews</strong> &mdash; large catalog pushes create
+      their preview as a background job. The plugin checks progress with a
+      job-specific token. This prevents reverse-proxy timeouts.</li>
     <li><strong>Two-way, on demand</strong> &mdash; manual full merge, planning push,
       and reviewed-grade push, plus planning and grade <em>pull</em> back into Target
       Scheduler.</li>
-    <li><strong>Stable identity</strong> &mdash; matches images by GUID, remaps parent
-      IDs for projects, targets, templates, and plans, and preserves the
-      telescope-side <code>acquired</code>/<code>accepted</code> counters. Grade pulls
-      touch only <code>gradingStatus</code> and <code>rejectreason</code>.</li>
+    <li><strong>Stable identity</strong> &mdash; images match by GUID. PSF Guard
+      updates parent IDs for projects, targets, templates, and plans while
+      preserving the telescope's acquired and accepted counters. Grade pulls
+      change only <code>gradingStatus</code> and <code>rejectreason</code>.</li>
     <li><strong>Optional thumbnails</strong> &mdash; transfer Target Scheduler
       thumbnails alongside the capture.</li>
-    <li><strong>Verified pulls</strong> &mdash; PSF Guard hashes the exact response
-      bytes and returns that SHA-256 in <code>X-Content-SHA256</code>. The plugin
-      verifies those bytes before it changes Target Scheduler. The digest inside
-      the JSON bundle remains advisory because different JSON writers do not
-      produce identical bytes.</li>
+    <li><strong>Verified pulls</strong> &mdash; PSF Guard sends a SHA-256 hash of
+      the exact response body in <code>X-Content-SHA256</code>. The plugin checks
+      this hash before changing Target Scheduler. It does not rely on the digest
+      inside the JSON bundle because JSON encoders can represent the same data
+      with different bytes.</li>
   </ul>
 
   <h2 id="previews">Review staged catalog changes</h2>
@@ -244,11 +241,11 @@ function gtag_report_demo() {
   destination. Open <strong>Settings &rarr; Sync</strong> and find
   <strong>Staged previews</strong>. The list includes previews made in this
   browser and previews a remote N.I.N.A. client left for review.</p>
-  <p>Each row names the catalog, operation, source, inserted and updated counts,
-  grade counts, and expiry. Expand <strong>What would change</strong> for exact
-  lines such as <code>update project &quot;Caldwell 49&quot;: state: 1 &rarr; 3</code>.
-  It also lists each grade transition with its reason and each project, target,
-  plan, or image insertion or update, capped at 400 lines.</p>
+  <p>Each row names the catalog, operation, source, change counts, and expiry.
+  Expand <strong>What would change</strong> to see each field change. The list
+  includes grade transitions and their reasons, plus each project, target,
+  plan, or image that will be inserted or updated. It shows at most 400
+  lines.</p>
   <ul>
     <li><strong>Apply</strong> writes the reviewed preview.</li>
     <li><strong>Refresh</strong> compares the saved source bundle with the
@@ -257,10 +254,9 @@ function gtag_report_demo() {
       catalog.</li>
   </ul>
   <div class="callout">
-    Nothing changes the destination until Apply. If the plugin is configured to
-    apply remote previews automatically, it applies the same frozen preview it
-    just created; otherwise the row remains in Staged previews until you act or
-    it expires.
+    Nothing changes until Apply. If automatic apply is enabled, the plugin
+    applies the exact preview it just created. Otherwise, the preview waits for
+    review until you apply, discard, or let it expire.
   </div>
 
   <h2 id="configure">Choose sync and upload behavior</h2>
@@ -285,8 +281,9 @@ function gtag_report_demo() {
   the advanced sequencer:</p>
   <ul>
     <li><strong>Check PSF Guard connection</strong> &mdash; verifies the server,
-      credential, and selected catalog. Place it near the start of a session so
-      a remote outage follows the instruction's configured error behavior.</li>
+      credential, and selected catalog. Place it near the start of a session.
+      If the server is unavailable, the sequencer uses the instruction's
+      configured error handling.</li>
     <li><strong>Pull PSF Guard planning</strong> &mdash; applies remote projects,
       targets, templates, and plans to Target Scheduler. Run it <em>before</em> a
       Target Scheduler container starts; a running container may keep its in-memory
@@ -305,9 +302,10 @@ function gtag_report_demo() {
       works without Target Scheduler and can replace profile-wide automatic
       uploads for one sequence.</li>
   </ul>
-  <p>Reconciliation instructions wait for final Target Scheduler transactions
-  and then wait for the server preview, so they are real sequence barriers.
-  Automatic per-capture pushes keep retrying independently in the background.</p>
+  <p>Reconciliation waits for Target Scheduler to finish its transaction and
+  for the server to create the preview. The sequence does not continue until
+  both steps finish. Automatic per-capture pushes continue retrying in the
+  background.</p>
 
   <h2 id="troubleshooting">Troubleshooting</h2>
   <div class="table-wrap">

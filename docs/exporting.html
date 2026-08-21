@@ -230,18 +230,17 @@ function gtag_report_demo() {
   Image data is already hard to compress, so store mode avoids wasted CPU and
   starts the download at once.</p>
   <p>For a NAS or headless host, set an absolute <strong>Server export
-  directory</strong> under <strong>Settings &rarr; Databases &rarr; Edit</strong>
-  (or set <code>export_dir</code> in that registry entry). The same Overview
-  action then starts one background export per database, reports planning and
-  file progress, and writes a sanitized folder for the selected project or
-  target below that root. PSF Guard clones files with a reflink when the
-  filesystem supports it and copies otherwise; WBPP mode writes its runner at
-  the end.</p>
+  directory</strong> under <strong>Settings &rarr; Databases &rarr; Edit</strong>,
+  or set <code>export_dir</code> in the registry entry. The Overview Export
+  action will then start a background job for that catalog. The UI shows
+  planning and file progress. PSF Guard creates a validated subfolder for the
+  selected project or target. It uses reflinks when the filesystem supports
+  them and copies the files otherwise. A WBPP export creates its runner after
+  the files are ready.</p>
   <div class="callout info">
-    A configured destination is operator consent for writes below that one
-    directory, so starting this export does not need the broad database-
-    management grant. The browser still cannot supply an arbitrary server
-    path.
+    After an administrator configures this directory, exports may write only
+    inside it. These exports do not need the broader database-management
+    permission. The browser cannot choose another server path.
   </div>
 
   <h2 id="cli">Export from the CLI</h2>
@@ -312,9 +311,9 @@ curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
   Query/body options are <code>project_id</code>, <code>target_id</code>,
   <code>include_pending</code>, <code>filter_name</code>, and
   <code>layout</code>; the local route also accepts <code>link</code> and
-  <code>dry_run</code>. The configured server route accepts the same scope and
-  layout fields plus a single sanitized <code>subdirectory</code>; it never
-  accepts an arbitrary destination.</p>
+  <code>dry_run</code>. The configured server route accepts the same selection
+  and layout fields. It also accepts one validated <code>subdirectory</code>
+  name. It cannot write outside the configured <code>export_dir</code>.</p>
 
   <h2 id="troubleshooting">Troubleshooting</h2>
   <div class="table-wrap">

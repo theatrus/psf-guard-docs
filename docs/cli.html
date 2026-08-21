@@ -208,13 +208,14 @@ psf-guard stack-snr ./lights
 
 <span class="c"># Put the strongest frames first and save the exact curve</span>
 psf-guard stack-snr ./lights --order quality --csv curve.csv --json curve.json</code></pre>
-  <p>The command recursively reads FITS and XISF frames, stacks them raw, and
-  measures signal-to-noise at increasing depths. Capture order asks whether
-  more frames like this night still help. Quality order ranks frames by detected
-  star count and sharpness to ask which are worth keeping; use
-  <code>--threads</code> to bound that detection work. A curve needs at least
-  three frames. See <a href="stacking.html#snr">Stack Previews</a> for the
-  measured curve, ideal comparison, verdicts, and projections.</p>
+  <p>The command searches subfolders for FITS and XISF frames, builds stacks
+  from the source frames, and measures SNR at several depths. Capture order
+  shows whether more frames like those from the current night may help. Quality
+  order sorts frames by star count and sharpness so you can see whether
+  lower-ranked frames still improve the stack. Use <code>--threads</code> to
+  limit the star-detection work. A curve needs at least three frames. See
+  <a href="stacking.html#snr">Stack Previews</a> for the measured curve, ideal
+  comparison, verdicts, and projections.</p>
 
   <h2 id="rejects">Reject archival</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]

@@ -173,18 +173,22 @@ function gtag_report_demo() {
   <p>Choose <strong>Calibration</strong> on a project card in Overview. The
   report uses the same matcher as a real stack, so it shows what would apply
   rather than merely counting files in the library.</p>
-  <p>Each frame kind lists its matching frames, capture sessions, and newest
-  date. A night-and-filter table then names the flat session selected for each
-  group of lights, its age, and whether it came from the same night. Warnings
-  call out missing kinds, nights without their own flats, stale flats, and
-  source light files that could not be resolved. Use the report before a long
-  build to find holes while there is still time to shoot them.</p>
+  <p>Each frame type shows its matching frames, capture sessions, and newest
+  date. For each light night and filter, the report shows the selected flat
+  session, its age, and whether it came from the same night. Warnings list
+  missing frame types, stale flats, nights without matching flats, and light
+  files that PSF Guard could not find.</p>
+  <figure>
+    <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage report with matching bias, dark, and flat counts for each light night and filter" loading="lazy">
+    <figcaption>The report uses the stack matcher, so the counts show which
+    calibration frames PSF Guard would use.</figcaption>
+  </figure>
 
   <h2 id="matching">How safe matching works</h2>
-  <p>A candidate must agree with every hard setting the light records. If the
-  light knows a value and the calibration frame omits it, the candidate does
-  not match; wholly unknown sensors never match. Safe candidates are ordered by
-  capture-time distance and limited to 64 inputs per master.</p>
+  <p>A calibration frame must match every known required setting. If the light
+  records a value but the calibration frame does not, they do not match.
+  Frames without a known sensor identity never match. PSF Guard orders safe
+  matches by capture-time distance and uses at most 64 inputs for one master.</p>
   <div class="table-wrap">
     <table>
       <tr><th>Master</th><th>Required agreement</th></tr>
@@ -194,14 +198,13 @@ function gtag_report_demo() {
       <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within 1 mm, and rotator angle within 1° when both frames record it</td></tr>
     </table>
   </div>
-  <p>Inputs to one master must also cohere with each other. Temperature groups
-  stay within 1 °C, and flats come from one capture session so a fresh dust map
-  is not mixed with a months-old one. PSF Guard chooses the nearest complete
-  cluster rather than letting one stray frame orphan a usable set.</p>
-  <p>Before integration, Seiza also checks that the chosen inputs form one
-  coherent set. A frame from the wrong filter, camera, gain, or readout mode is
-  set aside instead of costing the whole master. The calibration warning names
-  the rejected frame class and count; the remaining safe inputs still build
+  <p>Frames used for one master must also match one another. Temperatures must
+  stay within 1 °C, and flats must come from one capture session. PSF Guard
+  selects the nearest consistent group and ignores an outlier instead of
+  rejecting an otherwise usable group.</p>
+  <p>Before building the master, Seiza checks the inputs again. It skips frames
+  with the wrong filter, camera, gain, or readout mode. The warning identifies
+  the skipped frame type and count. The remaining safe inputs can still build
   the master.</p>
 
   <h2 id="stacking">Calibrate stack previews</h2>

@@ -207,6 +207,17 @@ function gtag_report_demo() {
       ranks the frame against every comparable stack candidate for that target
       and filter. It appears only when more than one session can be compared.</li>
   </ul>
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/review-preferences.png" alt="The Review settings tab with grade advance and two score chip choices" loading="lazy">
+      <figcaption>Review settings apply at once in the current browser.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/grid-score-chips.png" alt="Image grid cards showing the main score, night-session score, and all-sessions score" loading="lazy">
+      <figcaption>The moon and stacked-layers chips keep both comparisons
+      visible on each grid card.</figcaption>
+    </figure>
+  </div>
   <p>The Grid and Sequence toolbars repeat these choices as compact moon and
   stacked-layers toggles. One browser setting controls both views, so a frame
   keeps the same score context as you move through the grader. The grading
@@ -235,19 +246,24 @@ function gtag_report_demo() {
   <p>Open a frame and press <code>I</code> to open <strong>Sensor tilt and
   aberration inspection</strong>. The inspector places nine 1:1 crops in a
   3×3 mosaic and reports the median HFR, eccentricity, and star count for each
-  region. Pane borders compare softness with the sharpest region. A line through
-  a pane shows the mean star-elongation direction; a thicker line means the
-  stars agree more strongly.</p>
+  region. Border color shows how soft each region is compared with the sharpest
+  region. A line shows the average direction of star elongation. A thicker line
+  means the stars have more consistent elongation directions.</p>
   <p>The summary reports <strong>Tilt</strong>, <strong>Field curvature</strong>,
   and <strong>Center HFR</strong>. One soft side opposite a sharp side suggests
   sensor tilt. Soft corners around a sharper center suggest field curvature.
   A shared elongation direction across the whole sensor points more often to
   guiding or wind. Seeing can imitate all of these patterns, so confirm a
   diagnosis on several frames.</p>
+  <figure>
+    <img src="../assets/sensor-tilt-inspector.png" alt="Sensor tilt inspector with a three-by-three mosaic, regional HFR and eccentricity, elongation lines, and a tilt summary" loading="lazy">
+    <figcaption>Press <code>I</code> to compare sharpness and elongation across
+    nine regions at 1:1 scale.</figcaption>
+  </figure>
   <div class="callout info">
-    <strong>Missing regional measurements?</strong> If the inspector says the
-    star analysis predates region support, run <strong>Analyze Quality</strong>
-    again or reopen the frame after its star cache refreshes.
+    <strong>Missing regional measurements?</strong> If the cached star analysis
+    does not include regional data, run <strong>Analyze Quality</strong> again
+    or reopen the frame after the cache refreshes.
   </div>
 
   <h2 id="compare">Comparison mode</h2>
