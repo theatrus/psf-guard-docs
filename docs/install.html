@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Installation — PSF Guard</title>
   <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or source build.">
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
@@ -141,20 +141,22 @@ function gtag_report_demo() {
   <h2 id="server">Docker on a Linux server or NAS</h2>
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>Use this path for browser access on another machine</strong><p>The database mount must be writable. FITS folders can stay read-only.</p></div>
+    <div class="workflow-copy"><strong>Use this path for browser access on another machine</strong><p>The database mount must be writable, but the FITS directories can remain read-only.</p></div>
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
   <pre><code>docker run -d -p 3000:3000 \
   -v /path/to/catalog.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
   ghcr.io/theatrus/psf-guard:latest</code></pre>
-  <p>Open <code>http://localhost:3000/</code>. To tune the port, cache, or
-  preview pre-generation, mount a TOML config at <code>/data/config.toml</code>
-  and append <code>server --config /data/config.toml /data/database.sqlite
-  /images</code>. See <a href="configuration.html">Configuration &amp; API</a>.</p>
+
+  <p>Open <code>http://localhost:3000/</code> in your browser. You can configure
+  the port, cache settings, and preview pre-generation by mounting a TOML configuration
+  file at <code>/data/config.toml</code> and appending the configuration parameters
+  to the start command: <code>server --config /data/config.toml /data/database.sqlite /images</code>.
+  For details, see the <a href="configuration.html">Configuration &amp; API reference</a>.</p>
 
   <h2 id="standalone-cli">Standalone CLI binaries</h2>
-  <p>These version-independent links point at the latest release:</p>
+  <p>These version-independent links download the latest release for your platform:</p>
   <table>
     <tr><th>Platform</th><th>Download</th></tr>
     <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64')"><code>psf-guard-linux-x64</code></a></td></tr>
@@ -169,10 +171,11 @@ copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup
 psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
 
   <h2 id="fedora-rpm">Fedora RPM</h2>
-  <p>Releases attach prebuilt RPMs for Fedora 43 and 44:</p>
+  <p>Prebuilt RPM packages are attached to each release for Fedora 43 and 44:</p>
   <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
-  <p>The package installs the CLI/server and a <code>psf-guard.service</code>
-  systemd unit. Build instructions live in
+  <p>The package installs the CLI binary and a <code>psf-guard.service</code>
+  systemd unit to run the server in the background. Build instructions are
+  available in
   <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md')">packaging/rpm/README.md</a>.</p>
 
   <h2 id="source">Build from source</h2>
@@ -180,8 +183,9 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
 cd psf-guard
 cargo build --release
 ./target/release/psf-guard server catalog.sqlite /path/to/images/</code></pre>
-  <p>The build needs Rust and Node.js/npm. It embeds the React frontend and uses
-  the published pure-Rust Seiza crates for image processing.</p>
+  <p>Building from source requires Rust and Node.js/npm. The compilation process
+  embeds the React frontend and uses the published pure-Rust Seiza crates for
+  image processing.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="./">← Getting Started</a>

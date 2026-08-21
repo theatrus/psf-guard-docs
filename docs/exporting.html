@@ -120,19 +120,16 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Export for Stacking</h1>
   <p class="lede">
-    Turn reviewed lights and their safely matched calibration frames into a
-    clean stacking input without moving or changing the source files. Export
-    one project or target from Overview, download a ZIP, export in the
-    background on the server, or use the CLI for repeatable batch runs.
+    You can compile reviewed light frames and their matching calibration frames into a structured directory for stacking without modifying or moving your source files. You can export projects or targets from the Overview page, download them as a ZIP archive, run background exports on a remote server, or use the CLI for automated batch operations.
   </p>
 
   <div class="workflow-note simple">
     <div class="workflow-tag">Export</div>
-    <div class="workflow-copy"><strong>Accepted lights in; rejects always out</strong><p>Choose a target-grouped tree or a PixInsight WBPP-ready layout.</p></div>
-    <a class="workflow-link" href="#overview">Start in Overview ↓</a>
+    <div class="workflow-copy"><strong>The system includes accepted lights and always excludes rejected frames.</strong><p>You can select either a target-grouped directory structure or a PixInsight WBPP-compatible layout.</p></div>
+    <a class="workflow-link" href="#overview">You can begin the export from the Overview page ↓</a>
   </div>
 
-  <h2 id="modes">Choose an export mode</h2>
+  <h2 id="modes">You can select from several export modes.</h2>
   <div class="table-wrap">
     <table>
       <tr><th>Where</th><th>Result</th><th>Best for</th></tr>
@@ -143,7 +140,7 @@ function gtag_report_demo() {
     </table>
   </div>
 
-  <h2 id="selection">What PSF Guard exports</h2>
+  <h2 id="selection">The system exports accepted files based on their grades.</h2>
   <div class="table-wrap">
     <table>
       <tr><th>Grade</th><th>Default</th><th>Optional</th></tr>
@@ -163,7 +160,7 @@ function gtag_report_demo() {
     <a href="calibration.html#matching">Calibration Libraries</a>.
   </div>
 
-  <h2 id="layout">Output layout</h2>
+  <h2 id="layout">The system offers two different directory layouts.</h2>
   <p>Every export surface offers two trees. <strong>Grouped by target</strong>
   remains the default and works naturally with Siril and manual processing:</p>
   <pre><code>destination/
@@ -199,7 +196,7 @@ function gtag_report_demo() {
   would land at the same path, later names gain a numeric suffix instead of
   overwriting the first.</p>
 
-  <h2 id="overview">Export from Overview</h2>
+  <h2 id="overview">You can perform exports directly from the Overview page.</h2>
   <ol>
     <li>Finish grading the frames you want to stack.</li>
     <li>Return to <strong>Overview</strong> and expand the project.</li>
@@ -218,14 +215,14 @@ function gtag_report_demo() {
   accepted frame and PSF Guard has found its image files. If it is missing,
   check the accepted count and refresh file discovery in Settings.</p>
 
-  <h3>Desktop app</h3>
+  <h3>The desktop app performs local exports.</h3>
   <p>The desktop app places files straight into the chosen folder. It tries a
   hardlink first, which is instant and uses no extra data blocks when source
   and destination share a filesystem. If the link cannot be made, PSF Guard
   copies the file. A summary reports linked, copied, already present, missing,
   and failed files.</p>
 
-  <h3>Browser or remote server</h3>
+  <h3>The browser or remote server performs streaming or background exports.</h3>
   <p>Without a server destination, the browser streams an uncompressed ZIP.
   Image data is already hard to compress, so store mode avoids wasted CPU and
   starts the download at once.</p>
@@ -243,7 +240,7 @@ function gtag_report_demo() {
     permission. The browser cannot choose another server path.
   </div>
 
-  <h2 id="cli">Export from the CLI</h2>
+  <h2 id="cli">You can run exports from the command-line interface.</h2>
   <pre><code><span class="c"># Preview the plan, then copy accepted lights and safe calibration frames</span>
 psf-guard export my-db --dest ./stacking --dry-run
 psf-guard export my-db --dest ./stacking
@@ -275,7 +272,7 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
     </table>
   </div>
 
-  <h2 id="repeat">Repeat exports safely</h2>
+  <h2 id="repeat">You can repeat exports without duplicating files or overwriting changes.</h2>
   <p>Export is designed to top up a stacking folder after each session.</p>
   <ul>
     <li>A destination file with the expected size is counted as already
@@ -291,7 +288,7 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
     stacking run.
   </div>
 
-  <h2 id="api">Automate with the HTTP API</h2>
+  <h2 id="api">You can automate export operations using the HTTP API.</h2>
   <pre><code><span class="c"># Stream one target and its calibration frames as a WBPP ZIP</span>
 curl "http://localhost:3000/api/db/my-db/export?target_id=42&amp;layout=wbpp" \
   --output psf-guard-export.zip
@@ -315,15 +312,15 @@ curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
   and layout fields. It also accepts one validated <code>subdirectory</code>
   name. It cannot write outside the configured <code>export_dir</code>.</p>
 
-  <h2 id="troubleshooting">Troubleshooting</h2>
+  <h2 id="troubleshooting">Use this troubleshooting table to resolve export issues.</h2>
   <div class="table-wrap">
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
       <tr><td>No Export action</td><td>The scope needs an Accepted frame and an image file found under the configured image folders.</td></tr>
-      <tr><td><code>nothing to export</code></td><td>Check the project/target/filter scope, grades, image directories, and filename metadata. Add Pending only when intended.</td></tr>
+      <tr><td><code>nothing to export</code></td><td>You should verify the project, target, filter scope, grades, image directories, and filename metadata. You should add Pending frames only when intended.</td></tr>
       <tr><td>Hardlinks became copies</td><td>Hardlinks require source and destination on the same filesystem and a filesystem that supports links.</td></tr>
       <tr><td>ZIP stops or will not open</td><td>A source became unreadable during streaming. Check file access, then download again.</td></tr>
-      <tr><td>Expected calibration frames are absent</td><td>Open the calibration library and compare the hard matching fields. Export includes only frames safely matched to selected lights.</td></tr>
+      <tr><td>Expected calibration frames are absent</td><td>You should open the calibration library and compare the matching fields, as the system only exports frames that safely match the selected light frames.</td></tr>
     </table>
   </div>
 

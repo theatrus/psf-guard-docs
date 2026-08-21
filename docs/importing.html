@@ -118,61 +118,41 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Add image folders and plan the project</h1>
+  <h1>You can add image folders and plan your project.</h1>
   <p class="lede">
-    Start from plain FITS or XISF folders, build a Target Scheduler-compatible
-    catalog, review the projects and plans PSF Guard derives from the headers,
-    then add costly quality evidence in the background.
+    You can build a Target Scheduler-compatible catalog from FITS or XISF folders, review the projects and plans that PSF Guard derives from the image headers, and run background quality analysis to measure your stars and solve pointing coordinates.
   </p>
 
   <div class="workflow-note import">
     <div class="workflow-tag">From images</div>
-    <div class="workflow-copy"><strong>Use this path for a FITS/XISF archive or missing frames</strong><p>Import reads headers first and leaves quality work for later.</p></div>
-    <a class="workflow-link" href="#create">Create a catalog ↓</a>
+    <div class="workflow-copy"><strong>You can use this path for a FITS/XISF archive or missing frames.</strong><p>The importer reads file headers first and leaves quality work for later.</p></div>
+    <a class="workflow-link" href="#create">You can create a catalog ↓</a>
   </div>
 
-  <h2 id="create">Create a catalog from images</h2>
-  <p>The desktop app always allows database changes. For the web server, bind
-  to a trusted interface and opt in:</p>
+  <h2 id="create">You can create a catalog from images.</h2>
+  <p>The desktop application allows database modifications. If you run the web server, you must bind it to a trusted network interface and enable database management with the following command:</p>
   <pre><code>psf-guard server --host 127.0.0.1 --allow-database-management</code></pre>
-  <p>Open <strong>Settings → New Database from Images</strong>, add one or more
-  absolute image directories, and choose <strong>Create &amp; Import</strong>.
-  Invalid paths stay in the form and the error names the missing directory.</p>
+  <p>In the application, go to <strong>Settings → New Database from Images</strong>, enter one or more absolute paths to your image directories, and click <strong>Create &amp; Import</strong>. If any path is invalid, the form retains your input and displays an error naming the missing directory.</p>
   <figure>
     <img src="../assets/import-from-images.png" alt="New Database from Images form with header-only import and optional background quality analysis">
-    <figcaption>The first pass reads image headers only. Quality analysis stays
-    off by default and can run later.</figcaption>
+    <figcaption>The first pass reads image headers only. Quality analysis is disabled by default and can be run later.</figcaption>
   </figure>
-  <p>The UI puts the SQLite file in <code>databases/</code> beside PSF Guard's
-  registry and shows the exact path on the database card. Reused names get a
-  numeric suffix. The CLI creates the file at the path you give it:</p>
+  <p>The user interface saves the SQLite database file in the <code>databases/</code> directory relative to the PSF Guard registry and displays the absolute path on the database card. Duplicate database names receive a numeric suffix automatically. The command-line interface creates the database file at the specified path:</p>
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>Automate the same import</strong><p>Use <code>create-db</code> for a new archive or <code>import</code> to add frames.</p></div>
-    <a class="workflow-link" href="cli.html#import">CLI reference →</a>
+    <div class="workflow-copy"><strong>You can automate imports using the command-line interface.</strong><p>Use <code>create-db</code> to initialize a new database or <code>import</code> to append images to an existing database.</p></div>
+    <a class="workflow-link" href="cli.html#import">Refer to the CLI reference →</a>
   </div>
   <pre><code>psf-guard create-db ./archive.sqlite /data/lights /data/more-lights \
   --name "Archive"</code></pre>
-  <p>Use <code>--dry-run</code> to preview a CLI import without keeping the new
-  file, or <code>--no-register</code> to keep it out of the shared registry.</p>
+  <p>You can append the <code>--dry-run</code> flag to preview the command-line import without writing any files, or use the <code>--no-register</code> flag to prevent the database from being added to the shared registry.</p>
 
-  <h2 id="formats">Supported image formats</h2>
-  <p>A folder scan picks up <code>.fits</code>, <code>.fit</code>,
-  <code>.fts</code>, and <code>.xisf</code>, in any letter case. Monolithic XISF
-  files written by PixInsight carry the same astronomy keywords, so they group,
-  grade, preview, screen, and stack like FITS frames. Sidecar files are ignored.</p>
-  <p>PixInsight commonly stores floating-point XISF samples between 0 and 1.
-  When the file declares those bounds, PSF Guard maps the samples onto a 16-bit
-  physical scale while reading them. Background and star flux then remain
-  comparable with camera-written frames in the same sequence; the source file
-  is never changed.</p>
+  <h2 id="formats">The application supports standard astronomical image formats.</h2>
+  <p>The folder scanner processes <code>.fits</code>, <code>.fit</code>, <code>.fts</code>, and <code>.xisf</code> files with case-insensitive extension matching. Monolithic XISF files written by PixInsight contain the standard astronomical header keywords, allowing them to be grouped, graded, previewed, screened, and stacked in the same manner as FITS frames. The scanner ignores any sidecar files.</p>
+  <p>PixInsight commonly stores floating-point pixel data in XISF files normalized between 0.0 and 1.0. When an imported file specifies these bounds, PSF Guard maps the samples onto a 16-bit physical scale during reading. This scaling ensures that background noise and star flux remain comparable with raw camera frames in the same sequence, without modifying the source file.</p>
 
-  <h2 id="derived">What PSF Guard derives</h2>
-  <p>PSF Guard writes a full Target Scheduler-compatible schema. This inherited
-  mapping lets it open an existing Scheduler database, but Target Scheduler is
-  not required. Imported light frames begin as Pending. Their header data
-  becomes projects, targets, shared exposure templates, exposure plans, and
-  acquired-image rows:</p>
+  <h2 id="derived">PSF Guard derives planning metadata from image headers.</h2>
+  <p>PSF Guard creates a database using a schema that is fully compatible with Target Scheduler. This compatible schema allows you to open existing Target Scheduler databases, though Target Scheduler itself is not required to use the application. Imported light frames are initially marked as pending, and PSF Guard parses their header metadata to populate projects, targets, shared exposure templates, exposure plans, and acquired-image rows:</p>
   <ul>
     <li><code>OBJECT</code> names define targets. Each target gets one project
       by default, even across many nights.</li>
@@ -188,54 +168,31 @@ function gtag_report_demo() {
     <li>Each template and exposure length becomes a plan. Frame counts seed the
       desired and acquired counts.</li>
   </ul>
-  <p>Bias, dark, dark-flat, and flat frames follow a separate path. They become
-  calibration-library records in PSF Guard-owned tables, never projects or
-  Target Scheduler <code>acquiredimage</code> rows. PSF Guard records their paths
-  and fingerprints while leaving every source file in place.</p>
+  <p>Bias, dark, dark-flat, and flat calibration frames follow a separate processing path. They are registered as calibration-library records in tables managed by PSF Guard, and they do not generate projects or Target Scheduler <code>acquiredimage</code> records. PSF Guard indexes their file paths and hashes their contents while leaving the source files unaltered.</p>
   <figure>
     <img src="../assets/project-plan-narrowband.png" alt="B, G, HA, L, OIII, R, and SII exposure templates for a real narrowband project">
-    <figcaption>A real narrowband plan shows the same fields import fills:
-    filter, default exposure, capture settings, and scheduling limits.</figcaption>
+    <figcaption>This narrowband plan illustrates the fields that the importer populates, including filter names, default exposure times, capture settings, and scheduling limits.</figcaption>
   </figure>
   <figure>
     <img src="../assets/target-plan-narrowband.png" alt="Target coordinates and seven derived exposure plans for Golf of Mexico">
-    <figcaption>Coordinates and filter plans remain editable from Overview →
-    Plan &amp; coordinates.</figcaption>
+    <figcaption>You can edit target coordinates and filter plans on the Overview dashboard under the Plan &amp; coordinates section.</figcaption>
   </figure>
   <div class="callout info">
-    Header import does not plate-solve folders or treat the FITS object name as
-    pixel proof. Run quality analysis later to add fresh star measurements,
-    photometry, spatial screening, and solved pointing evidence.
+    The initial header import does not plate-solve files or verify the FITS object name against actual pixel data. You can run background quality analysis later to generate star measurements, photometric data, spatial screening, and verified pointing coordinates.
   </div>
 
-  <h2 id="top-up">Import more frames</h2>
-  <p>Choose <strong>Import</strong> on a configured database. PSF Guard first
-  shows a dry preview. Before applying it, choose exactly what the next scan
-  should include:</p>
+  <h2 id="top-up">You can import additional frames into an existing database.</h2>
+  <p>Click <strong>Import</strong> on a database card to run a dry-run preview. Before applying the changes, you can configure the scan using the following options:</p>
   <ul>
-    <li><strong>Import</strong> selects <strong>Lights and calibration</strong>
-      (the default), <strong>Lights only</strong>, or
-      <strong>Calibration only</strong>. Frames outside the selected kind are
-      counted and left alone. A calibration-only run can rebuild the library
-      without touching scheduler image rows.</li>
-    <li><strong>Folders</strong> shows each configured image root and two levels
-      of subfolders. Select a whole root, or deselect it and choose only the
-      night or processing folders you need. Choosing a subfolder inside a
-      configured root does not require extra database-management permission.</li>
-    <li><strong>Skip processing artifacts</strong> leaves out integration masters
-      and PixInsight calibrated or registered intermediates. This is off by
-      default; enable it when a processing tree repeats the same exposures under
-      new basenames.</li>
+    <li><strong>The Import option</strong> lets you select <strong>Lights and calibration</strong> (the default), <strong>Lights only</strong>, or <strong>Calibration only</strong>. The importer counts and ignores any frames that do not match your selection. This allows you to rebuild the calibration library without modifying light frame records.</li>
+    <li><strong>The Folders option</strong> displays each configured image root directory and two levels of subdirectories. You can select entire root paths or choose specific subfolders to target particular nights or data sets. Selecting subfolders within a configured root does not require additional database administration permissions.</li>
+    <li><strong>The Skip processing artifacts option</strong> excludes integration masters and intermediate files generated during calibration or registration. This setting is disabled by default, but you should enable it if your directories contain duplicate versions of the same exposure with different names.</li>
   </ul>
   <div class="callout info">
-    Changing a scope or folder does not change the catalog. Choose
-    <strong>Update preview</strong> to run the dry preview again, review the new
-    counts, and only then confirm the import.
+    Modifying the import scope or directory selection does not alter your catalog immediately. You must click <strong>Update preview</strong> to recalculate the changes, review the updated counts, and then confirm the import.
   </div>
-  <p>The importer skips basenames already present, attaches a new light to an
-  existing target by object name or coordinates within 0.5 degrees, and creates
-  new structure only for unmatched lights. Calibration frames are deduplicated
-  by canonical path and file fingerprint.</p>
+  <p>The importer skips files with basenames that already exist in the database. It attaches new light frames to existing targets if the object name matches or if the coordinates are within 0.5 degrees, creating new target records only when no matches are found. The system deduplicates calibration frames using their canonical paths and file fingerprints.</p>
+  <p>The following examples demonstrate how to perform imports using the command-line interface:</p>
   <pre><code><span class="c"># Preview, then import lights and calibration frames</span>
 psf-guard import archive ./new-frames --dry-run
 psf-guard import archive ./new-frames
@@ -245,88 +202,57 @@ psf-guard import archive ./new-flats --calibration-only
 
 <span class="c"># Leave derived processing files out of the catalog</span>
 psf-guard import archive ./processing-tree --skip-processed</code></pre>
-  <p><code>--lights-only</code> and <code>--calibration-only</code> select one
-  frame kind and cannot be combined. <code>--skip-processed</code> applies to
-  either scope. Use <code>--no-attach</code> when every imported light should
-  create new catalog structure instead of joining a matching target.</p>
-  <p>The settings page reads job state from the server when it opens. Closing or
-  reloading the page does not hide a running import; the progress view resumes.
-  One import can run per database.</p>
+  <p>The <code>--lights-only</code> and <code>--calibration-only</code> options filter the import to a single frame type and cannot be used together. The <code>--skip-processed</code> option works with either setting. If you want every imported light frame to create a new target record instead of merging with existing targets, append the <code>--no-attach</code> flag.</p>
+  <p>The settings page queries the active job status from the server when opened. Closing or refreshing the page does not terminate a running import, and the progress interface will resume monitoring. The application runs one import process per database at a time.</p>
 
-  <h2 id="quality">Backfill quality later</h2>
-  <p>Each database card has two low-priority actions:</p>
+  <h2 id="quality">You can analyze and backfill image quality attributes.</h2>
+  <p>The database management cards provide two background processing tasks:</p>
   <ul>
-    <li><strong>Analyze Missing Quality</strong> keeps valid cached evidence and
-      fills gaps.</li>
-    <li><strong>Rescan All Quality</strong> recomputes star counts and every
-      cached quality signal.</li>
+    <li><strong>Analyze Missing Quality</strong> scans the database to find images without quality metrics, processes those files, and preserves existing cached measurements.</li>
+    <li><strong>Rescan All Quality</strong> recalculates star counts and overwrites all previously cached quality metrics.</li>
   </ul>
   <figure>
     <img src="../assets/settings-catalog-quality.png" alt="Settings showing Analyze Missing Quality and Rescan All Quality on a configured database">
-    <figcaption>Use Analyze Missing Quality after a header-only import. Rescan
-    All Quality is the explicit full refresh.</figcaption>
+    <figcaption>You should run the Analyze Missing Quality task after completing a header-only import. The Rescan All Quality task performs a full recalculation of all metrics.</figcaption>
   </figure>
-  <p>The job works one target at a time, reports progress, and yields to
-  interactive preview or scan work. The N.I.N.A. Fast detector supplies star
-  count and HFR, so new measurements stay comparable with Target Scheduler.
-  Full-star data also feeds flux-based photometry; the pass adds spatial cloud
-  and obstruction metrics plus fresh pointing evidence. A server restart stops
-  the in-memory job, but the persistent cache lets the next run skip completed
-  work.</p>
-  <p><strong>Write star count and HFR into image metadata</strong> controls whether
-  those measured values also fill empty fields in the catalog. It is on by
-  default and remembered for import-time analysis, Analyze Missing Quality, and
-  Rescan All Quality. Existing N.I.N.A./Target Scheduler measurements win, and
-  PSF Guard never writes into the FITS or XISF file itself.</p>
+  <p>The quality analyzer processes files sequentially by target, reports real-time progress, and yields resources to interactive preview or manual scan operations. The system uses the N.I.N.A. Fast detector to measure star counts and half-flux radius (HFR), ensuring that the measurements remain directly comparable to Target Scheduler values. The star data is also used for flux-based photometry, which detects clouds, spatial obstructions, and verified pointing coordinates. If you restart the server, the active in-memory job will stop, but the persistent cache allows subsequent runs to resume without reprocessing completed files.</p>
+  <p>The <strong>Write star count and HFR into image metadata</strong> option determines whether these calculated metrics populate empty fields in your database catalog. This setting is active by default and is applied during standard imports, partial quality analyses, and full rescans. Pre-existing measurements from N.I.N.A. or Target Scheduler are preserved, and PSF Guard never modifies the source FITS or XISF files.</p>
 
-  <h2 id="plan">Review and edit the plan</h2>
-  <p>Open <strong>Overview → Plan &amp; coordinates</strong> to inspect project
-  state and limits, target name and coordinates, rotation, ROI, shared
-  templates, and filter plans. With database management enabled, edit those
-  fields, add a plan, or correct imported project and target grouping.</p>
-  <p>Open <strong>Scheduling limits</strong> to edit Target Scheduler's
-  <strong>Flats handling</strong> rule:</p>
+  <h2 id="plan">You can review and edit your planning parameters.</h2>
+  <p>Navigate to <strong>Overview → Plan &amp; coordinates</strong> to view project states, target names, celestial coordinates, camera rotation, regions of interest, shared templates, and filter plans. When database management is enabled, you can edit these values, append new plans, and adjust target and project groups.</p>
+  <p>You can access the <strong>Scheduling limits</strong> section to configure the Target Scheduler <strong>Flats handling</strong> behavior:</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Choice</th><th>When Target Scheduler takes flats</th></tr>
-      <tr><td>Off</td><td>Do not schedule flats for this project</td></tr>
-      <tr><td>Every 1–7 sessions</td><td>Take flats after the selected number of capture sessions</td></tr>
-      <tr><td>Target completion</td><td>Take flats when the target completes</td></tr>
-      <tr><td>Immediate</td><td>Request flats immediately</td></tr>
+      <tr><th>Option</th><th>Target Scheduler Behavior</th></tr>
+      <tr><td>Off</td><td>The scheduler does not plan flat frames for this project.</td></tr>
+      <tr><td>Every 1–7 sessions</td><td>The scheduler requests flat frames after the specified number of imaging sessions.</td></tr>
+      <tr><td>Target completion</td><td>The scheduler requests flat frames when the target is fully imaged.</td></tr>
+      <tr><td>Immediate</td><td>The scheduler requests flat frames during the next available opportunity.</td></tr>
     </table>
   </div>
-  <p>This is Target Scheduler planning state. It does not override PSF Guard's
-  calibration-frame matching or a stack preview's Calibration mode.</p>
+  <p>These settings manage Target Scheduler planning states. They do not affect PSF Guard's calibration library matching or the calibration mode applied to stack previews.</p>
 
-  <h2 id="sync">Sync with the telescope</h2>
+  <h2 id="sync">You can synchronize databases between your grading machine and telescope computer.</h2>
   <div class="workflow-note sync">
     <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Sync only when grading and capture use separate database files</strong><p>Preview each change before applying it.</p></div>
-    <a class="workflow-link" href="workflows.html#sync">Sync workflow →</a>
+    <div class="workflow-copy"><strong>You should synchronize databases when you separate your grading and acquisition environments.</strong><p>You should preview every change before applying synchronization updates.</p></div>
+    <a class="workflow-link" href="workflows.html#sync">Read the synchronization workflow documentation →</a>
   </div>
-  <p>Add both databases in Settings, then use <strong>Data Transfer</strong>.
-  Every action requires a dry preview before Apply:</p>
+  <p>Configure both databases in <strong>Settings</strong>, and use the <strong>Data Transfer</strong> tab to manage sync tasks. Each task requires running a dry preview before you can click <strong>Apply</strong>:</p>
   <figure>
     <img src="../assets/data-transfer.png" alt="Data Transfer workspace with named source and destination catalogs" loading="lazy">
-    <figcaption>Choose a direction and action, then review the server-owned
-    preview before Apply becomes available.</figcaption>
+    <figcaption>You must choose a sync direction and operation, and then verify the generated preview report before the application enables the Apply action.</figcaption>
   </figure>
   <ul>
-    <li><strong>Merge catalogs</strong> copies new or changed projects, targets,
-      templates, plans, captures, and grades from the telescope into the local
-      database. Local reviewed grades win.</li>
-    <li><strong>Send planning</strong> sends projects, targets, templates,
-      plans, and rule weights back to the telescope. It leaves telescope image
-      rows, capture counts, and grades alone.</li>
-    <li><strong>Send reviewed grades</strong> sends Accepted and Rejected
-      grades for matching image GUIDs. Pending grades stay local.</li>
+    <li><strong>Merge catalogs</strong> copies new or modified projects, targets, templates, plans, capture records, and grading states from the telescope database into your local catalog. Local manual grades take precedence over telescope values.</li>
+    <li><strong>Send planning</strong> exports projects, targets, templates, plans, and scheduling rules from your local database back to the telescope, without modifying acquisition records or existing grading states on the telescope.</li>
+    <li><strong>Send reviewed grades</strong> syncs manual Accepted and Rejected states for matching image GUIDs to the telescope database. It ignores pending local grades.</li>
   </ul>
+  <p>The following command-line examples demonstrate the corresponding synchronization tasks:</p>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
 psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run
 psf-guard sync grades --from archive.sqlite --to telescope.sqlite --dry-run</code></pre>
-  <div class="callout"><strong>Back up both databases before the first
-  write.</strong> Keep the named directions: pull captures to the grading copy,
-  then push planning and grades to the telescope.</div>
+  <div class="callout"><strong>You should back up both database files before running synchronization writes.</strong> Ensure that you maintain the correct sync direction: pull image captures to your grading database first, and then push updated planning configurations and grades back to the telescope computer.</div>
 
   <nav class="next-prev">
     <a href="grader.html">← The Grader UI</a>

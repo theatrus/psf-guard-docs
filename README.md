@@ -5,9 +5,9 @@ The website for [PSF Guard](https://github.com/theatrus/psf-guard), served at
 
 ## Structure
 
-Plain hand-rolled static HTML/CSS with a dependency-free Node build for the
-small pieces of shared site chrome. The generated HTML is checked in, and
-what's in the repo is exactly what's served.
+This repository contains plain static HTML and CSS files with a dependency-free
+Node build for shared website elements. The generated HTML is checked in, and
+what is in the repository is exactly what is served.
 
 ```
 index.html          Splash / landing page
@@ -23,20 +23,23 @@ scripts/build.mjs   Shared top bar and docs navigation generator
 
 ## Publishing
 
-`main` is the deployed content — the checked-in static files are served as-is
-from the repo root and published to psf-guard.com by external infrastructure.
-The deploy does not need Node or a build step.
+The `main` branch contains the deployed content. The checked-in static files
+are served as-is from the repository root and published to psf-guard.com by
+external infrastructure. The deployment process does not require Node or a
+build step.
 
 ## Updating content
 
-- Screenshots come from the main repo's `docs/` folder — refresh by copying
-  new captures into `assets/`.
-- Run `npm run build` after changing the shared top bar or documentation
-  navigation. Commit the generated HTML along with the template change.
-- Run `npm run check` before publishing. It verifies the checked-in HTML is in
-  sync with the template and that local links and image references resolve.
-- Feature and CLI documentation should track the main repo's `README.md`;
-  the deep screening material tracks `docs/SCREENING.md`.
-- Download links use `releases/latest/download/...` for the version-less CLI
-  binaries and link to the releases page for versioned installers, so nothing
-  here needs touching on a normal release.
+- Screenshots are copied from the main repository's `docs/` folder. You can
+  refresh them by copying new captures into the `assets/` directory.
+- Run `npm run build` after modifying the shared top bar or documentation
+  navigation, then commit the generated HTML files along with the template
+  changes.
+- Run `npm run check` before publishing to verify that the checked-in HTML is
+  in sync with the template and that local links and image references resolve.
+- Feature and CLI documentation tracks the main repository's `README.md`
+  file, while the screening documentation tracks `docs/SCREENING.md`.
+- Download links use `releases/latest/download/...` for the versionless CLI
+  binaries and link to the releases page for versioned installers, so you
+  do not need to update these on a normal release.
+

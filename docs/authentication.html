@@ -118,101 +118,111 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Server Accounts</h1>
-  <p class="lede">Run PSF Guard as a web server and it can ask who is calling.
-  Authentication is off by default, and the desktop app never uses it — but the
-  moment a server listens past your own machine, it stops handing out the
-  catalog to anyone who finds the port.</p>
+  <h1 id="server-accounts-title">Manage Server Accounts and Security</h1>
+  <p class="lede">When you run PSF Guard as a web server, you can enable user
+  authentication. Authentication is disabled by default, and the desktop
+  application does not use it. However, if the server is configured to accept
+  remote connections, it requires authentication to restrict access to the catalog.</p>
 
-  <h2 id="bind">The bind address decides</h2>
-  <p>Reaching a loopback server already means reaching the machine, so nothing
-  changes there. Any other address is a different question, and a server with no
-  accounts on one now answers every API request with 401 — reads included.</p>
+  <h2 id="bind">Understand how the bind address affects authentication</h2>
+  <p>A loopback server is only accessible from the local host, so it does not
+  require authentication. If the server is bound to any other network interface
+  and has no accounts configured, it responds to all API requests, including
+  read operations, with an HTTP 401 Unauthorized status.</p>
 
   <div class="table-wrap">
     <table>
       <tr><th>Bind address</th><th>With no accounts configured</th></tr>
-      <tr><td><code>127.0.0.1</code>, <code>::1</code>, <code>localhost</code></td><td>Full access. This is the desktop app and local development.</td></tr>
-      <tr><td>Anything else, including the <code>0.0.0.0</code> default</td><td>Every API request answers 401 until an account exists.</td></tr>
+      <tr><td><code>127.0.0.1</code>, <code>::1</code>, <code>localhost</code></td><td>The server grants full access. Use this setting for the desktop application and local development.</td></tr>
+      <tr><td>Anything else, including the <code>0.0.0.0</code> default</td><td>The server responds to all API requests with an HTTP 401 status until you create at least one user account.</td></tr>
     </table>
   </div>
 
-  <p><code>--allow-database-management</code> goes further: on a network address
-  the server refuses to start until an account exists, because those routes name
-  filesystem paths the server then reads and writes. Once one does, only an
-  editor may use them.</p>
+  <p>The <code>--allow-database-management</code> flag imposes stricter security:
+  if the server is bound to a network address, it will not start until at least
+  one user account exists. This is because database management routes allow the
+  server to read and write to filesystem paths. Once you create an account,
+  only users with the editor role can access these routes.</p>
 
   <div class="callout">
-    <strong>Upgrading a server that already listens on the network?</strong>
-    It will stop serving until you add a user. <code>psf-guard users add editor
-    --role read-write</code> is the short path;
-    <code>--allow-anonymous-access</code> is the escape hatch below.
+    <strong>If you are upgrading a server that is already accessible on the network:</strong>
+    the server will block API requests until you add a user account. You can
+    add a user by running <code>psf-guard users add editor --role read-write</code>,
+    or bypass this requirement temporarily using the <code>--allow-anonymous-access</code> flag.
   </div>
 
-  <h2 id="anonymous">Keeping a network server open on purpose</h2>
-  <p><code>--allow-anonymous-access</code> gives every caller on a network
-  address what a localhost server gives them — no accounts, no login — and logs
-  what it is handing out.</p>
+  <h2 id="anonymous">Configure anonymous access for network servers</h2>
+  <p>The <code>--allow-anonymous-access</code> flag allows all network connections
+  without requiring user accounts or logins, similar to a localhost server, and
+  logs all server activity.</p>
 
   <pre><code>psf-guard server --host 0.0.0.0 --allow-anonymous-access</code></pre>
 
-  <p>It is meant for a network you trust as much as the machine itself, and for
-  upgrading a deployment without an outage. It grants full editor access —
-  grading, imports, and with <code>--allow-database-management</code> the
-  registry itself — to anyone who can reach the port. Treat it as temporary: add
-  accounts, then drop the flag.</p>
+  <p>You should only use this setting on fully trusted private networks or to
+  perform zero-downtime server upgrades. This flag grants full editor permissions
+  (including grading, imports, and, if <code>--allow-database-management</code> is
+  enabled, registry modifications) to anyone who can connect to the server port.
+  This should be treated as a temporary measure: you should add user accounts and
+  then remove this flag.</p>
 
-  <h2 id="roles">Editors and read-only users</h2>
-  <p>A read-only user can read catalogs, images, quality results, exports, and
-  cached analysis. By default they cannot <em>start</em> the expensive work —
-  stack builds, plate solves, satellite predictions, view processing — though
-  every cached result stays available to them. Set
-  <code>allow_read_only_compute = true</code> to let them start those jobs too;
-  that suits a trusted private server and not a public demo, where repeated jobs
-  eat CPU, bandwidth, and cache.</p>
+  <h2 id="roles">Assign editor and read-only user roles</h2>
+  <p>A user with the read-only role can view catalogs, images, quality results,
+  exports, and cached analysis. By default, read-only users cannot start
+  resource-intensive tasks, such as stack builds, plate solves, satellite
+  predictions, or view generation, though they can access all previously cached
+  results. You can set <code>allow_read_only_compute = true</code> in the
+  configuration to allow read-only users to trigger these computations. This is
+  suitable for trusted private servers, but is not recommended for public servers
+  where concurrent jobs could exhaust CPU, network bandwidth, and cache storage.</p>
 
-  <p>An editor can grade images, edit projects and plans, start scans and
-  imports, write exports, and apply sync previews. If database management is
-  enabled on the server, an editor can also manage databases, remote clients,
-  peers, catalogs, and calibration records.</p>
+  <p>An editor can grade images, edit projects and plans, initiate quality scans and
+  imports, generate exports, and apply synchronization previews. If database
+  management is enabled, an editor can also manage databases, remote clients, peers,
+  catalogs, and calibration records.</p>
 
-  <p>The server enforces the role itself, so a client calling the API directly
-  gains nothing. The UI marks a read-only session <strong>Read only</strong>,
-  hides Settings, and disables the grading controls.</p>
+  <p>The server enforces role permissions directly on the backend, which prevents
+  unauthorized API clients from bypassing security. The user interface labels
+  read-only sessions as <strong>Read only</strong>, hides the Settings panel, and
+  disables grading controls.</p>
 
-  <h2 id="users">Managing users</h2>
-  <p>An editor signed in to a web server gets a <strong>Users</strong> tab in
-  Settings: add an account, record an optional email, change a role or password,
-  remove someone. Changes take effect at once. Changing access or a password
-  signs out that account's existing sessions; changing only an email does not.
-  The UI will not remove the account you are signed in with, nor leave the
-  server without an editor.</p>
+  <h2 id="users">Manage user accounts</h2>
+  <p>An editor signed in to a web server can access the <strong>Users</strong>
+  tab in Settings to add accounts, record optional email addresses, update roles
+  or passwords, and delete accounts. All changes take effect immediately. Modifying
+  account permissions or passwords terminates active sessions for that user,
+  while updating only the email address does not. The user interface prevents
+  you from deleting the account you are currently logged in with, and prevents
+  you from removing the last editor account.</p>
 
   <figure>
     <img src="../assets/server-users.png" alt="The Users tab in PSF Guard Settings, listing an editor and a read-only reviewer" loading="lazy">
-    <figcaption>Editors manage browser accounts from Settings. The desktop app
-    does not show the tab — its localhost server does not use logins.</figcaption>
+    <figcaption>Editors can manage browser accounts from the Settings panel.
+    The desktop application does not show this tab because its integrated local
+    server does not require logins.</figcaption>
   </figure>
 
-  <p>The CLI does the same job on a headless box, and prompts twice without
-  echoing when no password file is given:</p>
+  <p>You can also perform these user management operations from the command-line
+  interface, which prompts you twice for a password without echoing input if you
+  do not specify a password file:</p>
 
   <pre><code>psf-guard users add viewer --role read-only --email viewer@example.com
 psf-guard users add editor --role read-write --password-file /run/secrets/editor
 psf-guard users list
 psf-guard users remove viewer</code></pre>
 
-  <p>Passwords are stored as salted Argon2 hashes in <code>auth.json</code>
-  beside the database registry, mode <code>0600</code> on Unix; the password
-  itself never is. Use <code>--replace</code> to change a role or password.
-  Restart the server after a CLI change — active sessions stay valid until you
-  do.</p>
+  <p>Passwords are stored as salted Argon2 hashes in the <code>auth.json</code>
+  file located next to the database registry, using file permissions <code>0600</code>
+  on Unix systems. The raw password is never saved. You can use the <code>--replace</code>
+  flag to update a user's role or password. You must restart the server after making
+  user modifications through the command-line interface, as active sessions remain
+  valid until the server restarts.</p>
 
-  <h2 id="signing-in">Signing in</h2>
-  <p>Once <code>auth.json</code> holds a user, the browser gets a login page. A
-  successful login sets an HttpOnly, SameSite=Strict session cookie. Sessions
-  live in server memory, expire after <code>session_hours</code>, and end when
-  the server restarts.</p>
+  <h2 id="signing-in">Sign in to the server</h2>
+  <p>When the <code>auth.json</code> file contains at least one user account,
+  the server displays a login page in the browser. A successful login sets an
+  HttpOnly cookie with the SameSite=Strict attribute. Active sessions are stored
+  in server memory, expire after the duration specified by <code>session_hours</code>,
+  and are terminated if the server restarts.</p>
 
   <figure>
     <img src="../assets/server-login.png" alt="The PSF Guard server login page" loading="lazy">
@@ -224,41 +234,46 @@ session_hours = 168
 secure_cookie = true
 allow_read_only_compute = false</code></pre>
 
-  <p>Secure cookies are the default. Only set <code>secure_cookie = false</code>
-  for a direct HTTP development server — a browser will not send a Secure cookie
-  over plain HTTP.</p>
+  <p>Secure cookies are enabled by default. You should only set
+  <code>secure_cookie = false</code> when running a local HTTP development server,
+  as modern browsers will not transmit cookies marked as Secure over unencrypted HTTP
+  connections.</p>
 
-  <h2 id="sync">Remote clients do not use browser sessions</h2>
-  <p>Remote image upload and scheduler sync carry their own
-  <code>Authorization: Bearer</code> credentials, scoped to one catalog. Those
-  routes keep working without a browser login, which is how a headless intake
-  box runs while a person grades elsewhere.</p>
+  <h2 id="sync">Use bearer credentials for remote clients</h2>
+  <p>Remote image uploads and scheduler synchronization utilize
+  <code>Authorization: Bearer</code> token credentials that are scoped to a single
+  catalog. These endpoints remain functional without requiring a browser session,
+  which allows automated ingest servers to operate independently of the grading
+  interface.</p>
 
-  <p>By default, pairing requires database-management permission. An editor
-  opens <strong>Settings &rarr; Databases</strong>, edits a catalog, and creates
-  a <strong>Pair a client</strong> code. The code works once and expires after
-  one hour. After pairing, the client receives the catalog ID and its own saved
-  credential. PSF Guard stores only a digest of that credential. The N.I.N.A.
-  plugin stores the credential in Windows Credential Manager.</p>
+  <p>By default, pairing a remote client requires database management permissions.
+  An editor can navigate to <strong>Settings &rarr; Databases</strong>, edit the
+  catalog, and generate a <strong>Pair a client</strong> pairing code. This pairing
+  code is single-use and expires after one hour. Once paired, the remote client
+  receives the catalog ID and its unique credential. The PSF Guard server stores
+  only the digest of the client credential, and the N.I.N.A. plugin stores the
+  credential securely in Windows Credential Manager.</p>
 
-  <p>Each install appears separately under <strong>Paired clients</strong>.
-  Revoking one stops only that install. It does not sign out browser users,
-  revoke other paired clients, or invalidate the legacy manual API key.
-  Pairing enables scheduler sync, but image upload remains a separate catalog
-  setting with its own receive directory.</p>
+  <p>Each connected client installation is listed under <strong>Paired clients</strong>.
+  Revoking a client credential only disables access for that specific installation.
+  It does not affect active browser sessions, revoke other paired clients, or
+  invalidate legacy manual API keys. Pairing enables scheduler synchronization,
+  but image uploads remain controlled by a separate setting and require a
+  configured receive directory.</p>
 
   <div class="callout info">
-    Pairing and revocation require database management because they grant or
-    remove catalog access. Once paired, ordinary sync and upload requests need
-    only the client's catalog-scoped bearer credential. Use HTTPS whenever the
-    client connects across a network you do not fully trust.
+    Client pairing and revocation require database management permissions because
+    they modify catalog access grants. After pairing is complete, standard
+    synchronization and upload requests only require the client's catalog-scoped
+    bearer token. You should use HTTPS whenever clients connect over networks
+    that are not fully trusted.
   </div>
 
-  <p>Older clients can still use a manually generated Remote API key plus the
-  catalog ID. Replacing that manual key invalidates only the previous manual
-  key; paired clients keep their own credentials. See the
-  <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin setup</a> for both
-  paths.</p>
+  <p>Legacy clients can continue to connect using a manually generated Remote
+  API key and the catalog ID. Replacing the manual key only invalidates the
+  previous manual key, and does not affect paired client credentials. For more details
+  on configuring these options, see the <a href="sync-plugin.html#server">N.I.N.A.
+  Sync Plugin setup</a> section.</p>
 
   <p>Scripts that drive the ordinary UI API log in with a cookie jar instead:</p>
 
@@ -268,23 +283,26 @@ allow_read_only_compute = false</code></pre>
 
 curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
 
-  <h2 id="deployment">Deployment notes</h2>
+  <h2 id="deployment">Review deployment guidelines</h2>
   <ul>
-    <li>Put a public server behind HTTPS. Login passwords otherwise cross the
-      network in clear text.</li>
-    <li>Seed an account from an existing secret with
-      <code>--password-file</code>; only the hash is written.</li>
-    <li>Keep <code>--allow-database-management</code> off unless you need
-      browser-side database management. An editor login does not override that
-      gate, and the gate does not override the login — on a network address a
-      server needs both.</li>
-    <li>Signing out revokes that session. Restarting the server revokes every
-      browser session.</li>
+    <li>You should place any public server behind an HTTPS reverse proxy.
+      Otherwise, login passwords will be transmitted across the network in plain
+      text.</li>
+    <li>You can seed a new account from an existing secret using the
+      <code>--password-file</code> flag, which ensures that only the password hash
+      is written to disk.</li>
+    <li>You should keep the <code>--allow-database-management</code> flag
+      disabled unless you specifically need browser-side database management. An
+      editor login does not bypass this restriction, and the restriction does not
+      bypass the login requirement. A server listening on a public network address
+      requires both.</li>
+    <li>Logging out terminates the active session. Restarting the server revokes
+      all current browser sessions.</li>
   </ul>
 
   <div class="callout info">
-    Full reference, including the registry paths used by a custom
-    <code>--registry</code>, lives in
+    The full reference documentation, including registry paths for custom
+    <code>--registry</code> configurations, is available in
     <a href="https://github.com/theatrus/psf-guard/blob/main/docs/AUTHENTICATION.md">docs/AUTHENTICATION.md</a>
     in the main repository.
   </div>

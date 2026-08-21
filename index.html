@@ -84,11 +84,11 @@ function gtag_report_demo() {
     <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
     <h1>Keep the frames that matter.<br><span class="grad">Reject the ones that don't.</span></h1>
     <p class="lede">
-      An astrophotography image catalog manager, with optional N.I.N.A. and
-      Target Scheduler integration. Catalog your FITS files in place, browse and
-      grade frames by target, session, and filter, and let it flag clouds,
-      obstructions, tracking loss, and bad pointing — then preview stacks and
-      export the keepers.
+      PSF Guard is an astrophotography image catalog manager with optional
+      N.I.N.A. and Target Scheduler integration. You can catalog your FITS files
+      in place, browse and grade frames by target, session, and filter, and
+      automatically flag clouds, obstructions, tracking loss, and bad pointing.
+      You can then preview stacks and export the accepted frames.
     </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
@@ -105,8 +105,8 @@ function gtag_report_demo() {
 
 <section class="section compact">
   <div class="callout info">
-    <strong>Like Lightroom Classic, but for astrophotography data.</strong>
-    PSF Guard catalogs files in place instead of moving them into a managed
+    <strong>PSF Guard works like Lightroom Classic, but for astrophotography data.</strong>
+    It catalogs files in place instead of moving them into a managed
     library. It reads FITS metadata and stores its image map, plans, and grades
     in a catalog based on the Target Scheduler database structure. Target
     Scheduler integration is optional.
@@ -120,12 +120,12 @@ function gtag_report_demo() {
 
 <div class="strip">
   <p class="strip-inner">
-    <strong>Star count and HFR miss ruined frames.</strong> Measured on a real session:
-    a tree line occluding the field left star counts within normal variation, and HFR
-    stayed flat until the frame was <strong>more than 60% blocked</strong>. A thin cloud
-    veil dimmed every star by 37% — and the frame was still Accepted by conventional
-    grading. PSF Guard screens with signals that are <strong>local, photometric, and
-    temporal</strong> — classical statistics calibrated on real sessions.
+    <strong>Traditional metrics like star count and HFR can miss low-quality frames.</strong>
+    In a test session, a tree line blocking the field left star counts within
+    normal variation, and the HFR remained flat until the frame was more than
+    60% occluded. A thin cloud veil reduced star brightness by 37%, but the frame
+    was still accepted by conventional grading. PSF Guard uses local, photometric,
+    and temporal statistics calibrated on real sessions to detect these issues.
   </p>
 </div>
 
@@ -142,66 +142,70 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🖼️</div>
       <h3>Fast visual grader</h3>
-      <p>One grader UI, in the desktop app or any browser: auto-stretched previews, zoom and pan,
-      side-by-side comparison with synchronized zoom, batch operations,
-      keyboard-driven workflow, and full undo/redo.</p>
+      <p>You can use the same grader user interface in the desktop app or any
+      web browser. It provides auto-stretched previews, synchronized side-by-side
+      comparison zoom and pan, batch operations, keyboard shortcuts, and full
+      undo/redo support.</p>
     </div>
     <div class="card">
       <div class="icon">☁️</div>
       <h3>Automatic quality screening</h3>
-      <p>Spatial metrics, cross-frame photometry, and fresh plate solutions catch
-      occlusion, clouds, thin veils, errant light, off-target frames, and tracking
-      loss — with evidence explaining every verdict.</p>
+      <p>PSF Guard uses spatial metrics, cross-frame photometry, and plate-solving
+      to detect occlusion, clouds, thin veils, errant light, off-target pointing,
+      and tracking loss. The system provides the specific analysis and evidence
+      for every grade.</p>
     </div>
     <div class="card">
       <div class="icon">🌌</div>
       <h3>Sky context &amp; plate solving</h3>
-      <p>See expected catalog objects from known coordinates, solve image pixels
-      on demand with Seiza, and overlay labels, object outlines, an RA/Dec grid,
-      and the measured target offset.</p>
+      <p>The application displays expected catalog objects from coordinate
+      metadata, solves image pixels on demand using the Seiza engine, and overlays
+      object labels, outlines, an RA/Dec grid, and the measured center offset.</p>
     </div>
     <div class="card">
       <div class="icon">🔬</div>
       <h3>Live stack previews</h3>
-      <p>Integrate a target's graded frames per channel with Seiza registration,
-      combine them into LRGB or SHO/HOO/Foraxx color previews with background
-      extraction and opt-in deconvolution, and download the linear FITS —
-      before committing hours to a full run.</p>
+      <p>You can register and stack the accepted frames for each channel, then
+      combine them into LRGB or narrowband (SHO, HOO, Foraxx) color previews. The
+      preview tool includes background extraction, optional deconvolution, and
+      linear FITS download features.</p>
     </div>
     <div class="card">
       <div class="icon">🔁</div>
       <h3>Optional scheduler link</h3>
-      <p>Open a Target Scheduler database or sync a separate telescope copy.
-      Reviewed grades keep its acquired-image counts accurate, so it can
-      replace rejected frames.</p>
+      <p>You can open a Target Scheduler database directly or synchronize state
+      with a separate telescope computer. Recording your grades keeps the
+      scheduler's acquired-image count accurate so it can replace rejected
+      frames.</p>
     </div>
     <div class="card">
       <div class="icon">📥</div>
       <h3>Catalog &amp; plan</h3>
-      <p>Build a catalog from plain FITS folders, derive projects, coordinates,
-      shared exposure templates, and plans from headers, then add quality data
-      in the background.</p>
+      <p>You can build a catalog from FITS folders. The application reads image
+      headers to organize projects, coordinates, and plans, then processes the
+      pixel quality data in the background.</p>
     </div>
     <div class="card">
       <div class="icon">🗂️</div>
       <h3>Safe reject archival</h3>
-      <p>Move rejected frames and their sidecars out of the directory tree your
-      stacking software scans. Idempotent, recorded, and fully reversible —
-      restore never overwrites.</p>
+      <p>The application moves rejected frames and their sidecar files out of the
+      directory tree used by your stacking software. This process is documented,
+      idempotent, and reversible, ensuring that restoring files never overwrites
+      existing data.</p>
     </div>
     <div class="card">
       <div class="icon">🔭</div>
       <h3>Two-machine workflows</h3>
-      <p>Sync projects, captured images, and grades between the telescope's
-      database and your grading machine — pull to refresh, grade locally,
-      push grades back.</p>
+      <p>You can synchronize projects, captured images, and grades between the
+      telescope database and your local grading machine. This allows you to pull
+      recent data, grade the frames locally, and push the results back.</p>
     </div>
     <div class="card">
       <div class="icon">⭐</div>
       <h3>Star detection &amp; PSF analysis</h3>
-      <p>A port of N.I.N.A.'s detector plus a HocusFocus-inspired detector, with
-      Gaussian/Moffat PSF fitting, annotated star maps, and residual
-      visualizations.</p>
+      <p>The software includes star detectors ported from N.I.N.A. and HocusFocus,
+      which feature Gaussian and Moffat PSF fitting, annotated star maps, and
+      residual visualizations.</p>
     </div>
   </div>
 </section>
@@ -209,66 +213,60 @@ function gtag_report_demo() {
 <section class="section" id="sky-context">
   <h2>Know where every frame landed</h2>
   <p class="sub">
-    Header coordinates provide immediate catalog context. When the frame has no
-    embedded WCS, choose <strong>Solve field</strong> or press <code>O</code>:
-    PSF Guard tries a fast hinted solve, falls back to the blind index when
-    installed, caches the result, and turns on the shared Seiza overlay.
+    Image headers provide immediate coordinate context. If a frame lacks
+    embedded WCS data, selecting <strong>Solve field</strong> or pressing <code>O</code>
+    triggers a fast hinted plate solve. The system can fall back to a local blind index
+    if installed, caches the solution, and displays the shared Seiza overlay.
   </p>
   <figure class="feature-shot">
     <img src="assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and target offset" loading="lazy">
-    <figcaption>A pixel-derived hinted solve: catalog labels and outlines, RA/Dec grid, solved scale, and a target only 32 arcseconds from center.</figcaption>
+    <figcaption>The system displays catalog labels, object outlines, an RA/Dec grid, the solved pixel scale, and the measured offset from the target center.</figcaption>
   </figure>
   <p><a class="btn" href="docs/astrometry.html">Set up catalogs and plate solving →</a></p>
 </section>
 
 <section class="section" id="screening">
-  <h2>Screening that sees what global metrics can't</h2>
+  <h2>Quality screening beyond global metrics</h2>
   <p class="sub">
-    Every flagged frame can be rendered as an annotated diagnostic: the analysis
-    grid is overlaid on the image, colored by the signal that fired, with the
-    verdict and metrics in the caption. The diagnostic shows which rule fired
-    and why.
+    You can view flagged frames as annotated diagnostics. The application overlays the analysis
+    grid on the image, highlights the cells where quality thresholds were breached, and provides the
+    specific verdict and metrics in the caption to explain why the frame was flagged.
   </p>
   <div class="shot-pair">
     <figure>
       <img src="assets/screening-onset.jpg" alt="Annotated diagnostic showing occlusion arriving: red cells trace a tree line" loading="lazy">
-      <figcaption>Occlusion arriving — red cells trace the tree line exactly.
-      Transparency of the surviving field: 1.01, which is why global metrics miss it.</figcaption>
+      <figcaption>The diagnostic detects the onset of occlusion by tracing the tree line in red. The transparency of the remaining unoccluded field is 1.01, which causes conventional global metrics to miss the issue.</figcaption>
     </figure>
     <figure>
       <img src="assets/screening-veil.jpg" alt="Annotated diagnostic of a thin cloud veil detected photometrically" loading="lazy">
-      <figcaption>Thin veil — nothing is locally wrong, but matched-star photometry
-      reads transparency 0.63 (~0.5 mag). Conventional grading accepted this frame.</figcaption>
+      <figcaption>The diagnostic detects a thin cloud veil. While no local structures are blocked, matched-star photometry measures a transparency of 0.63, or approximately 0.5 magnitudes of extinction.</figcaption>
     </figure>
   </div>
   <div class="shot-pair">
     <figure>
       <img src="assets/screening-frontier.jpg" alt="Advancing occluder frontier: blue cells darker than history, yellow lit fringe" loading="lazy">
-      <figcaption>An advancing occluder: blue cells read <em>darker</em> than their own
-      history (blocked skyglow), yellow marks the lit fringe.</figcaption>
+      <figcaption>The diagnostic highlights an advancing occluding object. Blue cells indicate regions that are darker than the historical baseline due to blocked skyglow, while yellow cells mark the lit edge.</figcaption>
     </figure>
     <figure>
       <img src="assets/screening-glow.jpg" alt="Static corner glow detected against the frame's own gradient model" loading="lazy">
-      <figcaption>Static corner glow, present from the session's first frame — invisible
-      to temporal baselines, caught against the frame's own gradient model.</figcaption>
+      <figcaption>The diagnostic detects a static corner glow that was present from the first frame. This issue is caught by analyzing the frame's own gradient model rather than comparing it to a temporal baseline.</figcaption>
     </figure>
   </div>
   <p><a class="btn" href="docs/screening.html">How screening works →</a></p>
 </section>
 
 <section class="section" id="stacking">
-  <h2>Preview the stack before you commit to it</h2>
+  <h2>Preview stacks inside the grader</h2>
   <p class="sub">
-    Live-stack the accepted frames of a target right inside the grader —
-    your current grades and sequence checks select the inputs. Combine cached
-    channel stacks into LRGB or narrowband color with Seiza background
-    extraction, editable processing, and opt-in deconvolution; then export the
-    non-rejected lights into a WBPP-ready folder, zip download, or instant
-    local hardlinks.
+    You can generate live-stack previews of your accepted frames directly in the grader.
+    The application stacks cached channels into LRGB or narrowband color images using Seiza background
+    extraction, custom stretch options, and optional deconvolution. Once verified, you can export
+    the accepted light frames into folders structured for PixInsight WBPP, download them as a ZIP archive,
+    or generate local hard links.
   </p>
   <figure class="feature-shot">
     <img src="assets/stack-color-real-previews.jpg" alt="Real Gulf of Mexico (NGC 7000) Foraxx SHO preview built from PSF Guard channel stacks" loading="lazy">
-    <figcaption>A real Gulf of Mexico (NGC&nbsp;7000) Foraxx SHO quick-look built from six accepted narrowband acquisitions — recombine palettes without re-integrating.</figcaption>
+    <figcaption>This Foraxx SHO quick-look image was built from six accepted narrowband channel stacks. You can adjust and recombine color palettes without restarting the integration.</figcaption>
   </figure>
   <p>
     <a class="btn" href="docs/stacking.html">Stack previews →</a>
@@ -281,43 +279,38 @@ function gtag_report_demo() {
   <div class="gallery">
     <figure>
       <img src="assets/overview.png" alt="Overview with recent projects and real narrowband frames" loading="lazy">
-      <figcaption>Overview: recent projects and frames, targets, completion, and grading progress across every catalog.</figcaption>
+      <figcaption>The Overview page shows recent projects, targets, completion rates, and overall grading progress across your catalogs.</figcaption>
     </figure>
-    <figure>
-      <img src="assets/compare.jpg" alt="Side-by-side comparison with synchronized zoom" loading="lazy">
-      <figcaption>Side-by-side comparison with synchronized zoom and pan.</figcaption>
+    <figure class="assets/compare.jpg" alt="Side-by-side comparison with synchronized zoom" loading="lazy">
+      <figcaption>The comparison mode provides side-by-side frame inspection with synchronized zoom and panning.</figcaption>
     </figure>
     <figure>
       <img src="assets/sequence-quality-astrometry.png" alt="Sequence analysis with per-frame quality scores and solved-center scatter" loading="lazy">
-      <figcaption>Sequence view: two poor frames, nine good frames, and solved-center evidence.</figcaption>
+      <figcaption>The Sequence view displays frame-by-frame quality scores alongside solved-center astrometric data.</figcaption>
     </figure>
     <figure>
       <img src="assets/annotated-stars.jpg" alt="Annotated star detection output" loading="lazy">
-      <figcaption>HocusFocus inspired detection with annotated output.</figcaption>
+      <figcaption>The star detection tool is based on HocusFocus and generates annotated diagnostic outputs.</figcaption>
     </figure>
     <figure>
       <img src="assets/psf-visualization.jpg" alt="PSF fitting residual grids" loading="lazy">
-      <figcaption>Observed / fitted / residual PSF grids with Moffat &amp; Gaussian models.</figcaption>
+      <figcaption>The PSF fitting tool analyzes star shapes using Gaussian and Moffat models to output observed, fitted, and residual grids.</figcaption>
     </figure>
   </div>
 </section>
 
 <section class="section" id="install">
-  <h2>Install it your way</h2>
-  <p class="sub">Desktop app, Docker container, standalone binary, or Fedora RPM —
-  one tool, wherever your images live.</p>
+  <h2>Supported installation methods</h2>
+  <p class="sub">PSF Guard is available as a desktop app, Docker container, standalone binary, or Fedora RPM to support different environments.</p>
   <div class="install-grid">
     <div class="card">
       <h3>🖥️ Desktop app</h3>
-      <p>Native installers for Windows (<code>.msi</code> / NSIS setup with CLI on
-      PATH), macOS (<code>.dmg</code>, Apple Silicon), and Linux
-      (<code>.deb</code> / AppImage).</p>
+      <p>The application has native installers for Windows, macOS (Apple Silicon), and Linux (Debian packages or AppImage).</p>
       <p><a href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download the latest release →</a></p>
     </div>
     <div class="card">
       <h3>🐳 Docker</h3>
-      <p>For NAS boxes and home servers. The catalog mount must be writable so
-      grades and plans can be saved.</p>
+      <p>You can run the application in Docker on NAS devices or home servers. The catalog directory mount must be writable to save grades and plans.</p>
       <pre><code>docker run -d -p 3000:3000 \
   -v /path/to/catalog.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
@@ -325,23 +318,22 @@ function gtag_report_demo() {
     </div>
     <div class="card">
       <h3>⌨️ Standalone CLI</h3>
-      <p>Single binary for scripting and servers. Screen a night in one command:</p>
+      <p>The standalone command-line binary runs on servers or within automated scripts, allowing you to screen entire imaging sessions in a single command.</p>
       <pre><code>psf-guard screen-fits ./LIGHT --annotate ./diag
 psf-guard server catalog.sqlite ./images</code></pre>
       <p><a href="docs/install.html#standalone-cli">Downloads &amp; platform notes →</a></p>
     </div>
     <div class="card">
       <h3>📦 Fedora RPM</h3>
-      <p>Prebuilt packages for Fedora 43/44 with a <code>psf-guard.service</code>
-      systemd unit for running the grader as a daemon.</p>
+      <p>Prebuilt RPM packages are available for Fedora, and they include a systemd service unit to run the grader as a background daemon.</p>
       <pre><code>sudo dnf install ./psf-guard-*.x86_64.rpm</code></pre>
     </div>
   </div>
   <div class="callout" style="margin-top:2rem">
-    <strong>Opening an existing Target Scheduler database?</strong> Back it up
-    before the first write. PSF Guard can save grades into it, and sync can
-    copy state between database files. Preview import and sync changes before
-    applying them.
+    <strong>Important:</strong> Back up your Target Scheduler database before opening
+    it in PSF Guard for the first time. The application writes grades directly
+    to the database, and the synchronization tool copies state between database
+    files. You can preview all import and sync operations before applying them.
   </div>
 </section>
 

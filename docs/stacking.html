@@ -119,275 +119,140 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Stack Previews</h1>
-  <p class="lede">Check an integration before committing hours to processing:
-  PSF Guard live-stacks the graded frames of a target right inside the grader —
-  safely calibrated, per channel, in color, and with your current grades and
-  sequence checks.</p>
+  <p class="lede">You can check an integration before starting full processing by using PSF Guard to stack the graded frames of a target inside the grader. This preview is calibrated per channel, displayed in color, and reflects your current grades and sequence checks.</p>
 
-  <h2 id="mono">Per-channel previews from graded frames</h2>
-  <p>From a project's stack panel, PSF Guard integrates the selected or visible
-  frames per exact target and filter with Seiza registration. The selection
-  policy runs before registration: catalog rejects and current sequence-analysis
-  regrade recommendations are excluded <em>before</em> registration, so the
-  preview shows what your accepted data actually stacks into. The latest
-  successful result for each channel is kept durably in the cache; rebuilding
-  one channel never discards its siblings.</p>
+  <h2 id="mono">The system generates per-channel previews from graded frames.</h2>
+  <p>From the project stack panel, PSF Guard integrates the selected or visible
+  frames for each target and filter using Seiza registration. The selection
+  policy runs before registration. Catalog rejects and sequence-analysis
+  regrade recommendations are excluded before registration, so the
+  preview shows how the accepted data stacks. The latest
+  successful result for each channel is stored in the cache, and rebuilding
+  one channel does not discard the others.</p>
 
   <div class="shot-pair">
     <figure>
       <img src="../assets/stack-preview.png" alt="A three-frame B-channel project stack preview card" loading="lazy">
-      <figcaption>On-demand integration grouped by exact target and channel,
-      with live calibration and registration progress.</figcaption>
+      <figcaption>This card shows an on-demand integration grouped by target and channel, with active calibration and registration progress.</figcaption>
     </figure>
     <figure>
       <img src="../assets/stack-preview-decisions.png" alt="Per-frame Seiza registration and admission details" loading="lazy">
-      <figcaption>Every input's quality exclusion, reference choice, match
-      count, registration RMS, and admission decision is retained with the
-      result.</figcaption>
+      <figcaption>The system retains the quality exclusion, reference selection, match count, registration RMS, and admission decision for each input frame.</figcaption>
     </figure>
   </div>
 
-  <h2 id="calibration">Choose calibration per stack or channel</h2>
+  <h2 id="calibration">You can select calibration options for each stack or channel.</h2>
   <p>The stack panel can build bias, dark, dark-flat, and flat masters from the
-  catalog's safely matched library. <strong>Auto</strong> applies only masters
-  with a sound dependency chain; <strong>Force on</strong> applies every master
-  it can build and warns about risky cases; <strong>Off</strong> integrates raw
-  lights. The project choice is remembered, while each target/filter card can
-  override it independently.</p>
-  <p>Multi-night stacks divide themselves into calibration sessions when the
-  lights need different flats or darks, then swap masters as each group is
-  integrated. A failed master no longer fails the stack: the card names what
-  was skipped and why, continues with the safe masters, and keeps the exact
-  applied set in its resume and provenance identity.</p>
-  <p><a href="calibration.html">Open Calibration Libraries →</a> for import,
-  hard matching rules, flats-only pedestal handling, hot-pixel safeguards,
-  master caching, and sky-flat advice.</p>
+  catalog matching library. The <strong>Auto</strong> setting applies only masters
+  with a valid dependency chain. The <strong>Force on</strong> setting applies every master
+  it can build and warns about potential issues, while the <strong>Off</strong> setting integrates raw
+  lights. The project-level choice is saved, and you can override it on individual target or filter cards.</p>
+  <p>Multi-night stacks are divided into calibration sessions when the
+  lights require different flats or darks, and the system swaps masters as each group is
+  integrated. If a master fails to build, the stack integration continues. The card lists which master was skipped and why, continues with the valid masters, and records the applied set in the session metadata.</p>
+  <p><a href="calibration.html">You can open the Calibration Libraries page to read about calibration imports and rules.</a> This page covers import procedures, hard matching rules, flats-only pedestal handling, hot-pixel safeguards, master caching, and sky-flat advice.</p>
   <figure>
     <img src="../assets/stack-calibration-controls.png" alt="Stack preview panel with project-wide Auto calibration and a completed HOO color preview" loading="lazy">
-    <figcaption>A real project with project-wide <strong>Auto</strong>
+    <figcaption>This interface shows a project with project-wide <strong>Auto</strong>
     calibration selected. The same panel builds mono channels and the finished
     HOO color preview while preserving each result independently.</figcaption>
   </figure>
 
-  <h2 id="queue">Build a whole night without babysitting it</h2>
-  <p>Build buttons stay live while a build runs. Each click queues a channel
-  behind the one working, every card shows its own queued or running state, and
-  the status line counts what is waiting. <strong>Stop</strong> ends the build
-  in front; once a queue forms it becomes <strong>Stop all</strong>. A stop
-  lands between frames, between channels, and between calibration masters, so
-  it takes effect within about one frame's work rather than instantly. Nothing
-  half-finished is ever published: a channel stopped before its FITS and preview
-  are written leaves no artifact, and channels that already finished keep
-  theirs.</p>
+  <h2 id="queue">You can build stack previews for an entire night without manual intervention.</h2>
+  <p>Build buttons remain active while a build is running. Each click adds a channel to the queue. Each card shows its current queued or active state, and the status line displays the number of waiting jobs. The <strong>Stop</strong> button ends the active build, and the button changes to <strong>Stop all</strong> when a queue exists. Stopping a build occurs between frames, channels, or calibration masters, which means the process completes within the time it takes to process a single frame. The system does not write incomplete outputs. If you stop a channel before the FITS file and preview are written, the system leaves no partial files, and previously completed channels are preserved.</p>
 
-  <p>Because a queue makes rebuilding cheap, a rebuild that only <em>added</em>
-  frames resumes from where the last one finished instead of integrating the
-  night again, and the card counts the restored work. A checkpoint is reused
-  only when it is provably an ancestor of the new set &mdash; identical source
-  fingerprints for every recorded frame, the same calibration, the same
-  Accepted-only policy, the same pipeline. Anything else restacks from scratch
-  and the card says which of those changed, so a slow full rebuild is never a
-  mystery.</p>
+  <p>Because the queue is efficient, a rebuild that only adds frames resumes from the last completed frame instead of reintegrating the entire night, and the card displays the number of restored frames. The system only reuses a checkpoint when it is a direct ancestor of the new set. This requires identical source fingerprints for every frame, the same calibration settings, the same Accepted-only policy, and the same pipeline version. If any of these parameters change, the system rebuilds the stack from scratch and indicates the changed parameters on the card.</p>
 
-  <p>A build belongs to the server, not to the tab that started it. The header
-  carries a <strong>Stacking</strong> indicator while any mono or color build is
-  queued or running &mdash; in every view and across databases &mdash; and the
-  panels re-attach to a running job when they mount. Leave the grid, reload the
-  page, come back: the work is still there. Superseded artifacts are swept from
-  the cache behind you.</p>
+  <p>A build job runs on the server rather than the browser tab that started it. The header displays a <strong>Stacking</strong> indicator while any mono or color build is queued or running across any view or database. The panels automatically reconnect to the active job when they mount. You can navigate away from the grid or reload the page without losing progress. Superseded artifacts are automatically removed from the cache.</p>
 
-  <h2 id="snr">See when more frames stop helping</h2>
-  <p>Each mono build measures <strong>Signal-to-noise vs depth</strong> at
-  several stack sizes. The solid line shows the measured SNR. If all accepted
-  frames have the same known exposure, a dashed square-root line shows the gain
-  expected from ideal averaging. If exposures differ or are missing, PSF Guard
-  shows only the measured curve and does not estimate future gains.</p>
+  <h2 id="snr">The system shows when additional frames no longer improve quality.</h2>
+  <p>Each mono build measures the signal-to-noise ratio against stack depth at several stack sizes. The solid line represents the measured signal-to-noise ratio. If all accepted frames have the same exposure length, a dashed line shows the theoretical gain expected from ideal averaging. If exposure lengths differ or are not recorded, PSF Guard displays only the measured curve without estimating future gains.</p>
   <div class="shot-pair">
     <figure>
       <img src="../assets/stack-snr-analysis.png" alt="Two completed mono stack cards with measured signal-to-noise curves, ideal trends, verdicts, and frame projections" loading="lazy">
-      <figcaption>Completed stack cards show the curve, verdict, averaging
-      rate, and estimated frames needed for more signal.</figcaption>
+      <figcaption>Completed stack cards display the curve, the final verdict, the averaging rate, and the estimated number of frames required for signal improvement.</figcaption>
     </figure>
     <figure>
       <img src="../assets/stack-snr-curve.png" alt="A 90-frame H-alpha stack with measured signal-to-noise by depth and an ideal square-root comparison" loading="lazy">
-      <figcaption>This quality-ordered 90-frame H-alpha stack starts with its
-      strongest frames, then shows how the measured curve approaches the ideal
-      as weaker frames join it.</figcaption>
+      <figcaption>This quality-ordered 90-frame H-alpha stack begins with the highest-ranked frames, and then shows how the measured curve approaches the theoretical ideal as lower-ranked frames are added.</figcaption>
     </figure>
   </div>
-  <p>The <strong>Order</strong> control changes the question:</p>
+  <p>The <strong>Order</strong> control determines how frames are added to the stack:</p>
   <ul>
-    <li><strong>Capture sequence</strong> adds frames in capture order and uses
-      one fixed, high-quality frame for registration. Use it to estimate
-      whether similar data from another night will improve the stack.</li>
-    <li><strong>Quality</strong> adds the highest-ranked frames first. Use it to
-      see whether lower-quality frames still improve the stack. PSF Guard
-      rebuilds the stack because a new frame may belong earlier in the
-      ranking.</li>
+    <li>The <strong>Capture sequence</strong> option adds frames in the order they were captured and uses a single high-quality frame for registration. This option helps estimate if similar data from another session will improve the stack.</li>
+    <li>The <strong>Quality</strong> option adds the highest-ranked frames first. This option helps determine if lower-quality frames still contribute to stack quality. The system rebuilds the stack because new frames may alter the quality ranking.</li>
   </ul>
-  <p>With enough measurements, the card reports
-  <strong>Still improving</strong>, <strong>Diminishing returns</strong>,
-  <strong>Plateau</strong>, or <strong>Getting worse</strong>. It also estimates
-  how many more frames may be needed to improve SNR by 5% or 10%. If the
-  evidence is not clear, the card shows the measurements without a verdict.
-  You can collapse the chart; its heading still shows the order and verdict.</p>
-  <p>PSF Guard saves the result in the stack sidecar and resume checkpoint. It
-  also writes <code>SNRORDER</code>,
-  <code>SNRNOISE</code>, <code>SNRVALUE</code>, <code>SNRSLOPE</code>, and
-  <code>SNRVERDT</code> to the FITS header. Use
-  <a href="cli.html#snr"><code>stack-snr</code></a> to measure a folder without
-  a catalog.</p>
+  <p>When the system gathers sufficient measurements, the card displays a verdict of <strong>Still improving</strong>, <strong>Diminishing returns</strong>, <strong>Plateau</strong>, or <strong>Getting worse</strong>. It also estimates how many additional frames are required to improve the signal-to-noise ratio by 5% or 10%. If there is insufficient data, the card displays the measurements without a verdict. You can collapse the chart, and the heading will still display the order and verdict.</p>
+  <p>PSF Guard saves this measurement in the stack sidecar and the resume checkpoint. It also writes the <code>SNRORDER</code>, <code>SNRNOISE</code>, <code>SNRVALUE</code>, <code>SNRSLOPE</code>, and <code>SNRVERDT</code> headers to the FITS file. You can use the <a href="cli.html#snr"><code>stack-snr</code></a> command-line tool to measure a directory of files without creating a catalog.</p>
 
-  <h2 id="inspect">Inspect at full resolution, stretch, download</h2>
-  <p>The preview opens in the same inspector the grader uses — zoom, pan, fit,
-  and one-pixel-per-pixel — and the display stretch is a parameterized Seiza
-  stretch you can adjust or revert without recomputing the integration. The
-  cached result stays linear: download it as FITS and drop it straight into
-  your processing workflow.</p>
+  <h2 id="inspect">You can inspect, stretch, and download previews at full resolution.</h2>
+  <p>The preview opens in the primary inspector, which supports zooming, panning, scaling to fit, and pixel-to-pixel viewing. The display stretch is a parameterized Seiza stretch that you can adjust or revert without recalculating the integration. The cached result remains linear, allowing you to download it as a FITS file and import it directly into external processing applications.</p>
 
   <div class="shot-pair">
     <figure>
       <img src="../assets/stack-preview-inspection.png" alt="Native-resolution stack inspection with zoom and pan" loading="lazy">
-      <figcaption>Familiar zoom, pan, fit, and 1:1 controls on the
-      full-resolution result.</figcaption>
+      <figcaption>The inspector provides zoom, pan, fit, and 1:1 pixel controls for full-resolution results.</figcaption>
     </figure>
     <figure>
       <img src="../assets/stack-preview-stretch.png" alt="Parameterized Seiza display stretch controls on a stack preview" loading="lazy">
-      <figcaption>Apply or revert display stretches; the cached integration
-      underneath remains linear.</figcaption>
+      <figcaption>You can apply or revert display stretches while the underlying cached integration remains linear.</figcaption>
     </figure>
   </div>
 
-  <h2 id="orientation">Every channel the same way up</h2>
-  <p>A German equatorial mount turns the field 180&deg; when it flips, and
-  registration matches star triangles at any angle &mdash; so both halves of
-  such a night stack cleanly, but the reference frame alone would decide which
-  way up the result comes out. Shoot filters in blocks across the meridian and
-  two channels of one target could face opposite ways.</p>
+  <h2 id="orientation">The system aligns all channels to the same orientation.</h2>
+  <p>A German equatorial mount rotates the field by 180 degrees during a meridian flip. Registration matches star patterns at any angle to ensure both halves of a session stack correctly, but the reference frame determines the orientation of the output. If you capture filters in blocks across the meridian, two channels of the same target could have opposite orientations.</p>
 
-  <p>PSF Guard anchors that choice to the sky instead. A cached plate solve or a
-  valid embedded WCS on the reference frame says which way north points, and the
-  stack is published with north in the upper half of the frame. Failing that it
-  reads the frame's <code>PIERSIDE</code>, interpreted through what a solved
-  channel in the same build already taught it about which side faces which way.
-  Failing both, it follows whichever way most of that stack's own exposure
-  faced. No plate solve is run for this, and it is only ever a half turn &mdash;
-  your camera angle is kept, and nothing is resampled.</p>
+  <p>PSF Guard coordinates orientation using sky coordinates. If a cached plate solve or a valid WCS header is present on the reference frame, the system determines which way north points and publishes the stack with north in the upper half of the frame. If sky coordinates are unavailable, the system reads the <code>PIERSIDE</code> header, interpreting it based on any solved channels in the same build. If both methods fail, the system adopts the orientation used by the majority of the exposure time in the stack. This operation does not run an active plate solve and only performs a 180-degree rotation, which preserves the camera angle without resampling.</p>
 
-  <h2 id="color">Color composition: LRGB and narrowband palettes</h2>
-  <p>When the required channel stacks exist, combine them without rebuilding
-  the integrations. PSF Guard discovers unambiguous L/R/G/B and
-  Ha/OIII/SII roles from the durable mono stacks, registers filters onto the
-  luminance or H-alpha reference, and calls Seiza's color combiners. Available
-  palettes are SHO, SOH, HSO, HOS, OSH, OHS, and HOO plus Foraxx-SHO and
-  Foraxx-HOO; targets without SII automatically expose only the HOO
-  variants.</p>
+  <h2 id="color">You can combine channels using LRGB and narrowband color palettes.</h2>
+  <p>When the required channel stacks exist, you can combine them without rebuilding the underlying integrations. PSF Guard detects L, R, G, B, Ha, OIII, and SII filters from the saved mono stacks, registers the filters to the luminance or H-alpha reference, and applies the Seiza color combiners. The available palettes include SHO, SOH, HSO, HOS, OSH, OHS, HOO, Foraxx-SHO, and Foraxx-HOO. Targets without SII data display only the HOO variants.</p>
 
   <figure>
     <img src="../assets/stack-color-real-previews.jpg" alt="Real Gulf of Mexico Foraxx SHO preview built from PSF Guard channel stacks" loading="lazy">
-    <figcaption>A real Gulf of Mexico (NGC&nbsp;7000) Foraxx SHO preview:
-    294 integrated frames — 100 H-alpha, 100 OIII, and 94 SII.</figcaption>
+    <figcaption>This image shows a Foraxx SHO preview of the Gulf of Mexico (NGC 7000) built from 294 integrated frames, including 100 H-alpha, 100 OIII, and 94 SII frames.</figcaption>
   </figure>
 
   <figure>
     <img src="../assets/stack-narrowband-sho-real.jpg" alt="The same channel stacks combined as standard SHO" loading="lazy">
-    <figcaption>The same three linear channel stacks recombined as standard
-    SHO. Switching palettes never re-integrates — both of these came from one
-    set of channel stacks.</figcaption>
+    <figcaption>This image shows the same three linear channel stacks combined as a standard SHO preview. Changing the palette does not require reintegration, and both previews use the same mono channel stacks.</figcaption>
   </figure>
 
-  <p>Rebuilt source channels mark remembered color results stale without
-  hiding them, so you always know when a combination no longer reflects the
-  freshest channel data. Color outputs are cached with full provenance
-  (source jobs, palette, policy, Seiza revision) as screen and native PNG plus
-  an RGB 32-bit-float FITS whose header records the palette and
-  linear-versus-display transfer semantics.</p>
+  <p>Rebuilding source channels marks the associated color results as outdated but does not hide them, which indicates when a combination does not reflect the current channel data. Color outputs are cached with complete metadata including source jobs, palette, policy, and Seiza revision. The system saves these as screen-stretched and native PNG files, alongside an RGB 32-bit floating-point FITS file whose header records the palette and transfer semantics.</p>
 
-  <h2 id="edges">Trim the edges registration leaves behind</h2>
-  <p>Registering one channel onto another leaves blank margins where that frame
-  did not reach. Each color card now carries an <strong>Edges</strong> picker:
-  keep them, trim to the box the covered pixels span, or trim to the largest
-  rectangle every channel covers in full. The default is unchanged, so results
-  you already have stay valid.</p>
+  <h2 id="edges">The system can trim edge artifacts caused by registration.</h2>
+  <p>Registering channels to one another can leave blank margins where the frames do not overlap completely. Each color card contains an <strong>Edges</strong> setting that allows you to keep the margins, crop to the bounding box of all covered pixels, or crop to the largest rectangle shared by all channels. The default option preserves the existing behavior to keep current results valid.</p>
 
-  <p>The choice is part of the job identity, so each one keeps its own cached
-  artifact and applying a processing stack retains the crop the card is showing.
-  The crop happens before normalization, so every channel is scaled from the
-  same patch of sky, and <code>CRPIX</code> moves onto the cropped grid so the
-  FITS keeps its plate solution. A finished card reports the kept size and the
-  share of the grid retained &mdash; and when one channel's coverage sits far
-  from the others, which is a pointing error rather than dither, it names the
-  channel that bounded the crop.</p>
+  <p>This setting is stored with the job configuration, which means each job maintains its own cached files and applying a processing stack preserves the selected crop. The crop is applied before normalization, which ensures all channels scale from the same sky area, and the <code>CRPIX</code> coordinates are updated on the cropped grid to preserve the plate solution. The completed card shows the final dimensions and the percentage of the grid that was retained. If a channel has poor coverage due to a pointing error rather than dither, the card identifies the channel that limited the crop.</p>
 
-  <h2 id="background">Background extraction and processing controls</h2>
-  <p>Color previews fit and subtract each input channel's background before
-  cross-filter registration, using Seiza background extraction with
-  per-channel fit diagnostics. The editable processing stack exposes additive
-  or multiplicative correction controls and ordered per-input and output
-  stretch stacks — with complete phase progress while a job runs.</p>
+  <h2 id="background">The system provides background extraction and processing controls.</h2>
+  <p>The system fits and subtracts the background of each input channel before registering filters. This process uses Seiza background extraction and displays per-channel fit diagnostics. The editable processing stack provides additive or multiplicative correction controls and ordered stretch stacks for input and output channels, along with phase progress during execution.</p>
 
   <figure>
     <img src="../assets/stack-background-real.jpg" alt="Background extraction controls and per-channel fit diagnostics from a real narrowband preview" loading="lazy">
-    <figcaption>Resolved fit evidence and the editable background model: this
-    real run accepted 73/96 H-alpha, 78/96 OIII, and 95/96 SII sample
-    locations while rejecting noisy or source-contaminated fits.</figcaption>
+    <figcaption>This interface shows the fit data and editable background model. This run accepted 73/96 H-alpha, 78/96 OIII, and 95/96 SII sample locations while rejecting noisy or contaminated samples.</figcaption>
   </figure>
 
-  <h2 id="deconvolution">Opt-in deconvolution</h2>
-  <p>Stack previews can apply Seiza deconvolution as an opt-in processing
-  step, sharpening the preview without touching the cached linear
-  integration. Like the display stretch, it is a reversible view decision —
-  toggle it, compare, and download either representation.</p>
+  <h2 id="deconvolution">You can enable optional deconvolution to sharpen previews.</h2>
+  <p>Stack previews can apply Seiza deconvolution as an optional step to sharpen the image without altering the cached linear integration. Like the display stretch, deconvolution is a view setting that you can toggle, compare, or bypass when downloading the FITS file.</p>
 
-  <h2 id="setups">Reuse named processing setups</h2>
-  <p>Both <strong>View processing</strong> and the color
-  <strong>Processing stack</strong> can save their parameters under a name.
-  Choose a built-in or saved setup, inspect the values it fills into the editor,
-  then run <strong>Apply processing</strong>; selecting a setup never starts an
-  expensive render by itself.</p>
-  <p>A view setup contains its display stretch and optional deconvolution. A
-  color setup contains background extraction, per-channel input processing,
-  and output stretches. Applying a color setup to another target matches its
-  channels by name and leaves deconvolution opt-in for channels the setup did
-  not explicitly name.</p>
-  <p>Saved setups are global across every configured database. Manage, delete,
-  import, or export them in <strong>Settings &rarr; Setups</strong>; exports can
-  contain one setup or the whole collection. Viewers on an authenticated server
-  may list, apply, and export setups, while saving, deleting, and importing need
-  an editor.</p>
+  <h2 id="setups">You can save and reuse named processing configurations.</h2>
+  <p>You can save parameters in the <strong>View processing</strong> and <strong>Processing stack</strong> panels under a custom name. You can select a saved configuration, review its values in the editor, and apply the processing. Selecting a configuration does not trigger an immediate render.</p>
+  <p>A view configuration saves the display stretch and optional deconvolution settings. A color configuration saves background extraction, per-channel input processing, and output stretches. Applying a color configuration to a different target matches channels by name and leaves deconvolution disabled for channels not explicitly named in the configuration.</p>
+  <p>Saved configurations are available across all configured databases. You can manage, delete, import, or export configurations in <strong>Settings &rarr; Setups</strong>. Exports can contain a single configuration or the entire collection. Users on an authenticated server can list, apply, and export configurations, while creating, deleting, or importing configurations requires editor permissions.</p>
 
-  <h2 id="artifact">Find which frame left that mark</h2>
-  <p>A stack makes a satellite trail, a reflection, a dust shadow, or a hot
-  region far easier to see than any single sub does. Open the full-size
-  inspector, choose <strong>Find source artifact</strong>, and drag a box around
-  the suspect area: PSF Guard maps that region back through each frame's own
-  registration and ranks the source frames by how far each one departs from its
-  peers there.</p>
+  <h2 id="artifact">The artifact finder identifies which source frame caused a defect.</h2>
+  <p>Integrated stacks can make satellite trails, reflections, dust shadows, or hot pixels more visible than they are on individual subframes. You can open the full-resolution inspector, select <strong>Find source artifact</strong>, and draw a box around the affected region. PSF Guard maps the region through registration coordinates and ranks the source frames by how much they deviate from their peers in that area.</p>
 
   <figure>
     <img src="../assets/stack-artifact-finder.png" alt="A selected stack region ranked across the source frames that contributed it" loading="lazy">
-    <figcaption>The selected region, cropped from every contributing frame and
-    ranked by how far each departs from the others.</figcaption>
+    <figcaption>The interface shows the selected region cropped from each contributing frame, ranked by its deviation from the other frames.</figcaption>
   </figure>
 
-  <p>Results carry the peak sigma, the direction &mdash; bright or dark &mdash;
-  and a cautious shape label: compact spot, diagonal trail, defocused ring,
-  broad dark shadow. Low-evidence results stay unclassified rather than
-  guessing. The search never grades anything for you; it points, and you decide.
-  It cannot isolate a defect that lands in the same registered place in every
-  frame, because that defect becomes part of the baseline it compares against.
-  A region must be at least 8 pixels a side, and dragging past 512 stops the box
-  at 512 rather than clearing it.</p>
+  <p>The results display the peak sigma value, the direction of the deviation as bright or dark, and a shape classification such as a compact spot, diagonal trail, defocused ring, or broad shadow. Results with low evidence remain unclassified. The search tool does not modify grades automatically; it identifies candidate frames for manual review. The tool cannot detect a defect that appears in the same registered position on every frame, as that defect becomes part of the baseline. The selected region must be at least 8 pixels per side, and selections larger than 512 pixels are capped at 512 pixels.</p>
 
-  <h2 id="takeout">Take the data out for real stacking</h2>
-  <p>When the preview convinces you the data is worth a full run, export the
-  non-rejected lights and their safely matched calibration frames straight
-  into your stacking pipeline. Rejects are never exported; ungraded frames are
-  opt-in. Keep the default target-grouped tree, or choose the WBPP layout and
-  use its generated PixInsight handoff scripts.</p>
-  <p><a href="exporting.html">Open the Export for Stacking guide →</a> for
-  desktop and browser steps, CLI filters, repeat-export behavior, API examples,
-  and troubleshooting.</p>
+  <h2 id="takeout">You can export the validated data for external stacking.</h2>
+  <p>Once you verify the data quality using the preview, you can export the accepted lights and their matching calibration frames to your external stacking pipeline. Rejected frames are excluded from the export, and ungraded frames are optional. You can use the default target-grouped directory structure or select the WBPP layout, which generates PixInsight handoff scripts.</p>
+  <p><a href="exporting.html">You can open the Export for Stacking guide to review export procedures.</a> This guide covers desktop and browser workflows, command-line filters, repeat exports, API examples, and troubleshooting.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="satellites.html">← Satellite Tracks</a>

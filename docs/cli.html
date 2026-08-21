@@ -118,19 +118,20 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>CLI Reference</h1>
+  <h1>Use the Command Line Interface</h1>
   <p class="lede">
-    The command-line tools serve the UI, add FITS/XISF libraries, screen images,
-    and sync database copies. Most desktop catalog work does not need them.
+    The command-line interface provides tools to serve the user interface,
+    import FITS and XISF libraries, screen images, and synchronize database
+    copies. Most local desktop catalog tasks do not require these commands.
   </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>Run PSF Guard on a server or in scripts</strong><p>Start with <code>psf-guard --help</code>; each command has its own help.</p></div>
+    <div class="workflow-copy"><strong>You can run PSF Guard on a server or in scripts.</strong><p>Run <code>psf-guard --help</code> to view the main help menu. Each individual command supports the <code>--help</code> flag as well.</p></div>
     <a class="workflow-link" href="install.html#server">Installation →</a>
   </div>
 
-  <h2 id="server">Serving the grader UI</h2>
+  <h2 id="server">Serve the grader UI</h2>
   <pre><code><span class="c"># Serve (registers the DB in the shared registry on first run)</span>
 psf-guard server &lt;database&gt; &lt;image-dirs...&gt; [--port 3000]
 
@@ -142,9 +143,10 @@ psf-guard server --registry /tmp/scratch.json &lt;db&gt; &lt;dirs...&gt;
 
 <span class="c"># Bind localhost only (default binds 0.0.0.0)</span>
 psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
-  <p>Multiple image directories are scanned in priority order (first hit wins).
-  The server manages every database in the registry, not just the one passed on
-  the command line — see <a href="configuration.html">Configuration</a>.</p>
+  <p>The server scans multiple image directories in priority order, resolving to the
+  first matching file found. The server manages all databases defined in the registry,
+  not just the database specified on the command line. For more details, see the
+  <a href="configuration.html">Configuration</a> section.</p>
 
   <h2 id="import">Import FITS and XISF libraries</h2>
   <pre><code><span class="c"># Build and register a compatible image catalog</span>
@@ -163,33 +165,33 @@ psf-guard import archive ./processing-tree --skip-processed
 
 <span class="c"># Preview removal of projects made by an import</span>
 psf-guard remove-imported archive --dry-run</code></pre>
-  <p>The first pass reads headers only. Light frames become Pending catalog
-  images and derive projects, targets, shared exposure templates, and plans.
-  Bias, dark, dark-flat, and flat frames become calibration-library records,
-  not Target Scheduler image rows. <code>--lights-only</code> and
-  <code>--calibration-only</code> are mutually exclusive;
-  <code>--skip-processed</code> works with either. Scans accept
-  <code>.fits</code>, <code>.fit</code>, <code>.fts</code>, and monolithic
-  <code>.xisf</code> files. See <a href="importing.html">Add Images &amp;
-  Plan</a> for the UI's frame-kind selector, folder checkboxes, safe preview
-  workflow, grouping rules, and quality backfill.</p>
+  <p>During the import process, the first pass reads only the file headers. Light
+  frames are imported as Pending catalog images, which then generate projects,
+  targets, shared exposure templates, and plans. Bias, dark, dark-flat, and flat
+  frames are imported as calibration library records instead of Target Scheduler
+  image rows. The <code>--lights-only</code> and <code>--calibration-only</code>
+  flags are mutually exclusive, while the <code>--skip-processed</code> flag is
+  compatible with both. The scanner accepts <code>.fits</code>, <code>.fit</code>,
+  <code>.fts</code>, and monolithic <code>.xisf</code> files. For more details on the
+  user interface, folder selection, preview workflows, grouping rules, and quality
+  backfilling, see the <a href="importing.html">Add Images &amp; Plan</a> section.</p>
 
-  <h2 id="screening">Quality screening</h2>
+  <h2 id="screening">Screen images for quality</h2>
   <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
 psf-guard screen-fits ./lights --annotate ./diag      <span class="c"># diagnostic PNGs</span>
 psf-guard screen-fits ./lights --regrade-db my-db --dry-run
 psf-guard screen-fits ./lights --format json          <span class="c"># or table, csv</span></code></pre>
-  <p>The database-free command runs spatial and photometric screening.
-  <code>--regrade-db</code> additionally loads the intended catalog target
-  coordinates, runs fresh Seiza plate solves, and sends supported recommendations
-  through the same grader. Details: <a href="screening.html">Quality Screening</a>
-  and <a href="astrometry-quality.html">Astrometry Quality</a>. When orbital
-  elements are already cached, it also applies the cache-only
-  <a href="satellites.html">Satellite Tracks</a> prediction and pixel-alignment
-  analysis. Prediction alone warns; a reviewed rejection requires a matched
-  high-risk trail.</p>
+  <p>This command operates without a database to perform spatial and photometric
+  screening. The <code>--regrade-db</code> flag loads target coordinates from the
+  catalog, performs plate solves using the Seiza solver, and evaluates recommendations
+  through the grader. For more details, see the <a href="screening.html">Quality Screening</a>
+  and <a href="astrometry-quality.html">Astrometry Quality</a> sections. If orbital
+  elements are cached, the tool also performs satellite tracking predictions and
+  pixel-alignment analysis as described in the <a href="satellites.html">Satellite Tracks</a>
+  section. Predictions only generate warnings, while a formal rejection requires a
+  matching high-risk trail.</p>
 
-  <h2 id="export">Export for stacking</h2>
+  <h2 id="export">Export images for stacking</h2>
   <pre><code><span class="c"># Preview, then copy Accepted lights into &lt;target&gt;/LIGHT/&lt;filter&gt;/</span>
 psf-guard export my-db --dest ./stacking --dry-run
 psf-guard export my-db --dest ./stacking
@@ -197,10 +199,10 @@ psf-guard export my-db --dest ./stacking
 <span class="c"># Narrow the export and use hardlinks when possible</span>
 psf-guard export my-db --dest ./stacking \
   --target "California Nebula" --filter HA --link</code></pre>
-  <p>Rejected frames are never exported. See
-  <a href="exporting.html">Export for Stacking</a> for desktop/browser use,
-  Pending-frame opt-in, raw database paths, repeat-export behavior, and API
-  examples.</p>
+  <p>Rejected frames are excluded from the export. For information regarding
+  desktop and browser usage, importing pending frames, locating raw database paths,
+  managing repeat exports, and reviewing API examples, see the
+  <a href="exporting.html">Export for Stacking</a> section.</p>
 
   <h2 id="snr">Measure stack depth without a catalog</h2>
   <pre><code><span class="c"># Measure a folder in capture order</span>
@@ -208,27 +210,28 @@ psf-guard stack-snr ./lights
 
 <span class="c"># Put the strongest frames first and save the exact curve</span>
 psf-guard stack-snr ./lights --order quality --csv curve.csv --json curve.json</code></pre>
-  <p>The command searches subfolders for FITS and XISF frames, builds stacks
-  from the source frames, and measures SNR at several depths. Capture order
-  shows whether more frames like those from the current night may help. Quality
-  order sorts frames by star count and sharpness so you can see whether
-  lower-ranked frames still improve the stack. Use <code>--threads</code> to
-  limit the star-detection work. A curve needs at least three frames. See
-  <a href="stacking.html#snr">Stack Previews</a> for the measured curve, ideal
-  comparison, verdicts, and projections.</p>
+  <p>This command searches subdirectories for FITS and XISF files, generates stacks
+  from the source frames, and measures the signal-to-noise ratio at multiple stack
+  depths. Stacking in capture order indicates whether adding more frames from the
+  same session improves the signal. Stacking in quality order sorts frames by star
+  count and sharpness to determine if lower-quality frames continue to improve the
+  stack. You can limit the concurrent star-detection threads by using the
+  <code>--threads</code> flag. Generating a curve requires a minimum of three
+  frames. For more details about curves, comparisons, and SNR projections, see the
+  <a href="stacking.html#snr">Stack Previews</a> section.</p>
 
-  <h2 id="rejects">Reject archival</h2>
+  <h2 id="rejects">Archive rejected files</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]
 psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--dry-run]</code></pre>
-  <p>Details: <a href="workflows.html#rejects">Rejects &amp; Sync</a>.</p>
+  <p>For more details, see the <a href="workflows.html#rejects">Rejects &amp; Sync</a> section.</p>
 
-  <h2 id="sync">Two-database sync</h2>
+  <h2 id="sync">Synchronize two databases</h2>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to my-db
 psf-guard sync planning --from my-db --to telescope.sqlite
 psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
-  <p>Details: <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
+  <p>For more details, see the <a href="workflows.html#sync">Rejects &amp; Sync</a> section.</p>
 
-  <h2 id="analysis">Star detection &amp; PSF analysis</h2>
+  <h2 id="analysis">Detect stars and analyze PSF data</h2>
   <pre><code><span class="c"># Detect stars and compare against database values</span>
 psf-guard analyze-fits image.fits [--detector nina|hocusfocus] [--compare-all]
 
@@ -243,28 +246,30 @@ psf-guard visualize-psf-multi image.fits [--num-stars 25]
 psf-guard benchmark-psf image.fits</code></pre>
   <figure>
     <img src="../assets/psf-visualization.jpg" alt="PSF visualization grid: observed, fitted, residual" loading="lazy">
-    <figcaption><code>visualize-psf-multi</code>: observed / fitted / residual grids
-    with Moffat &amp; Gaussian models.</figcaption>
+    <figcaption>The <code>visualize-psf-multi</code> command outputs observed,
+    fitted, and residual grids using Moffat and Gaussian models.</figcaption>
   </figure>
-  <p>The analysis commands also accept XISF paths. Annotated star maps label
-  each detection with its measured HFR; use <code>--max-stars</code> to trade
-  label density for field coverage.</p>
+  <p>These analysis commands also support XISF file paths. The annotated star maps
+  label detected stars with their measured HFR. You can use the <code>--max-stars</code>
+  flag to control label density and field coverage.</p>
 
-  <h2 id="fits">FITS utilities</h2>
+  <h2 id="fits">Use FITS utilities</h2>
   <pre><code>psf-guard stretch-to-png image.fits -o output.png    <span class="c"># MTF auto-stretch</span>
 psf-guard read-fits image.fits                       <span class="c"># header/metadata dump</span></code></pre>
 
-  <h2 id="db">Database queries &amp; manual grading</h2>
+  <h2 id="db">Query databases and grade images manually</h2>
   <pre><code>psf-guard list-projects -d database.sqlite
 psf-guard list-targets "Project Name" -d database.sqlite
 psf-guard dump-grading -d database.sqlite [--project NAME]
 psf-guard show-images &lt;IDS&gt; -d database.sqlite
 psf-guard update-grade &lt;ID&gt; rejected -d database.sqlite
 psf-guard regrade database.sqlite [--dry-run]        <span class="c"># statistical re-grading</span></code></pre>
-  <p>Batch commands also support statistical outlier detection
-  (<code>--enable-statistical</code>): per-target/filter HFR and star-count
-  distribution analysis plus sequence-based cloud detection. Details in
-  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md')">docs/STATISTICAL_GRADING.md</a>.</p>
+  <p>Batch commands also support statistical outlier detection using the
+  <code>--enable-statistical</code> flag. This enables HFR and star-count
+  distribution analysis per target and filter, as well as sequence-based cloud
+  detection. Detailed information is available in the
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md')">docs/STATISTICAL_GRADING.md</a>
+  document.</p>
 
   <nav class="next-prev">
     <a href="workflows.html">← Rejects &amp; Sync</a>
