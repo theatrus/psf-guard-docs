@@ -120,14 +120,12 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Sky Context &amp; Plate Solving</h1>
   <p class="lede">
-    Identify the objects expected around a frame, solve its pixels on demand
-    with Seiza, and inspect catalog labels, object outlines, an RA/Dec grid,
-    solved scale, and pointing offset without leaving the grader.
+    PSF Guard identifies the objects expected around a frame, solves its pixels on demand with the Seiza engine, and displays catalog labels, object outlines, an RA/Dec grid, the solved scale, and the pointing offset directly in the grader.
   </p>
 
   <figure>
     <img src="../assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and the Sky context panel">
-    <figcaption>A hinted solve of the Cocoon Nebula. The overlay and side panel share the same pixel-derived WCS and catalog provenance.</figcaption>
+    <figcaption>This image shows a hinted solve of the Cocoon Nebula. The overlay and side panel share the same pixel-derived WCS and catalog provenance.</figcaption>
   </figure>
 
   <h2 id="layers">Context, solution, and overlay are different layers</h2>
@@ -135,65 +133,51 @@ function gtag_report_demo() {
     <tr><th>Layer</th><th>What it tells you</th><th>What it needs</th></tr>
     <tr>
       <td>Catalog context</td>
-      <td>Objects expected near the FITS or catalog target coordinates. This is pointing context, not proof that an object is visible in the pixels.</td>
-      <td><code>objects.bin</code> and approximate coordinates</td>
+      <td>This layer displays objects expected near the FITS or catalog target coordinates. This provides pointing context rather than proof that an object is visible in the pixels.</td>
+      <td>This requires <code>objects.bin</code> and approximate target coordinates.</td>
     </tr>
     <tr>
       <td>WCS solution</td>
-      <td>The image's measured center, scale, rotation, parity, and target offset. A supported embedded TAN WCS is accepted immediately; otherwise PSF Guard solves the pixels.</td>
-      <td>A star catalog, or a supported embedded WCS</td>
+      <td>This reports the image's measured center, scale, rotation, parity, and target offset. A supported embedded TAN WCS is accepted immediately; otherwise PSF Guard solves the pixels.</td>
+      <td>This requires a star catalog or a supported embedded WCS.</td>
     </tr>
     <tr>
       <td>Sky overlay</td>
-      <td>RA/Dec grid, target marker, labels, extents, and source-qualified catalog outlines projected into the image.</td>
-      <td>A WCS solution plus <code>objects.bin</code> for object annotations</td>
+      <td>This projects an RA/Dec grid, target marker, labels, extents, and source-qualified catalog outlines into the image.</td>
+      <td>This requires a WCS solution and <code>objects.bin</code> for object annotations.</td>
     </tr>
   </table>
 
-  <h2 id="install">1. Install the Seiza catalogs</h2>
-  <p>PSF Guard embeds Seiza 0.12.0's solver, but does not bundle its
-  multi-gigabyte catalogs. Open <strong>Settings → Seiza Catalogs</strong> in
-  the desktop app to install or update them. A browser gets the same controls
-  when the server starts with <code>--allow-database-management</code>.</p>
-  <p>Settings reports which features are ready, offers additive packages, keeps
-  download progress across page reloads, and validates installed files.
-  <strong>Blind solving</strong> is the recommended default.</p>
+  <h2 id="install">1. You must install the Seiza catalogs</h2>
+  <p>PSF Guard embeds Seiza version 0.12.0's solver, but does not bundle the multi-gigabyte catalogs. You can install or update them by opening <strong>Settings → Seiza Catalogs</strong> in the desktop app. The web interface provides the same controls if the server starts with the <code>--allow-database-management</code> option.</p>
+  <p>The Settings view displays which features are active, offers additional catalog packages, preserves download progress across page reloads, and validates installed files. <strong>Blind solving</strong> is the recommended default.</p>
   <figure>
     <img src="../assets/settings-catalog-quality.png" alt="Settings showing Seiza catalog readiness, package selection, validation, and database quality actions">
-    <figcaption>Catalog status and database quality work share one Settings
-    view. Validation checks the installed files before a solve needs them.</figcaption>
+    <figcaption>The Settings view displays both catalog status and database quality. Validation checks the installed files before a solve is initiated.</figcaption>
   </figure>
-  <p>For a manual or headless install, get the <code>seiza</code> CLI from the
-  <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a>, or
-  install the matching CLI with Cargo:</p>
+  <p>For manual or headless installations, you can download the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases page</a>, or install the matching CLI version using Cargo:</p>
   <pre><code>cargo install seiza-cli --version 0.12.0</code></pre>
-  <p>Then use either the guided setup or the non-interactive prebuilt download:</p>
+  <p>After installing the CLI, use the guided setup or the non-interactive prebuilt download command:</p>
   <pre><code><span class="c"># Recommended: choose a bundle for your available storage and use case.</span>
 seiza setup
 
 <span class="c"># Or download the complete, SHA-256-verified prebuilt bundle.</span>
 seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
-  <p>The complete bundle includes every resource. If you install individual
-  files, these three roles matter to PSF Guard:</p>
+  <p>The complete bundle contains all required files. If you install individual files, PSF Guard relies on the following three resources:</p>
   <table>
     <tr><th>File</th><th>Feature</th></tr>
-    <tr><td><code>objects.bin</code></td><td>Coordinate-only object context plus solved labels and catalog outlines</td></tr>
-    <tr><td><code>stars-lite-tycho2.bin</code>, <code>stars-gaia.bin</code>, or <code>stars-deep-gaia17.bin</code></td><td>Hinted solving; Seiza selects the deepest installed catalog</td></tr>
-    <tr><td><code>blind-gaia16.idx</code></td><td>Blind fallback when the pointing hint is absent or stale</td></tr>
+    <tr><td><code>objects.bin</code></td><td>This file provides coordinate-only object context, solved labels, and catalog outlines.</td></tr>
+    <tr><td><code>stars-lite-tycho2.bin</code>, <code>stars-gaia.bin</code>, or <code>stars-deep-gaia17.bin</code></td><td>These files enable hinted solving. Seiza automatically selects the deepest installed catalog.</td></tr>
+    <tr><td><code>blind-gaia16.idx</code></td><td>This file provides a blind solver fallback when the pointing hint is missing or outdated.</td></tr>
   </table>
 
-  <h2 id="configure">2. Let PSF Guard find the bundle</h2>
-  <p><code>seiza setup</code> writes to Seiza's platform-standard catalog
-  directory, which PSF Guard searches automatically. Restart PSF Guard after
-  installing or changing catalogs.</p>
-  <p>For a custom location, set <code>SEIZA_CATALOG_DIR</code> before starting
-  PSF Guard, or merge this top-level fragment into the existing PSF Guard JSON
-  registry:</p>
+  <h2 id="configure">2. PSF Guard must locate the catalog bundle</h2>
+  <p>The <code>seiza setup</code> command writes to the platform-standard catalog directory, which PSF Guard searches automatically. You must restart PSF Guard after installing or modifying catalogs.</p>
+  <p>If you use a custom location, set the <code>SEIZA_CATALOG_DIR</code> environment variable before starting PSF Guard, or merge the following top-level fragment into your existing PSF Guard configuration file:</p>
   <pre><code>"astrometry": {
   "data_dir": "/path/to/seiza-data"
 }</code></pre>
-  <p>Keep the registry's existing <code>databases</code> entries. The registry
-  lives here:</p>
+  <p>You must preserve any existing <code>databases</code> entries in the configuration. The configuration file is located at the following paths depending on your platform:</p>
   <table>
     <tr><th>Platform</th><th>Registry path</th></tr>
     <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
@@ -201,9 +185,8 @@ seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
     <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
   </table>
 
-  <h3 id="docker">Docker</h3>
-  <p>Mount the catalog directory read-only and expose its location to the
-  embedded Seiza library:</p>
+  <h3 id="docker">You can run PSF Guard with Docker</h3>
+  <p>To deploy PSF Guard using Docker, mount the catalog directory as read-only and expose its location to the embedded Seiza library:</p>
   <pre><code>docker run -d -p 3000:3000 \
   -e SEIZA_CATALOG_DIR=/catalogs \
   -v /path/to/seiza-data:/catalogs:ro \
@@ -211,58 +194,33 @@ seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
   -v /path/to/images:/images:ro \
   ghcr.io/theatrus/psf-guard:latest</code></pre>
 
-  <h2 id="verify">3. Verify the running setup</h2>
-  <p>The capability endpoint reports every resolved path and which features are
-  available. The validation endpoint deliberately opens and fully reads each
-  configured catalog, so it can take time on the deep bundle:</p>
+  <h2 id="verify">3. You can verify the running configuration</h2>
+  <p>The capability endpoint reports the resolved paths and identifies which features are available. The validation endpoint fully reads each configured catalog, which can take several minutes when using the deep Gaia catalog:</p>
   <pre><code>curl http://localhost:3000/api/astrometry/capabilities
 curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
   <div class="callout info">
-    <strong>Catalog objects but no Solve field?</strong> You have
-    <code>objects.bin</code>, but no usable star catalog. A solver needs one of
-    the <code>stars-*.bin</code> files; the blind index is optional and only
-    provides fallback when the hint cannot solve the field.
+    <strong>The system displays catalog objects but the Solve button is disabled.</strong> This indicates that the system found <code>objects.bin</code>, but no usable star catalog is installed. The solver requires at least one of the <code>stars-*.bin</code> files to function. The blind index is optional and is only used as a fallback when the hinted solver cannot process the field.
   </div>
 
-  <h2 id="use">4. Solve and inspect a frame</h2>
+  <h2 id="use">4. You can solve and inspect a frame</h2>
   <ol>
-    <li>Open an image in the detail grader. The <strong>Sky context</strong>
-      panel loads header and catalog context without running a solve.</li>
-    <li>If a supported WCS is embedded, use <strong>Sky overlay</strong>
-      immediately. Otherwise choose <strong>Solve field</strong> or press
-      <code>O</code>.</li>
-    <li>PSF Guard tries a hinted solve first (using FITS/mount position and
-      scale), then the installed blind index if the hint is missing or stale.</li>
-    <li>A successful solve enables the overlay automatically. Press
-      <code>O</code> again to toggle it while you zoom, pan, or grade.</li>
-    <li>With orbital elements cached, press <code>T</code> to draw satellites
-      predicted to cross the solved sensor and align nearby trails in the FITS
-      pixels.</li>
+    <li>Open an image in the detail grader. The <strong>Sky context</strong> panel loads the header and catalog context without running a plate solve.</li>
+    <li>If the image has a supported embedded WCS, you can enable the <strong>Sky overlay</strong> immediately. If not, click <strong>Solve field</strong> or press the <code>O</code> key to solve the image.</li>
+    <li>PSF Guard attempts a hinted solve first using the FITS header mount coordinates and scale. It falls back to the blind index if the hint is missing or outdated.</li>
+    <li>A successful plate solve automatically enables the sky overlay. You can press the <code>O</code> key to toggle the overlay while zooming, panning, or grading.</li>
+    <li>If you have cached orbital elements, you can press the <code>T</code> key to display predicted satellite crossings and align nearby trails in the pixels.</li>
   </ol>
-  <p>The panel labels the result <strong>Embedded WCS</strong>,
-  <strong>Hinted solve</strong>, or <strong>Blind solve</strong>, and shows the
-  solved center, pixel scale, and whether the scheduled target is in frame.
-  The <strong>Rotation</strong> row shows the angle from image top to celestial
-  north. Positive values turn toward image right. <strong>Mirrored</strong>
-  means the image has reversed left-to-right orientation relative to the
-  sky.</p>
-  <p>Satellite projection adds the exposure time and observing site to that
-  WCS. Dashed orbital paths and solid pixel-aligned paths remain separate. See
-  <a href="satellites.html">Satellite Tracks</a> for timing headers, offline
-  elements, the evidence boundary, and grading behavior.</p>
+  <p>The details panel identifies the solution source as an <strong>Embedded WCS</strong>, a <strong>Hinted solve</strong>, or a <strong>Blind solve</strong>. It displays the solved center coordinates, the pixel scale, and whether the scheduled target is within the field of view. The <strong>Rotation</strong> field shows the angle from the top of the image to celestial north, where positive values indicate rotation toward the right. The <strong>Mirrored</strong> label indicates that the image orientation is reversed left-to-right compared to the sky.</p>
+  <p>The satellite projection overlays use the exposure time and observing site coordinates alongside the WCS. Predicted orbital paths (dashed) and detected pixel-aligned trails (solid) remain distinct. See <a href="satellites.html">Satellite Tracks</a> for details regarding timing headers, offline elements, the evidence boundaries, and grading behavior.</p>
 
-  <h2 id="cache">Solution cache and concurrency</h2>
-  <p>Pixel-derived solutions are stored per database under
-  <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code>. They are reused
-  on later visits and invalidated when the source FITS file, relevant catalog,
-  or Seiza version changes. PSF Guard runs one memory-heavy solve per database
-  at a time; repeated requests for the same frame reuse the completed cache.</p>
+  <h2 id="cache">PSF Guard caches solutions and manages solver concurrency</h2>
+  <p>Pixel-derived plate solutions are stored on disk under <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code>. These solutions are reused on subsequent visits and are invalidated if the source FITS file, the catalog files, or the Seiza version changes. PSF Guard runs only one memory-intensive plate solve at a time per database, and concurrent requests for the same frame reuse the cached solution once completed.</p>
 
-  <h2 id="api">Image astrometry API</h2>
-  <pre><code><span class="c"># Header/catalog context or a valid cached/embedded solution; never launches a solve.</span>
+  <h2 id="api">The image astrometry API exposes these features programmatically</h2>
+  <pre><code><span class="c"># This endpoint returns the header and catalog context or a valid cached solution, but does not launch a solve.</span>
 curl http://localhost:3000/api/db/my-db/images/123/astrometry
 
-<span class="c"># Decode pixels and solve on demand.</span>
+<span class="c"># This endpoint decodes the image pixels and solves the field on demand.</span>
 curl -X POST http://localhost:3000/api/db/my-db/images/123/astrometry</code></pre>
 
   <nav class="next-prev">

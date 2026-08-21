@@ -118,86 +118,89 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Rejects &amp; Sync</h1>
+  <h1>Manage Rejects and Sync Databases</h1>
   <p class="lede">
-    Optional tools for moving rejected files out of a stacking tree and copying
+    These optional tools move rejected files out of a stacking tree and copy
     grades, plans, and captures between two database files.
   </p>
 
   <div class="workflow-note sync">
     <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Use sync only when the telescope and grading machine have separate copies</strong><p>A direct desktop connection does not need it.</p></div>
+    <div class="workflow-copy"><strong>Use sync only when the telescope and grading machine have separate copies</strong><p>A direct desktop connection does not require database sync.</p></div>
     <a class="workflow-link" href="#sync">Sync commands ↓</a>
   </div>
 
-  <h2 id="rejects">Managing rejected files</h2>
+  <h2 id="rejects">Manage rejected files</h2>
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI</div>
-    <div class="workflow-copy"><strong>Archive files after grading</strong><p>Preview with <code>--dry-run</code>, then restore from the recorded paths if needed.</p></div>
+    <div class="workflow-copy"><strong>You can archive files after grading.</strong><p>Preview changes with the <code>--dry-run</code> flag, then restore files from the recorded paths if needed.</p></div>
     <a class="workflow-link" href="cli.html#rejects">CLI reference →</a>
   </div>
-  <p>Stacking tools such as PixInsight load everything under your lights
-  directory — including frames you've rejected. <code>move-rejects</code>
-  archives rejected frames (and their sidecars: <code>.xisf</code>,
-  <code>.json</code>, <code>.txt</code>) into a <code>REJECT/</code> subtree so
-  they're out of the scan path while the archive records where they came from:</p>
+  <p>Stacking tools such as PixInsight load all files under your lights
+  directory, including rejected frames. The <code>move-rejects</code> command
+  moves rejected frames and their sidecars (such as <code>.xisf</code>,
+  <code>.json</code>, and <code>.txt</code> files) into a <code>REJECT/</code> subdirectory.
+  This removes them from the processing path. The tool records the original paths so you can restore the files later:</p>
   <pre><code><span class="c"># Move rejects to &lt;image_dir&gt;/&lt;Project&gt;/REJECT/... with their sidecars.
 # Idempotent; every move is recorded for restore.</span>
 psf-guard move-rejects --db my-db [--dry-run]
 
-<span class="c"># Changed your mind? Un-reject frames in the UI, then:</span>
+<span class="c"># If you want to undo a rejection, un-reject the frames in the UI and run the following command:</span>
 psf-guard restore-rejects --db my-db          <span class="c"># restores only un-rejected files</span>
 psf-guard restore-rejects --db my-db --all    <span class="c"># restores everything</span></code></pre>
   <ul>
-    <li><strong>Recorded</strong> — every move lands in an archive table in the
-      database (plus a redundant manifest in each archive root for disaster
-      recovery), so restores are exact.</li>
-    <li><strong>Reversible</strong> — <code>restore-rejects</code> by default
-      restores only files whose grade is no longer Rejected (you un-rejected them
-      in the UI); <code>--all</code> restores everything. It never overwrites: if
-      the original path is occupied, the file is restored beside it with a
-      <code>.restored</code> suffix.</li>
-    <li><strong>Still visible</strong> — archived frames remain findable in the
-      grader UI; the file index covers the <code>REJECT/</code> subtree.</li>
-    <li><strong>Configurable</strong> — <code>--reject-segment</code>,
-      <code>--reject-depth</code>, and <code>--sidecar-exts</code> flags, or a
-      per-database <code>reject_archive</code> block in the registry.</li>
+    <li><strong>The process is recorded</strong> — every operation is saved in an
+      archive table in the database, with a redundant manifest file in each
+      archive root for recovery, ensuring that restores are exact.</li>
+    <li><strong>The process is reversible</strong> — the <code>restore-rejects</code>
+      command by default restores only files that are no longer marked as rejected
+      in the UI. You can use the <code>--all</code> flag to restore all files.
+      The command does not overwrite existing files; if an original path is
+      occupied, the tool restores the file with a <code>.restored</code> suffix.</li>
+    <li><strong>Files remain visible</strong> — archived frames are still
+      indexed and searchable in the grader UI, as the file index covers the
+      <code>REJECT/</code> subtree.</li>
+    <li><strong>The command is configurable</strong> — you can configure the
+      behavior using the <code>--reject-segment</code>, <code>--reject-depth</code>,
+      and <code>--sidecar-exts</code> flags, or by defining a <code>reject_archive</code>
+      block in the registry configuration file.</li>
   </ul>
   <div class="callout info">
-    Requires Target Scheduler plugin schema v22+ (the stable image GUID). Older
-    databases are refused with a pointer at the legacy
-    <code>filter-rejected</code> command, which still works but leaves files in
-    the same tree.
+    This feature requires the Target Scheduler plugin schema version 22 or later
+    to support stable image GUIDs. Older databases are not compatible, but you
+    can use the legacy <code>filter-rejected</code> command, which does not move
+    files out of the directory tree.
   </div>
 
-  <h2 id="sync">Syncing between machines</h2>
-  <p>Grade on one machine while the telescope keeps capturing on another.
-  <code>sync</code> moves state between two scheduler databases — registry slugs
-  or <code>.sqlite</code> paths — matching images by their stable GUID:</p>
+  <h2 id="sync">Sync databases between machines</h2>
+  <p>You can grade images on one machine while a telescope captures images on
+  another. The <code>sync</code> command transfers state between two scheduler
+  databases, using registry slugs or <code>.sqlite</code> file paths, and matches
+  images by their stable GUID:</p>
   <figure>
     <img src="../assets/data-transfer.png" alt="Data Transfer workspace with merge, planning, and reviewed-grade actions" loading="lazy">
     <figcaption>The Settings workspace names both catalogs and requires a
     server-owned preview before any merge or push.</figcaption>
   </figure>
-  <h3 id="staged-previews">Review every staged preview</h3>
-  <p><strong>Settings &rarr; Sync &rarr; Staged previews</strong> lists every
-  transfer waiting on the server, including a push the N.I.N.A. plugin created
-  in the background. Each row shows the destination catalog, operation, source,
-  inserted and updated counts, grade counts, and expiry.</p>
-  <p>Expand <strong>What would change</strong> to see each field change. The
-  list includes grade transitions and their reasons, plus each project,
-  target, plan, or image that will be inserted or updated. It shows at most
-  400 lines.</p>
+  <h3 id="staged-previews">Review staged previews</h3>
+  <p>The <strong>Settings &rarr; Sync &rarr; Staged previews</strong> section
+  lists all transfers waiting on the server, including background transfers
+  created by the N.I.N.A. plugin. Each entry shows the destination catalog,
+  operation type, source database, insertion and update counts, grade counts, and
+  expiration time.</p>
+  <p>You can expand the <strong>What would change</strong> section to view individual
+  field changes. This list shows grade transitions, reasons for changes, and any
+  projects, targets, plans, or images that will be inserted or updated, up to a
+  limit of 400 lines.</p>
   <ul>
-    <li><strong>Apply</strong> writes the reviewed preview.</li>
-    <li><strong>Refresh</strong> compares its saved source with the current
-      destination again.</li>
-    <li><strong>Discard</strong> removes it without changing the destination.</li>
+    <li><strong>Apply</strong> writes the changes from the reviewed preview to the destination database.</li>
+    <li><strong>Refresh</strong> compares the saved source data with the current destination database state again.</li>
+    <li><strong>Discard</strong> deletes the staged preview without modifying the destination database.</li>
   </ul>
-  <p>Nothing changes until you select Apply. For a large remote push, the server
-  builds the preview in the background. The client checks progress while the
-  server loads the source data and compares it with the destination. This
-  avoids keeping one HTTP request open through a reverse proxy.</p>
+  <p>The system does not modify the destination database until you click Apply.
+  For large data transfers, the server generates the preview in the background.
+  The client polls the server for progress updates while the server loads and
+  compares the data, which prevents HTTP timeouts through reverse proxies.</p>
   <pre><code><span class="c"># Mirror projects, targets and captured images FROM the telescope INTO your DB.
 # Your local grading is preserved; new images arrive with the telescope's grade.</span>
 psf-guard sync pull --from telescope.sqlite --to my-db --dry-run
@@ -208,38 +211,43 @@ psf-guard sync planning --from my-db --to telescope.sqlite --dry-run
 
 <span class="c"># Push your grading decisions back TO the telescope (one-way, source wins).</span>
 psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
-  <p>Use them as a loop — <strong>pull</strong> to refresh, plan and grade
-  locally, then push <strong>planning</strong> and <strong>grades</strong> back:</p>
+  <p>You can run these commands in a loop: use <strong>pull</strong> to refresh
+  the local database, plan and grade locally, and then push the <strong>planning</strong>
+  and <strong>grades</strong> updates back to the telescope:</p>
   <ul>
-    <li><strong><code>sync pull</code></strong> mirrors structure (projects,
-      targets, exposure plans, templates) and captured images into your local
-      database. Telescope wins for structure; your local grading is preserved —
-      an existing image keeps its grade unless it's still Pending, in which case
-      it adopts the telescope's.</li>
-    <li><strong><code>sync grades</code></strong> pushes grading status and
-      reject reasons one-way (source wins), with
-      <code>--status</code>/<code>--project</code>/<code>--target</code> filters
-      to scope what moves.</li>
-    <li><strong><code>sync planning</code></strong> pushes project and target
-      settings, shared templates, exposure plans, and rule weights without
-      changing capture counts, image rows, or grades on the telescope.</li>
-    <li>All three open the source read-only, refuse same-path source/dest, run in a
-      single transaction, and report exactly what changed (matched, changed,
-      unchanged, unmatched).</li>
+    <li><strong><code>sync pull</code></strong> copies the structure (projects,
+      targets, exposure plans, and templates) and captured images into your local
+      database. The telescope database is treated as the authority for structural
+      data, but your local grading decisions are preserved. An existing image
+      retains its local grade unless its status is Pending, in which case it
+      adopts the grade from the telescope.</li>
+    <li><strong><code>sync grades</code></strong> pushes grading statuses and
+      rejection reasons from the local database to the destination. You can filter
+      which records are transferred by using the <code>--status</code>,
+      <code>--project</code>, or <code>--target</code> flags.</li>
+    <li><strong><code>sync planning</code></strong> copies project and target
+      configurations, shared templates, exposure plans, and rule weights to the
+      destination. This command does not modify capture history, image records, or
+      grades on the telescope.</li>
+    <li>All three sync commands open the source database in read-only mode,
+      prevent execution if the source and destination paths are identical, run
+      within a single transaction, and output a report showing matched, changed,
+      unchanged, and unmatched records.</li>
   </ul>
   <div class="callout">
-    Keep the named directions. Full pull protects local reviewed grades;
-    planning push cannot change telescope capture history; grades push changes
-    only grading state. The Settings panel previews all three actions before
-    Apply.
+    You should use the designated sync directions to protect your data. A pull
+    operation protects local reviewed grades, a planning push does not overwrite
+    telescope capture history, and a grades push only modifies grading states.
+    The Settings panel provides a preview of all three operations before they
+    are applied.
   </div>
   <div class="callout info">
-    Rather than sync two SQLite files by hand, the
-    <a href="sync-plugin.html">PSF Guard Sync plugin for N.I.N.A.</a> pushes each
-    capture live and pulls plans and grades from inside N.I.N.A.
+    Instead of manually syncing SQLite databases, you can use the
+    <a href="sync-plugin.html">PSF Guard Sync plugin for N.I.N.A.</a> to push captures
+    in real time and pull plans and grades directly within N.I.N.A.
   </div>
 
-  <h2 id="full-loop">End-to-end workflow</h2>
+  <h2 id="full-loop">Execute the end-to-end workflow</h2>
   <pre><code><span class="c"># 1. Bring the night's captures over from the telescope</span>
 psf-guard sync pull --from telescope.sqlite --to my-db
 

@@ -120,201 +120,183 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>The Grader UI</h1>
   <p class="lede">
-    A fast, keyboard-driven UI for reviewing and grading subs. It's the same
-    UI everywhere: the desktop app ships it built in (no server or browser
-    needed), and <code>psf-guard server</code> serves the identical interface
-    to any browser for NAS and remote setups. Grades stay in the active
-    catalog. When the active catalog is an existing Target Scheduler database,
-    the scheduler can use the grades to replace rejected frames.
+    PSF Guard provides a keyboard-driven user interface for reviewing and grading
+    sub-exposures. The desktop app includes this interface natively, while the
+    <code>psf-guard server</code> command serves the same interface to web browsers
+    for NAS and remote installations. Your grades are saved directly to the active
+    catalog. If you use an existing Target Scheduler database as the active catalog,
+    the scheduler can use these grades to replace rejected frames.
   </p>
 
   <div class="workflow-note simple">
     <div class="workflow-tag">Simple</div>
-    <div class="workflow-copy"><strong>Build or open a catalog</strong><p>Start from FITS/XISF folders or an existing Target Scheduler database.</p></div>
+    <div class="workflow-copy"><strong>Build or open a catalog</strong><p>You can start from FITS/XISF folders or open an existing Target Scheduler database.</p></div>
     <a class="workflow-link" href="./#choose">Getting started →</a>
   </div>
 
   <h2 id="overview">Overview dashboard</h2>
   <figure>
     <img src="../assets/overview.png" alt="Overview showing recent projects and real narrowband frames">
-    <figcaption>Recent projects and frames, targets, image counts, and grading
-    progress across every configured database.</figcaption>
+    <figcaption>The Overview page displays recent projects, targets, completion rates, and overall grading progress across your catalogs.</figcaption>
   </figure>
-  <p>The overview aggregates all your configured catalogs: project and
-  target statistics, completion percentages, real-time file discovery status, and
-  filter usage. Click through any project or target to land in its grid. After
-  grading, use <strong>⬇ Export</strong> on a project or target to build clean
-  stacking input; see <a href="exporting.html">Export for Stacking</a>.</p>
+  <p>The overview dashboard aggregates all your configured catalogs, showing project
+  and target statistics, completion percentages, real-time file discovery status, and
+  filter usage. Click through any project or target to view its grid. After
+  grading, select <strong>⬇ Export</strong> on a project or target to compile your
+  accepted frames; see the <a href="exporting.html">Export for Stacking</a> guide.</p>
 
   <div class="shot-pair">
     <figure>
       <img src="../assets/overview-project-activity.png" alt="Compact project card with a newest-frame marker and relative capture time" loading="lazy">
-      <figcaption>Recent projects group by capture date and mark the newest
-      frame, with a relative capture time on every thumbnail.</figcaption>
+      <figcaption>Recent projects are grouped by capture date. The interface highlights the newest frame and shows relative capture times on each thumbnail.</figcaption>
     </figure>
     <figure>
       <img src="../assets/project-search-menu.png" alt="Unified project and target picker with type-ahead search" loading="lazy">
-      <figcaption>The header picker searches projects and targets, groups
-      recent work first, and expands each project into its targets.</figcaption>
+      <figcaption>The search bar in the header lets you query projects and targets, displays recent work first, and expands each project into its constituent targets.</figcaption>
     </figure>
   </div>
 
   <h2 id="grid">Image grid</h2>
   <figure>
     <img src="../assets/grid-flaming-star-narrowband.png" alt="Wide desktop grid showing real Flaming Star H-alpha frames and the compact controls">
-    <figcaption>Real Flaming Star H-alpha frames in the cleaned desktop grid.
-    The compact toolbar keeps every review control in stable rows.</figcaption>
+    <figcaption>The image grid displays your frames alongside a compact toolbar containing stable control rows.</figcaption>
   </figure>
   <ul>
-    <li><strong>Smart filtering</strong> — project, target, grading status,
-      filter, date range, search, image size, and filter/date/session grouping.</li>
-    <li><strong>Batch operations</strong> — multi-select with Shift+Click / Ctrl+Click,
-      or move the cursor with arrows and press Space. Hold Shift with an arrow
-      key to extend the selection from the keyboard. Accept, reject, or unmark
-      the whole selection.</li>
-    <li><strong>Visible selection state</strong> — an accepted or rejected card
-      keeps its grade-colored border when selected. An outer ring and checkmark
-      show the selection without hiding the grade.</li>
-    <li><strong>Stable review position</strong> — preview generation, stack
-      status, and database refreshes preserve the first visible image instead
-      of moving the page.</li>
-    <li><strong>Metadata on every card</strong> — HFR, star counts, acquisition details.</li>
-    <li><strong>Smart loading</strong> — fast previews first, full resolution on zoom.
-      Previews generate on demand in the background, so a fresh install is browsable
-      immediately; a "Generating…" badge shows while the queue works.</li>
+    <li><strong>Smart filtering</strong> — You can filter frames by project, target, grading status,
+      filter, date range, and search queries, and you can group them by filter, date, or session.</li>
+    <li><strong>Batch operations</strong> — You can select multiple frames using Shift+Click or Ctrl+Click,
+      or move the cursor with arrow keys and press Space. You can also hold Shift with an arrow
+      key to extend your selection from the keyboard, then accept, reject, or unmark the entire selection.</li>
+    <li><strong>Visible selection state</strong> — Accepted and rejected cards retain their
+      grade-colored borders when selected. An outer ring and checkmark show the selection without obscuring the grade.</li>
+    <li><strong>Stable review position</strong> — Operations like preview generation, stack
+      status updates, and database refreshes preserve your current scroll position on the first visible image rather
+      than moving the page.</li>
+    <li><strong>Metadata display</strong> — Each card displays metadata including measured HFR, star count, and acquisition details.</li>
+    <li><strong>Smart loading</strong> — The interface loads low-resolution previews first and
+      fetches full-resolution images on zoom. Previews generate in the background, making fresh installations browsable
+      immediately while a "Generating…" badge indicates active background processing.</li>
   </ul>
   <details>
-    <summary>Responsive narrow-window layout</summary>
+    <summary>The responsive narrow-window layout wraps controls for smaller screens.</summary>
     <figure>
       <img src="../assets/grid-flaming-star-responsive.png" alt="Flaming Star H-alpha grid with the controls wrapped for a narrow window">
-      <figcaption>The same controls wrap into short rows without hiding the
-      image cursor or grading state.</figcaption>
+      <figcaption>The interface controls wrap into shorter rows on narrow screens without obscuring the image cursor or grading state.</figcaption>
     </figure>
   </details>
 
   <h2 id="review-preferences">Review preferences and score chips</h2>
-  <p>Open <strong>Settings → Review</strong> to set review behavior for this
+  <p>Open <strong>Settings → Review</strong> to configure review behavior for this
   browser. Under <strong>Grading</strong>, the option <strong>Move to the next
-  image after accept, reject, or pending</strong> controls whether a grade
-  advances the cursor. Hold Shift while you accept, reject, or unmark to do the
-  opposite for that one grade.</p>
-  <p>Under <strong>Score chips</strong>, choose either or both comparison
-  badges:</p>
+  image after accept, reject, or pending</strong> controls whether applying a grade
+  automatically advances the cursor. Hold Shift while you accept, reject, or unmark to
+  temporarily invert this auto-advance behavior for that single frame.</p>
+  <p>Under <strong>Score chips</strong>, you can toggle the display of two comparison badges:</p>
   <ul>
-    <li><strong>Night-session score chip</strong> — the moon badge ranks the
-      frame within its own capture session.</li>
-    <li><strong>All-sessions score chip</strong> — the stacked-layers badge
-      ranks the frame against every comparable stack candidate for that target
-      and filter. It appears only when more than one session can be compared.</li>
+    <li><strong>Night-session score chip</strong> — The moon badge ranks a frame within its specific capture session.</li>
+    <li><strong>All-sessions score chip</strong> — The stacked-layers badge ranks a frame against all comparable stack candidates for that target and filter across all sessions. This chip appears when multiple sessions are available for comparison.</li>
   </ul>
   <div class="shot-pair">
     <figure>
       <img src="../assets/review-preferences.png" alt="The Review settings tab with grade advance and two score chip choices" loading="lazy">
-      <figcaption>Review settings apply at once in the current browser.</figcaption>
+      <figcaption>Review settings apply immediately to the current browser.</figcaption>
     </figure>
     <figure>
       <img src="../assets/grid-score-chips.png" alt="Image grid cards showing the main score, night-session score, and all-sessions score" loading="lazy">
-      <figcaption>The moon and stacked-layers chips keep both comparisons
-      visible on each grid card.</figcaption>
+      <figcaption>The moon and stacked-layers chips keep both relative rankings visible on each grid card.</figcaption>
     </figure>
   </div>
   <p>The Grid and Sequence toolbars repeat these choices as compact moon and
-  stacked-layers toggles. One browser setting controls both views, so a frame
-  keeps the same score context as you move through the grader. The grading
-  preference also applies in image detail. The large score badge remains the
-  score for the active comparison; its tooltip says whether it is a
-  <strong>Pixel-assisted score</strong> or <strong>Catalog-relative
-  score</strong>.</p>
+  stacked-layers toggles. Your browser setting controls both views, so a frame
+  retains the same score context as you navigate through the grader. The grading
+  preference also applies in the detailed image viewer. The main score badge
+  represents the active comparison context. Hovering over it displays a tooltip
+  indicating whether it is a <strong>Pixel-assisted score</strong> or a
+  <strong>Catalog-relative score</strong>.</p>
 
   <h2 id="stars">Star overlays and measured HFR</h2>
   <p>Open a frame and press <code>S</code> to toggle the live star overlay. The
-  annotated-star image uses the same measurements and labels every detection
-  with its HFR beside the circle. Limit the maximum star count when a dense
-  field would make the labels too crowded; label size follows the preview size
-  so the values remain legible.</p>
-  <p>HocusFocus detection automatically uses the frame's focal length and pixel
-  size when both headers are available. Wide-field images keep smaller stars;
-  long-focal-length images use a stricter structure preset. Missing scale
-  headers retain the standard detector behavior.</p>
+  annotated-star image displays your star detections, labeling each with its
+  measured HFR next to the circle. You can limit the maximum star count to keep
+  the overlay legible in dense star fields; label sizes scale with the preview size
+  to preserve readability.</p>
+  <p>HocusFocus star detection automatically utilizes the frame's focal length and pixel
+  size when both metadata headers are available. Wide-field exposures retain smaller stars,
+  while long-focal-length images use a stricter detection preset. Images that lack scale
+  headers fall back to standard detector behavior.</p>
   <figure>
     <img src="../assets/annotated-hfr-labels.png" alt="Image inspector with every detected star labeled by its measured HFR" loading="lazy">
-    <figcaption>Press <code>S</code> in the image inspector to compare the
-    frame with the detector's star positions and per-star HFR measurements.</figcaption>
+    <figcaption>Pressing <code>S</code> in the image inspector compares the active frame with the detector's star positions and per-star HFR measurements.</figcaption>
   </figure>
 
   <h2 id="tilt">Sensor tilt and aberration inspector</h2>
-  <p>Open a frame and press <code>I</code> to open <strong>Sensor tilt and
-  aberration inspection</strong>. The inspector places nine 1:1 crops in a
+  <p>Open a frame and press <code>I</code> to launch the <strong>Sensor tilt and
+  aberration inspection</strong> tool. The inspector displays nine 1:1 crops in a
   3×3 mosaic and reports the median HFR, eccentricity, and star count for each
-  region. Border color shows how soft each region is compared with the sharpest
-  region. A line shows the average direction of star elongation. A thicker line
-  means the stars have more consistent elongation directions.</p>
-  <p>The summary reports <strong>Tilt</strong>, <strong>Field curvature</strong>,
-  and <strong>Center HFR</strong>. One soft side opposite a sharp side suggests
+  region. The border color of each crop indicates its softness relative to the sharpest
+  region. A line indicates the average direction of star elongation, where a thicker line
+  represents a more consistent elongation direction across the region.</p>
+  <p>The summary report includes <strong>Tilt</strong>, <strong>Field curvature</strong>,
+  and <strong>Center HFR</strong>. A soft edge opposite a sharp edge suggests
   sensor tilt. Soft corners around a sharper center suggest field curvature.
-  A shared elongation direction across the whole sensor points more often to
-  guiding or wind. Seeing can imitate all of these patterns, so confirm a
-  diagnosis on several frames.</p>
+  Uniform elongation across the entire sensor typically points to guiding errors or wind.
+  Because atmospheric seeing can mimic these aberrations, you should evaluate several
+  frames to confirm a diagnosis.</p>
   <figure>
     <img src="../assets/sensor-tilt-inspector.png" alt="Sensor tilt inspector with a three-by-three mosaic, regional HFR and eccentricity, elongation lines, and a tilt summary" loading="lazy">
-    <figcaption>Press <code>I</code> to compare sharpness and elongation across
-    nine regions at 1:1 scale.</figcaption>
+    <figcaption>Pressing <code>I</code> displays a 3×3 mosaic comparing star sharpness and elongation across nine sensor regions at 1:1 scale.</figcaption>
   </figure>
   <div class="callout info">
     <strong>Missing regional measurements?</strong> If the cached star analysis
     does not include regional data, run <strong>Analyze Quality</strong> again
-    or reopen the frame after the cache refreshes.
+    or reopen the frame after the cache finishes updating.
   </div>
 
   <h2 id="compare">Comparison mode</h2>
   <figure>
     <img src="../assets/compare.jpg" alt="Side-by-side comparison with synchronized zoom">
-    <figcaption>Synchronized zoom and pan; grade either or both frames without leaving the view.</figcaption>
+    <figcaption>Comparison mode displays two frames side by side with synchronized or independent zoom and pan. You can accept, reject, or unmark both images simultaneously.</figcaption>
   </figure>
-  <p>Put two frames side by side with synchronized (or independent) zoom and pan —
-  ideal for judging a borderline frame against a known-good neighbor. Accept,
-  reject, or unmark both images at once.</p>
+  <p>Comparison mode displays two frames side by side with synchronized or independent
+  zoom and pan, which is useful for evaluating borderline frames against known-good
+  neighbors. You can accept, reject, or unmark both images simultaneously.</p>
 
   <h2 id="sky-context">Sky context and plate solving</h2>
-  <p>Open a frame to see catalog objects expected near its FITS or catalog
-  target coordinates. If it has no embedded WCS, choose
+  <p>When you open a frame, the interface displays the catalog objects expected near
+  its target coordinates. If the frame lacks an embedded WCS, you can select
   <strong>Solve field</strong> or press <code>O</code> to run Seiza against the
-  pixels. A successful solution enables the sky overlay with catalog labels,
-  outlines, an RA/Dec grid, solved scale, and target offset. See
-  <a href="astrometry.html">Sky Context &amp; Plate Solving</a> for catalog setup,
-  Docker configuration, validation, and the API.</p>
+  pixels. A successful solve enables the sky overlay, which displays catalog labels,
+  outlines, an RA/Dec grid, the solved pixel scale, and the measured target offset.
+  For details on catalog setup, Docker configuration, and API integration, see the
+  <a href="astrometry.html">Sky Context &amp; Plate Solving</a> guide.</p>
   <figure>
     <img src="../assets/settings-seiza-catalogs.png" alt="Settings showing installed Seiza catalogs and available sky features" loading="lazy">
-    <figcaption>Settings shows which catalog features work and installs or
-    validates the Seiza sky data when database management is enabled.</figcaption>
+    <figcaption>The Settings menu displays active catalog features and allows you to install or validate Seiza sky data when database management is enabled.</figcaption>
   </figure>
 
   <h2 id="sequence">Sequence view</h2>
   <figure>
     <img src="../assets/sequence-quality-astrometry.png" alt="Sequence analysis with two poor frames, nine good frames, and solved-center scatter">
-    <figcaption>One quality view combines image conditions, PSF/guiding metrics,
-    solved-center scatter, and field-relative pointing evidence.</figcaption>
+    <figcaption>The Sequence view combines image conditions, PSF/guiding metrics, solved-center scatter, and field-relative pointing data into a single quality graph.</figcaption>
   </figure>
-  <p>The Sequence view plots per-frame quality over a night: HFR, star counts, and
-  — once you press <strong>Scan Quality</strong> — spatial, photometric, and
-  pixel-derived astrometry signals. Flagged runs are classified (occlusion,
-  clouds, sky brightening, off target, pointing jump/drift, or unsolved). The
-  analyzer keeps stable deliberate framing segments advisory, while returned
-  excursions and within-segment drift remain rejectable. The selectors focus
-  the evidence, and a per-image review appears before a recommended rejection
-  is written. See <a href="screening.html">Quality
-  Screening</a> and <a href="astrometry-quality.html">Astrometry Quality</a>.</p>
+  <p>The Sequence view plots per-frame quality over an acquisition session, tracking
+  metrics like HFR, star counts, and—after running <strong>Scan Quality</strong>—spatial,
+  photometric, and pixel-derived astrometry signals. Flagged frames are classified as
+  occlusion, clouds, sky brightening, off-target pointing, pointing drift/jump, or unsolved.
+  The analyzer flags intentional framing changes as advisory, while frame excursions and
+  within-segment drift are flagged as rejectable. The interface presents the specific evidence
+  for your review before writing recommended rejections to the database. For more information,
+  see the guides on <a href="screening.html">Quality Screening</a> and
+  <a href="astrometry-quality.html">Astrometry Quality</a>.</p>
 
-  <p>Sequence handles like the grid it sits beside: the same arrow keys, the
-  same <kbd>Space</kbd> to select, and a selection made in the grid carried
-  through when you switch. Open an image and close it again and you land back
-  where you were, on the same card, even one that was only half in view. Tabs
-  wrap onto another line rather than scrolling sideways, and a thumbnail size
-  control &mdash; remembered across reloads &mdash; sets how much of the night
-  fits on screen at once.</p>
+  <p>The Sequence view uses the same controls as the image grid: you can use the same
+  arrow keys to navigate, press Space to select frames, and preserve your active selection
+  when switching between views. When you open and close a detailed image view, you return
+  to your previous scroll position in the grid. Toolbar tabs wrap onto multiple lines on
+  smaller screens, and the grid remembers your thumbnail size setting across reloads.</p>
 
-  <p>Quality analysis starts from the image grid as well, and the control
-  appears only where there is something to scan.</p>
+  <p>You can also start the quality analysis directly from the image grid, where the
+  analysis controls appear when scannable frames are available.</p>
 
   <h2 id="shortcuts">Keyboard shortcuts</h2>
   <table class="kbd-table">
@@ -332,11 +314,11 @@ function gtag_report_demo() {
   </table>
 
   <h2 id="write-back">Where grades go</h2>
-  <p>Every action updates <code>gradingStatus</code> in the active catalog,
-  with undo and redo tracked in the UI. PSF Guard uses the Target Scheduler
-  database mapping for catalogs it creates. If you open or sync a live Target
-  Scheduler database, the scheduler can count accepted images against each
-  exposure plan and queue replacements for rejected frames.</p>
+  <p>Every grading action updates the <code>gradingStatus</code> field in the active
+  catalog, and the interface tracks your undo and redo history. PSF Guard uses the Target
+  Scheduler database schema for all catalogs it creates. If you open or synchronize a
+  live Target Scheduler database, the scheduler counts the accepted images against your
+  active exposure plans and schedules replacement frames for rejected exposures.</p>
 
   <nav class="next-prev">
     <a href="install.html">← Installation</a>
