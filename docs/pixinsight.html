@@ -199,11 +199,32 @@ B  = OIII</code></pre>
       <tr><td>Create a stars image</td><td>Builds the colour stars image from the star images.</td></tr>
       <tr><td>Combined image</td><td>Also screens the stars onto the result, <code>~(~result*~stars)</code>. Handy for a quick look; for a final image you will usually blend the stars yourself.</td></tr>
       <tr><td>Factor images</td><td>Shows the <code>o</code> and <code>ho</code> factor images as separate grayscale images. They are informative only.</td></tr>
-      <tr><td>Standard adjustments</td><td>Applies the Foraxx curves and selective saturation boost to the result, and a curve to the stars. Uncheck to get the raw PixelMath output and do your own adjustments.</td></tr>
+      <tr><td>Standard adjustments</td><td>Applies the Foraxx hue and saturation curves to the result, and a hue curve to the stars. Uncheck to get the raw PixelMath output and do your own adjustments.</td></tr>
+      <tr><td>Channel midtones</td><td>A midtones transfer per starless channel, after the gain. 0.5 is neutral; lower lifts faint OIII or SII without pushing highlights into clipping the way a plain gain does.</td></tr>
     </table>
   </div>
   <p>Options are remembered between runs. The reset button restores the
   defaults and keeps the selected images.</p>
+
+  <h3 id="masks">Shape the mixing masks</h3>
+  <p>The two Foraxx factors are masks: <code>o</code> decides where SII replaces
+  Ha in red, and <code>ho</code> decides where Ha replaces OIII in green. They
+  set the colour transitions, so the script lets you reshape them. <strong>Bias</strong>
+  is a midtones balance on each mask: 0.5 is neutral, lower brightens the mask so
+  the replacing channel wins over more of the image, higher favours the base
+  channel. <strong>Contrast</strong> steepens the mask around 0.5 for a sharper
+  transition. The factor images show the reshaped masks, and neutral values
+  give the original palette exactly.</p>
+
+  <h3 id="extras">Masks and colour</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>What it does</th></tr>
+      <tr><td>Channel-ratio masks</td><td>Creates <code>OIII/(Ha+OIII)</code> and, with three channels, <code>SII/(Ha+SII)</code> as grayscale images named <code>&lt;result&gt;_ratio_OIII</code> and <code>_ratio_SII</code>. They select oxygen- or sulfur-rich structure regardless of brightness, for use as masks on your own adjustments. Below the mean-signal threshold they fade to black, so faint, unstable ratios do not select the background.</td></tr>
+      <tr><td>Protected saturation</td><td>A saturation boost through a generated mask, <code>(L* - background)/(1 - background) &times; (1 - saturation)</code>, so the dark background and already saturated pixels are left alone. The mask stays open as <code>&lt;result&gt;_satmask</code> for reuse.</td></tr>
+      <tr><td>L* lift</td><td>Colour-preserving brightness: a curve on the CIE L* channel only, through (0.5, 0.5 + lift). Hue and chroma are untouched, so the colour relationships survive the stretch. This is PixInsight's equivalent of a Luminosity-mode curves layer.</td></tr>
+    </table>
+  </div>
 
   <h3 id="outputs">What you get</h3>
   <ul>
