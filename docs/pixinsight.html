@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PixInsight Scripts — PSF Guard</title>
-  <meta name="description" content="Add the PSF Guard PixInsight repository and use the Foraxx Palette Utility to build Foraxx, SHO, HOO, HSO and OHS palette images from starless narrowband data.">
+  <meta name="description" content="Where to find the theatr.us PixInsight scripts and the Foraxx palette guide.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -125,132 +125,29 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>PixInsight Scripts</h1>
   <p class="lede">
-    The PixInsight scripts are a <a href="https://theatr.us/software/astro">theatr.us</a> tool, published from the update repository at
-    <a href="https://pixinsight.theatr.us/">pixinsight.theatr.us</a>.
-    It currently publishes the <strong>Foraxx Palette Utility</strong>, a script
-    that builds a Foraxx palette image from stretched, starless narrowband images,
-    with an optional stars image. The scripts install and update through
-    PixInsight's own update system.
+    The PixInsight scripts are a <a href="https://theatr.us/software/astro">theatr.us</a>
+    tool rather than part of PSF Guard, and their guide lives there:
+    <a href="https://theatr.us/software/astro/foraxx">Foraxx palette for PixInsight and Photoshop</a>.
   </p>
 
-  <h2 id="install">Add the repository</h2>
+  <h2 id="install">In short</h2>
   <ol>
-    <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage Repositories</strong>.</li>
-    <li>Add this repository URL, including the trailing slash:
-      <pre><code>https://pixinsight.theatr.us/</code></pre></li>
-    <li>Run <strong>Resources &rarr; Updates &rarr; Check for Updates</strong>,
-      accept the update, and restart PixInsight when asked.</li>
+    <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage Repositories</strong>
+      and add <code>https://pixinsight.theatr.us/</code>, including the trailing slash.</li>
+    <li>Run <strong>Check for Updates</strong>, accept, and restart PixInsight.</li>
     <li>The scripts appear under <strong>Script &rarr; theatr.us</strong>.</li>
   </ol>
   <div class="callout info">
-    The repository serves the current script to PixInsight <strong>1.9.4</strong> and
-    later 1.9 releases, which run the new V8 JavaScript runtime. Installs from
-    1.8.9-3 through 1.9.3 receive the original 1.16 script instead. The earlier address <code>https://pixinsight.psf-guard.com/</code> still works. The packages
-    are not code-signed, so PixInsight prints a warning in the console the first
-    time a script runs. That is expected.
+    The earlier address <code>https://pixinsight.psf-guard.com/</code> still works and
+    serves the same files. Everything else, from the palette math to every option,
+    is in the <a href="https://theatr.us/software/astro/foraxx">guide on theatr.us</a>.
   </div>
 
-  <h2 id="foraxx">Foraxx Palette Utility</h2>
-  <p>The Foraxx palette is a dynamic narrowband combination published by
-  <a href="https://thecoldestnights.com/2020/06/pixinsight-dynamic-narrowband-combinations-with-pixelmath/">The Coldest Nights</a>.
-  Where a fixed mapping such as SHO puts each filter in one colour channel, Foraxx
-  weights the red and green channels pixel by pixel from the OIII and Ha&times;OIII
-  signal, which gives the bronze-and-teal look with fewer green casts. The script
-  runs the PixelMath expressions for you and applies a standard set of curves and
-  a selective saturation boost.</p>
-  <p>For SII, Ha and OIII the palette is:</p>
-  <pre><code>o  = OIII^~OIII
-ho = (Ha*OIII)^~(Ha*OIII)
-R  = o*SII + ~o*Ha
-G  = ho*Ha + ~ho*OIII
-B  = OIII</code></pre>
-  <p>where <code>~x</code> is PixelMath's <code>1 - x</code>. With Ha and OIII only,
-  <code>R = Ha</code>. The stars image uses the same mapping with the star images
-  in the colour terms, while the dynamic factors still come from the starless
-  images.</p>
-
-  <h3 id="inputs">Prepare the inputs</h3>
-  <ol>
-    <li>Stretch each narrowband master to non-linear. The script does not stretch.</li>
-    <li>Remove the stars from each stretched image with StarXTerminator or
-      StarNet, keeping the stars-only image if you want a colour stars image.</li>
-    <li>Make sure every image has the same dimensions. The script checks this and
-      refuses mismatched inputs.</li>
-  </ol>
-
-  <h3 id="run">Run the script</h3>
-  <ol>
-    <li>Open <strong>Script &rarr; theatr.us &rarr; Foraxx Palette Utility</strong>.</li>
-    <li>Choose <strong>two channels</strong> for Ha + OIII data (mono, or OSC with a
-      dual narrowband filter) or <strong>three channels</strong> for SII + Ha + OIII.</li>
-    <li>Pick a palette. <strong>Foraxx (dynamic)</strong> is the default; SHO, HOO,
-      HSO and OHS are plain channel mappings for comparison.</li>
-    <li>Select the starless image for each channel and, if you want a stars image,
-      the matching stars image.</li>
-    <li>Click <strong>Run</strong>. The console shows each step.</li>
-  </ol>
-
-  <h3 id="options">Options</h3>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Option</th><th>What it does</th></tr>
-      <tr><td>Channel gains</td><td>Multiplies each starless channel before combination, clipped at 1. Values above 1 push that channel forward; with Foraxx this also shifts the dynamic factors. Star images are not scaled.</td></tr>
-      <tr><td>Output identifier</td><td>The name of the result image. Defaults to the palette name. The stars image gets <code>_stars</code> and the combined image <code>_combined</code>. If a name is taken, a numeric suffix is added, so nothing is overwritten.</td></tr>
-      <tr><td>Create a stars image</td><td>Builds the colour stars image from the star images.</td></tr>
-      <tr><td>Combined image</td><td>Also screens the stars onto the result, <code>~(~result*~stars)</code>. Handy for a quick look; for a final image you will usually blend the stars yourself.</td></tr>
-      <tr><td>Factor images</td><td>Shows the <code>o</code> and <code>ho</code> factor images as separate grayscale images. They are informative only.</td></tr>
-      <tr><td>Standard adjustments</td><td>Applies the Foraxx hue and saturation curves to the result, and a hue curve to the stars. Uncheck to get the raw PixelMath output and do your own adjustments.</td></tr>
-      <tr><td>Channel midtones</td><td>A midtones transfer per starless channel, after the gain. 0.5 is neutral; lower lifts faint OIII or SII without pushing highlights into clipping the way a plain gain does.</td></tr>
-    </table>
-  </div>
-  <p>Options are remembered between runs. The reset button restores the
-  defaults and keeps the selected images.</p>
-
-  <h3 id="masks">Shape the mixing masks</h3>
-  <p>The two Foraxx factors are masks: <code>o</code> decides where SII replaces
-  Ha in red, and <code>ho</code> decides where Ha replaces OIII in green. They
-  set the colour transitions, so the script lets you reshape them. <strong>Bias</strong>
-  is a midtones balance on each mask: 0.5 is neutral, lower brightens the mask so
-  the replacing channel wins over more of the image, higher favours the base
-  channel. <strong>Contrast</strong> steepens the mask around 0.5 for a sharper
-  transition. The factor images show the reshaped masks, and neutral values
-  give the original palette exactly.</p>
-
-  <h3 id="extras">Masks and colour</h3>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Option</th><th>What it does</th></tr>
-      <tr><td>Channel-ratio masks</td><td>Creates <code>OIII/(Ha+OIII)</code> and, with three channels, <code>SII/(Ha+SII)</code> as grayscale images named <code>&lt;result&gt;_ratio_OIII</code> and <code>_ratio_SII</code>. They select oxygen- or sulfur-rich structure regardless of brightness, for use as masks on your own adjustments. Below the mean-signal threshold they fade to black, so faint, unstable ratios do not select the background.</td></tr>
-      <tr><td>Protected saturation</td><td>A saturation boost through a generated mask, <code>(L* - background)/(1 - background) &times; (1 - saturation)</code>, so the dark background and already saturated pixels are left alone. The mask stays open as <code>&lt;result&gt;_satmask</code> for reuse.</td></tr>
-      <tr><td>L* lift</td><td>Colour-preserving brightness: a curve on the CIE L* channel only, through (0.5, 0.5 + lift). Hue and chroma are untouched, so the colour relationships survive the stretch. This is PixInsight's equivalent of a Luminosity-mode curves layer.</td></tr>
-    </table>
-  </div>
-
-  <h3 id="outputs">What you get</h3>
-  <ul>
-    <li><strong>Foraxx</strong>: the palette image, RGB, in the sample format of
-      the Ha image. Each adjustment is on the undo history, so you can step back
-      to the raw combination.</li>
-    <li><strong>Foraxx_stars</strong>: the colour stars image, if requested.</li>
-    <li><strong>o</strong> and <strong>ho</strong>: the factor images, if requested.</li>
-  </ul>
-  <p>From here, treat the result like any stretched image: blend the stars back
-  in, adjust colour, and reduce noise as usual.</p>
-
-  <h2 id="updates">Updating and source</h2>
-  <p>New versions arrive through Check for Updates. The script source, a headless
-  test suite, and the packaging live at
-  <a href="https://github.com/theatrus/foraxx-palette-utility">theatrus/foraxx-palette-utility</a>.
-  The repository index itself is built from
-  <a href="https://github.com/theatrus/pixinsight-repository">theatrus/pixinsight-repository</a>.</p>
-
-  <h2 id="credits">Credits</h2>
-  <p>The original Foraxx Palette Utility was written and published by
-  <strong>Paul Hancock (Paulyman Astro)</strong>, copyright 2023-2024. The V8
-  rewrite for PixInsight 1.9.4, the extra palettes, gains and packaging are by
-  Yann Ramin, copyright 2026. The palette and its expressions come from The
-  Coldest Nights. This product is based on software from the PixInsight project,
-  developed by Pleiades Astrophoto and its contributors.</p>
+  <h2 id="why">Why it pairs with PSF Guard</h2>
+  <p>PSF Guard decides which frames to keep and can build the stacked narrowband
+  masters; the Foraxx script is one way to turn those masters into a palette image.
+  Seiza, which powers PSF Guard's stacking, can also render the Foraxx palette
+  directly.</p>
 
   <nav class="next-prev">
     <a href="authentication.html">&larr; Server Accounts</a>
