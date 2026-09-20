@@ -125,8 +125,8 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>PixInsight Scripts</h1>
   <p class="lede">
-    PSF Guard hosts a PixInsight update repository at
-    <a href="https://pixinsight.psf-guard.com/">pixinsight.psf-guard.com</a>.
+    The PixInsight scripts are a <a href="https://theatr.us/software/astro">theatr.us</a> tool, published from the update repository at
+    <a href="https://pixinsight.theatr.us/">pixinsight.theatr.us</a>.
     It currently publishes the <strong>Foraxx Palette Utility</strong>, a script
     that builds a Foraxx palette image from stretched, starless narrowband images,
     with an optional stars image. The scripts install and update through
@@ -137,15 +137,15 @@ function gtag_report_demo() {
   <ol>
     <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage Repositories</strong>.</li>
     <li>Add this repository URL, including the trailing slash:
-      <pre><code>https://pixinsight.psf-guard.com/</code></pre></li>
+      <pre><code>https://pixinsight.theatr.us/</code></pre></li>
     <li>Run <strong>Resources &rarr; Updates &rarr; Check for Updates</strong>,
       accept the update, and restart PixInsight when asked.</li>
-    <li>The scripts appear under <strong>Script &rarr; PSF Guard Scripts</strong>.</li>
+    <li>The scripts appear under <strong>Script &rarr; theatr.us</strong>.</li>
   </ol>
   <div class="callout info">
     The repository serves the current script to PixInsight <strong>1.9.4</strong> and
     later 1.9 releases, which run the new V8 JavaScript runtime. Installs from
-    1.8.9-3 through 1.9.3 receive the original 1.16 script instead. The packages
+    1.8.9-3 through 1.9.3 receive the original 1.16 script instead. The earlier address <code>https://pixinsight.psf-guard.com/</code> still works. The packages
     are not code-signed, so PixInsight prints a warning in the console the first
     time a script runs. That is expected.
   </div>
@@ -180,7 +180,7 @@ B  = OIII</code></pre>
 
   <h3 id="run">Run the script</h3>
   <ol>
-    <li>Open <strong>Script &rarr; PSF Guard Scripts &rarr; Foraxx Palette Utility</strong>.</li>
+    <li>Open <strong>Script &rarr; theatr.us &rarr; Foraxx Palette Utility</strong>.</li>
     <li>Choose <strong>two channels</strong> for Ha + OIII data (mono, or OSC with a
       dual narrowband filter) or <strong>three channels</strong> for SII + Ha + OIII.</li>
     <li>Pick a palette. <strong>Foraxx (dynamic)</strong> is the default; SHO, HOO,
