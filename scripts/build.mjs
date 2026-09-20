@@ -50,6 +50,12 @@ const docsNavigation = [
       ["authentication.html", "Server Accounts"],
     ],
   },
+  {
+    label: "PixInsight",
+    pages: [
+      ["pixinsight.html", "PixInsight Scripts"],
+    ],
+  },
 ];
 
 function pageLinks(file) {

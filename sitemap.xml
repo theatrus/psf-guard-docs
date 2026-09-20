@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://psf-guard.com/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/astrometry-quality.html</loc>
@@ -47,6 +47,9 @@
   <url>
     <loc>https://psf-guard.com/docs/install.html</loc>
     <lastmod>2026-08-21</lastmod>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/pixinsight.html</loc>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/satellites.html</loc>

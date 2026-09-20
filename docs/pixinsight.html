@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PixInsight Scripts — PSF Guard</title>
+  <meta name="description" content="Add the PSF Guard PixInsight repository and use the Foraxx Palette Utility to build Foraxx, SHO, HOO, HSO and OHS palette images from starless narrowband data.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html" class="active" aria-current="page">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>PixInsight Scripts</h1>
+  <p class="lede">
+    PSF Guard hosts a PixInsight update repository at
+    <a href="https://pixinsight.psf-guard.com/">pixinsight.psf-guard.com</a>.
+    It currently publishes the <strong>Foraxx Palette Utility</strong>, a script
+    that builds a Foraxx palette image from stretched, starless narrowband images,
+    with an optional stars image. The scripts install and update through
+    PixInsight's own update system.
+  </p>
+
+  <h2 id="install">Add the repository</h2>
+  <ol>
+    <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage Repositories</strong>.</li>
+    <li>Add this repository URL, including the trailing slash:
+      <pre><code>https://pixinsight.psf-guard.com/</code></pre></li>
+    <li>Run <strong>Resources &rarr; Updates &rarr; Check for Updates</strong>,
+      accept the update, and restart PixInsight when asked.</li>
+    <li>The scripts appear under <strong>Script &rarr; PSF Guard Scripts</strong>.</li>
+  </ol>
+  <div class="callout info">
+    The repository serves the current script to PixInsight <strong>1.9.4</strong> and
+    later 1.9 releases, which run the new V8 JavaScript runtime. Installs from
+    1.8.9-3 through 1.9.3 receive the original 1.16 script instead. The packages
+    are not code-signed, so PixInsight prints a warning in the console the first
+    time a script runs. That is expected.
+  </div>
+
+  <h2 id="foraxx">Foraxx Palette Utility</h2>
+  <p>The Foraxx palette is a dynamic narrowband combination published by
+  <a href="https://thecoldestnights.com/2020/06/pixinsight-dynamic-narrowband-combinations-with-pixelmath/">The Coldest Nights</a>.
+  Where a fixed mapping such as SHO puts each filter in one colour channel, Foraxx
+  weights the red and green channels pixel by pixel from the OIII and Ha&times;OIII
+  signal, which gives the bronze-and-teal look with fewer green casts. The script
+  runs the PixelMath expressions for you and applies a standard set of curves and
+  a selective saturation boost.</p>
+  <p>For SII, Ha and OIII the palette is:</p>
+  <pre><code>o  = OIII^~OIII
+ho = (Ha*OIII)^~(Ha*OIII)
+R  = o*SII + ~o*Ha
+G  = ho*Ha + ~ho*OIII
+B  = OIII</code></pre>
+  <p>where <code>~x</code> is PixelMath's <code>1 - x</code>. With Ha and OIII only,
+  <code>R = Ha</code>. The stars image uses the same mapping with the star images
+  in the colour terms, while the dynamic factors still come from the starless
+  images.</p>
+
+  <h3 id="inputs">Prepare the inputs</h3>
+  <ol>
+    <li>Stretch each narrowband master to non-linear. The script does not stretch.</li>
+    <li>Remove the stars from each stretched image with StarXTerminator or
+      StarNet, keeping the stars-only image if you want a colour stars image.</li>
+    <li>Make sure every image has the same dimensions. The script checks this and
+      refuses mismatched inputs.</li>
+  </ol>
+
+  <h3 id="run">Run the script</h3>
+  <ol>
+    <li>Open <strong>Script &rarr; PSF Guard Scripts &rarr; Foraxx Palette Utility</strong>.</li>
+    <li>Choose <strong>two channels</strong> for Ha + OIII data (mono, or OSC with a
+      dual narrowband filter) or <strong>three channels</strong> for SII + Ha + OIII.</li>
+    <li>Pick a palette. <strong>Foraxx (dynamic)</strong> is the default; SHO, HOO,
+      HSO and OHS are plain channel mappings for comparison.</li>
+    <li>Select the starless image for each channel and, if you want a stars image,
+      the matching stars image.</li>
+    <li>Click <strong>Run</strong>. The console shows each step.</li>
+  </ol>
+
+  <h3 id="options">Options</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>What it does</th></tr>
+      <tr><td>Channel gains</td><td>Multiplies each starless channel before combination, clipped at 1. Values above 1 push that channel forward; with Foraxx this also shifts the dynamic factors. Star images are not scaled.</td></tr>
+      <tr><td>Output identifier</td><td>The name of the result image. Defaults to the palette name. The stars image gets <code>_stars</code> and the combined image <code>_combined</code>. If a name is taken, a numeric suffix is added, so nothing is overwritten.</td></tr>
+      <tr><td>Create a stars image</td><td>Builds the colour stars image from the star images.</td></tr>
+      <tr><td>Combined image</td><td>Also screens the stars onto the result, <code>~(~result*~stars)</code>. Handy for a quick look; for a final image you will usually blend the stars yourself.</td></tr>
+      <tr><td>Factor images</td><td>Shows the <code>o</code> and <code>ho</code> factor images as separate grayscale images. They are informative only.</td></tr>
+      <tr><td>Standard adjustments</td><td>Applies the Foraxx curves and selective saturation boost to the result, and a curve to the stars. Uncheck to get the raw PixelMath output and do your own adjustments.</td></tr>
+    </table>
+  </div>
+  <p>Options are remembered between runs. The reset button restores the
+  defaults and keeps the selected images.</p>
+
+  <h3 id="outputs">What you get</h3>
+  <ul>
+    <li><strong>Foraxx</strong>: the palette image, RGB, in the sample format of
+      the Ha image. Each adjustment is on the undo history, so you can step back
+      to the raw combination.</li>
+    <li><strong>Foraxx_stars</strong>: the colour stars image, if requested.</li>
+    <li><strong>o</strong> and <strong>ho</strong>: the factor images, if requested.</li>
+  </ul>
+  <p>From here, treat the result like any stretched image: blend the stars back
+  in, adjust colour, and reduce noise as usual.</p>
+
+  <h2 id="updates">Updating and source</h2>
+  <p>New versions arrive through Check for Updates. The script source, a headless
+  test suite, and the packaging live at
+  <a href="https://github.com/theatrus/foraxx-palette-utility">theatrus/foraxx-palette-utility</a>.
+  The repository index itself is built from
+  <a href="https://github.com/theatrus/pixinsight-repository">theatrus/pixinsight-repository</a>.</p>
+
+  <h2 id="credits">Credits</h2>
+  <p>The original Foraxx Palette Utility was written and published by
+  <strong>Paul Hancock (Paulyman Astro)</strong>, copyright 2023-2024. The V8
+  rewrite for PixInsight 1.9.4, the extra palettes, gains and packaging are by
+  Yann Ramin, copyright 2026. The palette and its expressions come from The
+  Coldest Nights. This product is based on software from the PixInsight project,
+  developed by Pleiades Astrophoto and its contributors.</p>
+
+  <nav class="next-prev">
+    <a href="authentication.html">&larr; Server Accounts</a>
+    <a href="./">Documentation home &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
