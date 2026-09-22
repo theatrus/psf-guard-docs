@@ -317,6 +317,32 @@ curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
   and layout fields. It also accepts one validated <code>subdirectory</code>
   name. It cannot write outside the configured <code>export_dir</code>.</p>
 
+  <h2 id="photoshop">Continue processing FITS and XISF in Photoshop</h2>
+  <p>After grading and stacking, you can open your FITS or XISF results directly
+  in Photoshop with the separate
+  <a href="https://github.com/theatrus/xisf-photoshop">FITS and XISF Photoshop plugins</a>,
+  powered by Seiza's image codecs. The plugins import Float32 or rescaled 16-bit
+  integer images, optionally debayer Bayer mosaics to RGB, and save at the
+  document's 16- or 32-bit depth by default.</p>
+  <p><a href="https://github.com/theatrus/xisf-photoshop/releases/latest">Download the latest plugin release</a>
+  for the Windows x64 installer or manual plugin ZIP, or the signed and notarized
+  universal macOS ZIP. Both formats are included. Close Photoshop before
+  installation and restart it afterward; the Windows installer is currently
+  unsigned. See the
+  <a href="https://github.com/theatrus/xisf-photoshop#download-and-install">installation guide</a>
+  for the steps for each platform.</p>
+  <p>Set defaults in <strong>Help → About Plug-In → FITS/XISF</strong> on Windows
+  or <strong>Photoshop → About Plug-In → FITS/XISF</strong> on macOS. Open asks for
+  an import choice by default; <strong>Remember choice</strong> saves it for
+  future images. Save follows the document depth without prompting by default.</p>
+  <div class="callout info">
+    Keep the original scientific files. A 16-bit import rescales the image range
+    and loses absolute scale and precision. Plugin saves flatten the image and
+    do not preserve WCS, acquisition headers, CFA tags, or other source metadata.
+    Save edits to new files, especially when PSF Guard's exported files are
+    hardlinked to your source images, and use PSD/PSB to retain Photoshop layers.
+  </div>
+
   <h2 id="troubleshooting">Use this troubleshooting table to resolve export issues.</h2>
   <div class="table-wrap">
     <table>
