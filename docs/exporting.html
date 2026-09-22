@@ -327,8 +327,8 @@ curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
   <p><a href="https://github.com/theatrus/xisf-photoshop/releases/latest">Download the latest plugin release</a>
   for the Windows x64 installer or manual plugin ZIP, or the signed and notarized
   universal macOS ZIP. Both formats are included. Close Photoshop before
-  installation and restart it afterward; the Windows installer is currently
-  unsigned. See the
+  installation and restart it afterward. Starting with 0.5.0, the Windows plugins
+  and installer are signed by StackFoundry LLC. See the
   <a href="https://github.com/theatrus/xisf-photoshop#download-and-install">installation guide</a>
   for the steps for each platform.</p>
   <p>Set defaults in <strong>Help → About Plug-In → FITS/XISF</strong> on Windows
@@ -336,9 +336,12 @@ curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
   an import choice by default; <strong>Remember choice</strong> saves it for
   future images. Save follows the document depth without prompting by default.</p>
   <div class="callout info">
-    Keep the original scientific files. A 16-bit import rescales the image range
-    and loses absolute scale and precision. Plugin saves flatten the image and
-    do not preserve WCS, acquisition headers, CFA tags, or other source metadata.
+    Starting with plugin 0.5.0, same-format saves retain source headers and
+    metadata; switching formats copies compatible FITS keywords on a best-effort
+    basis. Debayered saves omit active CFA tags. Keep the original scientific
+    files: a 16-bit import rescales pixels and loses absolute scale and precision.
+    Re-solve astrometry after geometric edits; see the
+    <a href="https://github.com/theatrus/xisf-photoshop#metadata-retention">metadata retention limits</a>.
     Save edits to new files, especially when PSF Guard's exported files are
     hardlinked to your source images, and use PSD/PSB to retain Photoshop layers.
   </div>
