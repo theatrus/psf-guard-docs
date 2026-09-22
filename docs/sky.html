@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sky Coverage — PSF Guard</title>
+  <meta name="description" content="Map every target your catalogs have imaged on one all-sky chart, turn it as a globe, see your stack previews in place, and replay the nights that built it.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="sky.html" class="active" aria-current="page">Sky Coverage</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Sky Coverage</h1>
+  <p class="lede">The Sky view draws every target from every registered database on one map of the whole sky, and replays the nights that built it. Open it from the <strong>Sky</strong> tab next to Overview.</p>
+
+  <figure class="feature-shot">
+    <img src="../assets/sky-coverage.jpg" alt="The Sky view: a stat band, filter chips, and an all-sky map with constellations and every imaged field" loading="lazy">
+    <figcaption>The Sky view shows the stat band, the rig and filter chips, and the all-sky map with constellations and every imaged field.</figcaption>
+  </figure>
+
+  <h2 id="fields">The map shows each target as its field on the sky.</h2>
+  <p>Each target is drawn as the patch of sky its camera covers. The field size comes from a plate solve of one of the target's frames when PSF Guard has one, otherwise from the sensor size and focal length in one frame's FITS header together with the rotation the scheduler planned. A target with neither is drawn as a dot. The colour of a field is the mix of filters that went into it, and it is brighter the more hours it has.</p>
+  <p>Hover a field for its card: the rig, the project, the coordinates, the hours per filter, a sparkline of hours per night, the frame and night counts, the first and last night, and where the field size came from. Click the field to open the target in Images.</p>
+  <figure>
+    <img src="../assets/sky-coverage-card.jpg" alt="A target card over the map with hours per filter and a sparkline of nights" loading="lazy">
+    <figcaption>The card lists the hours per filter and a sparkline of the nights the target was shot.</figcaption>
+  </figure>
+  <p>Behind the fields sit every star to magnitude 5.5 and the constellation figures and names. The <strong>Constellations</strong> switch hides the figures and names. The equatorial frame shows right ascension and declination with the galactic plane dashed; the galactic frame shows galactic longitude and latitude with the celestial equator dashed. The ecliptic is the dotted gold line, and a soft band marks the Milky Way.</p>
+
+  <h2 id="turn">You can turn the sky from inside or look at it as a globe.</h2>
+  <p><strong>Flat</strong> is the sky seen from inside the sphere, the whole of it at once at first. <strong>Globe</strong> is the same sphere seen from outside. In both, a drag turns the sky sideways and up or down at every zoom, and the projection is centred on wherever you have turned it, so what you look at is drawn with the least distortion. Scroll to zoom about the centre of the view. The buttons in the corner step the zoom and return to the whole sky, and a double click does the same. The page remembers its frame, shape, turn, zoom, and cuts for the browser session, so coming back from Images lands on the same sky.</p>
+  <figure>
+    <img src="../assets/sky-coverage-globe.jpg" alt="The sky drawn as a globe, turned toward Cygnus and the pole" loading="lazy">
+    <figcaption>The globe is turned toward Cygnus and the pole by dragging.</figcaption>
+  </figure>
+
+  <h2 id="stacks">Zoom in to see your stack previews in place.</h2>
+  <p>Past three times zoom, each field that has a finished stack shows the picture itself inside its outline. PSF Guard uses the target's latest colour stack when one exists, otherwise the mono stack with the most integration. A preview is placed by its reference frame's plate solution when the astrometry cache holds one, carried through the stack's own orientation, so it lands where the pixels really are. Any channel with a solved frame can place a colour stack. Without a solve, the picture is laid into the field by the planned rotation, north up and east left, which can be a flip out. The <strong>Stacks when zoomed</strong> switch turns the pictures off.</p>
+  <figure>
+    <img src="../assets/sky-coverage-zoomed.jpg" alt="The Iris Nebula's colour stack drawn inside its solved field outline" loading="lazy">
+    <figcaption>The Iris Nebula's colour stack sits inside its solved outline at the right rotation.</figcaption>
+  </figure>
+
+  <h2 id="timeline">The timeline replays the nights that built the catalog.</h2>
+  <p>Under the map, one lane per rig shows the integration of every night as a bar stacked by filter, with month ticks below and a Moon row whose brightness is the Moon's illumination that night. With more than one rig, an <strong>All rigs</strong> lane on top sums them. The slider spans the nights the selected rigs and filters captured on and has two thumbs: the right one shows the map as it stood at the end of a night, the left one sets where the story starts, and the year chips under it jump the start to January of a year. Press play to replay from the start thumb. Fields appear as their first frames arrive and brighten as hours accumulate.</p>
+  <figure>
+    <img src="../assets/sky-coverage-timeline.png" alt="One timeline lane per rig with an all-rigs total on top, month ticks, and a Moon row" loading="lazy">
+    <figcaption>The timeline shows one lane per rig, an all-rigs total on top, month ticks, and the Moon row.</figcaption>
+  </figure>
+  <p>A night is the civil date it began on. PSF Guard splits each catalog's day at its quietest hour, the middle of the longest stretch of the UTC day in which that catalog never captured anything, so an evening and the small hours after it share one night whatever the site's longitude, and a rig imaging across noon UTC is not cut in two.</p>
+
+  <h2 id="numbers">The stat band totals what the map shows.</h2>
+  <p>The chips turn rigs and filters on and off, and <strong>Accepted frames only</strong> counts graded-in frames alone. Every number on the page follows the same cut: the stat band, the fields, their cards, and the timeline. The band gives:</p>
+  <ul>
+    <li>the integration in hours, the frame count, the target count, and the night count;</li>
+    <li>the sky covered, which is the area the shown fields reach with overlaps counted once, to a twentieth of a degree, and beneath it the fields added together when that is more;</li>
+    <li>the pixels on sky, which counts each covered patch at the finest plate scale of any field that reached it, so a long focal length earns more per square degree;</li>
+    <li>the longest night, which is the most one rig captured in one night, and which rig; and</li>
+    <li>the target with the most hours.</li>
+  </ul>
+
+  <h2 id="poster">You can save the map as a poster.</h2>
+  <p><strong>Save PNG</strong> renders the map at twice its on-screen size, as shown and as zoomed, with the title, the span, and the numbers above it. The button is a browser feature and is not offered in the desktop app.</p>
+  <figure>
+    <img src="../assets/sky-coverage-poster.jpg" alt="The saved poster: title, span, numbers, and the map" loading="lazy">
+    <figcaption>The saved poster carries the title, the span, the numbers, and the map.</figcaption>
+  </figure>
+
+  <h2 id="api">The numbers come from one request per database.</h2>
+  <p><code>GET /api/db/{db}/sky/coverage</code> returns, for one database, every target with its coordinates in degrees, per-filter frame and second totals, the nights it was shot, its footprint, and its latest stack preview; every night, target, and filter row; the filters seen; and the totals, including the hour the catalog's nights split at. The page asks every registered database and merges the answers.</p>
+  <p>The constellation figures, constellation names, and stars drawn behind the fields come from the d3-celestial data set, Copyright (c) 2015, Olaf Frohn, under the BSD 3-Clause License.</p>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="stacking.html">← Stack Previews</a>
+    <a href="calibration.html">Calibration Libraries →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
