@@ -96,6 +96,7 @@ function gtag_report_demo() {
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -209,6 +210,24 @@ psf-guard import archive ./new-flats --calibration-only
 psf-guard import archive ./processing-tree --skip-processed</code></pre>
   <p>The <code>--lights-only</code> and <code>--calibration-only</code> options filter the import to a single frame type and cannot be used together. The <code>--skip-processed</code> option works with either setting. If you want every imported light frame to create a new target record instead of merging with existing targets, append the <code>--no-attach</code> flag.</p>
   <p>The settings page queries the active job status from the server when opened. Closing or refreshing the page does not terminate a running import, and the progress interface will resume monitoring. The application runs one import process per database at a time.</p>
+
+  <h2 id="automatic">You can let a database import new frames on its own.</h2>
+  <p>Turn on <strong>Automatic import</strong> when you edit a database under
+  <strong>Settings &rarr; Databases</strong>. The database then scans its image
+  directories once when the app or server opens it, on a schedule from every
+  15 minutes to once a day, or both, and imports the frames it does not have
+  yet. You choose whether a run takes lights, calibration frames, or both,
+  whether it queues the background quality scan for what it brings in, and
+  whether it accepts frames from a rig the catalog has not seen.</p>
+  <p>A run needs no confirmation and never asks for a path it was not given,
+  so it works without database management. Before reading any header it drops
+  every file the catalog already holds, a light by its basename and a
+  calibration frame by its path and fingerprint, so a folder of thousands of
+  known frames costs a directory walk and one query. The rest follows the same
+  matching rules as the <strong>Import</strong> button. The database row shows
+  the schedule, the last run's result and when the next run is due, with a
+  <strong>Run now</strong> button that uses the same settings. A run waits
+  while another import, a remote upload or an interactive job is under way.</p>
 
   <h2 id="quality">You can analyze and backfill image quality attributes.</h2>
   <p>The database management cards provide two background processing tasks:</p>

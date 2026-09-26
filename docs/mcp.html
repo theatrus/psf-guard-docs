@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCP for Agents — PSF Guard</title>
+  <meta name="description" content="Let an agent such as Claude Code work a running PSF Guard server over the Model Context Protocol: personal API tokens, the /api/mcp endpoint, what each tool reads or changes, and how roles apply.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">The Grader UI</a></li>
+    <li><a href="importing.html">Add Images & Plan</a></li>
+  </ul>
+  <h4>Analyze</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="stacking.html">Stack Previews</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="exporting.html">Export for Stacking</a></li>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html" class="active" aria-current="page">MCP for Agents</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1 id="mcp-title">Drive PSF Guard from an agent with MCP</h1>
+  <p class="lede">A running PSF Guard server is also a Model Context Protocol
+  (MCP) server. An agent such as Claude Code can list your catalogs, read
+  grades and quality evidence, score a night's frames, apply grades, and start
+  imports, quality scans and WBPP runs. The endpoint is <code>/api/mcp</code>
+  on the same port as the grader, and the same login rules guard it.</p>
+
+  <h2 id="tokens">Create an API token</h2>
+  <p>On a server with user accounts, an agent signs in with a personal API
+  token rather than a password. Open <strong>Settings &rarr; Users &rarr; API
+  tokens</strong>, choose <strong>New token</strong>, give it a label such as
+  <em>claude on laptop</em>, and pick whether it is read only and when it
+  expires. The token is shown once. Copy it then.</p>
+
+  <p>The command line does the same and prints the token once. Restart the
+  server after a CLI change, as with user accounts:</p>
+
+  <pre><code>psf-guard users token create editor --label "claude on laptop" --expires-days 90
+psf-guard users token list
+psf-guard users token revoke &lt;id&gt;</code></pre>
+
+  <p>A token acts as its user and never gains more than that user has. A
+  viewer's token reads; an editor's token can also grade and start jobs
+  unless it was minted read only. Everyone signed in manages their own
+  tokens; an editor sees them all and can mint one for another user. A token
+  cannot mint or revoke tokens, so a leaked token cannot renew itself.
+  Revoking a token stops it at once, and removing a user removes that user's
+  tokens.</p>
+
+  <div class="callout info">
+    A loopback server with no accounts, which is what the desktop app and
+    <code>psf-guard server</code> on your own machine run, needs no token. A
+    network server with no accounts answers 401 here as it does everywhere
+    else; see <a href="authentication.html#bind">Server Accounts</a>.
+  </div>
+
+  <h2 id="connect">Connect a client</h2>
+  <p>Any client that speaks MCP's streamable HTTP transport works. Give it
+  the URL and the token as a bearer header. For Claude Code:</p>
+
+  <pre><code>claude mcp add --transport http psf-guard https://guard.example/api/mcp \
+  --header "Authorization: Bearer psfg_…"</code></pre>
+
+  <p>On the desktop app or a local server with no accounts, drop the header:</p>
+
+  <pre><code>claude mcp add --transport http psf-guard http://127.0.0.1:3000/api/mcp</code></pre>
+
+  <p>The endpoint is stateless and answers in plain JSON, so a reverse proxy
+  needs nothing extra and there is no session to expire. Revoke the token to
+  cut an agent off.</p>
+
+  <h2 id="tools">What the tools do</h2>
+  <p>Every tool but <code>list_databases</code> takes a <code>database</code>:
+  the id or name that <code>list_databases</code> reports. Results are the
+  same JSON the grader itself reads.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>What it answers</th><th>Needs</th></tr>
+      <tr><td><code>list_databases</code></td><td>Open catalogs: id, name, path, image folders</td><td>read</td></tr>
+      <tr><td><code>list_projects</code></td><td>Projects with targets, plans, progress and recent frames</td><td>read</td></tr>
+      <tr><td><code>list_targets</code></td><td>Targets with coordinates, grade counts and last capture</td><td>read</td></tr>
+      <tr><td><code>list_images</code></td><td>Lights with grade, filter, exposure and stored metrics, filtered by project, target or grade, in pages</td><td>read</td></tr>
+      <tr><td><code>get_image</code></td><td>One image: grade, file location, header metadata, metrics</td><td>read</td></tr>
+      <tr><td><code>get_image_quality</code></td><td>Score, issues found, and place in the sequence, from stored evidence</td><td>read</td></tr>
+      <tr><td><code>analyze_sequence</code></td><td>Relative scores and suggested rejects for a target, a project, or the whole database</td><td>read</td></tr>
+      <tr><td><code>get_statistics</code></td><td>Whole-database counts</td><td>read</td></tr>
+      <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights</td><td>read</td></tr>
+      <tr><td><code>get_sky_coverage</code></td><td>Every target's footprint and exposure by filter</td><td>read</td></tr>
+      <tr><td><code>get_jobs</code></td><td>Import, quality scan and WBPP progress</td><td>read</td></tr>
+      <tr><td><code>astrobin_csv</code></td><td>The AstroBin acquisition CSV for a project or target</td><td>read</td></tr>
+      <tr><td><code>grade_images</code></td><td>Set accepted, rejected or pending with a reason; returns the grades it replaced</td><td>write</td></tr>
+      <tr><td><code>start_quality_backfill</code></td><td>Start the background quality scan</td><td>write</td></tr>
+      <tr><td><code>start_import</code></td><td>Scan the configured folders for new lights and calibration frames</td><td>write</td></tr>
+      <tr><td><code>start_wbpp_run</code></td><td>Run PixInsight WBPP on a project's or target's accepted lights</td><td>write and database management</td></tr>
+      <tr><td><code>cancel_wbpp_run</code></td><td>Stop the running WBPP run</td><td>write and database management</td></tr>
+    </table>
+  </div>
+
+  <p>Jobs return at once; the agent polls <code>get_jobs</code>. A tool that
+  the token may not use answers with a tool error that says so, not a
+  protocol failure, so the agent can explain it.</p>
+
+  <p>The server also hands the agent PSF Guard's ground rules: sequence
+  analysis and quality context suggest, and nothing changes until
+  <code>grade_images</code> runs; catalog predictions and header values are
+  not pixel evidence, and a conclusion should say which it rests on.</p>
+
+  <h2 id="curl">Try it without a client</h2>
+  <pre><code>TOKEN=psfg_…
+curl -s https://guard.example/api/mcp \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
+       "params":{"name":"list_databases","arguments":{}}}'</code></pre>
+
+  <div class="callout info">
+    The reference, with the token file format and operator notes, is
+    <a href="https://github.com/theatrus/psf-guard/blob/main/docs/MCP.md">docs/MCP.md</a>
+    in the main repository.
+  </div>
+
+  <nav class="next-prev">
+    <a href="authentication.html">&larr; Server Accounts</a>
+    <a href="pixinsight.html">PixInsight Scripts &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

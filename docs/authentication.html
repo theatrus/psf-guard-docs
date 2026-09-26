@@ -96,6 +96,7 @@ function gtag_report_demo() {
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html" class="active" aria-current="page">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -280,7 +281,16 @@ allow_read_only_compute = false</code></pre>
   on configuring these options, see the <a href="sync-plugin.html#server">N.I.N.A.
   Sync Plugin setup</a> section.</p>
 
-  <p>Scripts that drive the ordinary UI API log in with a cookie jar instead:</p>
+  <h2 id="tokens">Use API tokens for scripts and agents</h2>
+  <p>A personal API token lets a script or an MCP client act as a user
+  without a browser login. Mint one under <strong>Settings &rarr; Users
+  &rarr; API tokens</strong> or with <code>psf-guard users token create</code>,
+  and send it as <code>Authorization: Bearer psfg_…</code>. A token never
+  grants more than its user has, can be made read only or given an expiry,
+  and is shown once. See <a href="mcp.html">MCP for Agents</a>.</p>
+
+  <p>Scripts that drive the ordinary UI API can log in with a cookie jar
+  instead:</p>
 
   <pre><code>curl -c psf-guard.cookies -H "Content-Type: application/json" \
   -d '{"username":"editor","password":"..."}' \
@@ -314,7 +324,7 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
 
   <nav class="next-prev">
     <a href="configuration.html">&larr; Configuration &amp; API</a>
-    <a href="cli.html">CLI Reference &rarr;</a>
+    <a href="mcp.html">MCP for Agents &rarr;</a>
   </nav>
 </main>
 </div>

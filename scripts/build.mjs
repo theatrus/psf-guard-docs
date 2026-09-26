@@ -49,6 +49,7 @@ const docsNavigation = [
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],
       ["authentication.html", "Server Accounts"],
+      ["mcp.html", "MCP for Agents"],
     ],
   },
   {
