@@ -126,13 +126,13 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Export for Stacking</h1>
   <p class="lede">
-    You can compile reviewed light frames and their matching calibration frames into a structured directory for stacking without modifying or moving your source files. You can export projects or targets from the Overview page, download them as a ZIP archive, run background exports on a remote server, or use the CLI for automated batch operations.
+    You can compile reviewed light frames and their matching calibration frames into a structured directory for stacking without modifying or moving your source files. You can export projects or targets from the Library page, download them as a ZIP archive, run background exports on a remote server, or use the CLI for automated batch operations.
   </p>
 
   <div class="workflow-note simple">
     <div class="workflow-tag">Export</div>
     <div class="workflow-copy"><strong>The system includes accepted lights and always excludes rejected frames.</strong><p>You can select either a target-grouped directory structure or a PixInsight WBPP-compatible layout.</p></div>
-    <a class="workflow-link" href="#overview">You can begin the export from the Overview page ↓</a>
+    <a class="workflow-link" href="#overview">You can begin the export from the Library page ↓</a>
   </div>
 
   <h2 id="modes">You can select from several export modes.</h2>
@@ -202,10 +202,10 @@ function gtag_report_demo() {
   would land at the same path, later names gain a numeric suffix instead of
   overwriting the first.</p>
 
-  <h2 id="overview">You can perform exports directly from the Overview page.</h2>
+  <h2 id="overview">You can perform exports directly from the Library page.</h2>
   <ol>
     <li>Finish grading the frames you want to stack.</li>
-    <li>Return to <strong>Overview</strong> and expand the project.</li>
+    <li>Return to <strong>Library</strong> and expand the project.</li>
     <li>Choose <strong>Grouped by target</strong> or <strong>WBPP</strong> from
       the page's <strong>Export layout</strong> control.</li>
     <li>Choose <strong>⬇ Export</strong> on the project to export all its
@@ -214,8 +214,8 @@ function gtag_report_demo() {
       ZIP or let the configured server export run in the background.</li>
   </ol>
   <figure>
-    <img src="../assets/export-overview.png" alt="Overview project card with accepted and rejected counts and the Export action">
-    <figcaption>Export a whole project from its expanded Overview card.</figcaption>
+    <img src="../assets/export-overview.png" alt="Library project card with accepted and rejected counts and the Export action">
+    <figcaption>Export a whole project from its expanded Library card.</figcaption>
   </figure>
   <p>The action appears only when that project or target has at least one
   accepted frame and PSF Guard has found its image files. If it is missing,
@@ -234,7 +234,7 @@ function gtag_report_demo() {
   starts the download at once.</p>
   <p>For a NAS or headless host, set an absolute <strong>Server export
   directory</strong> under <strong>Settings &rarr; Databases &rarr; Edit</strong>,
-  or set <code>export_dir</code> in the registry entry. The Overview Export
+  or set <code>export_dir</code> in the registry entry. The Library Export
   action will then start a background job for that catalog. The UI shows
   planning and file progress. PSF Guard creates a validated subfolder for the
   selected project or target. It uses reflinks when the filesystem supports

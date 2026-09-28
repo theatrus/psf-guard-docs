@@ -181,7 +181,7 @@ function gtag_report_demo() {
   </figure>
   <figure>
     <img src="../assets/target-plan-narrowband.png" alt="Target coordinates and seven derived exposure plans for Golf of Mexico">
-    <figcaption>You can edit target coordinates and filter plans on the Overview dashboard under the Plan &amp; coordinates section.</figcaption>
+    <figcaption>You can edit target coordinates and filter plans from a Library project card: <strong>Planning</strong> opens the project with its database&rsquo;s targets and exposures expanded.</figcaption>
   </figure>
   <div class="callout info">
     The initial header import does not plate-solve files or verify the FITS object name against actual pixel data. You can run background quality analysis later to generate star measurements, photometric data, spatial screening, and verified pointing coordinates.
@@ -243,7 +243,7 @@ psf-guard import archive ./processing-tree --skip-processed</code></pre>
   <p>The <strong>Write star count and HFR into image metadata</strong> option determines whether these calculated metrics populate empty fields in your database catalog. This setting is active by default and is applied during standard imports, partial quality analyses, and full rescans. Pre-existing measurements from N.I.N.A. or Target Scheduler are preserved, and PSF Guard never modifies the source FITS or XISF files.</p>
 
   <h2 id="plan">You can review and edit your planning parameters.</h2>
-  <p>Navigate to <strong>Overview → Plan &amp; coordinates</strong> to view project states, target names, celestial coordinates, camera rotation, regions of interest, shared templates, and filter plans. When database management is enabled, you can edit these values, append new plans, and adjust target and project groups.</p>
+  <p>Choose <strong>Planning</strong> on a project card in the Library. The planning workspace opens with that database&rsquo;s <strong>Targets and exposures</strong> expanded under <strong>Databases</strong>: project states, target names, celestial coordinates, camera rotation, regions of interest, shared templates, and filter plans. When database management is enabled, you can edit these values, append new plans, and adjust target and project groups.</p>
   <p>You can access the <strong>Scheduling limits</strong> section to configure the Target Scheduler <strong>Flats handling</strong> behavior:</p>
   <div class="table-wrap">
     <table>
