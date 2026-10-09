@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collaboration — PSF Guard</title>
+  <meta name="description" content="Join AstroCollab projects such as Starfront from a rig: pull tonight's work, activate it in Target Scheduler, and report reviewed frames.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html" class="active" aria-current="page">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Collaboration</h1>
+  <p class="lede">
+    Join shared imaging projects on an AstroCollab server, such as Starfront.
+    PSF Guard pulls each night's assigned work into a rig's Target Scheduler
+    database and reports the frames that pass review.
+  </p>
+
+  <div class="callout info">
+    <strong>Experimental.</strong> Joining or importing never starts a sequence
+    or grants acquisition. Your rig runs assigned work through Target Scheduler,
+    as it runs any other project. Use one collaboration host per rig: PSF Guard,
+    or the separate
+    <a href="https://github.com/theatrus/starfront-targetscheduler-collab">Starfront
+    TargetScheduler Collab</a> plugin, not both.
+  </div>
+
+  <h2 id="connect">Connect a rig</h2>
+  <p>Open <strong>Settings › Rigs</strong>, choose <strong>Setup</strong> on a
+  rig, then <strong>Collaboration</strong>. Choose <strong>Connect
+  server</strong>. The wizard has three steps:</p>
+  <ol>
+    <li><strong>Server</strong>: the server's HTTPS address and the remote name
+      for this rig.</li>
+    <li><strong>Sign in</strong>: browser sign-in or a pairing code, whichever the
+      server offers. For browser sign-in, approve on the server's page, then choose
+      <strong>Check sign-in</strong>.</li>
+    <li><strong>Capture</strong>: this rig's filters, exposure lengths, binning and
+      color mode. <strong>Finish setup</strong> saves them.</li>
+  </ol>
+  <p>Close the wizard at any step and resume with <strong>Continue
+  setup</strong>. Optics come from the rig's own setup. Set the rig's
+  <a href="rigs.html#sites">site</a> first: nightly work uses it for the observing
+  night and the Moon.</p>
+  <figure>
+    <img src="../assets/rig-collaboration.png" alt="Rig setup, Collaboration section with a connected server and the Tonight, Automation, Capture, Reports and Connection tabs" loading="lazy">
+    <figcaption>A connected server. Pairing leaves background work, activation and activity sharing off.</figcaption>
+  </figure>
+
+  <h2 id="tonight">Tonight</h2>
+  <p>Choose a connected server to open its tabs. On <strong>Tonight</strong>:</p>
+  <ul>
+    <li><strong>Browse projects</strong> lists projects this rig can shoot.
+      <strong>Join</strong> consents to share; it does not start anything.</li>
+    <li><strong>Pull tonight's work</strong> asks for the rig-local night, noon to
+      noon, with its Moon context. <strong>Night override</strong> asks for another
+      date.</li>
+    <li><strong>Review import</strong> shows each panel and filter visit.
+      <strong>Import draft</strong> creates an ordinary inactive project draft.
+      Apply fetches the work again and refuses a review that changed.</li>
+  </ul>
+  <p>Then open the project's <a href="planning.html#workspace">plan workspace</a>,
+  give the rig a template for each assigned filter at the assigned exposure, and
+  activate. Activation uses the assignment's exact panels, angles and frame
+  counts. Target Scheduler may finish the work on later nights; an assignment is
+  not a deadline, and applying it again does not refill its quota.</p>
+
+  <h2 id="automation">Automation</h2>
+  <p>On <strong>Automation</strong>, tick the joined projects PSF Guard may act on,
+  then turn on what you want:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>What it does</th></tr>
+      <tr><td><strong>Pull tonight automatically</strong></td><td>Pulls work once per
+        rig-local night, and again after a restart if the night's pull has not run.
+        Failures back off and retry. A busy database retries the saved work
+        locally.</td></tr>
+      <tr><td><strong>Activate in rig database</strong></td><td>Writes safe
+        assignments into this rig's database. A new draft takes the one template
+        that matches its filter and binning. Ambiguous or edited recipes wait for
+        review in Planning.</td></tr>
+      <tr><td><strong>Submit contribution reports automatically</strong></td><td>Checks
+        for ready images every five minutes and sends reports from the outbox,
+        without an open browser.</td></tr>
+    </table>
+  </div>
+  <p><strong>Refresh now</strong> runs the saved automation at once. It never joins
+  a project for you. The tab shows the last success, the next refresh, errors and
+  held assignments. Plans you already have stay in place through outages.</p>
+  <figure>
+    <img src="../assets/collaboration-automation.png" alt="Automation tab with Pull tonight automatically, allowed projects, Activate in rig database and Submit contribution reports automatically" loading="lazy">
+    <figcaption>Each automatic step is a separate opt-in, for the projects you allow.</figcaption>
+  </figure>
+
+  <h2 id="reports">Reports</h2>
+  <p>A report credits the frames a rig shot for an assignment. PSF Guard sends
+  only accepted frames with measured evidence:</p>
+  <ul>
+    <li>a fresh pixel plate solve, with a footprint shared across the frames;</li>
+    <li>exposure length within 0.1% of the assigned one (10 ms to 1 s), reported as
+      saved, not as planned;</li>
+    <li>pixel scale, focal length, HFR, guiding RMS, bandpass, Moon illumination and
+      separation, where the files and catalog hold them. Missing values read
+      <strong>Unknown</strong>;</li>
+    <li>for frames taken by the Director plugin, a matching saved-capture
+      receipt.</li>
+  </ul>
+  <p>On <strong>Reports</strong>, pick an imported visit, its panel and the accepted
+  images, set <strong>Observing night</strong> to the night they were shot, and
+  choose <strong>Review images</strong>. <strong>Queue finalized
+  contribution</strong> freezes that review in a durable outbox, and <strong>Check
+  in</strong> sends it. A failed batch stays queued for the next try. The tab keeps
+  each report's delivery and the server's acceptance or rejection, with its reason.
+  A remote rejection never changes your grades.</p>
+
+  <h2 id="activity">Share current activity</h2>
+  <p><strong>Share current activity</strong>, on <strong>Capture</strong>, is off by
+  default. When on, fresh Director status reaches the server at most once a
+  minute. Target names and pointing stay private, and old status never shows as
+  current.</p>
+
+  <h2 id="credentials">Credentials</h2>
+  <p>The server keeps each rig's agent token in
+  <code>collaboration-credentials.json</code> beside the registry, readable only by
+  its owner. Tokens are plain text on disk: keep the file out of shared backups and
+  bug reports. <strong>Check connection</strong> tests the saved token.
+  <strong>Disconnect</strong> removes it here but keeps the rig's identity and queued
+  reports; it does not revoke the agent on the server. See
+  <a href="configuration.html">Configuration</a>.</p>
+
+  <nav class="next-prev">
+    <a href="rigs.html">← Rigs, Sites &amp; Live</a>
+    <a href="workflows.html">Rejects &amp; Sync →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

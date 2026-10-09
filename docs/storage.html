@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Storage &amp; Performance — PSF Guard</title>
+  <meta name="description" content="Choose where PSF Guard keeps caches, stacks and calibration masters, set disk limits and processor shares, manage the header job queue, and find the desktop logs.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html" class="active" aria-current="page">Storage & Performance</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1 id="storage-title">Storage and Performance</h1>
+  <p class="lede">Choose where PSF Guard keeps the files it makes, how full their
+  disks may get, and how much of the processor its work may take. This page
+  also covers the header's job queue, what survives a restart, and the desktop
+  app's log files.</p>
+
+  <h2 id="folders">Choose where files go</h2>
+  <p>Each database keeps the files PSF Guard generates in three folders, with a
+  slug folder per database in each:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Folder</th><th>Holds</th><th>Set with</th></tr>
+      <tr><td><strong>Cache</strong></td><td>Image previews, star lists, plate solves, quality scans and other per-image results</td><td><code>--cache-dir</code>, <code>[cache] directory</code></td></tr>
+      <tr><td><strong>Stacks</strong></td><td>Stacks, color previews, WBPP stacks, saved processing, and WBPP runs that have no runs folder of their own</td><td><code>--stack-dir</code>, <code>[cache] stack_directory</code></td></tr>
+      <tr><td><strong>Calibration masters</strong></td><td>Masters built from your calibration frames</td><td><code>--calibration-dir</code>, <code>[cache] calibration_directory</code></td></tr>
+    </table>
+  </div>
+  <p>Stacks and masters go in the cache unless a folder of their own is named.
+  Name one to put them on another volume: stacks on a large network share, for
+  example, with the cache on a fast local disk. The command line wins over the
+  config file, and both win over Settings.</p>
+  <pre><code><span class="c"># On the command line</span>
+psf-guard server --stack-dir /mnt/nas/psf-guard/stacks \
+  --calibration-dir /mnt/nas/psf-guard/masters
+
+<span class="c"># Or in the server's TOML file</span>
+[cache]
+stack_directory = "/mnt/nas/psf-guard/stacks"
+calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
+
+  <h3 id="choose-folders">Choose folders in Settings</h3>
+  <p>Open <strong>Settings &rarr; Storage &rarr; Folders</strong>, in the
+  desktop app too. Type or browse to a folder for <strong>Cache</strong>,
+  <strong>Stacks</strong> or <strong>Calibration masters</strong>, then click
+  <strong>Save folders</strong>. Leave Stacks or Calibration masters empty to
+  use the cache. A folder the server's config file fixes reads <em>Set by the
+  server config file</em> and cannot change here. Choosing folders needs
+  database management.</p>
+  <figure>
+    <img src="../assets/settings-storage-folders.png" alt="Settings › Storage › Folders: Cache, Stacks and Calibration masters" loading="lazy">
+    <figcaption>Folders saved here take effect at the next start, which moves the files across first.</figcaption>
+  </figure>
+  <p>A folder saved in Settings takes effect at the next start, which moves the
+  files there first. Until then the field names the folder still in use. In
+  the desktop app, <strong>Restart now</strong> restarts the whole app to
+  carry out the move.</p>
+  <ul>
+    <li>Each file is renamed into place. Across file systems it is copied into
+      a <code>.partial</code> folder that is renamed into place before the
+      original is removed. Copies keep their file times, which the disk limit
+      reads.</li>
+    <li>Folders merge. A file already at the target with the same size and
+      time counts as moved, so a start that stops halfway finishes the move the
+      next time. A file that differs is a conflict.</li>
+    <li>If a move fails, PSF Guard moves the files back, keeps using the old
+      folder, says why under <strong>Folders</strong>, and tries again at the
+      next start.</li>
+    <li>Calibration master records in the catalog follow their files, so
+      masters are not built again.</li>
+    <li>A large move delays the start. The log names each folder it moves.</li>
+    <li>Settings refuses folders that sit one inside another.</li>
+  </ul>
+  <div class="callout info">
+    Only Settings moves files. A folder changed on the command line or in the
+    config file is used as it is, and the old files stay where they were.
+  </div>
+
+  <h2 id="disk-use">Disk use</h2>
+  <p><strong>Settings &rarr; Storage &rarr; Disk use</strong> shows every
+  volume the three folders sit on: how full it is, its limit, which folders and
+  databases it holds, and how much of it is stacks, calibration masters and
+  image previews.</p>
+  <figure>
+    <img src="../assets/settings-storage-disk-use.png" alt="Settings › Storage › Disk use: three volumes with usage bars and limit marks, the Most of the volume to use slider and Separate limits" loading="lazy">
+    <figcaption>Each volume shows how full it is and what PSF Guard keeps on it.</figcaption>
+  </figure>
+  <p><strong>Most of the volume to use</strong> (90% by default) is the highest
+  share of the whole volume, other files included, that PSF Guard lets it
+  reach, as <code>df</code> counts it. 100% turns culling off. Changing the
+  limit needs database management.</p>
+
+  <h3 id="cull-order">What goes when a volume is over its limit</h3>
+  <p>Every five minutes, and right after a limit changes, PSF Guard reads each
+  volume. When one is over its limit, PSF Guard deletes only what lives on that
+  volume, in this order:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Order</th><th>Deleted</th><th>Rule</th></tr>
+      <tr><td>1</td><td>Image previews, annotated previews, star lists</td><td>Least recently viewed first, until the volume is two points under its limit. Anything viewed in the last quarter hour stays.</td></tr>
+      <tr><td>2</td><td>Stack resume checkpoints</td><td>A day old or more.</td></tr>
+      <tr><td>3</td><td>Calibration masters</td><td>Unused for a week, least recently used first. Only while no build runs, and only when that brings the volume back under.</td></tr>
+      <tr><td>Never</td><td>Stacks, color previews, WBPP stacks</td><td>They take minutes to hours to make.</td></tr>
+    </table>
+  </div>
+  <p>A preview comes back the next time someone opens the image, and a master
+  is built again from its frames when a stack needs it. A master whose frames
+  are gone, or that the catalog does not record, is never deleted: it could not
+  be built again. A limit changed in Settings checks the volumes at once but
+  leaves masters to the next regular pass.</p>
+
+  <h3 id="separate-limits">Limits for stacks and masters</h3>
+  <p>Tick <strong>Separate limits for stacks and calibration masters</strong>
+  to give folders on their own volumes limits of their own: <strong>Most of the
+  stack volume to use</strong> and <strong>Most of the calibration master
+  volume to use</strong>. A volume that holds more than one folder uses the
+  lowest of their limits. A full stack volume never deletes previews from a
+  cache on another disk.</p>
+  <ul>
+    <li>Background preview pre-generation stops two points under the cache
+      volume's limit, so it never makes previews the next pass would delete.
+      Previews someone opens are still made.</li>
+    <li>A volume still over its limit once nothing more may go shows in
+      red.</li>
+    <li>Sizes are measured at most hourly, and after a cull.</li>
+    <li>On a file system that keeps snapshots, deleted previews free no space
+      until the snapshot goes.</li>
+    <li>PSF Guard records when a preview or master is used, because many
+      mounts, NFS among them, do not record reads.</li>
+    <li>Windows servers do not read their volumes, so the limit does not apply
+      there.</li>
+    <li>To make previews smaller on disk, set <code>preview_format = "jpeg"</code>;
+      see <a href="configuration.html#preview-format">Configuration &amp; API</a>.</li>
+  </ul>
+
+  <h2 id="cleanup">Hourly cleanup</h2>
+  <p>Rebuilds write new files beside old ones. Once an hour, in every database
+  and whatever the disk limit, PSF Guard deletes what nothing uses any
+  more:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>What</th><th>Deleted</th></tr>
+      <tr><td>Stacks a newer build of the same target and channel replaced</td><td>Once no index or job names them, after a day</td></tr>
+      <tr><td>Stretch and deconvolution results</td><td>A week after they were last selected or used</td></tr>
+      <tr><td>Artifact searches</td><td>When their stack is gone</td></tr>
+      <tr><td>Stacks of deleted projects</td><td>With the project's index. Merging projects keeps the merged project's stacks.</td></tr>
+      <tr><td>Stack resume checkpoints</td><td>After 30 days with no build writing or resuming from them. At once when no build could resume from them, such as one from an older stacking pipeline.</td></tr>
+      <tr><td>Calibration masters a newer master built from the same frames replaced</td><td>Once unused for a day and named by no stack</td></tr>
+      <tr><td>Half-written masters a stopped build left</td><td>A day old</td></tr>
+      <tr><td>WBPP run folders</td><td>Never: a run's output may exist nowhere else</td></tr>
+    </table>
+  </div>
+  <p>Masters are swept only while no stack build runs. An index that cannot be
+  read stops the sweep of that database rather than leaving what it names
+  unprotected; the server log names the file.</p>
+
+  <h2 id="processor">Processor use</h2>
+  <p><strong>Settings &rarr; Performance &rarr; Processor use</strong> sets how
+  many cores each kind of work may use, as a share of the logical cores. A
+  change applies to work that starts after it, without a restart.</p>
+  <figure>
+    <img src="../assets/settings-performance.png" alt="Settings › Performance › Processor use: Work you wait on and Background work sliders" loading="lazy">
+    <figcaption>Each share limits all work of its kind together.</figcaption>
+  </figure>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Share</th><th>Covers</th><th>Default</th></tr>
+      <tr><td><strong>Work you wait on</strong></td><td>Stack builds, color and stretches you start, quality scans you start, previews being looked at</td><td>50%, or <code>scan_worker_ratio</code></td></tr>
+      <tr><td><strong>Background work</strong></td><td>Automatic stack refreshes, quality backfill and new-frame analysis in every database, preview pre-generation</td><td>25%, or <code>background_worker_ratio</code></td></tr>
+    </table>
+  </div>
+  <p>Each share is a limit for all such work together, not for each job. Jobs
+  running at once split it: a stack refresh, quality backfill in every database
+  and preview pre-generation share the background share. A job takes the
+  workers free when it starts and gives them back when it ends. It never
+  waits: one that starts while the share is spent runs on one worker. Work you
+  wait on also pauses background work.</p>
+  <p>The share covers Seiza's own threads. Since Seiza 0.24, each job runs
+  debayering, stretching, star detection and stacking on the workers it was
+  given, so one background preview no longer keeps every core busy. Previews
+  you look at, plate solves, star lists and PSF views still use every core,
+  since background work pauses while they run. Quality scans plate-solve
+  several frames at once, up to their share. RC-Astro's tools are programs of
+  their own and choose their own threads.</p>
+  <p>A share chosen here is kept in the registry and wins over the config file.
+  <strong>Use the default</strong> goes back to the file's value. Memory can
+  lower the count further: a pool never holds more frames than half the free
+  memory allows. <code>GET</code> and <code>PUT /api/settings/workers</code>
+  read and set the shares; <code>null</code> means the default.</p>
+
+  <h2 id="jobs">Background jobs in the header</h2>
+  <p>The header shows background work as one small chip: the overall progress
+  and the number of jobs. Hover, focus or click it to open the queue. It lists
+  every catalog refresh, quality scan, stack and color build, and WBPP run,
+  running or queued, on any database.</p>
+  <figure>
+    <img src="../assets/header-jobs.png" alt="The header's background jobs popup with running stack builds and Stop" loading="lazy">
+    <figcaption>The queue lists work on every database; click a row's target to open what it works on.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>↑</strong> and <strong>↓</strong> move a waiting stack build or
+      WBPP run in its line. The line, not the order you asked, decides what
+      runs next.</li>
+    <li><strong>✕</strong> takes a waiting job out of the line.</li>
+    <li><strong>Stop</strong> ends a running stack build or WBPP run after
+      asking once: <strong>Stop it</strong> or <strong>Keep</strong>. A color
+      composition already running has no Stop; it finishes within
+      minutes.</li>
+    <li>Click the target or database under a row to open what it works on: a
+      build's or WBPP run's stacks, a quality scan's sequence, or a refreshed
+      database's images.</li>
+    <li>A quality scan that finished with errors stays on the chip, which
+      reads <em>Finished with errors</em> once nothing else runs. Its note
+      offers <strong>Open the sequence</strong> and stays until you dismiss
+      it.</li>
+  </ul>
+  <p>Changing the line needs write access. A stack build's line reads, for
+  example, <em>Rejecting transients · pass 2/3 · frame 4/14</em> through the
+  final rejection pass, and a calibration master build names the master and
+  what Seiza is doing with it.</p>
+  <h3 id="automatic-refreshes">Automatic refreshes</h3>
+  <p>With <strong>Rebuild stack previews on their own</strong> on, under
+  <strong>Settings &rarr; Stacking</strong>, new frames and grade changes queue
+  a refresh after a settling delay. A refresh still settling is not listed or
+  counted: nothing runs yet. It appears once it builds, marked
+  <code>automatic</code>, and uses the background share. See
+  <a href="stacking.html">Stacks</a>.</p>
+  <p>Scripts can start a settling refresh at once or drop it until the next
+  change:</p>
+  <pre><code><span class="c"># Builds running first, then the line in order, then settling refreshes under "scheduled"</span>
+curl localhost:3000/api/stack-activity
+
+<span class="c"># Start one within seconds, or skip it</span>
+curl -X POST localhost:3000/api/stack-activity/scheduled/run-now \
+  -H "Content-Type: application/json" -d '{"database_id":"my-db","project_id":2}'
+curl -X POST localhost:3000/api/stack-activity/scheduled/skip \
+  -H "Content-Type: application/json" -d '{"database_id":"my-db","project_id":2}'
+
+<span class="c"># Move a waiting build (0 is next) or take it out</span>
+curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/move \
+  -H "Content-Type: application/json" -d '{"position":0}'
+curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre>
+
+  <h2 id="restart">After a restart</h2>
+  <p>The job queue survives a restart. PSF Guard keeps a journal beside the
+  database registry (<code>config.jobs.json</code> next to
+  <code>config.json</code>), rewritten a few seconds after the queue changes
+  and once more when the server stops cleanly: Ctrl+C, SIGTERM, or quitting the
+  desktop app. On start it puts the queue back before the automatic scheduler
+  starts anything:</p>
+  <ul>
+    <li>Stack and color builds come back in order, each prepared again from the
+      catalog as it is now. One whose database is gone, or that finished before
+      the restart, is skipped with a note in the log.</li>
+    <li>A build cut off part way resumes from its checkpoint where it can. One
+      cut off by two restarts in a row is not started a third time, since it is
+      the likelier cause of the restarts.</li>
+    <li>A build whose disk is not mounted yet is retried every minute for half
+      an hour.</li>
+    <li>Automatic refreshes still settling keep their due times, or run at once
+      if those passed.</li>
+    <li>Waiting WBPP runs keep their place. A WBPP run the restart cut off shows
+      as stopped rather than starting again from nothing; start it again when
+      you are ready.</li>
+    <li>With automatic previews on, every database is checked once after a
+      start, so frames that arrived while the server was down still reach their
+      stacks.</li>
+  </ul>
+  <p>A server started without a registry keeps no journal.</p>
+
+  <h2 id="logs">Desktop log files</h2>
+  <p>The desktop app writes one log file a day and keeps a week of them.
+  <strong>Open logs</strong>, at the foot of Settings, opens the folder:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Platform</th><th>Log folder</th></tr>
+      <tr><td>Windows</td><td><code>%LOCALAPPDATA%\com.theatrus.psf-guard\logs</code></td></tr>
+      <tr><td>macOS</td><td><code>~/Library/Logs/com.theatrus.psf-guard</code></td></tr>
+      <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
+    </table>
+  </div>
+  <p>The log holds what a server prints to its console: folder moves, the
+  queue put back after a restart, and each frame a stack leaves out or rejects,
+  and why. <code>RUST_LOG</code> sets the level; the default is
+  <code>info</code>. A server run from the command line or in Docker logs to
+  its console.</p>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="sync-plugin.html">&larr; N.I.N.A. Sync Plugin</a>
+    <a href="cli.html">CLI Reference &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

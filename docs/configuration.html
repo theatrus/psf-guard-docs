@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Configuration &amp; API — PSF Guard</title>
-  <meta name="description" content="The database registry, the server TOML, and the REST API.">
+  <meta name="description" content="The PSF Guard registry and the files beside it, the server TOML file, the planning store, offline sky maps, Docker paths, GUID repair, and the REST API.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html" class="active" aria-current="page">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -124,170 +137,321 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1 id="config-api-title">Configure PSF Guard and Use the API</h1>
+  <h1 id="config-api-title">Configuration and API</h1>
   <p class="lede">
-    The JSON registry lists database catalogs and image folders, while the
-    server TOML file controls runtime configuration settings. The REST API exposes
-    the same operations as the graphical user interface.
+    The JSON registry lists catalogs and holds the choices made in Settings; the
+    server's TOML file sets ports, caches and grants at start. The REST API
+    exposes what the UI does.
   </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>This page describes server configuration and API usage.</strong><p>Most desktop users can manage database catalogs through the Settings panel and do not need to read this section.</p></div>
+    <div class="workflow-copy"><strong>For servers, Docker and scripts</strong><p>The desktop app manages all of this in Settings.</p></div>
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
 
-  <h2 id="registry">Understand the catalog registry</h2>
-  <p>The server can manage multiple image catalogs. Each catalog uses the
-  Target Scheduler database mapping. The database list is stored in a JSON
-  registry file at the platform config location, rather than in the TOML
-  configuration file:</p>
-  <table>
-    <tr><th>Platform</th><th>Registry path</th></tr>
-    <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
-    <tr><td>macOS</td><td><code>~/Library/Application Support/psf-guard/config.json</code></td></tr>
-    <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
-  </table>
-  <p>The <code>psf-guard server &lt;db&gt; &lt;dirs...&gt;</code> command
-  <strong>registers</strong> the specified database on the first execution and
-  reuses it in subsequent sessions. You can also manage this list using the Settings
-  panel in the desktop application or the <code>/api/databases</code> endpoints.
-  If you want to run a temporary session without modifying your permanent
-  configuration, pass a scratch path to the <code>--registry</code> flag, such as
-  <code>--registry /tmp/scratch.json</code>.</p>
-  <p>The default N.I.N.A. scheduler database on Windows lives at
+  <h2 id="registry">Catalog registry</h2>
+  <p>The server can serve many catalogs, each a database with Target Scheduler's
+  tables. Their list lives in a JSON registry, not in the TOML file:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Platform</th><th>Registry</th></tr>
+      <tr><td>Windows</td><td><code>%APPDATA%\psf-guard\config.json</code></td></tr>
+      <tr><td>macOS</td><td><code>~/Library/Application Support/psf-guard/config.json</code></td></tr>
+      <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
+      <tr><td>Docker</td><td><code>/data/config/psf-guard/config.json</code></td></tr>
+    </table>
+  </div>
+  <p><code>psf-guard server &lt;db&gt; &lt;dirs...&gt;</code> registers that
+  database on first run and reuses it afterwards. Settings and the
+  <code>/api/databases</code> endpoints edit the same list.
+  <code>--registry /tmp/scratch.json</code> runs a session that leaves your real
+  list alone. N.I.N.A.'s scheduler database on Windows is
   <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</p>
-  <p>Each registry entry can also set <code>export_dir</code> to an absolute
-  server-side destination:</p>
   <pre><code>{
   "id": "archive",
   "name": "Archive",
   "db_path": "/data/archive.sqlite",
   "image_dirs": ["/data/images"],
-  "export_dir": "/data/stacking-exports"
+  "export_dir": "/data/stacking-exports",
+  "process_dir": "/data/_Process"
 }</code></pre>
-  <p>When this is configured, overview exports run as background jobs under the
-  specified directory. The client selects a project, target, and layout, rather
-  than specifying an arbitrary path. You can set this field in the user interface under
-  <strong>Settings &rarr; Databases &rarr; Edit</strong>. Leaving this value
-  empty disables server-side exports.</p>
+  <ul>
+    <li><code>export_dir</code> (<strong>Server export directory</strong> under
+      <strong>Settings &rarr; Databases &rarr; Edit</strong>) turns on server-side
+      exports into that folder. The browser picks a project, target and layout,
+      never a path. Empty turns them off.</li>
+    <li><code>process_dir</code> (<strong>Process directory</strong>) is where a
+      WBPP run may save its masters beside your finished work. See
+      <a href="wbpp.html">WBPP Runs</a>.</li>
+  </ul>
+  <p>Settings saves server-wide choices in the same file: processor shares,
+  storage folders and disk limits, stacking, calibration matching, export
+  defaults, AstroBin filter IDs, PixInsight, and Remote PSF Guard peers. A peer's
+  key is kept in the clear there, so protect the file.</p>
 
-  <h2 id="astrometry">Configure Seiza catalogs and plate solving</h2>
-  <p>PSF Guard uses the standard catalog discovery process from Seiza. Data installed
-  by running <code>seiza setup</code> is discovered automatically. You can specify a
-  custom catalog bundle directory by setting the <code>SEIZA_CATALOG_DIR</code> environment
-  variable or by defining the top-level <code>astrometry.data_dir</code> field in the
-  registry file:</p>
+  <h3 id="files">Files beside the registry</h3>
+  <p>PSF Guard keeps its other state next to the registry. With a registry
+  named something other than <code>config.json</code>, each file takes the
+  registry's name as a prefix: <code>catalogs.json</code> gets
+  <code>catalogs.auth.json</code>.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>File</th><th>Holds</th></tr>
+      <tr><td><code>auth.json</code></td><td>Browser users and API tokens, as hashes. See <a href="authentication.html">Server Accounts</a>.</td></tr>
+      <tr><td><code>director-meta.sqlite</code></td><td>The planning store: plans, framing, rigs, sites, exposure templates</td></tr>
+      <tr><td><code>config.jobs.json</code></td><td>The job queue, kept across restarts. See <a href="storage.html#restart">Storage &amp; Performance</a>.</td></tr>
+      <tr><td><code>collaboration-credentials.json</code></td><td>AstroCollab agent tokens, in plain text, mode <code>0600</code> on Unix and a user-only ACL on Windows. See <a href="collaboration.html">Collaboration</a>.</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    Keep the config folder writable only by the PSF Guard user, and leave
+    <code>collaboration-credentials.json</code> out of backups you share and
+    diagnostic bundles.
+  </div>
+
+  <h2 id="planning-store">Planning store</h2>
+  <p>Planning is on for every server. Its store,
+  <code>director-meta.sqlite</code>, sits beside the registry, and the desktop
+  app uses the same place. A server started without
+  <code>--allow-database-management</code> plans read-only over its catalogs:
+  plans, framing and rig profiles can be drafted, but activation, pushes and
+  Target Scheduler edits answer <code>403</code>, and nothing is written into a
+  rig database.</p>
+  <pre><code><span class="c"># Keep the planning store somewhere else</span>
+psf-guard server --allow-database-management \
+  --director-meta /srv/psf-guard/director-meta.sqlite</code></pre>
+  <p><code>--director-meta</code> needs <code>--allow-database-management</code>.
+  Its folder must exist. A missing file is created; an existing file must be a
+  planning store, never a catalog or another SQLite database. Back the store up
+  with an SQLite-aware tool before an upgrade, and never copy a live main file
+  without its WAL. See <a href="planning.html">Planning</a>.</p>
+
+  <h2 id="sky-maps">Offline sky maps</h2>
+  <p>Framing can draw on N.I.N.A.'s whole-sky caches with no network. Install
+  one into the server's cache:</p>
+  <pre><code>psf-guard sky-maps install full --cache-dir /path/to/cache               <span class="c"># DSS, 3.3 GB</span>
+psf-guard sky-maps install nsns-ohs --cache-dir /path/to/cache           <span class="c"># NSNS SHO, 1.4 GB</span>
+psf-guard sky-maps install nsns-ohs-starless --cache-dir /path/to/cache  <span class="c"># starless, 0.5 GB</span>
+psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
+  <ul>
+    <li>Sets land in <code>&lt;cache&gt;/director/sky-maps/</code>. A running
+      server offers a new set within half a minute.</li>
+    <li><code>install</code> also takes a zip URL. A folder copied from a rig's
+      own <code>%LOCALAPPDATA%\NINA\FramingAssistantCache</code> works too: drop
+      it under <code>sky-maps/</code>.</li>
+    <li>In Docker the default <code>./cache</code> is <code>/data/cache</code>:
+      <code>docker exec psf-guard psf-guard sky-maps install full</code>.</li>
+    <li>An offline set stands in for its online survey: the DSS set for the
+      DSS2 colour plates, the SHO set for the online NSNS SHO layer. The online
+      layer stays a click away.</li>
+    <li>The maps carry their own licences; the NSNS sets are CC BY-NC-SA. The
+      framing view shows the attribution.</li>
+  </ul>
+  <p>See <a href="framing.html">Framing</a>.</p>
+
+  <h2 id="astrometry">Seiza catalogs and plate solving</h2>
+  <p>PSF Guard finds Seiza's catalogs the way Seiza does. Data installed with
+  <code>seiza setup</code> or under <strong>Settings &rarr; Catalogs</strong>
+  is found on its own. Name another bundle with the
+  <code>SEIZA_CATALOG_DIR</code> environment variable or the top-level
+  <code>astrometry</code> block in the registry:</p>
   <pre><code>"astrometry": {
   "data_dir": "/path/to/seiza-data",
   "satellite_elements": "historical-or-active.tle"
 }</code></pre>
-  <p>You must restart PSF Guard after changing this environment variable or registry
-  field. For more details on download commands, required files, Docker volume mounts,
-  validating capabilities, the user interface workflow, and solution cache behavior,
-  see the <a href="astrometry.html">Sky Context &amp; Plate Solving</a> section.</p>
+  <p>Blind solves use the blind index beside the star catalog. A
+  <code>blind_index</code> setting or <code>SEIZA_BLIND_INDEX</code> still
+  chooses another. Restart PSF Guard after changing the variable or the block.
+  See <a href="astrometry.html">Sky Context &amp; Solver</a>.</p>
 
-  <h2 id="toml">Configure server settings with the TOML file</h2>
+  <h2 id="docker">Docker</h2>
+  <p>The image keeps everything it writes on the <code>/data</code> volume. It
+  sets <code>XDG_CONFIG_HOME=/data/config</code>, so the registry and the files
+  beside it live in <code>/data/config/psf-guard</code>;
+  <code>SEIZA_CATALOG_DIR=/data/seiza</code>, so catalogs installed in Settings
+  stay; and works in <code>/data</code>, so the default cache is
+  <code>/data/cache</code>. A redeploy or an image update keeps all of it. See
+  <a href="install.html#server">Installation</a>.</p>
+
+  <h2 id="toml">Server TOML file</h2>
   <pre><code>cp psf-guard.toml.example psf-guard.toml
 psf-guard server --config psf-guard.toml</code></pre>
   <pre><code>[server]
 port = 3000
 host = "0.0.0.0"
-<span class="c"># Optional: fraction of CPU cores for parallel work (both default sensibly).
-# Interactive jobs (occlusion scans, on-demand previews) get scan_worker_ratio;
-# background pre-generation gets background_worker_ratio and pauses entirely
-# while an interactive job runs.</span>
+cors = true
+<span class="c"># Shares of the logical cores. Settings → Performance overrides both.</span>
 #scan_worker_ratio = 0.5
 #background_worker_ratio = 0.25
+#preview_format = "png"        <span class="c"># or "jpeg"</span>
+#preview_jpeg_quality = 88     <span class="c"># 50–100</span>
+#preview_color = true          <span class="c"># colour by default for OSC frames</span>
+#keep_failed_uploads = false
+
+[server.auth]
+session_hours = 168
+<span class="c"># Omit to follow the browser's HTTP or HTTPS scheme.</span>
+#secure_cookie = true
+allow_read_only_compute = false
+
+<span class="c"># Optional plain-text notice under the header</span>
+[server.banner]
+title = "Demo site"
+message = "This public demo uses sample data. Changes may be reset."
+link_text = "Learn about PSF Guard"
+link_url = "https://psf-guard.com/"
 
 [cache]
-directory = "./cache"
-file_ttl = "5m"        <span class="c"># 30s, 5m, 1h, 2h30m, 1d ...</span>
+directory = "./cache"   <span class="c"># fixes the cache; omit it to choose one in Settings</span>
+#stack_directory = "/mnt/nas/psf-guard/stacks"          <span class="c"># default: the cache</span>
+#calibration_directory = "/mnt/nas/psf-guard/masters"   <span class="c"># default: the cache</span>
+file_ttl = "5m"         <span class="c"># 30s, 5m, 1h, 2h30m, 1d ...</span>
 directory_ttl = "5m"
 
-[pregeneration]        <span class="c"># optional background preview warming</span>
+[pregeneration]         <span class="c"># optional background preview warming</span>
 enabled = true
-screen = true          <span class="c"># 1200px previews</span>
-large = false          <span class="c"># 2000px previews</span></code></pre>
-  <p>Command-line arguments override settings specified in the configuration file.
-  The server continues to parse legacy <code>[database]</code> and <code>[images]</code>
-  sections but ignores them in server mode, as it reads database configurations from
-  the registry file instead.</p>
+screen = true           <span class="c"># 1200 px previews</span>
+large = false           <span class="c"># 2000 px previews</span>
+#workers = 4</code></pre>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Key</th><th>Does</th></tr>
+      <tr><td><code>scan_worker_ratio</code></td><td>Share of cores for work you wait on (default 0.5)</td></tr>
+      <tr><td><code>background_worker_ratio</code></td><td>Share for background work (default 0.25). See <a href="storage.html#processor">Processor use</a>.</td></tr>
+      <tr><td><code>[cache] directory</code></td><td>The cache. Naming it here fixes it, so Settings cannot move it.</td></tr>
+      <tr><td><code>stack_directory</code>, <code>calibration_directory</code></td><td>Folders for stacks and masters. See <a href="storage.html#folders">Storage</a>.</td></tr>
+      <tr><td><code>file_ttl</code>, <code>directory_ttl</code></td><td>How long file and folder listings are cached</td></tr>
+      <tr><td><code>[server.auth]</code></td><td>Session length, cookie policy, and whether viewers may start compute. See <a href="authentication.html#signing-in">Server Accounts</a>.</td></tr>
+      <tr><td><code>[server.banner]</code></td><td>A notice under the header. Plain text; set both link fields or neither, with <code>http://</code> or <code>https://</code>.</td></tr>
+      <tr><td><code>keep_failed_uploads</code></td><td>Keep a refused remote upload's staged file in the receive folder, named in the log</td></tr>
+    </table>
+  </div>
+  <p>Command-line options win over the file. A legacy <code>[database]</code> or
+  <code>[images]</code> section is still read but ignored in server mode:
+  databases come from the registry.</p>
 
-  <h2 id="api">Use the REST API</h2>
-  <p>Per-database endpoints are located under the <code>/api/db/{db_id}/</code>
-  path. Sending a <code>GET</code> request to <code>/api/databases</code> returns
-  a list of configured databases and their unique identifiers.</p>
+  <h3 id="preview-format">Preview format</h3>
+  <p>Previews and annotated images are PNG by default: exact, the same pixels
+  the stretch made. <code>preview_format = "jpeg"</code> makes them about a
+  third the size, but JPEG smooths the faint detail where noise, hot pixels and
+  marginal stars live, so a frame can look cleaner than it is. Grading always
+  measures the FITS, never a preview. The two formats use different
+  extensions, so switching back finds the old files still valid. Nothing
+  deletes the other format; the server reports its size at start.</p>
+  <p><code>preview_color</code> sets which rendition of a one-shot-color frame
+  pre-generation warms and the viewer opens with.</p>
+
+  <h3 id="remote-blocks">Grant remote sync and uploads in the file</h3>
+  <p>A server run from the command line has no Settings panel, so it takes
+  remote grants from its config file:</p>
+  <pre><code>[[remote_sync]]
+database = "telescope"                       <span class="c"># registry slug</span>
+token_file = "/run/secrets/psf-guard-key"    <span class="c"># or token = "..."</span>
+
+[[remote_upload]]
+database = "telescope"
+image_dir = "/data/incoming"
+placement = "target_tree"                    <span class="c"># optional; default "flat"</span>
+#directory_template = "%YEAR%/%TARGET%/%NIGHT%/%TYPE%"
+token_file = "/run/secrets/psf-guard-key"</code></pre>
+  <p>These apply at start and are never written back to the registry, so
+  rotating a key is a restart. A database has one key, whatever it grants.
+  Naming a database that is not registered stops the server. Neither block
+  needs <code>--allow-database-management</code>. Template tokens:
+  <code>%PROJECT%</code>, <code>%TARGET%</code>, <code>%DATE%</code>,
+  <code>%NIGHT%</code>, <code>%YEAR%</code>, <code>%TYPE%</code>,
+  <code>%FILTER%</code>, <code>%TELESCOPE%</code>, <code>%CAMERA%</code>,
+  <code>%EXPOSURE%</code>, <code>%GAIN%</code>. See
+  <a href="workflows.html#remote">Rejects &amp; Sync</a> and
+  <a href="sync-plugin.html">N.I.N.A. Sync Plugin</a>.</p>
+
+  <h2 id="guids">Fill in GUIDs</h2>
+  <p>Planning, sync and multi-rig projects find Target Scheduler rows by GUID.
+  Target Scheduler skips giving existing rows one when a database is upgraded
+  past schema 22 in one step, and such projects cannot be planned or synced.
+  <strong>Settings &rarr; Databases</strong> says how many rows lack one and
+  offers <strong>Fill in GUIDs</strong>. It copies the database beside itself
+  first, then fills only the empty GUIDs. Close N.I.N.A. on that rig before
+  filling.</p>
+  <pre><code>psf-guard -d schedulerdb.sqlite fill-guids --dry-run
+psf-guard -d schedulerdb.sqlite fill-guids</code></pre>
+
+  <h2 id="api">REST API</h2>
+  <p>Per-database routes sit under <code>/api/db/{db_id}/</code>.
+  <code>GET /api/databases</code> lists the databases and their IDs. On a
+  server with accounts, send a session cookie or an API token; see
+  <a href="authentication.html#tokens">Server Accounts</a>. Agents can use the
+  <a href="mcp.html">MCP endpoint</a> instead.</p>
   <pre><code><span class="c"># List images with filters</span>
 curl "localhost:3000/api/db/my-db/images?project_id=2&amp;status=pending"
 
-<span class="c"># Update a grade</span>
+<span class="c"># Set a grade</span>
 curl -X PUT localhost:3000/api/db/my-db/images/123/grade \
   -H "Content-Type: application/json" \
   -d '{"status": "accepted"}'
 
-<span class="c"># Start and inspect a target-aware quality scan</span>
+<span class="c"># Start and read a quality scan</span>
 curl -X POST localhost:3000/api/db/my-db/analysis/quality-scan \
   -H "Content-Type: application/json" \
   -d '{"target_id": 42}'
 curl localhost:3000/api/db/my-db/analysis/quality-scan
 
-<span class="c"># Fetch processed images</span>
+<span class="c"># Processed images</span>
 curl "localhost:3000/api/db/my-db/images/123/preview?size=large" -o preview.png
 curl "localhost:3000/api/db/my-db/images/123/annotated" -o stars.png
 
-<span class="c"># Catalog capability diagnostics and on-demand plate solving</span>
+<span class="c"># Catalog capabilities and on-demand plate solving</span>
 curl "localhost:3000/api/astrometry/capabilities"
 curl "localhost:3000/api/db/my-db/images/123/astrometry"
 curl -X POST "localhost:3000/api/db/my-db/images/123/astrometry"
 
 <span class="c"># Cached or on-demand satellite prediction</span>
 curl "localhost:3000/api/db/my-db/images/123/satellites"
-curl -X POST "localhost:3000/api/db/my-db/images/123/satellites"</code></pre>
-  <p>The export API provides three distinct routes. The read-only route streams
-  the exported files as a ZIP archive. The local path route can write files to any
-  directory on the server file system and requires database management permissions.
-  The <code>GET/POST /api/db/{db_id}/export/server</code> route reports the operation's
-  progress and restricts file writes to the configured <code>export_dir</code> directory.
-  For more details on request options and code examples, see the
-  <a href="exporting.html#api">Export for Stacking</a> section.</p>
-  <p>Preview and annotated images are generated asynchronously. If the requested
-  image is not cached, the server returns an HTTP 202 status code containing
-  <code>{"state": "generating"}</code>. The client can poll the batch
-  <code>generation-status</code> endpoint to verify when the files are ready.
-  This design allows the user interface to display generation badges without
-  maintaining long-lived HTTP requests.</p>
-  <p>The quality scan calculates spatial and photometric metrics, and then generates
-  fresh plate solutions from image pixels. These results are saved in the database-specific
-  cache and are used by the sequence analysis endpoint. For more details about target
-  coordinates, failure handling, and regrading safety, see the
-  <a href="astrometry-quality.html">Astrometry Quality</a> section.</p>
-  <p>The database management endpoints (such as <code>POST/PUT/DELETE /api/databases</code>)
-  are disabled by default unless the server is started with the
-  <code>--allow-database-management</code> flag. This prevents unauthorized
-  clients on the network from modifying your database list. The desktop application
-  always enables these endpoints for its integrated local server.</p>
+curl -X POST "localhost:3000/api/db/my-db/images/123/satellites"
 
-  <h2 id="limitations">Review known limitations</h2>
+<span class="c"># Processor shares and storage</span>
+curl localhost:3000/api/settings/workers
+curl localhost:3000/api/settings/storage
+
+<span class="c"># The job queue</span>
+curl localhost:3000/api/stack-activity</code></pre>
   <ul>
-    <li><strong>One-shot-color (OSC) images are displayed in luminance-first mode</strong>:
-      raw OSC FITS files that contain a recognized <code>BAYERPAT</code> header
-      are debayered and then converted to grayscale luminance for grading and quality
-      analysis. The single-frame grader does not render them in full color.</li>
-    <li><strong>The scanner makes directory path assumptions</strong>: directory layouts
-      matching the <code>%DATEMINUS12%/%TARGETNAME%/%DATEMINUS12%/LIGHT/...</code>
-      pattern (with or without the leading date) are detected automatically. Other
-      directory structures might not be recognized correctly. If you need support
-      for additional directory structures, please
-      <a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">open an issue on GitHub</a>.</li>
-    <li><strong>You should create database and file backups</strong>: back up your
-      database catalog before performing bulk edits, and back up your raw FITS
-      files before executing file-moving commands.</li>
+    <li>A preview or annotated image not yet cached answers <code>202</code>
+      with <code>{"state": "generating"}</code>. Poll the batch
+      <code>generation-status</code> route to learn when it is ready.</li>
+    <li>The quality scan measures spatial and photometric evidence and solves
+      each frame from its pixels; sequence analysis reads the results. See
+      <a href="astrometry-quality.html">Astrometry Quality</a>.</li>
+    <li>Exports have three routes: a ZIP download, a write to any server path
+      (needs database management), and
+      <code>GET/POST /api/db/{db_id}/export/server</code>, which writes only
+      below <code>export_dir</code> and reports progress. See
+      <a href="exporting.html#api">Export &amp; AstroBin</a>.</li>
+    <li>Database management routes such as
+      <code>POST/PUT/DELETE /api/databases</code> are off unless the server
+      starts with <code>--allow-database-management</code>. The desktop app
+      always turns them on for its own local server.</li>
   </ul>
 
-  <nav class="next-prev">
-    <a href="cli.html">← CLI Reference</a>
-    <span></span>
+  <h2 id="limitations">Known limitations</h2>
+  <ul>
+    <li><strong>One-shot-color frames are measured on luminance.</strong> The
+      viewer shows a raw OSC frame with a <code>BAYERPAT</code> header in colour
+      (<kbd>C</kbd> switches to luminance), but grading and quality metrics
+      always use luminance, so the numbers stay comparable with N.I.N.A.'s.</li>
+    <li><strong>Folder layouts.</strong> Layouts like
+      <code>%DATEMINUS12%/%TARGETNAME%/%DATEMINUS12%/LIGHT/...</code>, with or
+      without the leading date, are recognized. For others,
+      <a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">open an issue</a>
+      with an example.</li>
+    <li><strong>Back up first.</strong> Back up a catalog before bulk edits, and
+      your image files before commands that move them.</li>
+  </ul>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="cli.html">&larr; CLI Reference</a>
+    <a href="authentication.html">Server Accounts &rarr;</a>
   </nav>
 </main>
 </div>

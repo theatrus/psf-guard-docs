@@ -5,6 +5,9 @@
     <lastmod>2026-09-27</lastmod>
   </url>
   <url>
+    <loc>https://psf-guard.com/docs/activation.html</loc>
+  </url>
+  <url>
     <loc>https://psf-guard.com/docs/astrometry-quality.html</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
@@ -25,12 +28,18 @@
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
+    <loc>https://psf-guard.com/docs/collaboration.html</loc>
+  </url>
+  <url>
     <loc>https://psf-guard.com/docs/configuration.html</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/exporting.html</loc>
     <lastmod>2026-09-27</lastmod>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/framing.html</loc>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/grader.html</loc>
@@ -57,6 +66,12 @@
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
+    <loc>https://psf-guard.com/docs/planning.html</loc>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/rigs.html</loc>
+  </url>
+  <url>
     <loc>https://psf-guard.com/docs/satellites.html</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
@@ -73,8 +88,14 @@
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
+    <loc>https://psf-guard.com/docs/storage.html</loc>
+  </url>
+  <url>
     <loc>https://psf-guard.com/docs/sync-plugin.html</loc>
     <lastmod>2026-09-25</lastmod>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/wbpp.html</loc>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/workflows.html</loc>

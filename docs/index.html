@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Getting Started — PSF Guard</title>
-  <meta name="description" content="Build a PSF Guard image catalog from FITS folders or open a Target Scheduler database, then review and grade your first project.">
+  <meta name="description" content="Install PSF Guard, build a catalog from FITS or XISF folders or open a Target Scheduler database, review your first project, and plan across rigs.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,115 +139,109 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Getting Started</h1>
   <p class="lede">
-    Install PSF Guard, then build an image catalog from FITS folders or open an
-    existing N.I.N.A. Target Scheduler database. Both of these paths keep the
-    image files in their current locations and do not require using the command line.
+    Install PSF Guard, then build a catalog from FITS or XISF folders or open a
+    N.I.N.A. Target Scheduler database. Image files stay where they are. No
+    command line needed.
   </p>
 
-  <h2 id="install">1. Install PSF Guard</h2>
-  <p>Installing the desktop app is the most direct path on Windows, macOS, and
-  Linux. The installation guide also covers Docker setups, standalone CLI
-  binaries, Fedora RPMs, and building from source.</p>
-  <p><a href="install.html">Open the installation guide →</a></p>
+  <figure class="feature-shot">
+    <img src="../assets/library-compact.jpg" alt="The Library: catalog totals, the Show and search controls, and one row of pills per project grouped by when it was last shot" loading="lazy">
+    <figcaption>The Library lists every project in every catalog, newest work first.</figcaption>
+  </figure>
 
-  <h2 id="choose">2. Choose your setup</h2>
+  <h2 id="install">1. Install</h2>
+  <p>The desktop app runs on Windows, macOS and Linux. Docker, standalone CLI
+  binaries and Fedora RPMs serve the same UI to a browser.</p>
+  <p><a href="install.html">Installation →</a></p>
+
+  <h2 id="choose">2. Choose a starting point</h2>
   <div class="workflow-routes">
     <div class="workflow-note simple">
       <div class="workflow-tag">From FITS</div>
-      <div class="workflow-copy"><strong>Build a catalog from image folders</strong><p>This path reads headers first and then processes pixel quality measurements in the background.</p></div>
-      <a class="workflow-link" href="importing.html">Catalog guide →</a>
+      <div class="workflow-copy"><strong>Build a catalog from image folders</strong><p>Headers first; pixel measurements run in the background.</p></div>
+      <a class="workflow-link" href="importing.html">Import Images →</a>
     </div>
     <div class="workflow-note import">
       <div class="workflow-tag">Existing DB</div>
-      <div class="workflow-copy"><strong>Open a Target Scheduler catalog</strong><p>Add the database and your FITS folders in Settings to start reviewing your frames.</p></div>
-      <a class="workflow-link" href="#existing-database">Scheduler setup →</a>
+      <div class="workflow-copy"><strong>Open a Target Scheduler database</strong><p>Add the database and its image folders in Settings.</p></div>
+      <a class="workflow-link" href="#existing-database">Scheduler setup ↓</a>
     </div>
     <div class="workflow-note cli">
       <div class="workflow-tag">CLI / NAS</div>
-      <div class="workflow-copy"><strong>Serve the grader or run batch tools</strong><p>You can use this method for Docker containers, NAS devices, automated scripting, or command-line screening.</p></div>
-      <a class="workflow-link" href="cli.html#server">CLI guide →</a>
+      <div class="workflow-copy"><strong>Serve the UI or run batch tools</strong><p>Docker, NAS, scripts and command-line screening.</p></div>
+      <a class="workflow-link" href="cli.html#server">CLI Reference →</a>
     </div>
     <div class="workflow-note sync">
       <div class="workflow-tag">Two DBs</div>
-      <div class="workflow-copy"><strong>Sync a telescope and grading copy</strong><p>This setup pulls captured frames to your grading machine and pushes updated plans and grades back to the telescope.</p></div>
-      <a class="workflow-link" href="workflows.html#sync">Sync guide →</a>
+      <div class="workflow-copy"><strong>Keep a telescope copy and a grading copy</strong><p>Pull captures here; push plans and grades back.</p></div>
+      <a class="workflow-link" href="workflows.html#sync">Rejects &amp; Sync →</a>
     </div>
   </div>
 
   <div class="callout info">
-    <strong>PSF Guard works like Lightroom Classic, but for astrophotography data.</strong>
-    It catalogs files in their current locations. It uses the Target
-    Scheduler database structure for its image map, plans, and grades, but does
-    not require Target Scheduler.
+    <strong>Like Lightroom Classic, for astrophotography data.</strong> PSF Guard
+    catalogs files in place. It keeps its image map, plans and grades in the
+    Target Scheduler database layout, but Target Scheduler is optional.
   </div>
 
-  <h2 id="first-catalog">3. Start a catalog</h2>
-  <p>To start, open <strong>Settings → New Database from Images</strong>, select your
-  FITS folders, and review the header-only import before creating the catalog.
-  PSF Guard groups your images and creates plans without waiting for pixel
-  analysis. For more details, see the guide on <a href="importing.html">adding images
-  and plans</a>.</p>
+  <h2 id="first-catalog">3. Build a catalog</h2>
+  <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
+  image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
+  frames into projects, targets and exposure plans from the headers alone. Turn on
+  <strong>Automatic import</strong> to bring in new frames on a schedule. See
+  <a href="importing.html">Import Images</a>.</p>
 
   <h2 id="existing-database">Or open a Target Scheduler database</h2>
   <div class="callout">
-    <strong>Back up your Target Scheduler database before writing to it for the first time.</strong>
-    Grading operations update the database file directly. You can use the import
-    and sync previews to review changes before applying them.
+    <strong>Back up the database before PSF Guard first writes to it.</strong>
+    Grading writes to the file. Import and sync preview their changes first.
   </div>
   <ol>
-    <li>Open <strong>Settings → Add Database</strong>.</li>
-    <li>Select the Target Scheduler SQLite file and add the folders that hold
-      its FITS images. On Windows, the usual database path is
+    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
+    <li>Pick the SQLite file and add the folders that hold its images. On Windows
+      the file is usually
       <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
-    <li>Choose a project on Library, then open Images or Sequence.</li>
+    <li>Choose a project in the <strong>Library</strong>; it opens in
+      <strong>Images</strong>.</li>
   </ol>
-  <div class="callout info">
-    PSF Guard does not copy your FITS files. Your image folders can remain
-    read-only, but the scheduler database file must be writable to save
-    grades or planning changes.
-  </div>
+  <p>Image folders can be read only. The database file must be writable to save
+  grades and plans.</p>
 
-  <h2 id="first-review">4. Review the first project</h2>
+  <h2 id="first-review">4. Review a project</h2>
   <ol>
-    <li>Use the Library page to check projects, targets, completion rates, and
-      file status.</li>
-    <li>Open the Images page. You can filter by status or channel, move through
-      frames using the arrow keys, and press Space to build a selection.</li>
-    <li>Accept or reject frames, or open the Sequence view to review a complete
-      session.</li>
-    <li>Run the <strong>Scan Quality</strong> tool when you want to generate
-      pixel-based evidence for clouds, obstructions, and pointing errors.</li>
-    <li>Once grading is complete, export the accepted light frames from the
-      Library page into a structured stacking directory or a ZIP archive.</li>
+    <li>In the <strong>Library</strong>, pick a project. Its row shows the database,
+      state, accepted against desired, grading counts and capture dates.</li>
+    <li>In <strong>Images</strong>, filter by status, filter or quality flag. Move with
+      the arrow keys, select with Space, accept with <kbd>A</kbd> and reject with
+      <kbd>X</kbd>.</li>
+    <li>Open <strong>Sequence</strong> to see a whole session scored, with the cause
+      behind each low score.</li>
+    <li>Open <strong>Stacks</strong> to stack the accepted frames per channel and
+      combine them in color.</li>
+    <li>Export the accepted lights for PixInsight, or run WBPP on the server.</li>
   </ol>
-  <p>You can continue by reading the guide on <a href="grader.html">the grader
-  user interface</a>. Additional features like plate solving, satellite track
-  detection, stack previews, <a href="exporting.html">exporting</a>, importing,
-  and database synchronization are described in optional sidebar guides.</p>
+  <p>Next: <a href="grader.html">Library &amp; Grader</a>,
+  <a href="screening.html">Quality Screening</a>,
+  <a href="stacking.html">Stacks</a> and <a href="exporting.html">Export</a>.</p>
 
-  <h2 id="server">Server, NAS, and CLI setups</h2>
-  <div class="workflow-note cli">
-    <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>Use the command line only when the setup needs it</strong><p>While the desktop app handles the standard single-database workflow, the CLI provides options for server hosting, batch quality screening, data import, data export, and automation.</p></div>
-    <a class="workflow-link" href="install.html#server">Install for a server →</a>
-  </div>
+  <h2 id="planning">5. Plan across rigs</h2>
+  <p>Every database is a rig and every project a plan. Open a plan's
+  <strong>Planning</strong> workspace to frame it on the sky, set goals per filter,
+  and write it into each rig's Target Scheduler database. See
+  <a href="planning.html">Planning</a>.</p>
 
   <h2 id="two-machines">Two-machine setups</h2>
-  <div class="workflow-note sync">
-    <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Keep the telescope database and a grading copy</strong><p>You can maintain the telescope's database and a separate grading copy. This setup pulls projects and captures to the grading machine, and pushes edited plans and reviewed grades back to the telescope.</p></div>
-    <a class="workflow-link" href="workflows.html#sync">Sync workflow →</a>
-  </div>
-  <p>You do not need to set up synchronization if the desktop app can open the
-  telescope database directly. Synchronization is intended for exchanging state
-  between two separate database files.</p>
+  <p>Skip sync when PSF Guard can open the telescope's database directly. Sync is
+  for two separate database files: pull captures to the grading copy, then push
+  plans and reviewed grades back. A rig at another site can run its own PSF Guard;
+  sync with it over the network with <strong>Remote PSF Guard</strong>. See
+  <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
 
-  <h2 id="requirements">Current image handling</h2>
-  <p>PSF Guard reads monochrome FITS files directly. It also debayers raw
-  one-shot-color (OSC) FITS files that contain a recognized <code>BAYERPAT</code>
-  header, using the extracted luminance channel for grading and quality
-  measurements. The single-frame grader does not currently render OSC exposures
-  in color.</p>
+  <h2 id="requirements">Image formats</h2>
+  <p>PSF Guard reads FITS (<code>.fits</code>, <code>.fit</code>, <code>.fts</code>)
+  and monolithic XISF. FITS images in an extension, tile-compressed (fpack), signed
+  16-bit and 64-bit integer images all open. Raw one-shot-color frames with a
+  <code>BAYERPAT</code> header show in color (<kbd>C</kbd> switches); grading measures their luminance.</p>
 
   <nav class="next-prev">
     <span></span>

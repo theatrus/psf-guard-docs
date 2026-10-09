@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Calibration Libraries — PSF Guard</title>
-  <meta name="description" content="Import bias, dark, dark-flat, and flat frames into PSF Guard; understand safe matching, on-demand masters, stack calibration modes, and calibration-aware exports.">
+  <meta name="description" content="Catalog bias, dark, dark-flat and flat frames in PSF Guard: safe matching, dark masters by night, stray-light darks, masters from other software, coverage reports and stack calibration.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html" class="active" aria-current="page">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -125,174 +138,327 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Calibration Libraries</h1>
-  <p class="lede">
-    You can catalog bias, dark, dark-flat, and flat frames alongside the lights they serve.
-    PSF Guard matches them conservatively, builds master frames only when they are needed for a stack, and keeps the raw frames and generated FITS files on disk.
-  </p>
+  <p class="lede">Catalog bias, dark, dark-flat and flat frames beside the
+  lights they serve. PSF Guard matches them conservatively, builds masters when
+  a stack needs them, and leaves the raw frames where they are.</p>
 
   <div class="workflow-note import">
     <div class="workflow-tag">Calibrate</div>
-    <div class="workflow-copy"><strong>You can add calibration folders to the same catalog as your lights.</strong><p>The import process reads file headers, and stack previews build and cache safe masters on demand.</p></div>
-    <a class="workflow-link" href="#add">You can add frames below ↓</a>
+    <div class="workflow-copy"><strong>Add calibration folders to the catalog that holds your lights.</strong><p>Import reads headers only. Stacks, WBPP runs and exports then take the matching frames.</p></div>
+    <a class="workflow-link" href="#add">Add frames ↓</a>
   </div>
 
-  <h2 id="add">You can add calibration frames to the catalog.</h2>
+  <h2 id="add">Add calibration frames</h2>
   <ol>
-    <li>In <strong>Settings &rarr; Databases</strong>, add the folders holding the
-      calibration files to the catalog's image directories.</li>
-    <li>Choose <strong>Import</strong>, select <strong>Calibration only</strong>
-      when appropriate, and inspect the dry preview before applying it.
-      New-database creation and the CLI use the same header-only scan.</li>
-    <li>Open the database's calibration summary and choose
-      <strong>Manage</strong> to inspect coverage by rig and frame type.</li>
+    <li>In <strong>Settings &rarr; Databases</strong>, add the folders that hold
+      the calibration files to the catalog's image directories.</li>
+    <li>Run <strong>Import</strong>. Choose <strong>Calibration only</strong> to
+      skip lights, and check the dry preview before applying it. Creating a
+      database and the CLI use the same header-only scan, and automatic import
+      can take new calibration frames on a schedule; see
+      <a href="importing.html#automatic">Import Images</a>.</li>
+    <li>Back in <strong>Settings &rarr; Databases</strong>, click
+      <strong>Manage</strong> on the database's calibration summary to see
+      coverage by rig and frame type.</li>
   </ol>
-  <p>PSF Guard recognizes the usual <code>IMAGETYP</code> values:</p>
+  <p>PSF Guard sorts frames by their <code>IMAGETYP</code> header:</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Library type</th><th>Recognized header values</th></tr>
+      <tr><th>Library type</th><th>Header values</th></tr>
       <tr><td>Bias</td><td><code>BIAS</code>, <code>OFFSET</code></td></tr>
       <tr><td>Dark</td><td><code>DARK</code></td></tr>
       <tr><td>Dark flat</td><td><code>DARK FLAT</code>, <code>DARKFLAT</code>, <code>FLATDARK</code></td></tr>
-      <tr><td>Flat</td><td><code>FLAT</code></td></tr>
+      <tr><td>Flat</td><td><code>FLAT</code>, <code>TWILIGHT FLAT</code></td></tr>
     </table>
   </div>
-  <p>Calibration records stay in PSF Guard-owned tables inside the catalog.
-  Pixels and master blobs do not: raw paths and file fingerprints point back to
-  the image library, while generated masters live in the cache. Reading an
-  untouched Target Scheduler database does not create the calibration tables,
-  and a dry run rolls its temporary catalog changes back.</p>
+  <p>Twilight flats stay in the calibration library during folder imports and
+  remote uploads. They never become light rows or exposure templates that
+  could sync back to Target Scheduler. Masters from other software import too;
+  see <a href="#external">below</a>.</p>
+  <p>Calibration records live in PSF Guard's own tables inside the catalog.
+  Pixels do not: records point at the raw files, and generated masters live
+  in the calibration masters folder. Reading an untouched Target Scheduler
+  database creates no tables, and a dry run rolls its changes back.</p>
 
-  <h2 id="rigs">You can manage imaging rigs and calibration libraries.</h2>
-  <p>A stable rig identity combines telescope, camera, sensor dimensions, and
-  binning; N.I.N.A. profile IDs are recorded separately. A copied database
-  therefore carries the calibration catalog without tying it to one local row
-  number or profile.</p>
-  <p>The library manager filters by rig and frame type, marks paths that no
-  longer exist, and shows the settings used for matching. An editor with
-  database management enabled can rescan the configured folders, forget a bad
-  catalog record without deleting its file, or clear generated masters while
-  retaining all raw frames. Forgetting an input invalidates every dependent
-  master automatically.</p>
+  <h2 id="rigs">Manage the library</h2>
+  <p>A rig is the telescope, camera, sensor size and binning. N.I.N.A. profile
+  IDs are recorded beside it, so a copied database carries its calibration
+  library without tying it to one machine.</p>
+  <p>The <strong>Calibration library</strong> dialog filters by rig and type,
+  and <strong>Missing files only</strong> shows paths that no longer exist. It
+  groups frames by night, one row per night until expanded, with flats and
+  dark flats in one section and darks and bias in their own. With database
+  management, it can:</p>
+  <ul>
+    <li><strong>Scan configured folders</strong> again;</li>
+    <li><strong>Forget</strong> a wrong record, or <strong>Forget night</strong>
+      for a whole night, without deleting any FITS file;</li>
+    <li><strong>Clear generated masters</strong>, keeping every raw frame and
+      record.</li>
+  </ul>
+  <p>Forgetting a frame drops every master built from it, and every master
+  built from those. When a frame turns up at a new path with the same kind,
+  file name and capture time, its record follows the file and keeps its marks
+  and masters.</p>
 
-  <h2 id="coverage">You can check calibration coverage for each project.</h2>
-  <p>Choose <strong>Calibration</strong> on a project card in the Library. The
-  report uses the same matcher as a real stack, so it shows what would apply
-  rather than merely counting files in the library.</p>
-  <p>Each frame type shows its matching frames, capture sessions, and newest
-  date. For each light night and filter, the report shows the selected flat
-  session, its age, and whether it came from the same night. Warnings list
-  missing frame types, stale flats, nights without matching flats, and light
-  files that PSF Guard could not find.</p>
   <figure>
-    <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage report with matching bias, dark, and flat counts for each light night and filter" loading="lazy">
-    <figcaption>The report uses the stack matcher, so the counts show which
-    calibration frames PSF Guard would use.</figcaption>
+    <img src="../assets/calibration-library.png" alt="Calibration library: rig and type filters, and flats grouped by night" loading="lazy">
+    <figcaption>The calibration library groups frames by the night they belong to.</figcaption>
   </figure>
 
-  <h2 id="matching">The matching system uses conservative settings to match frames.</h2>
-  <p>A calibration frame must match every known required setting. If the light
-  records a value but the calibration frame does not, they do not match.
-  Frames without a known sensor identity never match. PSF Guard orders safe
-  matches by capture-time distance and uses at most 64 inputs for one master.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Master</th><th>Required agreement</th></tr>
-      <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, and Bayer layout</td></tr>
-      <tr><td>Dark</td><td>Bias fields, exposure within the larger of 0.1% or 0.05 seconds, and temperature within 3 °C</td></tr>
-      <tr><td>Dark flat</td><td>Flat sensor settings, exposure, and temperature</td></tr>
-      <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within 1 mm, and rotator angle within 1° when both frames record it</td></tr>
-    </table>
-  </div>
-  <p>Frames used for one master must also match one another. Temperatures must
-  stay within 1 °C, and flats must come from one capture session. PSF Guard
-  selects the nearest consistent group and ignores an outlier instead of
-  rejecting an otherwise usable group.</p>
-  <p>Before building the master, Seiza checks the inputs again. It skips frames
-  with the wrong filter, camera, gain, or readout mode. The warning identifies
-  the skipped frame type and count. The remaining safe inputs can still build
-  the master.</p>
+  <h3 id="nights">Date frames by night</h3>
+  <p>Flats, darks and bias are dated by the night they belong to, in the
+  library, the coverage report and export folders. A night splits where the
+  catalog's lights are never captured, as in <a href="sky.html">Sky
+  Coverage</a>, so dusk and dawn flats share the date of the night between
+  them. Rigs west of Greenwich no longer see dawn flats a day late. A catalog
+  with no lights splits at noon UTC.</p>
 
-  <h2 id="stacking">The stack panel provides three calibration modes.</h2>
-  <p>The stack panel's <strong>Calibration</strong> control has three modes:</p>
+  <h3 id="boundaries">Mark where calibration stops being valid</h3>
+  <p>Nearest in time is the right default, but it cannot know about a dust
+  cleaning or a re-spaced imaging train. Select one or more nights in the
+  library and mark their frames usable <strong>only for lights after
+  them</strong> (a set shot right after the change) or <strong>only for lights
+  before them</strong> (the last set before it). Matching never takes a marked
+  frame across its boundary. Marking the same frames <strong>in both directions
+  again</strong> clears the mark. Marks survive rescans and sync with the
+  library.</p>
+
+  <h2 id="coverage">Check coverage for a project</h2>
+  <p>Click <strong>Calibration</strong> on a project's full card in the
+  <strong>Library</strong>. The report uses the same matcher as a stack, so it
+  shows what would apply, not just what files exist.</p>
+  <ul>
+    <li>Per kind: how many frames match, how many sessions they span, and the
+      newest.</li>
+    <li>Per night and filter: the flat set a master would use, how far it is
+      from the lights, and whether the night has its own flats.</li>
+    <li>The dark column shows what one dark master would use: its frames, the
+      nights they span, and the nearest night's distance. Hover for every
+      matching dark within reach.</li>
+    <li>A night with no flats names the nearest flat refused only for its
+      rotator angle, how far off it is, and the limit. That is the usual cause
+      when a rotator moved.</li>
+    <li>Masters from other software that fit the lights' camera and sensor
+      size (and filter, for flats) are listed under the night: used, matching
+      but not used, or not used with the readings that disagree, such as
+      <code>rotation light=92.6deg master=94.7deg</code>.</li>
+  </ul>
+  <p>Warnings name kinds with no matches, nights without same-night flats, and
+  flats more than a month from their lights.</p>
+
+  <figure>
+    <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage for Golf of Mexico: warnings, frame counts per kind, and flats and darks matched per night and filter" loading="lazy">
+    <figcaption>The coverage report matches one light per night and filter exactly as a stack would.</figcaption>
+  </figure>
+
+  <h2 id="matching">Safe matching</h2>
+  <p>A calibration frame must agree with every setting the light records. If
+  the light records a value and the frame does not, they do not match. A frame
+  with no known camera name or sensor size never matches.</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Mode</th><th>Behavior</th></tr>
-      <tr><td><strong>Auto</strong></td><td>Default. Apply only masters whose matching and dependency chain are safe.</td></tr>
-      <tr><td><strong>Force on</strong></td><td>Use every master that can be built, including a flat without a trusted pedestal estimate; the card warns about the risk.</td></tr>
-      <tr><td><strong>Off</strong></td><td>Skip matching and integrate the raw lights.</td></tr>
+      <tr><th>Master</th><th>Must agree</th></tr>
+      <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, Bayer layout</td></tr>
+      <tr><td>Dark</td><td>Bias fields; exposure within the larger of 0.1% or 0.05&nbsp;s; temperature within 3&nbsp;°C; shot within the dark reach of the light</td></tr>
+      <tr><td>Dark flat</td><td>The flat's sensor settings, exposure and temperature</td></tr>
+      <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within 1&nbsp;mm, and rotator angle within the rotation tolerance (2° by default) when both record it</td></tr>
     </table>
   </div>
-  <p>The project-level choice is saved, and you can override it on individual target and filter cards. You can disable calibration for a single channel without discarding calibration for the remaining channels. Results built under a different mode are marked as outdated.</p>
-  <p>Multi-night stacks may need different flats or darks. PSF Guard partitions
-  the lights into calibration sessions, swaps the appropriate masters as it
-  integrates each group, and reports the session count on the card. Resume
-  checkpoints and source-artifact searches include the exact per-session master
-  identity, so changed calibration always forces the safe amount of rebuilding.</p>
+  <p>The readout mode counts however the driver spelled it. N.I.N.A. writes a
+  name such as <code>Extend Fullwell 2CMS</code>; PSF Guard compares names
+  ignoring case, so a High Gain dark never serves an Extend Fullwell light.</p>
+  <p>Frames in one master must also agree with each other: temperatures
+  within 1&nbsp;°C, and flats from one session, shot within a day of each
+  other. The nearest group with enough frames builds the master, up to 64
+  frames. Before integrating, Seiza checks the inputs again and leaves out
+  any it will not accept, such as a frame filed under the wrong filter, camera
+  or readout mode; the stack warning names them.</p>
+  <p><strong>Settings &rarr; Setups &rarr; Calibration</strong> sets the
+  <strong>Rotation tolerance (degrees)</strong> for every database on the
+  server, starting with the next stack.</p>
+
+  <figure>
+    <img src="../assets/settings-calibration.png" alt="Settings › Setups › Calibration: Rotation tolerance, Masters from other software, Dark reach, Complete night and Mask stars in flats" loading="lazy">
+    <figcaption>Calibration settings apply to every database on the server.</figcaption>
+  </figure>
+
+  <h3 id="darks">Dark masters</h3>
+  <p>Darks keep for months, so a dark master can draw on several nights. It
+  uses the nearest complete night of darks alone. When no night is complete,
+  it pools the nights within reach, nearest first. Two settings under
+  <strong>Settings &rarr; Setups &rarr; Calibration &rarr; Dark masters</strong>
+  bound this:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+      <tr><td><strong>Dark reach (days)</strong></td><td>183</td><td>A dark shot further than this from the light does not match, so darks six months away no longer serve. A dark marked for lights before or after it follows its mark instead, however old.</td></tr>
+      <tr><td><strong>Complete night (darks)</strong></td><td>10</td><td>The nearest night with this many matching darks is used alone. With fewer, nights pool.</td></tr>
+    </table>
+  </div>
+
+  <h3 id="stray-light">Darks that caught stray light</h3>
+  <p>A dark shot while light reached the sensor, such as dawn through an open
+  roof or a cap left off, has the right headers, so header matching accepts it.
+  Its pixels sit above the bias, often more with each frame as the sky
+  brightens. Clipping drops the worst frame but keeps the milder ones, and the
+  master then pushes every light's sky below zero and carves a bowl that later
+  shows as colored corners.</p>
+  <p>PSF Guard measures each raw dark and dark flat once in the background,
+  after the server starts and after each import. It compares each frame with
+  every frame that could stand in for it, from any night, and marks one more
+  than one noise sigma above the quietest as <strong>Stray light</strong>. A
+  marked dark stays out of stack masters, WBPP runs and exports, and reports
+  name the frames left out. Nothing is deleted. A lone frame with nothing to
+  compare against stays in use.</p>
+
+  <h3 id="external">Masters from other software</h3>
+  <p>A master bias, dark or flat from WBPP, Siril or another tool imports like
+  any calibration frame. A master <code>IMAGETYP</code> or an
+  <code>NCOMBINE</code> card marks it, and the library shows a
+  <strong>Master</strong> badge. PSF Guard uses it as-is, never integrated
+  again.</p>
+  <ul>
+    <li>Matching is lenient, since such files often drop gain, offset and
+      temperature: what both sides record must agree, and the camera name or
+      sensor size must still match. A dark's exposure must still match. The
+      stack report names what the match took on trust.</li>
+    <li>A master dark that records no sensor temperature, such as one from
+      WBPP, calibrates cooled lights.</li>
+    <li>WBPP's FITS masters are floats scaled 0 to 1. PSF Guard copies such a
+      master into its cache once, on the same 16-bit scale as every other
+      frame. The original is never written to.</li>
+  </ul>
+  <p><strong>Masters from other software</strong>, under <strong>Settings
+  &rarr; Setups &rarr; Calibration</strong>, decides how they take part:
+  <strong>Use them whenever one matches</strong> (default), <strong>Only when
+  raw frames cannot build one</strong>, or <strong>Never</strong>.</p>
+
+  <h2 id="stacking">Calibration in stacks</h2>
+  <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
+  has three modes:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Mode</th><th>What it does</th></tr>
+      <tr><td><strong>Auto</strong></td><td>Default. Applies only masters whose matching and dependencies are safe.</td></tr>
+      <tr><td><strong>Force on</strong></td><td>Applies every master that can be built, including a flat with no trusted pedestal. The card warns about the risk.</td></tr>
+      <tr><td><strong>Off</strong></td><td>Skips matching and stacks the raw lights.</td></tr>
+    </table>
+  </div>
+  <p>The project-wide choice is saved, and each channel card can override it.
+  A stack whose lights need different flats or darks splits into calibration
+  sessions and swaps masters between them; the card reports the session count.
+  Calibration runs on raw CFA data before debayering.</p>
   <div class="callout info">
-    A master that fails to build does not fail the stack. The affected lights
-    continue without it, and the card names the skipped master and full reason.
-    A dependent master is skipped rather than built from a failed input.
+    A master that fails to build does not fail the stack. The lights stack
+    without it, and the card names the skipped master and why. A master whose
+    input master failed, such as a flat whose bias did not build, is skipped
+    rather than built without it.
   </div>
 
-  <h2 id="flats">The system applies flat-field safeguards and pedestal estimation.</h2>
+  <h2 id="flats">Flats</h2>
   <p>A flat divides correctly only after the light's pedestal is removed. A
-  bias or dark master provides that subtraction. With a flats-only library,
-  PSF Guard can fit the pedestal from the lights when the field provides enough
-  vignetting and the estimate passes consistency guardrails. The card reports
-  the fitted value; an untrustworthy fit leaves the flat unused in Auto mode
-  and explains why.</p>
-  <p>Flat masters receive a spatial defect pass because a hot pixel repeats in
-  every flat and survives across-frame clipping. Darks retain their hot pixels
-  so they can subtract the lights' own. If no dark master exists, calibrated
-  lights receive the same impulse filter before integration.</p>
+  bias or dark master does that. With flats only, PSF Guard fits the pedestal
+  from the lights when the field has enough vignetting and the estimate passes
+  its checks; the card reports the fitted value. When the fit is not trusted,
+  Auto leaves the flat out and says to import bias or dark frames.</p>
+  <p>A flat master gets a defect pass after integration: a hot or dead pixel
+  repeats in every flat, survives clipping, and would print into every light.
+  Darks keep their hot pixels, since those subtract the lights' own. Lights
+  in a session with no dark master get the same pixel filter before
+  stacking.</p>
   <div class="callout">
-    <strong>You should let stars move between sky flats.</strong> You can dither or let the sky drift during capture.
-    Tracking a star on the same flat pixels allows it to survive statistical
-    clipping, and star profiles are too wide for the pixel-defect filter to
-    remove.
+    <strong>Let stars move between sky flats.</strong> Dither or let the sky
+    drift. A star that stays on the same pixels survives clipping, and star
+    images are too wide for the defect pass to remove.
   </div>
+  <p><strong>Mask stars in flats</strong>, under <strong>Settings &rarr; Setups
+  &rarr; Calibration &rarr; Flat masters</strong>, detects stars in each raw
+  flat and leaves them out before integration. It is off by default and does
+  not touch imported masters. Every pixel must keep at least two unmasked
+  frames, or the flat build fails and the stack goes on without it.</p>
+  <p>Dew drying off the sensor window leaves spots that fade from one flat to
+  the next. PSF Guard reads each new flat master back against its frames.
+  When a minority disagree, the master rebuilds without them; when the whole
+  set disagrees with itself, the next-nearest flat set takes its place; with
+  no other set, the master serves and the card says to retake it.</p>
 
-  <h2 id="masters">The system caches generated masters with full provenance details.</h2>
-  <p>Each master needs at least two inputs. Seiza uses a two-pass,
-  leave-one-out sigma-clipped mean and writes the input count and clipping
-  provenance into the FITS. Cached filenames are content-addressed from the
-  input frame identities and fingerprints, dependency masters, and processing
-  versions. Changing a bias invalidates dark and flat masters that used it; a
-  valid unchanged master is reused.</p>
-  <pre><code>&lt;cache&gt;/&lt;database&gt;/calibration-masters/</code></pre>
+  <h2 id="masters">Masters</h2>
+  <p>Each master needs at least two frames. Bias and dark masters use a
+  two-pass, leave-one-out sigma-clipped mean; flat masters use median/MAD
+  clipping after calibrating and normalizing each frame. The FITS records the
+  method, thresholds, frame count and rejected samples. Seiza 0.23.1 builds
+  masters on every core.</p>
+  <p>While a master builds, the stack card and the header queue name it, what
+  Seiza is doing, and the frame or tile under way. <strong>Stop</strong> ends a
+  master build part way and writes nothing.</p>
+  <p>Master files are named from their input frames, file fingerprints,
+  upstream masters and algorithm versions, so a changed bias rebuilds the dark
+  and flat masters that used it, and an unchanged master is reused. They live
+  in the calibration masters folder, which is the cache unless
+  <code>--calibration-dir</code> or <strong>Settings &rarr; Storage &rarr;
+  Folders</strong> names another:</p>
+  <pre><code>&lt;calibration masters folder&gt;/&lt;database&gt;/calibration-masters/</code></pre>
+  <p>Once an hour PSF Guard removes half-written masters and masters that a
+  newer one built from the same frames replaced, once unused for a day and
+  named by no stack. Over the disk limit, masters unused for a week can go
+  too. A master whose frames are gone, or that the catalog does not record, is
+  always kept. A removed master is built again when a stack needs it. See
+  <a href="storage.html#disk-use">Disk use</a>.</p>
+  <p><strong>Masters</strong> on a finished stack shows the master files that
+  stack used, with pan, zoom, a display stretch and an unchanged FITS
+  download.</p>
 
-  <h2 id="export">You can export lights along with their calibration frames.</h2>
-  <p>Project and target exports add the raw calibration frames safely matched to
-  each selected light. The default target-grouped layout keeps flats beside the
-  target they serve. The optional <strong>WBPP</strong> layout uses PixInsight's
-  frame-type roots, puts dark flats beside darks, and includes
-  <code>run-wbpp.sh</code> and <code>run-wbpp.cmd</code> to load the export into
-  WeightedBatchPreprocessing.</p>
-  <p><a href="exporting.html">You can open the Export for Stacking guide to review export procedures.</a> This guide covers both directory structures, UI and CLI controls, the generated WBPP handoff, and repeat-export behavior.</p>
+  <h2 id="calibrated">Calibrated copies</h2>
+  <p>Calibrated and registered copies that WBPP, Siril, ASTAP, DeepSkyStacker
+  and other tools write are paired with the light each came from, instead of
+  importing as extra lights. A calibrated copy with no raw frame becomes the
+  light until the raw arrives. Stacks still read the raw frames and calibrate
+  them from this library. See <a href="importing.html#calibrated">Import
+  Images</a>.</p>
 
-  <h2 id="transfer">You can copy calibration records when moving a catalog.</h2>
-  <p><strong>Merge catalogs</strong> and <code>sync pull</code> copy rigs, profile
-  bindings, and raw calibration-frame records. They intentionally do not copy
-  generated master rows or cached FITS files. The destination resolves stale
-  raw paths by basename under its own configured image folders and builds its
-  own masters.</p>
+  <h2 id="export">Export with calibration frames</h2>
+  <p>Project and target exports add, for each light, the raw frames a stack
+  would build its masters from: the nearest coherent set of each kind, not
+  everything the library matched. Darks marked for stray light stay out.</p>
+  <ul>
+    <li>Flats stay under their target and under the night they were shot,
+      since two nights of one target can need different flats.</li>
+    <li>In the WBPP layout, each light's path names its night, so each night's
+      lights calibrate with that night's flats.</li>
+    <li>When lights of one exposure were matched to different darks, each set
+      of darks goes in its own <code>DARKSET_&lt;night&gt;</code> folder, so WBPP
+      does not average every night's darks into one master.</li>
+  </ul>
+  <p>Layouts, options and the WBPP runner are on
+  <a href="exporting.html">Export &amp; AstroBin</a>.</p>
 
-  <h2 id="troubleshooting">Use this troubleshooting table to resolve calibration issues.</h2>
+  <h2 id="transfer">Move a catalog</h2>
+  <p><strong>Merge catalogs</strong> and <code>sync pull</code> copy rigs,
+  profile bindings, raw calibration records and validity marks. They do not
+  copy generated masters, whose paths belong to the source machine. The
+  destination finds stale raw paths by file name under its own image folders
+  and builds its own masters.</p>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
   <div class="table-wrap">
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
-      <tr><td>No calibration summary</td><td>You should add the calibration folder to the catalog, run the import process, and confirm that the <code>IMAGETYP</code> header correctly identifies the frame.</td></tr>
-      <tr><td>No matching master</td><td>You should verify the camera, size, binning, gain, offset, readout mode, exposure, temperature, filter, telescope, focal length, and recorded rotator angle settings match between frames.</td></tr>
-      <tr><td>Master build warning</td><td>You can open the card details to view the skipped master and its cause. The light stack continues using the masters that built successfully.</td></tr>
-      <tr><td>Flat makes edges brighter</td><td>You should use Auto mode and import bias or dark frames. Force on mode can apply a flat whose pedestal was not removed.</td></tr>
-      <tr><td>Stars in a sky-flat master</td><td>You can dither or allow drift between flats, as stars in a fixed position cannot be removed by clipping.</td></tr>
-      <tr><td>Old master reused</td><td>Changed input fingerprints invalidate the master automatically. You should use the Clear masters command only when you need to rebuild every valid master.</td></tr>
+      <tr><td>No calibration summary</td><td>Add the calibration folder to the catalog, run Import, and confirm <code>IMAGETYP</code> names the frame type.</td></tr>
+      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout mode, exposure, temperature, filter, telescope, focal length and rotator angle. The coverage report names a flat refused for its angle.</td></tr>
+      <tr><td>A night has no flats</td><td>Open the coverage report. If a rotator moved, raise <strong>Rotation tolerance (degrees)</strong> or shoot new flats.</td></tr>
+      <tr><td>Darks from another season used</td><td>Lower <strong>Dark reach (days)</strong>, or mark validity boundaries.</td></tr>
+      <tr><td>Fewer darks than expected</td><td>Look for the <strong>Stray light</strong> mark in the library.</td></tr>
+      <tr><td>Master build warning</td><td>Open the card's details for the skipped master and its cause. The stack goes on with the masters that built.</td></tr>
+      <tr><td>Flat makes edges brighter</td><td>Use Auto and import bias or dark frames. Force on can apply a flat whose pedestal was not removed.</td></tr>
+      <tr><td>Stars in a sky-flat master</td><td>Dither or let the sky drift between flats, or turn on <strong>Mask stars in flats</strong>.</td></tr>
+      <tr><td>Old master reused</td><td>Changed frames rebuild masters on their own. Use <strong>Clear generated masters</strong> only to rebuild every master.</td></tr>
     </table>
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="sky.html">← Sky Coverage</a>
-    <a href="exporting.html">Export for Stacking →</a>
+    <a href="wbpp.html">&larr; WBPP Runs</a>
+    <a href="exporting.html">Export &amp; AstroBin &rarr;</a>
   </nav>
 </main>
 </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MCP for Agents — PSF Guard</title>
-  <meta name="description" content="Let an agent such as Claude Code work a running PSF Guard server over the Model Context Protocol: personal API tokens, the /api/mcp endpoint, what each tool reads or changes, and how roles apply.">
+  <meta name="description" content="Connect Claude Code or another MCP client to PSF Guard at /api/mcp with an API token to read catalogs and quality evidence, grade frames, and start jobs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -124,72 +137,70 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1 id="mcp-title">Drive PSF Guard from an agent with MCP</h1>
+  <h1 id="mcp-title">MCP for Agents</h1>
   <p class="lede">A running PSF Guard server is also a Model Context Protocol
-  (MCP) server. An agent such as Claude Code can list your catalogs, read
-  grades and quality evidence, score a night's frames, apply grades, and start
-  imports, quality scans and WBPP runs. The endpoint is <code>/api/mcp</code>
-  on the same port as the grader, and the same login rules guard it.</p>
+  (MCP) server at <code>/api/mcp</code>, on the same port as the UI. An agent
+  such as Claude Code can list catalogs, read grades and quality evidence,
+  score a night's frames, apply grades, and start imports, quality scans and
+  WBPP runs. The same login rules guard it.</p>
 
   <h2 id="tokens">Create an API token</h2>
   <p>On a server with user accounts, an agent signs in with a personal API
-  token rather than a password. Open <strong>Settings &rarr; Users &rarr; API
-  tokens</strong>, choose <strong>New token</strong>, give it a label such as
-  <em>claude on laptop</em>, and pick whether it is read only and when it
-  expires. The token is shown once. Copy it then.</p>
-
-  <p>The command line does the same and prints the token once. Restart the
-  server after a CLI change, as with user accounts:</p>
-
+  token, not a password. Open <strong>Settings &rarr; Users &rarr; API
+  tokens</strong>, click <strong>+ New token</strong>, give it a
+  <strong>Label</strong> such as <em>claude on laptop</em>, and choose an expiry
+  and <strong>Read only, whatever the user's role</strong> if the agent should
+  only read. Click <strong>Create token</strong> and copy it then: it is shown
+  once.</p>
+  <figure>
+    <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
+    <figcaption>Settings › Users › API tokens.</figcaption>
+  </figure>
+  <p>The CLI does the same and prints the token once. Restart the server after a
+  CLI change:</p>
   <pre><code>psf-guard users token create editor --label "claude on laptop" --expires-days 90
 psf-guard users token list
 psf-guard users token revoke &lt;id&gt;</code></pre>
-
-  <p>A token acts as its user and never gains more than that user has. A
-  viewer's token reads; an editor's token can also grade and start jobs
-  unless it was minted read only. Everyone signed in manages their own
-  tokens; an editor sees them all and can mint one for another user. A token
-  cannot mint or revoke tokens, so a leaked token cannot renew itself.
-  Revoking a token stops it at once, and removing a user removes that user's
-  tokens.</p>
-
+  <p>A token acts as its user and never gets more than that user has. A
+  viewer's token reads; an editor's token can also grade and start jobs, unless
+  it was made read only. An editor sees every token and can make one for
+  another user. A token cannot mint or revoke tokens, so a leaked token cannot
+  renew itself. Revoking a token stops it at once, and removing a user removes
+  that user's tokens. See <a href="authentication.html#tokens">Server
+  Accounts</a>.</p>
   <div class="callout info">
-    A loopback server with no accounts, which is what the desktop app and
-    <code>psf-guard server</code> on your own machine run, needs no token. A
-    network server with no accounts answers 401 here as it does everywhere
-    else; see <a href="authentication.html#bind">Server Accounts</a>.
+    A loopback server with no accounts, such as the desktop app or
+    <code>psf-guard server</code> on your own machine, needs no token. A
+    network server with no accounts answers 401 here as everywhere else; see
+    <a href="authentication.html#bind">Server Accounts</a>.
   </div>
 
   <h2 id="connect">Connect a client</h2>
-  <p>Any client that speaks MCP's streamable HTTP transport works. Give it
-  the URL and the token as a bearer header. For Claude Code:</p>
-
+  <p>Any client that speaks MCP's streamable HTTP transport works. Give it the
+  URL and the token as a bearer header. For Claude Code:</p>
   <pre><code>claude mcp add --transport http psf-guard https://guard.example/api/mcp \
   --header "Authorization: Bearer psfg_…"</code></pre>
-
-  <p>On the desktop app or a local server with no accounts, drop the header:</p>
-
+  <p>On the desktop app or a local server with no accounts, drop the
+  header:</p>
   <pre><code>claude mcp add --transport http psf-guard http://127.0.0.1:3000/api/mcp</code></pre>
-
   <p>The endpoint is stateless and answers in plain JSON, so a reverse proxy
   needs nothing extra and there is no session to expire. Revoke the token to
-  cut an agent off.</p>
+  cut an agent off; it stops at its next call.</p>
 
-  <h2 id="tools">What the tools do</h2>
+  <h2 id="tools">Tools</h2>
   <p>Every tool but <code>list_databases</code> takes a <code>database</code>:
-  the id or name that <code>list_databases</code> reports. Results are the
-  same JSON the grader itself reads.</p>
-
+  the ID or name <code>list_databases</code> reports. Results are the JSON the
+  UI itself reads.</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Tool</th><th>What it answers</th><th>Needs</th></tr>
-      <tr><td><code>list_databases</code></td><td>Open catalogs: id, name, path, image folders</td><td>read</td></tr>
+      <tr><th>Tool</th><th>Answers</th><th>Needs</th></tr>
+      <tr><td><code>list_databases</code></td><td>Open catalogs: ID, name, path, image folders</td><td>read</td></tr>
       <tr><td><code>list_projects</code></td><td>Projects with targets, plans, progress and recent frames</td><td>read</td></tr>
       <tr><td><code>list_targets</code></td><td>Targets with coordinates, grade counts and last capture</td><td>read</td></tr>
-      <tr><td><code>list_images</code></td><td>Lights with grade, filter, exposure and stored metrics, filtered by project, target or grade, in pages</td><td>read</td></tr>
+      <tr><td><code>list_images</code></td><td>Lights with grade, filter, exposure and stored metrics, filtered by project, target or grade, in pages (<code>limit</code>, <code>offset</code>)</td><td>read</td></tr>
       <tr><td><code>get_image</code></td><td>One image: grade, file location, header metadata, metrics</td><td>read</td></tr>
-      <tr><td><code>get_image_quality</code></td><td>Score, issues found, and place in the sequence, from stored evidence</td><td>read</td></tr>
-      <tr><td><code>analyze_sequence</code></td><td>Relative scores and suggested rejects for a target, a project, or the whole database</td><td>read</td></tr>
+      <tr><td><code>get_image_quality</code></td><td>Score, issues, and place in the sequence, from stored evidence</td><td>read</td></tr>
+      <tr><td><code>analyze_sequence</code></td><td>Relative scores and suggested rejects for a target, a project, or the database</td><td>read</td></tr>
       <tr><td><code>get_statistics</code></td><td>Whole-database counts</td><td>read</td></tr>
       <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights</td><td>read</td></tr>
       <tr><td><code>get_sky_coverage</code></td><td>Every target's footprint and exposure by filter</td><td>read</td></tr>
@@ -202,15 +213,15 @@ psf-guard users token revoke &lt;id&gt;</code></pre>
       <tr><td><code>cancel_wbpp_run</code></td><td>Stop the running WBPP run</td><td>write and database management</td></tr>
     </table>
   </div>
-
-  <p>Jobs return at once; the agent polls <code>get_jobs</code>. A tool that
-  the token may not use answers with a tool error that says so, not a
-  protocol failure, so the agent can explain it.</p>
-
-  <p>The server also hands the agent PSF Guard's ground rules: sequence
+  <p>Jobs return at once; the agent polls <code>get_jobs</code>. A tool the
+  token may not use answers with a tool error that says so, not a protocol
+  failure, so the agent can explain it. The WBPP tools need a server started
+  with <code>--allow-database-management</code>, as the UI's
+  <strong>Stack in WBPP</strong> does.</p>
+  <p>The server also gives the agent PSF Guard's ground rules: sequence
   analysis and quality context suggest, and nothing changes until
-  <code>grade_images</code> runs; catalog predictions and header values are
-  not pixel evidence, and a conclusion should say which it rests on.</p>
+  <code>grade_images</code> runs; catalog predictions and header values are not
+  pixel evidence, and a conclusion should say which it rests on.</p>
 
   <h2 id="curl">Try it without a client</h2>
   <pre><code>TOKEN=psfg_…
@@ -221,13 +232,23 @@ curl -s https://guard.example/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
        "params":{"name":"list_databases","arguments":{}}}'</code></pre>
 
+  <h2 id="operators">Notes for operators</h2>
+  <ul>
+    <li>The endpoint sits inside the API router, so the login, the read-only
+      role and the database-management gate apply as they do to the UI.</li>
+    <li>Tokens live in <code>auth.json</code> beside the registry as SHA-256
+      hashes. Tokens made in Settings work at once; a CLI change needs a
+      restart.</li>
+    <li>The same token works for the REST API. See
+      <a href="configuration.html#api">Configuration &amp; API</a>.</li>
+  </ul>
   <div class="callout info">
-    The reference, with the token file format and operator notes, is
+    The reference is
     <a href="https://github.com/theatrus/psf-guard/blob/main/docs/MCP.md">docs/MCP.md</a>
     in the main repository.
   </div>
 
-  <nav class="next-prev">
+  <nav class="next-prev" aria-label="Documentation pages">
     <a href="authentication.html">&larr; Server Accounts</a>
     <a href="pixinsight.html">PixInsight Scripts &rarr;</a>
   </nav>

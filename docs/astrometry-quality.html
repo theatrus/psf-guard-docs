@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Astrometry Quality — PSF Guard</title>
-  <meta name="description" content="Use fresh plate solutions and sequence analysis to find off-target frames, pointing jumps, tracking drift, and meaningful solve failures.">
+  <meta name="description" content="Plate-solve every frame from its pixels and flag off-target frames, pointing jumps and drift, rotator slips and failed solves, with reviewed rejections.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html" class="active" aria-current="page">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,67 +139,90 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Astrometry Quality</h1>
   <p class="lede">
-    A quality scan solves the current FITS pixels using Seiza, compares each solved center with the intended catalog target and its sequence, and adds auditable pointing evidence to the same 0 to 1 quality score used for cloud, occlusion, photometry, guiding, and PSF grading.
+    A quality scan plate-solves each frame from its pixels with Seiza and compares the solved center and rotation with the intended target and the rest of the sequence. This page covers the pointing and rotation flags, how they score, and how to review and apply them.
   </p>
 
   <figure>
-    <img src="../assets/sequence-quality-astrometry.png" alt="Sequence quality analysis with eleven solved frames and two poor outliers">
-    <figcaption>The eleven-frame run shows two poor frames and nine good frames, and the solved-center plot displays the pointing evidence.</figcaption>
+    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: score chart, solved pointing scatter, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
+    <figcaption>One session after a scan: scores, solved pointing, and each frame's cause.</figcaption>
   </figure>
 
-  <h2 id="run">You can run a quality scan from the UI</h2>
+  <h2 id="run">Run a quality scan</h2>
   <ol>
-    <li>Open a catalog target and select the <strong>Sequence Analysis</strong> tab.</li>
-    <li>Click the <strong>Scan Quality</strong> button. The system performs spatial and photometric analysis before initiating a plate solve for each frame.</li>
-    <li>Inspect the pointing scatter plot and the individual frame evidence. You can use the selection buttons, such as <strong>Select Off Target</strong>, <strong>Select Unsolved</strong>, or <strong>Select Recommended</strong>, to filter the frames for review.</li>
+    <li>Choose a target in the header and open <strong>Images</strong> or <strong>Sequence</strong>.</li>
+    <li>Click <strong>Analyze Quality</strong>. It shows when the target has new frames or results from an older quality model.</li>
+    <li>Follow progress on the header's jobs chip, from any view. When the scan ends, Sequence shows the scores, the <strong>Solved pointing</strong> scatter and each frame's evidence.</li>
   </ol>
-  <p>Results are cached per database, but reuse is tied to the FITS size and modification time plus the solver resource fingerprints. Replacing a FITS file under the same name cannot reuse stale WCS.</p>
+  <p>The scan runs two stages, then refreshes the sequence scores: spatial and photometric screening for clouds, occlusion, transparency and stray light, then a fresh plate solve of each frame. Both stages work on several frames at once, as many as <strong>Settings → Performance → Processor use</strong> allows. A scan you start uses the share for work you wait on. Quality backfill and analysis of new frames use the background share and pause while you wait on other work. See <a href="storage.html">Storage &amp; Performance</a>.</p>
+  <p>Results are cached per database. A solve is reused only while the file's size and modification time and the Seiza, star catalog and blind index fingerprints still match, so a replaced file is never graded from a stale WCS.</p>
 
-  <h2 id="flags">Quality flags affect frame grading and scores</h2>
-  <table>
-    <tr><th>Flag</th><th>Evidence</th><th>Score / recommendation</th></tr>
-    <tr><td><strong>Off Target</strong></td><td>The target coordinates lie outside the solved footprint, or a short departure is at least 20% of the shorter field dimension.</td><td>The pointing score is set to 0, the total score is capped at 0.20, and rejection is recommended.</td></tr>
-    <tr><td><strong>Stable Offset</strong></td><td>At least three consecutive solved frames form a stable framing cluster while the target remains within the field of view.</td><td>This flag is advisory only, applying no score cap or automatic rejection.</td></tr>
-    <tr><td><strong>Pointing Jump</strong></td><td>A small group of frames deviates from a framing cluster and subsequently returns to it.</td><td>The total score is capped at 0.30, and rejection is recommended.</td></tr>
-    <tr><td><strong>Pointing Drift</strong></td><td>A progressive trend within a contiguous framing segment exceeds the field or scatter threshold.</td><td>The affected frames in the tail of the segment are capped at 0.30, and rejection is recommended.</td></tr>
-    <tr><td><strong>Plate Solve Failed</strong></td><td>The image pixels decoded successfully, but the field failed to solve or too few stars were detected.</td><td>The system applies a modest penalty and only recommends rejection if independent image degradation is also detected.</td></tr>
-    <tr><td><strong>Solve Unavailable</strong></td><td>An error occurred during catalog access, pixel decoding, solve cancellation, or system resource allocation.</td><td>This is treated as an operational error, and no quality flag is applied or automatic grade recommended.</td></tr>
-  </table>
-
-  <p>The system clusters the solved centers before determining pointing offsets, jumps, or drift. A sustained reframing step (such as an <code>A → B</code> transition or an <code>A → B → C</code> mosaic) is treated as a new stable segment. This prevents subsequent frames from being incorrectly flagged as off-target or triggering false drift detections. A short excursion (such as <code>A → B → A</code>) is classified as a pointing jump. Drift is calculated independently within each contiguous segment.</p>
-
+  <h2 id="flags">Flags</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Flag</th><th>Evidence</th><th>Score and recommendation</th></tr>
+    <tr><td><strong>Off Target</strong></td><td>The target lies outside the solved footprint, or a short departure is at least 20% of the field's short side away.</td><td>Pointing score 0; total capped at 0.20; rejection recommended.</td></tr>
+    <tr><td><strong>Stable Offset</strong></td><td>At least three frames in a row form a stable framing cluster, with the target still inside the footprint.</td><td>Advisory only: no cap, no rejection.</td></tr>
+    <tr><td><strong>Pointing Jump</strong></td><td>A short run leaves a framing cluster and later returns to it.</td><td>Total capped at 0.30; rejection recommended.</td></tr>
+    <tr><td><strong>Pointing Drift</strong></td><td>A robust Theil-Sen trend within one framing segment passes the field or scatter threshold.</td><td>Tail frames capped at 0.30; rejection recommended.</td></tr>
+    <tr><td><strong>Rotation Skew</strong></td><td>A short run sits more than 2° from the rotation the rotator held, or the field turned more than 5° while the rotator reported no turn. See <a href="#rotation">Rotation skew</a>.</td><td>Total capped at 0.30; rejection recommended; stacks leave the frame out.</td></tr>
+    <tr><td><strong>Plate Solve Failed</strong></td><td>The pixels decoded and the solver had what it needed, but no field matched or too few stars were found.</td><td>Small score cut. Rejection only when separate cloud, obstruction or tracking evidence agrees.</td></tr>
+    <tr><td>Solve unavailable (no flag)</td><td>Missing catalogs or index, a decode error, an unsupported image, a cancelled solve, or an internal failure.</td><td>Operational error only: no flag and no grade.</td></tr>
+  </table></div>
+  <p>Solved centers are clustered before any offset, jump or drift call. A lasting reframe (<code>A → B</code>, or a mosaic <code>A → B → C</code>) starts a new framing segment, so later frames are not called off target and no false drift spans the session. A short <code>A → B → A</code> excursion is a pointing jump. Drift is fitted inside each segment.</p>
   <div class="callout info">
-    <strong>The system uses fresh pixel data as primary evidence.</strong> Embedded FITS WCS headers are helpful for display purposes but are not trusted for quality grading. Similarly, coordinate-only catalog matches are kept separate from pixel-derived plate solutions.
+    <strong>Fresh pixels decide.</strong> Embedded FITS WCS helps display and overlays but is not grading evidence: a scan always solves the current pixels. Coordinate-only catalog matches stay separate from pixel evidence.
   </div>
 
-  <h2 id="target">PSF Guard locates the intended target</h2>
-  <p>PSF Guard reads catalog files directly without modifying their schema. The system prefers target RA/Dec fields, using compatible target metadata and capture-specific coordinates as fallbacks. Absolute Off Target grading is only performed when authoritative coordinates with a supported epoch are available.</p>
-  <p>If no target coordinate is available, the system still uses the solved centers to detect relative pointing jumps and drift. PSF Guard does not assign an Off Target verdict in this scenario.</p>
+  <h2 id="rotation">Rotation skew</h2>
+  <p>Each solve gives the field's rotation: the direction of celestial north from image up, and whether the field is mirrored. Within a framing segment, frames whose rotation agrees within 2° form a run. Rotations are compared modulo a half turn, so a meridian flip is the same framing.</p>
+  <ul>
+    <li><strong>Held framing.</strong> A run of three or more frames is framing the rotator held. A re-rotation in mid-session is not a fault.</li>
+    <li><strong>Short skew.</strong> A run shorter than three frames, or one that leaves the held angle and comes back to it, is skew. PSF Guard measures it against the nearest held framing.</li>
+    <li><strong>Rotator slip.</strong> However long the run, a field that turned more than 5° from the framing the rest of the target shares, while the rotator's reported angle (N.I.N.A. <code>RotatorPosition</code>) did not turn with it, is skew. This catches a slip, a lost sync, or a camera turned by hand.</li>
+  </ul>
+  <p>A turn the rotator reported is framing someone chose. A reading that moves while the field holds still changes nothing in the pixels. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames overlap the rest less and crop the stack, so they are capped, recommended for rejection and left out of stacks. The 2° tolerance is fixed.</p>
+  <p>When Target Scheduler recorded a planned rotation for the target, the sequence response carries it beside the solved value, with their difference in <code>planned_rotation_offset_deg</code>. It is for display and flags nothing: capture software records rotation by its own convention, and a recorded 0 counts as no plan.</p>
 
-  <h2 id="review">You can review proposed changes before they are written to the database</h2>
-  <figure>
-    <img src="../assets/sequence-quality-review.png" alt="Review dialog showing a proposed astrometry rejection and evidence" loading="lazy">
-    <figcaption>The Reject Selected action opens a per-image review dialog that displays the exact score, the proposed <code>[Auto]</code> reason, and the supporting evidence.</figcaption>
-  </figure>
-  <p>No database modifications are made until you click <strong>Confirm rejection</strong>. Existing rejected images are not altered, and UI changes can be reverted using the standard undo and redo stack. The generated reason strings are specific to allow for future auditing:</p>
+  <h2 id="target">Where the intended target comes from</h2>
+  <p>PSF Guard reads the target from the catalog without changing its schema. Target RA/Dec fields come first; matching target metadata and capture-specific coordinates are fallbacks. Absolute <strong>Off Target</strong> grading runs only for supported epochs (J2000 or unspecified).</p>
+  <p>Without a target, solved centers still support relative jump and drift checks, on a tangent plane anchored at the first solved frame. That handles RA 0 wrap and polar fields. No frame is called <strong>Off Target</strong> without a target.</p>
+
+  <h2 id="review">Review and apply recommendations</h2>
+  <ol>
+    <li>In Sequence, pick <strong>Off target</strong>, <strong>Unsolved</strong> or <strong>Recommended</strong> from <strong>Select:</strong>.</li>
+    <li>Click <strong>Review rejection</strong>. The review lists every selected image with its score, the proposed <code>[Auto]</code> reason and the evidence.</li>
+    <li>Click <strong>Reject selected</strong> to write the grades, or <strong>Cancel</strong>.</li>
+  </ol>
+  <p>Images already rejected stay as they are, and grading uses the normal undo and redo. Reasons name the evidence:</p>
   <pre><code>[Auto] Astrometry: Off target - score 0.20; offset 36% of field
-[Auto] Astrometry: Tracking lost - score 0.30; pointing jump 420 arcsec</code></pre>
+[Auto] Astrometry: Tracking lost - score 0.30; pointing jump 420 arcsec
+[Auto] Astrometry: Tracking drift - score 0.30; 95 arcsec/hour
+[Auto] Astrometry: Rotator slip - score 0.30; field +7.2° from the rotator's angle
+[Auto] Astrometry: Rotation skew - score 0.30; +5.0° from the sequence
+[Auto] Quality: Plate solve failed + image degradation - score 0.30</code></pre>
 
-  <h2 id="cli">The CLI supports regrade workflows</h2>
+  <h2 id="cli">Regrade from the CLI</h2>
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>You can run the same quality checks over a folder of FITS files.</strong><p>Use the <code>--dry-run</code> option to preview changes before modifying the database.</p></div>
+    <div class="workflow-copy"><strong>Run the same checks over a folder of frames.</strong><p>Start with <code>--dry-run</code> to see every proposed write.</p></div>
     <a class="workflow-link" href="cli.html#screening">CLI reference →</a>
   </div>
   <pre><code><span class="c"># Preview every proposed database write</span>
 psf-guard screen-fits /path/to/lights --regrade-db my-db --dry-run
 
-<span class="c"># Apply supported recommendations</span>
+<span class="c"># Apply supported recommendations; already-rejected rows are untouched</span>
 psf-guard screen-fits /path/to/lights --regrade-db my-db</code></pre>
-  <p>The <code>--regrade-db</code> option matches each frame by its base filename and capture timestamp within a ten-minute window, loads the intended target, and performs a fresh plate solve. Our isolated solve failure is reported and reduces the frame score, but does not trigger an automatic rejection. Operational solver errors do not penalize the frame.</p>
-  <p>If orbital elements are configured or cached, the plate solve also projects satellite crossings and checks nearby pixels for matching trails. Predicted crossings reduce the score for manual review, whereas only high-risk trails with verified pixel alignment will trigger a rejection proposal. See <a href="satellites.html">Satellite Tracks</a>.</p>
+  <p><code>--regrade-db</code> matches each frame by file name and capture time (within ten minutes), loads its target, solves the pixels, and feeds the results through the same sequence grader the app uses. It adds satellite predictions only from orbital elements already in the cache; pass <code>--cache-dir</code> when the server uses another cache root. See <a href="satellites.html">Satellite Tracks</a>.</p>
+  <p>A lone failed solve is reported and lowers the score but is not written as a rejection. Off-target, jump, drift and skew recommendations, and failed solves backed by separate degradation, can be written. Operational solver errors always abstain.</p>
 
-  <p>The technical implementation details are available in the repository at <a href="https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md')">docs/ASTROMETRY_QUALITY.md</a>.</p>
+  <h2 id="api">API</h2>
+  <pre><code>POST /api/db/{db_id}/analysis/quality-scan
+  { target_id, filter_name?, force?, force_spatial?, force_astrometry?, force_satellites? }
+
+GET  /api/db/{db_id}/analysis/quality-scan
+GET  /api/db/{db_id}/analysis/sequence?target_id=...&amp;weight_pointing=...</code></pre>
+  <p>The pointing weight adds to the score and renormalizes when missing, so a database that has not been scanned keeps its earlier scores. <code>/analysis/spatial-scan</code> remains as an alias for older clients.</p>
+
+  <p>Technical notes: <a href="https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/ASTROMETRY_QUALITY.md')">docs/ASTROMETRY_QUALITY.md</a>.</p>
 
   <nav class="next-prev">
     <a href="astrometry.html">← Sky Context &amp; Solver</a>

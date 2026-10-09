@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sky Coverage — PSF Guard</title>
-  <meta name="description" content="Map every target your catalogs have imaged on one all-sky chart, turn it as a globe, see your stack previews in place, and replay the nights that built it.">
+  <meta name="description" content="Map every target your catalogs have imaged on one all-sky chart, turn it as a globe, see stacks in place, replay the nights that built it, and see where each rig points now.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html" class="active" aria-current="page">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -125,72 +138,91 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Sky Coverage</h1>
-  <p class="lede">The Sky view draws every target from every registered database on one map of the whole sky, and replays the nights that built it. Open it from the <strong>Sky</strong> tab next to Library.</p>
+  <p class="lede">The Sky view draws every target from every registered database on one map of the whole sky, replays the nights that built it, and shows where each rig points now. Open it with <strong>Sky</strong> in the header.</p>
 
   <figure class="feature-shot">
     <img src="../assets/sky-coverage.jpg" alt="The Sky view: a stat band, filter chips, and an all-sky map with constellations and every imaged field" loading="lazy">
-    <figcaption>The Sky view shows the stat band, the rig and filter chips, and the all-sky map with constellations and every imaged field.</figcaption>
+    <figcaption>The stat band, the rig and filter chips, and the all-sky map with constellations and every imaged field.</figcaption>
   </figure>
 
-  <h2 id="fields">The map shows each target as its field on the sky.</h2>
-  <p>Each target is drawn as the patch of sky its camera covers. The field size comes from a plate solve of one of the target's frames when PSF Guard has one, otherwise from the sensor size and focal length in one frame's FITS header together with the rotation the scheduler planned. A target with neither is drawn as a dot. The colour of a field is the mix of filters that went into it, and it is brighter the more hours it has.</p>
-  <p>Hover a field for its card: the rig, the project, the coordinates, the hours per filter, a sparkline of hours per night, the frame and night counts, the first and last night, and where the field size came from. Click the field to open the target in Images.</p>
+  <h2 id="fields">Fields on the map</h2>
+  <p>Each target is drawn as the patch of sky its camera covers. Its colour is the mix of filters that went into it, and it is brighter the more hours it has. The field size comes from the best source at hand:</p>
+  <ul>
+    <li>a plate solve of one of the target's frames, drawn as measured;</li>
+    <li>otherwise the sensor size and focal length in one frame's FITS header, turned by the rotation the scheduler planned;</li>
+    <li>a dot when neither is available.</li>
+  </ul>
+  <p>Hover a field for its card: rig, project, coordinates, hours per filter, a sparkline of hours per night, frame and night counts, first and last night, where the field size came from, and which stack is shown. Click the field to open the target in <strong>Images</strong>.</p>
   <figure>
     <img src="../assets/sky-coverage-card.jpg" alt="A target card over the map with hours per filter and a sparkline of nights" loading="lazy">
-    <figcaption>The card lists the hours per filter and a sparkline of the nights the target was shot.</figcaption>
+    <figcaption>The card lists hours per filter and a sparkline of the nights the target was shot.</figcaption>
   </figure>
-  <p>Behind the fields sit every star to magnitude 5.5 and the constellation figures and names. The <strong>Constellations</strong> switch hides the figures and names. The equatorial frame shows right ascension and declination with the galactic plane dashed; the galactic frame shows galactic longitude and latitude with the celestial equator dashed. The ecliptic is the dotted gold line, and a soft band marks the Milky Way.</p>
+  <p><strong>Equatorial</strong> shows right ascension and declination with the galactic plane dashed. <strong>Galactic</strong> shows galactic longitude and latitude with the celestial equator dashed. The ecliptic is the dotted gold line, and a soft band marks the Milky Way. Behind the fields sit every star to magnitude 5.5 and the constellation figures and names, which <strong>Constellations</strong> hides.</p>
 
-  <h2 id="turn">You can turn the sky from inside or look at it as a globe.</h2>
-  <p><strong>Flat</strong> is the sky seen from inside the sphere, the whole of it at once at first. <strong>Globe</strong> is the same sphere seen from outside. In both, a drag turns the sky sideways and up or down at every zoom, and the projection is centred on wherever you have turned it, so what you look at is drawn with the least distortion. Scroll to zoom about the centre of the view. The buttons in the corner step the zoom and return to the whole sky, and a double click does the same. The page remembers its frame, shape, turn, zoom, and cuts for the browser session, so coming back from Images lands on the same sky.</p>
+  <h2 id="turn">Turn the sky or view it as a globe</h2>
+  <p><strong>Flat</strong> is the sky seen from inside the sphere, the whole of it at first. <strong>Globe</strong> is the same sphere seen from outside. In both, a drag turns the sky in any direction at every zoom, and the projection centres on where you turned it, so what you look at has the least distortion. Scroll to zoom about the centre of the view. The corner buttons step the zoom and return to the whole sky; a double click does the same.</p>
+  <p>The page remembers its frame, shape, turn, zoom and cuts for the browser session, so coming back from Images lands on the same sky.</p>
   <figure>
     <img src="../assets/sky-coverage-globe.jpg" alt="The sky drawn as a globe, turned toward Cygnus and the pole" loading="lazy">
-    <figcaption>The globe is turned toward Cygnus and the pole by dragging.</figcaption>
+    <figcaption>The globe, turned toward Cygnus and the pole.</figcaption>
   </figure>
 
-  <h2 id="stacks">Zoom in to see your stack previews in place.</h2>
-  <p>Past three times zoom, each field that has a finished stack shows the picture itself inside its outline. PSF Guard uses the target's latest colour stack when one exists, otherwise the mono stack with the most integration. A preview is placed by its reference frame's plate solution when the astrometry cache holds one, carried through the stack's own orientation, so it lands where the pixels really are. Any channel with a solved frame can place a colour stack. Without a solve, the picture is laid into the field by the planned rotation, north up and east left, which can be a flip out. The <strong>Stacks when zoomed</strong> switch turns the pictures off.</p>
+  <h2 id="stacks">Stacks in place</h2>
+  <p>Past three times zoom, each field with a finished stack shows the picture inside its outline: the target's latest colour stack when one exists, else the mono stack with the most integration. A stack is placed by its reference frame's plate solve when the astrometry cache holds one, carried through the stack's own orientation, so it lands where the pixels are. Any channel with a solved frame can place a colour stack. Without a solve, the picture is laid in by the planned rotation, north up and east left, which can be a flip out. <strong>Stacks when zoomed</strong> turns the pictures off.</p>
   <figure>
     <img src="../assets/sky-coverage-zoomed.jpg" alt="The Iris Nebula's colour stack drawn inside its solved field outline" loading="lazy">
-    <figcaption>The Iris Nebula's colour stack sits inside its solved outline at the right rotation.</figcaption>
+    <figcaption>The Iris Nebula's colour stack inside its solved outline, at the right rotation.</figcaption>
   </figure>
 
-  <h2 id="timeline">The timeline replays the nights that built the catalog.</h2>
-  <p>Under the map, one lane per rig shows the integration of every night as a bar stacked by filter, with month ticks below and a Moon row whose brightness is the Moon's illumination that night. With more than one rig, an <strong>All rigs</strong> lane on top sums them. The slider spans the nights the selected rigs and filters captured on and has two thumbs: the right one shows the map as it stood at the end of a night, the left one sets where the story starts, and the year chips under it jump the start to January of a year. Press play to replay from the start thumb. Fields appear as their first frames arrive and brighten as hours accumulate.</p>
+  <h2 id="timeline">Replay the nights</h2>
+  <p>Under the map, one lane per rig shows each night's integration as a bar stacked by filter, with month ticks below and a Moon row whose brightness is that night's illumination. With more than one rig, an <strong>All rigs</strong> lane on top sums them.</p>
+  <p>The slider spans the nights the chosen rigs and filters captured, and has two thumbs. The right thumb shows the map as it stood at the end of a night; the left sets where the story starts, and the year chips under it jump the start to January of a year. Press play to replay from the start thumb: fields appear as their first frames arrive and brighten as hours add up. The stat band reads "from" and "as of" while the range is narrowed.</p>
   <figure>
     <img src="../assets/sky-coverage-timeline.png" alt="One timeline lane per rig with an all-rigs total on top, month ticks, and a Moon row" loading="lazy">
-    <figcaption>The timeline shows one lane per rig, an all-rigs total on top, month ticks, and the Moon row.</figcaption>
+    <figcaption>One lane per rig, an all-rigs total on top, month ticks and the Moon row.</figcaption>
   </figure>
-  <p>A night is the civil date it began on. PSF Guard splits each catalog's day at its quietest hour, the middle of the longest stretch of the UTC day in which that catalog never captured anything, so an evening and the small hours after it share one night whatever the site's longitude, and a rig imaging across noon UTC is not cut in two.</p>
+  <p>A night is the civil date it began on. PSF Guard splits each catalog's day at its quietest hour, the middle of the longest stretch of the UTC day in which that catalog never captured anything. An evening and the small hours after it share one night whatever the site's longitude, and a rig imaging across noon UTC is not cut in two.</p>
 
-  <h2 id="numbers">The stat band totals what the map shows.</h2>
-  <p>The chips turn rigs and filters on and off, and <strong>Accepted frames only</strong> counts graded-in frames alone. Every number on the page follows the same cut: the stat band, the fields, their cards, and the timeline. The band gives:</p>
+  <h2 id="numbers">Filters and totals</h2>
+  <p>Chips turn rigs and filters on and off, and <strong>Accepted frames only</strong> counts graded-in frames alone. Every number on the page follows the same cut: the stat band, the fields, their cards and the timeline. The band gives:</p>
   <ul>
-    <li>the integration in hours, the frame count, the target count, and the night count;</li>
-    <li>the sky covered, which is the area the shown fields reach with overlaps counted once, to a twentieth of a degree, and beneath it the fields added together when that is more;</li>
-    <li>the pixels on sky, which counts each covered patch at the finest plate scale of any field that reached it, so a long focal length earns more per square degree;</li>
-    <li>the longest night, which is the most one rig captured in one night, and which rig; and</li>
+    <li>integration hours, frames, targets and nights;</li>
+    <li>sky covered: the area the shown fields reach, overlaps counted once, to a twentieth of a degree, with the fields added together beneath it when that is more;</li>
+    <li>pixels on sky: each covered patch counted at the finest plate scale of any field that reached it, so a long focal length earns more per square degree;</li>
+    <li>the longest night: the most one rig captured in one night, and which rig;</li>
     <li>the target with the most hours.</li>
   </ul>
 
-  <h2 id="live">Live shows where each rig points now.</h2>
-  <p>When your rigs report to PSF Guard through the Director plugin, the <strong>Live</strong> chip in the header, or the <strong>Live</strong> chip in the Sky&rsquo;s controls, draws each rig on the map where it points now. A green ring means the rig is exposing and gold means it is doing something else. A dashed red ring marked &ldquo;quiet&rdquo; means the rig has stopped talking, and &ldquo;old report&rdquo; means its last status is more than ten minutes old. A dotted ring labelled &ldquo;at target&rdquo; is a place taken from the target the rig names, not a position its mount reported.</p>
-  <p>A list beside the map names each rig, whether it is online, and what it says it is doing. Choose a rig to turn the map to it. The full Live table sits under the timeline. Saved pictures leave the rigs out.</p>
-
-  <h2 id="poster">You can save the map as a poster.</h2>
-  <p><strong>Save PNG</strong> renders the map at twice its on-screen size, as shown and as zoomed, with the title, the span, and the numbers above it. The button is a browser feature and is not offered in the desktop app.</p>
+  <h2 id="live">Live rigs on the sky</h2>
+  <p><strong>Live</strong> draws each rig that reports through the N.I.N.A. Director plugin on the map, where it points now. Turn it on with the <strong>Live</strong> chip in the Sky's controls, or with the header's Live chip from any view. The header chip counts the rigs and how many are exposing, and turns red when one has gone quiet.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Mark</th><th>Meaning</th></tr>
+    <tr><td>Green ring</td><td>The rig is exposing.</td></tr>
+    <tr><td>Gold ring</td><td>The rig is doing something else.</td></tr>
+    <tr><td>Dashed red, "(quiet)"</td><td>The rig has stopped talking.</td></tr>
+    <tr><td>Dashed red, "(old report)"</td><td>The rig still talks, but its last status is more than ten minutes old.</td></tr>
+    <tr><td>Dotted ring, "at target"</td><td>Placed at the target the rig names, not at a position its mount reported.</td></tr>
+  </table></div>
+  <p>A list beside the map names each rig, its state (<strong>Online</strong>, <strong>Quiet</strong>, <strong>Offline</strong> or <strong>Never seen</strong>) and what it says it is doing. Choose a rig to turn the map to it and zoom in. The full Live table sits under the timeline; see <a href="rigs.html#live">Rigs</a>. The choice stays in the address (<code>live=1</code>), and saved pictures leave the rigs out.</p>
   <figure>
-    <img src="../assets/sky-coverage-poster.jpg" alt="The saved poster: title, span, numbers, and the map" loading="lazy">
-    <figcaption>The saved poster carries the title, the span, the numbers, and the map.</figcaption>
+    <img src="../assets/sky-live.jpg" alt="Sky coverage with Live on: the all-sky map, the Live list of rigs beside it and the timeline below" loading="lazy">
+    <figcaption>Live on the Sky: rigs beside the map, the timeline below.</figcaption>
   </figure>
 
-  <h2 id="api">The numbers come from one request per database.</h2>
-  <p><code>GET /api/db/{db}/sky/coverage</code> returns, for one database, every target with its coordinates in degrees, per-filter frame and second totals, the nights it was shot, its footprint, and its latest stack preview; every night, target, and filter row; the filters seen; and the totals, including the hour the catalog's nights split at. The page asks every registered database and merges the answers.</p>
-  <p>The constellation figures, constellation names, and stars drawn behind the fields come from the d3-celestial data set, Copyright (c) 2015, Olaf Frohn, under the BSD 3-Clause License.</p>
+  <h2 id="poster">Save the map as a poster</h2>
+  <p><strong>Save PNG</strong> renders the map at twice its on-screen size, as shown and as zoomed, with the title, the span and the numbers above it. The browser offers the button; the desktop app does not.</p>
+  <figure>
+    <img src="../assets/sky-coverage-poster.jpg" alt="The saved poster: title, span, numbers, and the map" loading="lazy">
+    <figcaption>The saved poster: title, span, numbers and the map.</figcaption>
+  </figure>
+
+  <h2 id="api">Where the numbers come from</h2>
+  <p><code>GET /api/db/{db}/sky/coverage</code> returns, for one database: every target with its coordinates in degrees, frame and second totals per filter, the nights it was shot and its footprint; every night, target and filter row; the filters seen; and the totals, including the hour the catalog's nights split at. Seconds come from each frame's recorded exposure. A target with a finished stack also carries <code>preview</code>: the preview URL, the pixel grid it covers, whether it is colour or one filter, and a TAN solution on that grid when the reference frame was solved. The page asks every registered database and merges the answers.</p>
+  <p>The constellation figures, constellation names and stars drawn behind the fields come from the d3-celestial data set, Copyright (c) 2015, Olaf Frohn, under the BSD 3-Clause License.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="stacking.html">← Stack Previews</a>
-    <a href="calibration.html">Calibration Libraries →</a>
+    <a href="satellites.html">← Satellite Tracks</a>
+    <a href="stacking.html">Stacks →</a>
   </nav>
 </main>
 </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PixInsight Scripts — PSF Guard</title>
-  <meta name="description" content="Where to find the theatr.us PixInsight scripts and the Foraxx palette guide.">
+  <meta name="description" content="Install the theatr.us PixInsight scripts and the Foraxx palette, and see how PSF Guard hands projects to PixInsight's WBPP.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -76,24 +76,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,42 +139,56 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>PixInsight Scripts</h1>
-  <p class="lede">
-    The PixInsight scripts are a <a href="https://theatr.us/software/astro#foraxx-palette-utility-for-pixinsight">theatr.us</a>
-    tool rather than part of PSF Guard, and their guide lives there:
-    <a href="https://theatr.us/software/astro/foraxx">Foraxx palette for PixInsight and Photoshop</a>.
-    The palette itself is <a href="https://thecoldestnights.com/2020/06/pixinsight-dynamic-narrowband-combinations-with-pixelmath/">The Coldest Nights</a>' dynamic narrowband combination.
-  </p>
+  <p class="lede">The PixInsight scripts, the Foraxx palette utility among them,
+  are a <a href="https://theatr.us/software/astro#foraxx-palette-utility-for-pixinsight">theatr.us</a>
+  tool rather than part of PSF Guard. This page covers installing them and how
+  PSF Guard works with PixInsight.</p>
 
-  <h2 id="install">In short</h2>
+  <h2 id="install">Install the scripts</h2>
   <ol>
-    <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage Repositories</strong>
-      and add <code>https://pixinsight.theatr.us/</code>, including the trailing slash.</li>
-    <li>Run <strong>Check for Updates</strong>, accept, and restart PixInsight.</li>
+    <li>In PixInsight, open <strong>Resources &rarr; Updates &rarr; Manage
+      Repositories</strong> and add <code>https://pixinsight.theatr.us/</code>,
+      trailing slash included.</li>
+    <li>Run <strong>Check for Updates</strong>, accept, and restart
+      PixInsight.</li>
     <li>The scripts appear under <strong>Script &rarr; theatr.us</strong>.</li>
   </ol>
   <div class="callout info">
-    The earlier address <code>https://pixinsight.psf-guard.com/</code> still works and
-    serves the same files. Everything else, from the palette math to every option,
-    is in the <a href="https://theatr.us/software/astro/foraxx">guide on theatr.us</a>.
+    The old address <code>https://pixinsight.psf-guard.com/</code> still serves
+    the same files. The palette math and every option are in the guide:
+    <a href="https://theatr.us/software/astro/foraxx">Foraxx palette for
+    PixInsight and Photoshop</a>. The palette is
+    <a href="https://thecoldestnights.com/2020/06/pixinsight-dynamic-narrowband-combinations-with-pixelmath/">The Coldest Nights</a>'
+    dynamic narrowband combination.
   </div>
 
-  <h2 id="why">Why it pairs with PSF Guard</h2>
-  <p>PSF Guard decides which frames to keep and can build the stacked narrowband
-  masters; the Foraxx script is one way to turn those masters into a palette image.
-  Seiza, which powers PSF Guard's stacking, can also render the Foraxx palette
-  directly.</p>
+  <h2 id="why">Use them with PSF Guard</h2>
+  <p>PSF Guard decides which frames to keep and stacks the narrowband channels.
+  The Foraxx script is one way to turn those masters into a palette image.
+  Seiza, which runs PSF Guard's stacking, also renders Foraxx SHO and Foraxx HOO
+  directly in <a href="stacking.html#color">Stacks</a>.</p>
 
-  <h2 id="photoshop">Bring FITS and XISF masters into Photoshop</h2>
-  <p>For a Photoshop finishing workflow, the
+  <h2 id="wbpp">Run WBPP from PSF Guard</h2>
+  <p>PSF Guard can hand a project to PixInsight's WeightedBatchPreprocessing
+  in two ways:</p>
+  <ul>
+    <li><strong>Stack in WBPP</strong> runs WBPP on the server and brings the
+      masters back as stacks. See <a href="wbpp.html">WBPP Runs</a>.</li>
+    <li>A WBPP export writes the frames, or just a script that names them, with
+      <code>run-wbpp.js</code> and launchers to run on any machine. See
+      <a href="exporting.html#wbpp">Export &amp; AstroBin</a>.</li>
+  </ul>
+
+  <h2 id="photoshop">Open FITS and XISF masters in Photoshop</h2>
+  <p>For a Photoshop finish, the
   <a href="https://github.com/theatrus/xisf-photoshop/releases/latest">FITS and XISF plugins</a>
-  open and save those formats directly on Windows and macOS. Choose Float32 or
-  rescaled 16-bit import, then save at the document depth. See
-  <a href="exporting.html#photoshop">Photoshop installation, settings, and file preservation</a>
-  before editing your masters.</p>
+  open and save both formats on Windows and macOS. Import as 32-bit float or
+  rescaled 16-bit, and save at the document depth. Read
+  <a href="exporting.html#photoshop">install, settings and file
+  preservation</a> before editing your masters.</p>
 
-  <nav class="next-prev">
-    <a href="authentication.html">&larr; Server Accounts</a>
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="mcp.html">&larr; MCP for Agents</a>
     <a href="./">Documentation home &rarr;</a>
   </nav>
 </main>

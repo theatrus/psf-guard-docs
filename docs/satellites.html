@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Satellite Tracks — PSF Guard</title>
-  <meta name="description" content="Project named satellite crossings, align nearby trails in solved astronomy images, and grade only when pixel evidence supports the prediction.">
+  <meta name="description" content="Predict satellite crossings for a solved frame, align them with trails in the pixels, and lower scores only when the pixels confirm a trail.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html" class="active" aria-current="page">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,63 +139,82 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Satellite Tracks</h1>
   <p class="lede">
-    PSF Guard uses Seiza to solve an exposure, projects cached orbital elements through the exact observing interval and site, and tests the nearby FITS pixels for a matching trail. The overlay separates orbital predictions from pixel evidence, and the sequence grader recommends rejection only when both sources confirm a trail.
+    PSF Guard predicts which cataloged satellites crossed a solved frame while its shutter was open, then checks the pixels along each path for a matching trail. This page covers the overlay, the metadata it needs, how trails affect scores, and the orbital-element cache.
   </p>
 
-  <div class="shot-pair">
-    <figure>
-      <img src="../assets/satellite-california-overlay.png" alt="California Nebula exposure with dashed orbital candidates and solid green pixel-aligned satellite trails" loading="lazy">
-      <figcaption>Dashed lines represent orbital predictions. Solid green lines indicate trails that are independently aligned to features in the FITS pixels.</figcaption>
-    </figure>
-    <figure>
-      <img src="../assets/satellite-california-sequence.png" alt="California Nebula frame marked for a pixel-aligned satellite trail in Sequence Analysis" loading="lazy">
-      <figcaption>The matched trail reduces the quality score to 0.35, and the frame is flagged for manual review.</figcaption>
-    </figure>
-  </div>
+  <figure>
+    <img src="../assets/satellite-california-overlay.png" alt="California Nebula exposure with dashed orbital candidates and solid green pixel-aligned satellite trails" loading="lazy">
+    <figcaption>Dashed lines are orbital predictions. Solid green lines are trails found in the FITS pixels along a prediction.</figcaption>
+  </figure>
 
-  <h2 id="identify">You can identify satellite tracks in an image</h2>
+  <h2 id="identify">Identify satellite tracks</h2>
   <ol>
-    <li>Open an image in the detail grader and navigate to the <strong>Satellite tracks</strong> section.</li>
-    <li>Click <strong>Identify satellite tracks</strong>, or press the <kbd>T</kbd> key. PSF Guard solves the image if no valid WCS solution is cached.</li>
-    <li>Toggle the <strong>Track identifiers</strong> option to compare the paths. Red, yellow, and cyan dashed lines represent high, possible, and low-risk orbital predictions respectively, while a solid green line shows the fitted pixel path.</li>
-    <li>Click a named result to open the external satellite information page containing orbital and launch details.</li>
+    <li>Open an image and find the <strong>Satellite tracks</strong> panel.</li>
+    <li>Click <strong>Identify satellite tracks</strong>, or press <kbd>T</kbd>. PSF Guard solves the frame first when no valid solution is cached.</li>
+    <li>Use <strong>Show track identifiers</strong> to turn the overlay on and off. Red, yellow and cyan dashed lines are high, possible and low-risk predictions; a solid green line is the fitted pixel path.</li>
+    <li>Click a named result to open its satellite information page.</li>
   </ol>
-
+  <p>The panel lists <strong>Crossings</strong>, <strong>Bright risk</strong>, <strong>Pixel matches</strong>, <strong>Exposure</strong> and the <strong>Element source</strong> (<strong>CelesTrak active</strong>, <strong>Seiza mirror</strong> or <strong>IAU SatChecker</strong>). Its badge reads <strong>Predicted</strong> or, once a trail matches, <strong>Pixel aligned</strong>.</p>
   <div class="callout info">
-    <strong>The system maintains a distinction between predictions and pixel measurements.</strong> A dashed line indicates that a cataloged object is predicted to have crossed the solved footprint. A solid green line indicates that a linear pixel feature passed the contrast and continuity checks. The cataloged identity is a candidate association rather than definitive proof that the specific object caused the trail.
+    <strong>Predictions and pixels stay apart.</strong> A dashed line says a cataloged object should have crossed the solved footprint. A solid green line says a linear feature in the pixels passed the contrast and continuity checks. The name is a candidate, not proof that this object made the trail.
   </div>
 
-  <h2 id="metadata">The system requires timing and observing site metadata</h2>
-  <p>Topocentric orbital propagation requires the observer's latitude, longitude, elevation, and the UTC shutter interval. PSF Guard accepts explicit <code>DATE-BEG</code> and <code>DATE-END</code> header bounds, or derives the interval from the exposure duration and <code>DATE-AVG</code>. If no midpoint is available, the system uses <code>DATE-OBS</code> combined with <code>EXPTIME</code> or <code>EXPOSURE</code>.</p>
-  <p>Supported site metadata aliases include <code>SITELAT</code>/<code>SITELONG</code>, <code>LAT-OBS</code>/<code>LONG-OBS</code>, and <code>OBSGEO-B</code>/<code>OBSGEO-L</code>. If time, site, WCS, or orbital elements are missing, the analysis abstains rather than reporting the frame as clean.</p>
+  <h2 id="prediction">Track prediction</h2>
+  <p>PSF Guard uses Seiza 0.24.0 and <code>seiza-satellites</code> 0.13.0. Since Seiza 0.23.1, tracks are predicted with the WGS72 constants their orbital elements were fitted with. This moves a track by up to tens of arcseconds. Predictions cached by an earlier version are recomputed by the next quality scan.</p>
 
-  <h2 id="validation">The tracking system is validated with real exposure data</h2>
-  <p>These screenshots use a real 60-second G-filter California Nebula exposure from October 2025. Seiza 0.10 matched 101 stars at 1.90 arcsec RMS. A historical TLE snapshot from the <a href="https://satchecker.readthedocs.io/en/latest/tools_tle.html">IAU SatChecker archive</a> predicted four high-risk crossings:</p>
+  <h2 id="metadata">Required metadata</h2>
+  <p>A prediction needs three inputs. Without any one of them the check abstains instead of calling the frame clean.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Input</th><th>Accepted forms</th></tr>
+    <tr><td>Pixel WCS</td><td>A solve of the frame. <strong>Identify satellite tracks</strong> runs the hinted or blind solver when none is cached.</td></tr>
+    <tr><td>UTC shutter interval</td><td>In order of preference: <code>DATE-BEG</code> or <code>DATE-OBS</code> through <code>DATE-END</code>; <code>DATE-AVG</code> plus <code>EXPTIME</code> or <code>EXPOSURE</code>; a start time plus <code>EXPTIME</code> or <code>EXPOSURE</code>.</td></tr>
+    <tr><td>Observing site</td><td><code>SITELAT</code>/<code>SITELONG</code>, <code>LAT-OBS</code>/<code>LONG-OBS</code> or <code>OBSGEO-B</code>/<code>OBSGEO-L</code>. Altitude from <code>SITEELEV</code>, <code>SITEELEVATION</code>, <code>ALT-OBS</code> or <code>OBSGEO-H</code>; sea level when missing.</td></tr>
+  </table></div>
+  <p><code>DATE-AVG</code> centers the interval on the writer's measured midpoint, so PSF Guard need not guess whether a timestamp marks shutter open or the end of readout.</p>
+
+  <h2 id="alignment">Pixel alignment</h2>
+  <p>The matcher downsamples the frame once to at most 2,048 pixels on its long side, estimates local noise, and runs a coarse-to-fine matched-filter search in a narrow corridor around each predicted path. A match needs at least 2.0 sigma robust line contrast, 65% path continuity and 50% usable coverage. A track without enough in-frame evidence is reported as not evaluated, not as a clean miss.</p>
+  <p>The result keeps the fitted segments, offsets, angle difference, contrast in physical ADU, significance, continuity, coverage and search radius beside the untouched orbital path. Work grows with the number of predicted crossings: the matcher never searches the whole frame for arbitrary lines or names an unrelated trail.</p>
+
+  <h2 id="grading">Risk and grading</h2>
+  <p>Risk is a 0–1 heuristic from sunlight, range, elevation and clipped path length. It is not an apparent magnitude: the catalog has no reliable brightness model for the exposure band, and attitude and flares change what you see.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Evidence</th><th>Effect</th></tr>
+    <tr><td>Prediction only, any risk</td><td>Shown on the overlay. No warning and no score change.</td></tr>
+    <tr><td>Pixel-aligned trail</td><td><strong>Satellite Trail Detected</strong> cause; score capped at 0.75 for review.</td></tr>
+    <tr><td>High-risk prediction with a pixel-aligned trail</td><td>Score capped at 0.35, and a rejection proposed: <code>[Auto] Pixel-aligned bright satellite trail</code>.</td></tr>
+  </table></div>
+  <p>Every proposed rejection still goes through the per-image review in Sequence, and existing rejections stay as they are. When stacking removes trails anyway, set <strong>Satellite trails</strong> to 0% in the Sequence view's <strong>Scoring</strong> control, or pass <code>--ignore-satellites</code> to <code>screen-fits</code>. Trails then neither lower the score nor drive rejections, but a confirmed trail still shows as a warning and on the overlay.</p>
+
+  <h2 id="validation">Validation on real exposures</h2>
+  <p>The thresholds were checked on two unmodified 60-second G-filter exposures of the California Nebula from October 2025, with historical elements from the <a href="https://satchecker.readthedocs.io/en/latest/tools_tle.html">IAU SatChecker archive</a>. These figures come from Seiza 0.10 and <code>seiza-satellites</code> 0.2. The brighter frame solved 101 stars at 1.90 arcsec RMS, and four high-risk crossings were predicted:</p>
   <ul>
-    <li><strong>CZ-4B R/B [48624]</strong>: This matched at 57.8 sigma and 100% path continuity, approximately 30 pixels from the raw prediction.</li>
-    <li><strong>STARLINK-3093 [49141]</strong>: This matched at 4.2 sigma and 100% continuity, approximately 76 pixels from the raw prediction.</li>
-    <li>Two additional high-risk predictions did not match a pixel trail and remain as prediction-only warnings.</li>
+    <li><strong>CZ-4B R/B [48624]</strong> matched at 57.8 sigma and 100% continuity, about 30 pixels from the raw prediction.</li>
+    <li><strong>STARLINK-3093 [49141]</strong> matched at 4.2 sigma and 100% continuity, about 76 pixels from the raw prediction.</li>
+    <li>The other two had low contrast and continuity and stayed prediction-only.</li>
   </ul>
-  <p>A fainter exposure from the preceding night independently matched <strong>STARLINK-5450 [54778]</strong> at 5.8 sigma and 99.7% continuity, approximately 43 pixels from the orbital path. Both dry-run regrade checks flag the affected frames for rejection due to verified pixel-aligned trails, and named candidates link to external satellite details for follow-up.</p>
+  <p>The fainter frame from the night before solved 102 stars at 1.96 arcsec RMS. Of three predicted crossings, only <strong>STARLINK-5450 [54778]</strong> matched: 5.8 sigma, 99.7% continuity, about 43 pixels from the orbital path. Both dry-run regrades flag the affected frame for rejection on pixel-aligned evidence.</p>
 
-  <h2 id="alignment">Pixel alignment uses a downsampled matched-filter search</h2>
-  <p>The Seiza matcher downsamples the frame to a maximum of 2,048 pixels on its longer axis, estimates the local noise level, and performs a coarse-to-fine matched-filter search along a narrow corridor surrounding the predicted orbital path. A valid match requires at least 2.0 sigma robust line contrast, 65% path continuity, and 50% usable sample coverage. Tracks that lack sufficient data for evaluation are reported as unevaluated rather than as confirmed non-detections.</p>
-  <p>The system records the fitted polyline segments, offsets, angle deltas, physical ADU contrast, significance, continuity, coverage, and search radius while preserving the original orbital path. The downsampled image is shared among all candidates, which means processing scales with the number of predicted crossings rather than searching the entire image for arbitrary lines.</p>
-
-  <h2 id="grading">The system calculates risk and updates frame grades</h2>
-  <p>The risk value is a geometric and illumination heuristic ranging from 0 to 1 based on the sunlight fraction, range, elevation, and clipped path length. It does not represent an apparent magnitude. Possible and high-risk orbital predictions cap the quality score at 0.75 to flag the frame for review, but prediction alone does not trigger a rejection. A high-risk candidate must also have a confirmed pixel-aligned trail before the score is capped at 0.35 and a rejection with the reason <code>[Auto] Pixel-aligned bright satellite trail</code> is proposed. All proposed rejections require manual review and explicit confirmation.</p>
-
-  <h2 id="cache">You can configure offline and reproducible satellite tracking</h2>
-  <p>The on-demand action in the UI and the <strong>Scan Quality</strong> action on the server can resolve and download current or historical orbital data. Timestamped snapshots are cached on disk up to a default limit of 5 GiB. Opening the Sequence Analysis tab or running the <code>screen-fits --regrade-db</code> command are cache-only operations that select the closest stored snapshot for each exposure. For fixed historical or reproducible analysis, you can configure a local OMM JSON or TLE file in the settings:</p>
+  <h2 id="cache">Orbital-element cache</h2>
+  <p>PSF Guard downloads orbital elements only on an explicit action: <strong>Identify satellite tracks</strong>, or a quality scan you start with <strong>Analyze Quality</strong>. Opening Sequence and running <code>screen-fits --regrade-db</code> use the cache only, and the CLI abstains when no suitable snapshot exists.</p>
+  <ul>
+    <li>Recent exposures use CelesTrak's active-satellite catalog.</li>
+    <li>Older exposures use a nearby cached entry, then the Seiza rolling mirror, then the public IAU SatChecker service. One historical answer serves the whole observing night.</li>
+    <li>Current and historical snapshots share one cache, 5 GiB by default. Past that, the oldest downloads go first, and the newest is always kept.</li>
+  </ul>
+  <p>For offline or reproducible work, name a local OMM JSON or TLE file in the registry. A relative path resolves below <code>data_dir</code>:</p>
   <pre><code>"astrometry": {
   "data_dir": "/var/lib/psf-guard/seiza",
   "satellite_elements": "historical.tle"
 }</code></pre>
-  <p>Per-image results retain the FITS fingerprint, the exact WCS, the timing and site headers, the orbital source with its payload SHA-256 hash, the alignment algorithm version, and the Seiza dependency versions. Replacing the source image, WCS solution, or alignment software invalidates the cached result.</p>
+  <p>Results for each image live under <code>&lt;cache&gt;/&lt;db-slug&gt;/satellites/&lt;image-id&gt;.json</code>. Each records the FITS fingerprint, the exact WCS, the timing and site headers, the element source with its payload SHA-256, the alignment version and the Seiza versions. A change to the image, the solve or the software makes the next scan recompute it. API clients can send <code>{"force_satellites": true}</code> to the quality-scan endpoint to recompute every prediction against the snapshot the cache now prefers.</p>
+  <p>When the CLI and the server share the default <code>./cache</code>, no option is needed. Otherwise give <code>screen-fits</code> the server's cache root:</p>
+  <pre><code>psf-guard screen-fits /path/to/lights \
+  --regrade-db my-db --cache-dir /var/cache/psf-guard --dry-run</code></pre>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="astrometry-quality.html">← Astrometry Quality</a>
-    <a href="stacking.html">Stack Previews →</a>
+    <a href="sky.html">Sky Coverage →</a>
   </nav>
 </main>
 </div>

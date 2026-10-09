@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CLI Reference — PSF Guard</title>
-  <meta name="description" content="Every PSF Guard command: serving, import, export, stack SNR, screening, reject archival, sync, star detection, PSF analysis, and database queries.">
+  <meta name="description" content="Every psf-guard command: serve, import, screen, export, sync, users and tokens, sky maps, GUID repair, and single-file analysis.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html" class="active" aria-current="page">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -124,162 +137,316 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Use the Command Line Interface</h1>
+  <h1>CLI Reference</h1>
   <p class="lede">
-    The command-line interface provides tools to serve the user interface,
-    import FITS and XISF libraries, screen images, and synchronize database
-    copies. Most local desktop catalog tasks do not require these commands.
+    Every <code>psf-guard</code> command: serve the UI, import image folders,
+    screen frames, export, sync, manage users, and analyze single files. The
+    desktop app needs none of them.
   </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>You can run PSF Guard on a server or in scripts.</strong><p>Run <code>psf-guard --help</code> to view the main help menu. Each individual command supports the <code>--help</code> flag as well.</p></div>
-    <a class="workflow-link" href="install.html#server">Installation →</a>
+    <div class="workflow-copy"><strong>Run PSF Guard on a server or from scripts</strong><p><code>psf-guard --help</code> lists the commands; <code>psf-guard &lt;command&gt; --help</code> lists a command's options.</p></div>
+    <a class="workflow-link" href="install.html#standalone-cli">Download the CLI →</a>
   </div>
 
+  <h2 id="commands">Commands</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Command</th><th>Does</th></tr>
+      <tr><td><code>server</code></td><td>Serve the grader UI, the REST API and the MCP endpoint</td></tr>
+      <tr><td><code>create-db</code></td><td>Create a Target Scheduler database and import image folders into it</td></tr>
+      <tr><td><code>import</code></td><td>Import image folders into an existing database</td></tr>
+      <tr><td><code>remove-imported</code></td><td>Remove the projects an import created</td></tr>
+      <tr><td><code>screen-fits</code></td><td>Screen frames for occlusion, clouds, pointing and satellite risk</td></tr>
+      <tr><td><code>export</code></td><td>Copy graded lights and matched calibration frames into a stacking folder</td></tr>
+      <tr><td><code>astrobin-csv</code></td><td>Write AstroBin's acquisition CSV for a project or target</td></tr>
+      <tr><td><code>stack-snr</code></td><td>Measure how a stack's SNR grows with depth, from a folder</td></tr>
+      <tr><td><code>move-rejects</code></td><td>Move rejected frames out of the stacking tree</td></tr>
+      <tr><td><code>restore-rejects</code></td><td>Bring archived rejects back</td></tr>
+      <tr><td><code>filter-rejected</code></td><td>Legacy reject mover with statistical flags</td></tr>
+      <tr><td><code>sync pull</code>, <code>planning</code>, <code>grades</code>, <code>remote</code></td><td>Copy captures, plans or grades between two databases or two servers</td></tr>
+      <tr><td><code>users</code></td><td>Manage browser users and API tokens</td></tr>
+      <tr><td><code>sky-maps install</code>, <code>list</code></td><td>Install N.I.N.A.'s offline sky maps for framing</td></tr>
+      <tr><td><code>fill-guids</code></td><td>Give Target Scheduler rows without a GUID a new one</td></tr>
+      <tr><td><code>list-projects</code>, <code>list-targets</code></td><td>List a database's projects, or a project's targets</td></tr>
+      <tr><td><code>dump-grading</code></td><td>Print grading results</td></tr>
+      <tr><td><code>show-images</code></td><td>Show images by ID</td></tr>
+      <tr><td><code>update-grade</code></td><td>Set one image's grade</td></tr>
+      <tr><td><code>regrade</code></td><td>Regrade by statistical analysis</td></tr>
+      <tr><td><code>analyze-fits</code></td><td>Detect stars and compare with the database's values</td></tr>
+      <tr><td><code>annotate-stars</code></td><td>Write a PNG with detected stars marked</td></tr>
+      <tr><td><code>visualize-psf</code>, <code>visualize-psf-multi</code></td><td>Show PSF fit residuals for one star or a grid</td></tr>
+      <tr><td><code>benchmark-psf</code></td><td>Time PSF fitting</td></tr>
+      <tr><td><code>benchmark-detection</code></td><td>Benchmark HocusFocus star detection over a frame manifest</td></tr>
+      <tr><td><code>stretch-to-png</code></td><td>Convert a FITS file to a stretched PNG</td></tr>
+      <tr><td><code>read-fits</code></td><td>Print FITS metadata</td></tr>
+    </table>
+  </div>
+  <p>Commands that open a catalog take a registry slug or a <code>.sqlite</code>
+  path, and <code>--registry</code> names a registry other than the default.
+  The older database commands instead read the global <code>-d</code> option,
+  which goes before the command name and defaults to
+  <code>schedulerdb.sqlite</code>: <code>psf-guard -d my.sqlite
+  list-projects</code>.</p>
+
   <h2 id="server">Serve the grader UI</h2>
-  <pre><code><span class="c"># Serve (registers the DB in the shared registry on first run)</span>
+  <pre><code><span class="c"># Serve; the database is registered on first run and reused afterwards</span>
 psf-guard server &lt;database&gt; &lt;image-dirs...&gt; [--port 3000]
 
-<span class="c"># TOML config for server knobs (port, cache, pre-generation, worker ratios)</span>
+<span class="c"># Serve every database in the registry</span>
+psf-guard server
+
+<span class="c"># Server settings from a TOML file</span>
 psf-guard server --config psf-guard.toml
 
-<span class="c"># Throwaway session that doesn't touch your real registry</span>
+<span class="c"># A throwaway session that leaves your real registry alone</span>
 psf-guard server --registry /tmp/scratch.json &lt;db&gt; &lt;dirs...&gt;
 
-<span class="c"># Bind localhost only (default binds 0.0.0.0)</span>
+<span class="c"># Listen on localhost only (the default is 0.0.0.0)</span>
 psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
-  <p>The server scans multiple image directories in priority order, resolving to the
-  first matching file found. The server manages all databases defined in the registry,
-  not just the database specified on the command line. For more details, see the
-  <a href="configuration.html">Configuration</a> section.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>Does</th></tr>
+      <tr><td><code>--config</code>, <code>-c</code></td><td>Read the server's TOML file</td></tr>
+      <tr><td><code>--registry</code></td><td>Use another database registry</td></tr>
+      <tr><td><code>--port</code>, <code>-p</code>; <code>--host</code></td><td>Where to listen</td></tr>
+      <tr><td><code>--cache-dir</code></td><td>Cache folder</td></tr>
+      <tr><td><code>--stack-dir</code></td><td>Folder for stacks; default Settings, else the cache</td></tr>
+      <tr><td><code>--calibration-dir</code></td><td>Folder for calibration masters; default Settings, else the cache</td></tr>
+      <tr><td><code>--pregenerate-screen</code>, <code>--pregenerate-large</code>, <code>--pregenerate-original</code>, <code>--pregenerate-annotated</code>, <code>--pregenerate-all</code></td><td>Make those previews in the background</td></tr>
+      <tr><td><code>--cache-expiry</code></td><td>How long pre-generated previews last (default <code>1y</code>)</td></tr>
+      <tr><td><code>--allow-database-management</code></td><td>Allow database, catalog and path changes from the browser. On a network address it also needs an account.</td></tr>
+      <tr><td><code>--director-meta</code></td><td>Keep the planning store at another path; needs <code>--allow-database-management</code></td></tr>
+      <tr><td><code>--allow-anonymous-access</code></td><td>Serve a network address with no accounts, open to everyone</td></tr>
+      <tr><td><code>--static-dir</code></td><td>Serve the frontend from a folder instead of the built-in copy</td></tr>
+    </table>
+  </div>
+  <p>The server looks for each frame in its image folders in order and uses the
+  first match. It serves every database in the registry, not only the one on
+  the command line. See <a href="configuration.html">Configuration &amp;
+  API</a>, <a href="authentication.html">Server Accounts</a> and
+  <a href="storage.html#folders">Storage &amp; Performance</a>.</p>
 
-  <h2 id="import">Import FITS and XISF libraries</h2>
-  <pre><code><span class="c"># Build and register a compatible image catalog</span>
+  <h2 id="import">Import image folders</h2>
+  <pre><code><span class="c"># Create and register a catalog from image folders</span>
 psf-guard create-db archive.sqlite ./lights ./more-lights --name "Archive"
 
-<span class="c"># Preview and then import lights and calibration frames</span>
+<span class="c"># Preview, then import lights and calibration frames</span>
 psf-guard import archive ./new-frames --dry-run
 psf-guard import archive ./new-frames
 
-<span class="c"># Scope the run to one frame kind</span>
+<span class="c"># One frame kind only</span>
 psf-guard import archive ./new-lights --lights-only
 psf-guard import archive ./new-flats --calibration-only
 
-<span class="c"># Ignore integration masters and calibrated/registered intermediates</span>
+<span class="c"># Leave out integration masters and other processing output</span>
 psf-guard import archive ./processing-tree --skip-processed
 
-<span class="c"># Preview removal of projects made by an import</span>
-psf-guard remove-imported archive --dry-run</code></pre>
-  <p>During the import process, the first pass reads only the file headers. Light
-  frames are imported as Pending catalog images, which then generate projects,
-  targets, shared exposure templates, and plans. Bias, dark, dark-flat, and flat
-  frames are imported as calibration library records instead of Target Scheduler
-  image rows. The <code>--lights-only</code> and <code>--calibration-only</code>
-  flags are mutually exclusive, while the <code>--skip-processed</code> flag is
-  compatible with both. The scanner accepts <code>.fits</code>, <code>.fit</code>,
-  <code>.fts</code>, and monolithic <code>.xisf</code> files. For more details on the
-  user interface, folder selection, preview workflows, grouping rules, and quality
-  backfilling, see the <a href="importing.html">Add Images &amp; Plan</a> section.</p>
+<span class="c"># Take frames from a rig this catalog has not recorded</span>
+psf-guard import archive ./new-camera --accept-other-rigs
 
-  <h2 id="screening">Screen images for quality</h2>
-  <pre><code>psf-guard screen-fits ./lights                        <span class="c"># per-frame verdicts</span>
+<span class="c"># Preview removing the projects an import made</span>
+psf-guard remove-imported archive --dry-run</code></pre>
+  <p>The first pass reads headers only. Lights arrive as Pending frames and
+  build projects, targets, shared exposure templates and plans. Bias, dark,
+  dark-flat and flat frames go to the calibration library, not Target
+  Scheduler's image table. New frames attach to an existing target by name or
+  coordinates (<code>--match-radius-deg</code>) unless you pass
+  <code>--no-attach</code>. Calibrated and registered copies from WBPP, Siril,
+  ASTAP or DeepSkyStacker pair with the light they came from;
+  <code>--no-pairing</code> imports them as lights instead.</p>
+  <ul>
+    <li><code>--lights-only</code> and <code>--calibration-only</code> exclude
+      each other; <code>--skip-processed</code> works with either.</li>
+    <li><code>--time-gap-days</code> sets the gap between a rig's frames that
+      starts a new project. <code>--profile-id</code> picks the Target Scheduler
+      profile.</li>
+    <li><code>create-db</code> registers the new database unless you pass
+      <code>--no-register</code>.</li>
+    <li>The scanner reads <code>.fits</code>, <code>.fit</code>,
+      <code>.fts</code> and monolithic <code>.xisf</code> files.</li>
+  </ul>
+  <p>See <a href="importing.html">Import Images</a>.</p>
+
+  <h2 id="screening">Screen frames</h2>
+  <pre><code>psf-guard screen-fits ./lights                        <span class="c"># a verdict per frame</span>
 psf-guard screen-fits ./lights --annotate ./diag      <span class="c"># diagnostic PNGs</span>
 psf-guard screen-fits ./lights --regrade-db my-db --dry-run
 psf-guard screen-fits ./lights --format json          <span class="c"># or table, csv</span></code></pre>
-  <p>This command operates without a database to perform spatial and photometric
-  screening. The <code>--regrade-db</code> flag loads target coordinates from the
-  catalog, performs plate solves using the Seiza solver, and evaluates recommendations
-  through the grader. For more details, see the <a href="screening.html">Quality Screening</a>
-  and <a href="astrometry-quality.html">Astrometry Quality</a> sections. If orbital
-  elements are cached, the tool also performs satellite tracking predictions and
-  pixel-alignment analysis as described in the <a href="satellites.html">Satellite Tracks</a>
-  section. Predictions only generate warnings, while a formal rejection requires a
-  matching high-risk trail.</p>
+  <p><code>screen-fits</code> needs no database for spatial and photometric
+  screening. With <code>--regrade-db</code> it reads target coordinates from
+  the catalog, plate-solves each frame with Seiza, adds cached satellite risk,
+  and writes supported rejections. Satellite predictions only warn; a
+  rejection needs a matching bright trail in the pixels.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>Does</th></tr>
+      <tr><td><code>--min-score</code></td><td>Reject below this quality score (default 0.35)</td></tr>
+      <tr><td><code>--dead-cell-rise</code></td><td>Rise in dead cells over the baseline that flags occlusion (default 0.08)</td></tr>
+      <tr><td><code>--max-hfr</code>, <code>--min-stars</code></td><td>Hard limits, as in N.I.N.A.'s subframe selection; off by default</td></tr>
+      <tr><td><code>--ignore-satellites</code></td><td>Keep satellite trails as warnings only</td></tr>
+      <tr><td><code>--session-gap</code></td><td>Minutes that split a night into sequences (default 60)</td></tr>
+      <tr><td><code>--threads</code></td><td>Worker threads (default: all cores, within memory)</td></tr>
+      <tr><td><code>--cache-dir</code></td><td>The server's cache, for orbital elements and predictions</td></tr>
+    </table>
+  </div>
+  <p>See <a href="screening.html">Quality Screening</a>,
+  <a href="astrometry-quality.html">Astrometry Quality</a> and
+  <a href="satellites.html">Satellite Tracks</a>.</p>
 
-  <h2 id="export">Export images for stacking</h2>
+  <h2 id="export">Export for stacking</h2>
   <pre><code><span class="c"># Preview, then copy Accepted lights into &lt;target&gt;/LIGHT/&lt;filter&gt;/</span>
 psf-guard export my-db --dest ./stacking --dry-run
 psf-guard export my-db --dest ./stacking
 
-<span class="c"># Narrow the export and use hardlinks when possible</span>
+<span class="c"># One target and filter, hardlinked where possible</span>
 psf-guard export my-db --dest ./stacking \
-  --target "California Nebula" --filter HA --link</code></pre>
-  <p>Rejected frames are excluded from the export. For information regarding
-  desktop and browser usage, importing pending frames, locating raw database paths,
-  managing repeat exports, and reviewing API examples, see the
-  <a href="exporting.html">Export for Stacking</a> section.</p>
+  --target "California Nebula" --filter HA --link
 
-  <h2 id="snr">Measure stack depth without a catalog</h2>
-  <pre><code><span class="c"># Measure a folder in capture order</span>
+<span class="c"># A WBPP tree that names the frames where they are</span>
+psf-guard export my-db --dest ./wbpp --layout wbpp --placement reference \
+  --wbpp-drizzle 2x</code></pre>
+  <p>Rejects are never exported; <code>--include-pending</code> adds ungraded
+  frames. Re-runs skip files already there.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>Values</th></tr>
+      <tr><td><code>--layout</code></td><td><code>standard</code> (by target) or <code>wbpp</code> (one root per frame type)</td></tr>
+      <tr><td><code>--placement</code></td><td><code>copy</code>, <code>hardlink</code>, <code>reflink</code>, <code>symlink</code>, or <code>reference</code> (place nothing; the WBPP runner names the originals). <code>--link</code> is <code>hardlink</code>.</td></tr>
+      <tr><td><code>--local-root</code>, <code>--remote-root</code></td><td>With <code>reference</code>: the frames' folder as this machine and as the PixInsight machine see it</td></tr>
+      <tr><td><code>--wbpp-quality</code></td><td><code>maximum</code>, <code>good</code>, <code>fast</code></td></tr>
+      <tr><td><code>--wbpp-fast-integration</code></td><td><code>off</code> (default), <code>auto</code>, <code>on</code></td></tr>
+      <tr><td><code>--wbpp-drizzle</code></td><td><code>off</code>, <code>2x</code>, <code>3x</code></td></tr>
+      <tr><td><code>--wbpp-autocrop</code></td><td><code>true</code> or <code>false</code></td></tr>
+      <tr><td><code>--wbpp-rejection</code></td><td><code>percentile-clip</code>, <code>winsorized-sigma</code>, <code>linear-fit</code>, <code>esd</code>, <code>rcr</code>, <code>auto</code></td></tr>
+    </table>
+  </div>
+  <p>See <a href="exporting.html">Export &amp; AstroBin</a> and
+  <a href="wbpp.html">WBPP Runs</a>.</p>
+
+  <h3 id="astrobin">AstroBin acquisition CSV</h3>
+  <pre><code>psf-guard astrobin-csv my-db --project-id 2 -o acquisitions.csv
+psf-guard astrobin-csv my-db --target-id 42 --detail full --filter-id Ha=1234</code></pre>
+  <p>One row per night, filter and exposure length. <code>essentials</code>
+  (the default) writes date, filter, count and duration; <code>full</code> adds
+  binning, gain, sensor and ambient temperature, the f-number, and the
+  calibration frames the library matches. <code>--filter-id NAME=ID</code>
+  gives a filter its AstroBin ID, over the registry's settings.</p>
+
+  <h2 id="snr">Measure stack depth from a folder</h2>
+  <pre><code><span class="c"># A folder in capture order</span>
 psf-guard stack-snr ./lights
 
-<span class="c"># Put the strongest frames first and save the exact curve</span>
-psf-guard stack-snr ./lights --order quality --csv curve.csv --json curve.json</code></pre>
-  <p>This command searches subdirectories for FITS and XISF files, generates stacks
-  from the source frames, and measures the signal-to-noise ratio at multiple stack
-  depths. Stacking in capture order indicates whether adding more frames from the
-  same session improves the signal. Stacking in quality order sorts frames by star
-  count and sharpness to determine if lower-quality frames continue to improve the
-  stack. You can limit the concurrent star-detection threads by using the
-  <code>--threads</code> flag. Generating a curve requires a minimum of three
-  frames. For more details about curves, comparisons, and SNR projections, see the
-  <a href="stacking.html#snr">Stack Previews</a> section.</p>
+<span class="c"># Strongest frames first, and save the curve</span>
+psf-guard stack-snr ./lights --order quality --csv curve.csv --json curve.json
+
+<span class="c"># Weight each frame by its noise</span>
+psf-guard stack-snr ./lights --weight-by-noise</code></pre>
+  <p><code>stack-snr</code> searches folders for FITS and XISF files, stacks
+  them raw, and measures SNR at each depth. Capture order asks whether another
+  night would help; quality order ranks frames by stars and sharpness and asks
+  which are worth keeping. <code>--weight-by-noise</code> weighs each frame by
+  its inverse noise variance, relative to the first frame, as the stacking
+  method's <strong>By noise</strong> does, and prints each weight.
+  <code>--threads</code> caps star detection threads. A curve needs three
+  frames or more. See <a href="stacking.html#snr">Stacks</a>.</p>
 
   <h2 id="rejects">Archive rejected files</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]
-psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--dry-run]</code></pre>
-  <p>For more details, see the <a href="workflows.html#rejects">Rejects &amp; Sync</a> section.</p>
+psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--guid GUID] [--dry-run]</code></pre>
+  <p><code>move-rejects</code> also takes <code>--reject-segment</code>,
+  <code>--reject-depth</code> and <code>--sidecar-exts</code>. See
+  <a href="workflows.html#rejects">Rejects &amp; Sync</a>.</p>
 
-  <h2 id="sync">Synchronize two databases</h2>
+  <h2 id="sync">Sync two catalogs</h2>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to my-db
 psf-guard sync planning --from my-db --to telescope.sqlite
-psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
-  <p>For more details, see the <a href="workflows.html#sync">Rejects &amp; Sync</a> section.</p>
+psf-guard sync grades --from my-db --to telescope.sqlite
 
-  <h2 id="analysis">Detect stars and analyze PSF data</h2>
-  <pre><code><span class="c"># Detect stars and compare against database values</span>
+<span class="c"># With another PSF Guard over HTTP</span>
+psf-guard sync remote --direction pull --local my-db \
+  --peer https://telescope.example:3000 --token-file key.txt</code></pre>
+  <p>See <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
+
+  <h2 id="users">Manage users and API tokens</h2>
+  <pre><code>psf-guard users add editor --role read-write [--email ...] [--password-file PATH] [--replace]
+psf-guard users add viewer --role read-only
+psf-guard users list
+psf-guard users remove viewer [--allow-empty]
+
+psf-guard users token create editor --label "claude on laptop" [--read-only] [--expires-days 90]
+psf-guard users token list [--user editor]
+psf-guard users token revoke &lt;id&gt;</code></pre>
+  <p>Without <code>--password-file</code>, <code>users add</code> asks for the
+  password twice. <code>token create</code> prints the token once. Each
+  command takes <code>--registry</code>; restart the server after a change.
+  See <a href="authentication.html#users">Server Accounts</a> and
+  <a href="mcp.html#tokens">MCP for Agents</a>.</p>
+
+  <h2 id="sky-maps">Install offline sky maps</h2>
+  <pre><code>psf-guard sky-maps install full --cache-dir /path/to/cache
+psf-guard sky-maps install nsns-ohs --cache-dir /path/to/cache
+psf-guard sky-maps install nsns-ohs-starless --cache-dir /path/to/cache
+psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
+  <p><code>full</code> is N.I.N.A.'s whole-sky DSS set (3.3 GB),
+  <code>nsns-ohs</code> the Northern Sky Narrowband Survey in SHO colour
+  (1.4 GB), and <code>nsns-ohs-starless</code> its starless version (0.5 GB).
+  Any other value is taken as a zip URL. Pass the cache the server uses; the
+  default is <code>./cache</code>. See
+  <a href="configuration.html#sky-maps">Configuration &amp; API</a>.</p>
+
+  <h2 id="analysis">Detect stars and analyze PSFs</h2>
+  <pre><code><span class="c"># Detect stars and compare with the database's values</span>
 psf-guard analyze-fits image.fits [--detector nina|hocusfocus] [--compare-all]
 
 <span class="c"># Annotated star map</span>
 psf-guard annotate-stars image.fits [--max-stars 50]
 
-<span class="c"># PSF fit residuals — single star or a grid</span>
+<span class="c"># PSF fit residuals: one star, or a grid</span>
 psf-guard visualize-psf image.fits [--star-index N]
 psf-guard visualize-psf-multi image.fits [--num-stars 25]
 
-<span class="c"># PSF fitting performance benchmark</span>
-psf-guard benchmark-psf image.fits</code></pre>
+<span class="c"># Timing</span>
+psf-guard benchmark-psf image.fits
+psf-guard benchmark-detection manifest.json --output benchmark-detection.csv</code></pre>
   <figure>
     <img src="../assets/psf-visualization.jpg" alt="PSF visualization grid: observed, fitted, residual" loading="lazy">
-    <figcaption>The <code>visualize-psf-multi</code> command outputs observed,
-    fitted, and residual grids using Moffat and Gaussian models.</figcaption>
+    <figcaption><code>visualize-psf-multi</code> draws observed, fitted and
+    residual grids with Moffat and Gaussian models.</figcaption>
   </figure>
-  <p>These analysis commands also support XISF file paths. The annotated star maps
-  label detected stars with their measured HFR. You can use the <code>--max-stars</code>
-  flag to control label density and field coverage.</p>
+  <p>These commands read XISF files too. <code>annotate-stars</code> labels
+  each star with its HFR; <code>--max-stars</code> sets how many.
+  <code>benchmark-detection</code> records star count, HFR and time per frame
+  from a JSON manifest, and agreement with N.I.N.A.'s values where the manifest
+  has them.</p>
 
-  <h2 id="fits">Use FITS utilities</h2>
+  <h2 id="fits">FITS utilities</h2>
   <pre><code>psf-guard stretch-to-png image.fits -o output.png    <span class="c"># MTF auto-stretch</span>
-psf-guard read-fits image.fits                       <span class="c"># header/metadata dump</span></code></pre>
+psf-guard read-fits image.fits [-v]                  <span class="c"># header and metadata</span></code></pre>
 
-  <h2 id="db">Query databases and grade images manually</h2>
-  <pre><code>psf-guard list-projects -d database.sqlite
-psf-guard list-targets "Project Name" -d database.sqlite
-psf-guard dump-grading -d database.sqlite [--project NAME]
-psf-guard show-images &lt;IDS&gt; -d database.sqlite
-psf-guard update-grade &lt;ID&gt; rejected -d database.sqlite
-psf-guard regrade database.sqlite [--dry-run]        <span class="c"># statistical re-grading</span></code></pre>
-  <p>Batch commands also support statistical outlier detection using the
-  <code>--enable-statistical</code> flag. This enables HFR and star-count
-  distribution analysis per target and filter, as well as sequence-based cloud
-  detection. Detailed information is available in the
-  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md')">docs/STATISTICAL_GRADING.md</a>
-  document.</p>
+  <h2 id="db">Query databases and grade by hand</h2>
+  <pre><code>psf-guard -d database.sqlite list-projects
+psf-guard -d database.sqlite list-targets "Project Name"
+psf-guard -d database.sqlite dump-grading [--status rejected] [--project NAME] [--format csv]
+psf-guard -d database.sqlite show-images 12,13,14
+psf-guard -d database.sqlite update-grade 123 rejected --reason "Clouds"
+psf-guard -d database.sqlite fill-guids [--dry-run]
+psf-guard regrade database.sqlite [--dry-run] [--days 90]     <span class="c"># statistical regrade</span></code></pre>
+  <p><code>fill-guids</code> gives Target Scheduler rows that lack a GUID a new
+  one, after copying the database beside itself. Close N.I.N.A. on that rig
+  first. See <a href="configuration.html#guids">Configuration</a>.</p>
+  <p><code>regrade</code> and <code>filter-rejected</code> take statistical
+  outlier flags: <code>--enable-statistical</code> with
+  <code>--stat-hfr</code>, <code>--stat-stars</code>,
+  <code>--stat-distribution</code> and <code>--stat-clouds</code>, for HFR and
+  star-count outliers per target and filter and for cloud onsets in a
+  sequence. See
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md')">docs/STATISTICAL_GRADING.md</a>.</p>
 
-  <nav class="next-prev">
-    <a href="workflows.html">← Rejects &amp; Sync</a>
-    <a href="configuration.html">Configuration &amp; API →</a>
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="storage.html">&larr; Storage &amp; Performance</a>
+    <a href="configuration.html">Configuration &amp; API &rarr;</a>
   </nav>
 </main>
 </div>

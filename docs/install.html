@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Installation — PSF Guard</title>
-  <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or source build.">
+  <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or a source build; where logs and data live.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html" class="active" aria-current="page">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,62 +139,146 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Installation</h1>
   <p class="lede">
-    Install the desktop app unless you need a server or command-line workflow.
-    You do not need to choose or create a database until PSF Guard is running.
+    Install the desktop app, or run PSF Guard as a server from Docker, a
+    standalone binary, a Fedora RPM, or a source build. Choose a catalog once
+    it runs.
   </p>
 
   <h2 id="desktop">Desktop app</h2>
   <p>Download the installer for your platform from the
   <a href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">latest release</a>:</p>
-  <table>
-    <tr><th>Platform</th><th>Asset</th></tr>
-    <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code> or the NSIS <code>-setup.exe</code></td></tr>
-    <tr><td>macOS (Apple Silicon)</td><td><code>PSF.Guard_&lt;version&gt;_aarch64.dmg</code></td></tr>
-    <tr><td>Linux x64</td><td><code>PSF.Guard_&lt;version&gt;_amd64.deb</code> or <code>.AppImage</code></td></tr>
-  </table>
-  <p>Install and launch the app. The Windows NSIS installer also installs
-  <code>psf-guard-cli.exe</code> and adds it to your user <code>PATH</code>.</p>
-  <p>Next, return to <a href="./#choose">Getting Started</a> to build a catalog
-  from FITS folders or open an existing Target Scheduler database.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Platform</th><th>Asset</th></tr>
+      <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code>, or the NSIS <code>-setup.exe</code></td></tr>
+      <tr><td>macOS (Apple Silicon)</td><td><code>PSF.Guard_&lt;version&gt;_aarch64.dmg</code></td></tr>
+      <tr><td>Linux x64</td><td><code>PSF.Guard_&lt;version&gt;_amd64.deb</code> or <code>.AppImage</code></td></tr>
+    </table>
+  </div>
+  <p>The NSIS installer also installs <code>psf-guard-cli.exe</code> and adds it
+  to your user <code>PATH</code>, so the full CLI runs from any terminal.</p>
+  <p>Launch the app, then go to <a href="./#choose">Getting Started</a> to build
+  a catalog from image folders or open a Target Scheduler database.</p>
+
+  <h3 id="logs">Log files</h3>
+  <p>The desktop app writes one log file a day and keeps a week of them.
+  <strong>Open logs</strong>, at the foot of Settings, opens the folder:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Platform</th><th>Log folder</th></tr>
+      <tr><td>Windows</td><td><code>%LOCALAPPDATA%\com.theatrus.psf-guard\logs</code></td></tr>
+      <tr><td>macOS</td><td><code>~/Library/Logs/com.theatrus.psf-guard</code></td></tr>
+      <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
+    </table>
+  </div>
+  <p>The log holds what a server prints to its console, including each frame a
+  stack leaves out or rejects, and why. <code>RUST_LOG</code> sets the level;
+  the default is <code>info</code>.</p>
 
   <h2 id="server">Docker on a Linux server or NAS</h2>
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>Use this path for browser access on another machine</strong><p>The database mount must be writable, but the FITS directories can remain read-only.</p></div>
+    <div class="workflow-copy"><strong>Serve the UI to browsers on other machines</strong><p>The database mount must be writable. Image folders can stay read-only.</p></div>
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
-  <pre><code>docker run -d -p 3000:3000 \
+  <pre><code>docker run -d --name psf-guard -p 3000:3000 \
+  -v psf-guard-data:/data \
   -v /path/to/catalog.sqlite:/data/database.sqlite \
   -v /path/to/images:/images:ro \
-  ghcr.io/theatrus/psf-guard:latest</code></pre>
+  ghcr.io/theatrus/psf-guard:latest
 
-  <p>Open <code>http://localhost:3000/</code> in your browser. You can configure
-  the port, cache settings, and preview pre-generation by mounting a TOML configuration
-  file at <code>/data/config.toml</code> and appending the configuration parameters
-  to the start command: <code>server --config /data/config.toml /data/database.sqlite /images</code>.
-  For details, see the <a href="configuration.html">Configuration &amp; API reference</a>.</p>
+<span class="c"># Add the first editor; it asks for the password twice</span>
+docker exec -it psf-guard psf-guard users add admin --role read-write</code></pre>
+  <p>The container listens on every interface, so the server answers 401 until
+  a user exists and then asks for a login. Open
+  <code>http://localhost:3000/</code> and sign in. See
+  <a href="authentication.html#bind">Server Accounts</a>.</p>
+  <p>The repository's
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docker-compose.yml" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docker-compose.yml')"><code>docker-compose.yml</code></a>
+  does the same, with a healthcheck.</p>
+
+  <h3 id="docker-data">Keep <code>/data</code> on a volume</h3>
+  <p>The image writes everything it keeps below <code>/data</code>, so a
+  redeploy or an image update loses nothing:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Path</th><th>Holds</th></tr>
+      <tr><td><code>/data/config/psf-guard</code></td><td>Database registry (<code>config.json</code>), browser users and API tokens (<code>auth.json</code>), planning store (<code>director-meta.sqlite</code>), job queue journal (<code>config.jobs.json</code>), collaboration credentials</td></tr>
+      <tr><td><code>/data/cache</code></td><td>Previews, plate solves, quality scans, stacks, calibration masters, offline sky maps</td></tr>
+      <tr><td><code>/data/seiza</code></td><td>Seiza catalogs installed under <strong>Settings &rarr; Catalogs</strong></td></tr>
+      <tr><td><code>/data/database.sqlite</code></td><td>The catalog you mount. Writable: grading updates it.</td></tr>
+      <tr><td><code>/images</code></td><td>Your image folders. Read-only is enough to review and grade.</td></tr>
+    </table>
+  </div>
+  <p>A host folder works in place of a named volume if user 1000 can write it.
+  To keep stacks or masters on another disk, mount it and choose it under
+  <strong>Settings &rarr; Storage &rarr; Folders</strong>; see
+  <a href="storage.html#folders">Storage &amp; Performance</a>.</p>
+
+  <h3 id="docker-tags">Image tags</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tag</th><th>Follows</th></tr>
+      <tr><td><code>latest</code></td><td>The newest release</td></tr>
+      <tr><td><code>0.10.2</code></td><td>One release, pinned</td></tr>
+      <tr><td><code>0.10</code></td><td>The newest patch of that release line</td></tr>
+      <tr><td><code>edge</code></td><td>The main branch, with work not yet released</td></tr>
+    </table>
+  </div>
+
+  <h3 id="docker-health">Healthcheck and logs</h3>
+  <p>The image includes <code>curl</code>. The compose file checks
+  <code>/api/auth/status</code>, which answers without a login, so the check
+  passes before the first user exists:</p>
+  <pre><code>healthcheck:
+  test: ["CMD", "curl", "-fsS", "http://localhost:3000/api/auth/status"]
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s</code></pre>
+  <p>The server logs to the container's output (<code>docker logs psf-guard</code>).
+  <code>RUST_LOG</code> sets the level; the compose file sets <code>info</code>.</p>
+
+  <h3 id="docker-config">Configuration file and Seiza catalogs</h3>
+  <p>Mount a TOML file and pass <code>--config</code> to set the port, preview
+  format, pre-generation, or remote sync grants:</p>
+  <pre><code>docker run -d --name psf-guard -p 3000:3000 \
+  -v psf-guard-data:/data \
+  -v /path/to/catalog.sqlite:/data/database.sqlite \
+  -v /path/to/images:/images:ro \
+  -v /path/to/psf-guard.toml:/config/psf-guard.toml:ro \
+  ghcr.io/theatrus/psf-guard:latest \
+  server --config /config/psf-guard.toml /data/database.sqlite /images</code></pre>
+  <p>To use Seiza catalogs you already have instead of downloading them in
+  Settings, mount them read-only and set <code>SEIZA_CATALOG_DIR</code>:
+  <code>-v /path/to/seiza-data:/catalogs:ro -e SEIZA_CATALOG_DIR=/catalogs</code>.
+  See <a href="configuration.html#toml">Configuration &amp; API</a> and
+  <a href="astrometry.html">Sky Context &amp; Solver</a>.</p>
 
   <h2 id="standalone-cli">Standalone CLI binaries</h2>
-  <p>These version-independent links download the latest release for your platform:</p>
-  <table>
-    <tr><th>Platform</th><th>Download</th></tr>
-    <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64')"><code>psf-guard-linux-x64</code></a></td></tr>
-    <tr><td>macOS</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-x64')"><code>psf-guard-macos-x64</code></a></td></tr>
-    <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe')"><code>psf-guard-windows-x64.exe</code></a></td></tr>
-  </table>
+  <p>These links always download the latest release:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Platform</th><th>Download</th></tr>
+      <tr><td>Linux x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-linux-x64')"><code>psf-guard-linux-x64</code></a></td></tr>
+      <tr><td>macOS (Apple Silicon)</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-arm64" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-macos-arm64')"><code>psf-guard-macos-arm64</code></a></td></tr>
+      <tr><td>Windows x64</td><td><a href="https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest/download/psf-guard-windows-x64.exe')"><code>psf-guard-windows-x64.exe</code></a></td></tr>
+    </table>
+  </div>
   <pre><code><span class="c"># Linux / macOS</span>
 chmod +x psf-guard-*
 ./psf-guard-linux-x64 server catalog.sqlite /path/to/images/</code></pre>
-  <pre><code><span class="c">:: Windows — back up the DB first, then serve it</span>
+  <pre><code><span class="c">:: Windows: back up the database first, then serve it</span>
 copy "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" schedulerdb-backup.sqlite
 psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite" C:\path\to\images</code></pre>
+  <p>Then open <code>http://localhost:3000/</code>.</p>
 
   <h2 id="fedora-rpm">Fedora RPM</h2>
-  <p>Prebuilt RPM packages are attached to each release for Fedora 43 and 44:</p>
+  <p>Each release attaches a Fedora 44 RPM:</p>
   <pre><code>sudo dnf install ./psf-guard-*.fc44.x86_64.rpm</code></pre>
-  <p>The package installs the CLI binary and a <code>psf-guard.service</code>
-  systemd unit to run the server in the background. Build instructions are
-  available in
+  <p>The package installs the CLI and a <code>psf-guard.service</code> systemd
+  unit that runs the server as a daemon. To build for another Fedora release,
+  see
   <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md')">packaging/rpm/README.md</a>.</p>
 
   <h2 id="source">Build from source</h2>
@@ -189,13 +286,23 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
 cd psf-guard
 cargo build --release
 ./target/release/psf-guard server catalog.sqlite /path/to/images/</code></pre>
-  <p>Building from source requires Rust and Node.js/npm. The compilation process
-  embeds the React frontend and uses the published pure-Rust Seiza crates for
-  image processing.</p>
+  <p>The build needs Rust and Node.js with npm. It embeds the React frontend.
+  Image processing uses the pure-Rust Seiza crates, so no native
+  computer-vision libraries are needed.</p>
+
+  <h2 id="updates">Updates</h2>
+  <p>PSF Guard checks for newer releases without sending catalog or image
+  data. The server fetches the release notice at start and once a day, keeps
+  it for 24 hours, and serves it to every browser; reloading the page never
+  fetches the public feed. A banner below the header names the new version and
+  links its release notes.</p>
+  <p>The desktop app can also download, verify and install a signed update:
+  click <strong>Install update</strong>. A server never downloads or installs
+  an executable. Update its binary, package or Docker image yourself.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="./">← Getting Started</a>
-    <a href="grader.html">The Grader UI →</a>
+    <a href="grader.html">Library &amp; Grader →</a>
   </nav>
 </main>
 </div>

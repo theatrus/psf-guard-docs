@@ -12,9 +12,11 @@ what is in the repository is exactly what is served.
 ```
 index.html          Splash / landing page
 docs/               Documentation pages (shared sidebar nav)
-docs/importing.html  FITS/XISF import, quality backfill, planning, and scheduler sync
-docs/astrometry.html Seiza catalog setup, on-demand solving, and sky overlays
-docs/calibration.html Calibration libraries, safe matching, masters, and export
+docs/importing.html  FITS/XISF import, automatic import, quality backfill, and sync
+docs/stacking.html   Stacks view, stacking method, automatic refresh
+docs/wbpp.html       PixInsight WBPP runs from the server
+docs/planning.html   Plans, the plan workspace, framing, activation, rigs, collaboration
+docs/storage.html    Storage folders, disk limits, processor shares, job queue
 css/site.css        The one stylesheet (dark astro theme)
 assets/             Logo/favicon (hand-authored SVG) + screenshots
 scripts/build.mjs   Shared top bar and docs navigation generator
@@ -30,8 +32,8 @@ build step.
 
 ## Updating content
 
-- Screenshots are copied from the main repository's `docs/` folder. You can
-  refresh them by copying new captures into the `assets/` directory.
+- Screenshots come from a live PSF Guard server or the main repository's
+  `docs/` folder. Refresh one by replacing its file in `assets/`.
 - Run `npm run build` after modifying the shared top bar or documentation
   navigation, then commit the generated HTML files along with the template
   changes.

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rigs, Sites &amp; Live — PSF Guard</title>
+  <meta name="description" content="Give each rig its optics, site, horizon and limits, apply Target Scheduler limits to every project, and watch rigs live on the Sky.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html" class="active" aria-current="page">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Rigs, Sites &amp; Live</h1>
+  <p class="lede">
+    Every registered database is a rig. Give each rig its optics, site and
+    limits, give sites a horizon, and watch rigs that run the Director plugin on
+    the Sky.
+  </p>
+
+  <h2 id="list">The rig list</h2>
+  <p><strong>Settings › Rigs</strong> lists every registered database as a rig:
+  whether planning is on, its field of view and pixel scale, whether the
+  N.I.N.A. plugin has reported its camera, and the plugin's last status.
+  <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
+  opens its catalog.</p>
+  <figure>
+    <img src="../assets/settings-rigs.png" alt="Settings › Rigs: five rigs with field of view and pixel scale, each with Library and Setup" loading="lazy">
+    <figcaption>Settings › Rigs: one row per registered database.</figcaption>
+  </figure>
+
+  <h2 id="setup">Rig setup</h2>
+  <p>The selected rig's header stays above its setup. Sections sit in a rail on
+  the left on a desktop and in a strip on a narrow screen:
+  <strong>Optics</strong>, <strong>Site</strong>, <strong>Limits and
+  delivery</strong> and <strong>Collaboration</strong>. Edits stay in the form
+  while you switch sections; <strong>Save rig profile</strong> saves them.</p>
+  <figure>
+    <img src="../assets/rig-setup-optics.png" alt="Rig setup, Optics: sensor size, pixel size, focal length, aperture, camera angle and the computed field" loading="lazy">
+    <figcaption>Optics, with Use frame headers naming the frame it reads.</figcaption>
+  </figure>
+
+  <h3 id="optics">Optics</h3>
+  <p>Optics hold the unbinned sensor size in pixels, pixel size in micrometres,
+  effective focal length and aperture in millimetres, and how the camera angle
+  changes: a rotator, turned by hand between sessions, or fixed. The field of
+  view and pixel scale update as you type.</p>
+  <p><strong>Use frame headers</strong> copies sensor size, pixel size, focal
+  length, aperture and site from the newest frame the server can find, and names
+  the file. Headers from N.I.N.A. record binned values; PSF Guard folds them back
+  to the sensor. Each section says where its values came from: frame headers, set
+  by hand, or reported by the plugin.</p>
+
+  <h3 id="sites">Sites and horizons</h3>
+  <p>A site holds a location (latitude, east-positive longitude, elevation) and a
+  horizon. Add and edit sites under <strong>Settings › Rigs › Sites</strong>. Each
+  rig picks its <strong>Planning site</strong> and takes the site's location and
+  horizon, unless its own fields say otherwise: a location typed into the rig, or
+  a horizon pasted there or reported by the plugin.</p>
+  <p>A horizon is a N.I.N.A. <code>.hrz</code> file: one <code>azimuth altitude</code>
+  pair per line in degrees, <code>#</code> for comments. Paste or upload it, and
+  download it back for N.I.N.A. PSF Guard sorts the points and closes the curve
+  at north. It refuses a line that is not two numbers, an azimuth outside 0–360,
+  an altitude outside −90–90, or a repeated azimuth, and names the line.</p>
+  <p>Visibility, feasibility and the program sent to the plugin all use the
+  resolved location and horizon. A rig with neither has no location, and its
+  horizon is flat at its minimum altitude.</p>
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/settings-sites.png" alt="Settings › Rigs › Sites: a site's location fields and a pasted N.I.N.A. horizon" loading="lazy">
+      <figcaption>A site holds a location and a N.I.N.A. horizon.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/rig-setup-site.png" alt="Rig setup, Site: Planning site select, frame-header location fields, Bortle class, sky brightness and a horizon box" loading="lazy">
+      <figcaption>A rig picks its planning site, and overrides it only where it differs.</figcaption>
+    </figure>
+  </div>
+
+  <h3 id="limits">Limits and delivery</h3>
+  <p><strong>Limits and delivery</strong> holds the altitude and meridian limits
+  planning uses, the rig's Target Scheduler scheduling limits, and
+  <strong>Remote site</strong>.</p>
+  <p>The rig's Target Scheduler limits also reach projects no plan holds, such as
+  ones made in N.I.N.A. Below the fields, <strong>Target Scheduler
+  projects</strong> compares the saved limits with every project in the rig's
+  database and lists each one that differs, with what will change.
+  <strong>Apply</strong> writes them. A plan's own limits still win for its
+  project. Apply is refused when a project or the limits changed since the list
+  was read. Nothing applies by itself; a project made later waits for the next
+  Apply.</p>
+  <figure>
+    <img src="../assets/rig-limits.png" alt="Limits and delivery: planning limits, and Target Scheduler limits with inherited values" loading="lazy">
+    <figcaption>A rig's planning limits and its Target Scheduler limits for every project in its database.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/rig-ts-projects.png" alt="Target Scheduler projects: all 7 projects in the rig's database have these limits; Remote site set to This server only" loading="lazy">
+    <figcaption>The comparison with every project in the rig's database, and <strong>Remote site</strong> below it.</figcaption>
+  </figure>
+
+  <h3 id="remote-site">Remote site</h3>
+  <p>Set <strong>Remote site</strong> to the Sync peer that holds the rig's real
+  database when the rig runs on another PSF Guard. Activation then pushes the plan
+  to that peer. Leave it at <strong>This server only</strong> when N.I.N.A. writes
+  this server's database. See <a href="activation.html#remote">Rigs at another
+  site</a>.</p>
+
+  <h2 id="live">Live</h2>
+  <p>Rigs that run the Director plugin report what they do. The header's
+  <strong>Live</strong> chip counts them: <code>2 rigs · 1 exposing</code>, or
+  <code>2 rigs · 1 online</code> when none is exposing. It turns red when a rig
+  that used to talk goes quiet, and opens <strong>Live on the Sky</strong> from any
+  view.</p>
+  <p>On the Sky, each reporting rig is drawn on the coverage map where it points
+  now. A list of rigs sits beside the map; choosing one turns the map to it. A
+  quiet rig is drawn dashed red. A rig that reports no mount position is placed
+  at its planned target, dotted and labeled <em>at target</em>.</p>
+  <figure>
+    <img src="../assets/sky-live.jpg" alt="Sky coverage with Live on: the all-sky map, the Live list of rigs beside it and the timeline below" loading="lazy">
+    <figcaption>Live on the Sky. Each reporting rig is drawn where it points; the list sits beside the map.</figcaption>
+  </figure>
+  <p>The Live table under the map has one row per rig:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Column</th><th>Shows</th></tr>
+      <tr><td>Link</td><td><em>Online</em> within three minutes of any plugin call,
+        <em>Quiet</em> within thirty, <em>Offline</em> beyond, <em>Never seen</em>
+        before the first.</td></tr>
+      <tr><td>Doing</td><td>Phase, target, current operation and how long, wait
+        reason, safety, queue depth and errors, from the last status report. A
+        report older than its stated lifetime is marked stale.</td></tr>
+      <tr><td>Contact</td><td>How long since the rig pulled its program, checked in,
+        and reported status.</td></tr>
+      <tr><td>Frames</td><td>Saved frames grading has not accepted yet.</td></tr>
+      <tr><td>Plans</td><td>Activated plans the rig is assigned to, each a link to
+        its workspace.</td></tr>
+    </table>
+  </div>
+  <p>The table refreshes every fifteen seconds. A read-only account cannot open
+  Settings, so Live on the Sky shows rig setup and the template library read only
+  under the table.</p>
+
+  <h2 id="director">The Director plugin</h2>
+  <p>The Director plugin for N.I.N.A. is experimental. A paired plugin pulls its
+  rig's program from the last activation over HTTP, keeps running on it through
+  a network outage, checks in each saved frame, and reports live status. Saved
+  frames count as pending credit until grading accepts them; a receipt is
+  evidence a frame was taken, not that it passed. Pairing uses one-use codes an
+  operator issues, and grants no control of equipment.</p>
+  <p>Without the plugin, activation still writes ordinary Target Scheduler rows,
+  and the Target Scheduler plugin runs them as before.</p>
+
+  <nav class="next-prev">
+    <a href="activation.html">← Exposures &amp; Activation</a>
+    <a href="collaboration.html">Collaboration →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

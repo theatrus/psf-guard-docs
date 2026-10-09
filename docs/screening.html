@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quality Screening — PSF Guard</title>
-  <meta name="description" content="Automatically screen light frames for occlusion, clouds, stray light, off-target pointing, tracking loss, and meaningful solve failures.">
+  <meta name="description" content="Score light frames against their session and their whole target: clouds, occlusion, stray light, SNR, soft stars, pointing faults and satellite trails, each with a named cause.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html" class="active" aria-current="page">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -126,64 +139,33 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Quality Screening</h1>
   <p class="lede">
-    PSF Guard screens light frames for problems that affect integrations but are not caught by conventional grading. These problems include occlusion from trees or dome edges, small clouds, thin veils, stray light, static glow, off-target pointing, tracking loss, and plate-solve failures. The system can render spatial detections as annotated diagnostics, and astrometry results provide solved centers and field-relative evidence.
+    A quality scan measures each light frame's stars, sky, photometry and plate solve, then scores the frame against its session and its whole target. This page covers what the scan catches, how scores and causes work, and how to run it from the app or the CLI.
   </p>
-  <p>All detections use classical statistics. Thresholds are calibrated against real session data, which includes measured clean-frame envelopes across multiple nights and filters. Each detector is verified by regression tests to ensure consistent behavior.</p>
 
-  <h2 id="why">Global metrics do not capture localized frame degradation</h2>
-  <p>Star count and half-flux radius (HFR), which conventional grading tools rely on, often show little change when a frame is partially degraded. For example, in a session where a tree line progressively occluded the field of view:</p>
-  <ul>
-    <li>Frames with an occluded corner maintained star counts within normal variation because the unoccluded part of the field remained clear.</li>
-    <li>The HFR remained constant at approximately 2.6 until the frame was more than 60% occluded because the remaining stars were still in focus.</li>
-    <li>A thin cloud veil reduced the brightness of every star by 37% while the star count, HFR, and background level remained normal, causing the capture software's grader to accept the frame.</li>
-    <li>The rolling star-count baseline in N.I.N.A. adapts to gradual changes, which caused it to accept 31 of 33 occluded frames in the test session, including one that was 90% blocked.</li>
-  </ul>
-  <p>The screening stack uses local, photometric, and temporal signals to identify these issues. It evaluates individual grid cells, measures flux ratios instead of star counts, and compares each cell to its historical baseline to prevent gradual occlusions from being ignored.</p>
-
-  <h2 id="stack">The detection stack monitors multiple image characteristics</h2>
-  <table>
-    <tr><th>Signal</th><th>Catches</th><th>How</th></tr>
-    <tr><td><strong>Dead cells</strong></td><td>Occlusion (trees, dome, dew shield)</td>
-        <td>This measures the fraction of the 8×6 grid cells whose star density has collapsed compared to the median cell of the frame.</td></tr>
-    <tr><td><strong>Transparency</strong></td><td>Thin uniform veils</td>
-        <td>This calculates the median flux ratio of stars matched against a per-sequence reference catalog. A ratio of 0.7 indicates the whole frame is approximately 0.4 magnitudes dimmer.</td></tr>
-    <tr><td><strong>Localized extinction</strong></td><td>Small clouds</td>
-        <td>This divides per-cell flux ratios by global transparency. A passing cloud shows as a coherent dip in a specific patch of stars.</td></tr>
-    <tr><td><strong>Star-share drops</strong></td><td>Small opaque clouds</td>
-        <td>This compares each cell's share of the stars in the frame against the temporal median of that cell using a Poisson-aware calculation.</td></tr>
-    <tr><td><strong>Background rise</strong></td><td>Errant light (headlights, flashlights)</td>
-        <td>This compares the per-cell background level to the history of that cell after subtracting the gradient using a robust plane fit.</td></tr>
-    <tr><td><strong>Background fall</strong></td><td>Dark occluders, cloud shadow</td>
-        <td>This measures background drops where an occluder blocks skyglow, causing the area to appear darker.</td></tr>
-    <tr><td><strong>Static glow</strong></td><td>Corner haze, lit occluder edges</td>
-        <td>This flags cells that are brighter than the gradient model of the frame. This detects issues present from the first frame, which temporal baselines cannot identify.</td></tr>
-    <tr><td><strong>Fresh plate solution</strong></td><td>Off-target frames, pointing jumps/drift, deterministic no-solves</td>
-        <td>The solver processes the current pixels and compares the solved center with the target coordinates, stable framing clusters, and drift within the segment.</td></tr>
-  </table>
-  <p>These signals feed a sequence analyzer that scores each frame from 0 to 1 relative to its session. Sessions are defined by the same target, filter, and exposure, and they are split when a gap of 60 minutes or more occurs. The analyzer classifies potential issues with verdicts of <strong>OK</strong>, <strong>WARN</strong> (for recoverable issues like gradients that flat-frame processing can resolve or glow that causes stacking artifacts), and <strong>REJECT</strong> (for severe issues like clouds and occlusion).</p>
-
-  <p>Scores are calculated using only the available evidence. If an optional scan has not run, the analyzer renormalizes the score using the completed checks instead of penalizing the frame. This ensures that frames without spatial scans are not graded down, and a frame will receive the same score regardless of the session context or project view.</p>
-
-  <h2 id="scoring">The analyzer applies score guardrails and penalty controls</h2>
-  <p>A low relative score does not automatically assign a fault or recommend a rejection. PSF Guard only assigns a specific cause when the corresponding detector collects sufficient evidence, and rejection recommendations are based on these causes rather than the score alone.</p>
-  <p>The system applies an absolute guardrail: any light frame with zero detected stars receives a failing score and is assigned a <strong>No Stars Detected</strong> cause, even if no other sequence frames are available. Frames that have not been measured are not penalized, as missing optional analysis is not treated as evidence of a poor image.</p>
-  <p>You can adjust how strongly satellite trails, pointing failures, and temporal anomalies affect the score by opening the <strong>Penalties</strong> section in the Sequence view. The penalty sliders range from 0% (which ignores the evidence) to a default of 100%, up to a maximum of 200% (which doubles the score penalty). The chosen settings apply to the Sequence view, grid badges, and detail panel. The zero-star guardrail is fixed and cannot be scaled. Setting the satellite or pointing penalty to 0% also prevents that evidence from triggering a rejection recommendation.</p>
-  <figure>
-    <img src="../assets/sequence-penalties.png" alt="Sequence Analysis with the Satellite, Pointing, and Temporal penalty controls open" loading="lazy">
-    <figcaption>The Sequence view displays the three evidence penalty controls next to the score distribution, session groups, and frame recommendations.</figcaption>
-  </figure>
-
-  <h2 id="quick-start">Get started with quality screening</h2>
+  <h2 id="quick-start">Run a quality scan</h2>
   <div class="workflow-note simple">
     <div class="workflow-tag">In the app</div>
-    <div class="workflow-copy"><strong>Open the Sequence view for a target and click Scan Quality.</strong><p>Results are displayed on the affected frames and are cached across application restarts.</p></div>
+    <div class="workflow-copy"><strong>Choose a target and click Analyze Quality.</strong><p>The button shows in Images and Sequence when the target has new frames or results from an older quality model, and hides when every frame is up to date.</p></div>
     <a class="workflow-link" href="grader.html#sequence">Sequence view →</a>
   </div>
-  <p>You can use the selectors to focus on Clouded, Off Target, Unsolved, or all Recommended frames. PSF Guard displays a review screen before applying any rejections. For more information, see <a href="astrometry-quality.html">Astrometry Quality</a>.</p>
+  <p>The scan runs in the background: spatial and photometric screening, then a fresh plate solve of each frame, then new sequence scores. Both stages work on several frames at once, up to the share set in <strong>Settings → Performance → Processor use</strong>. The header's jobs chip shows progress from any view and any database. A scan with failed frames leaves a note on the chip, with a link to the target's sequence, until you dismiss it; with nothing else running the chip reads <strong>Finished with errors</strong>. Results persist across restarts.</p>
+  <p>Settings → <strong>Databases</strong> holds the database-wide actions. <strong>Analyze Missing Quality</strong> scans frames that have no results. <strong>Rescan All Quality</strong> forces a full rescan. <strong>Analyze new frames as they arrive</strong> scans frames that come by sync, peer pull, remote upload or auto-import a few minutes after they land. See <a href="importing.html#quality">Import Images</a>.</p>
+  <figure>
+    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing and cards with their causes" loading="lazy">
+    <figcaption>A session after a scan. Each card names its cause.</figcaption>
+  </figure>
+
+  <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis names a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail panel. For a local finding, image detail offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
+  <figure>
+    <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box naming a possible obstruction, and sky context from a hinted solve" loading="lazy">
+    <figcaption>Image detail. Quality analysis gives the score and its reason; Sky context gives the solve.</figcaption>
+  </figure>
+  <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes you tick. The grid scores one target, project or database at a time and never compares frames from unrelated targets. It reads stored metadata and cached evidence and does not start a scan, and it says how many visible frames stay unscored for lack of a comparable sequence or evidence.</p>
+  <p>To reject in bulk, pick a preset from <strong>Select:</strong> in Sequence (<strong>Below score threshold</strong>, <strong>Clouded</strong>, <strong>Off target</strong>, <strong>Unsolved</strong> or <strong>Recommended</strong>), then click <strong>Review rejection</strong>. Nothing is written until you confirm in the review. See <a href="astrometry-quality.html#review">Astrometry Quality</a>.</p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
-    <div class="workflow-copy"><strong>You can screen folders in batches or without using a database.</strong><p>Include the <code>--regrade-db</code> option to enable target-aware checks and grade proposals.</p></div>
+    <div class="workflow-copy"><strong>Screen folders without a database, or regrade one.</strong><p>Add <code>--regrade-db</code> for target-aware checks and grade proposals.</p></div>
     <a class="workflow-link" href="cli.html#screening">CLI reference →</a>
   </div>
   <pre><code><span class="c"># Screen a night of lights (no database needed)</span>
@@ -199,89 +181,210 @@ psf-guard screen-fits "/path/to/LIGHT" --regrade-db my-db-slug
 
 <span class="c"># Then archive the rejected files out of your stacking tree</span>
 psf-guard move-rejects --db my-db-slug</code></pre>
-  <p>If orbital elements are cached, the quality scan projects satellite crossings and checks a narrow pixel corridor along each predicted path. Predicted crossings that are not detected in the pixels generate a warning, while only pixel-confirmed high-risk trails trigger a rejection recommendation. See <a href="satellites.html">Satellite Tracks</a>.</p>
+  <p>CLI screening reports <strong>OK</strong>, <strong>WARN</strong> and <strong>REJECT</strong> verdicts. A scan you start from the app may download the orbital elements it needs for satellite checks; opening Sequence and CLI regrades use the cache only. See <a href="satellites.html">Satellite Tracks</a>.</p>
 
-  <h2 id="diagnostics">Read the annotated diagnostic images</h2>
-  <p>The <code>--annotate</code> option renders each flagged frame with an overlaid analysis grid. Cells are color-coded based on the triggered detection signal, and the caption contains the verdict, score, per-frame metrics, and classifier details.</p>
-  <table>
+  <h2 id="why">Why star count and HFR are not enough</h2>
+  <p>Star count and HFR barely move when part of a frame is ruined. On a real session where a tree line slowly covered the field:</p>
+  <ul>
+    <li>Frames with a blocked corner kept star counts within normal variation, because the rest of the field was clear.</li>
+    <li>HFR stayed near 2.6 until more than 60% of the frame was blocked. The stars that remained were still in focus.</li>
+    <li>A thin veil dimmed every star by 37% while star count, HFR and background looked normal. The capture software accepted the frame.</li>
+    <li>N.I.N.A.'s rolling star-count baseline followed the slow occlusion and accepted 31 of 33 blocked frames, one of them 90% blocked.</li>
+  </ul>
+  <p>The scan answers with signals that are local (per grid cell), photometric (flux ratios, not counts) and temporal (each cell against its own history), with baselines that do not absorb a slow-growing fault.</p>
+
+  <h2 id="stack">Detection signals</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Signal</th><th>Catches</th><th>How</th></tr>
+    <tr><td><strong>Dead cells</strong></td><td>Occlusion (trees, dome, dew shield)</td>
+        <td>Share of the 8×6 grid cells whose star density collapsed against the frame's median cell.</td></tr>
+    <tr><td><strong>Transparency</strong></td><td>Thin uniform veils</td>
+        <td>Median flux ratio of stars matched against a reference catalog for the sequence. 0.7 means the whole frame is about 0.4 mag dimmer.</td></tr>
+    <tr><td><strong>Localized extinction</strong></td><td>Small clouds</td>
+        <td>Flux ratio per cell divided by global transparency. A passing cloud shows as a dip in one patch of stars.</td></tr>
+    <tr><td><strong>Star-share drops</strong></td><td>Small opaque clouds</td>
+        <td>Each cell's share of the frame's stars against that cell's own median over time, allowing for Poisson noise.</td></tr>
+    <tr><td><strong>Background rise</strong></td><td>Stray light (headlights, flashlights)</td>
+        <td>Background per cell against the cell's own history, after removing the frame's gradient with a robust plane fit.</td></tr>
+    <tr><td><strong>Background fall</strong></td><td>Dark occluders, cloud shadow</td>
+        <td>The same, downward: something blocking skyglow reads darker, not milky.</td></tr>
+    <tr><td><strong>Static glow</strong></td><td>Corner haze, lit occluder edges</td>
+        <td>Cells brighter than the frame's own gradient model. Catches faults present from a session's first frame. A fresh solve excuses cells covered by large cataloged emission nebulae.</td></tr>
+    <tr><td><strong>SNR</strong></td><td>Haze, dew, a brighter sky</td>
+        <td>Flux promised by the frame's Gaia zero point divided by its sky noise. See <a href="#snr">SNR</a>.</td></tr>
+    <tr><td><strong>Fresh plate solution</strong></td><td>Off-target frames, pointing jumps and drift, rotator slips, failed solves</td>
+        <td>Seiza solves the current pixels. Solved centers and rotations are compared with the target, stable framing clusters, and drift within a segment. See <a href="astrometry-quality.html">Astrometry Quality</a>.</td></tr>
+    <tr><td><strong>Satellite prediction and pixel alignment</strong></td><td>Bright satellite trails</td>
+        <td>Cached orbital elements are projected through the solved field for the exposure, then the nearby pixels are searched for a matching trail. See <a href="satellites.html">Satellite Tracks</a>.</td></tr>
+  </table></div>
+
+  <h2 id="scoring">Scores and causes</h2>
+  <p>Each frame gets two scores from 0 to 1:</p>
+  <ul>
+    <li>The session score compares frames from one capture run. It catches a cloud, focus change or tracking loss within a night.</li>
+    <li>The all-sessions score compares every frame that could enter one stack, across nights, with matching exposure, gain, offset, binning, readout and sensor region. It exposes a weak night that looked stable on its own. A capture profile needs at least three matching frames across two sessions; one with fewer is listed, not given a perfect score. Stacks use this score to choose a reference frame.</li>
+  </ul>
+  <p>Both are relative ranks, not verdicts. Star count, HFR, eccentricity, SNR and background are compared with a robust good reference, and normal variation costs nothing. A scan adds spatial, photometric and plate-solve evidence. Missing evidence gets no weight: the score renormalizes over what was measured, so a frame is never marked down because an optional scan has not run. When a fresh solve puts a large emission nebula in the field, raw background gets no weight, since lower background can mean lost target signal.</p>
+  <p>Cards say <strong>Catalog-relative score</strong> until a scan adds pixel evidence, then <strong>Pixel-assisted score</strong>.</p>
+  <p>A low score alone names no fault and recommends nothing. A frame gets a cause only when its detector has enough evidence, and reject recommendations follow causes, not scores:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Kind</th><th>Causes</th></tr>
+    <tr><td>Sky and optics</td><td><strong>Likely Clouds</strong>, <strong>Possible Obstruction</strong>, <strong>Sky Brightening</strong>, <strong>Focus Drift</strong>, <strong>Soft Stars</strong></td></tr>
+    <tr><td>Mount and rotator</td><td><strong>Tracking Error</strong>, <strong>Wind Shake</strong>, <strong>Off Target</strong>, <strong>Stable Offset</strong>, <strong>Pointing Jump</strong>, <strong>Pointing Drift</strong>, <strong>Rotation Skew</strong>, <strong>Plate Solve Failed</strong></td></tr>
+    <tr><td>Events</td><td><strong>Satellite Trail Detected</strong></td></tr>
+    <tr><td>Absolute checks</td><td><strong>No Stars Detected</strong>, <strong>HFR Above Limit</strong>, <strong>Star Count Below Limit</strong>, <strong>Sensor Temperature</strong></td></tr>
+    <tr><td>Other</td><td><strong>Unknown Degradation</strong></td></tr>
+  </table></div>
+  <p>One absolute rule: a frame measured with zero stars is capped at a failing score with a <strong>No Stars Detected</strong> cause, even with no other frames to compare. Zero stars in a light frame is direct evidence of clouds, trailing or a blocked aperture. A frame with no star measurement at all is never capped. When the scan finds no stars where the capture software counted 20 or more, the scan failed: its star count, HFR and dead cells are dropped for that frame, and the score renormalizes around them. The same holds the other way round.</p>
+  <p>Sessions split at a Target Scheduler session change, a capture-profile change, or a 60-minute gap. Frames measured from calibrated pixels (a light catalogued from its calibrated copy, or measured from one) are scored only against each other, in sessions and stack comparisons of their own. Their background, flux and star counts differ from raw frames of the same sky, so they are no longer marked down beside them.</p>
+
+  <h2 id="snr">SNR from the Gaia zero point</h2>
+  <p>Capture software rarely records an SNR, so the quality scan measures one. It finds the frame's photometric zero point, the catalog magnitude of a star that gives one ADU per second, and divides the flux that zero point promises by the pixel-to-pixel sky noise.</p>
+  <ol>
+    <li>Measure up to 80 of the brightest unsaturated stars in a wide aperture: five times the frame's HFR, with a sky annulus from six to eight. Saturation is judged on the raw pixels, since a deep frame clips hundreds of its brightest stars.</li>
+    <li>After the plate solve, place Gaia stars with the frame's own solution and match them to the measured stars.</li>
+    <li>Take the median of magnitude + 2.5·log<sub>10</sub>(flux per second) as the zero point.</li>
+  </ol>
+  <p>Cloud, haze and dew lower the zero point, and a brighter sky raises the noise, so SNR falls with either. A frame dimmed by haze or shot under a brighter sky scores lower than frames of the same exposure from any night. Soft focus does not move SNR: the wide aperture holds a star's light whatever its size, and HFR already scores focus. The zero point needs no reference frame, so nights and both sides of a meridian flip compare directly; scoring still compares it only between frames of the same exposure and settings.</p>
+  <p>SNR needs a fresh plate solve and a Gaia star catalog. A Tycho-2 catalog mixes two bands and is not used. An SNR already in the image metadata is used as recorded.</p>
+  <div class="callout info">
+    <strong>Frames scanned by an earlier version have no SNR.</strong> Run <strong>Rescan All Quality</strong> under Settings → <strong>Databases</strong>, or send <code>force: true</code> to the quality-scan API, to measure it.
+  </div>
+
+  <h2 id="soft-stars">Soft stars</h2>
+  <p>HFR is judged against the whole target, not the night. PSF Guard compares a frame's HFR with the best of its target and filter across every night: the 10th percentile, once a capture profile has ten measured frames. Against its own night, a whole night of poor seeing or lost focus looks normal, and as one part of eight in the score, an HFR twice the best still left a frame near 0.8.</p>
+  <div class="table-wrap"><table>
+    <tr><th>HFR against the target's best</th><th>Effect</th></tr>
+    <tr><td>Up to 1.5×</td><td>None</td></tr>
+    <tr><td>Over 1.5×</td><td>Score capped, with a <strong>Soft Stars</strong> cause. The cap falls from 1.0 at 1.5× to the reject level (0.25) at 2×.</td></tr>
+    <tr><td>From 1.75×</td><td><code>[Auto]</code> reject recommendation; stacks leave the frame out.</td></tr>
+    <tr><td>2× and beyond</td><td>Capped at the reject level.</td></tr>
+  </table></div>
+  <pre><code>[Auto] Soft stars - HFR 4.10 px, 1.8× the target's best 2.28 px</code></pre>
+  <p>On one rig's catalog, 96.7% of frames sat within 1.3× of their best, and 1.5% beyond 1.5×.</p>
+  <figure>
+    <img src="../assets/sequence-soft-stars.png" alt="Sequence cards: three frames marked Soft Stars with HFR above 6, then frames marked Possible Obstruction" loading="lazy">
+    <figcaption>Frames at four times the target's best HFR are capped and marked Soft Stars.</figcaption>
+  </figure>
+
+  <h2 id="star-counts">One star count per target</h2>
+  <p>The quality scan and the capture software count stars on different scales. HocusFocus and N.I.N.A.'s own detector differ several-fold, and a rig's settings can change between nights. Mixing the two dragged down whole nights on rigs where they differ, so a target's frames are compared on one source per filter:</p>
+  <ul>
+    <li>The scan's values when at least as many frames have a scan count as were measured only by the capture software; otherwise the capture software's.</li>
+    <li>A failed scan counts on neither side. A rig whose every scan fails is scored on the capture software's counts.</li>
+    <li>Values the scan wrote back into imported metadata count as the scan's.</li>
+    <li>With the scan's values, a frame whose scan failed or has not run yet is left unmeasured, so a new frame waiting for its scan does not change how the rest score.</li>
+    <li>A frame that can never be scanned, because its file is offline, loses its star dimension once most of its target is scanned.</li>
+  </ul>
+  <p><strong>Max HFR</strong>, <strong>Min stars</strong> and the zero-star cap still judge each frame on its own measurement: the scan's when it counted stars, else the capture software's.</p>
+
+  <h3 id="zero-star-guards">Guards against false zero-star records</h3>
+  <ul>
+    <li><strong>Files still copying.</strong> A frame written within the last hour whose data ends in a long run of one value is taken as a copy under way, and measured on a later pass. Windows copies, sync tools and moves between volumes create the file at full size and fill it in after.</li>
+    <li><strong>HocusFocus fallback.</strong> Before it records no stars, the scan runs HocusFocus on the same pixels. If HocusFocus finds 20 or more, the frame has stars and is poor, not starless. It scores on HocusFocus's count, so a frame with a few dozen stars beside frames with hundreds scores low. Its HFR is shown but not scored, since HocusFocus measures HFR on another scale, and neither number is written into the catalog. The details say which detector counted, for example "N.I.N.A. Fast found no stars; HocusFocus found 68, used instead."</li>
+    <li><strong>Frames of one value.</strong> A frame whose pixels mostly share one value does not have its noise counted as stars.</li>
+    <li><strong>Changed files.</strong> A scan taken from a file that has changed since is measured again the next time the target is scanned, and the values it wrote back are replaced.</li>
+  </ul>
+
+  <h2 id="limits">Penalties and reject limits</h2>
+  <p>The <strong>Scoring</strong> control in Sequence sets how hard event evidence hits the score, and optional fixed limits like N.I.N.A.'s subframe selection.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+    <tr><td><strong>Satellite trails</strong></td><td>100%</td><td>Score hit for a pixel-confirmed trail. At 0%, trails neither lower the score nor drive reject recommendations, but a confirmed trail still shows as a warning. Useful when stacking removes trails.</td></tr>
+    <tr><td><strong>Pointing</strong></td><td>100%</td><td>Score hit for off-target, pointing-jump, pointing-drift and corroborated solve-failure evidence. At 0% it also stops driving reject recommendations.</td></tr>
+    <tr><td><strong>Temporal anomalies</strong></td><td>100%</td><td>Score hit when a frame suddenly departs from its neighbours.</td></tr>
+    <tr><td><strong>Max HFR</strong></td><td>Off</td><td>Reject any frame whose measured HFR (pixels) is over the limit.</td></tr>
+    <tr><td><strong>Min stars</strong></td><td>Off</td><td>Reject any frame with fewer detected stars than the limit.</td></tr>
+  </table></div>
+  <p>Penalties run from 0% (ignore the evidence) to 200% (double the hit). A frame past a reject limit is capped and gets an <code>[Auto]</code> reject recommendation, whatever the rest of the sequence looks like. A frame missing the measurement is exempt.</p>
+  <p>One limit is always on: <strong>Sensor Temperature</strong>. A frame whose sensor ran more than 10 °C warmer than the median of its session, or more than 20 °C above the cooler's set point, is capped and recommended for rejection. Dark current and hot pixels climb steeply with temperature, and no dark shot at the set point removes them. Colder never flags, and a frame with no temperature reading is exempt.</p>
+  <p>The settings are remembered and apply to Sequence, grid badges and image detail, so a frame scores the same everywhere. The zero-star cap does not scale. The CLI takes <code>--ignore-satellites</code>, <code>--max-hfr</code> and <code>--min-stars</code>; API callers pass <code>penalty_satellite</code>, <code>penalty_pointing</code>, <code>penalty_temporal</code>, <code>hfr_reject_above</code>, <code>star_count_reject_below</code> or <code>sensor_temp_tolerance_c</code>.</p>
+
+  <h2 id="diagnostics">Read the annotated diagnostics</h2>
+  <p><code>--annotate</code> renders each flagged frame with the analysis grid on top. Cells are marked by the signal that fired, and the caption strip gives the verdict, score, frame metrics and the classifier's explanation.</p>
+  <div class="table-wrap"><table>
     <tr><th>Marking</th><th>Meaning</th></tr>
-    <tr><td>Red fill</td><td>This indicates a dead cell where the star density collapsed due to occlusion.</td></tr>
-    <tr><td>Orange fill</td><td>This indicates localized extinction where stars are dimmed by a small cloud, labeled with the cell's flux ratio.</td></tr>
-    <tr><td>Magenta fill</td><td>This indicates a transient drop in the cell's share of stars.</td></tr>
-    <tr><td>Yellow border</td><td>This indicates a transient background rise caused by stray light.</td></tr>
-    <tr><td>Blue border</td><td>This indicates a transient background fall caused by a dark occluder or cloud shadow.</td></tr>
-    <tr><td>Cyan fill</td><td>This indicates static glow that rises above the gradient model of the frame.</td></tr>
-  </table>
+    <tr><td>Red fill</td><td>Dead cell: star density collapsed (occlusion).</td></tr>
+    <tr><td>Orange fill</td><td>Localized extinction: stars dimmed by a small cloud, labelled with the cell's flux ratio.</td></tr>
+    <tr><td>Magenta fill</td><td>Sudden drop in the cell's share of stars.</td></tr>
+    <tr><td>Yellow border</td><td>Background rise against the cell's history (stray light).</td></tr>
+    <tr><td>Blue border</td><td>Background fall against the cell's history (dark occluder, cloud shadow).</td></tr>
+    <tr><td>Cyan fill</td><td>Static glow above the frame's own gradient model.</td></tr>
+  </table></div>
 
-  <h3>The detector identifies arriving occlusion</h3>
+  <h3>Occlusion arriving</h3>
   <figure>
     <img src="../assets/screening-onset.jpg" alt="Occlusion onset: red cells trace the tree line" loading="lazy">
-    <figcaption>In this frame, 25% of the cells have lost their stars, and the red region traces the out-of-focus occluder. The transparency metric is 1.01, indicating that the remaining unoccluded field is photometrically normal. This explains why global metrics fail to catch these frames.</figcaption>
+    <figcaption>A quarter of the cells have lost their stars, and the red region traces the out-of-focus tree line. Transparency is 1.01: the rest of the field is photometrically normal, which is why global metrics miss frames like this.</figcaption>
   </figure>
 
-  <h3>The detector flags heavy occlusion with a lit edge</h3>
+  <h3>Heavy occlusion with a lit edge</h3>
   <figure>
     <img src="../assets/screening-occlusion.jpg" alt="Heavy occlusion with a yellow-bordered stray-lit cell" loading="lazy">
-    <figcaption>Half of the field is flagged as dead, and a yellow border highlights a cell where the background level rose above its temporal baseline. This occurs when the stray-lit edge of the occluder bleeds into a live cell.</figcaption>
+    <figcaption>Half the field is dead. A yellow border marks a cell whose background rose above its own history, where the occluder's lit edge reaches a live cell.</figcaption>
   </figure>
 
-  <h3>The boundary of the advancing occluder is highlighted</h3>
+  <h3>The occluder's edge</h3>
   <figure>
     <img src="../assets/screening-frontier.jpg" alt="Blue cells darker than history, yellow lit fringe" loading="lazy">
-    <figcaption>Later in the same session, blue borders mark cells that are darker than their historical average because the dark occluder blocks background skyglow. Yellow borders mark the illuminated edge of the occluder.</figcaption>
+    <figcaption>Later in the same session, blue borders mark cells darker than their history, where the occluder blocks skyglow. Yellow marks its lit fringe.</figcaption>
   </figure>
 
-  <h3>Photometry detects thin cloud veils</h3>
+  <h3>Thin cloud veil</h3>
   <div class="shot-pair">
     <figure>
       <img src="../assets/screening-veil-clean.jpg" alt="Clean frame: 2973 stars, transparency 1.05" loading="lazy">
-      <figcaption>This clean frame has 2,973 stars and a transparency of 1.05.</figcaption>
+      <figcaption>Clean frame: 2,973 stars, transparency 1.05.</figcaption>
     </figure>
     <figure>
       <img src="../assets/screening-veil.jpg" alt="Veiled frame: 1417 stars, transparency 0.63, REJECT" loading="lazy">
-      <figcaption>The same field 13 minutes later has 1,417 stars and a transparency of 0.63, representing approximately 0.5 magnitudes of uniform extinction. This is marked as REJECT.</figcaption>
+      <figcaption>The same field 13 minutes later: 1,417 stars, transparency 0.63, about 0.5 mag of uniform extinction. REJECT.</figcaption>
     </figure>
   </div>
-  <p>No individual cell is flagged because there is no localized degradation. The issue is detected solely through the matched-star flux ratios. This frame was accepted by conventional grading tools.</p>
+  <p>No cell is marked, because nothing is wrong locally. Only the matched-star flux ratios see the veil. Conventional grading accepted this frame.</p>
 
-  <h3>The static glow detector flags corner haze</h3>
+  <h3>Static corner glow</h3>
   <figure>
     <img src="../assets/screening-glow.jpg" alt="Cyan cells sitting on corner haze at 4.7% above the gradient plane" loading="lazy">
-    <figcaption>Haze is present from the first frame of the session, which makes temporal detectors unable to identify it. The static glow signal instead compares each cell against the gradient model of the frame. The cyan cells highlight the haze, which measures 4.7% above the plane.</figcaption>
+    <figcaption>Haze present from the session's first frame, so every temporal detector misses it. Static glow compares each cell with the frame's gradient model instead: the cyan cells sit on the haze, 4.7% above the plane.</figcaption>
   </figure>
+  <p>Real nebulae can make the same stable shape. When a fresh solve projects a large emission nebula across a bright cell, PSF Guard treats that cell as explained and keeps any bright cells outside it. Only solved geometry does this; a target name or FITS header does not silence the detector.</p>
 
-  <h2 id="tuning">You can tune the screening detectors</h2>
-  <p>The default parameters were calibrated against clean-frame envelopes across multiple nights and filters. The primary configuration settings are listed below:</p>
-  <table>
+  <h2 id="tuning">Tune the detectors</h2>
+  <p>Defaults were calibrated against measured clean-frame envelopes: 42 frames and more, four nights, several filters.</p>
+  <div class="table-wrap"><table>
     <tr><th>Knob</th><th>Default</th><th>Notes</th></tr>
-    <tr><td><code>--min-score</code></td><td>0.35</td><td>This sets the composite score threshold below which a frame is rejected.</td></tr>
-    <tr><td><code>--dead-cell-rise</code></td><td>0.08</td><td>This sets the occlusion sensitivity. Clean-frame jitter is usually 0.04 or lower, making 0.08 a conservative threshold.</td></tr>
-    <tr><td><code>--session-gap</code></td><td>60 min</td><td>This defines the gap in minutes used to split sequences into separate sessions.</td></tr>
-    <tr><td>glow threshold</td><td>2.5% of sky <strong>and</strong> &gt;30 ADU</td><td>The ADU floor prevents narrowband nebulosity from triggering false detections. True haze typically measures 48 to 103 ADU. This setting is rig-specific.</td></tr>
-    <tr><td>transparency threshold</td><td>0.80</td><td>This sets the global transparency threshold for uniform veil rejections.</td></tr>
-  </table>
+    <tr><td><code>--min-score</code></td><td>0.35</td><td>Composite score below which a frame is rejected.</td></tr>
+    <tr><td><code>--dead-cell-rise</code></td><td>0.08</td><td>Occlusion sensitivity. Clean-frame jitter is 0.04 or less, so 0.08 leaves a 2× margin.</td></tr>
+    <tr><td><code>--session-gap</code></td><td>60 min</td><td>Gap that splits a sequence into sessions.</td></tr>
+    <tr><td><code>--max-hfr</code></td><td>Off</td><td>Reject any frame whose HFR (pixels) is over this.</td></tr>
+    <tr><td><code>--min-stars</code></td><td>Off</td><td>Reject any frame with fewer detected stars than this.</td></tr>
+    <tr><td><code>--ignore-satellites</code></td><td>Off</td><td>Ignore satellite-trail evidence in scores and rejections. Trails still show as warnings.</td></tr>
+    <tr><td>Glow threshold</td><td>2.5% of sky <strong>and</strong> &gt;30 ADU</td><td>The ADU floor ignores weak structure; fresh solved geometry handles bright, large nebulae. True haze measured 48–103 ADU. Rig-specific: tune <code>glow_min_adu</code> for your camera and exposures.</td></tr>
+    <tr><td>Transparency threshold</td><td>0.80</td><td>Global veil rejection level.</td></tr>
+  </table></div>
 
-  <h3 id="safety">Safety properties prevent incorrect rejections</h3>
+  <h3 id="safety">Safety rules</h3>
   <ul>
-    <li><strong>Regrade matching uses a double-key system.</strong> Both the filename and the capture timestamp within a ten-minute window must match. This prevents screening the wrong directory from updating incorrect database rows. The system never modifies rows that are already marked as Rejected.</li>
-    <li><strong>The analyzer uses fresh pixel data as the source of truth.</strong> Embedded FITS WCS headers and coordinate associations are not used as grading evidence. The Scan Quality tool solves the actual pixels in the image and fingerprints cache entries against the FITS file and solver resources to ensure freshness.</li>
-    <li><strong>The system abstains on isolated solver failures.</strong> An isolated plate-solve failure reduces the frame score but does not trigger an automatic rejection unless other image degradation is detected. System or operational solver errors do not penalize the frame.</li>
-    <li><strong>Baselines are bounded over time.</strong> A prolonged period of anomalous frames is eventually accepted as a new baseline, which ensures that permanent environmental changes like moonrise do not cause the rest of the session to be rejected. Occluded frames remain penalized by the absolute spatial metric.</li>
-    <li><strong>Star-grid metrics abstain on sparse fields.</strong> The system disables spatial grid checks on frames with very low star counts, such as short narrowband exposures on slow optical systems, to prevent false dead-cell detections.</li>
-    <li><strong>Single-frame anomalies do not trigger rejections.</strong> Occlusion detections require confirmation from adjacent frames in the sequence. Photometric cloud detections use multi-star flux comparisons and can trigger on a single frame because clouds move quickly.</li>
+    <li><strong>Regrades match on two keys.</strong> File name and capture time (within ten minutes) must both agree, so screening the wrong folder cannot regrade the wrong row. Rows already Rejected are never touched.</li>
+    <li><strong>Fresh pixels decide.</strong> Embedded FITS WCS and coordinate-only catalog matches are never grading evidence. A scan solves the current pixels, and cached solves are tied to the file and the solver resources.</li>
+    <li><strong>A lone failed solve does not reject.</strong> It lowers the score, but rejection needs separate evidence of degradation. Missing catalogs, decode failures and other operational errors abstain.</li>
+    <li><strong>Baselines move on.</strong> A run of odd frames longer than <code>baseline_freeze_max_frames</code> (15 by default) becomes the new normal, so a lasting change such as moonrise cannot condemn the rest of a night. Occluded frames stay penalized by the absolute spatial term.</li>
+    <li><strong>Sparse fields abstain.</strong> Star-grid metrics stay silent on frames with few stars (narrowband, short frames on slow optics) instead of reporting false dead cells.</li>
+    <li><strong>Single-frame blips do not reject.</strong> Occlusion needs a neighbouring frame to agree. Photometric cloud calls rest on many stars' flux and may stand on one frame, since clouds move.</li>
   </ul>
 
-  <h2 id="limitations">The quality screening system has some limitations</h2>
+  <h2 id="limitations">Limitations</h2>
   <ul>
-    <li>The server scan uses the N.I.N.A. Fast algorithm to measure star counts and HFR. The full-resolution aperture calculation also provides the star flux for photometry. The <code>screen-fits</code> utility supports flux photometry with all available detectors.</li>
-    <li>The photometric reference requires stars to be visible in at least 50% of the session's frames. Consequently, it does not detect regions that are occluded for most of the sequence. This is by design, as those cases are handled by the dead-cell metric.</li>
-    <li>Raw one-shot-color FITS or XISF files require a recognized <code>BAYERPAT</code> header. PSF Guard debayers these files to luminance to perform quality measurements, and the diagnostic images remain luminance views.</li>
-    <li>The ADU threshold for static glow detection is specific to the imaging equipment and the exposure profile.</li>
+    <li>The server scan uses N.I.N.A. Fast for star count and HFR, which matches a rig running N.I.N.A.'s built-in detector. A rig on HocusFocus counts on another scale, which is why a target is scored from one source at a time. The same full-resolution aperture gives the flux for photometry. <code>screen-fits</code> does flux photometry with either detector.</li>
+    <li>The photometric reference needs stars present in at least half of a session's frames, so it cannot see regions blocked for most of a sequence. The dead-cell metric covers that case.</li>
+    <li>Raw one-shot-color FITS or XISF files need a recognized <code>BAYERPAT</code> header. PSF Guard debayers them to luminance for measurement, and the diagnostics stay luminance views.</li>
+    <li>The glow ADU floor depends on the rig and exposure profile.</li>
   </ul>
-  <p>The complete technical documentation is available in the repository at <a href="https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md')">docs/SCREENING.md</a>.</p>
+  <p>Full technical notes: <a href="https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/SCREENING.md')">docs/SCREENING.md</a>.</p>
 
   <nav class="next-prev">
-    <a href="importing.html">← Add Images &amp; Plan</a>
+    <a href="importing.html">← Import Images</a>
     <a href="astrometry.html">Sky Context &amp; Solver →</a>
   </nav>
 </main>

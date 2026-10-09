@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planning — PSF Guard</title>
+  <meta name="description" content="Plan a target once for every rig that shoots it: plans in the Library, the plan workspace, project order, scheduling limits and missing GUIDs.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=5">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html" class="active" aria-current="page">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Sync</a></li>
+    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Planning</h1>
+  <p class="lede">
+    Plan a target once for every rig that shoots it. Frame it on the sky, set
+    goals per filter, and write the result into each rig's Target Scheduler
+    database. Plans live in the Library beside the projects they shoot.
+  </p>
+
+  <div class="callout info">
+    <strong>New in 0.11.</strong> Planning is on for every server. A server
+    without database management plans read only: framing and goals save as
+    drafts, and activation and Target Scheduler edits are refused.
+  </div>
+
+  <figure>
+    <img src="../assets/plan-workspace.jpg" alt="A mosaic plan's workspace: summary, Framing, Exposures, Rigs and Priority and defaults tabs, the framing sky with a 2 by 2 mosaic, and the Target and Rigs panels" loading="lazy">
+    <figcaption>A plan's workspace. The summary sits above four tabs; Framing fills the window with the sky.</figcaption>
+  </figure>
+
+  <h2 id="model">Rigs and plans appear on their own</h2>
+  <p>There is nothing to set up. Opening the Library takes every registered
+  database in as a <strong>rig</strong> and every Target Scheduler project in
+  it as a <strong>plan</strong>.</p>
+  <ul>
+    <li>Projects that share a Target Scheduler GUID across databases, as Sync
+      copies do, become one plan shot by several rigs. Projects that only share
+      a name stay separate plans.</li>
+    <li>What Target Scheduler already holds becomes the plan's first draft:
+      its targets become the framing, with a mosaic grid when the targets form
+      one, and its exposure plans become goals per filter.</li>
+    <li>Until you save or activate the plan, it follows Target Scheduler. A
+      desired count raised or a target moved in N.I.N.A. shows up on the next
+      listing. After the first save, the drafts are yours.</li>
+    <li>A plan covers one target or one mosaic. A project of separate targets
+      is drafted from its first target, and Target Scheduler keeps running the
+      rest.</li>
+  </ul>
+  <p>Each rig database gets a small identity table, so a moved or renamed file
+  stays the same rig. The tables PSF Guard adds are plain SQL; N.I.N.A. and
+  Target Scheduler open the file as before.</p>
+
+  <h2 id="library">Plans in the Library</h2>
+  <p>A plan has no list of its own: it is its projects in the
+  <a href="grader.html#overview">Library</a>. A plan shot by several rigs is an
+  outer pill, <strong>N rigs</strong>, with the plan's total progress, its stage
+  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Active on N
+  rigs</strong>) and a <strong>Planning</strong> button. Under it sits one row per
+  rig, since each rig holds its own targets and frame counts.</p>
+  <figure>
+    <img src="../assets/library-plans.png" alt="Plans with nothing captured yet, with each plan's stage, rig database and Target Scheduler state" loading="lazy">
+    <figcaption>Plans framed or activated before any rig captures a frame wait below the projects.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Planning</strong> (⚙ on a compact row) opens the plan's
+      workspace.</li>
+    <li><strong>Plans with nothing captured yet</strong>, below the projects,
+      lists plans framed before any rig takes them and plans activated on rigs
+      that have not captured a frame. <strong>New plan</strong> starts one; the
+      pencil renames one.</li>
+    <li>The <strong>Show</strong> select and the search box narrow plans and
+      projects together. <strong>No database</strong> keeps plans nothing shoots
+      yet.</li>
+    <li>On a server with database management, a row's state pill is a select:
+      <strong>Active</strong>, <strong>Inactive</strong>, <strong>Draft</strong> or
+      <strong>Closed</strong> writes that project in Target Scheduler at once.</li>
+  </ul>
+
+  <h2 id="workspace">Open a plan's workspace</h2>
+  <p>Choose <strong>Planning</strong> on a Library row, or pick the project in
+  the header and choose <strong>Planning</strong> there. A plan with no
+  database yet starts its framing from a name or typed coordinates.</p>
+  <p>The workspace has a summary at the top (target, goals, each rig's setup
+  and the activation state) and four tabs:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tab</th><th>What it holds</th></tr>
+      <tr><td><strong>Framing</strong></td><td>The target, camera angle, mosaic
+        grid and each rig's field on a survey image, with tonight's visibility.
+        See <a href="framing.html">Framing</a>.</td></tr>
+      <tr><td><strong>Exposures</strong></td><td>Goals per filter, and for each
+        rig its template, exposure length and frames. See
+        <a href="activation.html#exposures">Exposures</a>.</td></tr>
+      <tr><td><strong>Rigs</strong></td><td>Each rig's database project, its
+        Target Scheduler settings and targets, and the plan's scheduling limits.
+        See <a href="activation.html#rigs-tab">Rigs tab</a>.</td></tr>
+      <tr><td><strong>Priority and defaults</strong></td><td>Project order and
+        scheduling defaults for every plan, a site or a rig.</td></tr>
+    </table>
+  </div>
+  <p>The workspace address is <code>/plan?plan=&lt;key&gt;</code>. The key is the
+  Target Scheduler GUID the plan's rigs share, so one link opens the same plan
+  on any PSF Guard that holds those databases. The open tab is part of the
+  address.</p>
+
+  <h2 id="save">Save from one bar</h2>
+  <p>Edits wait for the save bar at the top of the page. It names every section
+  with unsaved changes and lists what changed. Switching tabs keeps edits.
+  Leaving the page, closing the tab, or opening another plan with edits unsaved
+  asks first.</p>
+  <p>A copy saved elsewhere never replaces your edits. The tab says the plan
+  changed and offers <strong>Reload</strong>; the bar will not save over it.</p>
+
+  <h2 id="activate">Activate</h2>
+  <p>Activation writes the saved plan into each rig's Target Scheduler
+  database. Once every edit is saved, a bar asks for an activation while the
+  rigs lack the saved plan; <strong>Activate…</strong> opens the preview. The
+  summary reads <strong>On the rigs</strong> when nothing is missing, and
+  <strong>Drafts only</strong> on a server that does not write rig databases.
+  See <a href="activation.html#activate">Activation</a>.</p>
+
+  <h2 id="priority">Order projects</h2>
+  <p>Open <strong>Priority and defaults</strong> and unfold <strong>Project
+  priority</strong>. Move projects with the up and down buttons and save the
+  <strong>Global order</strong> once for all rigs. A site or rig override
+  replaces that list for its rigs; tick <strong>Use inherited order</strong> to
+  go back to the parent order.</p>
+  <p>The highest eligible project runs first. Finished work, blocked filters,
+  horizon and meridian limits still stop acquisition. Goal priorities choose
+  work inside a project; they never lift a lower-ranked project. New projects
+  follow the saved list by name until you rank them. The list holds up to 1024
+  projects.</p>
+  <figure>
+    <img src="../assets/plan-priority.png" alt="Project priority: Scope and Rig selects and the Global order with up and down buttons" loading="lazy">
+    <figcaption>Project priority, folded, says where the plan stands in the order.</figcaption>
+  </figure>
+
+  <h2 id="scheduling">Scheduling limits</h2>
+  <p>A plan carries Target Scheduler's per-project limits: minimum time,
+  minimum and maximum altitude, custom horizon and its offset, meridian window,
+  filter switch frequency, dither interval and smart exposure order.</p>
+  <ul>
+    <li>Set defaults for every plan, or for one site, on <strong>Priority and
+      defaults</strong>.</li>
+    <li>Set a rig's own under <a href="rigs.html#limits">Setup › Limits and
+      delivery</a>.</li>
+    <li>Set one plan's own on its <strong>Rigs</strong> tab under
+      <strong>Scheduling limits for every rig</strong>. A table shows what each
+      rig gets and where each value comes from.</li>
+  </ul>
+  <p>The nearest scope that sets a limit wins: plan, then rig, then the rig's
+  site, then global. An empty field inherits and says from where. A limit nobody
+  sets keeps Target Scheduler's default. Activation writes the resolved limits
+  into each rig's project, so they hold when Target Scheduler runs the rig on
+  its own.</p>
+  <figure>
+    <img src="../assets/plan-scheduling-limits.png" alt="Scheduling limits for every rig: inherited fields and a per-rig table naming where each value comes from" loading="lazy">
+    <figcaption>Empty fields inherit. The table shows what each rig gets and where it comes from.</figcaption>
+  </figure>
+
+  <h2 id="attach">Attach and detach projects</h2>
+  <p>Two rigs that each made their own project for one target are two plans,
+  since their GUIDs differ. In one plan's workspace, attach the other's project:
+  the list offers projects in databases this plan has none in. Attaching moves
+  the other plan's database links here and retires it. This plan keeps its own
+  framing and goals and takes the other's only where it has none.</p>
+  <p><strong>Detach</strong> gives a database's project a plan of its own again.
+  When this plan has work for that rig, Detach says how many goals go and asks
+  first. The project keeps its rows in Target Scheduler either way.</p>
+
+  <h2 id="guids">Fill in missing GUIDs</h2>
+  <p>Target Scheduler skips GUIDs for existing rows when a database jumps past
+  its schema 22 in one upgrade, and such projects cannot be planned.
+  <strong>Settings › Databases</strong> says how many rows are affected and
+  offers <strong>Fill in GUIDs</strong>. It copies the file beside itself first
+  (<code>&lt;file&gt;.before-guid-fill-&lt;seconds&gt;</code>), then fills only the
+  empty GUIDs.</p>
+  <pre><code>psf-guard -d schedulerdb.sqlite fill-guids --dry-run
+psf-guard -d schedulerdb.sqlite fill-guids</code></pre>
+  <div class="callout">Close N.I.N.A. on that rig first, and fill the rig's own
+  database, not a sync copy, so the GUIDs start where the rows do.</div>
+
+  <h2 id="store">Where plans are kept</h2>
+  <p>Drafts, rig profiles, sites and the template library live in
+  <code>director-meta.sqlite</code> beside the database registry, or at
+  <code>--director-meta &lt;path&gt;</code>. Back it up with the registry. Docker
+  keeps it under <code>/data/config</code>. Director remains the name of the
+  N.I.N.A. plugin, its protocol and the API.</p>
+
+  <nav class="next-prev">
+    <a href="exporting.html">← Export &amp; AstroBin</a>
+    <a href="framing.html">Framing →</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

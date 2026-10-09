@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Export for Stacking — PSF Guard</title>
-  <meta name="description" content="Export accepted lights and matched calibration frames as a ZIP, to a desktop folder, or into a configured server directory in grouped or WBPP layouts.">
+  <title>Export &amp; AstroBin — PSF Guard</title>
+  <meta name="description" content="Export accepted lights and matched calibration frames as a zip, a folder or a server export, in grouped or WBPP layouts, and write AstroBin acquisition CSVs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=5">
 <!-- google-tag:start -->
@@ -75,24 +75,37 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="install.html">Installation</a></li>
-    <li><a href="grader.html">The Grader UI</a></li>
-    <li><a href="importing.html">Add Images & Plan</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
   </ul>
-  <h4>Analyze</h4>
+  <h4>Review</h4>
   <ul>
     <li><a href="screening.html">Quality Screening</a></li>
     <li><a href="astrometry.html">Sky Context & Solver</a></li>
     <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
     <li><a href="satellites.html">Satellite Tracks</a></li>
-    <li><a href="stacking.html">Stack Previews</a></li>
     <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="exporting.html" class="active" aria-current="page">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="exporting.html" class="active" aria-current="page">Export for Stacking</a></li>
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
+    <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -124,180 +137,303 @@ function gtag_report_demo() {
 <!-- docs-nav:end -->
 
 <main class="docs-main">
-  <h1>Export for Stacking</h1>
-  <p class="lede">
-    You can compile reviewed light frames and their matching calibration frames into a structured directory for stacking without modifying or moving your source files. You can export projects or targets from the Library page, download them as a ZIP archive, run background exports on a remote server, or use the CLI for automated batch operations.
-  </p>
+  <h1>Export &amp; AstroBin</h1>
+  <p class="lede">Gather reviewed lights and their matched calibration frames
+  into a folder tree for another stacker, without moving or changing your
+  source files. Write the acquisition CSV that AstroBin's upload page
+  imports.</p>
 
   <div class="workflow-note simple">
     <div class="workflow-tag">Export</div>
-    <div class="workflow-copy"><strong>The system includes accepted lights and always excludes rejected frames.</strong><p>You can select either a target-grouped directory structure or a PixInsight WBPP-compatible layout.</p></div>
-    <a class="workflow-link" href="#overview">You can begin the export from the Library page ↓</a>
+    <div class="workflow-copy"><strong>Accepted lights go in; rejected frames never do.</strong><p>Choose a tree grouped by target, or a PixInsight WBPP tree with its runner script.</p></div>
+    <a class="workflow-link" href="#overview">Export from the Library ↓</a>
   </div>
 
-  <h2 id="modes">You can select from several export modes.</h2>
+  <h2 id="modes">Where to export</h2>
   <div class="table-wrap">
     <table>
-      <tr><th>Where</th><th>Result</th><th>Best for</th></tr>
-      <tr><td>Desktop app</td><td>Local folder, hardlinked when possible</td><td>Fast export on the grading machine with little extra disk use</td></tr>
-      <tr><td>Browser</td><td>Streaming ZIP, or a background server export when a destination is configured</td><td>Remote servers and NAS installs</td></tr>
-      <tr><td>CLI</td><td>Local folder, copy or hardlink</td><td>Automation, filters, dry runs, and repeat exports</td></tr>
-      <tr><td>HTTP API</td><td>Streaming ZIP or server-local folder</td><td>Custom tools and scheduled jobs</td></tr>
+      <tr><th>Where</th><th>Result</th></tr>
+      <tr><td>Desktop app</td><td>A folder you choose. Hard links on the same drive, copies elsewhere.</td></tr>
+      <tr><td>Browser</td><td>A zip download, or a background export on the server when the database has a server export directory.</td></tr>
+      <tr><td>CLI</td><td>A folder: copies, hard links, clones, symbolic links, or a WBPP runner that names the frames where they are.</td></tr>
+      <tr><td>HTTP API</td><td>A zip stream, a folder on the server, or a background export into the server export directory.</td></tr>
     </table>
   </div>
 
-  <h2 id="selection">The system exports accepted files based on their grades.</h2>
+  <h2 id="selection">What goes in</h2>
   <div class="table-wrap">
     <table>
-      <tr><th>Grade</th><th>Default</th><th>Optional</th></tr>
-      <tr><td>Accepted</td><td>Exported</td><td>Can be scoped by project, target, or filter</td></tr>
-      <tr><td>Pending</td><td>Skipped</td><td>Add with <code>--include-pending</code> or the API option</td></tr>
-      <tr><td>Rejected</td><td>Never exported</td><td>Cannot be enabled</td></tr>
+      <tr><th>Grade</th><th>Exported</th></tr>
+      <tr><td>Accepted</td><td>Always, scoped by project, target or filter.</td></tr>
+      <tr><td>Pending</td><td>When <strong>Include ungraded lights</strong> is ticked, which it is by default in the dialog. The CLI and API add them with <code>--include-pending</code> or <code>include_pending</code>.</td></tr>
+      <tr><td>Rejected</td><td>Never.</td></tr>
     </table>
   </div>
-  <p>Export reads the grade and image basename from the active catalog, then
-  resolves the file through that catalog's configured image folders. It does
-  not change grades, edit image files, or move anything out of the source
-  library.</p>
+  <p>Export reads grades and file names from the catalog and finds the files
+  under its image folders. It never changes grades, edits files or moves
+  anything out of the source library.</p>
   <div class="callout info">
-    PSF Guard adds the raw bias, dark, dark-flat, and flat frames safely matched
-    to each selected light. The same hard camera, sensor, capture, filter, and
-    optical gates used by stack previews decide what is safe. See
-    <a href="calibration.html#matching">Calibration Libraries</a>.
+    Each light brings the raw bias, dark, dark-flat and flat frames a stack
+    would build its masters from: the nearest safe set of each kind. Darks that
+    caught stray light stay out. See <a href="calibration.html#export">Calibration
+    Libraries</a>.
   </div>
 
-  <h2 id="layout">The system offers two different directory layouts.</h2>
-  <p>Every export surface offers two trees. <strong>Grouped by target</strong>
-  remains the default and works naturally with Siril and manual processing:</p>
+  <h2 id="overview">Export from the Library</h2>
+  <ol>
+    <li>Finish grading the frames you want to stack.</li>
+    <li>In the <strong>Library</strong>, open the project's full card. Click
+      <strong>Export</strong> on the project for all its targets, or on one
+      target's row.</li>
+    <li>In the dialog, choose whether to include ungraded lights, the
+      <strong>Layout</strong>, the <strong>WBPP settings</strong> for a WBPP
+      tree, and how the <strong>Files</strong> land.</li>
+    <li>Click <strong>Choose folder…</strong> in the desktop app,
+      <strong>Download zip</strong> in a browser, or <strong>Start
+      export</strong> when the database has a server export directory.</li>
+  </ol>
+
+  <figure>
+    <img src="../assets/library-card.png" alt="A Library project card with Open image grid, Sequence, Stacks, Planning, Calibration and Edit project" loading="lazy">
+    <figcaption>A project's card. Export and AstroBin sit on each target row below it.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="../assets/export-dialog.png" alt="Export dialog with the WBPP layout and WBPP settings" loading="lazy">
+    <figcaption>The Export dialog. Layout and WBPP settings start from the defaults under Settings → Setups → Export.</figcaption>
+  </figure>
+
+  <p><strong>Export</strong> appears when the project or target has at least
+  one accepted frame and PSF Guard found its files. <strong>Settings &rarr; Setups
+  &rarr; Export</strong> sets the <strong>Default layout</strong> and
+  <strong>WBPP settings</strong> each dialog starts from. They are server-wide
+  and shared by the desktop app and browsers.</p>
+  <p>How the files land:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Files</th><th>What it does</th></tr>
+      <tr><td><strong>Copy</strong></td><td>The export stands on its own. The desktop app hard-links on the same drive; a server export clones where the filesystem allows. Both copy otherwise.</td></tr>
+      <tr><td><strong>Link to the originals</strong></td><td>Symbolic links, so the tree takes no space and can point at a network mount. Whatever reads it must see the originals at the same paths.</td></tr>
+      <tr><td><strong>Reference in place</strong></td><td>Copies nothing. Writes only the WBPP runner, which names every frame where it is. WBPP layout only.</td></tr>
+      <tr><td><strong>Zip of the frames</strong></td><td>Browser download: every frame, plus the runner scripts for a WBPP tree.</td></tr>
+      <tr><td><strong>Scripts only</strong></td><td>Browser download: a small zip of the runner scripts, naming each frame where it sits on the server. WBPP layout only.</td></tr>
+    </table>
+  </div>
+  <p>With <strong>Reference in place</strong>, <strong>Server path</strong> is the
+  folder the frame list is relative to, filled with what the database's image
+  folders share. <strong>PixInsight path</strong> is the same folder on the
+  PixInsight machine, if it differs. Server path
+  <code>/mnt/barium/astrobin</code> and PixInsight path <code>P:\</code> list
+  the frames as <code>P:/_ByTelescope/…</code>. A frame outside the server path
+  keeps its full path.</p>
+
+  <h3>Desktop app</h3>
+  <p>The desktop app writes into the chosen folder. It tries a hard link first,
+  which is instant and takes no extra space on the same filesystem, and copies
+  when it cannot link. A summary counts linked, copied, already present,
+  missing and failed files.</p>
+
+  <h3>Browser</h3>
+  <p>Without a server export directory, the browser streams an uncompressed
+  zip. Image data does not compress well, so store mode saves CPU and the
+  download starts at once.</p>
+
+  <h3>Server export directory</h3>
+  <p>For a NAS or headless server, set an absolute <strong>Server export
+  directory</strong> under <strong>Settings &rarr; Databases &rarr; Edit</strong>,
+  or <code>export_dir</code> in the registry entry. <strong>Export</strong> then
+  starts a background job that writes a subfolder for the project or target
+  and shows its progress.</p>
+  <div class="callout info">
+    Once an administrator sets this directory, exports write only inside it.
+    They do not need the database-management grant, and a browser cannot
+    choose another server path.
+  </div>
+
+  <h2 id="layout">Layouts</h2>
+  <p><strong>Grouped by target</strong> is the default and suits Siril and
+  manual processing:</p>
   <pre><code>destination/
 ├── BIAS/
 ├── DARK/300s_G100/
 ├── DARKFLAT/2s_G100/
 └── California Nebula/
-    ├── FLAT/HA/
+    ├── FLAT/HA/SESSION_2026-08-18/
     └── LIGHT/HA/</code></pre>
-  <p>Flats stay under the target whose lights selected them. Two targets can
-  need different dust maps for the same filter, and merging those frames would
-  build the wrong master.</p>
-
-  <p><strong>WBPP</strong> uses the frame-type roots expected by PixInsight
-  WeightedBatchPreprocessing:</p>
+  <p>Flats stay under the target whose lights chose them, in a folder per
+  night: two targets, or two nights of one target, can need different flats
+  for one filter, and merging them would build the wrong master. Folders are
+  dated by the catalog's observing night, so dusk and dawn flats share one
+  date.</p>
+  <p><strong>WBPP</strong> uses the frame-type roots that PixInsight's
+  WeightedBatchPreprocessing expects:</p>
   <pre><code>destination/
 ├── bias/G100/
 ├── darks/300s_G100/
-├── flats/California Nebula/HA/
-└── lights/California Nebula/HA/</code></pre>
-  <p>Dark flats live in <code>darks/</code> because WBPP pairs them to flats by
-  exposure rather than using a separate frame type. A WBPP export also includes
-  <code>run-wbpp.sh</code> and <code>run-wbpp.cmd</code>. They start PixInsight's
-  WBPP 3.x command-line handoff in <code>loadOnly</code> mode, leaving the dialog
-  open so you can inspect grouping and references before starting the full run.
-  Remove that one line from the script when the same reviewed export should run
-  automatically.</p>
-  <p>WBPP writes progress to its own console and logs, not the launching
-  terminal. Results land below <code>wbpp-out/master</code> and
-  <code>wbpp-out/calibrated</code>; inspect <code>wbpp-out/logs/*.log</code> for
-  the final status.</p>
-  <p>PSF Guard keeps each source basename in either tree. If two selected files
-  would land at the same path, later names gain a numeric suffix instead of
-  overwriting the first.</p>
+├── flats/California Nebula/HA/SESSION_2026-08-18/
+├── lights/California Nebula/HA/SESSION_2026-08-18/
+├── run-wbpp.js
+├── run-wbpp.sh
+└── run-wbpp.cmd</code></pre>
+  <p>Dark flats go in <code>darks/</code>, since WBPP pairs a dark to a flat by
+  exposure. Each light's path names the same night as its flats, and the runner
+  tells WBPP to group by <code>SESSION</code>, so each night's lights calibrate
+  with that night's flats while bias and darks serve every night.</p>
 
-  <h2 id="overview">You can perform exports directly from the Library page.</h2>
-  <ol>
-    <li>Finish grading the frames you want to stack.</li>
-    <li>Return to <strong>Library</strong> and expand the project.</li>
-    <li>Choose <strong>Grouped by target</strong> or <strong>WBPP</strong> from
-      the page's <strong>Export layout</strong> control.</li>
-    <li>Choose <strong>⬇ Export</strong> on the project to export all its
-      accepted targets, or on one target to narrow the result.</li>
-    <li>In the desktop app, choose a destination folder. In a browser, save the
-      ZIP or let the configured server export run in the background.</li>
-  </ol>
-  <figure>
-    <img src="../assets/export-overview.png" alt="Library project card with accepted and rejected counts and the Export action">
-    <figcaption>Export a whole project from its expanded Library card.</figcaption>
-  </figure>
-  <p>The action appears only when that project or target has at least one
-  accepted frame and PSF Guard has found its image files. If it is missing,
-  check the accepted count and refresh file discovery in Settings.</p>
+  <h3 id="darksets">Dark sets per night</h3>
+  <p>A WBPP export builds the same dark masters a stack would. When lights of
+  one exposure and gain were matched to different darks, say each to its own
+  complete night, each set of darks goes in a
+  <code>darks/300s_G100/DARKSET_&lt;night&gt;/</code> folder named for its
+  nearest dark, and each light's path names its set. The runner groups by
+  <code>SESSION</code> and <code>DARKSET</code>, so each set serves only its own
+  lights and WBPP no longer averages every night's darks into one master.
+  When the lights share one set, there is no <code>DARKSET</code> folder.</p>
+  <p>Both layouts keep each file's name. When two files would land at the same
+  path, the later one gains a number instead of overwriting the first.</p>
 
-  <h3>The desktop app performs local exports.</h3>
-  <p>The desktop app places files straight into the chosen folder. It tries a
-  hardlink first, which is instant and uses no extra data blocks when source
-  and destination share a filesystem. If the link cannot be made, PSF Guard
-  copies the file. A summary reports linked, copied, already present, missing,
-  and failed files.</p>
+  <h2 id="wbpp">Run a WBPP export</h2>
+  <p>A WBPP export carries three files:</p>
+  <ul>
+    <li><code>run-wbpp.js</code>, the PixInsight script. It holds the frames, the
+      WBPP settings, and the per-group drizzle and Fast Integration choices WBPP
+      has no command-line parameter for.</li>
+    <li><code>run-wbpp.sh</code> and <code>run-wbpp.cmd</code> start PixInsight
+      on that script, writing to <code>wbpp-out</code> beside it. Set
+      <code>PI_ROOT</code> or <code>PI_BIN</code> when PixInsight is not in the
+      standard place.</li>
+  </ul>
+  <p>By default the script loads the frames and stops at WBPP's dialog, so you
+  can check the groups and references before an hour of integration. Append
+  <code>,run</code> to <code>PARAMS</code> in the launcher to go straight
+  through. Anything else appended to <code>PARAMS</code> reaches WBPP. On a
+  Linux machine without a display, run <code>xvfb-run -a ./run-wbpp.sh</code>.</p>
+  <p>WBPP writes to its own console and logs, not the terminal. Masters land in
+  <code>wbpp-out/master</code> and calibrated frames in
+  <code>wbpp-out/calibrated</code>; read <code>wbpp-out/logs/*.log</code> for
+  the outcome. To run WBPP on the server from PSF Guard instead, see
+  <a href="wbpp.html">WBPP Runs</a>; the settings are explained there.</p>
 
-  <h3>The browser or remote server performs streaming or background exports.</h3>
-  <p>Without a server destination, the browser streams an uncompressed ZIP.
-  Image data is already hard to compress, so store mode avoids wasted CPU and
-  starts the download at once.</p>
-  <p>For a NAS or headless host, set an absolute <strong>Server export
-  directory</strong> under <strong>Settings &rarr; Databases &rarr; Edit</strong>,
-  or set <code>export_dir</code> in the registry entry. The Library Export
-  action will then start a background job for that catalog. The UI shows
-  planning and file progress. PSF Guard creates a validated subfolder for the
-  selected project or target. It uses reflinks when the filesystem supports
-  them and copies the files otherwise. A WBPP export creates its runner after
-  the files are ready.</p>
-  <div class="callout info">
-    After an administrator configures this directory, exports may write only
-    inside it. These exports do not need the broader database-management
-    permission. The browser cannot choose another server path.
-  </div>
-
-  <h2 id="cli">You can run exports from the command-line interface.</h2>
-  <pre><code><span class="c"># Preview the plan, then copy accepted lights and safe calibration frames</span>
+  <h2 id="cli">Export from the command line</h2>
+  <pre><code><span class="c"># Preview the plan, then copy accepted lights and their calibration frames</span>
 psf-guard export my-db --dest ./stacking --dry-run
 psf-guard export my-db --dest ./stacking
 
-<span class="c"># Build the PixInsight WBPP tree and generated handoff scripts</span>
+<span class="c"># A WBPP tree with its runner scripts</span>
 psf-guard export my-db --dest ./stacking --layout wbpp
 
-<span class="c"># One target and filter; hardlink when possible</span>
+<span class="c"># Only the runner, naming frames where they are, for PixInsight on P:\</span>
+psf-guard export my-db --dest ./wbpp-run --layout wbpp \
+  --placement reference --local-root /mnt/barium/astrobin --remote-root 'P:\'
+
+<span class="c"># One target and filter; hard-link when possible</span>
 psf-guard export my-db --dest ./stacking \
   --target "California Nebula" --filter HA --link
 
-<span class="c"># Include ungraded frames as well as Accepted</span>
-psf-guard export my-db --dest ./stacking --include-pending
-
-<span class="c"># A raw SQLite path needs its image search roots</span>
+<span class="c"># A raw SQLite path needs its image folders</span>
 psf-guard export schedulerdb.sqlite --dest ./stacking \
   --image-dirs /data/lights,/archive/lights</code></pre>
   <div class="table-wrap">
     <table>
       <tr><th>Option</th><th>Effect</th></tr>
-      <tr><td><code>--project NAME</code></td><td>Project-name substring match</td></tr>
-      <tr><td><code>--target NAME</code></td><td>Target-name substring match</td></tr>
-      <tr><td><code>--filter NAME</code></td><td>Exact filter match, ignoring case</td></tr>
+      <tr><td><code>--project NAME</code></td><td>Project name, substring match</td></tr>
+      <tr><td><code>--target NAME</code></td><td>Target name, substring match</td></tr>
+      <tr><td><code>--filter NAME</code></td><td>One filter, exact match ignoring case</td></tr>
       <tr><td><code>--include-pending</code></td><td>Add Pending frames; Rejected still stay out</td></tr>
-      <tr><td><code>--layout grouped|wbpp</code></td><td>Choose the default target-grouped tree or PixInsight WBPP roots and scripts</td></tr>
-      <tr><td><code>--link</code></td><td>Try hardlinks, then fall back to copying</td></tr>
+      <tr><td><code>--layout standard|wbpp</code></td><td>Grouped by target (default) or the WBPP tree with its runner</td></tr>
+      <tr><td><code>--placement MODE</code></td><td><code>copy</code> (default), <code>hardlink</code>, <code>reflink</code>, <code>symlink</code>, or <code>reference</code> (WBPP only)</td></tr>
+      <tr><td><code>--link</code></td><td>Same as <code>--placement hardlink</code>: hard-link, else copy</td></tr>
+      <tr><td><code>--local-root</code>, <code>--remote-root</code></td><td>For <code>reference</code>: the folder frames are listed below, as this machine and the PixInsight machine see it</td></tr>
+      <tr><td><code>--wbpp-quality</code></td><td><code>maximum</code> (default), <code>good</code>, <code>fast</code></td></tr>
+      <tr><td><code>--wbpp-fast-integration</code></td><td><code>off</code> (default), <code>auto</code>, <code>on</code></td></tr>
+      <tr><td><code>--wbpp-drizzle</code></td><td><code>off</code> (default), <code>2x</code>, <code>3x</code></td></tr>
+      <tr><td><code>--wbpp-autocrop</code></td><td><code>true</code> or <code>false</code>; WBPP's default is on</td></tr>
+      <tr><td><code>--wbpp-rejection</code></td><td><code>auto</code>, <code>winsorized-sigma</code>, <code>linear-fit</code>, <code>esd</code>, <code>rcr</code>, <code>percentile-clip</code></td></tr>
       <tr><td><code>--dry-run</code></td><td>Print the plan without writing files</td></tr>
-      <tr><td><code>--image-dirs DIRS</code></td><td>Comma-separated search roots for a raw database path</td></tr>
+      <tr><td><code>--image-dirs DIRS</code></td><td>Comma-separated image folders for a raw database path</td></tr>
     </table>
   </div>
 
-  <h2 id="repeat">You can repeat exports without duplicating files or overwriting changes.</h2>
-  <p>Export is designed to top up a stacking folder after each session.</p>
+  <h2 id="repeat">Export again after each session</h2>
   <ul>
-    <li>A destination file with the expected size is counted as already
-      present and skipped.</li>
+    <li>A file already at the destination with the expected size counts as
+      present and is skipped.</li>
     <li>Newly accepted frames are added on the next run.</li>
-    <li>Source files and database grades are never changed.</li>
-    <li>Files that cannot be found are reported and do not stop other local
-      files from exporting.</li>
+    <li>Files that cannot be found are reported and do not stop the rest.</li>
   </ul>
   <div class="callout">
-    Export does not remove a file that you reject after an earlier export.
-    Start with a new destination or remove that exported copy before the final
-    stacking run.
+    Export does not remove a file you rejected after an earlier export. Start a
+    new destination, or delete that copy, before the final stacking run.
   </div>
 
-  <h2 id="api">You can automate export operations using the HTTP API.</h2>
-  <pre><code><span class="c"># Stream one target and its calibration frames as a WBPP ZIP</span>
+  <h2 id="astrobin">Write the AstroBin acquisition CSV</h2>
+  <p>AstroBin's upload page takes a CSV of imaging sessions on its acquisition
+  step. Click <strong>AstroBin</strong> next to <strong>Export</strong> on a
+  project's full card or a target row in the Library. The dialog previews the
+  rows, offers <strong>Copy CSV</strong> and <strong>Download CSV</strong>, and
+  asks for the AstroBin id of any filter it does not know yet.</p>
+
+  <figure>
+    <img src="../assets/astrobin-dialog.png" alt="AstroBin acquisitions dialog: Essentials or Full detail, Count ungraded lights, filter ids and the row table" loading="lazy">
+    <figcaption>One row per night, filter and exposure length, ready for AstroBin's CSV import.</figcaption>
+  </figure>
+
+  <p>A row is one night, one filter and one exposure length. Nights split where
+  the catalog's lights are never captured, as in Sky Coverage, so a session
+  past midnight stays one row. Accepted lights always count, ungraded lights
+  count unless you untick <strong>Count ungraded lights</strong>, and rejected
+  lights never count.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Detail</th><th>Columns</th></tr>
+      <tr><td><strong>Essentials</strong> (default)</td><td><code>date</code>, <code>filter</code>, <code>number</code>, <code>duration</code>. Reads only the catalog, so it is instant.</td></tr>
+      <tr><td><strong>Full</strong></td><td>Adds <code>binning</code>, <code>gain</code>, <code>sensorCooling</code> (mean sensor temperature), <code>fNumber</code>, the <code>darks</code>, <code>flats</code>, <code>flatDarks</code> and <code>bias</code> a stack would use for that night and filter, and <code>temperature</code> (mean focuser probe temperature). Rows also split by binning and gain.</td></tr>
+    </table>
+  </div>
+  <p>Full detail reads one light per night and filter from disk, header only.
+  Columns PSF Guard cannot know, such as <code>bortle</code> and
+  <code>meanFwhm</code>, are left out, and AstroBin treats them as blank.</p>
+
+  <h3 id="astrobin-filters">Filter ids</h3>
+  <p>AstroBin knows a filter by the number in its equipment page's address,
+  for example <code>…/equipment/explorer/filter/4049/…</code>, not by name. A
+  catalog's "G" says nothing about which G, so each catalog keeps its own
+  filter map under <strong>Settings &rarr; Databases &rarr; AstroBin
+  filters</strong>: the name as the catalog spells it, the AstroBin id, what
+  the filter is, and, when the rig's filter changed, the first and last night
+  the entry covers. Paste the filter's page address or the number alone. Each
+  saved id links back to its page.</p>
+  <p>The map lives in the catalog, so it travels with the rig's database, and
+  editing it needs database management. Ids you enter in the export dialog are
+  saved to this catalog's map with <strong>Save filter ids</strong>. <strong>Settings &rarr; Setups &rarr;
+  AstroBin</strong> holds server-wide defaults by name for names no catalog
+  entry covers. A filter with no id gets a blank cell, and the rest of the row
+  still imports.</p>
+
+  <figure>
+    <img src="../assets/astrobin-filter-map.png" alt="AstroBin filters for one catalog, with a G filter that changed on a date" loading="lazy">
+    <figcaption>A catalog's filter map; a filter that changed between nights gets two entries.</figcaption>
+  </figure>
+
+  <p>The CLI writes the same file:</p>
+  <pre><code>psf-guard astrobin-csv my-db --target-id 12
+psf-guard astrobin-csv my-db --project-id 3 --detail full --include-pending -o m31.csv
+psf-guard astrobin-csv my-db --target-id 12 --filter-id L=4049 --filter-id Ha=4051</code></pre>
+  <p><code>my-db</code> is a registry slug or a Target Scheduler database path.
+  <code>--detail full</code> needs the image folders, from the registry entry
+  or <code>--image-dirs</code>. On AstroBin, choose the CSV import on the
+  acquisition step and paste or upload the file. AstroBin drops a value it
+  cannot read without saying so, so check the rows in PSF Guard's preview
+  first.</p>
+
+  <h2 id="api">HTTP API</h2>
+  <pre><code><span class="c"># Stream one target and its calibration frames as a WBPP zip</span>
 curl "http://localhost:3000/api/db/my-db/export?target_id=42&amp;layout=wbpp" \
   --output psf-guard-export.zip
+
+<span class="c"># Only the runner scripts, naming frames where they sit on the server</span>
+curl "http://localhost:3000/api/db/my-db/export?target_id=42&amp;layout=wbpp&amp;placement=reference" \
+  --output wbpp-scripts.zip
 
 <span class="c"># Preview a folder export on the server's own filesystem</span>
 curl -X POST "http://localhost:3000/api/db/my-db/export/local" \
@@ -308,62 +444,72 @@ curl -X POST "http://localhost:3000/api/db/my-db/export/local" \
 curl -X POST "http://localhost:3000/api/db/my-db/export/server" \
   -H "Content-Type: application/json" \
   -d '{"project_id":7,"layout":"wbpp","subdirectory":"project-7"}'
-curl "http://localhost:3000/api/db/my-db/export/server"</code></pre>
-  <p>The ZIP route is read-only. The server-local route can write arbitrary
-  paths and therefore requires <code>--allow-database-management</code>.
-  Query/body options are <code>project_id</code>, <code>target_id</code>,
-  <code>include_pending</code>, <code>filter_name</code>, and
-  <code>layout</code>; the local route also accepts <code>link</code> and
-  <code>dry_run</code>. The configured server route accepts the same selection
-  and layout fields. It also accepts one validated <code>subdirectory</code>
-  name. It cannot write outside the configured <code>export_dir</code>.</p>
+curl "http://localhost:3000/api/db/my-db/export/server"
 
-  <h2 id="photoshop">Continue processing FITS and XISF in Photoshop</h2>
-  <p>After grading and stacking, you can open your FITS or XISF results directly
-  in Photoshop with the separate
+<span class="c"># The AstroBin CSV for one target</span>
+curl "http://localhost:3000/api/db/my-db/astrobin-export.csv?target_id=42&amp;detail=full" \
+  --output m31.csv</code></pre>
+  <p>The zip route and the AstroBin route only read. The local route can write
+  anywhere on the server, so it needs <code>--allow-database-management</code>.
+  The server route writes only below the configured <code>export_dir</code>
+  and takes one <code>subdirectory</code> name.</p>
+  <p>All export routes take <code>project_id</code>, <code>target_id</code>,
+  <code>include_pending</code>, <code>filter_name</code>, <code>layout</code>
+  (<code>standard</code> or <code>wbpp</code>), <code>placement</code>,
+  <code>local_root</code> and <code>remote_root</code>. The zip route takes the
+  WBPP settings as <code>wbpp_quality</code>, <code>wbpp_fast_integration</code>,
+  <code>wbpp_drizzle</code>, <code>wbpp_autocrop</code> and
+  <code>wbpp_rejection</code>; the POST routes take them as a
+  <code>wbpp</code> object. The local route also takes <code>dry_run</code>.</p>
+
+  <h2 id="photoshop">Finish FITS and XISF in Photoshop</h2>
+  <p>The separate
   <a href="https://github.com/theatrus/xisf-photoshop">FITS and XISF Photoshop plugins</a>,
-  powered by Seiza's image codecs. The plugins import Float32 or rescaled 16-bit
-  integer images, optionally debayer Bayer mosaics to RGB, and save at the
-  document's 16- or 32-bit depth by default.</p>
-  <p><a href="https://github.com/theatrus/xisf-photoshop/releases/latest">Download the latest plugin release</a>
-  for the Windows x64 installer or manual plugin ZIP, or the signed and notarized
-  universal macOS DMG. Both formats are included. Close Photoshop before
-  installation. On macOS, open the DMG and drag both plugin bundles onto its
-  <strong>Photoshop Plug-ins</strong> shortcut, then eject it and restart Photoshop.
-  A Mac ZIP remains available as an alternative. Starting with 0.5.0, the Windows plugins
-  and installer are signed by StackFoundry LLC. See the
+  built on Seiza's image codecs, open your stacks and masters in Photoshop.
+  They import 32-bit float or rescaled 16-bit images, can debayer Bayer
+  mosaics to RGB, and save at the document's 16- or 32-bit depth by
+  default.</p>
+  <p><a href="https://github.com/theatrus/xisf-photoshop/releases/latest">Download the latest release</a>:
+  a Windows x64 installer or manual plugin zip, or a signed and notarized
+  universal macOS DMG. Close Photoshop first. On macOS, drag both plugin
+  bundles onto the DMG's <strong>Photoshop Plug-ins</strong> shortcut, eject
+  it, and restart Photoshop. Since 0.5.0 the Windows plugins and installer are
+  signed by StackFoundry LLC. See the
   <a href="https://github.com/theatrus/xisf-photoshop#download-and-install">installation guide</a>
-  for the steps for each platform.</p>
-  <p>Set defaults in <strong>Help → About Plug-In → FITS/XISF</strong> on Windows
-  or <strong>Photoshop → About Plug-In → FITS/XISF</strong> on macOS. Open asks for
-  an import choice by default; <strong>Remember choice</strong> saves it for
-  future images. Save follows the document depth without prompting by default.</p>
+  for each platform.</p>
+  <p>Set defaults in <strong>Help → About Plug-In → FITS/XISF</strong> on
+  Windows or <strong>Photoshop → About Plug-In → FITS/XISF</strong> on macOS.
+  Open asks how to import by default; <strong>Remember choice</strong> saves
+  the answer. Save follows the document depth without asking.</p>
   <div class="callout info">
-    Starting with plugin 0.5.0, same-format saves retain source headers and
-    metadata; switching formats copies compatible FITS keywords on a best-effort
-    basis. Debayered saves omit active CFA tags. Keep the original scientific
-    files: a 16-bit import rescales pixels and loses absolute scale and precision.
-    Re-solve astrometry after geometric edits; see the
+    Since plugin 0.5.0, saving to the same format keeps source headers and
+    metadata; switching formats copies compatible FITS keywords where it can.
+    Debayered saves drop active CFA tags. Keep the original files: a 16-bit
+    import rescales pixels and loses absolute scale. Re-solve astrometry after
+    geometric edits; see the
     <a href="https://github.com/theatrus/xisf-photoshop#metadata-retention">metadata retention limits</a>.
-    Save edits to new files, especially when PSF Guard's exported files are
-    hardlinked to your source images, and use PSD/PSB to retain Photoshop layers.
+    Save edits to new files, above all when an export hard-linked them to your
+    source images, and use PSD or PSB to keep layers.
   </div>
 
-  <h2 id="troubleshooting">Use this troubleshooting table to resolve export issues.</h2>
+  <h2 id="troubleshooting">Troubleshooting</h2>
   <div class="table-wrap">
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
-      <tr><td>No Export action</td><td>The scope needs an Accepted frame and an image file found under the configured image folders.</td></tr>
-      <tr><td><code>nothing to export</code></td><td>You should verify the project, target, filter scope, grades, image directories, and filename metadata. You should add Pending frames only when intended.</td></tr>
-      <tr><td>Hardlinks became copies</td><td>Hardlinks require source and destination on the same filesystem and a filesystem that supports links.</td></tr>
-      <tr><td>ZIP stops or will not open</td><td>A source became unreadable during streaming. Check file access, then download again.</td></tr>
-      <tr><td>Expected calibration frames are absent</td><td>You should open the calibration library and compare the matching fields, as the system only exports frames that safely match the selected light frames.</td></tr>
+      <tr><td>No Export action</td><td>The scope needs an Accepted frame, with its file found under the database's image folders.</td></tr>
+      <tr><td><code>nothing to export</code></td><td>Check the project, target and filter scope, the grades, the image folders, and whether Pending frames should count.</td></tr>
+      <tr><td>Hard links became copies</td><td>Hard links need the source and destination on one filesystem that supports them.</td></tr>
+      <tr><td>Zip stops or will not open</td><td>A source file became unreadable during the stream. Check file access and download again.</td></tr>
+      <tr><td>Calibration frames missing</td><td>Open the project's coverage report. Only frames that safely match the lights are exported, and stray-light darks stay out.</td></tr>
+      <tr><td><strong>Reference in place</strong> unavailable</td><td>Choose the WBPP layout first.</td></tr>
+      <tr><td>The runner reports frames it cannot find</td><td>The frames are not at the listed paths on the PixInsight machine. Check <strong>PixInsight path</strong>, or edit <code>psfSourceRoot</code> at the top of <code>run-wbpp.js</code>.</td></tr>
+      <tr><td>AstroBin shows no filter</td><td>Give the filter an id in the catalog's AstroBin filter map or the dialog.</td></tr>
     </table>
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="calibration.html">← Calibration Libraries</a>
-    <a href="workflows.html">Rejects &amp; Sync →</a>
+    <a href="calibration.html">&larr; Calibration Libraries</a>
+    <a href="planning.html">Planning &rarr;</a>
   </nav>
 </main>
 </div>

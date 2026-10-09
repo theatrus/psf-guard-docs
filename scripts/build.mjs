@@ -24,28 +24,45 @@ const docsNavigation = [
     pages: [
       ["index.html", "Getting Started"],
       ["install.html", "Installation"],
-      ["grader.html", "The Grader UI"],
-      ["importing.html", "Add Images & Plan"],
+      ["grader.html", "Library & Grader"],
+      ["importing.html", "Import Images"],
     ],
   },
   {
-    label: "Analyze",
+    label: "Review",
     pages: [
       ["screening.html", "Quality Screening"],
       ["astrometry.html", "Sky Context & Solver"],
       ["astrometry-quality.html", "Astrometry Quality"],
       ["satellites.html", "Satellite Tracks"],
-      ["stacking.html", "Stack Previews"],
       ["sky.html", "Sky Coverage"],
+    ],
+  },
+  {
+    label: "Stack",
+    pages: [
+      ["stacking.html", "Stacks"],
+      ["wbpp.html", "WBPP Runs"],
       ["calibration.html", "Calibration Libraries"],
+      ["exporting.html", "Export & AstroBin"],
+    ],
+  },
+  {
+    label: "Plan",
+    pages: [
+      ["planning.html", "Planning"],
+      ["framing.html", "Framing"],
+      ["activation.html", "Exposures & Activation"],
+      ["rigs.html", "Rigs, Sites & Live"],
+      ["collaboration.html", "Collaboration"],
     ],
   },
   {
     label: "Operate",
     pages: [
-      ["exporting.html", "Export for Stacking"],
       ["workflows.html", "Rejects & Sync"],
       ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
+      ["storage.html", "Storage & Performance"],
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],
       ["authentication.html", "Server Accounts"],
