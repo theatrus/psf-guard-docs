@@ -6,7 +6,7 @@
   <title>PSF Guard — astrophotography image catalog, grading, and quality control</title>
   <meta name="description" content="Catalog FITS and XISF frames in place, grade them, find clouds and soft stars from the pixels, stack and export what passes, and plan the next nights across every rig. Target Scheduler is optional.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/site.css?v=5">
+  <link rel="stylesheet" href="css/site.css?v=6">
   <meta property="og:title" content="PSF Guard">
   <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Build from FITS folders or open a Target Scheduler database.">
   <meta property="og:image" content="https://psf-guard.com/assets/sky-context.jpg">
@@ -108,11 +108,37 @@ function gtag_report_demo() {
     Target Scheduler database layout, so it opens a live scheduler database the
     same way as one it built. Target Scheduler is optional.
   </div>
-  <p style="text-align:center; color:var(--text-dim); font-size:.85rem; margin:.7rem 0 0;">
-    More from us: <a href="https://seiza.fyi">seiza.fyi</a> — live plate solving in your browser, plus desktop apps for FITS browsing.
-    <a href="https://chatstronomy.com">Chatstronomy</a> watches your N.I.N.A. rigs and posts captures,
-    autofocus results and status to Discord or Matrix.
-  </p>
+</section>
+
+<section class="section compact" id="more">
+  <h2 class="more-title">More from us</h2>
+  <div class="more-grid">
+    <a class="more-card" href="https://chatstronomy.com/">
+      <span class="icon">💬</span>
+      <strong>Chatstronomy</strong>
+      <span>Watches your N.I.N.A. rigs and posts captures, autofocus results and status to Discord or Matrix.</span>
+    </a>
+    <a class="more-card" href="https://seiza.fyi">
+      <span class="icon">🧭</span>
+      <strong>Seiza</strong>
+      <span>Plate solving in your browser, and desktop apps for FITS. The engine behind PSF Guard's solves and stacks.</span>
+    </a>
+    <a class="more-card" href="https://theatr.us/software/astro#xisf-photoshop">
+      <span class="icon">🎨</span>
+      <strong>FITS &amp; XISF for Photoshop</strong>
+      <span>File-format plugins that open FITS and XISF files straight in Photoshop.</span>
+    </a>
+    <a class="more-card" href="https://github.com/theatrus/autopiercam">
+      <span class="icon">📷</span>
+      <strong>AutoPierCam</strong>
+      <span>A Windows tray app that keeps a still view of the rig from a ZWO ASI camera, day and night, with a pier-camera panel in N.I.N.A.</span>
+    </a>
+    <a class="more-card" href="https://pulsarfab.com/">
+      <span class="icon">🛠️</span>
+      <strong>PulsarFab</strong>
+      <span>Open astronomy hardware and the Regain equipment drivers.</span>
+    </a>
+  </div>
 </section>
 
 <div class="strip">
@@ -238,8 +264,8 @@ function gtag_report_demo() {
     WBPP on the server.
   </p>
   <figure class="feature-shot">
-    <img src="assets/stack-color-real-previews.jpg" alt="Gulf of Mexico Foraxx SHO preview built from PSF Guard channel stacks" loading="lazy">
-    <figcaption>A Foraxx SHO quick look from six narrowband channel stacks. Change the palette without restacking.</figcaption>
+    <img src="assets/stack-foraxx-teddy.jpg" alt="Foraxx SHO color preview of the Teddy Bear Nebula built from PSF Guard channel stacks" loading="lazy">
+    <figcaption>Foraxx SHO of the Teddy Bear Nebula: 517 frames, 86 hours of H-alpha, OIII and SII. Change the palette without restacking.</figcaption>
   </figure>
   <p>
     <a class="btn" href="docs/stacking.html">Stacks →</a>

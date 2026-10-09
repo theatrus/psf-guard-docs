@@ -6,7 +6,7 @@
   <title>Astrometry Quality — PSF Guard</title>
   <meta name="description" content="Plate-solve every frame from its pixels and flag off-target frames, pointing jumps and drift, rotator slips and failed solves, with reviewed rejections.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=5">
+  <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
@@ -131,6 +131,11 @@ function gtag_report_demo() {
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>
@@ -180,6 +185,11 @@ function gtag_report_demo() {
     <li><strong>Rotator slip.</strong> However long the run, a field that turned more than 5° from the framing the rest of the target shares, while the rotator's reported angle (N.I.N.A. <code>RotatorPosition</code>) did not turn with it, is skew. This catches a slip, a lost sync, or a camera turned by hand.</li>
   </ul>
   <p>A turn the rotator reported is framing someone chose. A reading that moves while the field holds still changes nothing in the pixels. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames overlap the rest less and crop the stack, so they are capped, recommended for rejection and left out of stacks. The 2° tolerance is fixed.</p>
+  <figure>
+    <img src="../assets/stack-frame-weights.png" alt="A stack's frame decisions listing two frames excluded for rotation skew, at +89.7° and −89.2° from the sequence" loading="lazy">
+    <figcaption>Two frames whose field turned about 90° while the rotator reported no turn,
+    scored 0.30 and left out of the stack.</figcaption>
+  </figure>
   <p>When Target Scheduler recorded a planned rotation for the target, the sequence response carries it beside the solved value, with their difference in <code>planned_rotation_offset_deg</code>. It is for display and flags nothing: capture software records rotation by its own convention, and a recorded 0 counts as no plan.</p>
 
   <h2 id="target">Where the intended target comes from</h2>
