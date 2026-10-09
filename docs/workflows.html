@@ -6,7 +6,7 @@
   <title>Rejects &amp; Sync — PSF Guard</title>
   <meta name="description" content="Archive rejected frames out of the stacking tree and sync captures, plans and grades between two catalogs or two PSF Guard servers.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=5">
+  <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
@@ -131,6 +131,11 @@ function gtag_report_demo() {
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>
@@ -288,10 +293,6 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   source, change counts and expiry. Expand <strong>What would change</strong>
   for the field changes, grade transitions, reject reasons, and the projects,
   targets, plans or frames to be inserted or updated, up to 400 lines.</p>
-  <figure>
-    <img src="../assets/settings-sync.png" alt="Settings › Sync: Data Transfer with Merge catalogs, Send planning and Send reviewed grades, and Remote PSF Guard" loading="lazy">
-    <figcaption>Settings › Sync: Data Transfer between catalogs, and Remote PSF Guard.</figcaption>
-  </figure>
   <ul>
     <li><strong>Apply</strong> writes the reviewed changes to the destination.</li>
     <li><strong>Refresh</strong> compares the saved source with the destination
@@ -310,6 +311,10 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   sync</strong>. A server with no Settings grants the same with a
   <code>[[remote_sync]]</code> block in its config file; see
   <a href="configuration.html#remote-blocks">Configuration</a>.</p>
+  <figure>
+    <img src="../assets/settings-remote-psf-guard.png" alt="Remote PSF Guard in Settings › Sync: peer select, Test connection, Add peer, and Pull from peer, Send planning and Send grades" loading="lazy">
+    <figcaption>Remote PSF Guard: add a peer once, then preview and apply in either direction.</figcaption>
+  </figure>
   <p>Then, on this server, open <strong>Settings &rarr; Sync &rarr; Remote PSF
   Guard</strong>:</p>
   <ol>

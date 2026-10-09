@@ -5,7 +5,7 @@ import { execSync } from "node:child_process";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
-const stylesheetVersion = 5;
+const stylesheetVersion = 6;
 const siteUrl = "https://psf-guard.com";
 
 const docsPages = fs
@@ -197,6 +197,11 @@ ${groups}
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>

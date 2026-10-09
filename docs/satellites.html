@@ -6,7 +6,7 @@
   <title>Satellite Tracks — PSF Guard</title>
   <meta name="description" content="Predict satellite crossings for a solved frame, align them with trails in the pixels, and lower scores only when the pixels confirm a trail.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=5">
+  <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
@@ -131,6 +131,11 @@ function gtag_report_demo() {
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>

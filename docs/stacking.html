@@ -6,7 +6,7 @@
   <title>Stacks — PSF Guard</title>
   <meta name="description" content="Stack graded frames on the server in PSF Guard's Stacks view: stacking method, calibration, build queue, automatic refresh, signal-to-noise by depth, color previews and mosaic panels.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=5">
+  <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
@@ -131,6 +131,11 @@ function gtag_report_demo() {
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>
@@ -272,6 +277,11 @@ function gtag_report_demo() {
       with little movement it lowers SNR. A drizzled stack skips the final
       pass.</li>
   </ul>
+  <figure>
+    <img src="../assets/stack-frame-weights.png" alt="Frame decisions for a 145-frame H-alpha stack: excluded frames with their reasons, the reference frame at weight 1.00, and accepted frames with registration RMS, star counts and weights" loading="lazy">
+    <figcaption>Frame decisions on a noise-weighted H-alpha stack. The reference weighs
+    1.00; noisier frames count for less. Rejected and rotation-skewed frames stay out.</figcaption>
+  </figure>
 
   <figure>
     <img src="../assets/settings-stacking.png" alt="Settings › Stacking: Recommended, Draft and Classic presets with Final pass, Normalization, Frame weights and Reference frame choices" loading="lazy">
@@ -518,6 +528,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     <img src="../assets/stack-color-real-previews.jpg" alt="Real Gulf of Mexico Foraxx SHO preview built from PSF Guard channel stacks" loading="lazy">
     <figcaption>Foraxx SHO of the Gulf of Mexico (NGC 7000) from 294 frames:
     100 H-alpha, 100 OIII and 94 SII.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/stack-foraxx-card.jpg" alt="A Foraxx SHO color card for the Teddy Bear Nebula: palette and edges pickers, the color preview, and its H-alpha, OIII and SII inputs, 517 frames and 86 hours" loading="lazy" style="max-width:640px">
+    <figcaption>A color card: Foraxx SHO of the Teddy Bear Nebula from 517 frames, 86 h
+    of H-alpha, OIII and SII. <strong>Masters</strong> lists the calibration behind each input.</figcaption>
   </figure>
   <figure>
     <img src="../assets/stack-narrowband-sho-real.jpg" alt="The same channel stacks combined as standard SHO" loading="lazy">

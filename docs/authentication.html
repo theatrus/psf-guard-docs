@@ -6,7 +6,7 @@
   <title>Server Accounts — PSF Guard</title>
   <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, mint API tokens, and pair remote clients safely.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="stylesheet" href="../css/site.css?v=5">
+  <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
@@ -131,6 +131,11 @@ function gtag_report_demo() {
     const sync = () => { menu.open = !narrow.matches; };
     sync();
     narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
   })();
 </script>
 </aside>
@@ -198,13 +203,9 @@ function gtag_report_demo() {
   does not. Settings will not remove the account you are signed in with, or the
   last editor.</p>
   <figure>
-    <img src="../assets/server-users.png" alt="The Users tab in PSF Guard Settings, listing an editor and a read-only reviewer" loading="lazy">
-    <figcaption>Editors manage browser accounts under Settings &rarr; Users.
-    The desktop app has no Users tab.</figcaption>
-  </figure>
-  <figure>
     <img src="../assets/settings-users.png" alt="Settings › Users: three users with their roles, and the API tokens section" loading="lazy">
-    <figcaption>Editors manage accounts and API tokens under Settings → Users.</figcaption>
+    <figcaption>Editors manage accounts and API tokens under Settings → Users.
+    The desktop app has no Users tab.</figcaption>
   </figure>
   <p>The CLI does the same. Without <code>--password-file</code> it asks for
   the password twice and shows nothing:</p>
