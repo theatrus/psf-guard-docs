@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MCP for Agents — PSF Guard</title>
-  <meta name="description" content="Connect Claude Code or another MCP client to PSF Guard at /api/mcp with an API token to read catalogs and quality evidence, grade frames, and start jobs.">
+  <meta name="description" content="Connect Claude Code, Codex or another MCP client to PSF Guard at /api/mcp to read catalogs, stacks, calibration and plans, grade frames, change plans, and start jobs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
@@ -145,23 +145,27 @@ function gtag_report_demo() {
   <h1 id="mcp-title">MCP for Agents</h1>
   <p class="lede">A running PSF Guard server is also a Model Context Protocol
   (MCP) server at <code>/api/mcp</code>, on the same port as the UI. An agent
-  such as Claude Code can list catalogs, read grades and quality evidence,
-  score a night's frames, apply grades, and start imports, quality scans and
-  WBPP runs. The same login rules guard it.</p>
+  such as Claude Code or Codex can read catalogs, grades and quality evidence,
+  look into stacks and calibration, read and change plans, grade frames, and
+  start imports, quality scans, stacks and WBPP runs. It meets the same
+  login and permission checks as a person.</p>
 
-  <h2 id="tokens">Create an API token</h2>
-  <p>On a server with user accounts, an agent signs in with a personal API
-  token, not a password. Open <strong>Settings &rarr; Users &rarr; API
-  tokens</strong>, click <strong>+ New token</strong>, give it a
-  <strong>Label</strong> such as <em>claude on laptop</em>, and choose an expiry
-  and <strong>Read only, whatever the user's role</strong> if the agent should
-  only read. Click <strong>Create token</strong> and copy it then: it is shown
+  <h2 id="tokens">Connect an agent</h2>
+  <p>On a server with user accounts, open <strong>Settings &rarr; Users &rarr;
+  API tokens</strong> and click <strong>Connect an agent</strong>. Tick
+  <strong>Let it grade and start jobs</strong> if the agent should write;
+  otherwise its token only reads. Click <strong>Create token</strong>. PSF
+  Guard makes a token of your own and shows what to paste into Claude Code and
+  into Codex, with this server's URL. Copy the token then: it is shown
   once.</p>
+  <p><strong>+ New token</strong> does the same with a <strong>Label</strong>,
+  an expiry or another user of your choosing, and <strong>Read only, whatever
+  the user's role</strong> for a token that only reads.</p>
   <figure>
     <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
-    <figcaption>Settings › Users › API tokens.</figcaption>
+    <figcaption>The <strong>+ New token</strong> form under Settings › Users › API tokens.</figcaption>
   </figure>
-  <p>The CLI does the same and prints the token once. Restart the server after a
+  <p>The CLI makes tokens too and prints each once. Restart the server after a
   CLI change:</p>
   <pre><code>psf-guard users token create editor --label "claude on laptop" --expires-days 90
 psf-guard users token list
@@ -175,58 +179,165 @@ psf-guard users token revoke &lt;id&gt;</code></pre>
   Accounts</a>.</p>
   <div class="callout info">
     A loopback server with no accounts, such as the desktop app or
-    <code>psf-guard server</code> on your own machine, needs no token. A
+    <code>psf-guard server</code> on your own machine, needs no token. Its
+    <strong>Settings &rarr; Agents</strong> tab shows the setup to paste. A
     network server with no accounts answers 401 here as everywhere else; see
     <a href="authentication.html#bind">Server Accounts</a>.
   </div>
 
-  <h2 id="connect">Connect a client</h2>
-  <p>Any client that speaks MCP's streamable HTTP transport works. Give it the
+  <h2 id="connect">Client setup</h2>
+  <p>Any client that speaks MCP's streamable HTTP transport works: give it the
   URL and the token as a bearer header. For Claude Code:</p>
   <pre><code>claude mcp add --transport http psf-guard https://guard.example/api/mcp \
   --header "Authorization: Bearer psfg_…"</code></pre>
-  <p>On the desktop app or a local server with no accounts, drop the
-  header:</p>
+  <p>For Codex, add the server to <code>~/.codex/config.toml</code> and pass the
+  token in an environment variable, so it never sits in the file:</p>
+  <pre><code>[mcp_servers.psf-guard]
+url = "https://guard.example/api/mcp"
+bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
+  <pre><code>export PSF_GUARD_TOKEN=psfg_…</code></pre>
+  <p>On the desktop app or a local server with no accounts, drop the token:</p>
   <pre><code>claude mcp add --transport http psf-guard http://127.0.0.1:3000/api/mcp</code></pre>
-  <p>The endpoint is stateless and answers in plain JSON, so a reverse proxy
-  needs nothing extra and there is no session to expire. Revoke the token to
-  cut an agent off; it stops at its next call.</p>
+  <p>The URL must end in <code>/api/mcp</code>. The bare address serves the
+  app and answers a POST with 405 and a note that names the endpoint. The
+  endpoint is stateless and answers in plain JSON, so a reverse proxy needs
+  nothing extra and there is no session to expire. Revoke the token to cut an
+  agent off; it stops at its next call.</p>
 
-  <h2 id="tools">Tools</h2>
-  <p>Every tool but <code>list_databases</code> takes a <code>database</code>:
-  the ID or name <code>list_databases</code> reports. Results are the JSON the
-  UI itself reads.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Tool</th><th>Answers</th><th>Needs</th></tr>
-      <tr><td><code>list_databases</code></td><td>Open catalogs: ID, name, path, image folders</td><td>read</td></tr>
-      <tr><td><code>list_projects</code></td><td>Projects with targets, plans, progress and recent frames</td><td>read</td></tr>
-      <tr><td><code>list_targets</code></td><td>Targets with coordinates, grade counts and last capture</td><td>read</td></tr>
-      <tr><td><code>list_images</code></td><td>Lights with grade, filter, exposure and stored metrics, filtered by project, target or grade, in pages (<code>limit</code>, <code>offset</code>)</td><td>read</td></tr>
-      <tr><td><code>get_image</code></td><td>One image: grade, file location, header metadata, metrics</td><td>read</td></tr>
-      <tr><td><code>get_image_quality</code></td><td>Score, issues, and place in the sequence, from stored evidence</td><td>read</td></tr>
-      <tr><td><code>analyze_sequence</code></td><td>Relative scores and suggested rejects for a target, a project, or the database</td><td>read</td></tr>
-      <tr><td><code>get_statistics</code></td><td>Whole-database counts</td><td>read</td></tr>
-      <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights</td><td>read</td></tr>
-      <tr><td><code>get_sky_coverage</code></td><td>Every target's footprint and exposure by filter</td><td>read</td></tr>
-      <tr><td><code>get_jobs</code></td><td>Import, quality scan and WBPP progress</td><td>read</td></tr>
-      <tr><td><code>astrobin_csv</code></td><td>The AstroBin acquisition CSV for a project or target</td><td>read</td></tr>
-      <tr><td><code>grade_images</code></td><td>Set accepted, rejected or pending with a reason; returns the grades it replaced</td><td>write</td></tr>
-      <tr><td><code>start_quality_backfill</code></td><td>Start the background quality scan</td><td>write</td></tr>
-      <tr><td><code>start_import</code></td><td>Scan the configured folders for new lights and calibration frames</td><td>write</td></tr>
-      <tr><td><code>start_wbpp_run</code></td><td>Run PixInsight WBPP on a project's or target's accepted lights</td><td>write and database management</td></tr>
-      <tr><td><code>cancel_wbpp_run</code></td><td>Stop the running WBPP run</td><td>write and database management</td></tr>
-    </table>
-  </div>
-  <p>Jobs return at once; the agent polls <code>get_jobs</code>. A tool the
-  token may not use answers with a tool error that says so, not a protocol
-  failure, so the agent can explain it. The WBPP tools need a server started
-  with <code>--allow-database-management</code>, as the UI's
-  <strong>Stack in WBPP</strong> does.</p>
+  <h2 id="access">What an agent may do</h2>
+  <p>Every tool sends its request through the same <code>/api</code> routes
+  the UI uses, as the caller. The read-only role,
+  <code>--allow-database-management</code> and each route's own checks limit an
+  agent exactly as they limit a person. A refused call comes back as a tool
+  error with the API's message, not a protocol failure, so the agent can
+  explain it. Where the server sets <code>allow_read_only_compute</code>, a
+  viewer's token can also build stacks, plate-solve and predict satellites, as
+  a viewer can in the UI.</p>
   <p>The server also gives the agent PSF Guard's ground rules: sequence
   analysis and quality context suggest, and nothing changes until
   <code>grade_images</code> runs; catalog predictions and header values are not
   pixel evidence, and a conclusion should say which it rests on.</p>
+
+  <h2 id="tools">Tools</h2>
+  <p>Catalog tools take a <code>database</code>: the ID or name
+  <code>list_databases</code> reports. Planning tools take a
+  <code>plan_id</code> from <code>list_plans</code> or a <code>rig</code> from
+  <code>list_rigs</code>. Results are the JSON the UI itself reads. When no tool
+  fits, <code>api_routes</code> lists every route <code>api_get</code> can
+  read.</p>
+
+  <h3 id="tools-catalog">Read the catalog</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>Answers</th></tr>
+      <tr><td><code>list_databases</code></td><td>Open catalogs: ID, name, path, image folders</td></tr>
+      <tr><td><code>list_projects</code></td><td>Projects with targets, plans, progress and recent frames</td></tr>
+      <tr><td><code>list_targets</code></td><td>Targets with coordinates, grade counts and last capture</td></tr>
+      <tr><td><code>get_project_scheduler</code></td><td>A project's Target Scheduler settings, targets and exposure plans</td></tr>
+      <tr><td><code>list_images</code></td><td>Lights with grade, filter, exposure and stored metrics. Filter by project, target, grade or filter name, keep only the header keys asked for (<code>metadata_keys</code>), and page with <code>limit</code> and <code>offset</code>.</td></tr>
+      <tr><td><code>get_image</code></td><td>One image: grade, file location, header metadata, metrics</td></tr>
+      <tr><td><code>get_image_quality</code></td><td>Score, issues, and place in the sequence, from stored evidence</td></tr>
+      <tr><td><code>analyze_sequence</code></td><td>Relative scores and suggested rejects for a target, a project, or the database</td></tr>
+      <tr><td><code>get_statistics</code></td><td>Whole-database counts</td></tr>
+      <tr><td><code>get_sky_coverage</code></td><td>Every target's footprint and exposure by filter</td></tr>
+      <tr><td><code>astrobin_csv</code></td><td>The AstroBin acquisition CSV for a project or target</td></tr>
+      <tr><td><code>get_jobs</code></td><td>Import, quality scan and WBPP progress</td></tr>
+      <tr><td><code>get_activity</code></td><td>Stack builds and WBPP runs across databases, running and queued</td></tr>
+      <tr><td><code>api_routes</code>, <code>api_get</code></td><td>Every route below <code>/api</code> the UI reads, and a read of any of them, as you</td></tr>
+    </table>
+  </div>
+
+  <h3 id="tools-stacks">Look into stacks and calibration</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>Answers</th></tr>
+      <tr><td><code>list_stacks</code></td><td>A project's latest stack per channel: frames used and left out, exposure, the masters each session applied, and the IDs the other stack tools take</td></tr>
+      <tr><td><code>get_stack</code></td><td>One channel frame by frame: sensor temperature, whether it was used and why, registration shift and rotation, weight, noise; and per night, whether the frames were dithered</td></tr>
+      <tr><td><code>get_stack_image</code></td><td>The stack as an image, as the app shows it or with the background stretched hard (<code>stretch: "background"</code>); crop to part of the frame</td></tr>
+      <tr><td><code>get_stack_calibration</code></td><td>The masters each session applied: the frames each was built from, with their sensor temperatures and nights, and the lights it calibrated</td></tr>
+      <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights</td></tr>
+      <tr><td><code>get_calibration_library</code></td><td>The library by night, with validity marks and masters</td></tr>
+      <tr><td><code>explain_calibration</code></td><td>Why one light got or missed each master: every library frame for its camera by night, with its temperatures, used, passed over, or refused with the reason; and what each master would span</td></tr>
+      <tr><td><code>check_uncalibrated_lights</code></td><td>A project's lights the library cannot calibrate properly, by night, filter and reason, with a <code>digest</code></td></tr>
+    </table>
+  </div>
+
+  <h3 id="tools-planning">Read Planning</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>Answers</th></tr>
+      <tr><td><code>list_plans</code></td><td>Every plan with its target, rigs, goals and state</td></tr>
+      <tr><td><code>get_plan</code></td><td>One plan: framing, rigs, and each rig's exposures per band</td></tr>
+      <tr><td><code>get_plan_progress</code></td><td>Frames per rig and objective against the goals</td></tr>
+      <tr><td><code>get_framing</code></td><td>The framing: centre, rotation, mosaic panels and the rig each uses</td></tr>
+      <tr><td><code>get_activation</code></td><td>What was last written to the rigs, and whether the plan changed since</td></tr>
+      <tr><td><code>list_rigs</code></td><td>Rig profiles and their last reported status</td></tr>
+      <tr><td><code>get_rig_preferences</code></td><td>A rig's observing preferences in force, and where each value comes from</td></tr>
+      <tr><td><code>get_rig_scheduling</code></td><td>The Target Scheduler limits a rig would write to each project, and which differ now</td></tr>
+      <tr><td><code>list_templates</code></td><td>The exposure template library, or a rig catalog's own templates</td></tr>
+      <tr><td><code>search_sky</code></td><td>Find a target by name or designation</td></tr>
+    </table>
+  </div>
+
+  <h3 id="tools-changes">Change things</h3>
+  <p>These need a token that may write. The ones marked
+  <em>management</em> also need a server started with
+  <code>--allow-database-management</code>, as their buttons in the app
+  do.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>Does</th><th>Needs</th></tr>
+      <tr><td><code>grade_images</code></td><td>Set accepted, rejected or pending with a reason; returns the grades it replaced</td><td>write</td></tr>
+      <tr><td><code>start_quality_backfill</code></td><td>Start the background quality scan</td><td>write</td></tr>
+      <tr><td><code>start_import</code></td><td>Scan the configured folders for new lights and calibration frames</td><td>write</td></tr>
+      <tr><td><code>start_stack</code>, <code>cancel_stack</code></td><td>Build stack previews for a project, target or filter; stop one</td><td>write</td></tr>
+      <tr><td><code>update_project</code>, <code>update_target</code></td><td>Change Target Scheduler settings, sending only the fields to change</td><td>write</td></tr>
+      <tr><td><code>update_exposure_plan</code>, <code>create_exposure_plan</code></td><td>Change or add an exposure plan</td><td>write</td></tr>
+      <tr><td><code>set_calibration_validity</code></td><td>Mark calibration frames for later or earlier lights, or clear the mark</td><td>write</td></tr>
+      <tr><td><code>solve_astrometry</code>, <code>predict_satellites</code></td><td>Plate-solve a light; predict satellite crossings and check them in the pixels</td><td>write</td></tr>
+      <tr><td><code>reject_uncalibrated_lights</code></td><td>Reject the lights <code>check_uncalibrated_lights</code> listed, with its digest, so Target Scheduler shoots them again</td><td>write</td></tr>
+      <tr><td><code>create_plan</code>, <code>rename_plan</code></td><td>Start a plan, or rename one</td><td>write</td></tr>
+      <tr><td><code>save_plan</code>, <code>save_framing</code></td><td>Save the whole plan or framing, changed, at the revision you read</td><td>write</td></tr>
+      <tr><td><code>take_plan_from_target_scheduler</code></td><td>Take a plan's values from a rig's Target Scheduler database</td><td>write</td></tr>
+      <tr><td><code>check_feasibility</code></td><td>When the target is observable from each rig's site over the coming nights</td><td>write</td></tr>
+      <tr><td><code>preview_activation</code></td><td>Exactly what activating a plan would write to each rig, with a <code>preview_digest</code></td><td>write</td></tr>
+      <tr><td><code>save_template</code>, <code>delete_template</code></td><td>Change the exposure template library</td><td>write</td></tr>
+      <tr><td><code>save_preferences</code></td><td>Save observing preferences for all rigs, a site or a rig</td><td>write</td></tr>
+      <tr><td><code>start_wbpp_run</code>, <code>cancel_wbpp_run</code></td><td>Run PixInsight WBPP on a project's or target's accepted lights; stop the run</td><td>management</td></tr>
+      <tr><td><code>apply_activation</code></td><td>Write that preview to the rigs; refuses if anything changed since</td><td>management</td></tr>
+      <tr><td><code>push_activation</code></td><td>Send an activated plan to rigs on other machines</td><td>management</td></tr>
+      <tr><td><code>apply_rig_scheduling</code></td><td>Write a rig's scheduling limits, with the digest <code>get_rig_scheduling</code> gave</td><td>management</td></tr>
+      <tr><td><code>preview_reject_removal</code></td><td>The rejects removal would take out, with a <code>digest</code></td><td>management</td></tr>
+      <tr><td><code>apply_reject_removal</code>, <code>restore_removed_rejects</code></td><td>Remove those rejects to the trash; bring a batch back</td><td>management</td></tr>
+      <tr><td><code>preview_sync</code>, <code>apply_sync</code></td><td>Preview a pull or push between two open databases; apply it</td><td>management</td></tr>
+    </table>
+  </div>
+  <p>Jobs return at once; the agent polls <code>get_jobs</code>, or
+  <code>list_stacks</code> for a stack.</p>
+
+  <h2 id="plans">Change a plan</h2>
+  <p>An agent changes a plan as the app does. It reads the plan
+  (<code>get_plan</code>) or its framing (<code>get_framing</code>), changes the
+  object, and saves it whole with <code>save_plan</code> or
+  <code>save_framing</code>. A save made since it read refuses, so it reads
+  again and redoes the change. Saving changes nothing on a rig. To put a plan
+  on the rigs, <code>preview_activation</code> shows what each rig's Target
+  Scheduler database would get; <code>apply_activation</code> writes it only if
+  nothing changed since that preview. See
+  <a href="activation.html">Exposures &amp; Activation</a>.</p>
+
+  <h2 id="stacks">Look into a stack</h2>
+  <p>Ask where a pattern in a stack comes from. <code>get_stack_image</code>
+  with <code>stretch: "background"</code> shows it, and a crop shows it at full
+  detail. <code>get_stack_calibration</code> shows whether a session had no
+  flat, or a dark master built from two frames, and the temperatures those
+  frames were shot at; <code>get_stack</code> gives each light's to set
+  against them. <code>explain_calibration</code> on one light says why: flats
+  marked for later lights, flats at another rotator angle, darks of another
+  exposure, or darks shot warmer than the light. <code>get_stack</code> also
+  shows, per night, whether the frames were dithered: frames that walk one way
+  without dithers turn anything fixed to the sensor into streaks. See
+  <a href="calibration.html">Calibration Libraries</a>.</p>
 
   <h2 id="curl">Try it without a client</h2>
   <pre><code>TOKEN=psfg_…

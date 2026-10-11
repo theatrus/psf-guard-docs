@@ -183,7 +183,7 @@ function gtag_report_demo() {
     <table>
       <tr><th>Role</th><th>Can</th></tr>
       <tr><td>Read only (<code>read-only</code>)</td><td>Browse catalogs, images, quality results, exports and cached analysis. List, apply and export processing setups. Cannot grade, edit, or open Settings.</td></tr>
-      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus grade with undo and redo, edit projects, targets and exposure plans, start quality scans and imports, save processing setups, write local exports, and apply sync previews. With database management on, also manage databases, peers, catalogs and calibration records.</td></tr>
+      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus grade with undo and redo, edit projects, targets and exposure plans, start quality scans and imports, save processing setups, write local exports, and apply sync previews. With database management on, also manage databases, peers, catalogs and calibration records, and remove rejects.</td></tr>
     </table>
   </div>
   <p>By default a viewer cannot start costly work: stack builds, plate solves,
@@ -265,9 +265,13 @@ allow_read_only_compute = false</code></pre>
   <p>A personal API token lets a script or an MCP client act as a user without
   a browser login. Send it as a bearer credential:</p>
   <pre><code>curl -H "Authorization: Bearer psfg_…" https://guard.example/api/databases</code></pre>
-  <p>Open <strong>Settings &rarr; Users &rarr; API tokens</strong> and click
-  <strong>+ New token</strong>. Give it a <strong>Label</strong>, optionally an
-  expiry in <strong>Expires after (days, optional)</strong>, and tick
+  <p>For Claude Code or Codex, open <strong>Settings &rarr; Users &rarr; API
+  tokens</strong> and click <strong>Connect an agent</strong>. It makes a token
+  of your own, read only unless you tick <strong>Let it grade and start
+  jobs</strong>, and shows the setup to paste; see
+  <a href="mcp.html#tokens">MCP for Agents</a>.</p>
+  <p>For anything else, click <strong>+ New token</strong>. Give it a
+  <strong>Label</strong>, optionally an expiry in <strong>Expires after (days, optional)</strong>, and tick
   <strong>Read only, whatever the user's role</strong> for a token that only reads.
   An editor can name another user in <strong>User (optional)</strong>, which is
   how a viewer, who has no Settings, gets one. Click <strong>Create
@@ -321,7 +325,9 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
   </div>
   <p>The Director plugin pairs separately, with its own one-use codes and
   credentials. A sync key or pairing code grants no Planning access, and API
-  tokens cannot issue or revoke Director clients.</p>
+  tokens cannot issue or revoke Director clients. Director plugin pairing is an
+  early beta; Target Scheduler with the PSF Guard Sync plugin is the main way
+  to run a rig today.</p>
 
   <h2 id="deployment">Deploy safely</h2>
   <ul>

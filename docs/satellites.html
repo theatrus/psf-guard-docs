@@ -201,7 +201,7 @@ function gtag_report_demo() {
   <p>The fainter frame from the night before solved 102 stars at 1.96 arcsec RMS. Of three predicted crossings, only <strong>STARLINK-5450 [54778]</strong> matched: 5.8 sigma, 99.7% continuity, about 43 pixels from the orbital path. Both dry-run regrades flag the affected frame for rejection on pixel-aligned evidence.</p>
 
   <h2 id="cache">Orbital-element cache</h2>
-  <p>PSF Guard downloads orbital elements only on an explicit action: <strong>Identify satellite tracks</strong>, or a quality scan you start with <strong>Analyze Quality</strong>. Opening Sequence and running <code>screen-fits --regrade-db</code> use the cache only, and the CLI abstains when no suitable snapshot exists.</p>
+  <p>PSF Guard downloads orbital elements only on an explicit action: <strong>Identify satellite tracks</strong>, the <a href="mcp.html">MCP</a> tool <code>predict_satellites</code>, or a quality scan you start with <strong>Analyze Quality</strong>. Opening Sequence and running <code>screen-fits --regrade-db</code> use the cache only, and the CLI abstains when no suitable snapshot exists.</p>
   <ul>
     <li>Recent exposures use CelesTrak's active-satellite catalog.</li>
     <li>Older exposures use a nearby cached entry, then the Seiza rolling mirror, then the public IAU SatChecker service. One historical answer serves the whole observing night.</li>
