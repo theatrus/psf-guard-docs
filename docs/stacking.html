@@ -191,6 +191,11 @@ function gtag_report_demo() {
       for rejection, such as cloud, obstruction, off-target pointing, lost
       tracking, stars far softer than the target's best, or a rotator that
       slipped. See <a href="screening.html">Quality Screening</a>.</li>
+    <li>Lights the calibration library can't calibrate, only when
+      <strong>Leave out lights that can't be calibrated</strong> is on under
+      <strong>Settings &rarr; Calibration</strong>. The card counts them under
+      <strong>can't calibrate</strong>. See
+      <a href="calibration.html#uncalibrated">Calibration Libraries</a>.</li>
   </ul>
   <p>The server log names each frame a build leaves out or Seiza rejects, and
   why. The desktop app writes this log to a daily file; <strong>Open
@@ -296,10 +301,12 @@ function gtag_report_demo() {
   chosen</strong>. Both stay visible until rebuilt.</p>
 
 
-  <p>Seiza 0.23.1 builds calibration masters on every core and runs stacking,
-  debayering, display stretches, background models and deconvolution faster,
-  with the same output. After each Seiza stacking upgrade, existing stacks and
-  masters rebuild once.</p>
+  <p>A build runs Seiza, masters included, on the cores it was given: the
+  share for work you wait on, or the background share for an automatic
+  refresh. Within a channel it prepares several frames at once while it
+  integrates earlier ones. See <a href="storage.html#processor">Processor
+  use</a>. After each Seiza stacking upgrade, existing stacks and masters
+  rebuild once.</p>
   <p>On the command line, <code>psf-guard stack-snr --weight-by-noise</code>
   applies the same noise weights; see <a href="#cli">below</a>.</p>
 
@@ -319,6 +326,12 @@ function gtag_report_demo() {
   <p>The project-wide choice is saved. Each card has its own select that
   overrides it for that channel; <strong>Project</strong> follows the panel. A
   stack built under another mode shows as out of date.</p>
+  <p><strong>Settings &rarr; Calibration</strong> sets the rules every stack
+  matches by: rotation tolerance, dark reach, <strong>Dark choice</strong>,
+  the flat age limit, and whether to leave out lights the library can't
+  calibrate. See <a href="calibration.html#darks">Dark masters</a> and
+  <a href="calibration.html#uncalibrated">Lights that can't be
+  calibrated</a>.</p>
   <p>A multi-night stack whose lights need different flats or darks splits into
   calibration sessions, and the build swaps masters between them. A master
   that fails to build does not fail the stack: the card names the skipped
@@ -332,9 +345,10 @@ function gtag_report_demo() {
 
   <p><strong>Masters</strong> on a finished stack opens the bias, dark,
   dark-flat and flat files that stack used, with the sessions and channels
-  that used each, fitted pedestals, pan and zoom, a display stretch, and an
-  unchanged FITS download. Matching rules, flats-only pedestals and master
-  caching are on <a href="calibration.html">Calibration Libraries</a>.</p>
+  that used each, fitted pedestals, the sensor temperatures and nights of each
+  master's frames, pan and zoom, a display stretch, and an unchanged FITS
+  download. Matching rules, flats-only pedestals and master caching are on
+  <a href="calibration.html">Calibration Libraries</a>.</p>
 
   <h2 id="queue">Queue builds</h2>
   <p>Build buttons stay live while a build runs. Each click queues another
@@ -586,11 +600,17 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   inspector offers the deconvolved FITS while it is on.</p>
   <p>When the server has RC-Astro's <code>rc-astro</code> CLI installed and
   licensed, <strong>RC-Astro tools</strong> offers BlurXTerminator,
-  NoiseXTerminator and StarXTerminator on the linear data, before the stretch.
+  NoiseXTerminator and StarXTerminator on the linear data, before the stretch,
+  in <strong>View processing</strong> and on each color input.
   Star removal keeps both halves, with a <strong>Starless</strong> /
   <strong>Stars</strong> switch and a stars FITS. Set
   <code>PSF_GUARD_RC_ASTRO</code> when the CLI is not on the server's
   <code>PATH</code>.</p>
+  <p>Each field takes the range the installed tool accepts. A value outside it
+  is marked with that range, and <strong>Apply processing</strong> or
+  <strong>Apply processing stack</strong> stops and says which field is wrong.
+  When the server refuses a color card's build or processing, the reason shows
+  beside the button you pressed.</p>
 
   <h3 id="setups">Save processing setups</h3>
   <p><strong>Setups</strong> at the top of <strong>View processing</strong> and

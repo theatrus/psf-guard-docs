@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Calibration Libraries — PSF Guard</title>
-  <meta name="description" content="Catalog bias, dark, dark-flat and flat frames in PSF Guard: safe matching, dark masters by night, stray-light darks, masters from other software, coverage reports and stack calibration.">
+  <meta name="description" content="Catalog bias, dark, dark-flat and flat frames in PSF Guard: safe matching, dark masters by night, stray-light darks, masters from other software, coverage reports, lights that can't be calibrated, and stack calibration.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
@@ -248,6 +248,8 @@ function gtag_report_demo() {
       size (and filter, for flats) are listed under the night: used, matching
       but not used, or not used with the readings that disagree, such as
       <code>rotation light=92.6deg master=94.7deg</code>.</li>
+    <li>A night and filter whose lights can't be calibrated says so, and
+      why.</li>
   </ul>
   <p>Warnings name kinds with no matches, nights without same-night flats, and
   flats more than a month from their lights.</p>
@@ -256,6 +258,35 @@ function gtag_report_demo() {
     <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage for Golf of Mexico: warnings, frame counts per kind, and flats and darks matched per night and filter" loading="lazy">
     <figcaption>The coverage report matches one light per night and filter exactly as a stack would.</figcaption>
   </figure>
+
+  <h3 id="uncalibrated">Lights that can't be calibrated</h3>
+  <p>A light can't be calibrated properly when:</p>
+  <ul>
+    <li>no flat matches it, though the library holds flats for its camera,
+      as when every flat for its filter was shot at another rotator
+      angle;</li>
+    <li>no bias or dark matches it, though the library holds either; or</li>
+    <li>its flats were shot further from it than <strong>Flat age limit
+      (days)</strong>, under <strong>Settings &rarr; Calibration &rarr; Flat
+      masters</strong>: 60 by default, and 0 lifts the limit.</li>
+  </ul>
+  <p>Each rule counts only where the library could have filled the gap, so a
+  rig that never shoots flats is not affected.</p>
+  <p><strong>Check lights</strong>, at the foot of the report, reads every
+  light of the project not already rejected and lists those that can't be
+  calibrated, by night, filter and reason. <strong>Reject N lights</strong>
+  then rejects them with that reason, so Target Scheduler shoots them again.
+  If the lights changed since the check, it refuses and asks for a new
+  check. Rejecting needs write access.</p>
+  <p>Stacks keep such lights unless <strong>Leave out lights that can't be
+  calibrated</strong>, under <strong>Settings &rarr; Calibration &rarr;
+  Stacks</strong>, is on. It is off by default. With it on, and calibration on
+  <strong>Auto</strong> or <strong>Force on</strong>, stacks leave those lights
+  out: the card counts them under <strong>can't calibrate</strong>, and
+  <strong>Frame decisions</strong> gives each one's reason. WBPP runs and
+  exports still take them.</p>
+  <p>Agents have the same check and rejection over MCP; see
+  <a href="mcp.html#tools">MCP for Agents</a>.</p>
 
   <h2 id="matching">Safe matching</h2>
   <p>A calibration frame must agree with every setting the light records. If
@@ -279,28 +310,43 @@ function gtag_report_demo() {
   frames. Before integrating, Seiza checks the inputs again and leaves out
   any it will not accept, such as a frame filed under the wrong filter, camera
   or readout mode; the stack warning names them.</p>
-  <p><strong>Settings &rarr; Setups &rarr; Calibration</strong> sets the
-  <strong>Rotation tolerance (degrees)</strong> for every database on the
-  server, starting with the next stack.</p>
+  <p>The settings on this page sit on the <strong>Settings &rarr;
+  Calibration</strong> tab. They apply to every database on the server,
+  starting with the next stack. Anyone can read them; saving needs write
+  access. <strong>Rotation tolerance (degrees)</strong>, under
+  <strong>Matching</strong>, sets how far a flat's rotator angle may sit from
+  the light's.</p>
 
   <figure>
-    <img src="../assets/settings-calibration.png" alt="Settings › Setups › Calibration: Rotation tolerance, Masters from other software, Dark reach, Complete night and Mask stars in flats" loading="lazy">
+    <img src="../assets/settings-calibration.png" alt="Settings › Calibration: Rotation tolerance, Masters from other software, Dark reach, Complete night and Mask stars in flats" loading="lazy">
     <figcaption>Calibration settings apply to every database on the server.</figcaption>
   </figure>
 
   <h3 id="darks">Dark masters</h3>
   <p>Darks keep for months, so a dark master can draw on several nights. It
   uses the nearest complete night of darks alone. When no night is complete,
-  it pools the nights within reach, nearest first. Two settings under
-  <strong>Settings &rarr; Setups &rarr; Calibration &rarr; Dark masters</strong>
-  bound this:</p>
+  it pools the nights within reach, nearest first. Three settings under
+  <strong>Settings &rarr; Calibration &rarr; Dark masters</strong> shape
+  this:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
       <tr><td><strong>Dark reach (days)</strong></td><td>183</td><td>A dark shot further than this from the light does not match, so darks six months away no longer serve. A dark marked for lights before or after it follows its mark instead, however old.</td></tr>
       <tr><td><strong>Complete night (darks)</strong></td><td>10</td><td>The nearest night with this many matching darks is used alone. With fewer, nights pool.</td></tr>
+      <tr><td><strong>Dark choice</strong></td><td>Complete set first</td><td>Which set of darks, or bias, builds the master when several match. See below.</td></tr>
     </table>
   </div>
+  <p>A dark matches a light within 3&nbsp;°C, but one master takes only darks
+  within 1&nbsp;°C of each other, so several sets can match. With
+  <strong>Complete set first</strong>, the nearest set with at least as many
+  frames as <strong>Complete night (darks)</strong> builds the master; a
+  nearer, smaller set serves only when no set is complete.
+  <strong>Nearest set</strong> keeps the old rule: the nearest two or more
+  frames at one temperature, however few. Under it, two warm darks shot the
+  night after the lights beat dozens at the set point a week away, and a
+  two-frame master puts its own read noise into every light as row banding.
+  Bias masters follow the same choice, and WBPP runs and exports take the same
+  frames. A stack whose masters change shows as out of date.</p>
 
   <h3 id="stray-light">Darks that caught stray light</h3>
   <p>A dark shot while light reached the sensor, such as dawn through an open
@@ -335,7 +381,7 @@ function gtag_report_demo() {
       frame. The original is never written to.</li>
   </ul>
   <p><strong>Masters from other software</strong>, under <strong>Settings
-  &rarr; Setups &rarr; Calibration</strong>, decides how they take part:
+  &rarr; Calibration &rarr; Matching</strong>, decides how they take part:
   <strong>Use them whenever one matches</strong> (default), <strong>Only when
   raw frames cannot build one</strong>, or <strong>Never</strong>.</p>
 
@@ -353,7 +399,8 @@ function gtag_report_demo() {
   <p>The project-wide choice is saved, and each channel card can override it.
   A stack whose lights need different flats or darks splits into calibration
   sessions and swaps masters between them; the card reports the session count.
-  Calibration runs on raw CFA data before debayering.</p>
+  Calibration runs on raw CFA data before debayering. To keep lights the
+  library can't calibrate out of stacks, see <a href="#uncalibrated">above</a>.</p>
   <div class="callout info">
     A master that fails to build does not fail the stack. The lights stack
     without it, and the card names the skipped master and why. A master whose
@@ -377,8 +424,8 @@ function gtag_report_demo() {
     drift. A star that stays on the same pixels survives clipping, and star
     images are too wide for the defect pass to remove.
   </div>
-  <p><strong>Mask stars in flats</strong>, under <strong>Settings &rarr; Setups
-  &rarr; Calibration &rarr; Flat masters</strong>, detects stars in each raw
+  <p><strong>Mask stars in flats</strong>, under <strong>Settings &rarr;
+  Calibration &rarr; Flat masters</strong>, detects stars in each raw
   flat and leaves them out before integration. It is off by default and does
   not touch imported masters. Every pixel must keep at least two unmasked
   frames, or the flat build fails and the stack goes on without it.</p>
@@ -392,8 +439,9 @@ function gtag_report_demo() {
   <p>Each master needs at least two frames. Bias and dark masters use a
   two-pass, leave-one-out sigma-clipped mean; flat masters use median/MAD
   clipping after calibrating and normalizing each frame. The FITS records the
-  method, thresholds, frame count and rejected samples. Seiza 0.23.1 builds
-  masters on every core.</p>
+  method, thresholds, frame count and rejected samples. A master builds on the
+  cores its stack build was given; see <a href="storage.html#processor">Processor
+  use</a>.</p>
   <p>While a master builds, the stack card and the header queue name it, what
   Seiza is doing, and the frame or tile under way. <strong>Stop</strong> ends a
   master build part way and writes nothing.</p>
@@ -412,7 +460,9 @@ function gtag_report_demo() {
   <a href="storage.html#disk-use">Disk use</a>.</p>
   <p><strong>Masters</strong> on a finished stack shows the master files that
   stack used, with pan, zoom, a display stretch and an unchanged FITS
-  download.</p>
+  download. Each master gives the sensor temperatures and nights of the frames
+  it was built from, read from those still in the library, so a dark master
+  shot warmer than its lights stands out.</p>
 
   <h2 id="calibrated">Calibrated copies</h2>
   <p>Calibrated and registered copies that WBPP, Siril, ASTAP, DeepSkyStacker
@@ -454,6 +504,8 @@ function gtag_report_demo() {
       <tr><td>A night has no flats</td><td>Open the coverage report. If a rotator moved, raise <strong>Rotation tolerance (degrees)</strong> or shoot new flats.</td></tr>
       <tr><td>Darks from another season used</td><td>Lower <strong>Dark reach (days)</strong>, or mark validity boundaries.</td></tr>
       <tr><td>Fewer darks than expected</td><td>Look for the <strong>Stray light</strong> mark in the library.</td></tr>
+      <tr><td>Row banding in a calibrated stack</td><td>Open <strong>Masters</strong> on the stack. A dark or bias master from two or three frames, or warmer than the lights, adds its own noise. Keep <strong>Dark choice</strong> on <strong>Complete set first</strong>, or shoot a full set at the set point.</td></tr>
+      <tr><td>Lights left out under <strong>can't calibrate</strong></td><td><strong>Frame decisions</strong> gives each reason. Add the missing frames, raise <strong>Flat age limit (days)</strong>, or turn off <strong>Leave out lights that can't be calibrated</strong>.</td></tr>
       <tr><td>Master build warning</td><td>Open the card's details for the skipped master and its cause. The stack goes on with the masters that built.</td></tr>
       <tr><td>Flat makes edges brighter</td><td>Use Auto and import bias or dark frames. Force on can apply a flat whose pedestal was not removed.</td></tr>
       <tr><td>Stars in a sky-flat master</td><td>Dither or let the sky drift between flats, or turn on <strong>Mask stars in flats</strong>.</td></tr>

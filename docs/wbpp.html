@@ -238,9 +238,12 @@ function gtag_report_demo() {
 
   <h2 id="darks">Darks and flats per night</h2>
   <p>A run gets the calibration frames a PSF Guard stack would build its
-  masters from: per light, the nearest coherent set of each kind, not every
-  frame the library matched. Darks that caught stray light stay out, and the
-  dialog counts them. See <a href="calibration.html#stray-light">Calibration
+  masters from: per light, one coherent set of each kind, not every frame the
+  library matched. Darks and bias follow <strong>Dark choice</strong> under
+  <strong>Settings &rarr; Calibration</strong>, so by default a complete set
+  beats a nearer, smaller one; see <a href="calibration.html#darks">Dark
+  masters</a>. Darks that caught stray light stay out, and the dialog counts
+  them. See <a href="calibration.html#stray-light">Calibration
   Libraries</a>.</p>
   <p>Each light carries a <code>SESSION</code> keyword for its night, so
   each night's lights calibrate with that night's flats, and the nights
