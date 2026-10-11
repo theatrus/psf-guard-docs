@@ -297,6 +297,9 @@ function gtag_report_demo() {
       counts. Pulling grades changes only <code>gradingStatus</code> and
       <code>rejectreason</code> on acquired images, then recounts the accepted
       frames of each plan it touched.</li>
+    <li><strong>Removed rejects stay out.</strong> A push, reconcile or upload
+      never brings back a frame <a href="workflows.html#remove-rejects">removed
+      in PSF Guard</a>. Target Scheduler keeps its own row.</li>
     <li><strong>Thumbnails are optional.</strong> <strong>Include Target
       Scheduler thumbnails</strong> sends Target Scheduler's thumbnails with the
       capture data. A reconcile refuses more than 256 MiB of them.</li>

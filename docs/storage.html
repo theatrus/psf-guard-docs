@@ -286,6 +286,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p>Masters are swept only while no stack build runs. An index that cannot be
   read stops the sweep of that database rather than leaving what it names
   unprotected; the server log names the file.</p>
+  <p>Neither the disk limit nor the cleanup touches your frames. To free the
+  space rejected frames take, <a href="workflows.html#remove-rejects">remove
+  old rejects</a>.</p>
 
   <h2 id="processor">Processor use</h2>
   <p><strong>Settings &rarr; Performance &rarr; Processor use</strong> sets how

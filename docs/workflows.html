@@ -144,9 +144,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Rejects and Database Sync</h1>
   <p class="lede">
-    Move rejected frames out of the folders your stacking tool reads, and copy
-    captures, plans and grades between two catalogs: two database files, or two
-    PSF Guard servers.
+    Move rejected frames out of the folders your stacking tool reads, remove
+    old rejects from the catalog, and copy captures, plans and grades between
+    two catalogs: two database files, or two PSF Guard servers.
   </p>
 
   <div class="workflow-note sync">
@@ -204,6 +204,54 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
     legacy <code>filter-rejected</code> command remains for its statistical
     flags.
   </div>
+
+  <h2 id="remove-rejects">Remove old rejects</h2>
+  <p>An archived reject stays in the catalog. To take frames that are truly
+  bad out of it, and free their disk space, remove them. Removal runs only
+  when you ask, and you can undo it until the trash is emptied. In Settings it
+  needs database management.</p>
+  <ol>
+    <li>In <strong>Settings &rarr; Databases</strong>, click
+      <strong>Purge Rejects</strong> beside the database's
+      <strong>Import</strong>.</li>
+    <li>Choose how many days a frame must have been rejected (7 by default; 0
+      takes every reject) and click <strong>Preview</strong>. The preview
+      lists the frames and their size, and says why any reject stays.</li>
+    <li>Choose how many days to keep the files in the trash (14 by default)
+      and click <strong>Remove N frames</strong>.</li>
+  </ol>
+  <ul>
+    <li><strong>Dated.</strong> PSF Guard dates each reject when it first sees
+      it. A frame no longer rejected loses its date, so rejecting it again
+      starts the wait over.</li>
+    <li><strong>Trash.</strong> Each frame's file, and its calibrated and
+      registered copies, move to a <code>.psf-guard-trash</code> folder in its
+      image directory, never overwriting. The frame leaves the catalog and its
+      cached previews and scans are deleted.</li>
+    <li><strong>Kept.</strong> Frames a collaboration report names, and frames
+      whose file another frame also uses, stay.</li>
+    <li><strong>Restore</strong> on a removed batch puts its files and rows
+      back. A taken file name comes back with a <code>.restored</code>
+      suffix.</li>
+    <li><strong>Empty trash</strong> appears once a batch is past its time in
+      the trash, and deletes those files. Nothing deletes them on its
+      own.</li>
+    <li><strong>Purge</strong> appears once a batch's files are gone, and
+      forgets its saved rows. A marker for each frame stays.</li>
+  </ul>
+  <p>Sync pulls, imports, automatic imports and remote uploads leave removed
+  frames out, purged ones included, and plan progress still counts them as
+  rejected. Removal changes only this catalog: a rig's own Target Scheduler
+  copy keeps its rows.</p>
+  <pre><code><span class="c"># Preview, then remove frames rejected 7 days ago or more.
+# --cache-dir names the server's cache, so the frames' cached files go too.</span>
+psf-guard remove-rejects --db my-db --days 7
+psf-guard remove-rejects --db my-db --days 7 --apply --cache-dir /path/to/cache
+
+psf-guard list-removed --db my-db
+psf-guard restore-removed --db my-db --batch &lt;batch&gt;
+psf-guard empty-reject-trash --db my-db    <span class="c"># files past their time in the trash</span>
+psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
   <h2 id="sync">Sync two database files</h2>
   <p>Grade on one machine while the telescope keeps capturing on another. Sync

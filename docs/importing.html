@@ -234,7 +234,8 @@ function gtag_report_demo() {
       telescope is listed by rig with an example file and left out, since it is far more
       often a filing mistake. Turn this on after a real equipment change.</li>
   </ul>
-  <p>A basename the catalog holds is skipped. A new light joins a target with the same
+  <p>A basename the catalog holds is skipped, as is one a
+  <a href="workflows.html#remove-rejects">removed reject</a> held. A new light joins a target with the same
   <code>OBJECT</code> name, else one within 0.5°, else starts a new project and target.
   Calibration frames are matched by path and file fingerprint.</p>
   <pre><code>psf-guard import archive ./new-frames --dry-run

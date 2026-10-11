@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CLI Reference — PSF Guard</title>
-  <meta name="description" content="Every psf-guard command: serve, import, screen, export, sync, users and tokens, sky maps, GUID repair, and single-file analysis.">
+  <meta name="description" content="Every psf-guard command: serve, import, screen, export, archive and remove rejects, sync, users and tokens, sky maps, GUID repair, and single-file analysis.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=6">
 <!-- google-tag:start -->
@@ -145,8 +145,8 @@ function gtag_report_demo() {
   <h1>CLI Reference</h1>
   <p class="lede">
     Every <code>psf-guard</code> command: serve the UI, import image folders,
-    screen frames, export, sync, manage users, and analyze single files. The
-    desktop app needs none of them.
+    screen frames, export, remove rejects, sync, manage users, and analyze
+    single files. The desktop app needs none of them.
   </p>
 
   <div class="workflow-note cli">
@@ -169,6 +169,9 @@ function gtag_report_demo() {
       <tr><td><code>stack-snr</code></td><td>Measure how a stack's SNR grows with depth, from a folder</td></tr>
       <tr><td><code>move-rejects</code></td><td>Move rejected frames out of the stacking tree</td></tr>
       <tr><td><code>restore-rejects</code></td><td>Bring archived rejects back</td></tr>
+      <tr><td><code>remove-rejects</code></td><td>Take old rejects out of the catalog, their files to a trash folder</td></tr>
+      <tr><td><code>list-removed</code>, <code>restore-removed</code></td><td>List removal batches; bring one back</td></tr>
+      <tr><td><code>empty-reject-trash</code>, <code>purge-removed</code></td><td>Delete trashed files past their time; then forget their saved rows</td></tr>
       <tr><td><code>filter-rejected</code></td><td>Legacy reject mover with statistical flags</td></tr>
       <tr><td><code>sync pull</code>, <code>planning</code>, <code>grades</code>, <code>remote</code></td><td>Copy captures, plans or grades between two databases or two servers</td></tr>
       <tr><td><code>users</code></td><td>Manage browser users and API tokens</td></tr>
@@ -357,12 +360,29 @@ psf-guard stack-snr ./lights --weight-by-noise</code></pre>
   <code>--threads</code> caps star detection threads. A curve needs three
   frames or more. See <a href="stacking.html#snr">Stacks</a>.</p>
 
-  <h2 id="rejects">Archive rejected files</h2>
+  <h2 id="rejects">Archive or remove rejects</h2>
   <pre><code>psf-guard move-rejects --db &lt;slug&gt; [--dry-run] [--project NAME] [--target NAME]
 psf-guard restore-rejects --db &lt;slug&gt; [--all] [--image-id N] [--guid GUID] [--dry-run]</code></pre>
   <p><code>move-rejects</code> also takes <code>--reject-segment</code>,
   <code>--reject-depth</code> and <code>--sidecar-exts</code>. See
   <a href="workflows.html#rejects">Rejects &amp; Sync</a>.</p>
+  <pre><code><span class="c"># Preview, then remove frames rejected 7 days ago or more</span>
+psf-guard remove-rejects --db &lt;slug&gt; [--days 7] [--project-id N] [--target-id N]
+psf-guard remove-rejects --db &lt;slug&gt; --apply [--retention-days 14] --cache-dir /path/to/cache
+
+psf-guard list-removed --db &lt;slug&gt;
+psf-guard restore-removed --db &lt;slug&gt; (--batch ID | --guid GUID...)
+psf-guard empty-reject-trash --db &lt;slug&gt;
+psf-guard purge-removed --db &lt;slug&gt; [--batch ID]</code></pre>
+  <p><code>remove-rejects</code> only previews until you pass
+  <code>--apply</code>. Files go to a <code>.psf-guard-trash</code> folder in
+  the image directory and stay <code>--retention-days</code> (14 by default)
+  before <code>empty-reject-trash</code> may delete them; until then
+  <code>restore-removed</code> brings them back. <code>--cache-dir</code> names
+  the server's cache (default <code>./cache</code>), so the frames' cached
+  files go too. <code>purge-removed</code> forgets the saved rows of emptied
+  batches. Settings does the same under <strong>Purge Rejects</strong>; see
+  <a href="workflows.html#remove-rejects">Rejects &amp; Sync</a>.</p>
 
   <h2 id="sync">Sync two catalogs</h2>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to my-db
