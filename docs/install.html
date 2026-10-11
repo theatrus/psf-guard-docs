@@ -212,7 +212,7 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
       <tr><td><code>/data/cache</code></td><td>Previews, plate solves, quality scans, stacks, calibration masters, offline sky maps</td></tr>
       <tr><td><code>/data/seiza</code></td><td>Seiza catalogs installed under <strong>Settings &rarr; Catalogs</strong></td></tr>
       <tr><td><code>/data/database.sqlite</code></td><td>The catalog you mount. Writable: grading updates it.</td></tr>
-      <tr><td><code>/images</code></td><td>Your image folders. Read-only is enough to review and grade.</td></tr>
+      <tr><td><code>/images</code></td><td>Your image folders. Read-only is enough to review and grade; removing rejects needs them writable.</td></tr>
     </table>
   </div>
   <p>A host folder works in place of a named volume if user 1000 can write it.
@@ -225,8 +225,8 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
     <table>
       <tr><th>Tag</th><th>Follows</th></tr>
       <tr><td><code>latest</code></td><td>The newest release</td></tr>
-      <tr><td><code>0.10.2</code></td><td>One release, pinned</td></tr>
-      <tr><td><code>0.10</code></td><td>The newest patch of that release line</td></tr>
+      <tr><td><code>0.11.0</code></td><td>One release, pinned</td></tr>
+      <tr><td><code>0.11</code></td><td>The newest patch of that release line</td></tr>
       <tr><td><code>edge</code></td><td>The main branch, with work not yet released</td></tr>
     </table>
   </div>
@@ -301,6 +301,10 @@ cargo build --release
   it for 24 hours, and serves it to every browser; reloading the page never
   fetches the public feed. A banner below the header names the new version and
   links its release notes.</p>
+  <p>A browser tab left open across a server update notices it: a
+  <strong>PSF Guard was updated</strong> bar offers <strong>Reload
+  now</strong>, and the tab reloads by itself the next time you change views.
+  Unsaved plan edits still ask first.</p>
   <p>The desktop app can also download, verify and install a signed update:
   click <strong>Install update</strong>. A server never downloads or installs
   an executable. Update its binary, package or Docker image yourself.</p>

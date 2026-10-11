@@ -155,6 +155,27 @@ function gtag_report_demo() {
     <a class="workflow-link" href="cli.html#server">CLI reference →</a>
   </div>
 
+  <h2 id="settings">Settings tabs</h2>
+  <p>Settings opens on <strong>Databases</strong>. A tab shows only when it
+  applies:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tab</th><th>Holds</th><th>See</th></tr>
+      <tr><td><strong>Databases</strong></td><td>Catalogs, imports, quality backfill, per-database options, <strong>Purge Rejects</strong>, N.I.N.A. pairing</td><td><a href="importing.html">Import Images</a></td></tr>
+      <tr><td><strong>Catalogs</strong></td><td>Seiza data packages. Needs database management.</td><td><a href="astrometry.html#install">Sky Context &amp; Solver</a></td></tr>
+      <tr><td><strong>Sync</strong></td><td>Data Transfer, staged previews, Remote PSF Guard. Needs database management and a catalog.</td><td><a href="workflows.html#sync">Rejects &amp; Sync</a></td></tr>
+      <tr><td><strong>Setups</strong></td><td>Processing setups, export defaults, PixInsight, AstroBin filter IDs</td><td><a href="exporting.html">Export</a>, <a href="wbpp.html#setup">WBPP</a></td></tr>
+      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, which lights stacks keep</td><td><a href="calibration.html#matching">Calibration</a></td></tr>
+      <tr><td><strong>Stacking</strong></td><td>Stacking method and automatic previews</td><td><a href="stacking.html#method">Stacks</a></td></tr>
+      <tr><td><strong>Storage</strong></td><td>Folders and disk limits. Changes need database management.</td><td><a href="storage.html">Storage</a></td></tr>
+      <tr><td><strong>Performance</strong></td><td>Processor use</td><td><a href="storage.html#processor">Processor use</a></td></tr>
+      <tr><td><strong>Review</strong></td><td>Score chips and review choices, kept in this browser</td><td><a href="grader.html#review-preferences">Library &amp; Grader</a></td></tr>
+      <tr><td><strong>Rigs</strong>, <strong>Exposure templates</strong></td><td>Planning's rigs, sites and template library</td><td><a href="rigs.html">Rigs</a>, <a href="activation.html#templates">Templates</a></td></tr>
+      <tr><td><strong>Users</strong></td><td>Accounts and API tokens, on a server with accounts</td><td><a href="authentication.html">Server Accounts</a></td></tr>
+      <tr><td><strong>Agents</strong></td><td>MCP setup, on the desktop app or a server without accounts</td><td><a href="mcp.html">MCP for Agents</a></td></tr>
+    </table>
+  </div>
+
   <h2 id="registry">Catalog registry</h2>
   <p>The server can serve many catalogs, each a database with Target Scheduler's
   tables. Their list lives in a JSON registry, not in the TOML file:</p>
@@ -191,7 +212,7 @@ function gtag_report_demo() {
       <a href="wbpp.html">WBPP Runs</a>.</li>
   </ul>
   <p>Settings saves server-wide choices in the same file: processor shares,
-  storage folders and disk limits, stacking, calibration matching, export
+  storage folders and disk limits, stacking, calibration, export
   defaults, AstroBin filter IDs, PixInsight, and Remote PSF Guard peers. A peer's
   key is kept in the clear there, so protect the file.</p>
 
@@ -437,6 +458,11 @@ curl localhost:3000/api/stack-activity</code></pre>
       <code>POST/PUT/DELETE /api/databases</code> are off unless the server
       starts with <code>--allow-database-management</code>. The desktop app
       always turns them on for its own local server.</li>
+    <li>Reject removal is one of them. <code>POST
+      /api/db/{db_id}/rejects/removal/preview</code> lists what would go and
+      returns a <code>digest</code>; <code>.../removal/apply</code> takes it and
+      refuses with <code>409</code> if the rejects changed since. See
+      <a href="workflows.html#remove-rejects">Rejects &amp; Sync</a>.</li>
   </ul>
 
   <h2 id="limitations">Known limitations</h2>
