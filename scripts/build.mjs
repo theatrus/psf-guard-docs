@@ -5,7 +5,7 @@ import { execSync } from "node:child_process";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
-const stylesheetVersion = 6;
+const stylesheetVersion = 7;
 const siteUrl = "https://psf-guard.com";
 
 const docsPages = fs

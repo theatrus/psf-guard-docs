@@ -172,6 +172,9 @@ th { background: rgba(148,163,184,.08); font-weight: 600; }
   color: transparent;
 }
 .hero .lede { color: var(--text-dim); font-size: 1.12rem; margin-bottom: 1.8rem; }
+/* The flow hero: words above, the four-step image across the full width. */
+.hero.hero-flow { grid-template-columns: minmax(0, 1fr); gap: 2.6rem; }
+.hero-flow .lede { max-width: 46rem; }
 .hero-logo { width: 64px; height: 64px; margin-bottom: 1.2rem; }
 .btn-row { display: flex; gap: .8rem; flex-wrap: wrap; }
 .btn {
