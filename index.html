@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PSF Guard — astrophotography image catalog, grading, and quality control</title>
-  <meta name="description" content="Catalog FITS and XISF frames in place, grade them, find clouds and soft stars from the pixels, stack and export what passes, and plan the next nights across every rig. Target Scheduler is optional.">
+  <meta name="description" content="Plan framing and exposure plans for every rig, shoot them with N.I.N.A. and Target Scheduler, grade every frame from its pixels, then stack and export what passes. FITS and XISF folders work without Target Scheduler too.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/site.css?v=6">
   <meta property="og:title" content="PSF Guard">
@@ -82,12 +82,15 @@ function gtag_report_demo() {
 <section class="hero">
   <div>
     <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
-    <h1>Keep the frames that matter.<br><span class="grad">Reject the ones that don't.</span></h1>
+    <h1>Plan it, shoot it with N.I.N.A.,<br><span class="grad">keep the frames that matter, and stack them.</span></h1>
     <p class="lede">
-      PSF Guard catalogs your FITS and XISF frames in place, grades them by target,
-      night and filter, and flags clouds, obstructions, soft stars and bad pointing
-      from the pixels. Stack what passes, export it for PixInsight, and plan the
-      next nights across every rig in N.I.N.A.'s Target Scheduler.
+      <strong>Plan</strong> the framing, mosaic and exposure plans for every rig.
+      <strong>Shoot with N.I.N.A.</strong>: activation writes Target Scheduler
+      projects, and the PSF Guard Sync plugin carries them to the rig and brings
+      frames and grades back. <strong>Grade</strong> every frame from its pixels
+      and reject the clouded, blocked, soft and off-target ones.
+      <strong>Stack and export</strong>: calibrated stacks, color previews, WBPP
+      runs and AstroBin exports.
     </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
@@ -96,8 +99,8 @@ function gtag_report_demo() {
     </div>
   </div>
   <figure class="hero-shot">
-    <img src="assets/grid.jpg" alt="PSF Guard image grid with Iris Nebula frames, score chips, HFR, star counts and grades" width="1200">
-    <figcaption>The image grid: scores, HFR, stars and grade on every card.</figcaption>
+    <img src="assets/hero-flow.jpg" alt="PSF Guard in four steps: plan a mosaic over the Heart Nebula, activate it as Target Scheduler projects for N.I.N.A., grade a session with soft-star and obstruction frames rejected, and stack a Foraxx SHO color image of the Teddy Bear Nebula" width="2400" height="1733">
+    <figcaption>Plan, shoot with N.I.N.A., grade, then stack and export.</figcaption>
   </figure>
 </section>
 
@@ -178,7 +181,8 @@ function gtag_report_demo() {
       <h3>Stacks</h3>
       <p>Stack each channel with noise weighting and local normalization, calibrated
       by the library's own masters, then compose LRGB or narrowband color. New frames
-      restack only what changed.</p>
+      restack only what changed, and the library names lights it cannot
+      calibrate.</p>
     </div>
     <div class="card">
       <div class="icon">🧪</div>
@@ -196,8 +200,9 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🗺️</div>
       <h3>Sky coverage &amp; Live</h3>
-      <p>Every field from every rig on one sky, with your stacks in place, a timeline of
-      every night, and live rigs drawn where they point.</p>
+      <p>Every field from every rig on one sky, with your stacks in place and a
+      timeline of every night. Rigs on the Director plugin, an early beta, show
+      where they point.</p>
     </div>
     <div class="card">
       <div class="icon">🌌</div>
@@ -226,8 +231,9 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🤖</div>
       <h3>MCP for agents</h3>
-      <p>An MCP server and API tokens let an agent such as Claude read grades and
-      evidence, apply grades, and start scans and WBPP runs.</p>
+      <p>Connect Claude Code or Codex from Settings. An agent reads grades, stacks,
+      calibration and plans, and changes them as you would, with your
+      permissions.</p>
     </div>
   </div>
 </section>
@@ -295,8 +301,8 @@ function gtag_report_demo() {
   <p class="sub">
     The Sky view maps every target from every database, equatorial or galactic, flat or
     as a globe. Zoom in to see each target's latest stack placed by its plate solve.
-    A timeline replays every night per rig, and Live shows each rig where it points
-    now.
+    A timeline replays every night per rig, and Live shows where each rig on the
+    Director plugin points now.
   </p>
   <figure class="feature-shot">
     <img src="assets/sky-live.jpg" alt="Sky coverage with totals, rig and filter chips, the all-sky map, and the Live list of rigs" loading="lazy">

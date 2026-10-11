@@ -15,7 +15,8 @@ docs/               Documentation pages (shared sidebar nav)
 docs/importing.html  FITS/XISF import, automatic import, quality backfill, and sync
 docs/stacking.html   Stacks view, stacking method, automatic refresh
 docs/wbpp.html       PixInsight WBPP runs from the server
-docs/planning.html   Plans, the plan workspace, framing, activation, rigs, collaboration
+docs/planning.html   Plans and the plan workspace; framing, activation, rigs and
+                     collaboration have pages of their own
 docs/storage.html    Storage folders, disk limits, processor shares, job queue
 css/site.css        The one stylesheet (dark astro theme)
 assets/             Logo/favicon (hand-authored SVG) + screenshots
