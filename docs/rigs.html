@@ -151,8 +151,9 @@ function gtag_report_demo() {
 
   <h2 id="list">The rig list</h2>
   <p><strong>Settings › Rigs</strong> lists every registered database as a rig:
-  whether planning is on, its field of view and pixel scale, whether the
-  N.I.N.A. plugin has reported its camera, and the plugin's last status.
+  its field of view and pixel scale, whether the N.I.N.A. plugin has reported
+  its camera, the peer its plans push to, and the plugin's last status. A new
+  database becomes a rig once the Library opens.
   <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
   opens its catalog.</p>
   <figure>
@@ -214,11 +215,12 @@ function gtag_report_demo() {
   <p>The rig's Target Scheduler limits also reach projects no plan holds, such as
   ones made in N.I.N.A. Below the fields, <strong>Target Scheduler
   projects</strong> compares the saved limits with every project in the rig's
-  database and lists each one that differs, with what will change.
-  <strong>Apply</strong> writes them. A plan's own limits still win for its
-  project. Apply is refused when a project or the limits changed since the list
-  was read. Nothing applies by itself; a project made later waits for the next
-  Apply.</p>
+  database and lists each one that differs, with what will change. Save the
+  rig profile first; <strong>Apply to N projects</strong> then writes them, and
+  sends the rows to the rig's <a href="#remote-site">remote site</a> when it has
+  one. A plan's own limits still win for its project. Apply is refused when a
+  project or the limits changed since the list was read. Nothing applies by
+  itself; a project made later waits for the next Apply.</p>
   <figure>
     <img src="../assets/rig-limits.png" alt="Limits and delivery: planning limits, and Target Scheduler limits with inherited values" loading="lazy">
     <figcaption>A rig's planning limits and its Target Scheduler limits for every project in its database.</figcaption>
@@ -229,14 +231,16 @@ function gtag_report_demo() {
   </figure>
 
   <h3 id="remote-site">Remote site</h3>
-  <p>Set <strong>Remote site</strong> to the Sync peer that holds the rig's real
-  database when the rig runs on another PSF Guard. Activation then pushes the plan
-  to that peer. Leave it at <strong>This server only</strong> when N.I.N.A. writes
-  this server's database. See <a href="activation.html#remote">Rigs at another
+  <p>When the rig runs on another PSF Guard, set <strong>Plans push to</strong>,
+  under <strong>Remote site</strong>, to the Sync peer that holds the rig's real
+  database. Activation then pushes the plan to that peer. Leave it at
+  <strong>This server only</strong> when N.I.N.A. writes this server's
+  database. See <a href="activation.html#remote">Rigs at another
   site</a>.</p>
 
   <h2 id="live">Live</h2>
-  <p>Rigs that run the Director plugin report what they do. The header's
+  <p>Rigs that run the <a href="#director">Director plugin</a> report what they
+  do. The header's
   <strong>Live</strong> chip counts them: <code>2 rigs · 1 exposing</code>, or
   <code>2 rigs · 1 online</code> when none is exposing. It turns red when a rig
   that used to talk goes quiet, and opens <strong>Live on the Sky</strong> from any
@@ -271,12 +275,18 @@ function gtag_report_demo() {
   under the table.</p>
 
   <h2 id="director">The Director plugin</h2>
-  <p>The Director plugin for N.I.N.A. is experimental. A paired plugin pulls its
+  <div class="callout info">
+    <strong>Director pairing is an early beta.</strong> Target Scheduler with
+    the <a href="sync-plugin.html">PSF Guard Sync plugin</a> is the recommended
+    way to run a rig.
+  </div>
+  <p>A paired Director plugin pulls its
   rig's program from the last activation over HTTP, keeps running on it through
   a network outage, checks in each saved frame, and reports live status. Saved
   frames count as pending credit until grading accepts them; a receipt is
   evidence a frame was taken, not that it passed. Pairing uses one-use codes an
-  operator issues, and grants no control of equipment.</p>
+  operator issues over the API; there is no pairing screen yet. Pairing grants
+  no control of equipment.</p>
   <p>Without the plugin, activation still writes ordinary Target Scheduler rows,
   and the Target Scheduler plugin runs them as before.</p>
 

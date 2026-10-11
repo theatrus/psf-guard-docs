@@ -153,7 +153,7 @@ function gtag_report_demo() {
   <p>The <strong>Exposures</strong> tab says what the plan wants. An objective is
   one bandpass with a goal in accepted hours or accepted frames. For each rig in
   the plan, it shows the template, exposure length and frames that meet the
-  goal.</p>
+  goal, and how far the rig has got.</p>
   <figure>
     <img src="../assets/plan-objectives.png" alt="Exposures tab: objectives per band with purpose and goal in frames per rig" loading="lazy">
     <figcaption>Objectives: one band each, with a goal in hours or frames.</figcaption>
@@ -169,11 +169,31 @@ function gtag_report_demo() {
       <code>Clear</code> are luminance; <code>Ha</code>, <code>H-alpha</code> and
       <code>Ha 3nm</code> are H-alpha; <code>OIII</code> and <code>O3</code> are
       OIII.</li>
-    <li>The exposure starts from the template's default, or from the rig's optics
-      and sky: 120 s broadband and 300 s narrowband at f/5 under Bortle 4 to 5,
+    <li>The exposure is the template's default, both when the rig joins and when
+      you pick another template. When a database template's default is under a
+      second, the rig's exposure for the band stands in, set by its optics and
+      sky: 120 s broadband and 300 s narrowband at f/5 under Bortle 4 to 5,
       longer for slower optics and darker skies.</li>
     <li>A rig with no template for a band sits that band out, and says so.</li>
   </ul>
+
+  <h3 id="progress">Progress and status</h3>
+  <p>Each rig's table has a <strong>Progress</strong> and a
+  <strong>Status</strong> column:</p>
+  <ul>
+    <li><strong>Progress</strong> counts accepted frames against what the rig's
+      Target Scheduler exposure plans ask for, with a bar, and the frames taken
+      and rejected beneath. Rejects removed from the catalog still count as
+      rejected.</li>
+    <li><strong>Status</strong> reads <strong>Off</strong>, <strong>Not
+      activated</strong>, <strong>Done</strong>, or the project's state in
+      Target Scheduler.</li>
+    <li>The top row, <strong>All objectives</strong>, sums the rig: the plan's
+      frames and hours, its progress over every objective, and its status.</li>
+  </ul>
+  <p>An exposure plan counts toward the objective activation wrote it for. One
+  taken in from Target Scheduler counts toward the objective with its template,
+  else the one with its filter's band.</p>
 
   <figure>
     <img src="../assets/plan-exposures-rig.png" alt="One rig's row on the Exposures tab: panels chosen, template, exposure, goal with Set, frames per panel and On for each objective" loading="lazy">
@@ -249,12 +269,12 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Label</th><th>Meaning</th></tr>
-      <tr><td><code>create</code></td><td>A new project, target, exposure plan or template.</td></tr>
-      <tr><td><code>adopt</code></td><td>An existing row taken over, with what changes.</td></tr>
-      <tr><td><code>update</code></td><td>A row from an earlier activation that changes.</td></tr>
-      <tr><td><code>disable</code></td><td>An exposure plan nothing asks for now, turned off; or a project set Inactive.</td></tr>
-      <tr><td><code>unchanged</code></td><td>A row that already holds the plan's values.</td></tr>
-      <tr><td><code>keep</code></td><td>The rig's own plans no objective asks for, left as they are.</td></tr>
+      <tr><td><strong>New</strong></td><td>A new project, target, exposure plan or template.</td></tr>
+      <tr><td><strong>Taken over</strong></td><td>An existing row the plan takes over, with what changes.</td></tr>
+      <tr><td><strong>Updated</strong></td><td>A row from an earlier activation that changes.</td></tr>
+      <tr><td><strong>Turned off</strong></td><td>An exposure plan nothing asks for now; or a project set Inactive.</td></tr>
+      <tr><td><strong>Left as is</strong></td><td>The rig's own plans no objective asks for.</td></tr>
+      <tr><td><strong>Unchanged</strong></td><td>A row that already holds the plan's values.</td></tr>
     </table>
   </div>
   <p>It also names any objective and panel no rig covers, and why a rig is
@@ -312,7 +332,7 @@ function gtag_report_demo() {
   <p>A rig can run on another PSF Guard at a remote observatory, with its own
   database that N.I.N.A. writes. To plan for it here:</p>
   <ol>
-    <li>Register that PSF Guard under <strong>Settings › Remote PSF Guard</strong>
+    <li>Register that PSF Guard under <strong>Settings › Sync › Remote PSF Guard</strong>
       and pull its catalog into a database on this server. The copy is the rig
       here.</li>
     <li>In the copy's <a href="rigs.html#setup">rig setup</a>, set

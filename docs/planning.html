@@ -170,7 +170,10 @@ function gtag_report_demo() {
       a name stay separate plans.</li>
     <li>What Target Scheduler already holds becomes the plan's first draft:
       its targets become the framing, with a mosaic grid when the targets form
-      one, and its exposure plans become goals per filter.</li>
+      one, and its exposure plans become goals per filter. Each band's template
+      and exposure come from its main exposure plan: one of a second or more,
+      then the one asking for the most frames, so a short test plan never sets
+      them.</li>
     <li>Until you save or activate the plan, it follows Target Scheduler. A
       desired count raised or a target moved in N.I.N.A. shows up on the next
       listing. After the first save, the drafts are yours.</li>
@@ -221,7 +224,7 @@ function gtag_report_demo() {
         grid and each rig's field on a survey image, with tonight's visibility.
         See <a href="framing.html">Framing</a>.</td></tr>
       <tr><td><strong>Exposures</strong></td><td>Goals per filter, and for each
-        rig its template, exposure length and frames. See
+        rig its template, exposure length, frames and progress. See
         <a href="activation.html#exposures">Exposures</a>.</td></tr>
       <tr><td><strong>Rigs</strong></td><td>Each rig's database project, its
         Target Scheduler settings and targets, and the plan's scheduling limits.
@@ -250,6 +253,11 @@ function gtag_report_demo() {
   summary reads <strong>On the rigs</strong> when nothing is missing, and
   <strong>Drafts only</strong> on a server that does not write rig databases.
   See <a href="activation.html#activate">Activation</a>.</p>
+  <p>Target Scheduler then runs the rows as it runs any project. When N.I.N.A.
+  runs on another machine, the
+  <a href="sync-plugin.html">PSF Guard Sync plugin</a>'s <strong>Pull
+  planning</strong> takes them into its Target Scheduler database. Target
+  Scheduler with the Sync plugin is the recommended way to run a rig.</p>
 
   <h2 id="priority">Order projects</h2>
   <p>Open <strong>Priority and defaults</strong> and unfold <strong>Project

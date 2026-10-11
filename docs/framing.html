@@ -247,8 +247,8 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
       a few arcminutes.</li>
   </ul>
   <p><strong>Catalogs marked</strong> under <strong>View</strong> picks which
-  catalog families get marks. Messier, NGC, IC, Sharpless, LDN and LBN start on;
-  Barnard, vdB, SNR, UGC, WR, PGC and HD wait for a chip. A layer whose catalog
+  catalog families get marks. Messier, NGC, IC, Sh2, LDN, LBN and SNR start on;
+  Barnard, vdB, UGC, PGC, HD and WR wait for a chip. A layer whose catalog
   is not on the server says so on the stage. A mark is a catalog place, not
   pointing evidence.</p>
 
@@ -322,12 +322,26 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   </figure>
 
   <h2 id="stacks-on-sky">Finished panels on the sky</h2>
-  <p>Once a plan is activated, the framing view draws each activated panel's
-  latest stack where its plate solve puts it, beside the planned rectangles.
-  A list gives every panel with its rig, frames accepted against desired, and
-  why a stack is missing: none built yet, or built but not solved. Panels from
-  different rigs sit side by side and are never blended.
-  <strong>Show finished stacks on the sky</strong> hides them.</p>
+  <p>The framing view draws each panel's finished stack where its plate solve
+  puts it, beside the planned rectangles. A panel is a target activation wrote,
+  or, for a rig no activation reached, a target of its Target Scheduler
+  project. A plan taken in from Target Scheduler shows its stacks without
+  being activated.</p>
+  <ul>
+    <li>The <strong>Finished stacks</strong> button among the layer buttons, or
+      the <strong>Stacks</strong> box under the sky, turns the layer on and off.
+      The browser keeps the choice.</li>
+    <li><strong>Stack shown</strong> picks which stack each panel shows:
+      <strong>Best per panel</strong> (a current color stack first, else the
+      mono stack with the most integration), one color composition, or one
+      filter. The browser keeps the pick for each plan.</li>
+    <li>A list gives every panel with its rig, frames accepted against desired,
+      and why no stack is drawn: none built yet, none of the kind picked, or
+      built but not solved.</li>
+  </ul>
+  <p>Panels from different rigs sit side by side and are never blended. When
+  the framing changed since the last activation, the list says so: stacks stay
+  where their solves put them, and the rectangles show the new plan.</p>
 
   <h2 id="save">Save the framing</h2>
   <p><strong>Save framing</strong> keeps the draft on the plan; the page's save bar
