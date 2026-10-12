@@ -160,7 +160,7 @@ function gtag_report_demo() {
       <tr><th>Where</th><th>Result</th></tr>
       <tr><td>Desktop app</td><td>A folder you choose. Hard links on the same drive, copies elsewhere.</td></tr>
       <tr><td>Browser</td><td>A zip download, or a background export on the server when the database has a server export directory.</td></tr>
-      <tr><td>CLI</td><td>A folder: copies, hard links, clones, symbolic links, or a WBPP runner that names the frames where they are.</td></tr>
+      <tr><td>CLI</td><td>A folder: copies, hard links, clones, symbolic links, or a WBPP runner that points to the frames where they are.</td></tr>
       <tr><td>HTTP API</td><td>A zip stream, a folder on the server, or a background export into the server export directory.</td></tr>
     </table>
   </div>
@@ -221,9 +221,9 @@ function gtag_report_demo() {
       <tr><th>Files</th><th>What it does</th></tr>
       <tr><td><strong>Copy</strong></td><td>The export stands on its own. The desktop app hard-links on the same drive; a server export clones where the filesystem allows. Both copy otherwise.</td></tr>
       <tr><td><strong>Link to the originals</strong></td><td>Symbolic links, so the tree takes no space and can point at a network mount. Whatever reads it must see the originals at the same paths.</td></tr>
-      <tr><td><strong>Reference in place</strong></td><td>Copies nothing. Writes only the WBPP runner, which names every frame where it is. WBPP layout only.</td></tr>
+      <tr><td><strong>Reference in place</strong></td><td>Copies nothing. Writes only the WBPP runner, which points to every frame where it is. WBPP layout only.</td></tr>
       <tr><td><strong>Zip of the frames</strong></td><td>Browser download: every frame, plus the runner scripts for a WBPP tree.</td></tr>
-      <tr><td><strong>Scripts only</strong></td><td>Browser download: a small zip of the runner scripts, naming each frame where it sits on the server. WBPP layout only.</td></tr>
+      <tr><td><strong>Scripts only</strong></td><td>Browser download: a small zip of the runner scripts, pointing to each frame where it sits on the server. WBPP layout only.</td></tr>
     </table>
   </div>
   <p>With <strong>Reference in place</strong>, <strong>Server path</strong> is the
@@ -283,7 +283,7 @@ function gtag_report_demo() {
 ├── run-wbpp.sh
 └── run-wbpp.cmd</code></pre>
   <p>Dark flats go in <code>darks/</code>, since WBPP pairs a dark to a flat by
-  exposure. Each light's path names the same night as its flats, and the runner
+  exposure. Each light's path includes the same night as its flats, and the runner
   tells WBPP to group by <code>SESSION</code>, so each night's lights calibrate
   with that night's flats while bias and darks serve every night.</p>
 
@@ -292,7 +292,7 @@ function gtag_report_demo() {
   one exposure and gain were matched to different darks, say each to its own
   complete night, each set of darks goes in a
   <code>darks/300s_G100/DARKSET_&lt;night&gt;/</code> folder named for its
-  nearest dark, and each light's path names its set. The runner groups by
+  nearest dark, and each light's path includes its set. The runner groups by
   <code>SESSION</code> and <code>DARKSET</code>, so each set serves only its own
   lights and WBPP no longer averages every night's darks into one master.
   When the lights share one set, there is no <code>DARKSET</code> folder.</p>
@@ -329,7 +329,7 @@ psf-guard export my-db --dest ./stacking
 <span class="c"># A WBPP tree with its runner scripts</span>
 psf-guard export my-db --dest ./stacking --layout wbpp
 
-<span class="c"># Only the runner, naming frames where they are, for PixInsight on P:\</span>
+<span class="c"># Only the runner, pointing to frames where they are, for PixInsight on P:\</span>
 psf-guard export my-db --dest ./wbpp-run --layout wbpp \
   --placement reference --local-root /mnt/barium/astrobin --remote-root 'P:\'
 
@@ -438,7 +438,7 @@ psf-guard astrobin-csv my-db --target-id 12 --filter-id L=4049 --filter-id Ha=40
 curl "http://localhost:3000/api/db/my-db/export?target_id=42&amp;layout=wbpp" \
   --output psf-guard-export.zip
 
-<span class="c"># Only the runner scripts, naming frames where they sit on the server</span>
+<span class="c"># Only the runner scripts, pointing to frames where they sit on the server</span>
 curl "http://localhost:3000/api/db/my-db/export?target_id=42&amp;layout=wbpp&amp;placement=reference" \
   --output wbpp-scripts.zip
 

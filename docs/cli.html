@@ -192,7 +192,7 @@ function gtag_report_demo() {
     </table>
   </div>
   <p>Commands that open a catalog take a registry slug or a <code>.sqlite</code>
-  path, and <code>--registry</code> names a registry other than the default.
+  path, and <code>--registry</code> picks a registry other than the default.
   The older database commands instead read the global <code>-d</code> option,
   which goes before the command name and defaults to
   <code>schedulerdb.sqlite</code>: <code>psf-guard -d my.sqlite
@@ -312,7 +312,7 @@ psf-guard export my-db --dest ./stacking
 psf-guard export my-db --dest ./stacking \
   --target "California Nebula" --filter HA --link
 
-<span class="c"># A WBPP tree that names the frames where they are</span>
+<span class="c"># A WBPP tree that points to the frames where they are</span>
 psf-guard export my-db --dest ./wbpp --layout wbpp --placement reference \
   --wbpp-drizzle 2x</code></pre>
   <p>Rejects are never exported; <code>--include-pending</code> adds ungraded
@@ -321,7 +321,7 @@ psf-guard export my-db --dest ./wbpp --layout wbpp --placement reference \
     <table>
       <tr><th>Option</th><th>Values</th></tr>
       <tr><td><code>--layout</code></td><td><code>standard</code> (by target) or <code>wbpp</code> (one root per frame type)</td></tr>
-      <tr><td><code>--placement</code></td><td><code>copy</code>, <code>hardlink</code>, <code>reflink</code>, <code>symlink</code>, or <code>reference</code> (place nothing; the WBPP runner names the originals). <code>--link</code> is <code>hardlink</code>.</td></tr>
+      <tr><td><code>--placement</code></td><td><code>copy</code>, <code>hardlink</code>, <code>reflink</code>, <code>symlink</code>, or <code>reference</code> (place nothing; the WBPP runner points to the originals). <code>--link</code> is <code>hardlink</code>.</td></tr>
       <tr><td><code>--local-root</code>, <code>--remote-root</code></td><td>With <code>reference</code>: the frames' folder as this machine and as the PixInsight machine see it</td></tr>
       <tr><td><code>--wbpp-quality</code></td><td><code>maximum</code>, <code>good</code>, <code>fast</code></td></tr>
       <tr><td><code>--wbpp-fast-integration</code></td><td><code>off</code> (default), <code>auto</code>, <code>on</code></td></tr>
@@ -378,7 +378,7 @@ psf-guard purge-removed --db &lt;slug&gt; [--batch ID]</code></pre>
   <code>--apply</code>. Files go to a <code>.psf-guard-trash</code> folder in
   the image directory and stay <code>--retention-days</code> (14 by default)
   before <code>empty-reject-trash</code> may delete them; until then
-  <code>restore-removed</code> brings them back. <code>--cache-dir</code> names
+  <code>restore-removed</code> brings them back. <code>--cache-dir</code> points to
   the server's cache (default <code>./cache</code>), so the frames' cached
   files go too. <code>purge-removed</code> forgets the saved rows of emptied
   batches. Settings does the same under <strong>Purge Rejects</strong>; see

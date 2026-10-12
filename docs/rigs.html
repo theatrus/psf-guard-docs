@@ -169,7 +169,7 @@ function gtag_report_demo() {
   while you switch sections; <strong>Save rig profile</strong> saves them.</p>
   <figure>
     <img src="../assets/rig-setup-optics.png" alt="Rig setup, Optics: sensor size, pixel size, focal length, aperture, camera angle and the computed field" loading="lazy">
-    <figcaption>Optics, with Use frame headers naming the frame it reads.</figcaption>
+    <figcaption>Optics, with Use frame headers showing the frame it reads.</figcaption>
   </figure>
 
   <h3 id="optics">Optics</h3>
@@ -178,8 +178,8 @@ function gtag_report_demo() {
   changes: a rotator, turned by hand between sessions, or fixed. The field of
   view and pixel scale update as you type.</p>
   <p><strong>Use frame headers</strong> copies sensor size, pixel size, focal
-  length, aperture and site from the newest frame the server can find, and names
-  the file. Headers from N.I.N.A. record binned values; PSF Guard folds them back
+  length, aperture and site from the newest frame the server can find, and says
+  which file. Headers from N.I.N.A. record binned values; PSF Guard folds them back
   to the sensor. Each section says where its values came from: frame headers, set
   by hand, or reported by the plugin.</p>
 
@@ -193,7 +193,7 @@ function gtag_report_demo() {
   pair per line in degrees, <code>#</code> for comments. Paste or upload it, and
   download it back for N.I.N.A. PSF Guard sorts the points and closes the curve
   at north. It refuses a line that is not two numbers, an azimuth outside 0–360,
-  an altitude outside −90–90, or a repeated azimuth, and names the line.</p>
+  an altitude outside −90–90, or a repeated azimuth, and says which line.</p>
   <p>Visibility, feasibility and the program sent to the plugin all use the
   resolved location and horizon. A rig with neither has no location, and its
   horizon is flat at its minimum altitude.</p>

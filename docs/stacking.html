@@ -197,7 +197,7 @@ function gtag_report_demo() {
       <strong>can't calibrate</strong>. See
       <a href="calibration.html#uncalibrated">Calibration Libraries</a>.</li>
   </ul>
-  <p>The server log names each frame a build leaves out or Seiza rejects, and
+  <p>The server log lists each frame a build leaves out or Seiza rejects, and
   why. The desktop app writes this log to a daily file; <strong>Open
   logs</strong> in Settings opens the folder.</p>
   <p>Expand <strong>Frame decisions</strong> on a card to audit the build: each
@@ -293,7 +293,7 @@ function gtag_report_demo() {
     <figcaption>Settings → Stacking sets the method for every stack on the server and the automatic refresh.</figcaption>
   </figure>
 
-  <p>The stack panel names the method in use beside <strong>Method:</strong>;
+  <p>The stack panel shows the method in use beside <strong>Method:</strong>;
   click it to open Settings. A change applies to the next build, automatic
   refreshes included. Cards built another way read <strong>Out of date —
   stacking method changed</strong>, and cards from before the method could be
@@ -334,9 +334,9 @@ function gtag_report_demo() {
   calibrated</a>.</p>
   <p>A multi-night stack whose lights need different flats or darks splits into
   calibration sessions, and the build swaps masters between them. A master
-  that fails to build does not fail the stack: the card names the skipped
+  that fails to build does not fail the stack: the card shows the skipped
   master and why, and the build goes on with the rest.</p>
-  <p>While masters build, the card and the header queue name the master, what
+  <p>While masters build, the card and the header queue show which master, what
   Seiza is doing with it, and the frame or tile under way, for example
   <em>Master dark · integrating frame 4/20</em>. The bar moves with it.
   <strong>Stop</strong> ends a master build part way, and a master stopped part
@@ -533,7 +533,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   Automatic refreshes compose only what was composed before.</p>
   <p>With exposure groups on, each card matches channels of one exposure band,
   so 30&nbsp;s and 300&nbsp;s RGB give two cards. A band missing a channel
-  names what it lacks. <strong>Custom combination</strong>, below the target's
+  says what it lacks. <strong>Custom combination</strong>, below the target's
   cards, picks sources by hand: mixed exposures, ambiguous filter names, or
   WBPP channels.</p>
 
@@ -572,7 +572,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>The crop happens before normalization, so every channel scales from the
   same sky, and the FITS moves <code>CRPIX</code> to keep the plate solution.
   The card reports the kept size and share. When one channel's coverage looks
-  like a pointing error rather than dither, the card names it.</p>
+  like a pointing error rather than dither, the card says which channel.</p>
 
   <h3 id="background">Remove the background</h3>
   <p>Before registration, PSF Guard fits and subtracts each channel's
@@ -648,7 +648,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   panels)</strong>. In Stacks it lays each panel's latest stack out as the
   mosaic's grid, and beside it places every solved stack on the sky by its
   plate solve, north up. Nothing is stitched: each panel still stacks, grades
-  and calibrates on its own. The caption names panels with no stack or no
+  and calibrates on its own. The caption lists panels with no stack or no
   solve yet.</p>
 
   <figure>

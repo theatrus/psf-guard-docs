@@ -162,7 +162,7 @@ function gtag_report_demo() {
   <ul>
     <li><strong>Executable</strong>: leave empty to look in the standard places
       (<code>/opt/PixInsight</code>, <code>~/PixInsight</code>, the macOS
-      Applications folder, Program Files), or name
+      Applications folder, Program Files), or point it to
       <code>PixInsight.sh</code> under <code>bin/</code> on Linux, the binary
       inside the app bundle on macOS, or <code>PixInsight.exe</code> on
       Windows.</li>
@@ -179,7 +179,7 @@ function gtag_report_demo() {
 
   <figure>
     <img src="../assets/settings-pixinsight.png" alt="Settings › Setups › PixInsight: found WBPP version, Executable and WBPP runs folder with free space" loading="lazy">
-    <figcaption>The PixInsight panel names the install it found, its WBPP version, and whether runs go through xvfb-run.</figcaption>
+    <figcaption>The PixInsight panel shows the install it found, its WBPP version, and whether runs go through xvfb-run.</figcaption>
   </figure>
 
   <h3 id="headless">Run on a headless server</h3>
@@ -280,7 +280,7 @@ function gtag_report_demo() {
   <h2 id="queue">Queue runs</h2>
   <p>PixInsight takes every core it can get, so the server runs one WBPP job
   at a time across all databases. Starting a run while another is going
-  queues it: the dialog names the run PixInsight is busy with, its button
+  queues it: the dialog shows the run PixInsight is busy with, its button
   reads <strong>Queue stacking</strong>, and <strong>Show that run</strong>
   switches to the running one. A queued run starts on its own when the running
   one ends, with the settings it was queued with.</p>
@@ -337,13 +337,13 @@ function gtag_report_demo() {
   Give the database a <strong>Process directory</strong> under
   <strong>Settings &rarr; Databases</strong>, and the run dialog offers to save
   the masters there.</p>
-  <p>Name the project's folder and tick <strong>Save the masters when
+  <p>Enter the project's folder name and tick <strong>Save the masters when
   done</strong> before a run, or click <strong>Save masters</strong> after it.
   The masters are copied to
   <code>&lt;process directory&gt;/&lt;folder&gt;/master/</code>. PSF Guard
   remembers the folder name per project. Nothing is overwritten: a file of the
   same size is taken as the same file and skipped, and one of a different size
-  is left alone and named. Only the masters are copied; the calibrated and
+  is left alone and listed. Only the masters are copied; the calibrated and
   registered frames stay in the run folder.</p>
 
   <h2 id="agents">Start runs from an agent</h2>
@@ -357,9 +357,9 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
-      <tr><td>PixInsight not found</td><td>The settings panel lists where it looked. Name the executable in <strong>Executable</strong>.</td></tr>
+      <tr><td>PixInsight not found</td><td>The settings panel lists where it looked. Enter the executable's path in <strong>Executable</strong>.</td></tr>
       <tr><td>No display</td><td>Install <code>xvfb</code> on the Linux server.</td></tr>
-      <tr><td>Frames left out</td><td>The run names each frame by its full path. A catalog row whose file is not under the database's image folders is left out and counted.</td></tr>
+      <tr><td>Frames left out</td><td>The run lists each frame by its full path. A catalog row whose file is not under the database's image folders is left out and counted.</td></tr>
       <tr><td>Fewer darks than the library holds</td><td>Darks marked for stray light stay out, and the dialog counts them.</td></tr>
       <tr><td>WBPP wrote no master</td><td>Read WBPP's log from the dialog. The usual causes are a group WBPP could not register, or calibration frames that do not match. PixInsight's console output is empty in this mode.</td></tr>
       <tr><td><code>*** Error: No database files have been selected.</code></td><td>The server's PixInsight has no local star catalog for WBPP's plate solver. WBPP solves another way and goes on.</td></tr>

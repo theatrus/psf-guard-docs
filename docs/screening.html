@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quality Screening — PSF Guard</title>
-  <meta name="description" content="Score light frames against their session and their whole target: clouds, occlusion, stray light, SNR, soft stars, pointing faults and satellite trails, each with a named cause.">
+  <meta name="description" content="Score light frames against their session and their whole target: clouds, occlusion, stray light, SNR, soft stars, pointing faults and satellite trails, each with its cause.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -157,12 +157,12 @@ function gtag_report_demo() {
   <p>Settings → <strong>Databases</strong> holds the database-wide actions. <strong>Analyze Missing Quality</strong> scans frames that have no results. <strong>Rescan All Quality</strong> forces a full rescan. <strong>Analyze new frames as they arrive</strong> scans frames that come by sync, peer pull, remote upload or auto-import a few minutes after they land. See <a href="importing.html#quality">Import Images</a>.</p>
   <figure>
     <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing and cards with their causes" loading="lazy">
-    <figcaption>A session after a scan. Each card names its cause.</figcaption>
+    <figcaption>A session after a scan. Each card gives its cause.</figcaption>
   </figure>
 
-  <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis names a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail panel. For a local finding, image detail offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
+  <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis finds a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail panel. For a local finding, image detail offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
   <figure>
-    <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box naming a possible obstruction, and sky context from a hinted solve" loading="lazy">
+    <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box reporting a possible obstruction, and sky context from a hinted solve" loading="lazy">
     <figcaption>Image detail. Quality analysis gives the score and its reason; Sky context gives the solve.</figcaption>
   </figure>
   <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes you tick. The grid scores one target, project or database at a time and never compares frames from unrelated targets. It reads stored metadata and cached evidence and does not start a scan, and it says how many visible frames stay unscored for lack of a comparable sequence or evidence.</p>
@@ -231,7 +231,7 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   </ul>
   <p>Both are relative ranks, not verdicts. Star count, HFR, eccentricity, SNR and background are compared with a robust good reference, and normal variation costs nothing. A scan adds spatial, photometric and plate-solve evidence. Missing evidence gets no weight: the score renormalizes over what was measured, so a frame is never marked down because an optional scan has not run. When a fresh solve puts a large emission nebula in the field, raw background gets no weight, since lower background can mean lost target signal.</p>
   <p>Cards say <strong>Catalog-relative score</strong> until a scan adds pixel evidence, then <strong>Pixel-assisted score</strong>.</p>
-  <p>A low score alone names no fault and recommends nothing. A frame gets a cause only when its detector has enough evidence, and reject recommendations follow causes, not scores:</p>
+  <p>A low score alone gives no cause and recommends nothing. A frame gets a cause only when its detector has enough evidence, and reject recommendations follow causes, not scores:</p>
   <div class="table-wrap"><table>
     <tr><th>Kind</th><th>Causes</th></tr>
     <tr><td>Sky and optics</td><td><strong>Likely Clouds</strong>, <strong>Possible Obstruction</strong>, <strong>Sky Brightening</strong>, <strong>Focus Drift</strong>, <strong>Soft Stars</strong></td></tr>

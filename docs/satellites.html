@@ -179,7 +179,7 @@ function gtag_report_demo() {
 
   <h2 id="alignment">Pixel alignment</h2>
   <p>The matcher downsamples the frame once to at most 2,048 pixels on its long side, estimates local noise, and runs a coarse-to-fine matched-filter search in a narrow corridor around each predicted path. A match needs at least 2.0 sigma robust line contrast, 65% path continuity and 50% usable coverage. A track without enough in-frame evidence is reported as not evaluated, not as a clean miss.</p>
-  <p>The result keeps the fitted segments, offsets, angle difference, contrast in physical ADU, significance, continuity, coverage and search radius beside the untouched orbital path. Work grows with the number of predicted crossings: the matcher never searches the whole frame for arbitrary lines or names an unrelated trail.</p>
+  <p>The result keeps the fitted segments, offsets, angle difference, contrast in physical ADU, significance, continuity, coverage and search radius beside the untouched orbital path. Work grows with the number of predicted crossings: the matcher never searches the whole frame for arbitrary lines or assigns a satellite to an unrelated trail.</p>
 
   <h2 id="grading">Risk and grading</h2>
   <p>Risk is a 0–1 heuristic from sunlight, range, elevation and clipped path length. It is not an apparent magnitude: the catalog has no reliable brightness model for the exposure band, and attitude and flares change what you see.</p>
@@ -207,7 +207,7 @@ function gtag_report_demo() {
     <li>Older exposures use a nearby cached entry, then the Seiza rolling mirror, then the public IAU SatChecker service. One historical answer serves the whole observing night.</li>
     <li>Current and historical snapshots share one cache, 5 GiB by default. Past that, the oldest downloads go first, and the newest is always kept.</li>
   </ul>
-  <p>For offline or reproducible work, name a local OMM JSON or TLE file in the registry. A relative path resolves below <code>data_dir</code>:</p>
+  <p>For offline or reproducible work, point the registry to a local OMM JSON or TLE file. A relative path resolves below <code>data_dir</code>:</p>
   <pre><code>"astrometry": {
   "data_dir": "/var/lib/psf-guard/seiza",
   "satellite_elements": "historical.tle"

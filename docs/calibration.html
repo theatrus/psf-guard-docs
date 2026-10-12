@@ -241,8 +241,8 @@ function gtag_report_demo() {
     <li>The dark column shows what one dark master would use: its frames, the
       nights they span, and the nearest night's distance. Hover for every
       matching dark within reach.</li>
-    <li>A night with no flats names the nearest flat refused only for its
-      rotator angle, how far off it is, and the limit. That is the usual cause
+    <li>A night with no flats shows the nearest flat the match refused only for
+      its rotator angle, how far off it is, and the limit. That is the usual cause
       when a rotator moved.</li>
     <li>Masters from other software that fit the lights' camera and sensor
       size (and filter, for flats) are listed under the night: used, matching
@@ -251,7 +251,7 @@ function gtag_report_demo() {
     <li>A night and filter whose lights can't be calibrated says so, and
       why.</li>
   </ul>
-  <p>Warnings name kinds with no matches, nights without same-night flats, and
+  <p>Warnings list kinds with no matches, nights without same-night flats, and
   flats more than a month from their lights.</p>
 
   <figure>
@@ -309,7 +309,7 @@ function gtag_report_demo() {
   other. The nearest group with enough frames builds the master, up to 64
   frames. Before integrating, Seiza checks the inputs again and leaves out
   any it will not accept, such as a frame filed under the wrong filter, camera
-  or readout mode; the stack warning names them.</p>
+  or readout mode; the stack warning lists them.</p>
   <p>The settings on this page sit on the <strong>Settings &rarr;
   Calibration</strong> tab. They apply to every database on the server,
   starting with the next stack. Anyone can read them; saving needs write
@@ -360,7 +360,7 @@ function gtag_report_demo() {
   every frame that could stand in for it, from any night, and marks one more
   than one noise sigma above the quietest as <strong>Stray light</strong>. A
   marked dark stays out of stack masters, WBPP runs and exports, and reports
-  name the frames left out. Nothing is deleted. A lone frame with nothing to
+  list the frames left out. Nothing is deleted. A lone frame with nothing to
   compare against stays in use.</p>
 
   <h3 id="external">Masters from other software</h3>
@@ -373,7 +373,7 @@ function gtag_report_demo() {
     <li>Matching is lenient, since such files often drop gain, offset and
       temperature: what both sides record must agree, and the camera name or
       sensor size must still match. A dark's exposure must still match. The
-      stack report names what the match took on trust.</li>
+      stack report shows what the match took on trust.</li>
     <li>A master dark that records no sensor temperature, such as one from
       WBPP, calibrates cooled lights.</li>
     <li>WBPP's FITS masters are floats scaled 0 to 1. PSF Guard copies such a
@@ -403,7 +403,7 @@ function gtag_report_demo() {
   library can't calibrate out of stacks, see <a href="#uncalibrated">above</a>.</p>
   <div class="callout info">
     A master that fails to build does not fail the stack. The lights stack
-    without it, and the card names the skipped master and why. A master whose
+    without it, and the card shows the skipped master and why. A master whose
     input master failed, such as a flat whose bias did not build, is skipped
     rather than built without it.
   </div>
@@ -442,19 +442,19 @@ function gtag_report_demo() {
   method, thresholds, frame count and rejected samples. A master builds on the
   cores its stack build was given; see <a href="storage.html#processor">Processor
   use</a>.</p>
-  <p>While a master builds, the stack card and the header queue name it, what
-  Seiza is doing, and the frame or tile under way. <strong>Stop</strong> ends a
+  <p>While a master builds, the stack card and the header queue show which one,
+  what Seiza is doing, and the frame or tile under way. <strong>Stop</strong> ends a
   master build part way and writes nothing.</p>
-  <p>Master files are named from their input frames, file fingerprints,
+  <p>Each master's file name comes from its input frames, file fingerprints,
   upstream masters and algorithm versions, so a changed bias rebuilds the dark
-  and flat masters that used it, and an unchanged master is reused. They live
+  and flat masters that used it, and an unchanged master is reused. Masters live
   in the calibration masters folder, which is the cache unless
   <code>--calibration-dir</code> or <strong>Settings &rarr; Storage &rarr;
-  Folders</strong> names another:</p>
+  Folders</strong> sets another:</p>
   <pre><code>&lt;calibration masters folder&gt;/&lt;database&gt;/calibration-masters/</code></pre>
   <p>Once an hour PSF Guard removes half-written masters and masters that a
   newer one built from the same frames replaced, once unused for a day and
-  named by no stack. Over the disk limit, masters unused for a week can go
+  no stack refers to them. Over the disk limit, masters unused for a week can go
   too. A master whose frames are gone, or that the catalog does not record, is
   always kept. A removed master is built again when a stack needs it. See
   <a href="storage.html#disk-use">Disk use</a>.</p>
@@ -479,7 +479,7 @@ function gtag_report_demo() {
   <ul>
     <li>Flats stay under their target and under the night they were shot,
       since two nights of one target can need different flats.</li>
-    <li>In the WBPP layout, each light's path names its night, so each night's
+    <li>In the WBPP layout, each light's path includes its night, so each night's
       lights calibrate with that night's flats.</li>
     <li>When lights of one exposure were matched to different darks, each set
       of darks goes in its own <code>DARKSET_&lt;night&gt;</code> folder, so WBPP
@@ -499,8 +499,8 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Symptom</th><th>Check</th></tr>
-      <tr><td>No calibration summary</td><td>Add the calibration folder to the catalog, run Import, and confirm <code>IMAGETYP</code> names the frame type.</td></tr>
-      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout mode, exposure, temperature, filter, telescope, focal length and rotator angle. The coverage report names a flat refused for its angle.</td></tr>
+      <tr><td>No calibration summary</td><td>Add the calibration folder to the catalog, run Import, and confirm <code>IMAGETYP</code> gives the frame type.</td></tr>
+      <tr><td>No matching master</td><td>Compare camera, size, binning, gain, offset, readout mode, exposure, temperature, filter, telescope, focal length and rotator angle. The coverage report shows a flat the match refused for its angle.</td></tr>
       <tr><td>A night has no flats</td><td>Open the coverage report. If a rotator moved, raise <strong>Rotation tolerance (degrees)</strong> or shoot new flats.</td></tr>
       <tr><td>Darks from another season used</td><td>Lower <strong>Dark reach (days)</strong>, or mark validity boundaries.</td></tr>
       <tr><td>Fewer darks than expected</td><td>Look for the <strong>Stray light</strong> mark in the library.</td></tr>

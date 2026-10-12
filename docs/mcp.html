@@ -199,7 +199,7 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   <p>On the desktop app or a local server with no accounts, drop the token:</p>
   <pre><code>claude mcp add --transport http psf-guard http://127.0.0.1:3000/api/mcp</code></pre>
   <p>The URL must end in <code>/api/mcp</code>. The bare address serves the
-  app and answers a POST with 405 and a note that names the endpoint. The
+  app and answers a POST with 405 and a note that gives the endpoint. The
   endpoint is stateless and answers in plain JSON, so a reverse proxy needs
   nothing extra and there is no session to expire. Revoke the token to cut an
   agent off; it stops at its next call.</p>

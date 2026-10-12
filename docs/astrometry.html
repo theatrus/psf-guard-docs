@@ -216,7 +216,7 @@ seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
     <tr><td>macOS</td><td><code>~/Library/Application Support/psf-guard/config.json</code></td></tr>
     <tr><td>Linux</td><td><code>~/.config/psf-guard/config.json</code></td></tr>
   </table></div>
-  <p>Name a single resource that lives apart from the bundle inside <code>astrometry</code>: <code>stars</code> for the star catalog (or <code>SEIZA_STAR_DATA</code>), <code>blind_index</code> for the blind index (or <code>SEIZA_BLIND_INDEX</code>). Relative paths resolve below <code>data_dir</code>. See <a href="configuration.html#astrometry">Configuration</a>.</p>
+  <p>Point to a single resource that lives apart from the bundle inside <code>astrometry</code>: <code>stars</code> for the star catalog (or <code>SEIZA_STAR_DATA</code>), <code>blind_index</code> for the blind index (or <code>SEIZA_BLIND_INDEX</code>). Relative paths resolve below <code>data_dir</code>. See <a href="configuration.html#astrometry">Configuration</a>.</p>
   <p>Blind solves use the index beside the star catalog, since a catalog and its index ship together and an index found elsewhere may belong to another catalog. A <code>blind_index</code> setting or <code>SEIZA_BLIND_INDEX</code> still chooses the index. With neither, and no index beside the stars, PSF Guard looks in <code>data_dir</code> and Seiza's default folders.</p>
 
   <h3 id="docker">Run with Docker</h3>
@@ -247,7 +247,7 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
     <li>Press <kbd>T</kbd> to predict satellite crossings and align them with trails in the pixels. See <a href="satellites.html">Satellite Tracks</a>.</li>
   </ol>
   <p>The overlay stays as you last left it, across frames and reloads. A frame that a quality scan solved on its own does not turn it on.</p>
-  <p>The panel's badge names the source: <strong>Embedded FITS WCS</strong>, <strong>Hinted solve</strong> or <strong>Blind solve</strong>. Below it:</p>
+  <p>The panel's badge shows the source: <strong>Embedded FITS WCS</strong>, <strong>Hinted solve</strong> or <strong>Blind solve</strong>. Below it:</p>
   <ul>
     <li><strong>Center</strong>: the solved RA and Dec.</li>
     <li><strong>Scale</strong>: arcseconds per pixel.</li>

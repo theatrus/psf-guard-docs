@@ -228,7 +228,7 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
       registered copies, move to a <code>.psf-guard-trash</code> folder in its
       image directory, never overwriting. The frame leaves the catalog and its
       cached previews and scans are deleted.</li>
-    <li><strong>Kept.</strong> Frames a collaboration report names, and frames
+    <li><strong>Kept.</strong> Frames a collaboration report lists, and frames
       whose file another frame also uses, stay.</li>
     <li><strong>Restore</strong> on a removed batch puts its files and rows
       back. A taken file name comes back with a <code>.restored</code>
@@ -244,7 +244,7 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
   rejected. Removal changes only this catalog: a rig's own Target Scheduler
   copy keeps its rows.</p>
   <pre><code><span class="c"># Preview, then remove frames rejected 7 days ago or more.
-# --cache-dir names the server's cache, so the frames' cached files go too.</span>
+# --cache-dir points to the server's cache, so the frames' cached files go too.</span>
 psf-guard remove-rejects --db my-db --days 7
 psf-guard remove-rejects --db my-db --days 7 --apply --cache-dir /path/to/cache
 
@@ -255,14 +255,14 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
 
   <h2 id="sync">Sync two database files</h2>
   <p>Grade on one machine while the telescope keeps capturing on another. Sync
-  copies chosen state between two Target Scheduler databases, named by
+  copies chosen state between two Target Scheduler databases, each given as a
   registry slug or <code>.sqlite</code> path, and matches rows by their stable
   GUID (schema 22 or later).</p>
 
   <h3 id="data-transfer">Data Transfer in Settings</h3>
   <figure>
     <img src="../assets/data-transfer.png" alt="Data Transfer with Merge catalogs, Send planning and Send reviewed grades, and source and destination catalogs" loading="lazy">
-    <figcaption>Data Transfer names both catalogs and shows a preview before
+    <figcaption>Data Transfer lists both catalogs and shows a preview before
     any Apply.</figcaption>
   </figure>
   <p>Open <strong>Settings &rarr; Sync</strong>. <strong>Data Transfer</strong>
@@ -328,7 +328,7 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
     </table>
   </div>
   <div class="callout">
-    Keep the named directions: pull from the telescope, then send planning and
+    Keep to these directions: pull from the telescope, then send planning and
     grades back. A pull protects your reviewed grades, a planning push leaves
     the telescope's capture history alone, and a grade push changes only
     grades. Reversing one direction could overwrite work.

@@ -159,8 +159,8 @@ function gtag_report_demo() {
       <tr><td><strong>Calibration masters</strong></td><td>Masters built from your calibration frames</td><td><code>--calibration-dir</code>, <code>[cache] calibration_directory</code></td></tr>
     </table>
   </div>
-  <p>Stacks and masters go in the cache unless a folder of their own is named.
-  Name one to put them on another volume: stacks on a large network share, for
+  <p>Stacks and masters go in the cache unless you set a folder of their own.
+  Set one to put them on another volume: stacks on a large network share, for
   example, with the cache on a fast local disk. The command line wins over the
   config file, and both win over Settings.</p>
   <pre><code><span class="c"># On the command line</span>
@@ -185,7 +185,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     <figcaption>Folders saved here take effect at the next start, which moves the files across first.</figcaption>
   </figure>
   <p>A folder saved in Settings takes effect at the next start, which moves the
-  files there first. Until then the field names the folder still in use. In
+  files there first. Until then the field shows the folder still in use. In
   the desktop app, <strong>Restart now</strong> restarts the whole app to
   carry out the move.</p>
   <ul>
@@ -201,7 +201,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       next start.</li>
     <li>Calibration master records in the catalog follow their files, so
       masters are not built again.</li>
-    <li>A large move delays the start. The log names each folder it moves.</li>
+    <li>A large move delays the start. The log lists each folder it moves.</li>
     <li>Settings refuses folders that sit one inside another.</li>
   </ul>
   <div class="callout info">
@@ -273,19 +273,19 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <div class="table-wrap">
     <table>
       <tr><th>What</th><th>Deleted</th></tr>
-      <tr><td>Stacks a newer build of the same target and channel replaced</td><td>Once no index or job names them, after a day</td></tr>
+      <tr><td>Stacks a newer build of the same target and channel replaced</td><td>Once no index or job refers to them, after a day</td></tr>
       <tr><td>Stretch and deconvolution results</td><td>A week after they were last selected or used</td></tr>
       <tr><td>Artifact searches</td><td>When their stack is gone</td></tr>
       <tr><td>Stacks of deleted projects</td><td>With the project's index. Merging projects keeps the merged project's stacks.</td></tr>
       <tr><td>Stack resume checkpoints</td><td>After 30 days with no build writing or resuming from them. At once when no build could resume from them, such as one from an older stacking pipeline.</td></tr>
-      <tr><td>Calibration masters a newer master built from the same frames replaced</td><td>Once unused for a day and named by no stack</td></tr>
+      <tr><td>Calibration masters a newer master built from the same frames replaced</td><td>Once unused for a day and no stack refers to them</td></tr>
       <tr><td>Half-written masters a stopped build left</td><td>A day old</td></tr>
       <tr><td>WBPP run folders</td><td>Never: a run's output may exist nowhere else</td></tr>
     </table>
   </div>
   <p>Masters are swept only while no stack build runs. An index that cannot be
-  read stops the sweep of that database rather than leaving what it names
-  unprotected; the server log names the file.</p>
+  read stops the sweep of that database rather than leaving what it refers to
+  unprotected; the server log says which file.</p>
   <p>Neither the disk limit nor the cleanup touches your frames. To free the
   space rejected frames take, <a href="workflows.html#remove-rejects">remove
   old rejects</a>.</p>
@@ -352,7 +352,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   </ul>
   <p>Changing the line needs write access. A stack build's line reads, for
   example, <em>Rejecting transients · pass 2/3 · frame 4/14</em> through the
-  final rejection pass, and a calibration master build names the master and
+  final rejection pass, and a calibration master build shows which master and
   what Seiza is doing with it.</p>
   <h3 id="automatic-refreshes">Automatic refreshes</h3>
   <p>With <strong>Rebuild stack previews on their own</strong> on, under

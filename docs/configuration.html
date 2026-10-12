@@ -279,7 +279,7 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   <h2 id="astrometry">Seiza catalogs and plate solving</h2>
   <p>PSF Guard finds Seiza's catalogs the way Seiza does. Data installed with
   <code>seiza setup</code> or under <strong>Settings &rarr; Catalogs</strong>
-  is found on its own. Name another bundle with the
+  is found on its own. Point to another bundle with the
   <code>SEIZA_CATALOG_DIR</code> environment variable or the top-level
   <code>astrometry</code> block in the registry:</p>
   <pre><code>"astrometry": {
@@ -345,12 +345,12 @@ large = false           <span class="c"># 2000 px previews</span>
       <tr><th>Key</th><th>Does</th></tr>
       <tr><td><code>scan_worker_ratio</code></td><td>Share of cores for work you wait on (default 0.5)</td></tr>
       <tr><td><code>background_worker_ratio</code></td><td>Share for background work (default 0.25). See <a href="storage.html#processor">Processor use</a>.</td></tr>
-      <tr><td><code>[cache] directory</code></td><td>The cache. Naming it here fixes it, so Settings cannot move it.</td></tr>
+      <tr><td><code>[cache] directory</code></td><td>The cache. Setting it here fixes it, so Settings cannot move it.</td></tr>
       <tr><td><code>stack_directory</code>, <code>calibration_directory</code></td><td>Folders for stacks and masters. See <a href="storage.html#folders">Storage</a>.</td></tr>
       <tr><td><code>file_ttl</code>, <code>directory_ttl</code></td><td>How long file and folder listings are cached</td></tr>
       <tr><td><code>[server.auth]</code></td><td>Session length, cookie policy, and whether viewers may start compute. See <a href="authentication.html#signing-in">Server Accounts</a>.</td></tr>
       <tr><td><code>[server.banner]</code></td><td>A notice under the header. Plain text; set both link fields or neither, with <code>http://</code> or <code>https://</code>.</td></tr>
-      <tr><td><code>keep_failed_uploads</code></td><td>Keep a refused remote upload's staged file in the receive folder, named in the log</td></tr>
+      <tr><td><code>keep_failed_uploads</code></td><td>Keep a refused remote upload's staged file in the receive folder; the log gives its path</td></tr>
     </table>
   </div>
   <p>Command-line options win over the file. A legacy <code>[database]</code> or
@@ -383,7 +383,7 @@ placement = "target_tree"                    <span class="c"># optional; default
 token_file = "/run/secrets/psf-guard-key"</code></pre>
   <p>These apply at start and are never written back to the registry, so
   rotating a key is a restart. A database has one key, whatever it grants.
-  Naming a database that is not registered stops the server. Neither block
+  A block whose database is not registered stops the server. Neither block
   needs <code>--allow-database-management</code>. Template tokens:
   <code>%PROJECT%</code>, <code>%TARGET%</code>, <code>%DATE%</code>,
   <code>%NIGHT%</code>, <code>%YEAR%</code>, <code>%TYPE%</code>,
