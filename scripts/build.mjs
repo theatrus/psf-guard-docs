@@ -24,6 +24,7 @@ const docsNavigation = [
     pages: [
       ["index.html", "Getting Started"],
       ["new-in-0.12.html", "New in 0.12"],
+      ["release-notes-0.12.html", "0.12 Release Notes"],
       ["install.html", "Installation"],
       ["grader.html", "Library & Grader"],
       ["importing.html", "Import Images"],

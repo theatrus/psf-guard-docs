@@ -75,6 +75,7 @@ function gtag_report_demo() {
   <ul>
     <li><a href="./">Getting Started</a></li>
     <li><a href="new-in-0.12.html" class="active" aria-current="page">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -154,257 +155,68 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>New in 0.12</h1>
-  <p class="lede">Review calibration frames, match flats across nights and dust
-  changes, edit mosaics panel by panel, and back up your catalogs. Version 0.12 also
-  improves image review, imports, stack processing and background jobs.</p>
-  <div class="callout info"><strong>Upcoming release.</strong> This page covers
-  the unreleased changes since 0.11. Features described here are planned for 0.12;
-  they are not part of the 0.11 release. The list may change before release.</div>
+  <p class="lede">Better calibration decisions, flexible mosaics and scheduled
+  backups. Here are the main changes since 0.11.</p>
+  <div class="callout info"><strong>Upcoming release.</strong> These changes are
+  planned for 0.12 and may change before release. They are not in 0.11.</div>
+  <p><a href="#upgrade">Before upgrading from 0.11 ↓</a> ·
+  <a href="release-notes-0.12.html">All changes in 0.12 →</a></p>
 
-  <nav aria-label="On this page">
-    <ul>
-      <li><a href="#calibration">Review calibration and match flats</a></li>
-      <li><a href="#review">Review images and score sessions</a></li>
-      <li><a href="#planning">Edit mosaics and activate plans</a></li>
-      <li><a href="#imports">Import and transfer catalogs</a></li>
-      <li><a href="#stacks">Build, process and export stacks</a></li>
-      <li><a href="#operations">Backups, settings and background jobs</a></li>
-      <li><a href="#integrations">Agents and collaboration</a></li>
-      <li><a href="#upgrade">Before upgrading from 0.11</a></li>
-    </ul>
-  </nav>
+  <h2 id="calibration">Review calibration as closely as your lights</h2>
+  <p>The new Calibration page grades bias, dark, dark-flat and flat frames, keeps
+  poor frames out of masters, and shows which lights are affected. Inspect the
+  evidence, override a grade, and set checks for each rig.</p>
+  <p><a href="calibration.html">Browse calibration frames →</a> ·
+  <a href="calibration-grading.html">Grades and coverage →</a></p>
 
-  <h2 id="calibration">Review calibration and match flats</h2>
-  <p>The new <a href="calibration.html">Calibration page</a> replaces the library
-  dialog. Browse sessions or flat groups, inspect frames, and open masters with their
-  source frames and the projects that use them. Open Calibration from a project to
-  see the calibration it uses, or widen the view to the rig's whole library.</p>
+  <h2 id="flats">Match flats across nights and dust changes</h2>
+  <p>PSF Guard measures how flats change, groups nights that match, and chooses
+  flats from the right side of a dust or illumination change. Inspect dust shadows,
+  compare groups, and split, join or override a group when needed. Matching also
+  checks whether flats at different rotator angles can serve the same lights.</p>
+  <p><a href="calibration-flats.html">Flat matching and dust changes →</a></p>
+
+  <h2 id="planning">Build mosaics one panel at a time</h2>
+  <p>Add, move and rotate individual panels while checking overlap across rigs.
+  Captured panels stay locked to their actual fields until you unlock them.
+  Activation previews show what Target Scheduler will run, turn off or restore.</p>
+  <p><a href="framing.html">Edit mosaic panels →</a> ·
+  <a href="activation.html">Activate plans →</a></p>
+
+  <h2 id="operations">Back up catalogs and settings together</h2>
+  <p>Create one archive of your settings and catalogs, even while N.I.N.A. writes
+  to them. Schedule daily or weekly backups and choose how long to keep them.
+  Secrets stay out unless you include them; restoration remains manual.</p>
+  <p><a href="backups.html">Set up backups →</a></p>
+
+  <h2 id="review">Review by observing night, with better scoring controls</h2>
+  <p>Browse nights on each rig's local clock, show the newest frames first, and
+  select by score, star count or HFR. Save scoring defaults and tune the new HFR rise
+  and Star loss penalties. Compact layouts use more of the screen, and signed-in
+  users keep their view choices across browsers.</p>
+  <p><a href="grader.html">Review images →</a> ·
+  <a href="screening.html">Score and select frames →</a></p>
+
+  <h2 id="stacks">Keep stack processing through rebuilds and restarts</h2>
+  <p>Processing runs show their queue position and progress, survive restarts, and
+  reapply your choices after a stack refreshes. Improved resampling removes
+  cross-hatched bands from slightly rotated frames. Stacks, WBPP and exports use
+  the same calibration settings and flat groups.</p>
+  <p><a href="stacking.html">Build and process stacks →</a> ·
+  <a href="wbpp.html">Run WBPP →</a></p>
+
+  <h2 id="more">More in this release</h2>
   <ul>
-    <li><strong>Grade every calibration frame.</strong> Bias, dark, dark-flat and
-    flat frames receive OK, suspect or poor grades. Measurements compare each frame
-    with suitable peers for clipping, level, noise, banding, hot pixels, light patterns
-    and changing spots. Poor frames stay out of masters and WBPP exports.</li>
-    <li><strong>Control which frames are used.</strong> <strong>Keep out</strong>
-    excludes a frame even if a later regrade passes it. <strong>Use anyway</strong>
-    overrides poor or suspect grades, including stray light in darks.
-    <strong>Clear</strong> restores automatic grading. Catalog transfers preserve
-    these choices.</li>
-    <li><strong>Find affected lights.</strong> The Library shows <strong>Poor</strong>
-    and <strong>Check</strong> calibration badges. Images and Sequence show calibration
-    chips and filters. A light's Calibration panel explains each finding, the proposed
-    master inputs, and why frames were used or excluded. Coverage reports link to the
-    affected lights and leave rejected lights out unless you include them.</li>
-    <li><strong>Match flats by measurement.</strong> PSF Guard groups nights whose
-    flats measure alike and separates them when dust or illumination changes. Lights
-    use flats from their side of a change. Their pixels can help resolve which side
-    they belong to; uncertain or unsuitable matches receive a Check.</li>
-    <li><strong>Account for rotator changes.</strong> Flats that measure alike can
-    form a response family across angles. Matching checks evidence before using
-    another angle, tolerates small rotator drift, and can resolve missing angles or
-    a re-homed rotator. Flats taken with different optical setups stay separate.</li>
-    <li><strong>Inspect dust and illumination.</strong> Compare a flat with its
-    session, show small spots, large faint disks and donuts, and inspect their depth
-    and estimated distance from the sensor. Focus-related dust motion and rotating
-    guider shadows no longer count as new dust. Stars in tracked sky flats no longer
-    trigger dew or frost findings.</li>
-    <li><strong>Edit flat groups.</strong> Split or join groups, place a light before
-    or after a change, or assign a group's flats to selected lights with
-    <strong>Flat side…</strong>. Your choices override the measurements. The group
-    view shows neighbouring changes, comparisons, masters and affected lights.</li>
-    <li><strong>Tune checks per rig.</strong> Set matching tolerances, dark choices,
-    frame-grade limits and light checks globally or for one rig. A light check can
-    flag, advise or be off. Presets cover sky flats, a dark library and no darks.
-    The light's panel explains which settings applied.</li>
-    <li><strong>Repair duplicate records.</strong> New imports catalog duplicate
-    calibration files once and follow a remaining copy if the original disappears.
-    For older duplicates, preview <strong>Repair duplicates</strong> before merging
-    records. Checks and repairs run as jobs with progress and Stop; they do not move
-    or delete files.</li>
-    <li><strong>Keep calibration current.</strong> Grading and flat measurements
-    follow imports, syncs and uploads in the background. Flat measuring reports its
-    progress and supports Stop and Resume. Unchanged sessions are not measured again;
-    missing or unreadable files are retried when their availability changes.
-    Calibration health updates as lights arrive or missing files return.</li>
+    <li id="imports"><a href="importing.html">Import rules and review</a> protect
+    existing capture plans and keep unwanted files out.</li>
+    <li><a href="storage.html">Background jobs</a> show queued and waiting work;
+    <a href="configuration.html">settings</a> protect unsaved edits.</li>
+    <li id="integrations"><a href="mcp.html">MCP tools</a> add flat-group and backup
+    actions. The <a href="collaboration.html">collaboration beta</a> adds file delivery
+    with transfer controls and receipts.</li>
   </ul>
-  <p>Read <a href="calibration-grading.html">Grades &amp; Coverage</a>,
-  <a href="calibration-flats.html">Flats &amp; Dust Changes</a>, and
-  <a href="calibration-masters.html">Masters &amp; Settings</a>.</p>
-
-  <h2 id="review">Review images and score sessions</h2>
-  <ul>
-    <li><strong>Use observing nights.</strong> Images, Sequence and Calibration split
-    nights at each rig's local noon, using frame sites where available. Dawn sessions
-    stay together. Set a rig's time zone when headers lack a site, or choose one
-    cutoff for all rigs. Night and hour marks can be shown or hidden.</li>
-    <li><strong>Compare like rigs.</strong> Sequence scoring and statistical grading
-    compare each Target Scheduler profile with itself when a catalog contains several
-    profiles. Two projects with the same name remain separate in Project groups.</li>
-    <li><strong>Set scoring defaults.</strong> Save penalties and reject limits under
-    <strong>Settings → Review → Sequence scoring</strong>. A toolbar change applies
-    to the current view and linked project views; save it as a default when wanted.
-    New <strong>HFR rise</strong> and <strong>Star loss</strong> penalties measure
-    deterioration against the night's good frames.</li>
-    <li><strong>Select by score, stars or HFR.</strong> Sequence's Cutoff supports all
-    three measurements. Grade dots below the chart show accepted, rejected and pending
-    frames. A Select rule stays active as you adjust the cutoff or rescore, while
-    preserving manual selection changes. Poor calibration selection waits until its
-    check is current.</li>
-    <li><strong>Review recent captures first.</strong> Choose <strong>Newest
-    first</strong>; keyboard navigation, Compare and the detail view follow that order.
-    New frames have a dot until your next visit from the Library. Images and Sequence
-    remember separate thumbnail sizes.</li>
-    <li><strong>Keep view choices across browsers.</strong> Signed-in users retain
-    sorting, grouping, thumbnail sizes, chips and Library layout across devices.
-    Links still override those defaults. Desktop and servers without accounts keep
-    preferences in the browser.</li>
-    <li><strong>Use more of the screen.</strong> Compact Library rows align their
-    columns and adapt to small screens. Image cards follow the sensor's shape.
-    Images, Sequence and Calibration share compact filter toolbars; mobile filters
-    collapse behind one button. The header uses icons and a single account menu.</li>
-    <li><strong>Keep your place.</strong> Detail panels fold and remember their state.
-    Image navigation preserves sidebar scroll position, including in Safari and the
-    macOS app. Calibration's session sidebar stays in reach; flat comparison keeps
-    its mode and zoom. Forgetting a calibration frame opens the next frame.</li>
-    <li><strong>Use keyboard and accessibility controls reliably.</strong> Rapid
-    navigation, thumbnail resizing and selection changes no longer lose updates.
-    Enter and Space activate the focused button without also changing image selection.
-    More controls announce their active choice to screen readers, and reduced-motion
-    settings stop loading spinners from rotating.</li>
-  </ul>
-  <p>Read <a href="grader.html">Library &amp; Grader</a> and
-  <a href="screening.html">Quality Screening</a>.</p>
-
-  <h2 id="planning">Edit mosaics and activate plans</h2>
-  <ul>
-    <li><strong>Place panels individually.</strong> Add panels beside a target, around
-    a mosaic, or into gaps. Drag, nudge and rotate each panel, undo edits, and check
-    overlap. Snap keeps the minimum overlap; you can override it when needed.</li>
-    <li><strong>Preserve captured fields.</strong> Panels with frames start locked at
-    their captured position, size and angle, using plate solves when available.
-    Moving or rotating an unlocked captured panel far enough creates a new Target
-    Scheduler target and preserves the old frames.</li>
-    <li><strong>Frame several rigs together.</strong> Switching rigs no longer
-    resizes an existing mosaic without a choice. Shared and separate framings check
-    their combined coverage and overlaps. Panel angles account for sky position;
-    each rig receives the panel's angle, with or without a rotator.</li>
-    <li><strong>See what activation will change.</strong> Plans show
-    <strong>Activated</strong> or <strong>Needs activating</strong>, with a reason.
-    The dialog previews automatically: what will run, what will turn off and why,
-    and what will turn back on. Unsaved edits require <strong>Save and activate…</strong>.</li>
-    <li><strong>Control the rig's exposure plans.</strong> Activation enables the
-    plans you chose and disables other exposure plans in that project, preserving
-    frames and counts. Objectives for the same target, template and exposure combine
-    their requested counts. <strong>Take Target Scheduler's values</strong> imports
-    separate exposure lengths as separate objectives when you want to retain them.</li>
-    <li><strong>Handle changes and offline sites.</strong> Activation detects edits
-    made in N.I.N.A., checks the current database before writing, and refreshes stale
-    previews. A remote site that missed activation remains marked as needing it,
-    offers a retry, and receives it automatically when contact resumes. Conflicting
-    scheduling edits require a reload before another save.</li>
-  </ul>
-  <p>Read <a href="framing.html">Framing</a> and
-  <a href="activation.html">Exposures &amp; Activation</a>. Planning and the Sync
-  plugin already existed in 0.11. The separate <a href="rigs.html#director">Director
-  plugin remains in early beta</a>; these changes do not announce direct acquisition.</p>
-
-  <h2 id="imports">Import and transfer catalogs</h2>
-  <ul>
-    <li><strong>Review new targets.</strong> Automatic import waits for your review
-    before creating projects for unknown targets. Change <strong>New targets</strong>
-    to skip them or create projects automatically.</li>
-    <li><strong>Exclude unwanted files.</strong> Include and exclude patterns, header
-    and exposure filters, and <code>.psfguardignore</code> apply to every import,
-    including scans started inside excluded folders. Unchanged excluded lights are
-    not read repeatedly.</li>
-    <li><strong>Preserve capture plans.</strong> In projects it did not create,
-    automatic import adds images only to existing exposure plans and leaves requested
-    counts alone. Frames needing a new plan wait for Review. Matching respects filter,
-    binning, exposure length and camera defaults for gain, offset and readout mode.</li>
-    <li><strong>Transfer calibration choices.</strong> Merge and sync preserve frame
-    overrides and flat-group decisions. Previews count incoming Keep out and Use
-    anyway choices, and destination choices survive differing source record IDs.
-    Repaired duplicates do not return on a later pull.</li>
-    <li><strong>Rescan from the image view.</strong> Use <strong>⋯ → Rescan image
-    folders</strong> in Images or Sequence. Automatic folder refreshes continue.</li>
-  </ul>
-  <p>Read <a href="importing.html">Import Images</a> and
-  <a href="workflows.html#sync">Data Transfer</a>.</p>
-
-  <h2 id="stacks">Build, process and export stacks</h2>
-  <ul>
-    <li><strong>Avoid bands in rotated frames.</strong> Stacks with small rotations
-    between nights no longer show cross-hatched bands on faint backgrounds. Reported
-    SNR measures the real sky noise and may be about a tenth lower than before.</li>
-    <li><strong>Track processing as a job.</strong> Stretch, deconvolution and
-    RC-Astro processing share the build queue, report what they are waiting for,
-    and show progress. Runs survive server restarts and resume after the last
-    completed tool step. Stack status updates also transfer less data.</li>
-    <li><strong>Reapply processing after a rebuild.</strong> Refreshed stacks use the
-    same stretch, deconvolution and RC-Astro choices automatically. The previous
-    result stays visible with a progress label until processing finishes.
-    <strong>Re-apply processing when a stack refreshes</strong> is on by default.</li>
-    <li><strong>Use consistent calibration.</strong> Stacks, WBPP, CLI and AstroBin
-    exports use the same matching settings and flat groups. With <strong>Leave out
-    lights that can't be calibrated</strong> on, exports omit those lights and report
-    why. WBPP separates lights needing different flats, lists the settings used,
-    and warns about frames left by an earlier export.</li>
-  </ul>
-  <p>Read <a href="stacking.html">Stacks</a>, <a href="wbpp.html">WBPP Runs</a>
-  and <a href="exporting.html">Export &amp; AstroBin</a>.</p>
-
-  <h2 id="operations">Backups, settings and background jobs</h2>
-  <ul>
-    <li><strong>Back up settings and catalogs.</strong> Download one archive or save
-    it to a folder, with versions and checksums. Catalog copies are safe while
-    N.I.N.A. writes. Schedule daily or weekly backups and choose retention limits.
-    Secrets stay out unless requested. The CLI supports backups and dry runs;
-    restoration remains manual.</li>
-    <li><strong>See all background work.</strong> The jobs list separates work you
-    started from automatic work, with running, waiting, queued and needs-attention
-    counts. Queued builds show their position; measurements show remaining work.
-    Automatic jobs yield to your work and can resume once it settles.</li>
-    <li><strong>Restart without losing work.</strong> Shutdown stops jobs at safe
-    points. Quality scans save results, stack builds checkpoint, and processing runs
-    resume after restart. Desktop restarts wait for the old server to finish saving
-    its queue. Catalog writes wait for competing writes instead of failing at once
-    with a database-lock error.</li>
-    <li><strong>Protect unsaved settings.</strong> Settings confirms before closing
-    over unsaved edits. Rig and site forms retain edits when collapsed or switched,
-    and reload warns before discarding them. Panels and fields have consistent
-    layout and contrast; form controls follow the dark theme. Library project-state
-    changes also ask for confirmation.</li>
-    <li><strong>Keep a stable desktop address.</strong> Set a fixed localhost port
-    under <strong>Settings → Server</strong> for browser, API and agent connections.
-    A port conflict opens settings so you can choose another port or Automatic.</li>
-    <li><strong>Separate editing from server paths.</strong> Editors can perform
-    more catalog, calibration, sync and WBPP actions without database management.
-    The gate still protects actions that choose server paths or storage settings.
-    Viewers remain read only. WBPP files and calibration reads have stricter path
-    checks.</li>
-  </ul>
-  <p>Read <a href="backups.html">Backups</a>,
-  <a href="storage.html">Storage &amp; Performance</a>,
-  <a href="configuration.html">Configuration &amp; API</a> and
-  <a href="authentication.html">Server Accounts</a>.</p>
-
-  <h2 id="integrations">Agents and collaboration</h2>
-  <ul>
-    <li><strong>More MCP tools.</strong> Agents can inspect flat groups, changes,
-    dust and project calibration; split or join groups; assign lights across changes;
-    override suspect frames; check and repair duplicates; pause or resume measurements;
-    and create backups. Job queries include all background jobs. Tools use the app's
-    access checks; MCP backups exclude secrets and do not return the archive.</li>
-    <li><strong>Deliver collaboration files.</strong> In the collaboration beta,
-    send accepted raw lights with matched calibration inputs, or an existing PSF Guard
-    or WBPP stack. Transfers support progress, Pause, Resume, Retry and Cancel.
-    Receipts survive restarts and prevent repeated uploads of shared files.
-    Automatic raw and PSF Guard stack delivery is opt-in.</li>
-    <li><strong>Preserve assignment constraints.</strong> Collaboration imports keep
-    Starfront's physical-filter and data-band mapping, OSC camera limits and Bortle
-    limits. Reports include data bands, and disabled project bands remain on hold.</li>
-  </ul>
-  <p>Read <a href="mcp.html">MCP for Agents</a> and
-  <a href="collaboration.html">Collaboration</a>.</p>
+  <p>Read the <a href="release-notes-0.12.html">full 0.12 release notes</a> for
+  all changes, fixes and links to the detailed guides.</p>
 
   <h2 id="upgrade">Before upgrading from 0.11</h2>
   <ul>
@@ -429,14 +241,9 @@ function gtag_report_demo() {
     existing stray-light exclusion. An older version that saves settings drops the
     new calibration settings and rig overrides; restore them after returning to 0.12.</li>
   </ul>
-  <p>This overview groups the changes in the
-  <a href="https://github.com/theatrus/psf-guard/blob/ce000b80a12133b8ab5799260c0dae59ee0e37ed/docs/releases/unreleased.md">unreleased notes used for this page</a>.
-  See the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/unreleased.md">current unreleased notes</a>
-  for later additions and the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/v0.11.0.md">0.11 release notes</a>
-  for features already released.</p>
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="./">← Getting Started</a>
-    <a href="install.html">Installation →</a>
+    <a href="release-notes-0.12.html">0.12 Release Notes →</a>
   </nav>
 </main>
 </div>
