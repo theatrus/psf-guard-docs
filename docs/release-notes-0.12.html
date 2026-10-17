@@ -248,7 +248,13 @@ function gtag_report_demo() {
     three measurements. Grade dots below the chart show accepted, rejected and pending
     frames. A Select rule stays active as you adjust the cutoff or rescore, while
     preserving manual selection changes. Poor calibration selection waits until its
-    check is current.</li>
+    check is current. After rejection, the rule stays active with no selection and
+    excludes rejected frames. Undo restores their counts without selecting them.</li>
+    <li><strong>Find frames behind an issue.</strong> Sequence's suspect pills open
+    frame lists with times and scores. Click a frame to move to it without changing
+    selection. Each filter's All sessions tab now starts its row with a distinct
+    color bar, tint, bold label and date-range icon. Toolbar pills open their lists
+    when clicked on the label or chevron as well.</li>
     <li><strong>Review recent captures first.</strong> Choose <strong>Newest
     first</strong>; keyboard navigation, Compare and the detail view follow that order.
     New frames have a dot until your next visit from the Library. Images and Sequence
@@ -339,6 +345,14 @@ function gtag_report_demo() {
     RC-Astro processing share the build queue, report what they are waiting for,
     and show progress. Runs survive server restarts and resume after the last
     completed tool step. Stack status updates also transfer less data.</li>
+    <li><strong>Control color processing.</strong> Stop a running color composition
+    from the jobs list and follow its channel, tool and percentage. Completed tool
+    steps stay cached. Unchanged channels reuse their tool results; changing the
+    reference stack or enabling background extraction reruns all channels.</li>
+    <li><strong>Copy channel settings.</strong> In the color editor,
+    <strong>Use each channel's processing</strong> copies the deconvolution and
+    RC-Astro settings shown on each channel card into its input. The composition
+    applies those settings to registered channels.</li>
     <li><strong>Reapply processing after a rebuild.</strong> Refreshed stacks use the
     same stretch, deconvolution and RC-Astro choices automatically. The previous
     result stays visible with a progress label until processing finishes.
@@ -438,7 +452,7 @@ function gtag_report_demo() {
   downgrade limits.</p>
 
   <p>These release notes group the changes in the
-  <a href="https://github.com/theatrus/psf-guard/blob/ce000b80a12133b8ab5799260c0dae59ee0e37ed/docs/releases/unreleased.md">unreleased notes used for this page</a>.
+  <a href="https://github.com/theatrus/psf-guard/blob/299a41e529fe48c5cc27729a05bc952dee691a0b/docs/releases/unreleased.md">unreleased notes used for this page</a>.
   See the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/unreleased.md">current unreleased notes</a>
   for later additions and the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/v0.11.0.md">0.11 release notes</a>
   for features already released.</p>

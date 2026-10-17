@@ -212,6 +212,17 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>Sequence, Images and the Calibration page share one compact toolbar: filter pills, the thumbnail size slider and the tools, with display settings under <strong>View</strong> and rarely used tools under <strong>⋯</strong>. In Sequence it holds <strong>Cutoff</strong>, <strong>Scoring</strong> and <strong>Select</strong>, and once frames are selected, the row below it offers <strong>Review rejection</strong>.</p>
   <p>Images and Sequence mark where frames cross into another night or hour, with the night's date before its first frame. Nights split at each rig's local noon, not at midnight. <strong>Marks</strong> in the View panel, or <strong>Night and hour marks</strong> in Settings › Review, shows nights and hours, nights only, or no marks. <a href="grader.html#marks">Library &amp; Grader</a> covers the toolbar and the marks.</p>
 
+  <p>Each filter's <strong>All sessions</strong> tab starts its row, with a bold
+  label, bar, tint and date-range icon in the filter's color. Click anywhere on a
+  toolbar pill with a list, including its label or chevron, to open the list.</p>
+
+  <h3 id="issues">Find frames with a specific issue</h3>
+  <p>Click a suspect pill in the Sequence summary—cloud events, focus drift,
+  tracking issues, off target or unsolved—to list its frames in strip order, with
+  their times and scores. Click a frame to move to it in the strip without changing
+  your selection. Click the pill again to close the list.</p>
+  <!-- SHOT: sequence-issue-frames.png | Sequence for Golf of Mexico, rig ultra cat, with the All sessions tab at the start of its filter row showing its color bar, tint, bold label and date-range icon. Open a suspect pill with real findings, such as cloud events or focus drift. Show the pill, its frame list with times and scores, and the relevant strip below. Click a listed frame to place the cursor on it without changing the selection. Do not grade frames. | Open an issue to find its frames without changing your selection. -->
+
   <h3 id="chart">Score chart</h3>
   <p>The chart draws one bar per frame, in capture order from left to right, even when <strong>View › Sort › Newest first</strong> turns the strip around. A dot under each bar gives the frame's grade: green for accepted, red for rejected, faint grey for pending. A bar's tooltip starts with the grade and the reject reason. The dots change as you grade, undo and redo.</p>
 
@@ -239,6 +250,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   beside the control to disable the rule and keep the selection, or
   <strong>Clear</strong> to disable the rule and clear the selection.</p>
   <p><strong>Review rejection</strong> lists each selected frame with its evidence. Nothing is written until you confirm. See <a href="astrometry-quality.html#review">Astrometry Quality</a>.</p>
+  <p>After you confirm a rejection, the rule stays active with nothing selected.
+  Rules exclude already rejected frames, so their counts show what remains to reject.
+  Undo restores those frames to the counts, but does not select them again.</p>
+  <!-- SHOT: sequence-select-after-reject.png | Use a disposable local catalog, not the live capture server. In Sequence, choose Recommended rejects and confirm a rejection through Review rejection. Capture the toolbar with the rule still active, its updated count and no selected frames, plus the rejected frames in the strip. Do not change grades on a live catalog to obtain this state. | After rejection, the rule stays active but clears the selection and excludes rejected frames. -->
   <!-- SHOT: sequence-select-rule.png | Sequence toolbar for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, with the Recommended rejects rule on: the pill reads "Select: Recommended rejects (N)" with the × beside it, and the row below shows "N selected", "Rule: Recommended rejects", Review rejection and Clear. Crop: the toolbar and its selection row only. | A rule under Select stays on and says how many frames it picks. -->
 
   <h2 id="why">Why star count and HFR are not enough</h2>

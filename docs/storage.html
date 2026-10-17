@@ -391,14 +391,14 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       Retry and Cancel; see <a href="collaboration.html">Collaboration</a>.</li>
     <li><strong>Stop</strong> ends running work after asking once:
       <strong>Stop it</strong> or <strong>Keep</strong>. It is offered on a
-      running stack build, an RC-Astro processing run, a WBPP run, a duplicate
+      running stack build, a color composition, an RC-Astro processing run, a WBPP run, a duplicate
       check or repair, a backup, <strong>Measuring flats</strong> and
       <strong>Reading frame sites</strong>. Stop pauses flat measuring until
       those flats change, and frame sites until frames are imported, or either
       until the server starts again; the Calibration page offers
-      <strong>Resume now</strong>. A color composition
-      already running has no Stop and finishes within minutes; a stretch or
-      deconvolution finishes in moments.</li>
+      <strong>Resume now</strong>. A color composition stops at its next channel or step and ends a running
+      RC-Astro tool immediately, keeping completed steps cached. A standalone stretch
+      or deconvolution has no Stop and finishes in moments.</li>
     <li>When the server knows what work remains, the row shows it, such as <code>1 more
     rig to check · 2 rigs queued</code> on
       <strong>Measuring flats</strong>, <code>another pass queued</code> on

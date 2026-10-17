@@ -422,6 +422,12 @@ function gtag_report_demo() {
     queue; click a row's target to open what it works on.</figcaption>
   </figure>
 
+  <p>A running color composition also has <strong>Stop</strong>. It stops at the
+  next channel or step and ends a running RC-Astro tool immediately. Completed tool
+  steps stay cached. The job row shows the current channel, tool and progress, such
+  as <code>H-alpha: BlurXTerminator (42%)</code>.</p>
+  <!-- SHOT: stack-color-progress.png | Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
+
   <p>The line survives a restart: queued and running builds and processing
   runs come back in order. A server stop lets a running build checkpoint the
   frames it has integrated, and the build resumes after the restart. See
@@ -675,6 +681,20 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <strong>Apply processing stack</strong> stops and says which field is wrong.
   When the server refuses a color card's build or processing, the reason shows
   beside the button you pressed.</p>
+
+  <h3 id="channel-processing">Use channel processing in a color composition</h3>
+  <p>In the color editor, click <strong>Use each channel's processing</strong> to
+  copy the deconvolution and RC-Astro settings shown on each channel card into that
+  color input. This copies settings, not processed pixels: the composition runs the
+  steps on the registered channel.</p>
+  <p>A card with only deconvolution clears that input's RC-Astro steps; a card with
+  only RC-Astro steps clears its deconvolution. If the card shows neither, the input
+  keeps its current settings.</p>
+  <p>PSF Guard caches tool results per channel. New frames in OIII rerun its tools
+  while unchanged H-alpha and SII results are reused. Changing the reference stack
+  reruns every channel: red for RGB, L for LRGB, or H-alpha for narrowband. With
+  background extraction on, all channels rerun because they share a background model.</p>
+  <!-- SHOT: stack-copy-channel-processing.png | In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot. | Copy each channel card's deconvolution and RC-Astro settings into the color composition. -->
 
   <h3 id="setups">Save processing setups</h3>
   <p><strong>Setups</strong> at the top of <strong>View processing</strong> and the

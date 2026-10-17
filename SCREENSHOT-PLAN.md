@@ -46,6 +46,16 @@ Replace each `SHOT` comment with a figure and its supplied caption once the
 image exists. Until then, the page has capture instructions, not broken images
 or screenshots from an older interface.
 
+## Latest Sequence and color-processing changes
+
+Capture `sequence-issue-frames.png` for the issue frame list and revised
+All sessions tab, `sequence-select-after-reject.png` for the rule after rejection,
+`stack-copy-channel-processing.png` for copying channel settings, and
+`stack-color-progress.png` for per-channel progress and Stop.
+Use a disposable local catalog for the rejection and channel-settings states.
+For the progress image, observe an existing run or use a local test run; do not
+start or stop work on the live server just to capture it.
+
 ## How to update this plan
 
 Every entry comes from a comment in the pages: `<!-- RESHOOT: file | what -->`
@@ -177,7 +187,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `wbpp-run-dialog.png` — pages: wbpp
   - Stacks view for Teddy Bear Nebula QMark (rig starfront-redcat61) on psf-guard.atpn.co, Stack in WBPP clicked: the run dialog before Start stacking, with Include ungraded lights ticked, the WBPP settings (Quality, Fast Integration, Drizzle, Autocrop, Light rejection), More WBPP parameters and Run folder; crop to the dialog
 
-## New screenshots (56)
+## New screenshots (60)
 
 - `activation-save-first.png` — pages: activation
   - Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving.
@@ -265,6 +275,10 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover.
 - `sequence-cutoff-hfr.jpg` — pages: screening
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards.
+- `sequence-issue-frames.png` — pages: screening
+  - Sequence for Golf of Mexico, rig ultra cat, with the All sessions tab at the start of its filter row showing its color bar, tint, bold label and date-range icon. Open a suspect pill with real findings, such as cloud events or focus drift. Show the pill, its frame list with times and scores, and the relevant strip below. Click a listed frame to place the cursor on it without changing the selection. Do not grade frames.
+- `sequence-select-after-reject.png` — pages: screening
+  - Use a disposable local catalog, not the live capture server. In Sequence, choose Recommended rejects and confirm a rejection through Review rejection. Capture the toolbar with the rule still active, its updated count and no selected frames, plus the rejected frames in the strip. Do not change grades on a live catalog to obtain this state.
 - `sequence-select-rule.png` — pages: screening
   - Sequence toolbar for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, with the Recommended rejects rule on: the pill reads "Select: Recommended rejects (N)" with the × beside it, and the row below shows "N selected", "Rule: Recommended rejects", Review rejection and Clear. Crop: the toolbar and its selection row only.
 - `settings-agents.png` — pages: mcp
@@ -289,6 +303,10 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Settings › Stacking in the new card layout, any server: the Stack previews card with its Automatic refresh box (Rebuild stack previews on their own, the two waits, Also stack channels that have no stack yet) and its Processing box with Re-apply processing when a stack refreshes ticked; crop to that card
 - `settings-unsaved-close.png` — pages: configuration
   - psf-guard.atpn.co as an editor, Settings › Calibration with one matching value changed and not saved, then Done clicked: the footer prompt "Unsaved changes in calibration settings. Close without saving them?" with Keep editing and Close without saving, and the Done button; crop to the bottom of the Settings dialog
+- `stack-color-progress.png` — pages: stacking
+  - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
+- `stack-copy-channel-processing.png` — pages: stacking
+  - In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot.
 - `stack-processing-waiting.png` — pages: stacking
   - Stacks view, Teddy Bear Nebula QMark (rig starfront-redcat61): start a build of the OIII channel, then on the H-alpha card open View processing, turn on RC-Astro BlurXTerminator and press Apply processing; crop the H-alpha card's View processing panel so its button reads "Waiting for the stack build of … · OIII to finish", with the header's background jobs list open beside it showing the BlurXTerminator row queued behind the build
 - `stack-reprocessing.jpg` — pages: stacking
