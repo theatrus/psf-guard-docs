@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Getting Started — PSF Guard</title>
-  <meta name="description" content="Install PSF Guard, build a catalog from FITS or XISF folders or open a Target Scheduler database, review your first project, and plan across rigs.">
+  <meta name="description" content="Set up PSF Guard on your desktop or a server, import images, optionally connect N.I.N.A., and review your first project.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,14 +106,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="backups.html">Backups</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -147,10 +153,9 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Getting Started</h1>
-  <p class="lede"> Install PSF Guard and connect N.I.N.A. through the PSF Guard Sync
-  plugin, import existing FITS or XISF folders, or open a Target Scheduler database.
-  Review your frames, plan future captures and build calibrated stacks without using the
-  command line. </p>
+  <p class="lede">Use PSF Guard on your desktop, or run it on a server or NAS and
+  open it in a browser. Both give you the same tools to review images, plan captures
+  and build calibrated stacks.</p>
 
   <!-- RESHOOT: library-compact.jpg | Library, compact view, full width: rows in columns with state, progress, grades, dates, calibration Poor/Check pills, Sequence, Stacks, ⚙; new icon header -->
   <figure class="feature-shot">
@@ -158,47 +163,54 @@ function gtag_report_demo() {
     <figcaption>The Library lists every project in every catalog, newest work first.</figcaption>
   </figure>
 
-  <h2 id="install">1. Install</h2>
-  <p>The desktop app runs on Windows, macOS and Linux. Docker, standalone CLI
-  binaries and Fedora RPMs serve the same UI to a browser.</p>
-  <p><a href="install.html">Installation →</a></p>
-
-  <h2 id="choose">2. Choose a starting point</h2>
+  <h2 id="choose">Choose desktop or server</h2>
+  <p id="install">Choose where PSF Guard will run and read your image files.</p>
   <div class="workflow-routes">
-    <div class="workflow-note sync">
-      <div class="workflow-tag">N.I.N.A.</div>
-      <div class="workflow-copy"><strong>Connect with PSF Guard Sync</strong><p>Recommended for N.I.N.A. with Target Scheduler: sync captures, plans and grades, and optionally upload images.</p></div>
-      <a class="workflow-link" href="#nina-sync">Connect N.I.N.A. ↓</a>
-    </div>
     <div class="workflow-note simple">
-      <div class="workflow-tag">From FITS</div>
-      <div class="workflow-copy"><strong>Build a catalog from image folders</strong><p>Headers first; pixel measurements run in the background.</p></div>
-      <a class="workflow-link" href="importing.html">Import Images →</a>
-    </div>
-    <div class="workflow-note import">
-      <div class="workflow-tag">Existing DB</div>
-      <div class="workflow-copy"><strong>Open a Target Scheduler database</strong><p>Add the database and its image folders in Settings.</p></div>
-      <a class="workflow-link" href="#existing-database">Scheduler setup ↓</a>
+      <div class="workflow-tag">Desktop</div>
+      <div class="workflow-copy"><strong>Work on your computer</strong><p>Install the app on Windows, macOS or Linux and import your image folders.</p></div>
+      <a class="workflow-link" href="#desktop">Set up the desktop app ↓</a>
     </div>
     <div class="workflow-note cli">
-      <div class="workflow-tag">CLI / NAS</div>
-      <div class="workflow-copy"><strong>Serve the UI or run batch tools</strong><p>Docker, NAS, scripts and command-line screening.</p></div>
-      <a class="workflow-link" href="cli.html#server">CLI Reference →</a>
-    </div>
-    <div class="workflow-note sync">
-      <div class="workflow-tag">Two DBs</div>
-      <div class="workflow-copy"><strong>Keep a telescope copy and a grading copy</strong><p>Pull captures here; push plans and grades back.</p></div>
-      <a class="workflow-link" href="workflows.html#sync">Rejects &amp; Sync →</a>
+      <div class="workflow-tag">Server / NAS</div>
+      <div class="workflow-copy"><strong>Keep your catalog on a server</strong><p>Run PSF Guard beside your image storage and review it from a browser. You can also connect N.I.N.A. to send captures and retrieve plans and grades.</p></div>
+      <a class="workflow-link" href="#server">Set up a server ↓</a>
     </div>
   </div>
+  <p>PSF Guard catalogs files in place. You can import images from any capture
+  software; N.I.N.A. and Target Scheduler are optional.</p>
 
-  <div class="callout info">
-    <strong>Like Lightroom Classic, for astrophotography data.</strong> PSF Guard
-    catalogs files in place. It keeps its image map, plans and grades in the
-    Target Scheduler database layout, but Target Scheduler is optional.
-  </div>
+  <h2 id="desktop">Set up the desktop app</h2>
+  <ol>
+    <li><a href="install.html#desktop">Install the app</a> for your operating system.</li>
+    <li>Open PSF Guard and <a href="#first-catalog">import your image folders</a>.</li>
+    <li>Choose a project in the Library and <a href="#first-review">review its frames</a>.</li>
+  </ol>
 
-  <h2 id="nina-sync">3. Connect N.I.N.A. with PSF Guard Sync</h2>
+  <h3 id="first-catalog">Import your images</h3>
+  <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
+  image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
+  frames into projects, targets and exposure plans from their headers. Turn on
+  <strong>Automatic import</strong> to check for new frames on a schedule. For frames
+  with unknown targets, choose <strong>Review</strong> and approve their import.
+  See <a href="importing.html">Import Images</a>.</p>
+
+  <h2 id="server">Set up a server or NAS</h2>
+  <ol>
+    <li><a href="install.html#server">Install with Docker</a> on your server or NAS,
+    or run the <a href="cli.html#server">standalone server</a>.</li>
+    <li>Give PSF Guard access to your image folders and a persistent location for its
+    catalogs and settings. Follow the <a href="install.html#docker-data">storage setup</a>
+    for Docker.</li>
+    <li>Open the server URL in a browser and <a href="importing.html">import your images</a>.
+    Use paths on the server, where PSF Guard reads the files.</li>
+    <li>Set up <a href="authentication.html">server accounts</a> for access from other
+    computers. See <a href="configuration.html">Configuration &amp; API</a> for server settings.</li>
+  </ol>
+  <p>You can import files already on the server, or connect N.I.N.A. to transfer
+  captures as you take them.</p>
+
+  <h3 id="nina-sync">Optional: connect N.I.N.A.</h3>
   <p>For N.I.N.A. with Target Scheduler, use the <a href="sync-plugin.html">PSF Guard
   Sync plugin</a>. Target Scheduler runs your imaging sessions. The Sync plugin sends
   capture records to PSF Guard and retrieves saved plans and reviewed grades. You can
@@ -219,32 +231,7 @@ function gtag_report_demo() {
   full setup. The Sync plugin transfers data; Target Scheduler remains responsible for
   capture. You do not need the Director beta for this setup.</p>
 
-  <h2 id="first-catalog">Or import existing images</h2>
-  <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
-  image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
-  frames into projects, targets and exposure plans from the headers alone. Turn on
-  <strong>Automatic import</strong> to bring in new frames on a schedule; PSF Guard
-  holds frames for unknown targets until you choose <strong>Review</strong> and approve
-  their import. See <a href="importing.html">Import Images</a>.</p>
-
-  <h2 id="existing-database">Or open a Target Scheduler database</h2>
-  <div class="callout">
-    <strong>Back up the database before PSF Guard first writes to it.</strong>
-    Grading writes to the file. Import and sync preview their changes first.
-    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
-  </div>
-  <ol>
-    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
-    <li>Pick the SQLite file and add the folders that hold its images. On Windows
-      the file is usually
-      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
-    <li>Choose a project in the <strong>Library</strong>; it opens in
-      <strong>Images</strong>.</li>
-  </ol>
-  <p>Image folders can be read only. The database file must be writable to save
-  grades and plans.</p>
-
-  <h2 id="first-review">4. Review a project</h2>
+  <h2 id="first-review">Review a project</h2>
   <ol>
     <li>In the <strong>Library</strong>, pick a project. Its row shows the database,
       state, accepted against desired, grading counts and capture dates.</li>
@@ -265,19 +252,40 @@ function gtag_report_demo() {
   <a href="calibration.html">Calibration</a>, <a href="stacking.html">Stacks</a>
   and <a href="exporting.html">Export</a>.</p>
 
-  <h2 id="planning">5. Plan across rigs</h2>
+  <h2 id="planning">Plan across rigs</h2>
   <p>PSF Guard creates rigs and plans from your registered databases and Target
   Scheduler projects. Open a plan's <strong>Planning</strong> workspace to frame it on
   the sky, set goals per filter, and write it into each rig's Target Scheduler database.
   See <a href="planning.html">Planning</a>.</p>
 
-  <h2 id="two-machines">Other ways to connect a rig</h2>
-  <p>If PSF Guard can open the telescope's database directly, you can work on that file
-  without syncing a second copy. For separate database files, use <a
-  href="workflows.html#sync">Data Transfer</a> to copy captures, plans and grades. If
-  another site runs its own PSF Guard server, connect through <strong>Remote PSF
-  Guard</strong>. For N.I.N.A. rigs, the Sync plugin is the recommended way to automate
-  these transfers.</p>
+  <h2 id="two-machines">Other database workflows</h2>
+  <p>Most setups can start by importing images or connecting N.I.N.A. to a server.
+  If you need to work with existing Target Scheduler databases, these options remain
+  available on desktop and server.</p>
+
+  <h3 id="existing-database">Open an existing Target Scheduler database</h3>
+  <div class="callout">
+    <strong>Back up the database before PSF Guard first writes to it.</strong>
+    Grading writes to the file. Import and sync preview their changes first.
+    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
+  </div>
+  <ol>
+    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
+    <li>Pick the SQLite file and add the folders that hold its images. On Windows
+      the file is usually
+      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
+    <li>Choose a project in the <strong>Library</strong>; it opens in
+      <strong>Images</strong>.</li>
+  </ol>
+  <p>Image folders can be read only. The database file must be writable to save
+  grades and plans.</p>
+
+  <h3 id="manual-transfer">Transfer between separate databases</h3>
+  <p>If you keep separate telescope and grading databases, use
+  <a href="workflows.html#sync">Data Transfer</a> to preview and copy captures,
+  plans and grades. For transfers between PSF Guard servers, use
+  <a href="workflows.html#remote">Remote PSF Guard</a>. These are manual alternatives
+  to the N.I.N.A. Sync plugin.</p>
 
   <h2 id="beta">Early beta: Director and collaboration</h2>
   <p>The upcoming <a href="rigs.html#director">N.I.N.A. Director plugin</a> is a

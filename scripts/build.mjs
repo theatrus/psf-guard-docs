@@ -63,14 +63,24 @@ const docsNavigation = [
   {
     label: "Operate",
     pages: [
-      ["workflows.html", "Rejects & Sync"],
-      ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
       ["storage.html", "Storage & Performance"],
       ["backups.html", "Backups"],
-      ["cli.html", "CLI Reference"],
+    ],
+  },
+  {
+    label: "Server",
+    pages: [
       ["configuration.html", "Configuration & API"],
       ["authentication.html", "Server Accounts"],
+      ["sync-plugin.html", "Connect N.I.N.A."],
       ["mcp.html", "MCP for Agents"],
+    ],
+  },
+  {
+    label: "Advanced workflows",
+    pages: [
+      ["workflows.html", "Rejects & Database Transfer"],
+      ["cli.html", "CLI Reference"],
     ],
   },
   {

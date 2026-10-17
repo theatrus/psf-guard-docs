@@ -106,14 +106,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html" class="active" aria-current="page">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
     <li><a href="backups.html">Backups</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html" class="active" aria-current="page">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -154,9 +160,10 @@ function gtag_report_demo() {
   </p>
 
   <div class="callout info">
-    <strong>Recommended for N.I.N.A. with Target Scheduler.</strong> Use this
-    plugin to keep your rig and PSF Guard in sync. Target Scheduler runs the
-    captures; PSF Guard handles planning, review and stacking. The upcoming
+    <strong>Optional connection for a server or NAS.</strong> If you use N.I.N.A.,
+    this plugin is the recommended way to exchange data with your PSF Guard server.
+    With Target Scheduler, you can also sync plans and grades while Target Scheduler
+    runs the captures. The upcoming
     <a href="rigs.html#director">Director plugin</a> is separate and in early beta.
   </div>
 
@@ -173,10 +180,10 @@ function gtag_report_demo() {
   </ol>
   <div class="callout info">
     The plugin needs <strong>Windows x64</strong>, N.I.N.A.
-    <strong>3.2.0.9001</strong> or newer, and PSF Guard <strong>0.9.0</strong>
+    <strong>3.2.0.9001</strong> or newer in the 3.2 line, and PSF Guard <strong>0.9.0</strong>
     or newer, the first release that pairs. Flat-coverage sync needs PSF Guard
-    <strong>0.9.6</strong> or newer. Catalog sync needs Target Scheduler schema
-    <strong>22</strong> or newer; direct image uploads do not. The repository
+    <strong>0.9.6</strong> or newer. Catalog sync needs a separate Target Scheduler installation with
+    schema <strong>22</strong> or newer. Direct image uploads do not need Target Scheduler. The repository
     lives at
     <a href="https://nina-plugins.psf-guard.com/">nina-plugins.psf-guard.com</a>.
   </div>
@@ -218,6 +225,11 @@ function gtag_report_demo() {
     they sit in the catalog's editor, which needs database management because it lets you set the catalog's folders. See
     <a href="authentication.html#sync">Server Accounts</a>.
   </div>
+
+  <figure class="feature-shot">
+    <img src="../assets/nina-sync-settings-pairing.png" alt="PSF Guard Sync settings in N.I.N.A., showing the server URL, pairing controls and capture automation options." loading="lazy">
+    <figcaption>Enter the server URL and pairing code under Connection. This example profile has not been paired. From the <a href="https://github.com/theatrus/psf-guard-nina-plugin/tree/64fa50a/docs/images">Sync plugin repository</a>, version 0.4.0.17.</figcaption>
+  </figure>
 
   <h3 id="recover">Recover a lost pairing</h3>
   <p><strong>Pairing status</strong> reads <strong>Paired</strong> when the
@@ -347,8 +359,10 @@ function gtag_report_demo() {
   <div class="callout">
     Nothing changes until a preview is applied. With <strong>Apply remote
     previews automatically</strong> on in the plugin, the plugin applies each
-    preview at once. Otherwise the preview waits until you apply it, discard
-    it, or it expires after 30 minutes.
+    preview at once. Otherwise most pushes wait until you apply the preview, discard
+    it, or it expires after 30 minutes. Sequencer reconcile instructions and the
+    <strong>PSF Guard target sync</strong> trigger always apply their previews, even
+    with automatic apply off.
   </div>
 
   <h2 id="configure">Configure the plugin</h2>
@@ -367,7 +381,7 @@ function gtag_report_demo() {
       <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
     <li>Leave <strong>Apply remote previews automatically</strong> on to apply
       each catalog preview at once, or turn it off to review previews in PSF
-      Guard.</li>
+      Guard. Sequencer reconciliation always applies its preview.</li>
     <li>Tick <strong>Include Target Scheduler thumbnails</strong> to send
       thumbnails. Tick <strong>Pull the merged catalog back after full
       reconcile</strong> to download the merged catalog, without thumbnails,
@@ -378,6 +392,17 @@ function gtag_report_demo() {
   It checks the server URL, the stored credential and the catalog. With
   automatic image upload on, it also checks that the catalog accepts
   uploads.</p>
+
+  <p>Pairing does not enable capture automation. Turning off the profile's enable
+  switch stops new automatic work and sequencer sync, but queued transfers can resume
+  when N.I.N.A. starts. To stop local transfers, close N.I.N.A.; to block the paired
+  client's access, revoke its pairing in PSF Guard. Manual commands remain available
+  while profile automation is off.</p>
+
+  <figure class="feature-shot">
+    <img src="../assets/nina-sync-settings-catalog.png" alt="PSF Guard Sync settings in N.I.N.A., showing queue recovery, Target Scheduler database settings, catalog actions and activity." loading="lazy">
+    <figcaption>Set the Target Scheduler database and review the catalog options before running a transfer. From the <a href="https://github.com/theatrus/psf-guard-nina-plugin/tree/64fa50a/docs/images">Sync plugin repository</a>, version 0.4.0.17.</figcaption>
+  </figure>
 
   <h3 id="deferred">Hold image uploads</h3>
   <p><strong>Defer image uploads until released</strong> stores each image
@@ -407,6 +432,9 @@ function gtag_report_demo() {
       expire it.</li>
   </ul>
 
+  <p>Back up the Target Scheduler database before your first pull. Pulling the full
+  catalog can change capture records as well as plans and grades.</p>
+
   <h2 id="sequencer">Use the sequencer instructions</h2>
   <p>The plugin adds a <strong>PSF Guard Sync</strong> category to N.I.N.A.'s
   advanced sequencer. Every item needs <strong>Enable PSF Guard for this
@@ -423,7 +451,7 @@ function gtag_report_demo() {
       <tr><td><strong>Push PSF Guard planning</strong></td><td>Sends Target Scheduler's projects, targets, templates and plans, and waits for the preview or its apply.</td></tr>
       <tr><td><strong>Pull PSF Guard grades</strong></td><td>Pulls reviewed grades and reject reasons, matched by image GUID, and recounts accepted frames per plan. It also syncs flat coverage; see <a href="#flats">below</a>.</td></tr>
       <tr><td><strong>Push PSF Guard grades</strong></td><td>Sends reviewed Target Scheduler grades and reject reasons, and waits for the preview or its apply.</td></tr>
-      <tr><td><strong>Reconcile PSF Guard catalog</strong></td><td>Uploads a full Target Scheduler snapshot, waits for the preview, and applies it when automatic apply is on. Use it at the end of a session. With pull-back on, it then pulls the merged catalog back, which needs automatic apply.</td></tr>
+      <tr><td><strong>Reconcile PSF Guard catalog</strong></td><td>Uploads a full Target Scheduler snapshot, waits for the preview, and applies it even when automatic apply is off. Use it at the end of a session. With pull-back on, it then pulls the merged catalog back.</td></tr>
       <tr><td><strong>Reconcile current target with PSF Guard</strong></td><td>Reconciles the current target's project, plans, captures and optional thumbnails. Place it near the end of the target's container. The plugin refuses a name that matches more than one Target Scheduler target, ignoring case.</td></tr>
     </table>
   </div>
@@ -437,7 +465,7 @@ function gtag_report_demo() {
   </div>
   <p>Reconcile instructions and <strong>PSF Guard target sync</strong> wait two
   seconds for Target Scheduler's last write, take one read-only snapshot, and
-  hold the sequence until the server's preview is ready. Per-capture pushes
+  wait until the server applies the preview, even with automatic apply off. Per-capture pushes
   from <strong>Automatically push saved light records</strong> carry on in the
   background queue and retry on errors; turn that setting off when a trigger
   should be the only catalog sync. To sync and upload the same light from a
@@ -505,8 +533,8 @@ function gtag_report_demo() {
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="workflows.html">&larr; Rejects &amp; Sync</a>
-    <a href="storage.html">Storage &amp; Performance &rarr;</a>
+    <a href="authentication.html">← Server Accounts</a>
+    <a href="mcp.html">MCP for Agents →</a>
   </nav>
 </main>
 </div>
