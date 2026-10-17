@@ -24,6 +24,28 @@ Each entry lists the pages that use it and what to show, taken from the
 - **Built from other captures, last:** `hero-flow.jpg`.
 - **Privacy:** blank any site latitude/longitude (`rig-setup-site.png`, `settings-sites.png`).
 
+## 0.12 highlights: capture first
+
+Three new images belong on `docs/new-in-0.12.html`, one beneath each of its
+first three feature descriptions. The page comments specify the UI state,
+crop, caption and file name:
+
+1. `release-012-calibration.jpg`: a calibration frame with a real grade finding,
+   its session, and the measurements that explain the grade.
+2. `release-012-flat-groups.jpg`: two measured flat groups and the comparison
+   that shows the dust or illumination change between them.
+3. `release-012-mosaic-editing.jpg`: the sky and panel controls together, with
+   a panel being moved, overlap shown, and captured panels still locked.
+
+Use the current 0.12 build. Capture at about 1440 px wide at 2× and check that
+key labels remain readable at the documentation column width. Keep these
+images focused on the feature; the linked guides cover the smaller controls.
+For mosaic editing, leave changes unsaved and discard them after capture.
+Do not fabricate a calibration finding or flat-group change for a screenshot.
+Replace each `SHOT` comment with a figure and its supplied caption once the
+image exists. Until then, the page has capture instructions, not broken images
+or screenshots from an older interface.
+
 ## How to update this plan
 
 Every entry comes from a comment in the pages: `<!-- RESHOOT: file | what -->`
@@ -155,7 +177,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `wbpp-run-dialog.png` — pages: wbpp
   - Stacks view for Teddy Bear Nebula QMark (rig starfront-redcat61) on psf-guard.atpn.co, Stack in WBPP clicked: the run dialog before Start stacking, with Include ungraded lights ticked, the WBPP settings (Quality, Fast Integration, Drizzle, Autocrop, Light rejection), More WBPP parameters and Run folder; crop to the dialog
 
-## New screenshots (53)
+## New screenshots (56)
 
 - `activation-save-first.png` — pages: activation
   - Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving.
@@ -233,6 +255,12 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
 - `plan-summary-activated.png` — pages: planning
   - Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills.
+- `release-012-calibration.jpg` — pages: new-in-0.12
+  - Priority: 0.12 highlights. Calibration page, Frames tab, Sessions selected, rig starfront-redcat61, Type: Flat, an Ha session for Teddy Bear Nebula QMark. Show the session sidebar, thumbnail strip with OK/suspect/poor grades, one suspect or poor flat in the viewer, and its grade reason and Frame/Session measurements. Keep Keep out, Use anyway and Clear visible without pressing them. Choose a frame with a real finding; use another session or rig if needed. Capture at about 1440 px wide at 2x, crop to the workspace below the header, and keep the grade reason readable at docs-column width. No settings or grades changed.
+- `release-012-flat-groups.jpg` — pages: new-in-0.12
+  - Priority: 0.12 highlights. Calibration page, Frames tab, Groups selected, rig c925-scheduler or starfront-redcat61, Type: Flat. Choose two measured groups separated by a real dust or illumination change. Show the group sidebar with the change reason and Compare open on that boundary; include the later/earlier night labels, the ratio image at Normal stretch, and Spots marks identifying the changed shadows. Keep enough of the group list to explain which nights the comparison separates. Capture at about 1440 px wide at 2x, crop to the group list and comparison, and keep the reason readable at docs-column width. Do not split, join, change limits or assign lights. If no measured change is available, record the missing state rather than implying one.
+- `release-012-mosaic-editing.jpg` — pages: new-in-0.12
+  - Priority: 0.12 highlights. Planning workspace for Heart Mosaic, rig askar107phq, Framing tab. Show the nebula survey with the captured panels and their padlocks, plus the Mosaic panels controls alongside it. In an unsaved draft, add or unlock one panel, select Panel mode with Snap on, and capture it being moved beside a neighbour with shaded overlap and its percentage visible. Include the selected panel in the list and the add-panel controls; frame the sky and sidebar together, not a sky-only crop. Capture at about 1440 px wide at 2x with labels readable at docs-column width. Do not Save or Activate; discard draft edits after capture.
 - `scoring-popover.png` — pages: screening
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover.
 - `sequence-cutoff-hfr.jpg` — pages: screening
