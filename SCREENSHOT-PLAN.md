@@ -150,12 +150,22 @@ Use **ultra cat**, project and target 12.
   nonzero count. Capture rejection, undo and selection-rule changes in a
   disposable local catalog, not by regrading this live project.
 
-### California Nebula: session scores and satellite candidate
+### California Nebula: Foraxx SHO, session scores and satellite candidate
 
 Use **ultra cat**, database `db-e075b4ec`, project and target **4**. There is
 another California Nebula project in the library, so choose the rig explicitly.
 [Open its Sequence](https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=4&target=4&current=561).
 
+- **Preferred narrowband color example: Foraxx SHO**, chosen by the user.
+  Use California for the homepage color feature, the color card in the stacking
+  guide and the final panel of `hero-flow.jpg`. Open Stacks for this project
+  and choose its existing Foraxx SHO preview. Keep the nebula prominent; show
+  the palette and channel inputs in the card crop. Record the actual exposure
+  group, frame counts and integration time at capture. The preview itself was
+  not inspected during scouting.
+- Save the homepage image as `stack-foraxx-california.jpg`; update its image
+  path, alt text and caption together. Do not reuse Teddy Bear counts or label
+  an existing Teddy Bear image as California.
 - Use this target for a second session-versus-all-sessions explanation. Choose
   **G · Oct 17, 2025, 05:50 AM (1)**: frame **561**, captured at 05:50:21,
   has a session score of **100%** and an all-sessions score of **85%**. Its
@@ -192,7 +202,7 @@ the target name **NGC 7023**. No project-state change is needed.
   Check calibration separately: a high quality score does not guarantee that
   suitable calibration masters exist.”
 - [Iris stacks](https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&current=776)
-  are the preferred broadband counterpart to Teddy Bear narrowband previews.
+  are the preferred broadband counterpart to California Foraxx SHO.
   Choose **LRGB 300 s** or **RGB 120 s** after preparation. At inspection,
   all seven mono groups were out of date and the color previews were Not built.
   LRGB 120 s also lacked L. Do not use these as finished-color shots yet.
@@ -202,8 +212,8 @@ the target name **NGC 7023**. No project-state change is needed.
 [Open Teddy Bear stacks](https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=2&target=2).
 Its ten mono groups have cached previews but are out of date because scoring
 settings changed. RGB, LRGB and SHO color previews show **Not built**. The
-600-second narrowband group remains a candidate for the planned Foraxx SHO
-shot, not a verified finished-color example. Sadr also has no built color
+600-second narrowband group is a fallback; California Foraxx SHO is now the
+preferred narrowband example. Sadr also has no built color
 preview and its channel work is queued.
 
 Do not use either as a finished-color screenshot yet. Prepare updated stacks
@@ -219,7 +229,7 @@ image goes. Edit the comment, not this list, then run `npm run shots`. When an
 image is captured, replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this file once no comments remain.
 
-## Redo (existing images) (53)
+## Redo (existing images) (55)
 
 - `activation-preview.png` — pages: home, activation
   - Activate on the rigs dialog for Heart Mosaic: auto preview in the new order (what Target Scheduler will shoot, what it turns off and why, what it turns back on)
@@ -254,7 +264,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `header-picker.png` — pages: grader
   - Header with the project picker open, the search box holding "Heart": Heart Mosaic (rig askar107phq) and other matches, one opened to All images and its targets; the new icon tabs visible beside it
 - `hero-flow.jpg` — pages: home
-  - Rebuild the four-step collage from new captures: (1) plan-workspace framing with mosaic panel tools, (2) the Activate on the rigs dialog in its new order, (3) Sequence of the Golf of Mexico H-alpha Jul 9 2026 session with grade dots and the new toolbar, (4) the Teddy Bear Foraxx SHO color card
+  - Rebuild the four-step collage from new captures: (1) plan-workspace framing with mosaic panel tools, (2) the Activate on the rigs dialog in its new order, (3) Sequence of the Golf of Mexico H-alpha Jul 9 2026 session with grade dots and the new toolbar, (4) the California Nebula Foraxx SHO color card (ultra cat, project 4); update the collage alt text when replacing the image
 - `image-detail.jpg` — pages: grader, screening
   - Image detail of a rejected H-alpha frame from Golf of Mexico (rig "ultra cat", session Jul 9 2026) marked Possible Obstruction, about 1600 px wide: the frame on the left; on the right Image Information, Quality analysis with the score and its reason, Calibration, and Sky context, each open with its fold chevron
   - Image detail of the rejected Golf of Mexico HA frame from Jul 9, 2026 (rig "ultra cat") marked Possible Obstruction. Side panels with their fold chevrons: Image Information folded to one line, Quality analysis open with the score, the reason and Show affected regions, Calibration folded, Sky context open with its Hinted solve badge, Satellite tracks folded. Full window.
@@ -331,6 +341,10 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Sky view with Live on: new icon header, stat band, all-sky map, Live list of rigs
   - Sky view with Live on, opened from the header's Live chip, desktop width with the new icon header: the all-sky coverage map with each reporting rig drawn where it points, the Live list of rigs beside the map, and the Live table under it.
   - The Sky view with Live on, under the new narrow header (view icons, the Sky tab named, the jobs and Live chips, the menu at the right): the stat band, the rig and filter chips with Live on, the all-sky map, the Live list of rigs beside it with their states, and the top of the timeline below. Full window, from the header to the timeline's All rigs lane.
+- `stack-foraxx-card.jpg` — pages: stacking
+  - Use California Nebula Foraxx SHO, ultra cat, project 4. Show the palette and edges controls, nebula preview and H-alpha, OIII and SII inputs. Record actual counts and integration time; update the alt text and caption when replacing the image. See SCREENSHOT-PLAN.md.
+- `stack-foraxx-teddy.jpg` — pages: home
+  - Replace with California Nebula Foraxx SHO, ultra cat, project 4, chosen by the user. Save as stack-foraxx-california.jpg and update the image path, alt text and caption together. Use the actual frame counts and integration time shown at capture. Keep the nebula prominent. See SCREENSHOT-PLAN.md.
 - `stacks-mosaic.jpg` — pages: home, grader, stacking
   - Stacks for Heart Mosaic mosaic (4 panels): panel stacks in grid order and on the sky; new header
   - Stacks for Heart Mosaic (rig askar107phq) with "Heart Mosaic mosaic (4 panels)" chosen in the rig · target switcher: each panel's stack in grid order and the panels placed on the sky by plate solve; include the new icon header with Stacks named as the current view
