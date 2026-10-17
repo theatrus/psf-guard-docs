@@ -150,6 +150,53 @@ Use **ultra cat**, project and target 12.
   nonzero count. Capture rejection, undo and selection-rule changes in a
   disposable local catalog, not by regrading this live project.
 
+### California Nebula: session scores and satellite candidate
+
+Use **ultra cat**, database `db-e075b4ec`, project and target **4**. There is
+another California Nebula project in the library, so choose the rig explicitly.
+[Open its Sequence](https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=4&target=4&current=561).
+
+- Use this target for a second session-versus-all-sessions explanation. Choose
+  **G · Oct 17, 2025, 05:50 AM (1)**: frame **561**, captured at 05:50:21,
+  has a session score of **100%** and an all-sessions score of **85%**. Its
+  stored grade is **Rejected · Quality analysis**. Do not imply that the
+  current score alone explains that stored grade.
+- Suggested explanation: “A one-frame session can score highly against itself.
+  Compare the frame with other nights before deciding whether to keep it.”
+- **G · All sessions (106)** also shows **11 cloud events**. Use it as an
+  alternative issue-list example; the expanded list still needs inspection.
+- Keep California for `satellite-california-overlay.png`. The October 17–20,
+  2025 G sessions exist, but frame 561 is only a candidate: a pixel-aligned
+  satellite match has not been verified. Inspect cached satellite results
+  before choosing the exact frame. Do not label a prediction as pixel evidence.
+- Library context at inspection: 997 accepted, 1,195 rejected, no pending,
+  with captures from October 17, 2025 through October 16, 2026.
+
+### Iris Nebula: image grid, score chips and broadband color
+
+Use **starfront-ultracat131**, database `db-93617230`, project **1**. Search
+**Iris** in Library, then open it under **Archived projects**; the images use
+the target name **NGC 7023**. No project-state change is needed.
+[Open the Iris grid](https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1).
+
+- Use Iris for `grid.jpg` and `grid-score-chips.png`: all **822 images** have
+  scores, across 27 groups in the inspected view.
+- For the score-chip crop, use **2026-09-17 · L · 300 s**. The five accepted
+  frames show **92–95%** all-sessions scores, **95–99%** night-session scores,
+  and Sky Brightening labels. The 23:02:13 frame shows **94% / 99% / 94%**
+  for main, night-session and all-sessions scores.
+- Include the following **2026-09-17 · G · 120 s** group in a wider crop to
+  show a separate calibration concern. The 23:47:55 frame scores **99%** but
+  warns **Can't be calibrated properly: Thin dark master**.
+- Suggested explanation: “Compare a frame within its night and across nights.
+  Check calibration separately: a high quality score does not guarantee that
+  suitable calibration masters exist.”
+- [Iris stacks](https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&current=776)
+  are the preferred broadband counterpart to Teddy Bear narrowband previews.
+  Choose **LRGB 300 s** or **RGB 120 s** after preparation. At inspection,
+  all seven mono groups were out of date and the color previews were Not built.
+  LRGB 120 s also lacked L. Do not use these as finished-color shots yet.
+
 ### Stacks: preparation still needed
 
 [Open Teddy Bear stacks](https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=2&target=2).
@@ -198,7 +245,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `grid-filter-list.png` — pages: grader
   - Images toolbar for Teddy Bear Nebula QMark (rig starfront-redcat61, Foraxx SHO), the Filter pill's list open with HA and OIII ticked and the pill reading "Filter: HA, OIII"; the Status, Flag, Calibration and Dates pills beside it; crop to the toolbar and the open list
 - `grid-score-chips.png` — pages: grader
-  - Crop of three or four Images cards in the frame's shape, Iris Nebula (rig starfront-ultracat131), filter B: the main score, the moon (night-session) chip and the layers (all-sessions) chip; include one light with a 🧪 Check or Poor chip if the project has one, else a light from a project listed by Show › Calibration issues
+  - Iris Nebula, starfront-ultracat131, project 1 (Library search Iris, Archived projects). Crop three or four cards from 2026-09-17 · L · 300 s: main, night-session and all-sessions scores. The 23:02:13 frame shows 94 / 99 / 94. A wider companion crop can include the following G · 120 s group: the 23:47:55 frame scores 99 but warns Thin dark master. Use the verified links and explanation in SCREENSHOT-PLAN.md.
 - `grid.jpg` — pages: grader
   - Images for Iris Nebula (rig starfront-ultracat131) at about 2000 px wide, View › Group: Filter, Status: All, no other filters: the compact toolbar (filter pills, size slider, View, undo/redo, Compare, Stats, quality scan, ⋯) with the slim count row under it, then the first group's cards in the frame's shape with score chips, filter, time, HFR, stars and grade; include the icon header
 - `header-jobs.png` — pages: grader, stacking, storage
@@ -239,7 +286,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `rig-ts-projects.png` — pages: rigs
   - Same setup, Limits and delivery, scrolled down: the Target Scheduler projects comparison (each differing project with what will change, or "all N projects … have these limits"), Apply to N projects, and the Remote site box with Plans push to set to This server only. New card layout.
 - `satellite-california-overlay.png` — pages: satellites
-  - Image detail of a frame with pixel-aligned satellite trails: the California Nebula G frame from October 2025 if the capture server has it, else any frame where Identify satellite tracks finds a pixel match (then change the alt text and caption to name it). Track identifiers on, dashed predictions and solid green fitted paths on the frame. Side panels with their fold chevrons: the other panels folded to one line each, Satellite tracks open with its Pixel aligned badge, Track identifiers on, Crossings, Bright risk, Pixel matches, Exposure, Element source and the track list. Crop: the frame and the side panel.
+  - Image detail of a frame with pixel-aligned satellite trails: California Nebula on ultra cat, project 4, has G sessions on October 17–20, 2025. Inspect cached results to choose a frame with a verified pixel match; frame 561 is a starting candidate, not a confirmed match. See SCREENSHOT-PLAN.md. If no cached match exists, prepare this shot in a disposable local catalog. Track identifiers on, dashed predictions and solid green fitted paths on the frame. Side panels with their fold chevrons: the other panels folded to one line each, Satellite tracks open with its Pixel aligned badge, Track identifiers on, Crossings, Bright risk, Pixel matches, Exposure, Element source and the track list. Crop: the frame and the side panel.
 - `sequence-session.jpg` — pages: home, astrometry-quality, grader, screening
   - Sequence, Golf of Mexico (ultra cat), H-alpha session Jul 9 2026: new toolbar, score chart with grade dots, cards with Soft Stars and Possible Obstruction
   - Same capture as on screening.html: Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, Cutoff on Score at its default, no Select rule. Show the new header, the compact Sequence toolbar, the session tabs, the score chart with grade dots, the Solved pointing scatter and the first row of frame-shaped cards (Soft Stars, then Possible Obstruction). Full window width, from the header to the first card row.
