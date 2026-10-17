@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Server Accounts — PSF Guard</title>
-  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, see what database management adds, mint API tokens, and pair remote clients safely.">
+  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, see what database management adds, create API tokens, and pair remote clients safely.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -145,7 +148,7 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1 id="server-accounts-title">Server Accounts</h1>
   <p class="lede">Turn on logins for a PSF Guard web server, give people editor
-  or read-only access, and mint API tokens for scripts and agents. The desktop
+  or read-only access, and create API tokens for scripts and agents. The desktop
   app needs none of this: its own server listens on localhost only.</p>
 
   <h2 id="bind">What a server with no accounts serves</h2>
@@ -174,7 +177,7 @@ function gtag_report_demo() {
   <p><code>--allow-anonymous-access</code> gives every caller on a network
   address what a localhost server gives, with no accounts and no login:</p>
   <pre><code>psf-guard server --host 0.0.0.0 --allow-anonymous-access</code></pre>
-  <p>It hands full editor access to anyone who can reach the port: grading,
+  <p>It gives full editor access to anyone who can reach the port: grading,
   imports, and, with <code>--allow-database-management</code>, the registry.
   Use it only on a network you trust as much as the machine, or to upgrade an
   older deployment without an outage. Then add accounts and drop the flag.</p>
@@ -213,7 +216,7 @@ function gtag_report_demo() {
   <p>By default a viewer cannot start costly work: stack builds, plate solves,
   satellite predictions, or view processing. Cached results stay available.
   <code>allow_read_only_compute = true</code> lets viewers start that work;
-  fit for a trusted private server, not a public demo where repeated jobs could
+  suitable for a trusted private server, not a public demo where repeated jobs could
   use up CPU, network and cache space.</p>
   <p>The server checks the role on every request, so a client calling the API
   directly gets no more. A viewer's header menu has no
@@ -331,11 +334,11 @@ allow_read_only_compute = false</code></pre>
     <li>The Library's compact or detailed rows, the project picker's grouping,
       and moving on after a grade.</li>
   </ul>
-  <p>A link that names an order, a grouping or a scoring value still wins.
+  <p>Sort order, grouping and scoring values in a link override saved preferences.
   Each change saves only what it changed, so a tab left open never undoes a
-  choice made since on another device. The first account to sign in on a
-  browser takes the choices that browser made before; later accounts start
-  from the defaults. A viewer saves theirs too, and saves scoring defaults
+  choice made since on another device. The first account to sign in inherits that
+  browser's saved choices; later accounts start
+  from the defaults. Viewers can save their choices too, including scoring defaults
   with the <strong>Scoring</strong> control's <strong>Save as
   default</strong>.</p>
   <p>The server keeps them in <code>user-preferences.json</code> beside

@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -151,7 +154,10 @@ function gtag_report_demo() {
     rejected frames.
   </p>
 
-  <div class="callout info"><strong>New after 0.11.</strong> The header shows its views as icons and keeps Settings and help in one menu; the Library lines its rows up in columns. Images and Sequence share one compact toolbar, with newest first, night and hour marks, and a dot on new frames.</div>
+  <div class="callout info"><strong>New after 0.11.</strong> The header shows its views as
+  icons and keeps Settings and help in one menu; the Library aligns project details in
+  columns. Images and Sequence share one compact toolbar, with newest first, night and
+  hour marks, and a dot on new frames.</div>
 
   <h2 id="overview">The Library</h2>
   <p>The <strong>Library</strong> lists every project in every registered catalog,
@@ -164,17 +170,17 @@ function gtag_report_demo() {
     <img src="../assets/library-compact.jpg" alt="The Library: catalog totals, the Projects toolbar pills, and one row per project with its pills in columns" loading="lazy">
     <figcaption>The compact Library: one row per project, each kind of pill in its own column.</figcaption>
   </figure>
-  <p>In the compact view each project is one row, and each kind of pill keeps its
+  <p>In the compact view each project is one row, and each kind of badge has its own
   column: database, Target Scheduler state, accepted against desired (it reads
   <strong>Done</strong> once the goal is met), grade counts, capture dates and
   calibration. <strong>Sequence</strong> and <strong>Stacks</strong> open those views;
   <strong>⚙</strong> opens the plan's <a href="planning.html">workspace</a>. A project
-  without a pill leaves its cell empty, so the columns stay straight. A long name ends
+  without a pill leaves its cell empty, so the columns stay aligned. A long name ends
   in "…" and shows in full on hover. A badge beside the name counts frames new since
   you last opened the project.</p>
-  <p>On a laptop or wider each row stays on one line, and the dates say how long ago
+  <p>On laptop and wider screens each row stays on one line, and the dates say how long ago
   the last frame was, with the range in the tooltip. On a tablet a row takes two or
-  three lines. On a phone it stacks one pill kind per place, in a rounded box.</p>
+  three lines. On a phone, the badges stack inside a rounded box.</p>
   <!-- SHOT: library-phone.png | Library on a phone, 375 px wide, Compact, Show: All projects: three or four project rows (for example Teddy Bear Nebula QMark, Golf of Mexico, Iris Nebula) as rounded boxes with one pill kind per place; crop from the Projects heading down | On a phone each row is a box with one kind of pill per place. -->
   <ul>
     <li><strong>Compact</strong> and <strong>Detailed</strong> switch the whole list.
@@ -204,7 +210,7 @@ function gtag_report_demo() {
 
   <h3 id="library-calibration">Calibration pills</h3>
   <p>A <strong>🧪 Poor</strong> or <strong>🧪 Check</strong> pill marks a project whose
-  lights the calibration library serves poorly: Poor when some lights can't be
+  lights have calibration issues: Poor when some lights can't be
   calibrated properly, Check when something is worth a look. Causes include lights
   with no calibration frames to match, thin dark masters, flats with changing spots,
   old or mixed flats, and suspect frames in use. A background check works it out. The
@@ -216,11 +222,12 @@ function gtag_report_demo() {
   <h2 id="header">The header</h2>
   <p>The header shows each view as an icon. The current view keeps its name; rest the
   pointer on another, or move focus to it, and its name slides out. <strong>Sky</strong>
-  comes first, since it follows no scope, then <strong>Library</strong>. The rest read
-  from the whole to the part: the project picker, <strong>Planning</strong> for that
+  comes first, since it covers all projects and databases, then <strong>Library</strong>.
+  The remaining controls follow the project and database scope: the project picker,
+  <strong>Planning</strong> for that
   project's plan, the rig and target switcher, then <strong>Images</strong>,
   <strong>Sequence</strong>, <strong>Calibration</strong> and <strong>Stacks</strong>.
-  Images, Sequence and Stacks wait until you pick a project or database.</p>
+  Images, Sequence and Stacks become available when you pick a project or database.</p>
   <!-- SHOT: header-tab-hover.png | Header crop, left half, in Images for Teddy Bear Nebula QMark (rig starfront-redcat61): Sky and Library as icons, the project picker, Planning icon, rig · target switcher, the Images tab showing its name as the current view, and the pointer resting on the Calibration tab with its name slid out; Sequence and Stacks as icons. Pair it with header-menu.png in a shot-pair | Hover a view to see its name. -->
   <!-- SHOT: header-menu.png | Header crop, right end, on psf-guard.atpn.co signed in as an editor: the jobs chip, the rigs chip, and the menu button open showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out. Pair it with header-tab-hover.png in a shot-pair | Settings, shortcuts, server information and sign out share one menu. -->
   <p>At the right sit the jobs chip and one menu button, ☰, holding
@@ -268,12 +275,12 @@ function gtag_report_demo() {
   <p>Images, Sequence and the Calibration page share one compact toolbar. Its first row
   holds the filter pills, the thumbnail size slider and the tools. A pill names its
   filter and its value, such as <strong>Status: All</strong>. <strong>View</strong>
-  holds the display settings, and <strong>⋯</strong> the tools used too rarely to keep
-  in sight. A slim row below gives the counts. On a phone the filters and the slider
+  holds the display settings, and <strong>⋯</strong> less-used tools. A slim row below
+  gives the counts. On a phone the filters and the slider
   fold behind a <strong>Filters</strong> button that counts the filters in use.</p>
   <ul>
     <li><strong>Status</strong>, <strong>Filter</strong>, <strong>Flag</strong> and
-      <strong>Calibration</strong> open lists of boxes: Ha and OIII together, or frames
+      <strong>Calibration</strong> open checkbox lists: Ha and OIII together, or frames
       with any of two flags. <strong>Dates</strong> and the search box narrow further;
       <strong>Clear</strong> drops every filter.</li>
     <li><strong>View</strong> holds <strong>Group</strong> (filter, session, date, or
@@ -364,7 +371,8 @@ function gtag_report_demo() {
   <a href="screening.html">Quality Screening</a>.</p>
   <p>Signed in to a server with user accounts, your view choices follow you to any
   browser: the sort order, the grouping, the thumbnail sizes, the chips, the Library's
-  rows and the project picker's grouping. A link still wins over them. Each change
+  rows and the project picker's grouping. Settings in a link override your saved choices.
+  Each change
   saves only what it changed, so a tab left open does not undo a choice made since on
   another device. Without accounts, and in the desktop app, the browser keeps
   them.</p>

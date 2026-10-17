@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html" class="active" aria-current="page">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -160,6 +163,28 @@ function gtag_report_demo() {
   Frame grades, flat groups, dust marks, calibration health and settings for
   one rig are new too.</div>
 
+  <h2>Calibration guides</h2>
+  <ul>
+    <li><strong>Calibration Libraries</strong></li>
+    <li><a href="calibration-grading.html">Calibration Grades &amp; Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats &amp; Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters &amp; Settings</a></li>
+  </ul>
+
+  <nav aria-label="On this page">
+    <h2>On this page</h2>
+    <ul>
+      <li><a href="#add">Add calibration frames</a></li>
+      <li><a href="#page">The Calibration page</a></li>
+      <li><a href="#nights">Nights</a></li>
+      <li><a href="#duplicates">Duplicates</a></li>
+      <li><a href="#cli">From the command line</a></li>
+      <li><a href="#calibrated">Calibrated copies</a></li>
+      <li><a href="#transfer">Move a catalog</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+    </ul>
+  </nav>
+
   <h2 id="add">Add calibration frames</h2>
   <ol>
     <li>In <strong>Settings › Databases</strong>, add the folders that hold
@@ -186,7 +211,7 @@ function gtag_report_demo() {
   <p>Twilight flats stay in the calibration library during folder imports and
   remote uploads. They never become light rows or exposure templates that
   could sync back to Target Scheduler. Masters from other software import too;
-  see <a href="#external">below</a>.</p>
+  see <a href="calibration-masters.html#external">Masters from other software</a>.</p>
   <p>Calibration records live in PSF Guard's own tables inside the catalog.
   Pixels do not: records point at the raw files, and generated masters live
   in the calibration masters folder. Reading an untouched Target Scheduler
@@ -202,15 +227,15 @@ function gtag_report_demo() {
   <h2 id="page">The Calibration page</h2>
   <p>The header's <strong>Calibration</strong> tab, between Sequence and
   Stacks, shows the library of the database in the header's scope: its
-  sessions, each frame drawn as a picture, one frame's numbers beside its
-  session's, and the masters built from them. Here the header's <strong>Rig ·
-  target</strong> control names the rig only. Other ways in:</p>
+  sessions, frame previews, each frame's measurements beside its session's, and the
+  masters built from them. Here the header's <strong>Rig ·
+  target</strong> control names the rig only. You can also open it from:</p>
   <ul>
     <li><strong>Open Calibration</strong> on a database's calibration summary
       in <strong>Settings › Databases</strong>;</li>
     <li><strong>Browse calibration</strong> in a project's
-      <a href="#coverage">coverage report</a>;</li>
-    <li>a night in an image's <a href="#light-panel">Calibration panel</a>,
+      <a href="calibration-grading.html#coverage">coverage report</a>;</li>
+    <li>a night in an image's <a href="calibration-grading.html#light-panel">Calibration panel</a>,
       which the 🧪 chip in Images and Sequence opens;</li>
     <li><strong>Open in Calibration</strong> on a master in a stack's
       <a href="stacking.html#inspect">Masters</a> inspector.</li>
@@ -218,7 +243,7 @@ function gtag_report_demo() {
   <p>The page has three tabs: <strong>Frames</strong>,
   <strong>Masters</strong>, and <strong>Scheduler flats</strong> for Target
   Scheduler's flat coverage (see <a href="sync-plugin.html#flats">N.I.N.A.
-  Sync Plugin</a>). The address keeps every choice, from the filters to the
+  Sync Plugin</a>). The URL stores every choice, from the filters to the
   frame and its stretch, so a reload or a shared link opens the same view.
   Viewers see the frames; editors also get the buttons that change them.</p>
 
@@ -246,9 +271,9 @@ function gtag_report_demo() {
   capture settings, including for flats the filter and rotator angle and for
   darks the exposure and temperature. The list runs newest night first, each
   session with its frames counted by grade. A chosen session shows its frames
-  as a strip of small pictures, in the order shot unless <strong>Order</strong>
+  as a thumbnail strip, in the order shot unless <strong>Order</strong>
   says otherwise, with one in the viewer. <strong>Sessions | Groups</strong>,
-  at the top of the sidebar, lists <a href="#groups-view">flat groups</a>
+  at the top of the sidebar, lists <a href="calibration-flats.html#groups-view">flat groups</a>
   instead.</p>
   <div class="table-wrap">
     <table>
@@ -271,9 +296,9 @@ function gtag_report_demo() {
   <p>The viewer keeps its zoom and position across a session's frames, so
   flipping through them compares the same place.</p>
 
-  <h3 id="pictures">Frame pictures</h3>
-  <p>Each kind's picture shows what goes wrong with that kind. Block means
-  shrink the picture, so a hot pixel stays visible at any size, and
+  <h3 id="pictures">Frame previews</h3>
+  <p>Each frame type uses a preview suited to its common defects. Block reduces the
+  preview size while keeping hot pixels visible, and
   <strong>Full size</strong> draws the frame at its own resolution.</p>
   <div class="table-wrap">
     <table>
@@ -285,21 +310,21 @@ function gtag_report_demo() {
   </div>
   <p><strong>Compare with session</strong> needs three flats in the session.
   What every flat shares, dust and vignetting, divides out; what changes from
-  flat to flat, such as dew drying off the window, stays. Stars in tracked
-  sky flats draw at neutral grey, so they do not read as dew. Stepping through
+  flat to flat, such as dew drying off the window, stays. Stars in tracked sky flats
+  appear neutral gray so they do not look like dew. Stepping through
   the flats keeps the comparison and the zoom.</p>
 
   <!-- SHOT: calibration-compare-session.jpg | Calibration › Frames, rig c925-scheduler, Type: Flat, one flat session chosen, Compare with session pressed at Normal (±3%), Spots on, so the session's dust shows with "in N of M flats" and any one-flat transient; include the stretch buttons, Compare with session, Spots and the strip | Compare with session divides a flat by its session's median: shared dust divides out, changes stay. -->
 
   <h3 id="frame-panel">One frame</h3>
   <p>The panel beside the viewer gives the frame's file, capture time and
-  settings, its grade and main reason, and each number grading measured
-  beside the median of its session: for a flat its level, clipped share,
+  settings, its grade and main reason, and each grading measurement beside the session
+  median: for a flat its level, clipped share,
   noise and spots, such as <code>15 spots · 3 large disks</code>; for a bias
   or dark its level and spread in ADU, noise, row and column banding and hot
-  pixels. Below them sit the limits the frame crossed, each with its value
-  and the limit. An editor gets <a href="#choices">Keep out, Use anyway and
-  Clear</a>, the <a href="#boundaries">validity marks</a> and
+  pixels. Below the measurements, the panel lists each exceeded limit beside the measured
+  value. An editor gets <a href="calibration-grading.html#choices">Keep out, Use anyway and
+  Clear</a>, the <a href="calibration-masters.html#boundaries">validity marks</a> and
   <strong>Forget</strong>.</p>
   <p><strong>Forget</strong> removes the frame's catalog record, every master
   built from it, and every master built on those. The FITS file stays. The
@@ -347,610 +372,16 @@ function gtag_report_demo() {
   older frame's site once, with <strong>Stop</strong>, and tries again while
   the server runs if the NAS is not mounted. PSF Guard then grades and groups
   those rigs again, and measures only the flat runs that were split.</p>
-  <p>Capture times on the Calibration page read on the rig's clock with its
-  offset, such as <code>2026-08-11 06:23 UTC−7</code>; when the server built a
-  master reads on your clock. Images and Sequence split lights at each rig's
+  <p>The Calibration page shows capture times in the rig's local time with its UTC offset,
+  such as <code>2026-08-11 06:23 UTC−7</code>. Master build times use your local time.
+  Images and Sequence split lights at each rig's
   noon too. <strong>Nights end</strong>, in Settings › Calibration, puts them
   back on one split for the whole catalog with <strong>Same time for all
   rigs</strong>.</p>
 
-  <h2 id="grades">Frame grades</h2>
-  <p>PSF Guard grades every raw bias, dark, dark flat and flat against the
-  frames that should agree with it. Masters from other software get no
-  grade.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Grade</th><th>Meaning</th></tr>
-      <tr><td><strong>OK</strong></td><td>Nothing crossed a limit.</td></tr>
-      <tr><td><strong>Suspect</strong></td><td>Something crossed the first limit. The frame stays in use, and the lights its masters serve get a <strong>Check</strong>.</td></tr>
-      <tr><td><strong>Poor</strong></td><td>Something crossed the second limit. Masters, WBPP exports and calibration reports leave the frame out, and stacks that used it build again.</td></tr>
-    </table>
-  </div>
-  <p>Grading compares a flat with the other flats of its session, and a bias,
-  dark or dark flat with every frame that could stand in for it, from any
-  night. Most checks need three or more peers. A flat's temperature never
-  counts: a flat shot warm with the cooler off can be a good flat.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Setting</th><th>Measures</th><th>Suspect</th><th>Poor</th></tr>
-      <tr><td><strong>Bias level</strong></td><td>Distance from the set's level, in the set's noise</td><td>1</td><td>3</td></tr>
-      <tr><td><strong>Bias noise</strong>, <strong>Dark noise</strong></td><td>Noise as a ratio to its peers'</td><td>1.1</td><td>1.3</td></tr>
-      <tr><td><strong>Bias banding</strong>, <strong>Dark banding</strong></td><td>Row or column banding as a ratio to the frame's noise</td><td>0.25</td><td>0.5</td></tr>
-      <tr><td><strong>Dark stray light</strong></td><td>Level above the quietest peer, in the frame's spread</td><td>0.5</td><td>1</td></tr>
-      <tr><td><strong>Dark hot pixels</strong></td><td>Hot pixels as a ratio to its peers'</td><td>1.5</td><td>3</td></tr>
-      <tr><td><strong>Flat clipping</strong></td><td>Share of samples at full scale</td><td>0.05%</td><td>0.5%</td></tr>
-      <tr><td><strong>Flat too bright</strong></td><td>Brightest channel, share of a 16-bit full scale</td><td>80%</td><td>92%</td></tr>
-      <tr><td><strong>Flat too dim</strong></td><td>Dimmest channel, share of full scale; lower is worse</td><td>10%</td><td>3%</td></tr>
-      <tr><td><strong>Flat light pattern</strong></td><td>Light pattern off the session's</td><td>2%</td><td>5%</td></tr>
-      <tr><td><strong>Flat spots</strong></td><td>Clear spots in one flat</td><td>100</td><td>500</td></tr>
-      <tr><td><strong>Flat changing spots</strong></td><td>Spots in one flat that change across its session</td><td>3</td><td>20</td></tr>
-      <tr><td><strong>Carried flat spots</strong></td><td>Changing spots in most of a set's flats, which its master keeps</td><td>1</td><td>10</td></tr>
-    </table>
-  </div>
-  <p>The limits sit under Settings › Calibration › <strong>Frame
-  grades</strong>; an empty limit is never reached. Grading runs in the
-  background when the server starts and after imports, forgets and remote
-  uploads, and gives way to work you started. A changed limit grades again
-  from the stored numbers. An ungraded frame stays in use.</p>
-
-  <h3 id="choices">Keep out, Use anyway, Clear</h3>
-  <p>An editor can overrule a grade from the frame's panel:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Button</th><th>Effect</th><th>Badge</th></tr>
-      <tr><td><strong>Keep out</strong></td><td>Leaves the frame out of masters and exports whatever its grade, as rejecting does for a light. Every frame offers it, so a later grade cannot bring a frame back. Unlike <strong>Forget</strong>, the frame stays in the library.</td><td><strong>Kept out by hand</strong></td></tr>
-      <tr><td><strong>Use anyway</strong></td><td>On a frame kept out, puts it back in use. On a suspect frame, says it is fine: it counts as OK, and the lights its masters serve lose the suspect frames Check. Its masters stay as they were.</td><td><strong>Used anyway</strong></td></tr>
-      <tr><td><strong>Clear</strong></td><td>Lets the grade decide again.</td><td>—</td></tr>
-    </table>
-  </div>
-  <p>A choice survives regrading and rescans, and travels with
-  <a href="#transfer">Merge catalogs and sync pull</a>. Leaving a frame out
-  rebuilds its master and every stack that used it; the stack card lists the
-  frames left out and why. Grades never stop calibration: a light they leave
-  with no flat, or with neither bias nor dark, is one that
-  <a href="#uncalibrated">can't be calibrated</a>.</p>
-
-  <!-- SHOT: calibration-frame-keep-out.png | Calibration › Frames, a dark session with a frame graded "Suspect · noise" or "Poor · stray light" chosen; crop to the frame panel: file, capture time with UTC offset, settings, the grade badge, the reason line, the Measure/Frame/Session table with Level and Spread in ADU, the findings with their limits, and the buttons Keep out, Use anyway, Forget and ◂ Before only / Both / After only ▸ | A frame's panel: its grade, its numbers beside its session's, and Keep out or Use anyway. -->
-
-  <h3 id="stray-light">Darks that caught stray light</h3>
-  <p>A dark shot while light reached the sensor, such as dawn through an open
-  roof or a cap left off, has the right headers. Its pixels sit above the
-  bias, often more with each frame. A master from such darks pushes every
-  light's sky below zero and carves a bowl that later shows as colored
-  corners.</p>
-  <p>A dark more than one noise sigma above the quietest frame that could
-  stand in for it, from any night, grades <strong>Poor · stray light</strong>,
-  so a morning whose darks all leaked is still caught by a clean set from
-  another night. A lone frame with nothing to compare against stays in use.
-  The frame panel gives each dark's level and spread in ADU beside its
-  session's, and <strong>Use anyway</strong> puts such a dark back into its
-  master.</p>
-
-  <h2 id="dust">Dust in flats</h2>
-  <p>Grading finds the shadows in each flat. A spot is a small patch that
-  passes less light than the response around it. Dust further up the train
-  casts large, faint shadows: out-of-focus <strong>disks</strong>, such as a
-  RedCat61's 600-pixel disks under half a percent deep, and
-  <strong>donuts</strong>, dust seen through an SCT's central obstruction.
-  These count apart, as large dust: <code>15 spots · 3 large disks</code>. A
-  spot of a few pixels must clear a threshold raised for the size of the
-  frame, so a large sensor does not count its own noise.</p>
-  <p><strong>Spots</strong>, above the viewer, draws what grading found at its
-  shape: a spot as its box, a disk as its rim, a donut as its ring and hole.
-  <strong>Large dust</strong>, nested under Spots, turns the disks, donuts and
-  vignetting on and off. Vignetting, a shadow hanging from an edge or corner
-  such as an off-axis guider's prism, draws dashed and never counts as dust.
-  Each large mark gives its depth and, when the header gives the focal ratio
-  and pixel size, how far in front of the sensor the dust sits:
-  <code>disk 0.33% · ~11 mm, filter/window</code>. Hover or tap a mark for its
-  numbers.</p>
-  <p>With <strong>Compare with session</strong> on, the marks show the
-  session's own dust, found on the stack of its flats, with the number of
-  flats each shows in. What one flat alone holds, such as a drop of dew
-  drying, draws as a transient. Only shadows count: a star in a sky flat adds
-  light, so it never counts as a spot or as dew.</p>
-
-  <!-- Note for the two dust SHOTs below: place them side by side in one <div class="shot-pair">. -->
-  <!-- SHOT: calibration-dust-disks.jpg | Calibration › Frames, rig starfront-redcat61, a flat (L or Ha) with Spots and Large dust on at Tight stretch: the large faint disks drawn as rims, each labelled like "disk 0.33% · ~11 mm, filter/window", and the frame panel's Spots row reading "N spots · M large disks" | Large dust on a RedCat61: faint out-of-focus disks, each with its depth and distance in front of the sensor. -->
-  <!-- SHOT: calibration-dust-donuts.jpg | Calibration › Frames, rig c925-scheduler, a flat with Spots and Large dust on at Tight stretch: donuts drawn as ring and hole with their depth labels, plus any dashed vignetting mark at an edge or corner | Donuts on an SCT: dust seen through the central obstruction. -->
-
-  <h2 id="flat-groups">Flat groups</h2>
-  <p>Dust moves, arrives and leaves between nights. A light divided by flats
-  from the wrong side of such a change carries the difference as a faint
-  ghost. PSF Guard measures how alike each night's flats are, keeps nights
-  that differ out of one master, and gives each light flats from its own side
-  of each change. The full rules are in
-  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/CALIBRATION_LIBRARY.md#flat-groups">docs/CALIBRATION_LIBRARY.md</a>.</p>
-
-  <h3 id="measuring">Measuring flats</h3>
-  <p>PSF Guard combines the flats of each session of two or more into one
-  response, and compares two responses as later ÷ earlier. That gives two
-  numbers, in percent of the sky background a light would be left with:
-  <strong>dust</strong>, the deepest shadow that arrived, left or moved, and
-  <strong>light pattern</strong>, the largest broad difference, such as a
-  changed vignette, after a straight gradient is taken out. Dust that moved no
-  further than focus travel explains, as an SCT's donuts do, draws but does
-  not count. A guider's corner shadow that turns with the camera counts as
-  vignetting, held to the light-pattern limit, not as new dust.</p>
-  <p><strong>Measuring flats</strong> is a job of its own in the header's job
-  line, with the rig, <code>12 of 40 sessions</code> and
-  <strong>Stop</strong>. It measures only the sessions an import, sync, upload,
-  forget or duplicate repair touched, so an up-to-date catalog reads no pixel.
-  The rig on screen in Frames goes first. Stop pauses measuring until those flats
-  change, <strong>Resume now</strong>, or a restart. A changed limit regroups
-  at once from the stored numbers.</p>
-
-  <h3 id="families">Angles and response families</h3>
-  <p>A rotator angle in the header is a guide, not proof of the light path.
-  Within one rig, filter, focal length and sensor mode, angles whose gaps stay
-  within the rig's rotation tolerance (at most 2°) count as one, so a rotator
-  that wanders by a degree or two still compares its flats. Angles whose
-  flats measure alike form one <strong>response family</strong>, named in
-  Frames by its measured angle range: <code>100.1–104.4°</code>, or
-  <code>72.6° &amp; 82.2°</code>. Flats shot through a reducer are never
-  compared with flats shot without it. Flats that record no angle join the one
-  family they measure alike with, or else serve a light only when no flat of
-  its angle does.</p>
-
-  <h3 id="changes">Groups, splits and changes</h3>
-  <p>Within a family, nights join into <strong>groups</strong> in time order
-  while their dust and light pattern stay within the limits, 1% and 2% by
-  default. Every night of a group measured alike with the others, so a slow
-  drift cannot chain unlike nights into one master. Between two groups lies a
-  <strong>split</strong>. Splits that overlap in time, with shadows at the
-  same place on the sensor, form one <strong>change</strong>. A change seen in
-  two filters, or in two families of one filter, is on the camera side and
-  applies to every light of the rig; one seen in one filter applies to that
-  filter only.</p>
-
-  <h3 id="light-flats">Which flats a light takes</h3>
-  <ol>
-    <li><strong>Its side of each change</strong>: by its time when shot
-      outside the change's window, else by its imaging session, else by its
-      own pixels fitted against the change's map. A light none of these
-      places is undetermined.</li>
-    <li><strong>Its family</strong>: the one at its recorded angle. Where two
-      families lie within 10°, as after a rotator re-homed, its own pixels
-      choose, and move it off its recorded angle only when its rotator's
-      epochs or another filter's lights agree.</li>
-    <li><strong>Its flats</strong>: its family's flats at its own angle, from
-      its side of every change. Another angle's flats serve only where they
-      measured alike on several nights, or its pixels chose the family. With
-      none on its side, it takes the nearest other angle's flats when the
-      rig's flats barely depend on the angle, else its own angle's flats
-      corrected across a camera-side change, else its own angle's flats from
-      the other side, flagged.</li>
-  </ol>
-  <p>A light's <a href="#light-panel">Calibration panel</a> says how its
-  flats were chosen, under <strong>Chosen by</strong>, and names its
-  <strong>Flat family</strong> when that was not the one at its recorded
-  angle. <strong>Flats from across a change</strong> raises a Check on a light
-  that had to take flats from the other side, or whose side nothing tells.
-  Nights measured alike mix in one master with no Check.</p>
-
-  <h3 id="groups-view">Flat groups in Frames</h3>
-  <p>Whenever the list can hold flats (<strong>Type</strong> All or Flat):</p>
-  <ul>
-    <li>Each flat session carries its group, such as <strong>Group 3 · 09-07 →
-      09-16, 4 nights</strong>, with a coloured band down its edge.</li>
-    <li>A split is a line above the newest session of the older group, with its
-      reason: <em>the light pattern changed by 2.6% (limit 2%)</em>. A
-      camera-side change shows once, with its depth, the filters it was seen in,
-      and its window on the rig's clock.</li>
-    <li><strong>Compare</strong>, on a split or a change, shows the later flats
-      divided by the earlier, at ±3%, ±1% or ±0.5%, with new and departed
-      shadows circled.</li>
-    <li>A line above the list gives each rig's limits and unmeasured sessions,
-      and ends in <strong>Edit limits</strong>, which opens Settings ›
-      Calibration › Flat groups on the rig's own value or the global one.</li>
-  </ul>
-  <p><strong>Groups</strong>, under <strong>Sessions | Groups</strong>, lists
-  the groups themselves, newest first by rig, filter and angle (such as
-  <strong>G · 3.2°</strong>), with the split between neighbours and its
-  reason in between: <strong>Change · new dust 1.6%</strong>, <strong>Split ·
-  pattern 2.6%</strong>. Marks name the <strong>Current</strong> group, which a
-  light shot now takes, one <strong>Partly measured</strong>, and one with a
-  <strong>Change after</strong>. ↑ and ↓ move between groups. A group shows its
-  flats in the strip night by night, then <strong>Members</strong> (its
-  nights), <strong>Why they belong together</strong> (how far apart they
-  measured, against the limits), <strong>Its edges</strong> (each side's split
-  or change, with Compare) and <strong>What it feeds</strong>: its flat
-  masters, and the lights that take it by project, each opening Images on
-  exactly those lights. In a project scope, the groups either side of the
-  project's own show dimmed as <strong>Neighbour</strong>.</p>
-
-  <!-- SHOT: calibration-flat-groups.jpg | Calibration › Frames with Sessions | Groups on Groups, rig c925-scheduler (or starfront-redcat61 if c925 has no split), Type: Flat: the sidebar's group list with a "Change · …" or "Split · pattern …" row between two groups and the Current / Change after marks; the chosen group's heading, its strip with night marks, and below it Members, Why they belong together and Its edges with Compare; scroll so the split row and the edges both show | Groups lists the flat groups newest first, with each split and its reason between them. -->
-  <!-- SHOT: calibration-flat-compare.jpg | Calibration › Frames, the same rig, Compare pressed on a split or change in the list: the "Flat comparison" view above the session with its title (the change's reason), "<later night> ÷ <earlier night>: the later flats divided by the earlier…", Normal (±1%) stretch, Spots on with new and gone shadows circled, and Close | Compare on a split divides the later flats by the earlier and circles what changed. -->
-
-  <h3 id="by-hand">Choose by hand</h3>
-  <p>Where the measurements are wrong, a choice made by hand wins:</p>
-  <ul>
-    <li><strong>Split here</strong>, on a night under Members, starts a new
-      group at that night. Lights take flats from their side of it by
-      time.</li>
-    <li><strong>Join</strong>, on the edge between two groups in the list, or
-      <strong>Join with next</strong> and <strong>Join with previous</strong>
-      under Its edges, makes two groups one, without the mixed-flats Check. A
-      join across a camera-side change says so; the change still decides which
-      side that filter's lights take.</li>
-    <li>A light's Calibration panel, under <strong>Choose its flats</strong>,
-      offers <strong>Before</strong> and <strong>After</strong> for each change
-      it was shot during, and <strong>Use group</strong> for one group's flats.
-      <strong>Every light of its imaging session</strong> applies the choice to
-      the whole run.</li>
-    <li><strong>Flat side…</strong>, in Images, sets Before, After or Reset on
-      the selected lights, for each change they were shot during.</li>
-  </ul>
-  <p>Edges chosen by hand read <em>Split by you</em> or <em>Joined by
-  you</em>, with the measured numbers beside them and <strong>Reset</strong>.
-  A choice whose flats or change are gone stays, shown as no longer applied,
-  until reset. Choices travel with Merge catalogs and <code>sync pull</code>.
-  Changing them needs write access and database management: the desktop app,
-  or a server started with <code>--allow-database-management</code>.</p>
-
-  <h3 id="flat-settings">Flat group settings</h3>
-  <p>Three settings sit under Settings › Calibration › <strong>Flat
-  groups</strong>, for every rig or one. A change rebuilds the masters and
-  stacks whose flats it changes.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
-      <tr><td><strong>Group flats</strong></td><td>By measurement</td><td><strong>By time only</strong> keeps one master per flat session, as before, and never measures the rig.</td></tr>
-      <tr><td><strong>Dust split</strong></td><td>1%</td><td>Two nights share a master while their dust differs by less than this.</td></tr>
-      <tr><td><strong>Light pattern split</strong></td><td>2%</td><td>The same for broad differences, such as a changed vignette.</td></tr>
-    </table>
-  </div>
-  <p>A read-only catalog, or one from an older build, groups flats by
-  time.</p>
-
-  <h2 id="health">Calibration health</h2>
-  <p>In the background, PSF Guard matches every light that is not rejected
-  as a stack would, and judges what it would get. <strong>Poor</strong> means
-  the light can't be calibrated properly; <strong>Check</strong> means it is
-  worth a look and still calibrates. A light takes its worst finding, and a
-  project its worst light.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Light check</th><th>Default</th><th>Flags a light when</th></tr>
-      <tr><td><strong>No frames for its camera</strong></td><td>Poor</td><td>Nothing matches its camera and settings, though the library holds frames for other cameras.</td></tr>
-      <tr><td><strong>No matching flat</strong></td><td>Poor</td><td>No flat matches, though there are flats for its camera.</td></tr>
-      <tr><td><strong>No matching bias or dark</strong></td><td>Poor</td><td>Neither matches, though the library has some.</td></tr>
-      <tr><td><strong>Flats past the age limit</strong></td><td>Poor</td><td>Its flats are further from it than <strong>Flat age limit</strong> (60 days).</td></tr>
-      <tr><td><strong>Thin dark master</strong></td><td>Poor</td><td>Its dark master would use fewer frames than <strong>Thin master</strong> (5).</td></tr>
-      <tr><td><strong>Thin bias master</strong></td><td>Poor without a dark, Check with one</td><td>Its bias master would use fewer than 5 frames.</td></tr>
-      <tr><td><strong>Changing spots in flats</strong></td><td>As <strong>Carried flat spots</strong> grades it</td><td>Spots that come and go across its flats, such as drying dew, end up in the master.</td></tr>
-      <tr><td><strong>Old flats</strong></td><td>Check</td><td>Its flats are further than <strong>Flat age warning</strong> (30 days).</td></tr>
-      <tr><td><strong>Flats from several nights</strong></td><td>Check</td><td>Its master mixes nights not measured against each other.</td></tr>
-      <tr><td><strong>Flats from across a change</strong></td><td>Check</td><td>Its flats come from the other side of a change, or its side is unknown.</td></tr>
-      <tr><td><strong>Suspect frames in its masters</strong></td><td>Check</td><td>Its masters take suspect frames no one chose to use anyway.</td></tr>
-      <tr><td><strong>Short after keeping frames out</strong></td><td>Check</td><td>Frames kept out by hand leave a master under the thin limit.</td></tr>
-    </table>
-  </div>
-  <p>The marks show in four places:</p>
-  <ul>
-    <li><strong>Library</strong>: a <strong>🧪 Poor</strong> or <strong>🧪
-      Check</strong> pill after the grading and date pills opens the project's
-      <a href="#coverage">coverage report</a>. <strong>Show › Calibration
-      issues</strong> lists only those projects.</li>
-    <li><strong>Images</strong>, <strong>Sequence</strong> and a mosaic's
-      sequence: a 🧪 chip under the score chips, red for Poor and yellow for
-      Check. Hover it for its findings; click it to open the light on its
-      Calibration panel. <strong>View › Chips</strong> turns it on and
-      off.</li>
-    <li><strong>Images</strong>: the <strong>Calibration</strong> filter keeps
-      Poor lights, Check lights, or both.</li>
-    <li><strong>Sequence</strong>: <strong>Select › Poor calibration</strong>
-      picks those lights for <strong>Review rejection</strong>. It reads
-      <em>(updating)</em> until the check has caught up.</li>
-  </ul>
-  <p>The check runs again after each grading pass, when a grade, a choice, a
-  validity mark or a setting changes, and when a light's missing file turns
-  up. It reads only the lights whose file changed.</p>
-
-  <!-- SHOT: library-calibration-pills.png | Library, compact view, Show set to Calibration issues: three or four project rows (such as Golf of Mexico and Iris Nebula) with their 🧪 Poor or 🧪 Check pill in the calibration column, the Show pill visible in the Projects toolbar | Show › Calibration issues lists the projects the library serves poorly; each 🧪 pill opens its coverage report. -->
-
-  <h3 id="light-panel">A light's Calibration panel</h3>
-  <p>An image's detail view has a <strong>Calibration</strong> panel. It lists
-  the light's findings in words, worst first, and for each kind the frames
-  its master would take, by night and sensor temperature, with the frames
-  <strong>Kept out</strong>, those that <strong>Also match, not used</strong>,
-  and those <strong>Refused</strong>, each with why. Each night opens its
-  frames on the Calibration page. Choosing a finding picks out the frames
-  behind it, such as the two nights a flat master mixes, and stays chosen from
-  image to image; <strong>Show every kind</strong> shows the rest again.</p>
-  <p>The panel names whose settings checked the light (<strong>Checked by the
-  global settings</strong>, or by the rig's own), each limit that differs from
-  its default and who set it, and under <strong>Not flagged</strong> what a
-  setting kept from being flagged. A refusal names its limit:
-  <code>dark is 3.2 °C warmer than the light (limit 2 °C, set for Askar 120 ·
-  ASI2600MM)</code>. <strong>Tune checks for</strong> the rig opens its
-  settings. For flats the panel adds <strong>Flat family</strong>,
-  <strong>Chosen by</strong> and <strong>Choose its flats</strong>. It opens by
-  itself on a Poor or Check light, and when you come from the 🧪 chip.</p>
-
-  <!-- SHOT: image-calibration-panel.png | Image detail of a Golf of Mexico H-alpha light from the Jul 9 2026 session (rig "ultra cat") that carries a Check or Poor finding; crop to the side panel with Calibration open: the findings list with one finding chosen, the Flats part with nights, temperatures, Flat family and Chosen by, the Darks part, and "Checked by …" with Tune checks for … | A light's Calibration panel names its findings and the frames behind each. -->
-
-  <h2 id="coverage">Check coverage for a project</h2>
-  <p>Click <strong>Calibration</strong> on a project's full card in the
-  <strong>Library</strong>, or its 🧪 pill. The report uses the same matcher as
-  a stack, so it shows what would apply, not just what files exist.
-  <strong>Browse calibration</strong>, at its top, opens the Calibration page
-  on that project.</p>
-  <ul>
-    <li><strong>Quality</strong> lists each health finding with its lights by
-      night and filter, and opens those lights in Images.</li>
-    <li>Per kind: how many frames match, how many sessions they span, and the
-      newest.</li>
-    <li>Per night and filter: the flat set a master would use, how far it is
-      from the lights, and whether the night has its own flats. The dark column
-      shows what one dark master would use; hover for every matching dark
-      within reach.</li>
-    <li>A night with no flats shows the nearest flat the match refused only for
-      its rotator angle, how far off it is, and the limit: the usual cause when a
-      rotator moved.</li>
-    <li>Each night lists the masters from other software that fit its lights:
-      used, matching but not used, or not used with the readings that
-      disagree, such as <code>rotation light=92.6deg master=94.7deg</code>.</li>
-    <li>A night and filter whose lights can't be calibrated says why, and opens
-      that night's lights in Images.</li>
-  </ul>
-  <p>Warnings list kinds with no matches, nights without same-night flats, and
-  flats more than a month from their lights. The report leaves rejected
-  lights out, so a night rejected for cloud does not show as lacking flats;
-  <strong>Include N rejected lights</strong> adds them back.</p>
-
-  <!-- RESHOOT: calibration-coverage-report.png | Library › Golf of Mexico full card › Calibration: the "Calibration coverage — Golf of Mexico" dialog with Browse calibration, the Quality section listing Poor/Check findings with lights by night and filter, the warnings, the per-kind counts, the Night/Filter/Lights/Flats/Darks/Bias table, the Include N rejected lights control, and Lights that can't be calibrated with Check lights -->
-  <figure>
-    <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage for Golf of Mexico: warnings, frame counts per kind, and flats and darks matched per night and filter" loading="lazy">
-    <figcaption>The coverage report matches one light per night and filter exactly as a stack would.</figcaption>
-  </figure>
-
-  <h3 id="uncalibrated">Lights that can't be calibrated</h3>
-  <p>A light can't be calibrated when a check set to flag Poor finds a gap: no
-  flat, though the library holds flats for its camera, as when every flat for
-  its filter was shot at another rotator angle; no bias or dark, though the
-  library holds either; or flats further away than <strong>Flat age
-  limit</strong> (60 days; 0 lifts it). Each rule counts only where the library
-  could have filled the gap, so a rig that never shoots flats is not
-  affected. A check set to <strong>Check only</strong> or <strong>Off</strong>
-  never makes a light one that can't be calibrated.</p>
-  <p><strong>Check lights</strong>, at the foot of the report, lists the
-  project's lights that can't be calibrated, by night, filter and reason.
-  <strong>Reject N lights</strong> then rejects them with that reason, so
-  Target Scheduler shoots them again. If the lights changed since the check,
-  it refuses and asks for a new check. Rejecting needs write access; agents
-  have the same check over <a href="mcp.html#tools">MCP</a>.</p>
-  <p>Stacks keep such lights unless <strong>Leave out lights that can't be
-  calibrated</strong>, under Settings › Calibration › Stacks and exports, is
-  on. It is off by default. With it on, and calibration on
-  <strong>Auto</strong> or <strong>Force on</strong>, stacks leave those lights
-  out: the card counts them under <strong>can't calibrate</strong>, and
-  <strong>Frame decisions</strong> gives each one's reason. Every
-  <a href="#export">export</a> leaves out the same lights.</p>
-
-  <h2 id="settings">Settings › Calibration</h2>
-  <p>Every limit on this page is a setting under <strong>Settings ›
-  Calibration</strong>. Values apply to every database on the server from the
-  next match, check and stack. The defaults are the limits PSF Guard used
-  before, so an untuned library behaves as it did. Anyone can read them;
-  saving needs an editor account.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Box</th><th>Settings (default)</th></tr>
-      <tr><td><strong>Matching</strong></td><td><strong>Flat rotation</strong> (2°), <strong>Flat focal length</strong> (1 mm), <strong>Dark temperature</strong> (3 °C), <strong>Flat session</strong>, the longest span of flats one master takes (24 h), <strong>Use darks</strong> (on), <strong>External masters</strong> (Whenever one matches), <strong>Rig's time zone</strong> (Automatic), <strong>Nights end</strong> (At each rig's noon)</td></tr>
-      <tr><td><strong>Dark masters</strong></td><td><strong>Dark reach</strong> (183 days), <strong>Complete night</strong> (10 darks), <strong>Dark choice</strong> (Complete set first); see <a href="#darks">Dark masters</a></td></tr>
-      <tr><td><strong>Flat groups</strong></td><td><strong>Group flats</strong>, <strong>Dust split</strong>, <strong>Light pattern split</strong>; see <a href="#flat-settings">above</a></td></tr>
-      <tr><td><strong>Flat masters</strong></td><td><strong>Mask stars in flats</strong> (off); see <a href="#flats">Flats</a></td></tr>
-      <tr><td><strong>Light checks</strong></td><td><strong>Flat age limit</strong> (60 days), <strong>Flat age warning</strong> (30 days), <strong>Thin master</strong> (5 frames), and each <a href="#health">light check</a></td></tr>
-      <tr><td><strong>Frame grades</strong></td><td>The suspect and poor limits of each <a href="#grades">frame check</a>, folded until opened</td></tr>
-      <tr><td><strong>Stacks and exports</strong></td><td><strong>Leave out lights that can't be calibrated</strong> (off)</td></tr>
-    </table>
-  </div>
-  <p>A light check that can raise Poor offers <strong>Poor</strong> (or
-  <strong>Flag</strong>, where it raises Poor or Check by itself),
-  <strong>Check only</strong> and <strong>Off</strong>; one that only raises
-  Check offers <strong>Check</strong> and <strong>Off</strong>. Check only
-  shows the finding as Check at most, so stacks keep the light and the Library
-  pill reads Check at most. Off does not flag it, and the light's panel lists
-  it under Not flagged.</p>
-  <p>Matching, Dark masters and Flat groups change which frames a light's
-  masters take, so the masters and stacks they touch build again; WBPP exports
-  and runs, and <code>psf-guard export</code>, match by the same settings.
-  <strong>Rig's time zone</strong> grades frames and plans flat groups again.
-  Light checks change only what is flagged, and Frame grades grade again from
-  the stored numbers; neither reads a pixel.</p>
-
-  <!-- RESHOOT: settings-calibration.png | Settings › Calibration, top of the tab in the new card layout: the "For every rig without its own value…" note, the Matching box (Flat rotation, Flat focal length, Dark temperature, Flat session, Use darks, External masters, Rig's time zone, Nights end) with help text, and the Dark masters box (Dark reach, Complete night, Dark choice) -->
-  <figure>
-    <img src="../assets/settings-calibration.png" alt="Settings › Calibration: Rotation tolerance, Masters from other software, Dark reach, Complete night and Mask stars in flats" loading="lazy">
-    <figcaption>Calibration settings apply to every database on the server.</figcaption>
-  </figure>
-  <!-- SHOT: settings-calibration-flat-groups.png | Settings › Calibration scrolled to the Flat groups box (Group flats, Dust split, Light pattern split, each with help and its default) and the Light checks box below it showing a few checks with their Poor / Check only / Off controls; open it from Edit limits in Calibration › Frames so the Dust split row is the one in focus | The Flat groups and Light checks boxes. Edit limits in Frames opens this tab on the dust limit. -->
-
-  <h3 id="rig-settings">Settings for one rig</h3>
-  <p><strong>Rigs</strong>, below the global settings, lists every rig an open
-  catalog records. Open a rig and press <strong>Own value</strong> beside a
-  setting to give the rig its own; the rest inherit, and each row says from
-  where. <strong>Save rig</strong> keeps the values, and <strong>Inherit
-  everything</strong> clears them. <strong>Start from</strong> fills the form
-  with a preset to review before saving:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Preset</th><th>For</th><th>Sets</th></tr>
-      <tr><td><strong>Sky flats</strong></td><td>Twilight flats, whose light pattern and level change with the sky</td><td>Flat session 72 h, Flats from several nights off, Flat light pattern 5% and 10%, Flat too dim 5% and 2%</td></tr>
-      <tr><td><strong>Dark library</strong></td><td>A rig that cannot cap for darks and uses a library shot elsewhere</td><td>Dark reach 730 days, No matching bias or dark as Check only</td></tr>
-      <tr><td><strong>No darks</strong></td><td>Bias, dark flats and flats only</td><td>Use darks off</td></tr>
-    </table>
-  </div>
-  <p>A light's checks and a calibration frame's grade both use its own rig's
-  values. Each catalog in <strong>Settings › Rigs</strong> links to its rigs
-  here, and this list links back. An older PSF Guard that saves its settings
-  drops the rigs' values, so set them again after a downgrade.</p>
-
-  <!-- SHOT: settings-calibration-rig.png | Settings › Calibration › Rigs with rig starfront-redcat61 expanded, Start from › Sky flats pressed and its note "… Review the values below, then save." showing; the Matching and Light checks groups open, with Flat session and Flats from several nights set as own values (Own value pressed) and other rows showing their inherited value and "· global" or "· default"; Save rig and Inherit everything at the foot | A rig's own settings, filled from the Sky flats preset. -->
-
-  <h2 id="matching">Safe matching</h2>
-  <p>A calibration frame must agree with every setting the light records. If
-  the light records a value and the frame does not, they do not match. A frame
-  with no known camera name or sensor size never matches.</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Master</th><th>Must agree</th></tr>
-      <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, Bayer layout</td></tr>
-      <tr><td>Dark</td><td>Bias fields; exposure within the larger of 0.1% or 0.05&nbsp;s; temperature within <strong>Dark temperature</strong> (3&nbsp;°C); shot within <strong>Dark reach</strong> of the light</td></tr>
-      <tr><td>Dark flat</td><td>The flat's sensor settings, exposure and temperature</td></tr>
-      <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within <strong>Flat focal length</strong> (1&nbsp;mm), and rotator angle within <strong>Flat rotation</strong> (2°) when both record it</td></tr>
-    </table>
-  </div>
-  <p>The readout mode counts however the driver spelled it. N.I.N.A. writes a
-  name such as <code>Extend Fullwell 2CMS</code>; PSF Guard compares names
-  ignoring case, so a High Gain dark never serves an Extend Fullwell light.</p>
-  <p>Frames in one master must also agree with each other: temperatures
-  within 1&nbsp;°C, and flats within 2°, 1&nbsp;mm and one <strong>Flat
-  session</strong> of each other. With flats grouped by measurement, only
-  nights that measured alike pool. The nearest group with enough frames builds
-  the master, up to 64 frames. Before integrating, Seiza checks the inputs
-  again and leaves out any it will not accept, such as a frame filed under the
-  wrong filter, camera or readout mode; the stack warning lists them.</p>
-
-  <h3 id="boundaries">Mark where calibration stops being valid</h3>
-  <p>Nearest in time is the right default, but it cannot know about a dust
-  cleaning or a re-spaced imaging train. Flat groups catch many such changes
-  in flats; mark the rest by hand. On the Calibration page, the session's
-  header marks every frame of a session, and the frame panel one frame:
-  <strong>◂ Before only</strong> for the last set before the change,
-  <strong>After only ▸</strong> for a set shot right after it, and
-  <strong>Both</strong> to clear the mark. Matching never takes a marked frame
-  across its boundary, for any kind. A light shot at the boundary instant
-  matches either way, and a frame with no capture time keeps matching. Marks
-  survive rescans and sync with the library.</p>
-
-  <h3 id="darks">Dark masters</h3>
-  <p>Darks keep for months, so a dark master can draw on several nights. It
-  uses the nearest complete night of darks alone. When no night is complete,
-  it pools the nights within reach, nearest first. Three settings under
-  <strong>Settings › Calibration › Dark masters</strong> shape this, for every
-  rig or one:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
-      <tr><td><strong>Dark reach</strong></td><td>183 days</td><td>A dark shot further than this from the light does not match. A dark marked to serve lights before or after it follows its mark instead, however old.</td></tr>
-      <tr><td><strong>Complete night</strong></td><td>10 darks</td><td>The nearest night with this many matching darks makes the master alone. With fewer, nights pool.</td></tr>
-      <tr><td><strong>Dark choice</strong></td><td>Complete set first</td><td>Which set of darks, or bias, builds the master when several match.</td></tr>
-    </table>
-  </div>
-  <p>A dark matches a light within 3&nbsp;°C, but one master takes only darks
-  within 1&nbsp;°C of each other, so several sets can match. With
-  <strong>Complete set first</strong>, the nearest set with at least
-  <strong>Complete night</strong> frames builds the master, and a nearer,
-  smaller set serves only when no set is complete. <strong>Nearest
-  set</strong> keeps the old rule, the nearest two or more frames however few,
-  and a two-frame master puts its own read noise into every light as row
-  banding. Bias masters follow the same choice, and WBPP runs and exports take
-  the same frames. A rig with no matching darks can turn <strong>Use
-  darks</strong> off: its lights take bias and flats, with no missing-dark
-  flag.</p>
-
-  <h3 id="external">Masters from other software</h3>
-  <p>A master bias, dark or flat from WBPP, Siril or another tool imports like
-  any calibration frame. A master <code>IMAGETYP</code> or an
-  <code>NCOMBINE</code> card marks it, and the frame panel shows a
-  <strong>Master</strong> badge. PSF Guard uses it as-is, never integrated
-  again, and does not grade it.</p>
-  <ul>
-    <li>Matching is lenient, since such files often drop gain, offset and
-      temperature: what both sides record must agree, and the camera name or
-      sensor size must still match. A dark's exposure must still match. The
-      stack report shows what the match took on trust.</li>
-    <li>A master dark that records no sensor temperature, such as one from
-      WBPP, calibrates cooled lights.</li>
-    <li>WBPP's FITS masters are floats scaled 0 to 1. PSF Guard copies such a
-      master into its cache once, on the same 16-bit scale as every other
-      frame. The original is never written to.</li>
-  </ul>
-  <p><strong>External masters</strong>, under Settings › Calibration ›
-  Matching, decides how they take part, for every rig or one:
-  <strong>Whenever one matches</strong> (default), <strong>Only if raw frames
-  can't build one</strong>, or <strong>Never</strong>.</p>
-
-  <h2 id="stacking">Calibration in stacks</h2>
-  <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
-  has three modes:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Mode</th><th>What it does</th></tr>
-      <tr><td><strong>Auto</strong></td><td>Default. Applies only masters whose matching and dependencies are safe.</td></tr>
-      <tr><td><strong>Force on</strong></td><td>Applies every master that can be built, including a flat with no trusted pedestal. The card warns about the risk.</td></tr>
-      <tr><td><strong>Off</strong></td><td>Skips matching and stacks the raw lights.</td></tr>
-    </table>
-  </div>
-  <p>The project-wide choice is saved, and each channel card can override it.
-  A stack whose lights need different flats or darks splits into calibration
-  sessions and swaps masters between them; the card reports the session count.
-  Calibration runs on raw CFA data before debayering. To keep lights the
-  library can't calibrate out of stacks, see <a href="#uncalibrated">above</a>.</p>
-  <div class="callout info">
-    A master that fails to build does not fail the stack. The lights stack
-    without it, and the card shows the skipped master and why. A master whose
-    input master failed, such as a flat whose bias did not build, is skipped
-    rather than built without it.
-  </div>
-
-  <h2 id="flats">Flats</h2>
-  <p>A flat divides correctly only after the light's pedestal is removed,
-  which a bias or dark master does. With flats only, PSF Guard fits the
-  pedestal from the lights when the field has enough vignetting and the fit
-  passes its checks; otherwise Auto leaves the flat out and says to import bias
-  or dark frames.</p>
-  <p>A flat master gets a defect pass after integration, since a hot or dead
-  pixel repeats in every flat and would print into every light. Darks keep
-  their hot pixels, which subtract the lights' own; lights with no dark master
-  get the same pixel filter before stacking.</p>
-  <div class="callout">
-    <strong>Let stars move between sky flats.</strong> Dither or let the sky
-    drift. A star that stays on the same pixels survives clipping, and star
-    images are too wide for the defect pass to remove.
-  </div>
-  <p><strong>Mask stars in flats</strong>, under Settings › Calibration ›
-  Flat masters, detects stars in each raw flat and leaves them out before
-  integration. It is off by default, applies to every rig, and does not touch
-  imported masters. Every pixel must keep at least two unmasked frames, or the
-  flat build fails and the stack goes on without it.</p>
-  <p>Dew drying off the sensor window leaves spots that fade from one flat to
-  the next. PSF Guard reads each new flat master back against its frames,
-  counting only dips, so stars in sky flats do not count. When a minority
-  disagree, the master rebuilds without them; when the whole set disagrees with
-  itself, the next-nearest flat set takes its place; with no other set, the
-  master serves and the card says to retake it.</p>
-
-  <h2 id="masters">Masters</h2>
-  <p>Each master needs at least two frames. Bias and dark masters use a
-  two-pass, leave-one-out sigma-clipped mean; flat masters use median/MAD
-  clipping after calibrating and normalizing each frame. The FITS records the
-  method, thresholds, frame count and rejected samples. A master builds on the
-  cores its stack build was given; see <a href="storage.html#processor">Processor
-  use</a>. While it builds, the stack card and the header queue show which
-  master and the frame or tile under way, and <strong>Stop</strong> ends the
-  build and writes nothing.</p>
-  <p>Each master's file name comes from its input frames, file fingerprints,
-  upstream masters and algorithm versions, so a changed bias rebuilds the dark
-  and flat masters that used it, and an unchanged master is reused. Masters live
-  in the calibration masters folder, which is the cache unless
-  <code>--calibration-dir</code> or <strong>Settings › Storage ›
-  Folders</strong> sets another:</p>
-  <pre><code>&lt;calibration masters folder&gt;/&lt;database&gt;/calibration-masters/</code></pre>
-  <p>PSF Guard removes old and half-written masters once unused, keeps any
-  master whose frames are gone, and builds a removed master again when a stack
-  needs it. See <a href="storage.html#disk-use">Disk use</a>.</p>
-  <p><strong>Masters</strong> on a finished stack shows the files that stack
-  used, with the sensor temperatures and nights of their frames, so a dark
-  master shot warmer than its lights stands out. <strong>Open in
-  Calibration</strong> opens a master on the Calibration page's
-  <a href="#masters-tab">Masters tab</a>.</p>
-
   <h2 id="duplicates">Duplicates</h2>
-  <p>Capture software drops frames where it likes, and a filer later copies
-  them into the calibration tree and deletes the originals. A frame on disk
+  <p>Capture software may save frames in one folder before you move them into your
+  calibration library. A frame on disk
   twice is catalogued once: when the original goes, its row moves to the copy
   and keeps its grade, marks and masters. Two files count as one exposure only
   when kind, capture time to the second, file name, rig, capture settings and
@@ -976,7 +407,7 @@ function gtag_report_demo() {
   line (<code>Checking files 812 of 2,140</code>, then <code>Merging 37 of
   203</code>), with <strong>Stop</strong>. A stopped repair writes nothing.
   Apply checks the files again and, if the plan changed, shows the new plan
-  instead. The repair moves and deletes no file, and a later pull from a catalog that
+  instead. The repair does not move or delete files, and a later pull from a catalog that
   still has the duplicates does not bring them back. Repairing needs database
   management: the desktop app, or a server started with
   <code>--allow-database-management</code>.</p>
@@ -1000,28 +431,6 @@ psf-guard flat-groups scheduler.sqlite --work ./flat-work --lights --report flat
   <code>--lights</code> says how each light's flats would be chosen, and
   <code>--report</code> writes JSON. It never writes the catalog or a frame.
   See <a href="cli.html">CLI Reference</a>.</p>
-
-  <h2 id="export">Export with calibration frames</h2>
-  <p>Project and target exports add, for each light, the raw frames a stack
-  would build its masters from, matched by the settings for the light's rig.
-  Poor frames, frames kept out and darks that caught stray light stay
-  out.</p>
-  <ul>
-    <li>Flats go under their target and night, placed by flat group as a stack
-      takes them, and lights of one night that need different flats get a
-      session each. WBPP cannot carry flats across a change, so such a light
-      keeps its flats as shot and is named in the export summary and the
-      runner.</li>
-    <li>When lights of one exposure were matched to different darks, each set
-      of darks goes in its own <code>DARKSET_&lt;night&gt;</code> folder, so WBPP
-      does not average every night's darks into one master.</li>
-    <li>With <strong>Leave out lights that can't be calibrated</strong> on,
-      every export leaves out the lights a stack would, in either layout, from
-      the dialog, the CLI and the AstroBin export, and says how many and
-      why.</li>
-  </ul>
-  <p>Layouts, options and the WBPP runner are on
-  <a href="exporting.html">Export &amp; AstroBin</a>.</p>
 
   <h2 id="calibrated">Calibrated copies</h2>
   <p>Calibrated and registered copies that WBPP, Siril, ASTAP, DeepSkyStacker
@@ -1067,8 +476,41 @@ psf-guard flat-groups scheduler.sqlite --work ./flat-work --lights --report flat
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="wbpp.html">&larr; WBPP Runs</a>
-    <a href="exporting.html">Export &amp; AstroBin &rarr;</a>
+    <a href="calibration-grading.html">Calibration Grades &amp; Coverage &rarr;</a>
   </nav>
+  <noscript>
+    <h2>Moved sections</h2>
+    <p>These sections now have their own pages:</p>
+    <ul>
+      <li id="grades"><a href="calibration-grading.html#grades">Frame grades</a></li>
+      <li id="choices"><a href="calibration-grading.html#choices">Keep out, Use anyway, Clear</a></li>
+      <li id="stray-light"><a href="calibration-grading.html#stray-light">Darks that caught stray light</a></li>
+      <li id="health"><a href="calibration-grading.html#health">Calibration health</a></li>
+      <li id="light-panel"><a href="calibration-grading.html#light-panel">A light's Calibration panel</a></li>
+      <li id="coverage"><a href="calibration-grading.html#coverage">Check coverage for a project</a></li>
+      <li id="uncalibrated"><a href="calibration-grading.html#uncalibrated">Lights that can't be calibrated</a></li>
+      <li id="dust"><a href="calibration-flats.html#dust">Dust in flats</a></li>
+      <li id="flat-groups"><a href="calibration-flats.html#flat-groups">Flat groups</a></li>
+      <li id="measuring"><a href="calibration-flats.html#measuring">Measuring flats</a></li>
+      <li id="families"><a href="calibration-flats.html#families">Angles and response families</a></li>
+      <li id="changes"><a href="calibration-flats.html#changes">Groups, splits and changes</a></li>
+      <li id="light-flats"><a href="calibration-flats.html#light-flats">Which flats a light takes</a></li>
+      <li id="groups-view"><a href="calibration-flats.html#groups-view">Flat groups in Frames</a></li>
+      <li id="by-hand"><a href="calibration-flats.html#by-hand">Choose by hand</a></li>
+      <li id="flat-settings"><a href="calibration-flats.html#flat-settings">Flat group settings</a></li>
+      <li id="matching"><a href="calibration-masters.html#matching">Safe matching</a></li>
+      <li id="boundaries"><a href="calibration-masters.html#boundaries">Mark where calibration stops being valid</a></li>
+      <li id="darks"><a href="calibration-masters.html#darks">Dark masters</a></li>
+      <li id="external"><a href="calibration-masters.html#external">Masters from other software</a></li>
+      <li id="stacking"><a href="calibration-masters.html#stacking">Calibration in stacks</a></li>
+      <li id="flats"><a href="calibration-masters.html#flats">Flats</a></li>
+      <li id="masters"><a href="calibration-masters.html#masters">Masters</a></li>
+      <li id="export"><a href="calibration-masters.html#export">Export with calibration frames</a></li>
+      <li id="settings"><a href="calibration-masters.html#settings">Settings › Calibration</a></li>
+      <li id="rig-settings"><a href="calibration-masters.html#rig-settings">Settings for one rig</a></li>
+    </ul>
+  </noscript>
+  <script src="../js/calibration-links.js" defer></script>
 </main>
 </div>
 

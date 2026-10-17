@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html" class="active" aria-current="page">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -158,7 +161,7 @@ function gtag_report_demo() {
   <div class="callout info"><strong>New after 0.11.</strong> Exports match
   calibration by <strong>Settings &rarr; Calibration</strong>, place flats by
   flat group, and can leave out lights that can't be calibrated, saying how
-  many and why. WBPP runner scripts list the settings in force and warn about
+  many and why. WBPP runner scripts list the current settings and warn about
   frames an earlier export left in the folder.</div>
 
   <h2 id="modes">Where to export</h2>
@@ -186,13 +189,13 @@ function gtag_report_demo() {
   anything out of the source library.</p>
   <div class="callout info">
     Each light brings the raw bias, dark, dark-flat and flat frames a stack
-    would build its masters from, matched by the settings in force for its
+    would build its masters from, matched by the current settings for its
     rig under <strong>Settings &rarr; Calibration</strong>. By default darks
     and bias come from the nearest complete set when one matches, as
     <strong>Dark choice</strong> sets, and a rig set to do without darks gets
     none. Flats come from the light's own side of each measured change, as
     its flat group sets. Frames the library keeps out, graded poor or kept out
-    by hand, stay out. See <a href="calibration.html#export">Calibration
+    by hand, stay out. See <a href="calibration-masters.html#export">Calibration
     Libraries</a>.
   </div>
 
@@ -306,7 +309,7 @@ function gtag_report_demo() {
   dated by the night calibration gives the flats, split at local noon where
   they were shot, so dusk and dawn flats share one date.</p>
   <p>In either layout, flats follow the rig's
-  <a href="calibration.html#flat-groups">flat groups</a>, as a stack's do: a light
+  <a href="calibration-flats.html#flat-groups">flat groups</a>, as a stack's do: a light
   takes flats from its own side of each measured change. Lights of one night
   that take different flats get a folder each,
   <code>SESSION_&lt;night&gt;-&lt;digest&gt;</code>. A light a stack would
@@ -362,7 +365,7 @@ function gtag_report_demo() {
   <p>The runner scripts carry notes on how the calibration frames were
   chosen:</p>
   <ul>
-    <li>the matching settings in force that differ from the defaults, with
+    <li>the current matching settings that differ from the defaults, with
       who set them, such as <code>Use darks: off (for Askar 120 · ZWO ASI2600MM
       Pro)</code>, or that the defaults chose them;</li>
     <li>the rigs that export no darks;</li>
@@ -591,7 +594,7 @@ curl "http://localhost:3000/api/db/my-db/astrobin-export.csv?target_id=42&amp;de
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="calibration.html">&larr; Calibration Libraries</a>
+    <a href="calibration-masters.html">&larr; Calibration Masters &amp; Settings</a>
     <a href="planning.html">Planning &rarr;</a>
   </nav>
 </main>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Exposures &amp; Activation — PSF Guard</title>
-  <meta name="description" content="Set goals per filter, bind rigs to templates, and activate a plan into each rig's Target Scheduler database: what the plan runs, what it turns off, and whether the rigs hold it.">
+  <meta name="description" content="Set goals per filter, bind rigs to templates, and activate a plan into each rig's Target Scheduler database: which exposure plans will run, which will stop, and whether each rig is up to date.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -152,8 +155,8 @@ function gtag_report_demo() {
 
   <div class="callout info">
     <strong>New after 0.11.</strong> The plan decides which Target Scheduler
-    exposure plans run, and the activation dialog previews by itself, starting
-    with what Target Scheduler will shoot. A plan reads <strong>Activated</strong>
+    exposure plans run, and the activation dialog opens with a preview of what Target
+    Scheduler will shoot. The plan status reads <strong>Activated</strong>
     or <strong>Needs activating</strong>.
   </div>
 
@@ -162,7 +165,7 @@ function gtag_report_demo() {
   one bandpass and purpose (<strong>Faint detail</strong> or <strong>Unsaturated
   stars</strong>) with a goal in accepted hours or accepted frames. For each rig
   in the plan, it shows the template, exposure length and frames that meet the
-  goal, and how far the rig has got.</p>
+  goal, and the rig's progress.</p>
   <!-- RESHOOT: plan-objectives.png | Planning workspace for Heart Mosaic (rig askar107phq), Exposures tab, nothing unsaved and no bar up: crop to the plan summary (green Activated pill and Activate… button) and the Objectives box below it, with each objective's Bandpass, Purpose and Goal, down to Add objective. -->
   <figure>
     <img src="../assets/plan-objectives.png" alt="Exposures tab: objectives per band with purpose and goal in frames per rig" loading="lazy">
@@ -258,7 +261,7 @@ function gtag_report_demo() {
   project, its templates and frames, what activation does there, and its Target
   Scheduler settings and targets once the database has the project. Rigs outside
   the plan fold away.</p>
-  <p>Each block's heading says whether the rig's rows hold the plan:
+  <p>Each block's heading shows whether the rig matches the saved plan:
   <em>activated</em>; <em>behind</em> with why, such as <em>behind · not activated
   yet</em>, <em>behind · differs from the plan</em> or <em>behind · activation
   turns off 1 plan</em>; or <em>couldn't check</em>, with the reason in its
@@ -277,7 +280,8 @@ function gtag_report_demo() {
   <!-- RESHOOT: plan-rigs.png | Planning workspace for Heart Mosaic, Rigs tab: crop to the askar107phq block, with its heading reading 'project "Heart Mosaic" activated' (not the old "not activated"), Drop from plan and Target Scheduler settings, the Project box (name, state, priority) and the first target's coordinates. -->
   <figure>
     <img src="../assets/plan-rigs.png" alt="Rigs tab: a rig's block with Drop from plan, Target Scheduler settings, project state and priority, and the first target's coordinates" loading="lazy">
-    <figcaption>One block per rig: its project, whether its rows hold the plan, its Target Scheduler settings and its targets.</figcaption>
+    <figcaption>One block per rig: its project, whether it matches the saved plan, its
+    Target Scheduler settings and its targets.</figcaption>
   </figure>
 
   <h2 id="activate">Activate</h2>
@@ -290,21 +294,21 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Label</th><th>Meaning</th></tr>
-      <tr><td><strong>Activated</strong></td><td>Every rig that shoots the plan holds exactly what activation would write.</td></tr>
-      <tr><td><strong>Needs activating</strong></td><td>Activation would change a rig's Target Scheduler rows: the saved plan or framing is not activated yet, a rig joined, rows changed in N.I.N.A., an old plan another exposure length replaced is still on, or a remote site lacks the last activation. The tooltip says why.</td></tr>
+      <tr><td><strong>Activated</strong></td><td>Every rig assigned to the plan matches what activation would write.</td></tr>
+      <tr><td><strong>Needs activating</strong></td><td>Activation would change a rig's Target Scheduler rows: the saved plan or framing is not activated yet, a rig joined, rows changed in N.I.N.A., an exposure plan with the old exposure length is still on, or a remote site lacks the last activation. The tooltip says why.</td></tr>
       <tr><td><strong>Checking the rigs…</strong></td><td>The check is running, and the last activation cannot answer for the saved plan.</td></tr>
-      <tr><td><strong>Couldn't check the rigs</strong></td><td>The check failed, or could not read a rig's database (<em>Couldn't check ultracat131</em>). The tooltip says why; no bar asks.</td></tr>
-      <tr><td><strong>Can't activate yet</strong></td><td>The plan lacks something activation needs, such as a saved framing. What to do sits beside the label instead of <strong>Activate…</strong>.</td></tr>
+      <tr><td><strong>Couldn't check the rigs</strong></td><td>The check failed, or could not read a rig's database (<em>Couldn't check ultracat131</em>). The tooltip explains why. No activation prompt appears.</td></tr>
+      <tr><td><strong>Can't activate yet</strong></td><td>The plan lacks something activation needs, such as a saved framing. Instructions appear beside the label in place of <strong>Activate…</strong>.</td></tr>
       <tr><td><strong>Drafts only</strong></td><td>This server does not write rig databases.</td></tr>
     </table>
   </div>
   <p><strong>Activate…</strong>, a separate button beside the label, opens the
-  activation dialog at any time. Once every edit is saved, a bar at the top of
-  the page asks while the plan needs activating and says why, such as
+  activation dialog at any time. Once every edit is saved, a banner at the top of the page
+  explains why activation is needed, such as
   "Needs activating: ultracat131 differs from the plan" or "Needs activating:
   turns off 1 plan in ultracat131". Its button reads <strong>Activate…</strong>,
-  or <strong>Activate again…</strong> once the plan has been activated. While
-  the bar is up, the summary leaves the label to it.</p>
+  or <strong>Activate again…</strong> once the plan has been activated. While the banner
+  is visible, the summary hides its status label.</p>
   <p>The label comes from a check that runs the same activation on an in-memory
   copy of each rig's planning tables. It writes nothing and never locks
   N.I.N.A.'s database. A rig whose rows would all read
@@ -312,7 +316,7 @@ function gtag_report_demo() {
   recorded.</p>
 
   <h3 id="dialog">The activation dialog</h3>
-  <p><strong>Activate on the rigs</strong> previews by itself when it opens, and
+  <p><strong>Activate on the rigs</strong> loads a preview when it opens, and
   again whenever the saved plan, the framing or the collaboration work chosen in
   it changes. There is no Preview button. A status line says
   <strong>Previewing…</strong>, <strong>Preview ready</strong> or
@@ -324,10 +328,10 @@ function gtag_report_demo() {
   when the result matches the preview. When something changed in between,
   nothing is written: the dialog says what, such as "Changed since the preview:
   the saved plan (revision 3 → 4) and ultracat131's rows", and previews again.
-  <strong>Activate</strong> stays off until that preview lands, and a line
-  beside it says why it waits.</p>
-  <p>The preview reads the saved plan, and the dialog never saves edits
-  unasked. With edits unsaved, it names the sections and offers <strong>Save and
+  <strong>Activate</strong> stays disabled until the new preview is ready, with the reason
+  shown beside it.</p>
+  <p>The preview reads the saved plan, and the dialog asks before saving edits. With edits
+  unsaved, it names the sections and offers <strong>Save and
   activate…</strong>, which saves them; the preview follows, and
   <strong>Activate</strong> waits for it.</p>
   <!-- SHOT: activation-save-first.png | Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving. | Unsaved edits come first: Save and activate… saves them, and the preview follows. -->
@@ -337,7 +341,8 @@ function gtag_report_demo() {
   <!-- RESHOOT: activation-preview.png | Activate on the rigs dialog for Heart Mosaic (rig askar107phq), opened from the summary's Activate… button, preview landed (status line "Preview ready"): crop to the top of the dialog, showing "Last activated … · 1 rig", the "Preview: framing revision …, plan revision …, 4 panels." line, the askar107phq counts line, the "After activation, Target Scheduler shoots" list, and the What changes in askar107phq heading. Do not press Activate. -->
   <figure>
     <img src="../assets/activation-preview.png" alt="Activate on the rigs preview: per rig, the project, four targets taken over and exposure plans unchanged, each with its frame counts" loading="lazy">
-    <figcaption>The dialog previews by itself; <strong>Activate</strong> writes only what it shows.</figcaption>
+    <figcaption>The dialog loads the preview automatically; <strong>Activate</strong>
+    writes only what it shows.</figcaption>
   </figure>
 
   <h3 id="preview">Read the preview</h3>
@@ -349,9 +354,9 @@ function gtag_report_demo() {
       that will run, with its target, exposure length, template and its filter,
       gain and offset, frames asked for and taken, and the objectives a shared
       plan is summed from.</li>
-    <li><strong>Turns off</strong>: each plan activation turns off, with its
-      frames and why, such as "not in the plan" or "replaced by Ha · 300 s".
-      This block is never folded and is drawn in the warning color: to keep a
+    <li><strong>Turns off</strong>: each plan activation turns off, with its frame counts
+    and the reason, such as "not in the plan" or "replaced by Ha · 300 s".
+      This block stays expanded and uses the warning color: to keep a
       plan, take Target Scheduler's values or add it to the plan.</li>
     <li><strong>Turns on</strong>: plans that were off and come back.</li>
     <li><strong>What changes in</strong> the rig: every other row, labeled.</li>
@@ -385,7 +390,7 @@ function gtag_report_demo() {
   <p>The plan decides which Target Scheduler exposure plans run in each rig's
   project:</p>
   <ul>
-    <li><strong>Every exposure plan the plan has runs.</strong> Activation writes
+    <li><strong>Every exposure plan included in the saved plan runs.</strong> Activation writes
       it and switches it on, and one that was off comes back on. A plan already
       in Target Scheduler on the same target, with the same template settings
       and exposure length, is taken over in place, frames kept.</li>

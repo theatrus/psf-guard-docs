@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -236,7 +239,7 @@ function gtag_report_demo() {
   plan with no database yet starts its framing from a name or typed
   coordinates.</p>
   <p>The workspace has a summary at the top (target, goals, each rig's setup,
-  and whether the rigs hold the plan) and four tabs:</p>
+  and whether each rig matches the saved plan) and four tabs:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Tab</th><th>What it holds</th></tr>
@@ -268,23 +271,23 @@ function gtag_report_demo() {
 
   <h2 id="activate">Activate</h2>
   <p>Activation writes the saved plan into each rig's Target Scheduler
-  database, and decides which of the project's exposure plans run there. The
-  summary ends with where the plan stands:</p>
+  database, and decides which of the project's exposure plans run there. The summary shows
+  the activation status:</p>
   <ul>
-    <li><strong>Activated</strong>: the rigs hold the saved plan.</li>
+    <li><strong>Activated</strong>: each rig matches the saved plan.</li>
     <li><strong>Needs activating</strong>: activation would change a rig's
       Target Scheduler rows. The tooltip says why.</li>
     <li><strong>Couldn't check the rigs</strong>, or <strong>Couldn't
-      check</strong> and a rig's name: a rig database could not be read. The
-      tooltip says why, and no bar asks.</li>
+      check</strong> and a rig's name: a rig database could not be read. The tooltip
+      explains why. No activation prompt appears.</li>
     <li><strong>Can't activate yet</strong>: what to do first, such as saving
       a framing.</li>
     <li><strong>Drafts only</strong>: this server does not write rig
       databases.</li>
   </ul>
   <p><strong>Activate…</strong>, a separate button beside the label, opens the
-  activation dialog at any time. Once every edit is saved, a bar at the top
-  asks while the plan needs activating and says why; its button reads
+  activation dialog at any time. Once every edit is saved, a banner at the top explains
+  why activation is needed; its button reads
   <strong>Activate again…</strong> after the first activation. See
   <a href="activation.html#status">Activation</a>.</p>
   <!-- SHOT: plan-summary-activated.png | Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills. | The rigs hold the saved plan. Activate… opens the dialog at any time. -->

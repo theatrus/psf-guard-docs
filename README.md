@@ -14,6 +14,10 @@ index.html          Splash / landing page
 docs/               Documentation pages (shared sidebar nav)
 docs/importing.html  FITS/XISF import, automatic import, quality backfill, and sync
 docs/stacking.html   Stacks view, stacking method, automatic refresh
+docs/calibration.html  Library, frame browser, nights and catalog maintenance
+docs/calibration-grading.html  Frame grades and light coverage
+docs/calibration-flats.html  Dust measurements and flat groups
+docs/calibration-masters.html  Matching, masters and calibration settings
 docs/wbpp.html       PixInsight WBPP runs from the server
 docs/planning.html   Plans and the plan workspace; framing, activation, rigs and
                      collaboration have pages of their own

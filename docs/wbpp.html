@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html" class="active" aria-current="page">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -182,8 +185,8 @@ function gtag_report_demo() {
   </ul>
   <p>The panel says what it found, which WBPP version, and whether the server
   has a display. PixInsight's licence must already be activated for the
-  account the server runs as; activation needs the real GUI once. Settings
-  asks before it closes over PixInsight settings you have not saved.</p>
+  account the server runs as; activation needs the real GUI once. Settings asks before
+  closing if you have unsaved PixInsight changes.</p>
 
   <!-- RESHOOT: settings-pixinsight.png | Settings › Setups in the new card layout on a server with PixInsight installed (psf-guard.atpn.co): the PixInsight card with the found install and WBPP version, whether runs go through xvfb-run, the Executable field and the WBPP runs folder with its free space; crop to that card -->
   <figure>
@@ -231,7 +234,7 @@ function gtag_report_demo() {
 
   <h2 id="settings">WBPP settings</h2>
   <p>A headless run starts from WBPP's own defaults, not from what its dialog
-  last saved, so these settings are the whole story. Drizzle and Fast
+  last saved. Set the run's options here. Drizzle and Fast
   Integration have no WBPP command-line parameter; the runner script sets them
   on every light group itself. <strong>Settings &rarr; Setups &rarr;
   Export</strong> holds the defaults that runs and WBPP exports start
@@ -250,19 +253,19 @@ function gtag_report_demo() {
   <h2 id="darks">Calibration frames per light</h2>
   <p>A run gets the calibration frames a PSF Guard stack would build its
   masters from: per light, one coherent set of each kind, not every frame the
-  library matched. Matching follows the settings in force for each light's
-  rig under <strong>Settings &rarr; Calibration</strong>:</p>
+  library matched. Matching uses the settings for each light's rig under <strong>Settings
+  &rarr; Calibration</strong>:</p>
   <ul>
     <li>The flat rotation, focal length and session limits decide which flats
       share a light's session.</li>
     <li>The dark settings decide its darks and bias. By default
       <strong>Dark choice</strong> takes a complete set over a nearer, smaller
-      one; see <a href="calibration.html#darks">Dark masters</a>. A rig set to
+      one; see <a href="calibration-masters.html#darks">Dark masters</a>. A rig set to
       do without darks gets none.</li>
     <li>Masters from other software go only when their setting uses them.</li>
     <li>Frames the library keeps out stay out, and the dialog counts them:
       frames graded poor, such as
-      <a href="calibration.html#stray-light">darks that caught stray
+      <a href="calibration-grading.html#stray-light">darks that caught stray
       light</a>, and frames kept out by hand.</li>
   </ul>
   <p>With <strong>Leave out lights that can't be calibrated</strong> on, under
@@ -277,7 +280,7 @@ function gtag_report_demo() {
   <p>Each light carries a <code>SESSION</code> keyword for its night, so
   each night's lights calibrate with that night's flats, and the nights
   integrate together afterwards. The flats follow the rig's
-  <a href="calibration.html#flat-groups">flat groups</a>: a light gets flats from
+  <a href="calibration-flats.html#flat-groups">flat groups</a>: a light gets flats from
   its own side of each measured change, as a stack would.</p>
   <ul>
     <li>Lights of one night that take different flats get a session each,
@@ -336,7 +339,7 @@ function gtag_report_demo() {
   one ends, with the settings it was queued with.</p>
   <p>The Library lists queued runs with their place; <strong>×</strong> or
   <strong>Remove from queue</strong> in the dialog takes one out. The header's
-  background jobs list the running run and the whole line on every database,
+  background jobs list the running job and queued jobs across all databases,
   under <strong>Started by you</strong>, a queued run with its place, such as
   <code>queued · 2 · 1 ahead</code>. <strong>↑</strong> and <strong>↓</strong>
   change the order, <strong>×</strong> takes a run out, and
@@ -372,7 +375,7 @@ function gtag_report_demo() {
     <li>An RGB master, such as one from a color camera, previews in color with
       a stretch per channel.</li>
   </ul>
-  <p>When taking the masters in fails, the section says why and offers
+  <p>If importing the masters fails, the section says why and offers
   <strong>Take in the last run</strong> to try again. It reads only that run's
   folder and needs an editor.</p>
 

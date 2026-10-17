@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -159,14 +162,14 @@ function gtag_report_demo() {
   <h2 id="settings">Settings tabs</h2>
   <div class="callout info"><strong>New after 0.11.</strong> The
   <strong>Server</strong> and <strong>Backups</strong> tabs, and a prompt
-  before Settings closes over unsaved edits.</div>
+  before closing Settings with unsaved edits.</div>
   <p>Open <strong>Settings</strong> from the menu at the right of the header,
   beside <strong>Keyboard shortcuts</strong>, <strong>Server
   information</strong> and, on a server with accounts, <strong>Sign
-  out</strong>. Only editors have it.</p>
+  out</strong>. Only editors can open Settings.</p>
   <!-- SHOT: header-menu.png | psf-guard.atpn.co signed in as an editor, any view (Library is fine): the menu button at the far right of the header clicked open, showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out; crop to the right end of the header and the open menu | Settings, keyboard shortcuts, server information and Sign out share the menu at the right of the header. -->
-  <p>Every tab has the same layout: each panel sits in a card of one width,
-  related fields share a named box, and each control sits beside its label.
+  <p>Every tab has the same layout: cards share a consistent width, related fields appear
+  in named groups, and controls sit beside their labels.
   Settings opens on <strong>Databases</strong>. A tab shows only when it
   applies:</p>
   <div class="table-wrap">
@@ -177,7 +180,7 @@ function gtag_report_demo() {
       <tr><td><strong>Catalogs</strong></td><td>Seiza data packages</td><td><a href="astrometry.html#install">Sky Context &amp; Solver</a></td></tr>
       <tr><td><strong>Sync</strong></td><td>Data Transfer, staged previews, Remote PSF Guard. Shows once a catalog exists.</td><td><a href="workflows.html#sync">Rejects &amp; Sync</a></td></tr>
       <tr><td><strong>Setups</strong></td><td>Processing setups, export defaults, PixInsight, AstroBin filter IDs. The PixInsight program and runs folder need database management.</td><td><a href="exporting.html">Export</a>, <a href="wbpp.html#setup">WBPP</a></td></tr>
-      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, flat groups, light checks, frame grades, which lights stacks and exports keep, and settings for one rig</td><td><a href="calibration.html#matching">Calibration</a></td></tr>
+      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, flat groups, light checks, frame grades, which lights stacks and exports keep, and settings for one rig</td><td><a href="calibration-masters.html#matching">Calibration</a></td></tr>
       <tr><td><strong>Stacking</strong></td><td>Stacking method and automatic previews</td><td><a href="stacking.html#method">Stacks</a></td></tr>
       <tr><td><strong>Storage</strong></td><td>Folders and disk limits. Changes need database management.</td><td><a href="storage.html">Storage</a></td></tr>
       <tr><td><strong>Backups</strong></td><td><strong>Back up now</strong> and scheduled backups. Needs database management.</td><td><a href="backups.html">Backups</a></td></tr>
@@ -190,8 +193,8 @@ function gtag_report_demo() {
   </div>
 
   <h3 id="unsaved">Unsaved edits</h3>
-  <p>Settings asks before <strong>Done</strong>, <strong>×</strong> or a click
-  outside closes it over edits a form has not saved: a rig's setup, a site,
+  <p>Settings asks before discarding unsaved edits when you click <strong>Done</strong>,
+  <strong>×</strong> or outside the dialog. It checks changes to a rig's setup, a site,
   calibration, scoring defaults, storage folders, PixInsight, the desktop
   server port or the backup schedule. It names the forms and offers
   <strong>Keep editing</strong> or <strong>Close without saving</strong>. The

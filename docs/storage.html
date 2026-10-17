@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -151,9 +154,10 @@ function gtag_report_demo() {
   settings and catalogs, see <a href="backups.html">Backups</a>.</p>
 
   <div class="callout info"><strong>New after 0.11.</strong> The background
-  jobs list splits your work from automatic work and counts queued, waiting and
-  needs-you jobs. A server stop lets running work reach a safe point and no
-  longer hangs until the service manager kills it.</div>
+  jobs list splits your work from automatic work and counts queued jobs, waiting jobs and
+  jobs that need your attention. When the server stops, running work reaches a safe point
+  before exit.
+  Shutdown no longer hangs until the service manager kills the server.</div>
 
   <h2 id="folders">Choose where files go</h2>
   <p>Each database keeps the files PSF Guard generates in three folders, with a
@@ -186,8 +190,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <strong>Save folders</strong>. Leave Stacks or Calibration masters empty to
   use the cache. A folder the server's config file fixes reads <em>Set by the
   server config file</em> and cannot change here. Choosing folders needs
-  database management. Settings asks before it closes over folders you have
-  not saved.</p>
+  database management. Settings asks before closing if you have unsaved folder changes.</p>
   <!-- RESHOOT: settings-storage-folders.png | Settings › Storage in the new card layout, desktop app or a server allowing database management: the Folders card with Cache, Stacks and Calibration masters fields (Stacks and Calibration masters empty, showing they use the cache) and Save folders; crop to the Folders card -->
   <figure>
     <img src="../assets/settings-storage-folders.png" alt="Settings › Storage › Folders: Cache, Stacks and Calibration masters" loading="lazy">
@@ -337,14 +340,14 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   read and set the shares; <code>null</code> means the default.</p>
 
   <h2 id="jobs">Background jobs in the header</h2>
-  <p>The header shows background work as one small chip: a progress ring, the
-  overall percent, and an icon with a count for each state that has any
-  jobs: running (a play mark), queued (a numbered list), waiting (an
+  <p>The header shows background work as one small chip: a progress ring, the overall
+  progress percentage, and an icon with a count for each state with jobs: running (a play
+  mark), queued (a numbered list), waiting (an
   hourglass) and needs you (a warning triangle). Hover a count to read its
-  name. On a phone the chip leaves out the running count, since the percent
-  stands for it. Hover, focus or click the chip to open the list.</p>
+  name. On a phone the chip leaves out the running count, since the progress percentage
+  already shows running work. Hover, focus or click the chip to open the list.</p>
   <!-- SHOT: header-jobs-chip.png | The header's right end on a desktop browser with the background jobs chip closed while work runs: progress ring, percent, and the running, queued and waiting counts each with its icon (one build running, two queued, one automatic refresh waiting), with the tooltip of the hourglass count ("1 waiting") showing; crop tightly around the chip and its tooltip | The chip counts running, queued, waiting and needs-you jobs, one icon each. -->
-  <p>The list holds every job on every database under two headings, each with
+  <p>The list shows jobs across all databases under two headings, each with
   its own counts:</p>
   <div class="table-wrap">
     <table>
@@ -353,7 +356,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       <tr><td><strong>Automatic</strong></td><td>Quality backfill and the analysis of new frames, automatic scans, <strong>Measuring flats</strong>, <strong>Reading frame sites</strong>, catalog refreshes on expiry or at start, automatic stack refreshes and re-applies of processing, scheduled backups, and transfers a connection's policy queued</td></tr>
     </table>
   </div>
-  <p>Under each heading, rows that need you come first, then running work,
+  <p>Under each heading, jobs that need your attention come first, then running work,
   then queued work, then waiting work.</p>
   <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
   <figure>
@@ -373,11 +376,11 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       order you asked, decides what runs next.</li>
     <li><strong>Waiting.</strong> Automatic work steps aside whenever yours
       runs. A database quality analysis, an automatic stack refresh or a
-      re-apply of processing that steps aside says what it waits for and keeps
-      a still bar at how far it had got. Waiting is normal, so these rows are
+      re-apply of processing that steps aside says what it waits for and keeps its
+      progress bar at the point where it paused. Waiting is normal, so these rows are
       drawn muted.</li>
-    <li><strong>Needs you.</strong> Only a row that needs a person takes the
-      warning colour, such as a collaboration transfer held for review, before
+    <li><strong>Needs you.</strong> Only jobs that need your attention use the warning
+    color, such as a collaboration transfer held for review, before
       upload or after it failed. A transfer row carries its own Pause, Resume,
       Retry and Cancel; see <a href="collaboration.html">Collaboration</a>.</li>
     <li><strong>Stop</strong> ends running work after asking once:
@@ -390,8 +393,8 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       <strong>Resume now</strong>. A color composition
       already running has no Stop and finishes within minutes; a stretch or
       deconvolution finishes in moments.</li>
-    <li>A row adds what waits behind the step under way when the server knows
-      it, such as <code>1 more rig to check · 2 rigs queued</code> on
+    <li>When the server knows what work remains, the row shows it, such as <code>1 more
+    rig to check · 2 rigs queued</code> on
       <strong>Measuring flats</strong>, <code>another pass queued</code> on
       <strong>Reading frame sites</strong>, or <code>3 channels to
       stack</code> on a waiting stack refresh.</li>
@@ -449,7 +452,7 @@ curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre
       processing run resumes after the last tool step that finished.</li>
     <li>Imports and calibration grading stop at a commit.</li>
   </ul>
-  <p>Every five seconds the log says what the stop still waits for.</p>
+  <p>Every five seconds the log lists the work still blocking shutdown.</p>
   <p>In the desktop app, <strong>Restart server</strong> under
   <strong>Settings &rarr; Server</strong> waits for the old server to finish
   its work, so the job queue it saves is not lost. If that work still runs

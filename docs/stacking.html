@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html" class="active" aria-current="page">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -202,7 +205,7 @@ function gtag_report_demo() {
       <strong>Leave out lights that can't be calibrated</strong> is on under
       <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>. The
       card counts them under <strong>can't calibrate</strong>. See
-      <a href="calibration.html#uncalibrated">Calibration Libraries</a>.</li>
+      <a href="calibration-grading.html#uncalibrated">Calibration Libraries</a>.</li>
   </ul>
   <p>Sequence analysis scores frames with your defaults from
   <strong>Settings &rarr; Review &rarr; Sequence scoring</strong>. When
@@ -353,15 +356,15 @@ function gtag_report_demo() {
   <strong>Rigs</strong>, for one. With <strong>Leave out lights that can't be
   calibrated</strong> on, under <strong>Stacks and exports</strong>, a build
   leaves out the lights a check flags for a missing flat, bias or dark, or
-  flats past the age limit. See <a href="calibration.html#darks">Dark
-  masters</a> and <a href="calibration.html#uncalibrated">Lights that can't be
+  flats past the age limit. See <a href="calibration-masters.html#darks">Dark
+  masters</a> and <a href="calibration-grading.html#uncalibrated">Lights that can't be
   calibrated</a>.</p>
   <p>Flats follow the rig's flat groups: each light takes flats from its own
   side of every measured change in the rig's flats, as the
   <strong>Calibration</strong> page's <strong>Frames</strong> view shows them,
   and nights whose flats differ stay out of one master. A light's
   <strong>Calibration</strong> panel in the image detail says how its flats
-  were chosen. See <a href="calibration.html#flat-groups">Flat groups</a>.</p>
+  were chosen. See <a href="calibration-flats.html#flat-groups">Flat groups</a>.</p>
   <p>A multi-night stack whose lights need different flats or darks splits into
   calibration sessions, and the build swaps masters between them. A master
   that fails to build does not fail the stack: the card shows the skipped
@@ -390,7 +393,7 @@ function gtag_report_demo() {
   show <code>queued</code> or live progress.</p>
   <p><strong>Stop</strong> appears while a build is queued or running, and
   reads <strong>Stop all</strong> with a count when more than one is waiting.
-  A stop lands between frames, channels, or the frames of a master. Nothing
+  The build stops between frames, channels, or master input frames. Nothing
   partial is published: a channel stopped before its FITS is written leaves no
   stack, and channels already finished keep theirs.</p>
   <p>A build belongs to the server, not to the page that started it. Leave the
@@ -459,7 +462,7 @@ function gtag_report_demo() {
   <strong>Automatic</strong> as <strong>Refreshing stacks</strong>, waiting,
   with what it waits for and how many channels it will stack.</p>
   <p>A build you start stops a running automatic build. Its refresh then
-  waits, with how far the build had got, and starts again once your work has
+  waits, with the progress the build had made, and starts again once your work has
   been quiet for 30 seconds: from where it stopped when no frame or grade
   changed meanwhile, else restacking what changed. Its row then turns into
   the running build; it is never listed twice. An automatic build you stop
@@ -551,7 +554,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 
   <h2 id="orientation">Keep channels the same way up</h2>
   <p>A German equatorial mount turns the field 180° at a meridian flip.
-  Registration lands both halves on one grid, but the reference frame sets
+  Registration aligns both halves on one grid, but the reference frame sets
   which way up the stack comes out, and two channels can disagree. PSF Guard
   turns a finished stack by a half turn when its reference faces the wrong
   way. The turn reverses the pixel order: no resampling, and the camera angle
@@ -682,11 +685,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <h2 id="processing-runs">Processing runs</h2>
   <p>Every <strong>Apply processing</strong>, whether a stretch, deconvolution
   or RC-Astro tools, runs on the server as a processing run, apart from the
-  page that asked for it. A plain stretch usually answers at once. A run needs
+  page that asked for it. A plain stretch usually finishes at once. A run needs
   the same stack worker as builds and color compositions, so it joins their
   line at the back. While it waits, the button says what holds the worker and
   how many runs are ahead, such as <code>Waiting for the stack build of M44 ·
-  Ha to finish</code>. Once it runs, the button shows how far it has got and
+  Ha to finish</code>. Once it runs, the button shows its progress and
   the step under way: <code>Applying… 42% · BlurXTerminator</code>.</p>
   <!-- SHOT: stack-processing-waiting.png | Stacks view, Teddy Bear Nebula QMark (rig starfront-redcat61): start a build of the OIII channel, then on the H-alpha card open View processing, turn on RC-Astro BlurXTerminator and press Apply processing; crop the H-alpha card's View processing panel so its button reads "Waiting for the stack build of … · OIII to finish", with the header's background jobs list open beside it showing the BlurXTerminator row queued behind the build | A processing run waits in the build line and says what it waits for. -->
   <p>The header's background jobs list each run beside the builds: what it
@@ -703,7 +706,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>Processing runs survive a restart. A server stop kills a running RC-Astro
   tool rather than wait minutes for it. After the restart the run comes back
   in its place in the line and resumes after the last tool step that
-  finished, and a page left open picks it up again. A run cut off by two
+  finished, and an open page resumes showing its progress. A run cut off by two
   restarts in a row, clean stops included, is not started a third time.</p>
 
   <h3 id="reapply">Re-apply processing when a stack refreshes</h3>
@@ -719,11 +722,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       first. Meanwhile the header lists it under <strong>Automatic</strong> as
       <strong>Re-applying processing</strong>, waiting, with what it waits
       for.</li>
-    <li>Until it lands, the card shows the previous stack's result, marked
+    <li>Until processing finishes, the card shows the previous stack's result, marked
       <code>From the previous stack · reprocessing</code> with the run's
       status. The new result then becomes the card's processing.</li>
-    <li>Only the newest stack is processed. A newer stack drops a re-apply that
-      waits or runs.</li>
+    <li>Only the newest stack is processed. A newer stack cancels any queued or running
+    re-apply for the older stack.</li>
     <li>A re-apply that fails keeps the previous result, says
       <code>reprocessing failed</code> with the reason, and is not tried again
       on its own.</li>

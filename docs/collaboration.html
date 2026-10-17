@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -260,8 +263,8 @@ function gtag_report_demo() {
 
   <h2 id="files">Upload contribution files</h2>
   <div class="callout info">
-    <strong>New after 0.11.</strong> <strong>Contribution files</strong> sends the
-    image files behind a contribution: raw accepted lights with their
+    <strong>New after 0.11.</strong> <strong>Contribution files</strong> sends the image
+    files for a contribution: raw accepted lights with their
     calibration, or a stack. <strong>Transfers</strong> in the header's
     background jobs shows each upload.
   </div>
@@ -272,8 +275,8 @@ function gtag_report_demo() {
       the remote panel and the accepted images, as for a report.</li>
     <li>Under <strong>Files to send</strong>, keep <strong>Raw lights and matched
       calibration</strong>, or pick an existing PSF Guard or WBPP stack of those
-      lights. WBPP does not record exactly which frames a stack took, so a WBPP
-      stack asks you to confirm it holds the selected images.</li>
+      lights. WBPP does not record which source frames a stack used, so PSF Guard asks you
+      to confirm that the stack contains the selected images.</li>
     <li>Choose <strong>Upload pending</strong>.</li>
   </ol>
   <p>Matching, checks and checksums run in the background, and a normal upload
@@ -291,8 +294,8 @@ function gtag_report_demo() {
   <p><strong>Upload accepted collaboration files automatically</strong> is a
   separate opt-in, off by default. It works on the rig's database, and
   <strong>Automatic files</strong> picks <strong>Raw lights and matched
-  calibration</strong> or <strong>PSF Guard stacks</strong>; WBPP stacks go by
-  hand only. Raw delivery queues new exposures and lights whose files changed,
+  calibration</strong> or <strong>PSF Guard stacks</strong>; WBPP stacks require a manual
+  upload. Raw delivery queues new exposures and lights whose files changed,
   without hashing old frames on every pass. A change to a light or its
   calibration holds the package for review, as does missing calibration where
   the export settings let such lights through. Starfront must collect files for
@@ -305,19 +308,19 @@ function gtag_report_demo() {
   state (<em>Checking files</em>, <em>Pending</em>, <em>Uploading</em>,
   <em>Paused</em>, <em>Retry scheduled</em>, <em>Review required</em>, <em>Needs
   attention</em>), its files and bytes so far, and buttons to pause, resume,
-  review and retry, or cancel it. A transfer to review counts as needing you.
+  review and retry, or cancel it. A transfer awaiting review counts as needing your attention.
   An outage does not block check-ins or acquisition.</p>
   <!-- SHOT: header-transfers.png | Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic. | A transfer in the header's background jobs, with its own controls. -->
   <p>Receipts record each file sent, per server, project, remote owner, file
   kind and SHA-256 of its content. They survive a restart. A file already sent
   to that destination is not sent again for another job, so shared calibration
-  frames go once; a new destination or changed bytes send it again. A file cut
+  frames go once; PSF Guard sends it again if the destination or file contents change. A file cut
   off mid-upload starts again from its beginning, without leaving a duplicate on
   the server.</p>
   <p>Starfront receives the files, not which calibration frame serves which
   light. PSF Guard keeps that list and warns about it in review; the project's
   coordinator must keep the files together. Original image files never change.
-  The file being sent is copied into the catalog's cache while it goes.</p>
+  PSF Guard caches a copy of the file during upload.</p>
 
   <h2 id="activity">Share current activity</h2>
   <p><strong>Share current activity</strong>, on <strong>Capture</strong>, is off by

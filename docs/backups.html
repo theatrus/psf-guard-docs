@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -145,10 +148,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Backups</h1>
   <p class="lede">
-    Back up PSF Guard's settings and every catalog it works on into one zip
-    archive: now, on a schedule from Settings, or from the command line for
-    your own scripts. Catalogs are copied safely while N.I.N.A. keeps
-    writing to them.
+    Back up PSF Guard's settings and catalogs in one zip archive. Start a backup in
+    Settings, set a schedule, or run it from the command line. PSF Guard copies catalogs
+    safely while N.I.N.A. keeps writing to them.
   </p>
 
   <div class="callout info">
@@ -157,7 +159,7 @@ function gtag_report_demo() {
     <a href="#restore">Restore by hand</a>.
   </div>
 
-  <h2 id="contents">What a backup holds</h2>
+  <h2 id="contents">What a backup contains</h2>
   <p>One archive, named <code>psf-guard-backup-&lt;UTC time&gt;-&lt;scope&gt;.zip</code>,
   such as <code>psf-guard-backup-2026-10-16T120000Z-full.zip</code>. Archives
   made by the schedule end in <code>-auto</code>. Inside:</p>
@@ -191,24 +193,23 @@ function gtag_report_demo() {
   <code>/var/lib/psf-guard/</code> for the Fedora RPM's service.</p>
 
   <h3 id="catalog-copy">How catalogs are copied</h3>
-  <p>Catalogs are copied with SQLite's online backup, never by copying the
-  file. The source opens read only, and the copy runs a few pages at a time
-  with a short pause between steps, so N.I.N.A. and the server keep writing
-  while it runs. A catalog that keeps changing through 40 restarts of the
+  <p>PSF Guard uses SQLite's online backup to copy catalogs. It opens the source read-only
+  and copies a few pages at a time, with short pauses so N.I.N.A. and the server can keep
+  writing. A catalog that keeps changing through 40 restarts of the
   copy, or that cannot be opened, is left out of that archive and named in
   its manifest; the rest of the backup goes on.</p>
 
   <h3 id="left-out">What a backup leaves out</h3>
-  <p>PSF Guard makes these again, so a backup never holds them: image
-  previews and star lists, stacks and their processing, calibration masters,
-  plate solves, satellite elements, sky maps, Seiza catalogs, and the FITS and
-  XISF frames themselves. Back up your image folders separately.
+  <p>Backups exclude image previews and star lists, stacks and their processing,
+  calibration masters, plate solves, satellite elements, sky maps, and Seiza catalogs. PSF
+  Guard can rebuild or fetch these. Backups also exclude the original FITS and XISF
+  frames. Back up your image folders separately.
   <a href="storage.html#disk-use">Settings › Storage</a> shows how large the
   generated folders are.</p>
 
   <h3 id="secrets">Secrets</h3>
   <p>Outgoing peer keys, collaboration service tokens and any
-  <code>token</code> in the server's TOML file are kept in the clear, so a backup
+  <code>token</code> in the server's TOML file are stored as plain text, so a backup
   leaves them out unless you tick <strong>Include secrets</strong>
   (<code>--include-secrets</code>). Peer keys are blanked, the collaboration
   credentials file is left out, and TOML tokens become <code>REDACTED</code>.
@@ -216,8 +217,8 @@ function gtag_report_demo() {
   keeps every account.</p>
   <p>An archive with secrets is never offered as a download; it stays in the
   server folder you chose. On a local macOS or Linux disk archives are
-  readable only by their owner. FAT, exFAT, SMB shares and Windows folders do
-  not keep that, so keep such an archive in a folder only you can read.</p>
+  readable only by their owner. FAT, exFAT, SMB shares and Windows folders do not preserve
+  those permissions. Store the archive in a folder only you can read.</p>
 
   <h2 id="now">Back up now</h2>
   <p>Open <strong>Settings › Backups</strong>. Choose the scope and whether to
@@ -239,14 +240,14 @@ function gtag_report_demo() {
       filling the system disk.</li>
     <li><strong>What to back up</strong>: settings and catalogs by default.</li>
     <li><strong>Include secrets</strong>: off by default.</li>
-    <li><strong>How many to keep</strong>: the newest 7 by default, or every
-      archive younger than some days. The newest is always kept.</li>
+    <li><strong>How many to keep</strong>: the newest 7 by default, or all archives from a
+    set number of days. PSF Guard always keeps the newest archive.</li>
   </ul>
   <p>A scheduled run is background work: it waits while work you started runs,
   and shows as waiting in the job line. A server that was off at the
   scheduled time runs once when it comes back. A failed run tries again an
   hour later.</p>
-  <p>After a complete run the schedule removes its own older archives. It
+  <p>After a complete scheduled backup, PSF Guard removes older scheduled archives. It
   never removes archives made by hand or by the CLI, another install's
   archives in a shared folder, or the last archive that holds a catalog a
   newer run left out.</p>
@@ -306,9 +307,8 @@ psf-guard backup /mnt/backups/psf-guard --include-secrets</code></pre>
            and ((.problems // []) | length) == 0'</code></pre>
   <p><code>unzip -t "$archive"</code> tests the zip itself.</p>
 
-  <h3 id="prune">Keep old archives in check</h3>
-  <p>Archives made by the CLI are yours: the schedule never removes them. Prune
-  them in the same script:</p>
+  <h3 id="prune">Remove old archives</h3>
+  <p>Scheduled cleanup never removes CLI archives. Remove old ones in your backup script:</p>
   <pre><code><span class="c"># Linux and macOS: drop full archives older than 30 days</span>
 find /mnt/backups/psf-guard -name 'psf-guard-backup-*-full.zip' -mtime +30 -delete
 
@@ -403,8 +403,7 @@ docker exec &lt;container&gt; psf-guard backup /backups</code></pre>
       <code>-shm</code> files beside it.</li>
     <li>If the backup left secrets out, enter peer keys, collaboration sign-ins
       and the server's remote tokens again.</li>
-    <li>Start PSF Guard. Previews, stacks and masters are made again as you use
-      them.</li>
+    <li>Start PSF Guard. PSF Guard rebuilds previews, stacks and masters as you use them.</li>
   </ol>
   <p>To move to a new machine, restore the same way, then fix catalog and image
   folder paths in <strong>Settings › Databases</strong> if they differ.</p>

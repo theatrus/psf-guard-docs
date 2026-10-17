@@ -43,7 +43,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Library on psf-guard.atpn.co, a Teddy Bear Nebula QMark target row (rig starfront-redcat61) › AstroBin, with Leave out lights that can't be calibrated on under Settings › Calibration: the AstroBin dialog on Full detail with Count ungraded lights ticked, the frames-nights-exposure summary, the note "N light(s) that can't be calibrated were left out, …" if any, any filter-id fields, and the first rows of the table; crop to the dialog
 - `astrobin-filter-map.png` — pages: exporting
   - Settings › Databases in the new card layout, one rig's catalog › AstroBin filters (pick a catalog with a filter that changed between nights, or add a dated second G entry): the filter map with name, AstroBin id linked to its page, description, and first and last nights; crop to the filter map
-- `calibration-coverage-report.png` — pages: calibration
+- `calibration-coverage-report.png` — pages: calibration-grading
   - Library › Golf of Mexico full card › Calibration: the "Calibration coverage — Golf of Mexico" dialog with Browse calibration, the Quality section listing Poor/Check findings with lights by night and filter, the warnings, the per-kind counts, the Night/Filter/Lights/Flats/Darks/Bias table, the Include N rejected lights control, and Lights that can't be calibrated with Check lights
 - `calibration-library.png` — pages: calibration
   - Calibration page, Frames tab, Sessions list (Sessions
@@ -110,7 +110,7 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `settings-api-tokens.png` — pages: authentication, mcp
   - psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card
   - psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card (same capture as authentication.html)
-- `settings-calibration.png` — pages: calibration
+- `settings-calibration.png` — pages: calibration-masters
   - Settings › Calibration, top of the tab in the new card layout: the "For every rig without its own value…" note, the Matching box (Flat rotation, Flat focal length, Dark temperature, Flat session, Use darks, External masters, Rig's time zone, Nights end) with help text, and the Dark masters box (Dark reach, Complete night, Dark choice)
 - `settings-catalogs.png` — pages: astrometry
   - Settings › Catalogs in the new card layout: the Seiza Catalogs card with its feature chips, the installed packages, the Catalog package select, Install / update catalogs and Validate installed files. Crop: that card only.
@@ -165,16 +165,16 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Settings → Databases, one database card after an automatic run that held frames: the status line with the schedule, last result and next run, Run now, the notes "12 skipped by scan rules" and "11 held: no matching project", and the Review button beside the held note; crop to the card's status area
 - `calibration-compare-session.jpg` — pages: calibration
   - Calibration › Frames, rig c925-scheduler, Type: Flat, one flat session chosen, Compare with session pressed at Normal (±3%), Spots on, so the session's dust shows with "in N of M flats" and any one-flat transient; include the stretch buttons, Compare with session, Spots and the strip
-- `calibration-dust-disks.jpg` — pages: calibration
+- `calibration-dust-disks.jpg` — pages: calibration-flats
   - Calibration › Frames, rig starfront-redcat61, a flat (L or Ha) with Spots and Large dust on at Tight stretch: the large faint disks drawn as rims, each labelled like "disk 0.33% · ~11 mm, filter/window", and the frame panel's Spots row reading "N spots · M large disks"
-- `calibration-dust-donuts.jpg` — pages: calibration
+- `calibration-dust-donuts.jpg` — pages: calibration-flats
   - Calibration › Frames, rig c925-scheduler, a flat with Spots and Large dust on at Tight stretch: donuts drawn as ring and hole with their depth labels, plus any dashed vignetting mark at an edge or corner
-- `calibration-flat-compare.jpg` — pages: calibration
+- `calibration-flat-compare.jpg` — pages: calibration-flats
   - Calibration › Frames, the same rig, Compare pressed on a split or change in the list: the "Flat comparison" view above the session with its title (the change's reason), "<later night> ÷ <earlier night>: the later flats divided by the earlier…", Normal (±1%) stretch, Spots on with new and gone shadows circled, and Close
-- `calibration-flat-groups.jpg` — pages: home, calibration
+- `calibration-flat-groups.jpg` — pages: home, calibration-flats
   - Calibration › Frames, Groups view for rig starfront-redcat61: group list in the sidebar with a split and its reason, one flat open with Spots and Large dust drawn
   - Calibration › Frames with Sessions
-- `calibration-frame-keep-out.png` — pages: calibration
+- `calibration-frame-keep-out.png` — pages: calibration-grading
   - Calibration › Frames, a dark session with a frame graded "Suspect · noise" or "Poor · stray light" chosen; crop to the frame panel: file, capture time with UTC offset, settings, the grade badge, the reason line, the Measure/Frame/Session table with Level and Spread in ADU, the findings with their limits, and the buttons Keep out, Use anyway, Forget and ◂ Before only / Both / After only ▸
 - `calibration-masters-tab.png` — pages: calibration
   - Calibration › Masters for the starfront-redcat61 database: the Type and Files on disk only pills, then three or four master cards (a flat, a dark, a bias), each with its sources line (frames, nights, temperatures), "built …" time, badges such as Thin or Other software, "Used by Teddy Bear Nebula QMark" and View
@@ -216,13 +216,13 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Header crop, left half, in Images for Teddy Bear Nebula QMark (rig starfront-redcat61): Sky and Library as icons, the project picker, Planning icon, rig · target switcher, the Images tab showing its name as the current view, and the pointer resting on the Calibration tab with its name slid out; Sequence and Stacks as icons. Pair it with header-menu.png in a shot-pair
 - `header-transfers.png` — pages: collaboration
   - Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
-- `image-calibration-panel.png` — pages: calibration
+- `image-calibration-panel.png` — pages: calibration-grading
   - Image detail of a Golf of Mexico H-alpha light from the Jul 9 2026 session (rig "ultra cat") that carries a Check or Poor finding; crop to the side panel with Calibration open: the findings list with one finding chosen, the Flats part with nights, temperatures, Flat family and Chosen by, the Darks part, and "Checked by …" with Tune checks for …
 - `image-detail-folded.png` — pages: grader
   - Image detail sidebar crop for a light with a 🧪 Check or Poor chip (find one with Library › Show › Calibration issues, then the Calibration pill in Images): Image Information, Quality analysis, Sky context and Satellite tracks folded to their one-line summaries (the score, "solved" or not, the crossing count), and Calibration open on its own listing the findings in words
 - `import-preview-plans.png` — pages: importing
   - The import preview opened by Review on that card: the held folders ticked under Folders, "↳ existing <project> / <target> — +N frame(s) (name match) · adds 1 exposure plan" and "· raises acquired on 2 plans" lines, "NEW <project> — 1 target(s), N frame(s)" lines for the new targets, "Adds 1 exposure template(s)", Queue background quality analysis, and the Import N frame(s) and Cancel buttons; crop to the preview panel
-- `library-calibration-pills.png` — pages: calibration, grader
+- `library-calibration-pills.png` — pages: calibration-grading, grader
   - Library, compact view, Show set to Calibration issues: three or four project rows (such as Golf of Mexico and Iris Nebula) with their 🧪 Poor or 🧪 Check pill in the calibration column, the Show pill visible in the Projects toolbar
   - Library, Compact, Show: Calibration issues (the Show pill reads it, marked as set): five or six rows with 🧪 Poor (red) and 🧪 Check (yellow) pills in the calibration column, for example rigs c925-scheduler and starfront-redcat61; hover one pill so its tooltip ("Calibration: N lights can't be calibrated properly") shows; crop to the toolbar and the rows
 - `library-phone.png` — pages: grader
@@ -245,9 +245,9 @@ its `RESHOOT` comment. Delete this file once no comments remain.
   - Settings → Databases → Edit on the starfront-redcat61 catalog, scrolled to the Scan rules and Automatic import boxes: Exclude holding **/Hocus Focus/** and **/PierCam/**, Include only empty, Lights need a target name and Match targets by position ticked, Shortest light (s) 10; Automatic import ticked with Run when the app or server opens this database, Schedule: Every hour, Import: Lights and calibration frames, New targets: Ask first; crop to the two boxes
 - `settings-backups.png` — pages: backups
   - Settings › Backups: Back up now with scope and Include secrets, the schedule, and the archive list
-- `settings-calibration-flat-groups.png` — pages: calibration
+- `settings-calibration-flat-groups.png` — pages: calibration-masters
   - Settings › Calibration scrolled to the Flat groups box (Group flats, Dust split, Light pattern split, each with help and its default) and the Light checks box below it showing a few checks with their Poor / Check only / Off controls; open it from Edit limits in Calibration › Frames so the Dust split row is the one in focus
-- `settings-calibration-rig.png` — pages: calibration
+- `settings-calibration-rig.png` — pages: calibration-masters
   - Settings › Calibration › Rigs with rig starfront-redcat61 expanded, Start from › Sky flats pressed and its note "… Review the values below, then save." showing; the Matching and Light checks groups open, with Flat session and Flats from several nights set as own values (Own value pressed) and other rows showing their inherited value and "· global" or "· default"; Save rig and Inherit everything at the foot
 - `settings-calibration-stacks-exports.png` — pages: exporting
   - Settings › Calibration in the new card layout, any server: the Stacks and exports box with Leave out lights that can't be calibrated ticked and its help line, and the Save button below; crop to that box and the button

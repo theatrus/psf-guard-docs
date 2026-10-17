@@ -91,6 +91,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -278,8 +281,9 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   tool wrote is paired with the light it came from, matched by capture time, exposure,
   filter, target and camera. It is not imported as another light.</p>
   <ul>
-    <li>A calibrated copy with no raw light becomes the light. A raw frame imported or
-      synced later takes that row over, grade and all.</li>
+    <li>A calibrated copy with no raw light becomes the light. If the raw frame arrives
+    later through import or sync, it replaces the copy in that row and keeps the
+    grade.</li>
     <li>Copies already on disk pair after each folder refresh.</li>
     <li>Image detail switches between a frame and its copies with <kbd>V</kbd>.</li>
     <li>A rejected frame's copies go into the reject archive with it, and come back
@@ -304,10 +308,9 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
       in a folder that does, are read. <code>LIGHT</code> keeps N.I.N.A.'s
       <code>LIGHT</code> folders.</li>
     <li><strong>Lights must say LIGHT</strong>: leave out a frame with no
-      <code>IMAGETYP</code> (or <code>FRAME</code>), instead of taking it for a
-      light.</li>
+      <code>IMAGETYP</code> (or <code>FRAME</code>), instead of treating it as a light.</li>
     <li><strong>Lights need a target name</strong>: leave out a light with no
-      <code>OBJECT</code>, as most autofocus and test frames are.</li>
+      <code>OBJECT</code>, as is common with autofocus and test frames.</li>
     <li><strong>Shortest light (s)</strong>: leave out lights shorter than this, or with
       no exposure time.</li>
     <li><strong>Match targets by position</strong>, on by default: a light whose
@@ -390,7 +393,7 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Rescan All Quality</strong> measures everything again.</li>
     <li><strong>Analyze new frames as they arrive</strong> measures frames that come by
       sync, peer pull, remote upload or automatic import, a few minutes after the last
-      one lands. Each server start also catches frames that came while it was down. Off
+      one finishes. At startup, the server also finds frames that arrived while it was stopped. Off
       by default.</li>
   </ul>
   <!-- RESHOOT: settings-database-options.png | Settings → Databases in the new card layout, one database card (for example the c925-scheduler catalog): calibration library summary, AstroBin filters, Analyze Missing Quality, Rescan All Quality, Analyze new frames as they arrive, Write star count and HFR into image metadata, Pair calibrated and registered copies with their lights, Measure quality on the calibrated copy, and the automatic import status line with Run now; Import and Edit buttons at the right -->
