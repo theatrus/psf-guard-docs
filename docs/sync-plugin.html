@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html" class="active" aria-current="page">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -205,8 +206,9 @@ function gtag_report_demo() {
   profile by machine and profile name. <strong>Revoke</strong> cuts off one
   and leaves the others alone.</p>
   <div class="callout info">
-    Generating pairing codes and revoking clients manage the database, so a
-    server needs database management, and with accounts an editor login. See
+    Generating pairing codes and revoking clients take an editor. In Settings
+    they sit in the catalog's editor, which needs database management because
+    it names the catalog's folders. See
     <a href="authentication.html#sync">Server Accounts</a>.
   </div>
 
@@ -442,15 +444,18 @@ function gtag_report_demo() {
   catalog. They also remove the coverage rows you invalidated in PSF
   Guard:</p>
   <ol>
-    <li>In PSF Guard, open <strong>Settings &rarr; Databases</strong>, click
-      <strong>Manage</strong> on the catalog's calibration library, and choose
+    <li>In PSF Guard, open the <strong>Calibration</strong> page from the
+      header, or <strong>Open Calibration</strong> under the catalog in
+      <strong>Settings &rarr; Databases</strong>, and choose
       <strong>Scheduler flats</strong>.</li>
-    <li>Select the suspect coverage records and click <strong>Invalidate
-      coverage</strong> with a reason.</li>
+    <li>Select the suspect coverage records, enter a <strong>Reason</strong>,
+      and click <strong>Invalidate coverage</strong>. It needs an
+      editor.</li>
     <li>Run <strong>Pull PSF Guard grades</strong> before the next Target
       Scheduler flats instruction. Target Scheduler then sees those flats as
       missing and can take them again under its usual rules.</li>
   </ol>
+  <!-- SHOT: calibration-scheduler-flats.png | psf-guard.atpn.co as an editor, Calibration page (header tab) on the catalog of rig c925-scheduler, Scheduler flats tab: the coverage list with two records ticked and the "Invalidate 2 coverage records?" box with its Reason field and Invalidate coverage button; crop to the tab's content | Calibration › Scheduler flats: invalidate coverage records so Target Scheduler takes those flats again. -->
   <ul>
     <li>A preview-only reconcile does not apply invalidations.</li>
     <li>Records are coverage, not files. Select every matching record,

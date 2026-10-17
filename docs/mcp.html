@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MCP for Agents — PSF Guard</title>
-  <meta name="description" content="Connect Claude Code, Codex or another MCP client to PSF Guard at /api/mcp to read catalogs, stacks, calibration and plans, grade frames, change plans, and start jobs.">
+  <meta name="description" content="Connect Claude Code, Codex or another MCP client to PSF Guard at /api/mcp to read catalogs, stacks, calibration, flats and plans, grade frames, change plans, start jobs and back up.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -146,9 +147,9 @@ function gtag_report_demo() {
   <p class="lede">A running PSF Guard server is also a Model Context Protocol
   (MCP) server at <code>/api/mcp</code>, on the same port as the UI. An agent
   such as Claude Code or Codex can read catalogs, grades and quality evidence,
-  look into stacks and calibration, read and change plans, grade frames, and
-  start imports, quality scans, stacks and WBPP runs. It meets the same
-  login and permission checks as a person.</p>
+  look into stacks, calibration and flats, read and change plans, grade frames,
+  start imports, quality scans, stacks and WBPP runs, and back up the server.
+  It meets the same login and permission checks as a person.</p>
 
   <h2 id="tokens">Connect an agent</h2>
   <p>On a server with user accounts, open <strong>Settings &rarr; Users &rarr;
@@ -158,9 +159,11 @@ function gtag_report_demo() {
   Guard makes a token of your own and shows what to paste into Claude Code and
   into Codex, with this server's URL. Copy the token then: it is shown
   once.</p>
+  <!-- SHOT: settings-connect-agent.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card after Connect an agent: Let it grade and start jobs left unticked, Create token clicked, showing the Claude Code and Codex setup snippets with their Copy buttons; blur or crop out the token itself; crop to the API tokens card | Connect an agent makes a token and shows the Claude Code and Codex setup with this server's URL. -->
   <p><strong>+ New token</strong> does the same with a <strong>Label</strong>,
   an expiry or another user of your choosing, and <strong>Read only, whatever
   the user's role</strong> for a token that only reads.</p>
+  <!-- RESHOOT: settings-api-tokens.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card (same capture as authentication.html) -->
   <figure>
     <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
     <figcaption>The <strong>+ New token</strong> form under Settings › Users › API tokens.</figcaption>
@@ -184,6 +187,12 @@ psf-guard users token revoke &lt;id&gt;</code></pre>
     network server with no accounts answers 401 here as everywhere else; see
     <a href="authentication.html#bind">Server Accounts</a>.
   </div>
+  <!-- SHOT: settings-agents.png | desktop app on macOS with no accounts, header menu › Settings › Agents tab: the Agents card with the /api/mcp URL, the Claude Code and Codex snippets with Copy buttons, and the "Choose a fixed server port" link; crop to the Agents card | Settings › Agents on the desktop app: the setup to paste, and a link to fix the server port. -->
+  <p>The desktop app picks a new port each time it starts unless you fix one.
+  <strong>Agents</strong> links to <strong>Settings &rarr; Server</strong>,
+  where <strong>Fixed port</strong> keeps the agent's URL across restarts; see
+  <a href="install.html#desktop-port">Installation</a>. A CLI server takes
+  <code>--port</code> or <code>port</code> in its TOML file.</p>
 
   <h2 id="connect">Client setup</h2>
   <p>Any client that speaks MCP's streamable HTTP transport works: give it the
@@ -208,7 +217,8 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   <p>Every tool sends its request through the same <code>/api</code> routes
   the UI uses, as the caller. The read-only role,
   <code>--allow-database-management</code> and each route's own checks limit an
-  agent exactly as they limit a person. A refused call comes back as a tool
+  agent exactly as they limit a person: each write needs the same role and
+  database management as its button in the app. A refused call comes back as a tool
   error with the API's message, not a protocol failure, so the agent can
   explain it. Where the server sets <code>allow_read_only_compute</code>, a
   viewer's token can also build stacks, plate-solve and predict satellites, as
@@ -219,6 +229,10 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   pixel evidence, and a conclusion should say which it rests on.</p>
 
   <h2 id="tools">Tools</h2>
+  <div class="callout info"><strong>New after 0.11.</strong> Tools for flat
+  groups, calibration frames, duplicate repair and backups. <code>get_jobs</code>
+  lists every background job, and <code>explain_calibration</code> can keep
+  only the flats.</div>
   <p>Catalog tools take a <code>database</code>: the ID or name
   <code>list_databases</code> reports. Planning tools take a
   <code>plan_id</code> from <code>list_plans</code> or a <code>rig</code> from
@@ -241,13 +255,13 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
       <tr><td><code>get_statistics</code></td><td>Whole-database counts</td></tr>
       <tr><td><code>get_sky_coverage</code></td><td>Every target's footprint and exposure by filter</td></tr>
       <tr><td><code>astrobin_csv</code></td><td>The AstroBin acquisition CSV for a project or target</td></tr>
-      <tr><td><code>get_jobs</code></td><td>Import, quality scan and WBPP progress</td></tr>
-      <tr><td><code>get_activity</code></td><td>Stack builds and WBPP runs across databases, running and queued</td></tr>
+      <tr><td><code>get_jobs</code></td><td>Every background job of one database: import, quality backfill and scan, WBPP, calibration grading, flat measuring, reading frame sites, and the duplicate check or repair, each with what it waits for</td></tr>
+      <tr><td><code>get_activity</code></td><td>Across databases: stack builds running and queued, refreshes and re-applies waiting, WBPP runs, and, where you may read backups, the backup under way and the last one</td></tr>
       <tr><td><code>api_routes</code>, <code>api_get</code></td><td>Every route below <code>/api</code> the UI reads, and a read of any of them, as you</td></tr>
     </table>
   </div>
 
-  <h3 id="tools-stacks">Look into stacks and calibration</h3>
+  <h3 id="tools-stacks">Look into stacks</h3>
   <div class="table-wrap">
     <table>
       <tr><th>Tool</th><th>Answers</th></tr>
@@ -255,10 +269,24 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
       <tr><td><code>get_stack</code></td><td>One channel frame by frame: sensor temperature, whether it was used and why, registration shift and rotation, weight, noise; and per night, whether the frames were dithered</td></tr>
       <tr><td><code>get_stack_image</code></td><td>The stack as an image, as the app shows it or with the background stretched hard (<code>stretch: "background"</code>); crop to part of the frame</td></tr>
       <tr><td><code>get_stack_calibration</code></td><td>The masters each session applied: the frames each was built from, with their sensor temperatures and nights, and the lights it calibrated</td></tr>
-      <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights</td></tr>
-      <tr><td><code>get_calibration_library</code></td><td>The library by night, with validity marks and masters</td></tr>
-      <tr><td><code>explain_calibration</code></td><td>Why one light got or missed each master: every library frame for its camera by night, with its temperatures, used, passed over, or refused with the reason; and what each master would span</td></tr>
+    </table>
+  </div>
+
+  <h3 id="tools-calibration">Read calibration and flats</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tool</th><th>Answers</th></tr>
+      <tr><td><code>get_calibration_report</code></td><td>Calibration frames the library matches to a project's nights; rejected lights stay out unless <code>include_rejected</code> is set</td></tr>
+      <tr><td><code>get_calibration_library</code></td><td>Library totals: frames and masters, and per rig the count of each kind and the oldest and newest capture</td></tr>
+      <tr><td><code>get_calibration_project_scope</code></td><td>What one project's lights use from the library: sessions, masters, rigs, and headers still being read</td></tr>
+      <tr><td><code>list_calibration_sessions</code>, <code>list_calibration_frames</code></td><td>The library a page at a time, narrowed by project, rig, kind, filter, session, flat group, grade, kept out or nights</td></tr>
+      <tr><td><code>get_calibration_frame</code></td><td>One frame: grade, findings, and measurements beside its session's; for a flat, its spots and large dust, its session's dust, and which of that dust it shows</td></tr>
+      <tr><td><code>explain_calibration</code></td><td>Why one light got or missed each master: every library frame for its camera by night, used, passed over, refused with the reason, or taken though suspect; what each master would span; for flats, the family, how it was chosen and the side of a change. <code>kinds: ["flat"]</code> keeps only the flats.</td></tr>
       <tr><td><code>check_uncalibrated_lights</code></td><td>A project's lights the library cannot calibrate properly, by night, filter and reason, with a <code>digest</code></td></tr>
+      <tr><td><code>get_flat_groups</code></td><td>Each rig's flat groups by family and night, the splits between them and why, the dust each split shows, a person's split or join and whether the measurements agree, and the rig's change events</td></tr>
+      <tr><td><code>get_flat_group_use</code></td><td>What each flat group feeds: its flat masters, and the lights that take it by project</td></tr>
+      <tr><td><code>get_light_flat_options</code></td><td>The changes some lights were shot during, with each change's key and the sides already chosen. Needs write access, as in the app.</td></tr>
+      <tr><td><code>get_calibration_duplicates</code></td><td>The duplicate check or repair, and its plan a page at a time, with the plan's <code>token</code></td></tr>
     </table>
   </div>
 
@@ -280,8 +308,8 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   </div>
 
   <h3 id="tools-changes">Change things</h3>
-  <p>These need a token that may write. The ones marked
-  <em>management</em> also need a server started with
+  <p>These need a token that may write, unless marked <em>read</em>. The
+  ones marked <em>management</em> also need a server started with
   <code>--allow-database-management</code>, as their buttons in the app
   do.</p>
   <div class="table-wrap">
@@ -291,11 +319,23 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
       <tr><td><code>start_quality_backfill</code></td><td>Start the background quality scan</td><td>write</td></tr>
       <tr><td><code>start_import</code></td><td>Scan the configured folders for new lights and calibration frames</td><td>write</td></tr>
       <tr><td><code>start_stack</code>, <code>cancel_stack</code></td><td>Build stack previews for a project, target or filter; stop one</td><td>write</td></tr>
+      <tr><td><code>start_wbpp_run</code>, <code>cancel_wbpp_run</code></td><td>Run PixInsight WBPP on a project's or target's accepted lights; stop the run</td><td>write</td></tr>
       <tr><td><code>update_project</code>, <code>update_target</code></td><td>Change Target Scheduler settings, sending only the fields to change</td><td>write</td></tr>
       <tr><td><code>update_exposure_plan</code>, <code>create_exposure_plan</code></td><td>Change or add an exposure plan</td><td>write</td></tr>
-      <tr><td><code>set_calibration_validity</code></td><td>Mark calibration frames for later or earlier lights, or clear the mark</td><td>write</td></tr>
       <tr><td><code>solve_astrometry</code>, <code>predict_satellites</code></td><td>Plate-solve a light; predict satellite crossings and check them in the pixels</td><td>write</td></tr>
       <tr><td><code>reject_uncalibrated_lights</code></td><td>Reject the lights <code>check_uncalibrated_lights</code> listed, with its digest, so Target Scheduler shoots them again</td><td>write</td></tr>
+      <tr><td><code>set_calibration_validity</code></td><td>Mark calibration frames for later or earlier lights, or clear the mark</td><td>write</td></tr>
+      <tr><td><code>set_calibration_frame_choice</code></td><td>Use anyway, keep out, or clear the choice on calibration frames; masters already built stay as they are</td><td>write</td></tr>
+      <tr><td><code>set_flat_group_override</code></td><td>Split a flat family's groups at a session, join two neighbouring groups, or reset the choice</td><td>management</td></tr>
+      <tr><td><code>set_light_flat_choice</code></td><td>Put lights before or after a change, give them one group's flats, or reset their choices</td><td>management</td></tr>
+      <tr><td><code>cancel_flat_measuring</code>, <code>resume_flat_measuring</code></td><td>Pause flat measuring, or take up what was paused</td><td>write</td></tr>
+      <tr><td><code>cancel_frame_sites</code>, <code>resume_frame_sites</code></td><td>Pause reading frame sites, or take it up again</td><td>write</td></tr>
+      <tr><td><code>check_calibration_duplicates</code></td><td>Check the library for exposures recorded more than once; writes nothing</td><td>read</td></tr>
+      <tr><td><code>repair_calibration_duplicates</code></td><td>Merge them, with the token of a check; applies nothing if the library changed since</td><td>management</td></tr>
+      <tr><td><code>cancel_calibration_duplicates</code></td><td>Stop the check or repair; a repair rolls back whole</td><td>write</td></tr>
+      <tr><td><code>preview_reject_removal</code></td><td>The rejects removal would take out, with a <code>digest</code></td><td>write</td></tr>
+      <tr><td><code>apply_reject_removal</code>, <code>restore_removed_rejects</code></td><td>Remove those rejects to the trash; bring a batch back</td><td>write</td></tr>
+      <tr><td><code>preview_sync</code>, <code>apply_sync</code></td><td>Preview a pull or push between two open databases; apply it</td><td>write</td></tr>
       <tr><td><code>create_plan</code>, <code>rename_plan</code></td><td>Start a plan, or rename one</td><td>write</td></tr>
       <tr><td><code>save_plan</code>, <code>save_framing</code></td><td>Save the whole plan or framing, changed, at the revision you read</td><td>write</td></tr>
       <tr><td><code>take_plan_from_target_scheduler</code></td><td>Take a plan's values from a rig's Target Scheduler database</td><td>write</td></tr>
@@ -303,17 +343,16 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
       <tr><td><code>preview_activation</code></td><td>Exactly what activating a plan would write to each rig, with a <code>preview_digest</code></td><td>write</td></tr>
       <tr><td><code>save_template</code>, <code>delete_template</code></td><td>Change the exposure template library</td><td>write</td></tr>
       <tr><td><code>save_preferences</code></td><td>Save observing preferences for all rigs, a site or a rig</td><td>write</td></tr>
-      <tr><td><code>start_wbpp_run</code>, <code>cancel_wbpp_run</code></td><td>Run PixInsight WBPP on a project's or target's accepted lights; stop the run</td><td>management</td></tr>
       <tr><td><code>apply_activation</code></td><td>Write that preview to the rigs; refuses if anything changed since</td><td>management</td></tr>
       <tr><td><code>push_activation</code></td><td>Send an activated plan to rigs on other machines</td><td>management</td></tr>
       <tr><td><code>apply_rig_scheduling</code></td><td>Write a rig's scheduling limits, with the digest <code>get_rig_scheduling</code> gave</td><td>management</td></tr>
-      <tr><td><code>preview_reject_removal</code></td><td>The rejects removal would take out, with a <code>digest</code></td><td>management</td></tr>
-      <tr><td><code>apply_reject_removal</code>, <code>restore_removed_rejects</code></td><td>Remove those rejects to the trash; bring a batch back</td><td>management</td></tr>
-      <tr><td><code>preview_sync</code>, <code>apply_sync</code></td><td>Preview a pull or push between two open databases; apply it</td><td>management</td></tr>
+      <tr><td><code>get_backups</code></td><td>The backup schedule, the archives without download paths, the run under way and the last one</td><td>management</td></tr>
+      <tr><td><code>start_backup</code>, <code>cancel_backup</code></td><td>Back up now, never with secrets; stop the run</td><td>management</td></tr>
     </table>
   </div>
-  <p>Jobs return at once; the agent polls <code>get_jobs</code>, or
-  <code>list_stacks</code> for a stack.</p>
+  <p>Jobs return at once. The agent polls <code>get_jobs</code> for one
+  database's jobs, <code>get_activity</code> for stack builds, WBPP runs and
+  backups across databases, or <code>list_stacks</code> for a stack.</p>
 
   <h2 id="plans">Change a plan</h2>
   <p>An agent changes a plan as the app does. It reads the plan
@@ -338,6 +377,44 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   shows, per night, whether the frames were dithered: frames that walk one way
   without dithers turn anything fixed to the sensor into streaks. See
   <a href="calibration.html">Calibration Libraries</a>.</p>
+
+  <h2 id="flats">Flats and their changes</h2>
+  <p>Ask why some lights got last month's flats.
+  <code>explain_calibration</code> with <code>kinds: ["flat"]</code> names the
+  family, the change the light sits beside and the side its flats came from.
+  <code>get_flat_groups</code> shows the rig's groups and why each split: dust,
+  light pattern or vignetting against the limits, with the dust counted by kind
+  (new, gone, moved) and shape (compact, disk, donut, patch) and the deepest
+  three named. Dust that moved only as far as focus travel explains is
+  counted apart and does not split groups. <code>get_calibration_frame</code>
+  shows one flat's own dust beside its session's.</p>
+  <p>A person's choices change which flats lights take, and need write access
+  and database management, as in the app. <code>set_flat_group_override</code>
+  splits or joins groups by the sessions' <code>response_key</code>;
+  <code>set_light_flat_choice</code> puts lights on a side of a change by its
+  <code>key</code>, which <code>get_light_flat_options</code> lists for a set
+  of lights. Use anyway on a suspect frame
+  (<code>set_calibration_frame_choice</code>) needs write access only.</p>
+  <p>A duplicate repair needs a check first.
+  <code>check_calibration_duplicates</code> starts it;
+  <code>get_calibration_duplicates</code> shows the plan and its
+  <code>token</code>; <code>repair_calibration_duplicates</code> takes that
+  token, merges the rows, and has the masters built from them built again. No
+  file is moved or deleted. See <a href="calibration.html">Calibration
+  Libraries</a>.</p>
+
+  <h2 id="backups">Backups</h2>
+  <p><code>get_backups</code>, <code>start_backup</code> and
+  <code>cancel_backup</code> need write access and database management, as
+  <a href="backups.html">Settings › Backups</a> does. An agent never handles
+  secrets: <code>start_backup</code> refuses them whoever signs in, and writes
+  only to the download area or the folder the schedule already uses, never a
+  folder of the agent's choosing. It copies the server's settings and stores
+  (<code>meta</code>) unless the agent asks for <code>full</code>, which adds
+  every catalog. Archives are listed without download paths, and
+  <code>api_get</code> reads no backups route, so an agent never hands an
+  archive out. A person downloads an archive, or makes one with secrets, in
+  Settings. No tool restores.</p>
 
   <h2 id="curl">Try it without a client</h2>
   <pre><code>TOKEN=psfg_…

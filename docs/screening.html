@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quality Screening — PSF Guard</title>
-  <meta name="description" content="Score light frames against their session and their whole target: clouds, occlusion, stray light, SNR, soft stars, pointing faults and satellite trails, each with its cause.">
+  <meta name="description" content="Score light frames against their session and their whole target: clouds, occlusion, stray light, SNR, soft stars, pointing faults and satellite trails, each with its cause. Cut and select frames by score, stars or HFR.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -144,8 +145,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Quality Screening</h1>
   <p class="lede">
-    A quality scan measures each light frame's stars, sky, photometry and plate solve, then scores the frame against its session and its whole target. This page covers what the scan catches, how scores and causes work, and how to run it from the app or the CLI.
+    A quality scan measures each light frame's stars, sky, photometry and plate solve, then scores the frame against its session and its whole target. This page covers what the scan catches, how scores and causes work, how to cut and select frames in Sequence, and how to run the scan from the app or the CLI.
   </p>
+  <div class="callout info"><strong>New after 0.11.</strong> The Sequence chart marks each frame's grade, <strong>Cutoff</strong> measures stars or HFR as well as the score, a <strong>Select</strong> rule stays on, and <strong>Scoring</strong> has defaults of its own and two more penalties, <strong>HFR rise</strong> and <strong>Star loss</strong>.</div>
 
   <h2 id="quick-start">Run a quality scan</h2>
   <div class="workflow-note simple">
@@ -153,20 +155,23 @@ function gtag_report_demo() {
     <div class="workflow-copy"><strong>Choose a target and click Analyze Quality.</strong><p>The button shows in Images and Sequence when the target has new frames or results from an older quality model, and hides when every frame is up to date.</p></div>
     <a class="workflow-link" href="grader.html#sequence">Sequence view →</a>
   </div>
-  <p>The scan runs in the background: spatial and photometric screening, then a fresh plate solve of each frame, then new sequence scores. Both stages work on several frames at once, up to the share set in <strong>Settings → Performance → Processor use</strong>. The header's jobs chip shows progress from any view and any database. A scan with failed frames leaves a note on the chip, with a link to the target's sequence, until you dismiss it; with nothing else running the chip reads <strong>Finished with errors</strong>. Results persist across restarts.</p>
-  <p>Settings → <strong>Databases</strong> holds the database-wide actions. <strong>Analyze Missing Quality</strong> scans frames that have no results. <strong>Rescan All Quality</strong> forces a full rescan. <strong>Analyze new frames as they arrive</strong> scans frames that come by sync, peer pull, remote upload or auto-import a few minutes after they land. See <a href="importing.html#quality">Import Images</a>.</p>
+  <p>The scan runs in the background: spatial and photometric screening, then a fresh plate solve of each frame, then new sequence scores. Both stages work on several frames at once, up to the share set in <strong>Settings › Performance › Processor use</strong>. The header's jobs chip shows progress from any view and any database. A scan with failed frames leaves a note on the chip, with a link to the target's sequence, until you dismiss it; with nothing else running the chip reads <strong>Finished with errors</strong>. Results persist across restarts.</p>
+  <p>Settings › <strong>Databases</strong> holds the database-wide actions. <strong>Analyze Missing Quality</strong> scans frames that have no results. <strong>Rescan All Quality</strong> forces a full rescan. <strong>Analyze new frames as they arrive</strong> scans frames that come by sync, peer pull, remote upload or auto-import a few minutes after they land. See <a href="importing.html#quality">Import Images</a>.</p>
+  <!-- RESHOOT: sequence-session.jpg | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, Cutoff on Score at its default, no Select rule, nothing selected. Show the new header, the compact Sequence toolbar (Filter pill, thumbnail slider, Cutoff, Scoring, Select, View, ⋯), the session tabs, the score chart with its grade dots under the bars, the Solved pointing scatter, and the first row of frame-shaped cards: three Soft Stars, then Possible Obstruction. Full window width, from the header to the first card row. -->
   <figure>
     <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing and cards with their causes" loading="lazy">
     <figcaption>A session after a scan. Each card gives its cause.</figcaption>
   </figure>
 
-  <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis finds a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail panel. For a local finding, image detail offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
+  <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis finds a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail's <strong>Quality analysis</strong> panel. For a local finding, that panel offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
+  <p>The panels beside the frame fold away: click a panel's title to fold or open it. Folded, <strong>Quality analysis</strong> keeps one line with the score and any reject reason, and each panel stays as you left it from image to image.</p>
+  <!-- RESHOOT: image-detail.jpg | Image detail of the rejected Golf of Mexico HA frame from Jul 9, 2026 (rig "ultra cat") marked Possible Obstruction. Side panels with their fold chevrons: Image Information folded to one line, Quality analysis open with the score, the reason and Show affected regions, Calibration folded, Sky context open with its Hinted solve badge, Satellite tracks folded. Full window. -->
   <figure>
     <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box reporting a possible obstruction, and sky context from a hinted solve" loading="lazy">
     <figcaption>Image detail. Quality analysis gives the score and its reason; Sky context gives the solve.</figcaption>
   </figure>
   <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes you tick. The grid scores one target, project or database at a time and never compares frames from unrelated targets. It reads stored metadata and cached evidence and does not start a scan, and it says how many visible frames stay unscored for lack of a comparable sequence or evidence.</p>
-  <p>To reject in bulk, pick a preset from <strong>Select:</strong> in Sequence (<strong>Below score threshold</strong>, <strong>Clouded</strong>, <strong>Off target</strong>, <strong>Unsolved</strong> or <strong>Recommended</strong>), then click <strong>Review rejection</strong>. Nothing is written until you confirm in the review. See <a href="astrometry-quality.html#review">Astrometry Quality</a>.</p>
+  <p>To reject in bulk, choose a rule under <strong>Select</strong> in Sequence, then click <strong>Review rejection</strong>. Nothing is written until you confirm in the review. See <a href="#select">Select frames by rule</a>.</p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
@@ -187,6 +192,33 @@ psf-guard screen-fits "/path/to/LIGHT" --regrade-db my-db-slug
 <span class="c"># Then archive the rejected files out of your stacking tree</span>
 psf-guard move-rejects --db my-db-slug</code></pre>
   <p>CLI screening reports <strong>OK</strong>, <strong>WARN</strong> and <strong>REJECT</strong> verdicts. A scan you start from the app may download the orbital elements it needs for satellite checks; opening Sequence and CLI regrades use the cache only. See <a href="satellites.html">Satellite Tracks</a>.</p>
+
+  <h2 id="sequence">Work in Sequence</h2>
+  <p>Sequence, Images and the Calibration page share one compact toolbar: filter pills, the thumbnail size slider and the tools, with display settings under <strong>View</strong> and rarely used tools under <strong>⋯</strong>. In Sequence it holds <strong>Cutoff</strong>, <strong>Scoring</strong> and <strong>Select</strong>, and once frames are selected, the row below it offers <strong>Review rejection</strong>.</p>
+  <p>Images and Sequence mark where frames cross into another night or hour, with the night's date before its first frame. Nights split at each rig's local noon, not at midnight. <strong>Marks</strong> in the View panel, or <strong>Night and hour marks</strong> in Settings › Review, shows nights and hours, nights only, or no marks. <a href="grader.html#marks">Library &amp; Grader</a> covers the toolbar and the marks.</p>
+
+  <h3 id="chart">Score chart</h3>
+  <p>The chart draws one bar per frame, in capture order from left to right, even when <strong>View › Sort › Newest first</strong> turns the strip around. A dot under each bar gives the frame's grade: green for accepted, red for rejected, faint grey for pending. A bar's tooltip starts with the grade and the reject reason. The dots change as you grade, undo and redo.</p>
+
+  <h3 id="cutoff">Cutoff</h3>
+  <p><strong>Cutoff</strong> measures <strong>Score</strong>, <strong>Stars</strong> or <strong>HFR</strong>. The chart's bars, its dashed line, the slider, the marked cards and the cutoff rule under <strong>Select</strong> follow the measure chosen. The score cutoff reads 0 to 100, as the chips do. A lower score and fewer stars fall below the cutoff; a larger HFR falls above it.</p>
+  <p>The Stars and HFR sliders run over the star counts and HFR the cards show for the session on screen. Their cutoff starts where the score's own star or HFR term reaches zero under the view's <strong>Star loss</strong> or <strong>HFR rise</strong> penalty: at 100%, 40% fewer stars than the session's 90th percentile, or an HFR 30% over its 10th. The cutoff is kept as a share of that reference, so it means the same on every session tab and filter. The address keeps the measure as <code>cutoffBy</code> and each measure's cutoff on its own key, <code>cutoff</code>, <code>starCutoff</code> or <code>hfrCutoff</code>, so switching back finds the cutoff where you left it.</p>
+  <!-- SHOT: sequence-cutoff-hfr.jpg | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards. | Cutoff set to HFR. The bars, the dashed line and the marked cards follow it; the dots under the bars give each frame's grade. -->
+
+  <h3 id="select">Select frames by rule</h3>
+  <p>The <strong>Select</strong> pill picks frames by a rule. Each choice says what it selects and how many frames it selects in the view on screen.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Rule</th><th>Selects</th></tr>
+    <tr><td><strong>Below the cutoff</strong></td><td>Frames past the cutoff. With Cutoff on Stars or HFR it reads <strong>Fewer stars than the cutoff</strong> or <strong>HFR above the cutoff</strong>.</td></tr>
+    <tr><td><strong>Clouds or obstruction</strong></td><td>Frames in which a detector found clouds or an obstruction.</td></tr>
+    <tr><td><strong>Off target</strong></td><td>Frames off target, or with a pointing jump, drift or rotation skew.</td></tr>
+    <tr><td><strong>Failed plate solve</strong></td><td>Frames that failed to solve and show image-quality evidence.</td></tr>
+    <tr><td><strong>Recommended rejects</strong></td><td>Frames the analysis recommends rejecting.</td></tr>
+    <tr><td><strong>Poor calibration</strong></td><td>Lights the calibration library serves poorly. Until the calibration check catches up with recent changes, it reads <strong>Poor calibration (updating)</strong> and cannot be chosen. See <a href="calibration.html">Calibration Libraries</a>.</td></tr>
+  </table></div>
+  <p>A chosen rule stays on. Moving the cutoff, changing its measure, rescoring or opening another session tab selects again without choosing the rule a second time. Frames you click by hand stay as you left them, and the row below the toolbar says how many you changed. The address keeps the rule as <code>selectRule</code>. <strong>×</strong> beside the pill turns the rule off and keeps the frames; <strong>Clear</strong> drops them and turns the rule off.</p>
+  <p><strong>Review rejection</strong> lists each selected frame with its evidence. Nothing is written until you confirm. See <a href="astrometry-quality.html#review">Astrometry Quality</a>.</p>
+  <!-- SHOT: sequence-select-rule.png | Sequence toolbar for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, with the Recommended rejects rule on: the pill reads "Select: Recommended rejects (N)" with the × beside it, and the row below shows "N selected", "Rule: Recommended rejects", Review rejection and Clear. Crop: the toolbar and its selection row only. | A rule under Select stays on and says how many frames it picks. -->
 
   <h2 id="why">Why star count and HFR are not enough</h2>
   <p>Star count and HFR barely move when part of a frame is ruined. On a real session where a tree line slowly covered the field:</p>
@@ -243,6 +275,9 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>One absolute rule: a frame measured with zero stars is capped at a failing score with a <strong>No Stars Detected</strong> cause, even with no other frames to compare. Zero stars in a light frame is direct evidence of clouds, trailing or a blocked aperture. A frame with no star measurement at all is never capped. When the scan finds no stars where the capture software counted 20 or more, the scan failed: its star count, HFR and dead cells are dropped for that frame, and the score renormalizes around them. The same holds the other way round.</p>
   <p>Sessions split at a Target Scheduler session change, a capture-profile change, or a 60-minute gap. Frames measured from calibrated pixels (a light catalogued from its calibrated copy, or measured from one) are scored only against each other, in sessions and stack comparisons of their own. Their background, flux and star counts differ from raw frames of the same sky, so they are no longer marked down beside them.</p>
 
+  <h3 id="profiles">Several rigs in one catalog</h3>
+  <p>Where one target and filter hold frames from two or more N.I.N.A. profiles, scoring compares each profile with itself: each forms sessions and stack comparisons of its own, so two rigs merged into one catalog are not scored against each other. The profile stands for the rig because catalog rows do not record the camera or telescope, so one rig kept under two profiles scores as two. A catalog with one profile scores as before, including older rows that name no profile. The statistical grader behind <code>psf-guard regrade</code> groups frames the same way; see <a href="cli.html#db">CLI Reference</a>.</p>
+
   <h2 id="snr">SNR from the Gaia zero point</h2>
   <p>Capture software rarely records an SNR, so the quality scan measures one. It finds the frame's photometric zero point, the catalog magnitude of a star that gives one ADU per second, and divides the flux that zero point promises by the pixel-to-pixel sky noise.</p>
   <ol>
@@ -267,6 +302,7 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   </table></div>
   <pre><code>[Auto] Soft stars - HFR 4.10 px, 1.8× the target's best 2.28 px</code></pre>
   <p>On one rig's catalog, 96.7% of frames sat within 1.3× of their best, and 1.5% beyond 1.5×.</p>
+  <!-- RESHOOT: sequence-soft-stars.png | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM: the first five frame-shaped cards at the default thumbnail size, three marked Soft Stars with HFR above 6, then two marked Possible Obstruction, with their score chips and grades. Crop: that row of cards only. -->
   <figure>
     <img src="../assets/sequence-soft-stars.png" alt="Sequence cards: three frames marked Soft Stars with HFR above 6, then frames marked Possible Obstruction" loading="lazy">
     <figcaption>Frames at four times the target's best HFR are capped and marked Soft Stars.</figcaption>
@@ -292,18 +328,29 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   </ul>
 
   <h2 id="limits">Penalties and reject limits</h2>
-  <p>The <strong>Scoring</strong> control in Sequence sets how hard event evidence hits the score, and optional fixed limits like N.I.N.A.'s subframe selection.</p>
+  <p>The <strong>Scoring</strong> control in the Sequence toolbar sets how hard evidence hits the score, and optional fixed reject limits like N.I.N.A.'s subframe selection.</p>
   <div class="table-wrap"><table>
-    <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+    <tr><th>Setting</th><th>Built in</th><th>Effect</th></tr>
     <tr><td><strong>Satellite trails</strong></td><td>100%</td><td>Score hit for a pixel-confirmed trail. At 0%, trails neither lower the score nor drive reject recommendations, but a confirmed trail still shows as a warning. Useful when stacking removes trails.</td></tr>
     <tr><td><strong>Pointing</strong></td><td>100%</td><td>Score hit for off-target, pointing-jump, pointing-drift and corroborated solve-failure evidence. At 0% it also stops driving reject recommendations.</td></tr>
-    <tr><td><strong>Temporal anomalies</strong></td><td>100%</td><td>Score hit when a frame suddenly departs from its neighbours.</td></tr>
-    <tr><td><strong>Max HFR</strong></td><td>Off</td><td>Reject any frame whose measured HFR (pixels) is over the limit.</td></tr>
-    <tr><td><strong>Min stars</strong></td><td>Off</td><td>Reject any frame with fewer detected stars than the limit.</td></tr>
+    <tr><td><strong>Temporal anomalies</strong></td><td>100%</td><td>Score hit when a frame suddenly departs from its neighbours, such as a sudden drop in stars or jump in HFR.</td></tr>
+    <tr><td><strong>HFR rise</strong></td><td>100%</td><td>How hard a frame is marked down for an HFR above the sequence's sharpest frames (its 10th percentile). At 100% the hit starts 5% over, and the HFR term reaches zero at 30% over.</td></tr>
+    <tr><td><strong>Star loss</strong></td><td>100%</td><td>How hard a frame is marked down for fewer stars than the sequence's best frames (its 90th percentile). At 100% the hit starts 10% under, and the star term reaches zero at 40% under.</td></tr>
+    <tr><td><strong>Max HFR</strong></td><td>Off</td><td>Reject any frame whose measured HFR (pixels) is over the limit. Above 0 and up to 100.</td></tr>
+    <tr><td><strong>Min stars</strong></td><td>Off</td><td>Reject any frame with fewer detected stars than the limit. A whole number from 1 to 1,000,000.</td></tr>
   </table></div>
-  <p>Penalties run from 0% (ignore the evidence) to 200% (double the hit). A frame past a reject limit is capped and gets an <code>[Auto]</code> reject recommendation, whatever the rest of the sequence looks like. A frame missing the measurement is exempt.</p>
+  <p>Penalties run from 0% (ignore the evidence) to 200% (double the hit), in steps of 10%. For <strong>HFR rise</strong> and <strong>Star loss</strong> the penalty divides both ends of the band: at 200% a frame loses score from 2.5% more HFR and the term reaches zero at 15%, at 50% the band doubles, and at 0% standing behind the good frames costs nothing. These keep the score graded and relative to the sequence.</p>
+  <p><strong>Max HFR</strong> and <strong>Min stars</strong> reject only past a fixed line. A frame past a limit is capped and gets an <code>[Auto]</code> reject recommendation, whatever the rest of the sequence looks like. A frame missing the measurement is exempt. An empty limit is off. A value outside the ranges above is refused and shown, never quietly changed.</p>
   <p>One limit is always on: <strong>Sensor Temperature</strong>. A frame whose sensor ran more than 10 °C warmer than the median of its session, or more than 20 °C above the cooler's set point, is capped and recommended for rejection. Dark current and hot pixels climb steeply with temperature, and no dark shot at the set point removes them. Colder never flags, and a frame with no temperature reading is exempt.</p>
-  <p>The settings are remembered and apply to Sequence, grid badges and image detail, so a frame scores the same everywhere. The zero-star cap does not scale. The CLI takes <code>--ignore-satellites</code>, <code>--max-hfr</code> and <code>--min-stars</code>; API callers pass <code>penalty_satellite</code>, <code>penalty_pointing</code>, <code>penalty_temporal</code>, <code>hfr_reject_above</code>, <code>star_count_reject_below</code> or <code>sensor_temp_tolerance_c</code>.</p>
+  <p>The zero-star cap does not scale. The CLI takes <code>--ignore-satellites</code>, <code>--max-hfr</code> and <code>--min-stars</code>; API callers pass <code>penalty_satellite</code>, <code>penalty_pointing</code>, <code>penalty_temporal</code>, <code>penalty_hfr_rise</code>, <code>penalty_star_loss</code>, <code>hfr_reject_above</code>, <code>star_count_reject_below</code> or <code>sensor_temp_tolerance_c</code>.</p>
+  <!-- SHOT: scoring-popover.png | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover. | The Scoring popover. A change applies to this view until you save it as your default. -->
+
+  <h3 id="scoring-defaults">Defaults and the current view</h3>
+  <p>Every view starts from your scoring defaults, set in <strong>Settings › Review › Sequence scoring</strong>. Each field shows its built-in value. <strong>Save defaults</strong> stores your changes, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
+  <!-- SHOT: settings-review-scoring.png | Settings › Review, the Sequence scoring card at the built-in values: Penalties (Satellite trails, Pointing, Temporal anomalies, HFR rise, Star loss, each 100% with its hint and "Built in: 100%"), Reject limits (Max HFR and Min stars empty, reading "off"), Save defaults and Reset to built-in defaults. Crop: that card only. | Settings › Review › Sequence scoring holds the defaults every view starts from. -->
+  <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>, and its popover offers <strong>Save as default</strong>, which makes the view's values your defaults, and <strong>Reset to default</strong>, which returns the view to them. For an editor, <strong>Edit defaults</strong> in the popover opens Settings.</p>
+  <p>Once a value differs from your defaults, the address names all of them: <code>penaltySatellite</code>, <code>penaltyPointing</code>, <code>penaltyTemporal</code>, <code>penaltyHfrRise</code>, <code>penaltyStarLoss</code> (1 is 100%), <code>maxHfr</code> and <code>minStars</code>, with <code>off</code> for a limit turned off. A link therefore scores the same for whoever opens it. A reload, the project's other targets, Images, the image detail and Stacks keep the view's scoring, so a frame scores the same everywhere in the project. Those views show <strong>Scoring (changed)</strong> with <strong>Reset</strong>, and Stacks says beside <strong>Build</strong> which values a build uses. Another project or database starts from your defaults.</p>
+  <p>Signed in to a server with user accounts, your defaults follow you to any browser, like your other view choices; otherwise the browser keeps them. The values an earlier version's Scoring control remembered become your defaults. See <a href="authentication.html">Server Accounts</a>.</p>
 
   <h2 id="diagnostics">Read the annotated diagnostics</h2>
   <p><code>--annotate</code> renders each flagged frame with the analysis grid on top. Cells are marked by the signal that fired, and the caption strip gives the verdict, score, frame metrics and the classifier's explanation.</p>

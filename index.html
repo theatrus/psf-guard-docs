@@ -98,6 +98,7 @@ function gtag_report_demo() {
       <a class="btn" href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">Source on GitHub</a>
     </div>
   </div>
+  <!-- RESHOOT: hero-flow.jpg | Rebuild the four-step collage from new captures: (1) plan-workspace framing with mosaic panel tools, (2) the Activate on the rigs dialog in its new order, (3) Sequence of the Golf of Mexico H-alpha Jul 9 2026 session with grade dots and the new toolbar, (4) the Teddy Bear Foraxx SHO color card -->
   <figure class="hero-shot">
     <img src="assets/hero-flow.jpg" alt="PSF Guard in four steps: plan a mosaic over the Heart Nebula, activate it as Target Scheduler projects for N.I.N.A., grade a session with soft-star and obstruction frames rejected, and stack a Foraxx SHO color image of the Teddy Bear Nebula" width="2400" height="1733">
     <figcaption>Plan, shoot with N.I.N.A., grade, then stack and export.</figcaption>
@@ -191,6 +192,14 @@ function gtag_report_demo() {
       night's flats and darks matched. Its masters come back as stacks.</p>
     </div>
     <div class="card">
+      <div class="icon">🧫</div>
+      <h3>Calibration you can check</h3>
+      <p>Every bias, dark and flat is graded. Flats are grouped by what they
+      measure, dust and vignetting are drawn, and each light says which
+      flats it takes and why. Projects the library serves poorly are
+      flagged.</p>
+    </div>
+    <div class="card">
       <div class="icon">🎯</div>
       <h3>Planning across rigs</h3>
       <p>Frame a target or mosaic on survey images, set goals per filter, check
@@ -235,6 +244,13 @@ function gtag_report_demo() {
       calibration and plans, and changes them as you would, with your
       permissions.</p>
     </div>
+    <div class="card">
+      <div class="icon">💾</div>
+      <h3>Backups</h3>
+      <p>Back up the settings and every catalog into one archive, now or on a
+      schedule, while N.I.N.A. keeps writing. <code>psf-guard backup</code>
+      does the same from cron or a timer.</p>
+    </div>
   </div>
 </section>
 
@@ -244,6 +260,7 @@ function gtag_report_demo() {
     Sequence scores a whole session at once and gives the cause of each low
     score. Annotated diagnostics mark the cells where a frame broke its own baseline.
   </p>
+  <!-- RESHOOT: sequence-session.jpg | Sequence, Golf of Mexico (ultra cat), H-alpha session Jul 9 2026: new toolbar, score chart with grade dots, cards with Soft Stars and Possible Obstruction -->
   <figure class="feature-shot">
     <img src="assets/sequence-session.jpg" alt="Sequence for one H-alpha session: score chart, solved pointing, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
     <figcaption>One night: three frames with soft stars, then a run of obstructions.</figcaption>
@@ -280,6 +297,18 @@ function gtag_report_demo() {
   </p>
 </section>
 
+<section class="section" id="calibration">
+  <h2>See the calibration each light gets</h2>
+  <p class="sub">
+    The Calibration page shows a rig's bias, darks and flats night by night, each
+    graded against the frames like it. Flats are grouped by what they measure, so new dust
+    or a moved camera starts a new group, and each light takes flats from its own
+    side of the change. Keep a frame out, use it anyway, or split a group by hand.
+  </p>
+  <!-- SHOT: calibration-flat-groups.jpg | Calibration › Frames, Groups view for rig starfront-redcat61: group list in the sidebar with a split and its reason, one flat open with Spots and Large dust drawn | Flat groups with the split between them, and a flat's dust drawn. -->
+  <p><a class="btn" href="docs/calibration.html">Calibration Libraries →</a></p>
+</section>
+
 <section class="section" id="planning">
   <h2>Plan the next nights across every rig</h2>
   <p class="sub">
@@ -289,6 +318,7 @@ function gtag_report_demo() {
     to write Target Scheduler projects, targets and exposure plans, with a preview of
     every row.
   </p>
+  <!-- RESHOOT: plan-workspace.jpg | Plan workspace for Heart Mosaic (askar107phq): summary reading Activated or Needs activating, Framing tab with Mosaic panels / Panel controls and the 2x2 mosaic on the offline DSS map -->
   <figure class="feature-shot">
     <img src="assets/plan-workspace.jpg" alt="A plan's workspace: a 2 by 2 mosaic over the Heart Nebula on the offline DSS map, with the target and rig panels" loading="lazy">
     <figcaption>A mosaic plan on the offline DSS map, with deep-sky marks and the rig's field.</figcaption>
@@ -304,6 +334,7 @@ function gtag_report_demo() {
     A timeline replays every night per rig, and Live shows where each rig on the
     Director plugin points now.
   </p>
+  <!-- RESHOOT: sky-live.jpg | Sky view with Live on: new icon header, stat band, all-sky map, Live list of rigs -->
   <figure class="feature-shot">
     <img src="assets/sky-live.jpg" alt="Sky coverage with totals, rig and filter chips, the all-sky map, and the Live list of rigs" loading="lazy">
     <figcaption>Totals, the all-sky map and the Live list of rigs.</figcaption>
@@ -328,10 +359,12 @@ function gtag_report_demo() {
 <section class="section" id="tour">
   <h2>A quick tour</h2>
   <div class="gallery">
+    <!-- RESHOOT: library-compact.jpg | Library, compact view, full width: rows in columns with state, progress, grades, dates, calibration Poor/Check pills, Sequence, Stacks, ⚙; new icon header -->
     <figure>
       <img src="assets/library-compact.jpg" alt="The Library with one row of pills per project" loading="lazy">
       <figcaption>The Library: every project in every catalog, newest work first.</figcaption>
     </figure>
+    <!-- RESHOOT: stacks-mosaic.jpg | Stacks for Heart Mosaic mosaic (4 panels): panel stacks in grid order and on the sky; new header -->
     <figure>
       <img src="assets/stacks-mosaic.jpg" alt="A four-panel mosaic in Stacks, in grid order and on the sky" loading="lazy">
       <figcaption>A mosaic's panel stacks, in grid order and on the sky.</figcaption>
@@ -340,6 +373,7 @@ function gtag_report_demo() {
       <img src="assets/compare.jpg" alt="Side-by-side comparison with linked zoom" loading="lazy">
       <figcaption>Compare two frames with linked zoom and pan.</figcaption>
     </figure>
+    <!-- RESHOOT: activation-preview.png | Activate on the rigs dialog for Heart Mosaic: auto preview in the new order (what Target Scheduler will shoot, what it turns off and why, what it turns back on) -->
     <figure>
       <img src="assets/activation-preview.png" alt="Activation preview listing every Target Scheduler row per rig" loading="lazy">
       <figcaption>Activation lists every row before it writes.</figcaption>
@@ -389,7 +423,8 @@ psf-guard server catalog.sqlite ./images</code></pre>
   <div class="callout" style="margin-top:2rem">
     <strong>Back up your Target Scheduler database</strong> before PSF Guard first
     writes to it. Grading writes to the file directly. Imports, sync and activation
-    preview their changes before they apply.
+    preview their changes before they apply. <a href="docs/backups.html">Backups</a>
+    copies every catalog safely, from Settings or <code>psf-guard backup</code>.
   </div>
 </section>
 

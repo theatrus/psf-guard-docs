@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -149,6 +150,13 @@ function gtag_report_demo() {
     the Sky.
   </p>
 
+  <div class="callout info">
+    <strong>New after 0.11.</strong> Each catalog in Settings › Rigs links to its
+    rigs' calibration settings, and the rig and site forms say <strong>Unsaved
+    changes</strong>. A remote site that missed an activation gets it again on
+    its own once it answers.
+  </div>
+
   <h2 id="list">The rig list</h2>
   <p><strong>Settings › Rigs</strong> lists every registered database as a rig:
   its field of view and pixel scale, whether the N.I.N.A. plugin has reported
@@ -156,6 +164,13 @@ function gtag_report_demo() {
   database becomes a rig once the Library opens.
   <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
   opens its catalog.</p>
+  <p>Under <strong>Calibration:</strong>, each row names the calibration rigs its
+  catalog records, with how many values each sets for itself. A calibration rig
+  is a telescope, camera, frame size and binning, as the calibration library
+  records it. Each name opens that rig's settings under
+  <a href="calibration.html#matching">Settings › Calibration</a>, and the note above
+  Calibration's rig list links back here.</p>
+  <!-- RESHOOT: settings-rigs.png | Settings › Rigs in the new card layout, desktop width: the Rigs card with its intro line and the five rigs (starfront-redcat61, starfront-ultracat131, askar107phq, c925-scheduler, ultra cat), each with field and pixel scale, its "Calibration:" links (camera · frame size · N own values), Library and Setup. Crop to the card. -->
   <figure>
     <img src="../assets/settings-rigs.png" alt="Settings › Rigs: five rigs with field of view and pixel scale, each with Library and Setup" loading="lazy">
     <figcaption>Settings › Rigs: one row per registered database.</figcaption>
@@ -166,7 +181,14 @@ function gtag_report_demo() {
   the left on a desktop and in a strip on a narrow screen:
   <strong>Optics</strong>, <strong>Site</strong>, <strong>Limits and
   delivery</strong> and <strong>Collaboration</strong>. Edits stay in the form
-  while you switch sections; <strong>Save rig profile</strong> saves them.</p>
+  while you switch sections, and while the setup is folded;
+  <strong>Save rig profile</strong> saves them, and <strong>Unsaved
+  changes</strong> beside it says when there is something to save.</p>
+  <p>Settings asks before <strong>Done</strong>, <strong>×</strong> or a click
+  outside closes it over edits a form has not saved: <strong>Keep
+  editing</strong> or <strong>Close without saving</strong>. The browser asks
+  before a reload drops them.</p>
+  <!-- RESHOOT: rig-setup-optics.png | Settings › Rigs › Setup for askar107phq in the new card layout: the section rail (Optics, Site, Limits and delivery, Collaboration) with Optics open, sensor size, pixel size, focal length, aperture, camera angle, the computed field, and Use frame headers naming the frame it read. Crop to the setup. -->
   <figure>
     <img src="../assets/rig-setup-optics.png" alt="Rig setup, Optics: sensor size, pixel size, focal length, aperture, camera angle and the computed field" loading="lazy">
     <figcaption>Optics, with Use frame headers showing the frame it reads.</figcaption>
@@ -197,6 +219,11 @@ function gtag_report_demo() {
   <p>Visibility, feasibility and the program sent to the plugin all use the
   resolved location and horizon. A rig with neither has no location, and its
   horizon is flat at its minimum altitude.</p>
+  <p>Opening another site keeps the edits of the one you left; <strong>Save
+  site</strong> saves them, with <strong>Unsaved changes</strong> beside it until
+  then.</p>
+  <!-- RESHOOT: settings-sites.png | Settings › Rigs, scrolled to the Sites card in the new layout: one site open with Name and Location fields and a pasted N.I.N.A. horizon, and Save site. Blank or blur the latitude and longitude values; never show a real site's coordinates. -->
+  <!-- RESHOOT: rig-setup-site.png | Settings › Rigs › Setup for askar107phq, Site section, new card layout: Planning site select, the location fields (blank or blur the latitude and longitude values), Bortle class, sky brightness and the horizon box, with Use frame headers. -->
   <div class="shot-pair">
     <figure>
       <img src="../assets/settings-sites.png" alt="Settings › Rigs › Sites: a site's location fields and a pasted N.I.N.A. horizon" loading="lazy">
@@ -221,10 +248,12 @@ function gtag_report_demo() {
   one. A plan's own limits still win for its project. Apply is refused when a
   project or the limits changed since the list was read. Nothing applies by
   itself; a project made later waits for the next Apply.</p>
+  <!-- RESHOOT: rig-limits.png | Settings › Rigs › Setup for askar107phq, Limits and delivery section, new card layout: Planning limits and the Target Scheduler limits fields with their inherited values. Crop to those two boxes. -->
   <figure>
     <img src="../assets/rig-limits.png" alt="Limits and delivery: planning limits, and Target Scheduler limits with inherited values" loading="lazy">
     <figcaption>A rig's planning limits and its Target Scheduler limits for every project in its database.</figcaption>
   </figure>
+  <!-- RESHOOT: rig-ts-projects.png | Same setup, Limits and delivery, scrolled down: the Target Scheduler projects comparison (each differing project with what will change, or "all N projects … have these limits"), Apply to N projects, and the Remote site box with Plans push to set to This server only. New card layout. -->
   <figure>
     <img src="../assets/rig-ts-projects.png" alt="Target Scheduler projects: all 7 projects in the rig's database have these limits; Remote site set to This server only" loading="lazy">
     <figcaption>The comparison with every project in the rig's database, and <strong>Remote site</strong> below it.</figcaption>
@@ -238,6 +267,31 @@ function gtag_report_demo() {
   database. See <a href="activation.html#remote">Rigs at another
   site</a>.</p>
 
+  <h3 id="missed-activation">When a site misses an activation</h3>
+  <p>A remote site can miss an activation: it was offline at
+  <strong>Activate</strong>, the push failed, or it has not run yet. The plan
+  then reads <strong>Needs activating</strong> even when the rows here match it,
+  and says why, here for a site named observatory-pi:</p>
+  <ul>
+    <li>the summary's tooltip and the bar at the top: "observatory-pi hasn't
+      received this activation";</li>
+    <li>the rig's line on the Rigs tab: <em>behind · not sent to
+      observatory-pi</em>.</li>
+  </ul>
+  <p>The bar and the activation dialog offer <strong>Send to observatory-pi
+  again</strong> (without "again" before a first try). The dialog lists each
+  such rig with the error and when it was tried. Neither shows the button once
+  every site has the activation.</p>
+  <p>The server also sends it on its own once the site answers: a successful
+  <strong>Test connection</strong> under Settings › Sync, a sync with that peer
+  other than a pull that
+  writes, or another push that reaches it. It sends only the latest activation of
+  each plan, never one the site already applied. A pull that writes does not
+  send, since the site's rows may have replaced the ones here; the plan may then
+  ask to be activated again first. The server log says what it sent and what
+  failed.</p>
+  <!-- SHOT: plan-send-again.png | Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
+
   <h2 id="live">Live</h2>
   <p>Rigs that run the <a href="#director">Director plugin</a> report what they
   do. The header's
@@ -249,6 +303,7 @@ function gtag_report_demo() {
   now. A list of rigs sits beside the map; choosing one turns the map to it. A
   quiet rig is drawn dashed red. A rig that reports no mount position is placed
   at its planned target, dotted and labeled <em>at target</em>.</p>
+  <!-- RESHOOT: sky-live.jpg | Sky view with Live on, opened from the header's Live chip, desktop width with the new icon header: the all-sky coverage map with each reporting rig drawn where it points, the Live list of rigs beside the map, and the Live table under it. -->
   <figure>
     <img src="../assets/sky-live.jpg" alt="Sky coverage with Live on: the all-sky map, the Live list of rigs beside it and the timeline below" loading="lazy">
     <figcaption>Live on the Sky. Each reporting rig is drawn where it points; the list sits beside the map.</figcaption>

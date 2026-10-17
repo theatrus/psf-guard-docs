@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Storage &amp; Performance — PSF Guard</title>
-  <meta name="description" content="Choose where PSF Guard keeps caches, stacks and calibration masters, set disk limits and processor shares, manage the header job queue, and find the desktop logs.">
+  <meta name="description" content="Choose where PSF Guard keeps caches, stacks and calibration masters, set disk limits and processor shares, follow the header's background jobs, stop the server safely, and find the desktop logs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html" class="active" aria-current="page">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -145,8 +146,14 @@ function gtag_report_demo() {
   <h1 id="storage-title">Storage and Performance</h1>
   <p class="lede">Choose where PSF Guard keeps the files it makes, how full their
   disks may get, and how much of the processor its work may take. This page
-  also covers the header's job queue, what survives a restart, and the desktop
-  app's log files.</p>
+  also covers the header's background jobs, how the server stops, what
+  survives a restart, and the desktop app's log files. To keep copies of
+  settings and catalogs, see <a href="backups.html">Backups</a>.</p>
+
+  <div class="callout info"><strong>New after 0.11.</strong> The background
+  jobs list splits your work from automatic work and counts queued, waiting and
+  needs-you jobs. A server stop lets running work reach a safe point and no
+  longer hangs until the service manager kills it.</div>
 
   <h2 id="folders">Choose where files go</h2>
   <p>Each database keeps the files PSF Guard generates in three folders, with a
@@ -179,7 +186,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <strong>Save folders</strong>. Leave Stacks or Calibration masters empty to
   use the cache. A folder the server's config file fixes reads <em>Set by the
   server config file</em> and cannot change here. Choosing folders needs
-  database management.</p>
+  database management. Settings asks before it closes over folders you have
+  not saved.</p>
+  <!-- RESHOOT: settings-storage-folders.png | Settings › Storage in the new card layout, desktop app or a server allowing database management: the Folders card with Cache, Stacks and Calibration masters fields (Stacks and Calibration masters empty, showing they use the cache) and Save folders; crop to the Folders card -->
   <figure>
     <img src="../assets/settings-storage-folders.png" alt="Settings › Storage › Folders: Cache, Stacks and Calibration masters" loading="lazy">
     <figcaption>Folders saved here take effect at the next start, which moves the files across first.</figcaption>
@@ -214,6 +223,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   volume the three folders sit on: how full it is, its limit, which folders and
   databases it holds, and how much of it is stacks, calibration masters and
   image previews.</p>
+  <!-- RESHOOT: settings-storage-disk-use.png | Settings › Storage in the new card layout on a server whose three folders sit on two or more volumes: the Disk use card with each volume's usage bar and limit mark, what it holds, the Most of the cache volume to use slider and Separate limits for stacks and calibration masters ticked with its two sliders; crop to the Disk use card -->
   <figure>
     <img src="../assets/settings-storage-disk-use.png" alt="Settings › Storage › Disk use: three volumes with usage bars and limit marks, the Most of the volume to use slider and Separate limits" loading="lazy">
     <figcaption>Each volume shows how full it is and what PSF Guard keeps on it.</figcaption>
@@ -246,8 +256,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p>Tick <strong>Separate limits for stacks and calibration masters</strong>
   to give folders on their own volumes limits of their own: <strong>Most of the
   stack volume to use</strong> and <strong>Most of the calibration master
-  volume to use</strong>. A volume that holds more than one folder uses the
-  lowest of their limits. A full stack volume never deletes previews from a
+  volume to use</strong>; the first slider then reads <strong>Most of the
+  cache volume to use</strong>. A volume that holds more than one folder uses
+  the lowest of their limits. A full stack volume never deletes previews from a
   cache on another disk.</p>
   <ul>
     <li>Background preview pre-generation stops two points under the cache
@@ -294,6 +305,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p><strong>Settings &rarr; Performance &rarr; Processor use</strong> sets how
   many cores each kind of work may use, as a share of the logical cores. A
   change applies to work that starts after it, without a restart.</p>
+  <!-- RESHOOT: settings-performance.png | Settings › Performance in the new card layout, any server: the Processor use card with the Work you wait on and Background work sliders, one of them moved off its default so Use the default shows; crop to that card -->
   <figure>
     <img src="../assets/settings-performance.png" alt="Settings › Performance › Processor use: Work you wait on and Background work sliders" loading="lazy">
     <figcaption>Each share limits all work of its kind together.</figcaption>
@@ -302,7 +314,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     <table>
       <tr><th>Share</th><th>Covers</th><th>Default</th></tr>
       <tr><td><strong>Work you wait on</strong></td><td>Stack builds, color and stretches you start, quality scans you start, previews being looked at</td><td>50%, or <code>scan_worker_ratio</code></td></tr>
-      <tr><td><strong>Background work</strong></td><td>Automatic stack refreshes, quality backfill and new-frame analysis in every database, preview pre-generation</td><td>25%, or <code>background_worker_ratio</code></td></tr>
+      <tr><td><strong>Background work</strong></td><td>Automatic stack refreshes, quality backfill and new-frame analysis in every database, calibration grading, flat measuring, preview pre-generation</td><td>25%, or <code>background_worker_ratio</code></td></tr>
     </table>
   </div>
   <p>Each share is a limit for all such work together, not for each job. Jobs
@@ -325,42 +337,90 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   read and set the shares; <code>null</code> means the default.</p>
 
   <h2 id="jobs">Background jobs in the header</h2>
-  <p>The header shows background work as one small chip: the overall progress
-  and the number of jobs. Hover, focus or click it to open the queue. It lists
-  every catalog refresh, quality scan, stack and color build, and WBPP run,
-  running or queued, on any database.</p>
+  <p>The header shows background work as one small chip: a progress ring, the
+  overall percent, and an icon with a count for each state that has any
+  jobs: running (a play mark), queued (a numbered list), waiting (an
+  hourglass) and needs you (a warning triangle). Hover a count to read its
+  name. On a phone the chip leaves out the running count, since the percent
+  stands for it. Hover, focus or click the chip to open the list.</p>
+  <!-- SHOT: header-jobs-chip.png | The header's right end on a desktop browser with the background jobs chip closed while work runs: progress ring, percent, and the running, queued and waiting counts each with its icon (one build running, two queued, one automatic refresh waiting), with the tooltip of the hourglass count ("1 waiting") showing; crop tightly around the chip and its tooltip | The chip counts running, queued, waiting and needs-you jobs, one icon each. -->
+  <p>The list holds every job on every database under two headings, each with
+  its own counts:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Heading</th><th>Holds</th></tr>
+      <tr><td><strong>Started by you</strong></td><td>Stack builds and processing runs, quality scans and duplicate checks you asked for, WBPP runs, a catalog refresh you asked for, and backups and transfers started by hand</td></tr>
+      <tr><td><strong>Automatic</strong></td><td>Quality backfill and the analysis of new frames, automatic scans, <strong>Measuring flats</strong>, <strong>Reading frame sites</strong>, catalog refreshes on expiry or at start, automatic stack refreshes and re-applies of processing, scheduled backups, and transfers a connection's policy queued</td></tr>
+    </table>
+  </div>
+  <p>Under each heading, rows that need you come first, then running work,
+  then queued work, then waiting work.</p>
+  <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
   <figure>
-    <img src="../assets/header-jobs.png" alt="The header's background jobs popup with running stack builds and Stop" loading="lazy">
-    <figcaption>The queue lists work on every database; click a row's target to open what it works on.</figcaption>
+    <img src="../assets/header-jobs.png" alt="The header's background jobs list: Started by you with a running build and a queued build three places back, and Automatic with a waiting stack refresh" loading="lazy">
+    <figcaption>Your work and automatic work under their own headings. A queued
+    build says its place in the whole line.</figcaption>
   </figure>
   <ul>
-    <li><strong>↑</strong> and <strong>↓</strong> move a waiting stack build or
-      WBPP run in its line. The line, not the order you asked, decides what
-      runs next.</li>
-    <li><strong>✕</strong> takes a waiting job out of the line.</li>
-    <li><strong>Stop</strong> ends a running stack build or WBPP run after
-      asking once: <strong>Stop it</strong> or <strong>Keep</strong>. A color
-      composition already running has no Stop; it finishes within
-      minutes.</li>
+    <li><strong>Queued.</strong> Stack builds, color compositions and
+      processing runs share one line, and WBPP runs have another. Both
+      headings share each line, since an automatic refresh's build can wait
+      ahead of yours, so a queued row says its place in the whole line and
+      how many wait ahead of it: <code>queued · 4 · 3 ahead</code>, or
+      <code>queued · 1 · next</code>. <strong>↑</strong> and
+      <strong>↓</strong> move it within the whole line, past rows under the
+      other heading, and <strong>✕</strong> takes it out. The line, not the
+      order you asked, decides what runs next.</li>
+    <li><strong>Waiting.</strong> Automatic work steps aside whenever yours
+      runs. A database quality analysis, an automatic stack refresh or a
+      re-apply of processing that steps aside says what it waits for and keeps
+      a still bar at how far it had got. Waiting is normal, so these rows are
+      drawn muted.</li>
+    <li><strong>Needs you.</strong> Only a row that needs a person takes the
+      warning colour, such as a collaboration transfer held for review, before
+      upload or after it failed. A transfer row carries its own Pause, Resume,
+      Retry and Cancel; see <a href="collaboration.html">Collaboration</a>.</li>
+    <li><strong>Stop</strong> ends running work after asking once:
+      <strong>Stop it</strong> or <strong>Keep</strong>. It is offered on a
+      running stack build, an RC-Astro processing run, a WBPP run, a duplicate
+      check or repair, a backup, <strong>Measuring flats</strong> and
+      <strong>Reading frame sites</strong>. Stop pauses flat measuring until
+      those flats change, and frame sites until frames are imported, or either
+      until the server starts again; the Calibration page offers
+      <strong>Resume now</strong>. A color composition
+      already running has no Stop and finishes within minutes; a stretch or
+      deconvolution finishes in moments.</li>
+    <li>A row adds what waits behind the step under way when the server knows
+      it, such as <code>1 more rig to check · 2 rigs queued</code> on
+      <strong>Measuring flats</strong>, <code>another pass queued</code> on
+      <strong>Reading frame sites</strong>, or <code>3 channels to
+      stack</code> on a waiting stack refresh.</li>
     <li>Click the target or database under a row to open what it works on: a
-      build's or WBPP run's stacks, a quality scan's sequence, or a refreshed
-      database's images.</li>
+      build's, processing run's or WBPP run's stacks, a quality scan's
+      sequence, a refreshed database's images, or the Calibration page for
+      flat measuring, frame sites and duplicate checks.</li>
     <li>A quality scan that finished with errors stays on the chip, which
       reads <em>Finished with errors</em> once nothing else runs. Its note
       offers <strong>Open the sequence</strong> and stays until you dismiss
       it.</li>
   </ul>
-  <p>Changing the line needs write access. A stack build's line reads, for
-  example, <em>Rejecting transients · pass 2/3 · frame 4/14</em> through the
-  final rejection pass, and a calibration master build shows which master and
-  what Seiza is doing with it.</p>
+  <!-- SHOT: header-jobs-automatic.png | Header background jobs list on psf-guard.atpn.co while flat measuring runs (for example after new flats for rig c925-scheduler arrive) and a stack build you started runs: Started by you with the running Stacking row and its Stop, and Automatic with a Measuring flats row (rig name, "… of … sessions") drawn muted and marked waiting, its line reading "Waiting for a stack build · …" with a still bar at how far it had got; crop the open list | Automatic work keeps its place in the list, muted while it waits for yours. -->
+  <p>Changing a line or stopping work needs write access. A stack build's row
+  reads, for example, <em>Rejecting transients · pass 2/3 · frame 4/14</em>
+  through the final rejection pass, a calibration master build shows which
+  master and what Seiza is doing with it, and a processing run shows its step
+  and when it started. Scheduled backups list here too; see
+  <a href="backups.html#schedule">Backups</a>.</p>
   <h3 id="automatic-refreshes">Automatic refreshes</h3>
   <p>With <strong>Rebuild stack previews on their own</strong> on, under
   <strong>Settings &rarr; Stacking</strong>, new frames and grade changes queue
   a refresh after a settling delay. A refresh still settling is not listed or
-  counted: nothing runs yet. It appears once it builds, marked
-  <code>automatic</code>, and uses the background share. See
-  <a href="stacking.html">Stacks</a>.</p>
+  counted: nothing runs yet. Once due, a refresh held back by your work or
+  another build is listed under <strong>Automatic</strong> as
+  <strong>Refreshing stacks</strong>, waiting, and its builds join the line
+  when it starts. An automatic build your build stopped starts again once
+  your work has been quiet for 30 seconds. Automatic builds use the
+  background share. See <a href="stacking.html#refresh">Stacks</a>.</p>
   <p>Scripts can start a settling refresh at once or drop it until the next
   change:</p>
   <pre><code><span class="c"># Builds running first, then the line in order, then settling refreshes under "scheduled"</span>
@@ -377,20 +437,43 @@ curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/move \
   -H "Content-Type: application/json" -d '{"position":0}'
 curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre>
 
+  <h2 id="stop">Stop the server</h2>
+  <p>A stop, from Ctrl+C, a service manager's SIGTERM or quitting the desktop
+  app, starts nothing new and lets running work reach its next safe point
+  before the server exits, so no file or catalog write is cut off:</p>
+  <ul>
+    <li>A quality scan saves what it has measured.</li>
+    <li>A stack build checkpoints the frames it has integrated and resumes
+      from there after the restart.</li>
+    <li>A running RC-Astro tool is killed rather than waited for; its
+      processing run resumes after the last tool step that finished.</li>
+    <li>Imports and calibration grading stop at a commit.</li>
+  </ul>
+  <p>Every five seconds the log says what the stop still waits for.</p>
+  <p>In the desktop app, <strong>Restart server</strong> under
+  <strong>Settings &rarr; Server</strong> waits for the old server to finish
+  its work, so the job queue it saves is not lost. If that work still runs
+  after two minutes, Settings and the log say what it waits for, and the old
+  server is left to finish; restart the whole app to end it.</p>
+
   <h2 id="restart">After a restart</h2>
   <p>The job queue survives a restart. PSF Guard keeps a journal beside the
   database registry (<code>config.jobs.json</code> next to
   <code>config.json</code>), rewritten a few seconds after the queue changes
-  and once more when the server stops cleanly: Ctrl+C, SIGTERM, or quitting the
-  desktop app. On start it puts the queue back before the automatic scheduler
-  starts anything:</p>
+  and once more when the server stops cleanly. On start it puts the queue back
+  before the automatic scheduler starts anything:</p>
   <ul>
-    <li>Stack and color builds come back in order, each prepared again from the
-      catalog as it is now. One whose database is gone, or that finished before
-      the restart, is skipped with a note in the log.</li>
+    <li>Stack and color builds and processing runs come back in order, each
+      prepared again from the catalog as it is now. One whose database is
+      gone, or that finished before the restart, is skipped with a note in the
+      log.</li>
     <li>A build cut off part way resumes from its checkpoint where it can. One
-      cut off by two restarts in a row is not started a third time, since it is
-      the likelier cause of the restarts.</li>
+      cut off by two crashes or killed processes in a row is not started a
+      third time, since it is the likelier cause of them. A clean stop does
+      not count.</li>
+    <li>A processing run resumes after the last tool step that finished. One
+      cut off by two restarts in a row, clean stops included, is not started a
+      third time, and the log says so.</li>
     <li>A build whose disk is not mounted yet is retried every minute for half
       an hour.</li>
     <li>Automatic refreshes still settling keep their due times, or run at once
@@ -415,15 +498,15 @@ curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre
       <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
     </table>
   </div>
-  <p>The log holds what a server prints to its console: folder moves, the
-  queue put back after a restart, and each frame a stack leaves out or rejects,
-  and why. <code>RUST_LOG</code> sets the level; the default is
+  <p>The log holds what a server prints to its console: folder moves, what a
+  stop waits for, the queue put back after a restart, and each frame a stack
+  leaves out or rejects, and why. <code>RUST_LOG</code> sets the level; the default is
   <code>info</code>. A server run from the command line or in Docker logs to
   its console.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="sync-plugin.html">&larr; N.I.N.A. Sync Plugin</a>
-    <a href="cli.html">CLI Reference &rarr;</a>
+    <a href="backups.html">Backups &rarr;</a>
   </nav>
 </main>
 </div>

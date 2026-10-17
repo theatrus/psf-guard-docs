@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -147,6 +148,7 @@ function gtag_report_demo() {
     PSF Guard predicts which cataloged satellites crossed a solved frame while its shutter was open, then checks the pixels along each path for a matching trail. This page covers the overlay, the metadata it needs, how trails affect scores, and the orbital-element cache.
   </p>
 
+  <!-- RESHOOT: satellite-california-overlay.png | Image detail of a frame with pixel-aligned satellite trails: the California Nebula G frame from October 2025 if the capture server has it, else any frame where Identify satellite tracks finds a pixel match (then change the alt text and caption to name it). Track identifiers on, dashed predictions and solid green fitted paths on the frame. Side panels with their fold chevrons: the other panels folded to one line each, Satellite tracks open with its Pixel aligned badge, Track identifiers on, Crossings, Bright risk, Pixel matches, Exposure, Element source and the track list. Crop: the frame and the side panel. -->
   <figure>
     <img src="../assets/satellite-california-overlay.png" alt="California Nebula exposure with dashed orbital candidates and solid green pixel-aligned satellite trails" loading="lazy">
     <figcaption>Dashed lines are orbital predictions. Solid green lines are trails found in the FITS pixels along a prediction.</figcaption>
@@ -154,7 +156,7 @@ function gtag_report_demo() {
 
   <h2 id="identify">Identify satellite tracks</h2>
   <ol>
-    <li>Open an image and find the <strong>Satellite tracks</strong> panel.</li>
+    <li>Open an image and find the <strong>Satellite tracks</strong> panel. If it is folded, click its title to open it.</li>
     <li>Click <strong>Identify satellite tracks</strong>, or press <kbd>T</kbd>. PSF Guard solves the frame first when no valid solution is cached.</li>
     <li>Use <strong>Show track identifiers</strong> to turn the overlay on and off. Red, yellow and cyan dashed lines are high, possible and low-risk predictions; a solid green line is the fitted pixel path.</li>
     <li>Click a named result to open its satellite information page.</li>
@@ -165,7 +167,7 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="prediction">Track prediction</h2>
-  <p>PSF Guard uses Seiza 0.24.0 and <code>seiza-satellites</code> 0.13.0. Since Seiza 0.23.1, tracks are predicted with the WGS72 constants their orbital elements were fitted with. This moves a track by up to tens of arcseconds. Predictions cached by an earlier version are recomputed by the next quality scan.</p>
+  <p>PSF Guard uses Seiza 0.36.0 and <code>seiza-satellites</code> 0.22.0. Since Seiza 0.23.1, tracks are predicted with the WGS72 constants their orbital elements were fitted with. This moves a track by up to tens of arcseconds. Predictions cached by an earlier version are recomputed by the next quality scan.</p>
 
   <h2 id="metadata">Required metadata</h2>
   <p>A prediction needs three inputs. Without any one of them the check abstains instead of calling the frame clean.</p>

@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -149,6 +150,7 @@ function gtag_report_demo() {
     command line needed.
   </p>
 
+  <!-- RESHOOT: library-compact.jpg | Library, compact view, full width: rows in columns with state, progress, grades, dates, calibration Poor/Check pills, Sequence, Stacks, ⚙; new icon header -->
   <figure class="feature-shot">
     <img src="../assets/library-compact.jpg" alt="The Library: catalog totals, the Show and search controls, and one row of pills per project grouped by when it was last shot" loading="lazy">
     <figcaption>The Library lists every project in every catalog, newest work first.</figcaption>
@@ -193,13 +195,16 @@ function gtag_report_demo() {
   <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
   image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
   frames into projects, targets and exposure plans from the headers alone. Turn on
-  <strong>Automatic import</strong> to bring in new frames on a schedule. See
-  <a href="importing.html">Import Images</a>.</p>
+  <strong>Automatic import</strong> to bring in new frames on a schedule; frames
+  for a target the catalog does not know wait for you to <strong>Review</strong>
+  them. See <a href="importing.html">Import Images</a>.</p>
 
   <h2 id="existing-database">Or open a Target Scheduler database</h2>
   <div class="callout">
     <strong>Back up the database before PSF Guard first writes to it.</strong>
     Grading writes to the file. Import and sync preview their changes first.
+    <a href="backups.html">Backups</a> copies every catalog safely while
+    N.I.N.A. runs.
   </div>
   <ol>
     <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
@@ -221,13 +226,17 @@ function gtag_report_demo() {
       <kbd>X</kbd>.</li>
     <li>Open <strong>Sequence</strong> to see a whole session scored, with the cause
       behind each low score.</li>
+    <li>Open <strong>Calibration</strong> to check the bias, darks and flats the
+      project's lights take. A <strong>Poor</strong> or <strong>Check</strong> pill
+      in the Library says a project needs a look.</li>
     <li>Open <strong>Stacks</strong> to stack the accepted frames per channel and
       combine them in color.</li>
     <li>Export the accepted lights for PixInsight, or run WBPP on the server.</li>
   </ol>
   <p>Next: <a href="grader.html">Library &amp; Grader</a>,
   <a href="screening.html">Quality Screening</a>,
-  <a href="stacking.html">Stacks</a> and <a href="exporting.html">Export</a>.</p>
+  <a href="calibration.html">Calibration</a>, <a href="stacking.html">Stacks</a>
+  and <a href="exporting.html">Export</a>.</p>
 
   <h2 id="planning">5. Plan across rigs</h2>
   <p>Every database is a rig and every project a plan. Open a plan's

@@ -63,6 +63,7 @@ const docsNavigation = [
       ["workflows.html", "Rejects & Sync"],
       ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
       ["storage.html", "Storage & Performance"],
+      ["backups.html", "Backups"],
       ["cli.html", "CLI Reference"],
       ["configuration.html", "Configuration & API"],
       ["authentication.html", "Server Accounts"],

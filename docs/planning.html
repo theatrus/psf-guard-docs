@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Planning — PSF Guard</title>
-  <meta name="description" content="Plan a target once for every rig that shoots it: plans in the Library, the plan workspace, project order, scheduling limits and missing GUIDs.">
+  <meta name="description" content="Plan a target once for every rig that shoots it: plans in the Library, the plan workspace and whether its rigs hold it, project order, scheduling limits and missing GUIDs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -150,11 +151,17 @@ function gtag_report_demo() {
   </p>
 
   <div class="callout info">
-    <strong>New in 0.11.</strong> Planning is on for every server. A server
-    without database management plans read only: framing and goals save as
-    drafts, and activation and Target Scheduler edits are refused.
+    <strong>New after 0.11.</strong> A plan reads <strong>Activated</strong> or
+    <strong>Needs activating</strong>, with its own <strong>Activate…</strong>
+    button, and the Library says <strong>Activated on N rigs</strong>. A Library
+    state pill asks before it changes Target Scheduler.
   </div>
 
+  <p>Planning is on for every server. A server without database management
+  plans read only: framing and goals save as drafts, and activation and Target
+  Scheduler edits are refused.</p>
+
+  <!-- RESHOOT: plan-workspace.jpg | Planning workspace for Heart Mosaic (rig askar107phq), Framing tab, whole window at desktop width: the new icon header, the plan summary with its green Activated pill and the Activate… button beside it, the four tabs, the sky with the 2×2 mosaic (locked shot panels with padlocks, small panel names) and the Rectangle / Panel / Sky and Snap buttons, and the Rigs sidebar on the right. No save bar or activation bar up. -->
   <figure>
     <img src="../assets/plan-workspace.jpg" alt="A mosaic plan's workspace: summary, Framing, Exposures, Rigs and Priority and defaults tabs, the framing sky with a 2 by 2 mosaic, and the Target and Rigs panels" loading="lazy">
     <figcaption>A plan's workspace. The summary sits above four tabs; Framing fills the window with the sky.</figcaption>
@@ -174,6 +181,11 @@ function gtag_report_demo() {
       and exposure come from its main exposure plan: one of a second or more,
       then the one asking for the most frames, so a short test plan never sets
       them.</li>
+    <li>Planning never adds objectives on its own: an imported project keeps one
+      objective per filter. A second exposure length on a filter is listed
+      under <strong>Turns off</strong> at activation until
+      <a href="activation.html#take-ts">Take Target Scheduler's values</a>
+      brings it in as an objective of its own.</li>
     <li>Until you save or activate the plan, it follows Target Scheduler. A
       desired count raised or a target moved in N.I.N.A. shows up on the next
       listing. After the first save, the drafts are yours.</li>
@@ -189,16 +201,20 @@ function gtag_report_demo() {
   <p>A plan has no list of its own: it is its projects in the
   <a href="grader.html#overview">Library</a>. A plan shot by several rigs is an
   outer pill, <strong>N rigs</strong>, with the plan's total progress, its stage
-  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Active on N
-  rigs</strong>) and a <strong>Planning</strong> button. Under it sits one row per
+  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Activated on N
+  rigs</strong>) and ⚙, which opens its workspace. Under it sits one row per
   rig, since each rig holds its own targets and frame counts.</p>
+  <p><strong>Activated on N rigs</strong> counts the rigs the last activation
+  wrote. It is not Target Scheduler's <strong>Active</strong> state, which each
+  rig's row shows in its own pill.</p>
+  <!-- RESHOOT: library-plans.png | Library, compact view, scrolled to "Plans with nothing captured yet" below the projects, at desktop width: rows lined up in columns, at least one row with the "Activated on 1 rig" badge, others with Planned or Framed, each with its rig pill, Target Scheduler state pill and "No frames yet", plus the New plan button. Crop to that section. -->
   <figure>
     <img src="../assets/library-plans.png" alt="Plans with nothing captured yet, with each plan's stage, rig database and Target Scheduler state" loading="lazy">
     <figcaption>Plans framed or activated before any rig captures a frame wait below the projects.</figcaption>
   </figure>
   <ul>
-    <li><strong>Planning</strong> (⚙ on a compact row) opens the plan's
-      workspace.</li>
+    <li><strong>Planning</strong> on a detailed card, or ⚙ on a compact row,
+      opens the plan's workspace.</li>
     <li><strong>Plans with nothing captured yet</strong>, below the projects,
       lists plans framed before any rig takes them and plans activated on rigs
       that have not captured a frame. <strong>New plan</strong> starts one; the
@@ -206,17 +222,21 @@ function gtag_report_demo() {
     <li>The <strong>Show</strong> select and the search box narrow plans and
       projects together. <strong>No database</strong> keeps plans nothing shoots
       yet.</li>
-    <li>On a server with database management, a row's state pill is a select:
-      <strong>Active</strong>, <strong>Inactive</strong>, <strong>Draft</strong> or
-      <strong>Closed</strong> writes that project in Target Scheduler at once.</li>
+    <li>On a server with database management, a row's state pill is a select.
+      Choosing <strong>Active</strong>, <strong>Inactive</strong>,
+      <strong>Draft</strong> or <strong>Closed</strong> asks first, naming the
+      project, the state and the database, then writes that project in Target
+      Scheduler. Target Scheduler acts on it from its next pick. Refused, the
+      pill stays on the saved state.</li>
   </ul>
 
   <h2 id="workspace">Open a plan's workspace</h2>
-  <p>Choose <strong>Planning</strong> on a Library row, or pick the project in
-  the header and choose <strong>Planning</strong> there. A plan with no
-  database yet starts its framing from a name or typed coordinates.</p>
-  <p>The workspace has a summary at the top (target, goals, each rig's setup
-  and the activation state) and four tabs:</p>
+  <p>Choose <strong>Planning</strong> or ⚙ on a Library row, or pick the
+  project in the header and choose the <strong>Planning</strong> tab there. A
+  plan with no database yet starts its framing from a name or typed
+  coordinates.</p>
+  <p>The workspace has a summary at the top (target, goals, each rig's setup,
+  and whether the rigs hold the plan) and four tabs:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Tab</th><th>What it holds</th></tr>
@@ -248,11 +268,27 @@ function gtag_report_demo() {
 
   <h2 id="activate">Activate</h2>
   <p>Activation writes the saved plan into each rig's Target Scheduler
-  database. Once every edit is saved, a bar asks for an activation while the
-  rigs lack the saved plan; <strong>Activate…</strong> opens the preview. The
-  summary reads <strong>On the rigs</strong> when nothing is missing, and
-  <strong>Drafts only</strong> on a server that does not write rig databases.
-  See <a href="activation.html#activate">Activation</a>.</p>
+  database, and decides which of the project's exposure plans run there. The
+  summary ends with where the plan stands:</p>
+  <ul>
+    <li><strong>Activated</strong>: the rigs hold the saved plan.</li>
+    <li><strong>Needs activating</strong>: activation would change a rig's
+      Target Scheduler rows. The tooltip says why.</li>
+    <li><strong>Couldn't check the rigs</strong>, or <strong>Couldn't
+      check</strong> and a rig's name: a rig database could not be read. The
+      tooltip says why, and no bar asks.</li>
+    <li><strong>Can't activate yet</strong>: what to do first, such as saving
+      a framing.</li>
+    <li><strong>Drafts only</strong>: this server does not write rig
+      databases.</li>
+  </ul>
+  <p><strong>Activate…</strong>, a separate button beside the label, opens the
+  activation dialog at any time. Once every edit is saved, a bar at the top
+  asks while the plan needs activating and says why; its button reads
+  <strong>Activate again…</strong> after the first activation. See
+  <a href="activation.html#status">Activation</a>.</p>
+  <!-- SHOT: plan-summary-activated.png | Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills. | The rigs hold the saved plan. Activate… opens the dialog at any time. -->
+  <!-- SHOT: plan-needs-activating.png | Planning workspace for Heart Mosaic (rig askar107phq) after raising one objective's goal on Exposures and saving (do not activate): crop to the bar at the top reading "Needs activating: saved plan not activated yet" with its "Activate again…" button, and the plan summary under it. | A saved change the rigs lack: the bar says why and offers Activate again…. -->
   <p>Target Scheduler then runs the rows as it runs any project. When N.I.N.A.
   runs on another machine, the
   <a href="sync-plugin.html">PSF Guard Sync plugin</a>'s <strong>Pull

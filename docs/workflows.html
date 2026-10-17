@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rejects &amp; Sync — PSF Guard</title>
-  <meta name="description" content="Archive rejected frames out of the stacking tree and sync captures, plans and grades between two catalogs or two PSF Guard servers.">
+  <meta name="description" content="Archive rejected frames out of the stacking tree, remove old rejects, and sync captures, plans, grades and calibration choices between two catalogs or two PSF Guard servers.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html" class="active" aria-current="page">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -208,8 +209,8 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
   <h2 id="remove-rejects">Remove old rejects</h2>
   <p>An archived reject stays in the catalog. To take frames that are truly
   bad out of it, and free their disk space, remove them. Removal runs only
-  when you ask, and you can undo it until the trash is emptied. In Settings it
-  needs database management.</p>
+  when you ask, and a restore undoes it until the trash is emptied. It needs
+  an editor.</p>
   <ol>
     <li>In <strong>Settings &rarr; Databases</strong>, click
       <strong>Purge Rejects</strong> beside the database's
@@ -260,6 +261,7 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   GUID (schema 22 or later).</p>
 
   <h3 id="data-transfer">Data Transfer in Settings</h3>
+  <!-- RESHOOT: data-transfer.png | psf-guard.atpn.co as an editor, header menu › Settings › Sync, the Data Transfer card in the new card layout: Merge catalogs selected, Source starfront-redcat61, Destination starfront-ultracat131, Include stored image thumbnails ticked, Preview changes button, before any preview; crop to the Data Transfer card -->
   <figure>
     <img src="../assets/data-transfer.png" alt="Data Transfer with Merge catalogs, Send planning and Send reviewed grades, and source and destination catalogs" loading="lazy">
     <figcaption>Data Transfer lists both catalogs and shows a preview before
@@ -278,8 +280,41 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   </div>
   <p>Each direction makes a preview on the server first. The preview keeps a
   frozen copy of the source and comes back after a page reload. Apply refuses
-  if the destination changed since the preview. The Sync tab needs database
-  management.</p>
+  if the destination changed since the preview. The Sync tab needs an
+  editor.</p>
+
+  <h3 id="calibration-sync">Calibration travels with a merge</h3>
+  <div class="callout info"><strong>New after 0.11.</strong> A merge carries
+  calibration choices and flat-group choices, and its preview counts
+  them.</div>
+  <p><strong>Merge catalogs</strong> and <code>sync pull</code> also copy the
+  calibration library: rigs, raw calibration-frame records and their grades.
+  Generated masters and cached files stay behind; the destination builds its
+  own. With them travel the choices that change which frames a master takes
+  or which flats a light takes:</p>
+  <ul>
+    <li><strong>Keep out</strong> and <strong>Use anyway</strong> on
+      calibration frames. When both catalogs hold a choice for a frame, the
+      later one wins. A choice made on the destination stays with its file
+      when the source catalogued that file under another ID.</li>
+    <li>Flat groups split or joined by hand, and lights put on a side of a
+      change or given one group's flats, matched by flat and light GUID. The
+      later choice or reset wins.</li>
+  </ul>
+  <p>The preview counts these choices, such as "Calibration choices: 3 kept
+  out, 1 used anyway. Masters built from these frames change.", because they
+  change the destination's masters. The Remote PSF Guard preview counts them
+  as <code>calibration choices</code>.</p>
+  <!-- SHOT: data-transfer-calibration-choices.png | psf-guard.atpn.co as an editor, Settings › Sync › Data Transfer: Merge catalogs from a source catalog holding Keep out or Use anyway choices (e.g. starfront-redcat61) into a scratch copy of it registered for the capture, after Preview changes: the preview block with "N rows will be added and N updated", the per-table counts, the "Calibration choices: … kept out, … used anyway. Masters built from these frames change." line, the expiry note, and Apply this preview / Cancel; do not apply; crop to the Data Transfer card | A merge preview counts the Keep out and Use anyway choices it brings, since they change the destination's masters. -->
+  <p>An import catalogues a calibration frame that is on disk twice, such as
+  a copy a filer has not yet cleaned out of the drop folder, once; when the
+  original goes, its row moves to the copy and keeps its grade and marks. A
+  later pull does not undo a <a href="cli.html#repair-duplicates">duplicate
+  repair</a>: a row a repair merged here is never brought back from a catalog
+  that still holds it, and a row the source's repair merged is merged here
+  too, its masters built again. The source keeps its own duplicates until it
+  is repaired there. See <a href="calibration.html#transfer">Calibration
+  Libraries</a>.</p>
 
   <h3 id="sync-cli">Sync from the command line</h3>
   <pre><code><span class="c"># Captures and structure FROM the telescope INTO your copy.
@@ -294,8 +329,10 @@ psf-guard sync planning --from my-db --to telescope.sqlite --dry-run
 psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   <ul>
     <li><strong><code>sync pull</code></strong> copies projects, targets,
-      templates, exposure plans, rule weights and captured images. The
-      telescope wins for structure. An existing frame keeps its local grade
+      templates, exposure plans, rule weights and captured images, and the
+      calibration library with its choices, as
+      <a href="#calibration-sync">above</a>. The telescope wins for
+      structure. An existing frame keeps its local grade
       unless that is Pending, in which case it takes the telescope's.
       <code>--no-image-data</code> skips the thumbnails.</li>
     <li><strong><code>sync planning</code></strong> copies project and target
@@ -320,6 +357,8 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
       <tr><td>A frame PSF Guard catalogued itself (import or upload) before the telescope's row arrived</td><td>Target, file name, and capture time within 2 s</td><td>Updated in place: it takes the telescope's GUID and keeps a reviewed grade</td></tr>
       <tr><td>A frame catalogued from its calibrated copy before the raw file arrived</td><td>Target, capture time, exposure and filter</td><td>Updated in place: the raw file becomes the light, and a reviewed grade stays</td></tr>
       <tr><td>Reviewed grade during a merge</td><td>GUID</td><td>The destination wins</td></tr>
+      <tr><td>Keep out or Use anyway on a calibration frame</td><td>Frame ID</td><td>The later choice wins; a destination choice stays with its file</td></tr>
+      <tr><td>Flat-group split or join, a light's flat side</td><td>Flat and light GUID</td><td>The later choice or reset wins</td></tr>
       <tr><td>Pending grade during a merge</td><td>GUID</td><td>Filled from the source</td></tr>
       <tr><td>Grade push</td><td>GUID</td><td>The source grade and reason win</td></tr>
       <tr><td>Row only at the destination</td><td></td><td>Kept</td></tr>
@@ -359,6 +398,7 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   sync</strong>. A server with no Settings grants the same with a
   <code>[[remote_sync]]</code> block in its config file; see
   <a href="configuration.html#remote-blocks">Configuration</a>.</p>
+  <!-- RESHOOT: settings-remote-psf-guard.png | psf-guard.atpn.co as an editor, Settings › Sync, the Remote PSF Guard card in the new card layout with one peer saved and selected (its Base URL shown, no key), Test connection, Add peer, Pull from peer selected, Local catalog chosen, Preview changes; crop to the Remote PSF Guard card -->
   <figure>
     <img src="../assets/settings-remote-psf-guard.png" alt="Remote PSF Guard in Settings › Sync: peer select, Test connection, Add peer, and Pull from peer, Send planning and Send grades" loading="lazy">
     <figcaption>Remote PSF Guard: add a peer once, then preview and apply in either direction.</figcaption>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Server Accounts — PSF Guard</title>
-  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, mint API tokens, and pair remote clients safely.">
+  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, see what database management adds, mint API tokens, and pair remote clients safely.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html" class="active" aria-current="page">Server Accounts</a></li>
@@ -160,7 +161,7 @@ function gtag_report_demo() {
   </div>
   <p><code>--allow-database-management</code> goes further: on a network
   address the server will not start until an account exists, because those
-  routes take paths the server then reads and writes. Once it starts, only
+  routes name paths the server then reads and writes. Once it starts, only
   editors can use them.</p>
   <div class="callout">
     <strong>Upgrading a server already on the network?</strong> It answers 401
@@ -182,18 +183,69 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Role</th><th>Can</th></tr>
-      <tr><td>Read only (<code>read-only</code>)</td><td>Browse catalogs, images, quality results, exports and cached analysis. List, apply and export processing setups. Cannot grade, edit, or open Settings.</td></tr>
-      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus grade with undo and redo, edit projects, targets and exposure plans, start quality scans and imports, save processing setups, write local exports, and apply sync previews. With database management on, also manage databases, peers, catalogs and calibration records, and remove rejects.</td></tr>
+      <tr><td>Read only (<code>read-only</code>)</td><td>Browse catalogs, images, quality results, exports and cached analysis. List, apply and export processing setups. Check the calibration library for duplicates. Save their own view choices. Cannot grade, edit, or open Settings.</td></tr>
+      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus the work listed below. <a href="#management">Database management</a> adds the server paths.</td></tr>
     </table>
   </div>
+  <p>An editor can, with or without database management:</p>
+  <ul>
+    <li>grade, with undo and redo;</li>
+    <li>edit projects, targets, coordinates and exposure plans, and move
+      targets and exposures between projects;</li>
+    <li>start quality scans, and imports from the database's own image
+      folders;</li>
+    <li>save, delete and import processing setups;</li>
+    <li>keep calibration frames out or use them anyway, mark their validity,
+      forget them, clear masters, and invalidate Target Scheduler flat
+      coverage;</li>
+    <li>set a project's exposure grouping and a catalog's AstroBin filter map,
+      and fill in missing GUIDs;</li>
+    <li>start, queue, cancel and publish WBPP runs in the runs folder the
+      PixInsight settings name, take a run's masters in as stacks, and read a
+      run's files;</li>
+    <li>install Seiza catalogs into the configured catalog folder;</li>
+    <li>add, check, change and remove sync peers, sync with them, and pair or
+      unpair remote clients;</li>
+    <li>move rejects to the trash, bring them back, and empty the trash;</li>
+    <li>write server exports into the database's export folder, and apply
+      sync previews.</li>
+  </ul>
   <p>By default a viewer cannot start costly work: stack builds, plate solves,
   satellite predictions, or view processing. Cached results stay available.
   <code>allow_read_only_compute = true</code> lets viewers start that work;
   fit for a trusted private server, not a public demo where repeated jobs could
   use up CPU, network and cache space.</p>
   <p>The server checks the role on every request, so a client calling the API
-  directly gets no more. The UI marks a viewer's session <strong>Read
-  only</strong>, hides Settings, and disables grading.</p>
+  directly gets no more. A viewer's header menu has no
+  <strong>Settings</strong>, and grading controls are disabled.</p>
+
+  <h2 id="management">What database management adds</h2>
+  <p><code>--allow-database-management</code>, always on in the desktop app,
+  guards what lets a client name a path on the server: a folder the server
+  reads, writes, lists or runs a program from. Without it, nobody can point a
+  server at the rest of its disk through the API. Work inside the folders an
+  operator already set, and edits to rows inside a catalog, stay an editor's.
+  With the gate on, an editor can also:</p>
+  <ul>
+    <li>register, create, change or remove databases, and set their image,
+      export, process and remote-upload folders;</li>
+    <li>import from a folder outside the database's image folders, and write
+      a local export to a path of their choosing;</li>
+    <li>choose storage folders and disk limits;</li>
+    <li>set the PixInsight program and the WBPP runs folder, and give one run a
+      folder outside that runs folder;</li>
+    <li>switch <strong>Analyze new frames as they arrive</strong>,
+      <strong>Pair calibrated and registered copies with their lights</strong>
+      and <strong>Measure quality on the calibrated copy</strong>.</li>
+  </ul>
+  <p>The gate also covers flat-group splits and joins and a light's flat side,
+  the calibration duplicate repair, <a href="backups.html">backups</a>, and
+  Planning's activation and pushes to the rigs. A viewer never gets any of
+  these.</p>
+  <p>Whatever the gate, only an editor reads a WBPP run's files, a link inside
+  a run folder cannot lead outside it, and no route reads a calibration frame
+  outside the database's folders: a catalog that records one elsewhere, as a
+  catalog synced from another machine may, shows it as missing.</p>
 
   <h2 id="users">Manage users</h2>
   <p>An editor signed in to a web server gets a <strong>Users</strong> tab in
@@ -202,6 +254,7 @@ function gtag_report_demo() {
   or removing a user, signs out that user's sessions; changing only the email
   does not. Settings will not remove the account you are signed in with, or the
   last editor.</p>
+  <!-- RESHOOT: settings-users.png | psf-guard.atpn.co signed in as an editor, header menu › Settings › Users tab in the new card layout: the Browser users card (three users with their roles, the Current badge, Edit and Remove, + Add user) and the top of the API tokens card with Connect an agent and + New token; crop to those two cards, no email addresses -->
   <figure>
     <img src="../assets/settings-users.png" alt="Settings › Users: three users with their roles, and the API tokens section" loading="lazy">
     <figcaption>Editors manage accounts and API tokens under Settings → Users.
@@ -244,6 +297,11 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
     <figcaption>The login page appears only when the server has
     accounts.</figcaption>
   </figure>
+  <p>Signed in, the menu at the right of the header says who you are and
+  holds <strong>Settings</strong> (editors only), <strong>Keyboard
+  shortcuts</strong>, <strong>Server information</strong> and <strong>Sign
+  out</strong>.</p>
+  <!-- SHOT: header-menu.png | psf-guard.atpn.co signed in as an editor, any view (Library is fine): the menu button at the far right of the header clicked open, showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out; crop to the right end of the header and the open menu (same capture as the SHOT on configuration.html) | The menu at the right of the header: who is signed in, Settings, keyboard shortcuts, server information and Sign out. -->
   <pre><code>[server.auth]
 session_hours = 168
 <span class="c"># Omit to follow the browser's HTTP or HTTPS scheme.</span>
@@ -261,6 +319,32 @@ allow_read_only_compute = false</code></pre>
   and the session. Each port uses its own cookie name, so two local servers no
   longer sign each other out.</p>
 
+  <h2 id="preferences">View choices follow the account</h2>
+  <div class="callout info"><strong>New after 0.11.</strong> Signed in to a
+  server with accounts, your view choices follow you to any browser or
+  device.</div>
+  <ul>
+    <li>Images and Sequence: the sort order, the grouping, the thumbnail
+      sizes, the chips, and the night and hour marks.</li>
+    <li>Sequence scoring: the defaults each view's <strong>Scoring</strong>
+      control starts from.</li>
+    <li>The Library's compact or detailed rows, the project picker's grouping,
+      and moving on after a grade.</li>
+  </ul>
+  <p>A link that names an order, a grouping or a scoring value still wins.
+  Each change saves only what it changed, so a tab left open never undoes a
+  choice made since on another device. The first account to sign in on a
+  browser takes the choices that browser made before; later accounts start
+  from the defaults. A viewer saves theirs too, and saves scoring defaults
+  with the <strong>Scoring</strong> control's <strong>Save as
+  default</strong>.</p>
+  <p>The server keeps them in <code>user-preferences.json</code> beside
+  <code>auth.json</code>, mode <code>0600</code> on Unix. Removing a user
+  removes their choices. The image detail's folded panels stay in each
+  browser, and exposure grouping stays a project setting shared by everyone.
+  Without accounts, and in the desktop app, the browser keeps the
+  choices.</p>
+
   <h2 id="tokens">API tokens for scripts and agents</h2>
   <p>A personal API token lets a script or an MCP client act as a user without
   a browser login. Send it as a bearer credential:</p>
@@ -277,6 +361,7 @@ allow_read_only_compute = false</code></pre>
   how a viewer, who has no Settings, gets one. Click <strong>Create
   token</strong> and copy it: it is not shown again. <strong>Revoke</strong>
   stops a token at once.</p>
+  <!-- RESHOOT: settings-api-tokens.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card -->
   <figure>
     <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
     <figcaption>A new token: label, user, expiry and a read-only switch.</figcaption>
@@ -319,8 +404,9 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
   key</strong> alone, and replacing the manual key leaves paired clients alone.
   See <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin</a>.</p>
   <div class="callout info">
-    Pairing and revoking change who can reach a catalog, so they need database
-    management. After pairing, sync and upload requests need only the client's
+    Pairing and revoking take an editor. In Settings they sit in the catalog's
+    editor, which needs database management because it names the catalog's
+    folders. After pairing, sync and upload requests need only the client's
     key. Use HTTPS on any network you do not fully trust.
   </div>
   <p>The Director plugin pairs separately, with its own one-use codes and
@@ -336,10 +422,10 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
     <li>Keep <code>auth.json</code> readable only by the PSF Guard user.</li>
     <li>Seed the first account from an existing secret with
       <code>--password-file</code>; only the hash is written.</li>
-    <li>Leave <code>--allow-database-management</code> off unless you need
-      database changes from the browser. An editor login does not bypass it,
-      and it does not bypass the login: on a network address the server needs
-      both.</li>
+    <li>Leave <code>--allow-database-management</code> off unless editors need
+      to name server paths from the browser. An editor login does not bypass
+      it, and it does not bypass the login: on a network address the server
+      needs both.</li>
     <li>Treat <code>--allow-anonymous-access</code> as temporary. A public
       server running it has no access control.</li>
     <li>Signing out ends that session. A restart ends every browser

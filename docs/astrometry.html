@@ -106,6 +106,7 @@ function gtag_report_demo() {
     <li><a href="workflows.html">Rejects & Sync</a></li>
     <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
     <li><a href="cli.html">CLI Reference</a></li>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
@@ -147,6 +148,7 @@ function gtag_report_demo() {
     PSF Guard lists the objects expected around a frame, solves its pixels on demand with Seiza, and draws catalog labels, outlines, an RA/Dec grid and the target offset over the image. This page covers the catalogs, where PSF Guard finds them, and solving a frame.
   </p>
 
+  <!-- RESHOOT: sky-context.jpg | Image detail of a solved frame with the sky overlay on (RA/Dec grid, catalog labels and outlines), the Cocoon Nebula HA frame if the capture server has it, else an Iris Nebula frame (rig starfront-ultracat131), with the alt text and caption changed to name it. Side panels with their fold chevrons: Image Information, Quality analysis and Calibration folded to one line each, Sky context open with its Hinted solve badge, Sky overlay on, Center, Scale, Rotation, Target and the expected objects. Full window. -->
   <figure>
     <img src="../assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and the Sky context panel">
     <figcaption>A hinted solve of the Cocoon Nebula. The overlay and the side panel share one pixel-derived WCS.</figcaption>
@@ -173,7 +175,7 @@ function gtag_report_demo() {
   </table></div>
 
   <h2 id="install">1. Install the Seiza catalogs</h2>
-  <p>PSF Guard embeds Seiza 0.24.0's solver but not its multi-gigabyte catalogs. Install them from Settings → <strong>Catalogs</strong> in the desktop app, or in a browser when the server runs with <code>--allow-database-management</code>. The <strong>Seiza Catalogs</strong> card shows which features are ready, keeps download progress across reloads, and checks files with <strong>Validate installed files</strong>.</p>
+  <p>PSF Guard embeds Seiza's solver but not its multi-gigabyte catalogs. Install them from Settings › <strong>Catalogs</strong> in the desktop app, or in a browser when the server runs with <code>--allow-database-management</code>. The <strong>Seiza Catalogs</strong> card shows which features are ready, keeps download progress across reloads, and checks files with <strong>Validate installed files</strong>.</p>
   <p>Choose a <strong>Catalog package</strong> and click <strong>Install / update catalogs</strong>. Packages add to each other, and PSF Guard uses the deepest star catalog it finds.</p>
   <div class="table-wrap"><table>
     <tr><th>Package</th><th>Contents</th></tr>
@@ -183,9 +185,10 @@ function gtag_report_demo() {
     <tr><td><strong>Deepest blind solving</strong></td><td>G≤20 Gaia data plus the blind index. About 9 GB more.</td></tr>
   </table></div>
   <p>Quality scans measure <a href="screening.html#snr">SNR</a> only against a Gaia catalog. Tycho-2 mixes two bands and is not used for it.</p>
+  <!-- RESHOOT: settings-catalogs.png | Settings › Catalogs in the new card layout: the Seiza Catalogs card with its feature chips, the installed packages, the Catalog package select, Install / update catalogs and Validate installed files. Crop: that card only. -->
   <figure>
     <img src="../assets/settings-catalogs.png" alt="Settings › Catalogs: Seiza Catalogs with feature chips, six installed packages, the Catalog package select and install buttons" loading="lazy">
-    <figcaption>Settings → Catalogs installs, updates and validates the Seiza catalogs.</figcaption>
+    <figcaption>Settings › Catalogs installs, updates and validates the Seiza catalogs.</figcaption>
   </figure>
   <p>For a manual or headless install, get the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a> or with Cargo, then download a bundle:</p>
   <pre><code>cargo install seiza-cli --version 0.24.0
@@ -240,7 +243,7 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
 
   <h2 id="use">4. Solve and inspect a frame</h2>
   <ol>
-    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and catalog context without solving.</li>
+    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and catalog context without solving. Click a panel's title to fold or open it; folded, Sky context keeps one line, such as whether the field solved and how many objects it holds.</li>
     <li>With a supported embedded WCS, the overlay is ready at once. Otherwise click <strong>Solve field</strong> or press <kbd>O</kbd>.</li>
     <li>PSF Guard tries a hinted solve from the header's mount coordinates and pixel scale, then the blind index if the hint is missing or stale.</li>
     <li>A solve you ask for turns the sky overlay on. After that, <kbd>O</kbd> toggles it while you zoom, pan or grade.</li>
@@ -257,7 +260,7 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
   <p>A failed solve offers <strong>Retry plate solve</strong>. A read-only account can view cached solutions but cannot start a solve.</p>
 
   <h2 id="cache">Cache and concurrency</h2>
-  <p>Solutions are stored under <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code> and reused until the source file, the catalog files or the Seiza version change. Seiza 0.24.0 reads more FITS layouts, such as tile-compressed images and images kept in an extension, but frames from N.I.N.A. read as before, so cached solves stay valid.</p>
+  <p>Solutions are stored under <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code> and reused until the source file, the catalog files or the installed Seiza version change.</p>
   <p><strong>Solve field</strong> runs one solve at a time per database, and requests for the same frame share the result. Quality scans solve several frames at once, up to the processor share; see <a href="astrometry-quality.html#run">Astrometry Quality</a>.</p>
 
   <h2 id="api">API</h2>
