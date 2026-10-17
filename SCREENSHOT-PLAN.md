@@ -1,6 +1,7 @@
 # Screenshot plan — docs site, next release
 
-Capture server: psf-guard.atpn.co (Chrome, 2× tiles). Nothing captured yet.
+Capture server: psf-guard.atpn.co (Chrome, 2× tiles). Targets checked on
+October 16, 2026; final screenshot files are still pending.
 Each entry lists the pages that use it and what to show, taken from the
 `RESHOOT` / `SHOT` comments left in the pages.
 
@@ -35,12 +36,13 @@ crop, caption and file name:
 2. `release-012-flat-groups.jpg`: two measured flat groups and the comparison
    that shows the dust or illumination change between them.
 3. `release-012-mosaic-editing.jpg`: the sky and panel controls together, with
-   a panel being moved, overlap shown, and captured panels still locked.
+   a captured panel selected, overlap shown, and captured panels still locked.
 
 Use the current 0.12 build. Capture at about 1440 px wide at 2× and check that
 key labels remain readable at the documentation column width. Keep these
 images focused on the feature; the linked guides cover the smaller controls.
-For mosaic editing, leave changes unsaved and discard them after capture.
+The mosaic highlight needs only a panel selection. Use a disposable copy for
+separate shots that require moving or unlocking panels.
 Do not fabricate a calibration finding or flat-group change for a screenshot.
 Replace each `SHOT` comment with a figure and its supplied caption once the
 image exists. Until then, the page has capture instructions, not broken images
@@ -55,6 +57,112 @@ All sessions tab, `sequence-select-after-reject.png` for the rule after rejectio
 Use a disposable local catalog for the rejection and channel-settings states.
 For the progress image, observe an existing run or use a local test run; do not
 start or stop work on the live server just to capture it.
+
+## Verified targets and explanations — October 16, 2026
+
+These choices come from read-only inspection in Chrome. Counts and grades can
+change. Recheck the named frame or group before capture. The links restore the
+view; follow the steps below for controls that the URL does not store.
+
+### Calibration: Teddy Bear Nebula QMark
+
+Use **starfront-redcat61**, project 2, for `release-012-calibration.jpg`.
+[Open the poor OIII flat](https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=c86f7ba628d954df&calKind=flat&calGrade=poor&calFrame=b28da39d-e31d-43f9-a226-944aa648e997).
+
+- Choose Frames, Sessions, Type Flat and Grade Poor. The September 13 session
+  contains `2026-09-14_07-05-02_OIII_-5.10_32.62s_0002.fits`.
+- Keep **Poor · uneven light**, the viewer, and Frame/Session measurements in
+  view. The illumination differs from its session by **13.9%**, above the
+  **5.0%** limit, despite **0% clipped pixels**. PSF Guard leaves it out of masters.
+- For a second image in the detailed guide, click **Compare with session**.
+  Wait for the image to finish drawing. The ratio shows broad, subtle changes;
+  do not describe them as proven dew or dust.
+- Suggested explanation: “Check how a flat differs from its session. This flat
+  has no clipped pixels, but its uneven illumination excludes it from masters.”
+- Secondary candidate: the October 7 HA session, frame
+  `2026-10-08_07-23-46_HA_-5.00_12.00s_0000.fits`, is OK with three large disks.
+  It can explain why dust shadows alone do not make a flat poor. Check the
+  overlay before choosing a crop; the overlay has not yet been inspected.
+
+### Flat groups: C925 OIII, August 10
+
+Use **c925-scheduler's full calibration library**, not a project's subset, for
+`release-012-flat-groups.jpg`, `calibration-flat-groups.jpg` and
+`calibration-flat-compare.jpg`.
+[Open Group 2 and its older-edge comparison](https://psf-guard.atpn.co/#/calibration?db=db-d6eaaf55&project=1&current=8620&calSession=25d0a0bb0b4100f7&calBrowse=groups&calSessionFrame=2d4bd6bb-a093-4f12-855f-adb6ed681010&calGroup=d067a2659094e08f&calFrame=766f5294-a5c8-4974-8fe0-d77a440d91bb&calEarlier=1c0d0817c025cfba0ea865842557a062&calLater=c7749f98b0cd8d918e699165e342f5f2).
+
+- Choose **Group 2 · OIII · 101.3–104.4° · 08-10 · 1 night · 10 flats**.
+  If starting from Bubble's Calibration page, first click **Show all of
+  c925-scheduler's calibration**. Bubble is only a route into the library;
+  these are not necessarily Bubble's flats.
+- The older edge reports **new dust, 1.8%**, above the 1% limit: one donut near
+  (507,2054). **Compare across the older edge** compares August 10 with May 19.
+  Keep the group, reason, dated ratio and Normal stretch visible. Inspect the
+  rendered ratio and Spots overlay before the final capture; only the
+  comparison's text and selected dates have been checked so far.
+- The newer edge reports **vignetting changed at the bottom edge, 2.1%**, above
+  the 2% limit, between August 10 and 15. This gives a second explanation:
+  illumination changes can separate groups without a dust change.
+- Suggested explanation: “Compare nights on either side of a group boundary.
+  New dust separates these groups; the next boundary records an illumination change.”
+- Selected frame: `2026-08-11_06-05-44_OIII_-10.00_36.28s_0000.fits`,
+  OK with seven donuts. It is a candidate for the SCT dust-overlay shot.
+- Do not split or join groups, change limits, or assign lights for a capture.
+  The Teddy Bear project subset has no comparable within-family split.
+
+### Mosaic: Heart Mosaic
+
+Use **askar107phq**, project 21, for `release-012-mosaic-editing.jpg` and the
+framing overview. [Open Heart Mosaic](https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b).
+
+- Open Framing and select **r1c2 locked 336 frames**. Keep the DSS image, all
+  four captured panels, their padlocks, the selected panel and its controls
+  together. Panel mode and Snap were already on during inspection.
+- This view already shows shaded overlap bands and percentages. No unlock,
+  drag, Save or Activate is needed. The screenshot composition was checked.
+- The captured field is **1.79° × 1.20° at 0.6°**. Actual overlaps range from
+  **18.1% to 19.4%**, below the saved **20%** minimum. Keep that warning if visible.
+- Suggested explanation: “Select a captured panel to check its field and
+  overlap. Captured panels stay locked until you unlock them.” Explain that
+  measured framing can differ from the planned overlap.
+- **Not activated yet** is the current plan state. Existing instructions that
+  require an Activated badge, a previous activation, or an activated rig need
+  another example or a disposable local plan. Do not activate this one for a shot.
+- The stack overlay has three placed panels; panel 1 HA lacks a plate solve.
+  Do not describe this as a complete four-panel solved-stack overlay.
+
+### Sequence: Golf of Mexico
+
+Use **ultra cat**, project and target 12.
+[Open the G all-sessions example](https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=9568&scoreScope=target-filter%3AG).
+
+- For `sequence-issue-frames.png`, choose **G · All sessions (612)** and open
+  **7 cloud events**. The **Likely clouds** list contains seven frames with
+  times and scores. Clicking **Jun 28, 02:09 AM, score 65** moves the cursor
+  to frame 9568 and leaves **0 selected**; this behavior was checked.
+- Keep the selected All sessions tab, issue pill, list and chart in the crop.
+  Suggested explanation: “Open an issue and jump to a frame without changing
+  your selection.” Call these likely clouds, not confirmed cloud damage.
+- For the general Sequence shot, choose **HA · Jul 9, 2026, 10:08 PM (57)**.
+  The first three frames show Soft Stars at 25%; later frames show Possible
+  Obstruction. [Open that session](https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10952).
+- Many frames already have grades. Do not assume Recommended rejects has a
+  nonzero count. Capture rejection, undo and selection-rule changes in a
+  disposable local catalog, not by regrading this live project.
+
+### Stacks: preparation still needed
+
+[Open Teddy Bear stacks](https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=2&target=2).
+Its ten mono groups have cached previews but are out of date because scoring
+settings changed. RGB, LRGB and SHO color previews show **Not built**. The
+600-second narrowband group remains a candidate for the planned Foraxx SHO
+shot, not a verified finished-color example. Sadr also has no built color
+preview and its channel work is queued.
+
+Do not use either as a finished-color screenshot yet. Prepare updated stacks
+and color previews in a disposable local catalog, or recheck after the owner's
+normal processing finishes. Use that local setup for copying channel settings
+and progress/Stop shots. No builds or settings changes were started during scouting.
 
 ## How to update this plan
 
@@ -202,10 +310,10 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `calibration-dust-donuts.jpg` — pages: calibration-flats
   - Calibration › Frames, rig c925-scheduler, a flat with Spots and Large dust on at Tight stretch: donuts drawn as ring and hole with their depth labels, plus any dashed vignetting mark at an edge or corner
 - `calibration-flat-compare.jpg` — pages: calibration-flats
-  - Calibration › Frames, the same rig, Compare pressed on a split or change in the list: the "Flat comparison" view above the session with its title (the change's reason), "<later night> ÷ <earlier night>: the later flats divided by the earlier…", Normal (±1%) stretch, Spots on with new and gone shadows circled, and Close
+  - Full c925-scheduler library, OIII Group 2 from August 10: Compare across the older edge. Show new dust: 1 donut near (507,2054), August 10 divided by May 19, the ratio image at Normal stretch and Spots on. Inspect the rendered overlay before capture. Use the verified link in SCREENSHOT-PLAN.md.
 - `calibration-flat-groups.jpg` — pages: home, calibration-flats
   - Calibration › Frames, Groups view for rig starfront-redcat61: group list in the sidebar with a split and its reason, one flat open with Spots and Large dust drawn
-  - Calibration › Frames with Sessions
+  - Calibration, Frames, Groups, full c925-scheduler library. Select Group 2 · OIII · 101.3–104.4° · 08-10 · 1 night · 10 flats. Show the list and Its edges: new dust 1.8% before this group, vignetting changed at bottom edge 2.1% after it. Keep the dates and Compare controls visible. Use the verified link in SCREENSHOT-PLAN.md; do not restrict to Bubble calibration.
 - `calibration-frame-keep-out.png` — pages: calibration-grading
   - Calibration › Frames, a dark session with a frame graded "Suspect · noise" or "Poor · stray light" chosen; crop to the frame panel: file, capture time with UTC offset, settings, the grade badge, the reason line, the Measure/Frame/Session table with Level and Spread in ADU, the findings with their limits, and the buttons Keep out, Use anyway, Forget and ◂ Before only / Both / After only ▸
 - `calibration-masters-tab.png` — pages: calibration
@@ -266,17 +374,17 @@ its `RESHOOT` comment. Delete this file once no comments remain.
 - `plan-summary-activated.png` — pages: planning
   - Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills.
 - `release-012-calibration.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Calibration page, Frames tab, Sessions selected, rig starfront-redcat61, Type: Flat, an Ha session for Teddy Bear Nebula QMark. Show the session sidebar, thumbnail strip with OK/suspect/poor grades, one suspect or poor flat in the viewer, and its grade reason and Frame/Session measurements. Keep Keep out, Use anyway and Clear visible without pressing them. Choose a frame with a real finding; use another session or rig if needed. Capture at about 1440 px wide at 2x, crop to the workspace below the header, and keep the grade reason readable at docs-column width. No settings or grades changed.
+  - Priority: 0.12 highlights. Use the verified Teddy Bear OIII flat in SCREENSHOT-PLAN.md: starfront-redcat61, September 13 session, frame 2026-09-14_07-05-02_OIII_-5.10_32.62s_0002.fits. Frames, Sessions, Type Flat, Grade Poor. Show the viewer, Poor · uneven light reason (13.9% against a 5.0% limit), and Frame/Session measurements including zero clipping. Capture at about 1440 px wide at 2x; keep the reason readable at docs-column width. Do not change grades.
 - `release-012-flat-groups.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Calibration page, Frames tab, Groups selected, rig c925-scheduler or starfront-redcat61, Type: Flat. Choose two measured groups separated by a real dust or illumination change. Show the group sidebar with the change reason and Compare open on that boundary; include the later/earlier night labels, the ratio image at Normal stretch, and Spots marks identifying the changed shadows. Keep enough of the group list to explain which nights the comparison separates. Capture at about 1440 px wide at 2x, crop to the group list and comparison, and keep the reason readable at docs-column width. Do not split, join, change limits or assign lights. If no measured change is available, record the missing state rather than implying one.
+  - Priority: 0.12 highlights. Use the verified C925 OIII Group 2 from August 10 in SCREENSHOT-PLAN.md, with the full rig calibration library visible. Compare across the older edge: August 10 divided by May 19, new dust 1.8%, one donut near (507,2054). Show the group list, change reason, dated ratio at Normal stretch and Spots overlay after checking the rendered image. Capture at about 1440 px wide at 2x. Do not change groups, limits or light assignments.
 - `release-012-mosaic-editing.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Planning workspace for Heart Mosaic, rig askar107phq, Framing tab. Show the nebula survey with the captured panels and their padlocks, plus the Mosaic panels controls alongside it. In an unsaved draft, add or unlock one panel, select Panel mode with Snap on, and capture it being moved beside a neighbour with shaded overlap and its percentage visible. Include the selected panel in the list and the add-panel controls; frame the sky and sidebar together, not a sky-only crop. Capture at about 1440 px wide at 2x with labels readable at docs-column width. Do not Save or Activate; discard draft edits after capture.
+  - Priority: 0.12 highlights. Heart Mosaic, askar107phq, Framing. Select r1c2 locked 336 frames. Show the DSS image, four captured panels with padlocks, shaded overlap bands and percentages, and the selected panel controls together. This view needs no edit. Actual overlaps are below the saved 20% minimum; keep the warning if visible. The plan currently shows Not activated yet. Capture at about 1440 px wide at 2x. Do not unlock, Save or Activate. See the verified link in SCREENSHOT-PLAN.md.
 - `scoring-popover.png` — pages: screening
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover.
 - `sequence-cutoff-hfr.jpg` — pages: screening
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards.
 - `sequence-issue-frames.png` — pages: screening
-  - Sequence for Golf of Mexico, rig ultra cat, with the All sessions tab at the start of its filter row showing its color bar, tint, bold label and date-range icon. Open a suspect pill with real findings, such as cloud events or focus drift. Show the pill, its frame list with times and scores, and the relevant strip below. Click a listed frame to place the cursor on it without changing the selection. Do not grade frames.
+  - Golf of Mexico, ultra cat, G · All sessions (612). Open 7 cloud events to show the Likely clouds list. Click Jun 28, 02:09 AM, score 65 (frame 9568): the cursor moves and 0 selected remains. Show the selected All sessions tab, issue pill, list with times and scores, and chart. Use the verified link in SCREENSHOT-PLAN.md. Do not grade frames.
 - `sequence-select-after-reject.png` — pages: screening
   - Use a disposable local catalog, not the live capture server. In Sequence, choose Recommended rejects and confirm a rejection through Review rejection. Capture the toolbar with the rule still active, its updated count and no selected frames, plus the rejected frames in the strip. Do not change grades on a live catalog to obtain this state.
 - `sequence-select-rule.png` — pages: screening
