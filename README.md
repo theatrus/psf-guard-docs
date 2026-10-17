@@ -37,6 +37,9 @@ build step.
 
 ## Updating content
 
+Follow the [documentation writing guide](CONTRIBUTING.md). It covers direct
+instructions, natural wording, technical accuracy and checks before committing.
+
 - Screenshots come from a live PSF Guard server or the main repository's
   `docs/` folder. Refresh one by replacing its file in `assets/`.
 - Run `npm run build` after modifying the shared top bar or documentation
