@@ -207,9 +207,9 @@ function gtag_report_demo() {
       <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
     </table>
   </div>
-  <p>The log holds what a server prints to its console, including each frame a
-  stack leaves out or rejects, and why. <code>RUST_LOG</code> sets the level;
-  the default is <code>info</code>.</p>
+  <p>The log records the server's console output, including each frame a stack leaves
+  out or rejects, and why. <code>RUST_LOG</code> sets the level; the default is
+  <code>info</code>.</p>
 
   <h2 id="server">Docker on a Linux server or NAS</h2>
   <div class="workflow-note cli">
@@ -316,11 +316,11 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
   unit that runs the server as a daemon. To build for another Fedora release,
   see
   <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md')">packaging/rpm/README.md</a>.</p>
-  <p>Stopping or restarting the service lets background work stop at its next
-  safe point: a quality scan saves what it measured, a stack build
-  checkpoints and resumes after the restart, and imports and calibration
-  grading stop at a commit. The log says what the stop still waits for. See
-  <a href="storage.html#restart">Storage &amp; Performance</a>.</p>
+  <p>Stopping or restarting the service lets background work stop at its next safe
+  point: a quality scan saves what it measured, a stack build checkpoints and resumes
+  after the restart, and imports and calibration grading stop at a commit. The log lists
+  the work still blocking shutdown. See <a href="storage.html#restart">Storage &amp;
+  Performance</a>.</p>
 
   <h2 id="source">Build from source</h2>
   <pre><code>git clone https://github.com/theatrus/psf-guard.git

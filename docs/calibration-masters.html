@@ -182,9 +182,9 @@ function gtag_report_demo() {
       <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within <strong>Flat focal length</strong> (1&nbsp;mm), and rotator angle within <strong>Flat rotation</strong> (2°) when both record it</td></tr>
     </table>
   </div>
-  <p>The readout mode counts however the driver spelled it. N.I.N.A. writes a
-  name such as <code>Extend Fullwell 2CMS</code>; PSF Guard compares names
-  ignoring case, so a High Gain dark never serves an Extend Fullwell light.</p>
+  <p>Readout mode names must match, ignoring case. N.I.N.A. writes a name such as
+  <code>Extend Fullwell 2CMS</code>; PSF Guard compares names ignoring case, so a High
+  Gain dark never serves an Extend Fullwell light.</p>
   <p>Frames in one master must also agree with each other: temperatures
   within 1&nbsp;°C, and flats within 2°, 1&nbsp;mm and one <strong>Flat
   session</strong> of each other. With flats grouped by measurement, only
@@ -206,11 +206,10 @@ function gtag_report_demo() {
   survive rescans and sync with the library.</p>
 
   <h3 id="darks">Dark masters</h3>
-  <p>Darks keep for months, so a dark master can draw on several nights. It
-  uses the nearest complete night of darks alone. When no night is complete,
-  it pools the nights within reach, nearest first. Three settings under
-  <strong>Settings › Calibration › Dark masters</strong> shape this, for every
-  rig or one:</p>
+  <p>Darks keep for months, so a dark master can draw on several nights. It uses the
+  nearest complete night of darks alone. When no night is complete, it pools the nights
+  within reach, nearest first. Three settings under <strong>Settings › Calibration ›
+  Dark masters</strong> shape this, globally or for one rig:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
@@ -219,17 +218,15 @@ function gtag_report_demo() {
       <tr><td><strong>Dark choice</strong></td><td>Complete set first</td><td>Which set of darks, or bias, builds the master when several match.</td></tr>
     </table>
   </div>
-  <p>A dark matches a light within 3&nbsp;°C, but one master takes only darks
-  within 1&nbsp;°C of each other, so several sets can match. With
-  <strong>Complete set first</strong>, the nearest set with at least
-  <strong>Complete night</strong> frames builds the master, and a nearer,
-  smaller set serves only when no set is complete. <strong>Nearest
-  set</strong> keeps the old rule, the nearest two or more frames however few,
-  and a two-frame master puts its own read noise into every light as row
-  banding. Bias masters follow the same choice, and WBPP runs and exports take
-  the same frames. A rig with no matching darks can turn <strong>Use
-  darks</strong> off: its lights take bias and flats, with no missing-dark
-  flag.</p>
+  <p>A dark matches a light within 3&nbsp;°C, but one master takes only darks within
+  1&nbsp;°C of each other, so several sets can match. With <strong>Complete set
+  first</strong>, the nearest set with at least <strong>Complete night</strong> frames
+  builds the master, and a nearer, smaller set serves only when no set is complete.
+  <strong>Nearest set</strong> keeps the old rule, the nearest two or more frames
+  however few, and a two-frame master puts its own read noise into every light as row
+  banding. Bias masters follow the same choice, and WBPP runs and exports take the same
+  frames. A rig with no matching darks can turn <strong>Use darks</strong> off: PSF
+  Guard calibrates its lights with bias and flats, with no missing-dark flag.</p>
 
   <h3 id="external">Masters from other software</h3>
   <p>A master bias, dark or flat from WBPP, Siril or another tool imports like
@@ -248,10 +245,10 @@ function gtag_report_demo() {
       master into its cache once, on the same 16-bit scale as every other
       frame. PSF Guard leaves the original unchanged.</li>
   </ul>
-  <p><strong>External masters</strong>, under Settings › Calibration ›
-  Matching, decides how they take part, for every rig or one:
-  <strong>Whenever one matches</strong> (default), <strong>Only if raw frames
-  can't build one</strong>, or <strong>Never</strong>.</p>
+  <p><strong>External masters</strong>, under Settings › Calibration › Matching, decides
+  how they take part, globally or for one rig: <strong>Whenever one matches</strong>
+  (default), <strong>Only if raw frames can't build one</strong>, or
+  <strong>Never</strong>.</p>
 
   <h2 id="stacking">Calibration in stacks</h2>
   <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
@@ -296,22 +293,21 @@ function gtag_report_demo() {
   integration. It is off by default, applies to every rig, and does not touch
   imported masters. Every pixel must keep at least two unmasked frames, or the
   flat build fails and the stack goes on without it.</p>
-  <p>Dew drying off the sensor window leaves spots that fade from one flat to
-  the next. PSF Guard reads each new flat master back against its frames,
-  counting only dips, so stars in sky flats do not count. When a minority
-  disagree, the master rebuilds without them; when the whole set disagrees with
-  itself, the next-nearest flat set takes its place; with no other set, the
-  master serves and the card says to retake it.</p>
+  <p>Dew drying off the sensor window leaves spots that fade from one flat to the next.
+  PSF Guard reads each new flat master back against its frames, counting only dips, so
+  stars in sky flats do not count. When a minority disagree, the master rebuilds without
+  them; when the whole set disagrees with itself, the next-nearest flat set takes its
+  place; with no other set, the PSF Guard uses the master and the card recommends taking
+  new flats.</p>
 
   <h2 id="masters">Masters</h2>
-  <p>Each master needs at least two frames. Bias and dark masters use a
-  two-pass, leave-one-out sigma-clipped mean; flat masters use median/MAD
-  clipping after calibrating and normalizing each frame. The FITS records the
-  method, thresholds, frame count and rejected samples. A master builds on the
-  cores its stack build was given; see <a href="storage.html#processor">Processor
-  use</a>. While it builds, the stack card and the header queue show which
-  master and the frame or tile under way, and <strong>Stop</strong> ends the
-  build and writes nothing.</p>
+  <p>Each master requires at least two frames. Bias and dark masters use a two-pass,
+  leave-one-out sigma-clipped mean; flat masters use median/MAD clipping after
+  calibrating and normalizing each frame. The FITS records the method, thresholds, frame
+  count and rejected samples. A master builds on the cores its stack build was given;
+  see <a href="storage.html#processor">Processor use</a>. While it builds, the stack
+  card and the header queue show which master and the frame or tile under way, and
+  <strong>Stop</strong> ends the build and writes nothing.</p>
   <p>Each master's file name comes from its input frames, file fingerprints,
   upstream masters and algorithm versions, so a changed bias rebuilds the dark
   and flat masters that used it, and an unchanged master is reused. Masters live
@@ -342,10 +338,9 @@ function gtag_report_demo() {
     <li>When lights of one exposure were matched to different darks, each set
       of darks goes in its own <code>DARKSET_&lt;night&gt;</code> folder, so WBPP
       does not average every night's darks into one master.</li>
-    <li>With <strong>Leave out lights that can't be calibrated</strong> on,
-      every export leaves out the lights a stack would, in either layout, from
-      the dialog, the CLI and the AstroBin export, and says how many and
-      why.</li>
+    <li>With <strong>Leave out lights that can't be calibrated</strong> on, every export
+    leaves out the lights a stack would, in either layout, from the dialog, the CLI and
+    the AstroBin export, and reports how many lights it excluded and why.</li>
   </ul>
   <p>Layouts, options and the WBPP runner are on
   <a href="exporting.html">Export &amp; AstroBin</a>.</p>
@@ -390,12 +385,12 @@ function gtag_report_demo() {
   <!-- SHOT: settings-calibration-flat-groups.png | Settings › Calibration scrolled to the Flat groups box (Group flats, Dust split, Light pattern split, each with help and its default) and the Light checks box below it showing a few checks with their Poor / Check only / Off controls; open it from Edit limits in Calibration › Frames so the Dust split row is the one in focus | The Flat groups and Light checks boxes. Edit limits in Frames opens this tab on the dust limit. -->
 
   <h3 id="rig-settings">Settings for one rig</h3>
-  <p><strong>Rigs</strong>, below the global settings, lists every rig an open
-  catalog records. Open a rig and press <strong>Own value</strong> beside a
-  setting to give the rig its own; the rest inherit, and each row says from
-  where. <strong>Save rig</strong> keeps the values, and <strong>Inherit
-  everything</strong> clears them. <strong>Start from</strong> fills the form
-  with a preset to review before saving:</p>
+  <p><strong>Rigs</strong>, below the global settings, lists every rig an open catalog
+  records. Open a rig and press <strong>Own value</strong> beside a setting to give the
+  rig its own; the rest inherit, and each row shows which settings it inherits.
+  <strong>Save rig</strong> keeps the values, and <strong>Inherit everything</strong>
+  clears them. <strong>Start from</strong> fills the form with a preset to review before
+  saving:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Preset</th><th>For</th><th>Sets</th></tr>

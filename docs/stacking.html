@@ -180,7 +180,7 @@ function gtag_report_demo() {
   browser and in the page address; <strong>Fit</strong> goes back to filling the
   row.</p>
   <p>Click the panel's <strong>Stacks</strong> title to fold the whole panel. A
-  folded panel shows how many channels it holds, or that a build is running.</p>
+  collapsed panel shows the channel count, or that a build is running.</p>
 
   <h2 id="mono">Build stacks</h2>
   <p>Click <strong>Build stacks</strong>. PSF Guard queues one build per target
@@ -359,12 +359,12 @@ function gtag_report_demo() {
   flats past the age limit. See <a href="calibration-masters.html#darks">Dark
   masters</a> and <a href="calibration-grading.html#uncalibrated">Lights that can't be
   calibrated</a>.</p>
-  <p>Flats follow the rig's flat groups: each light takes flats from its own
-  side of every measured change in the rig's flats, as the
-  <strong>Calibration</strong> page's <strong>Frames</strong> view shows them,
-  and nights whose flats differ stay out of one master. A light's
-  <strong>Calibration</strong> panel in the image detail says how its flats
-  were chosen. See <a href="calibration-flats.html#flat-groups">Flat groups</a>.</p>
+  <p>Flats follow the rig's flat groups: PSF Guard matches each light to flats from the
+  same side of every measured change in the rig's flats, as the
+  <strong>Calibration</strong> page's <strong>Frames</strong> view shows them, and
+  nights whose flats differ stay out of one master. A light's
+  <strong>Calibration</strong> panel in image detail explains how its flats were chosen.
+  See <a href="calibration-flats.html#flat-groups">Flat groups</a>.</p>
   <p>A multi-night stack whose lights need different flats or darks splits into
   calibration sessions, and the build swaps masters between them. A master
   that fails to build does not fail the stack: the card shows the skipped
@@ -396,24 +396,22 @@ function gtag_report_demo() {
   The build stops between frames, channels, or master input frames. Nothing
   partial is published: a channel stopped before its FITS is written leaves no
   stack, and channels already finished keep theirs.</p>
-  <p>A build belongs to the server, not to the page that started it. Leave the
-  page or reload it and the cards pick up the running build. The header's
-  background jobs chip shows overall progress and a count of running, queued
-  and waiting jobs; hover or click it to see the list. Builds you started sit
-  under <strong>Started by you</strong>, automatic refreshes under
-  <strong>Automatic</strong>. Both share one build line, so a queued build
-  says its place in the whole line and how many wait ahead of it, as
-  <code>queued · 4 · 3 ahead</code>. <strong>↑</strong> and
-  <strong>↓</strong> move a queued build, <strong>×</strong> takes it out of
-  the line, and <strong>Stop</strong> ends the running one after asking once.
-  Click a build's target to open its stacks. Progress keeps moving through the
-  final rejection pass, for example <code>Rejecting transients · pass 2/3 ·
-  frame 4/14</code>.</p>
+  <p>A build belongs to the server, not to the page that started it. Leave the page or
+  reload it and the cards pick up the running build. The header's background jobs chip
+  shows overall progress and a count of running, queued and waiting jobs; hover or click
+  it to see the list. Builds you started sit under <strong>Started by you</strong>,
+  automatic refreshes under <strong>Automatic</strong>. Both share one build line, so a
+  queued build shows its position in the queue and the number of jobs ahead, as
+  <code>queued · 4 · 3 ahead</code>. <strong>↑</strong> and <strong>↓</strong> move a
+  queued build, <strong>×</strong> takes it out of the line, and <strong>Stop</strong>
+  ends the running one after asking once. Click a build's target to open its stacks.
+  Progress keeps moving through the final rejection pass, for example <code>Rejecting
+  transients · pass 2/3 · frame 4/14</code>.</p>
   <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
   <figure>
     <img src="../assets/header-jobs.png" alt="The header's background jobs list: Started by you with a running build and a queued build three places back, and Automatic with a waiting stack refresh" loading="lazy">
-    <figcaption>The header's background jobs. A queued build says its place in the
-    whole line; click a row's target to open what it works on.</figcaption>
+    <figcaption>The header's background jobs. A queued build shows its position in the
+    queue; click a row's target to open what it works on.</figcaption>
   </figure>
 
   <p>The line survives a restart: queued and running builds and processing
@@ -627,10 +625,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       <tr><td><strong>Trim to full coverage</strong></td><td>The largest rectangle every channel covers. Removes the corners a meridian flip or rotator leaves.</td></tr>
     </table>
   </div>
-  <p>The crop happens before normalization, so every channel scales from the
-  same sky, and the FITS moves <code>CRPIX</code> to keep the plate solution.
-  The card reports the kept size and share. When one channel's coverage looks
-  like a pointing error rather than dither, the card says which channel.</p>
+  <p>The crop happens before normalization, so every channel scales from the same sky,
+  and the FITS moves <code>CRPIX</code> to keep the plate solution. The card reports the
+  kept size and share. When one channel's coverage looks like a pointing error rather
+  than dither, the card identifies the channel.</p>
 
   <h3 id="background">Remove the background</h3>
   <p>Before registration, PSF Guard fits and subtracts each channel's
@@ -671,38 +669,37 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   beside the button you pressed.</p>
 
   <h3 id="setups">Save processing setups</h3>
-  <p><strong>Setups</strong> at the top of <strong>View processing</strong> and
-  the color <strong>Processing stack</strong> saves the current parameters
-  under a name. Choosing a setup fills the editor; nothing renders until you
-  apply it. A view setup holds the stretch, deconvolution and RC-Astro steps. A
-  color setup holds background extraction, per-channel processing and output
-  stretches, and matches channels by name on another target.</p>
+  <p><strong>Setups</strong> at the top of <strong>View processing</strong> and the
+  color <strong>Processing stack</strong> saves the current parameters under a name.
+  Choosing a setup fills the editor; nothing renders until you apply it. A view setup
+  stores the stretch, deconvolution and RC-Astro steps. A color setup stores background
+  extraction, per-channel processing and output stretches, and matches channels by name
+  on another target.</p>
   <p>Setups serve every database on the server. <strong>Settings &rarr;
   Setups</strong> lists, deletes, imports and exports them. On a server with
   accounts, viewers can list, apply and export; saving, deleting and importing
   need an editor.</p>
 
   <h2 id="processing-runs">Processing runs</h2>
-  <p>Every <strong>Apply processing</strong>, whether a stretch, deconvolution
-  or RC-Astro tools, runs on the server as a processing run, apart from the
-  page that asked for it. A plain stretch usually finishes at once. A run needs
-  the same stack worker as builds and color compositions, so it joins their
-  line at the back. While it waits, the button says what holds the worker and
-  how many runs are ahead, such as <code>Waiting for the stack build of M44 ·
-  Ha to finish</code>. Once it runs, the button shows its progress and
-  the step under way: <code>Applying… 42% · BlurXTerminator</code>.</p>
+  <p>Every <strong>Apply processing</strong>, whether a stretch, deconvolution or
+  RC-Astro tools, runs on the server as a processing run, apart from the page that asked
+  for it. A plain stretch usually finishes at once. A run needs the same stack worker as
+  builds and color compositions, so it joins their line at the back. While it waits, the
+  button shows which job is using the worker and how many runs are ahead, such as
+  <code>Waiting for the stack build of M44 · Ha to finish</code>. Once it runs, the
+  button shows its progress and the step under way: <code>Applying… 42% ·
+  BlurXTerminator</code>.</p>
   <!-- SHOT: stack-processing-waiting.png | Stacks view, Teddy Bear Nebula QMark (rig starfront-redcat61): start a build of the OIII channel, then on the H-alpha card open View processing, turn on RC-Astro BlurXTerminator and press Apply processing; crop the H-alpha card's View processing panel so its button reads "Waiting for the stack build of … · OIII to finish", with the header's background jobs list open beside it showing the BlurXTerminator row queued behind the build | A processing run waits in the build line and says what it waits for. -->
-  <p>The header's background jobs list each run beside the builds: what it
-  does (<code>BlurXTerminator</code>, <code>Deconvolution</code>,
-  <code>Stretch</code>, or a chain's steps joined with <code>+</code>), the
-  target and channel, and its place in the line or its progress. Click the
-  target to open its stacks. <strong>↑</strong> and <strong>↓</strong> move a
-  queued run and <strong>×</strong> takes it out of the line.
-  <strong>Stop</strong> ends a running RC-Astro run: the tool is killed, the
-  steps already finished stay cached, and the button says
-  <code>Processing was stopped</code>. A running stretch or deconvolution has
-  no Stop; it finishes in moments. A build you start waits behind processing
-  runs asked for earlier unless you move it.</p>
+  <p>The header's background jobs list each run beside the builds: what it does
+  (<code>BlurXTerminator</code>, <code>Deconvolution</code>, <code>Stretch</code>, or a
+  chain's steps joined with <code>+</code>), the target and channel, and its place in
+  the line or its progress. Click the target to open its stacks. <strong>↑</strong> and
+  <strong>↓</strong> move a queued run and <strong>×</strong> takes it out of the line.
+  <strong>Stop</strong> ends a running RC-Astro run: the tool is killed, the steps
+  already finished stay cached, and the button shows <code>Processing was
+  stopped</code>. A running stretch or deconvolution has no Stop; it finishes in
+  moments. A build you start waits behind processing runs asked for earlier unless you
+  move it.</p>
   <p>Processing runs survive a restart. A server stop kills a running RC-Astro
   tool rather than wait minutes for it. After the restart the run comes back
   in its place in the line and resumes after the last tool step that

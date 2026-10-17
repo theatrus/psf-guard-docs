@@ -169,8 +169,8 @@ function gtag_report_demo() {
   <a href="authentication.html">Server Accounts</a>.</p>
   <ol>
     <li>Open <strong>Settings → Databases → New Database from Images</strong>.</li>
-    <li>Enter a name and one or more absolute folder paths. A bad path stays in the
-      form, and the error says which one.</li>
+    <li>Enter a name and one or more absolute folder paths. If a path is invalid, the
+    form keeps your entry and shows which path to correct.</li>
     <li>Leave <strong>Queue background quality analysis</strong> off for a quick first
       import.</li>
     <li>Choose <strong>Create &amp; Import</strong>. Progress survives closing or
@@ -330,10 +330,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   contents are not read. Both rules hold when an import starts inside an excluded or
   ignored folder, as <strong>Review</strong> does: it reads nothing there.</p>
   <p>The three light filters apply only to frames that would become lights; exclude and
-  include patterns apply to calibration frames too. The preview and the automatic
-  import's status line say what the rules left out, such as "12 skipped by scan rules",
-  "1 folder(s) skipped by .psfguardignore" or "3 left out: no target name". Frames
-  already in a catalog stay. A remote upload from N.I.N.A. does not use scan rules.</p>
+  include patterns apply to calibration frames too. The preview and automatic import
+  status summarize what the scan rules excluded, such as "12 skipped by scan rules", "1
+  folder(s) skipped by .psfguardignore" or "3 left out: no target name". Frames already
+  in a catalog stay. A remote upload from N.I.N.A. does not use scan rules.</p>
 
   <h2 id="automatic">Import new frames automatically</h2>
   <p>Edit a database under <strong>Settings → Databases</strong> and turn on

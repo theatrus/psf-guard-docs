@@ -211,7 +211,7 @@ function gtag_report_demo() {
     <table>
       <tr><th>Button</th><th>Effect</th><th>Badge</th></tr>
       <tr><td><strong>Keep out</strong></td><td>Leaves the frame out of masters and exports whatever its grade, as rejecting does for a light. Every frame offers it, so a later grade cannot bring a frame back. Unlike <strong>Forget</strong>, the frame stays in the library.</td><td><strong>Kept out by hand</strong></td></tr>
-      <tr><td><strong>Use anyway</strong></td><td>On a frame kept out, puts it back in use. On a suspect frame, says it is fine: it counts as OK, and lights using its masters no longer get a Check for suspect frames. Its masters stay as they were.</td><td><strong>Used anyway</strong></td></tr>
+      <tr><td><strong>Use anyway</strong></td><td>On a frame kept out, puts it back in use. On a suspect frame, overrides the grade to OK, and lights using its masters no longer get a Check for suspect frames. Its masters stay as they were.</td><td><strong>Used anyway</strong></td></tr>
       <tr><td><strong>Clear</strong></td><td>Lets the grade decide again.</td><td>—</td></tr>
     </table>
   </div>
@@ -285,23 +285,23 @@ function gtag_report_demo() {
   <!-- SHOT: library-calibration-pills.png | Library, compact view, Show set to Calibration issues: three or four project rows (such as Golf of Mexico and Iris Nebula) with their 🧪 Poor or 🧪 Check pill in the calibration column, the Show pill visible in the Projects toolbar | Show › Calibration issues lists the projects the library serves poorly; each 🧪 pill opens its coverage report. -->
 
   <h3 id="light-panel">A light's Calibration panel</h3>
-  <p>An image's detail view has a <strong>Calibration</strong> panel. It lists
-  the light's findings in words, worst first, and for each kind the frames
-  its master would take, by night and sensor temperature, with the frames
-  <strong>Kept out</strong>, those that <strong>Also match, not used</strong>,
-  and those <strong>Refused</strong>, each with why. Each night opens its
-  frames on the Calibration page. Choosing a finding picks out the frames
-  behind it, such as the two nights a flat master mixes, and stays chosen from
-  image to image; <strong>Show every kind</strong> shows the rest again.</p>
-  <p>The panel names whose settings checked the light (<strong>Checked by the
-  global settings</strong>, or by the rig's own), each limit that differs from
-  its default and who set it, and under <strong>Not flagged</strong> what a
-  setting kept from being flagged. A refusal names its limit:
-  <code>dark is 3.2 °C warmer than the light (limit 2 °C, set for Askar 120 ·
-  ASI2600MM)</code>. <strong>Tune checks for</strong> the rig opens its
-  settings. For flats the panel adds <strong>Flat family</strong>,
-  <strong>Chosen by</strong> and <strong>Choose its flats</strong>. It opens by
-  itself on a Poor or Check light, and when you come from the 🧪 chip.</p>
+  <p>An image's detail view has a <strong>Calibration</strong> panel. It lists findings
+  in order of severity. For each calibration type, it shows the frames PSF Guard would
+  use to build a master, grouped by night and sensor temperature. It also lists frames
+  <strong>Kept out</strong>, those that <strong>Also match, not used</strong>, and those
+  <strong>Refused</strong>, with the reason for each decision. Click a night to open its
+  frames on the Calibration page. Choose a finding to highlight the frames that caused
+  it, such as the two nights a flat master mixes, and stays chosen from image to image;
+  <strong>Show every kind</strong> shows the rest again.</p>
+  <p>The panel shows which settings PSF Guard used to check the light (<strong>Checked
+  by the global settings</strong>, or by the rig's own), each limit that differs from
+  its default and who set it, and lists suppressed findings under <strong>Not
+  flagged</strong>. For each refused match, it shows the limit that failed: <code>dark
+  is 3.2 °C warmer than the light (limit 2 °C, set for Askar 120 · ASI2600MM)</code>.
+  <strong>Tune checks for</strong> the rig opens its settings. For flats the panel adds
+  <strong>Flat family</strong>, <strong>Chosen by</strong> and <strong>Choose its
+  flats</strong>. It opens by itself on a Poor or Check light, and when you come from
+  the 🧪 chip.</p>
 
   <!-- SHOT: image-calibration-panel.png | Image detail of a Golf of Mexico H-alpha light from the Jul 9 2026 session (rig "ultra cat") that carries a Check or Poor finding; crop to the side panel with Calibration open: the findings list with one finding chosen, the Flats part with nights, temperatures, Flat family and Chosen by, the Darks part, and "Checked by …" with Tune checks for … | A light's Calibration panel names its findings and the frames behind each. -->
 
@@ -326,8 +326,8 @@ function gtag_report_demo() {
     <li>Each night lists the masters from other software that fit its lights:
       used, matching but not used, or not used with the readings that
       disagree, such as <code>rotation light=92.6deg master=94.7deg</code>.</li>
-    <li>A night and filter whose lights can't be calibrated says why, and opens
-      that night's lights in Images.</li>
+    <li>For each night and filter with lights that cannot be calibrated, the report
+    explains why. Click the entry to open those lights in Images.</li>
   </ul>
   <p>Warnings list kinds with no matches, nights without same-night flats, and
   flats more than a month from their lights. The report leaves rejected
@@ -341,14 +341,13 @@ function gtag_report_demo() {
   </figure>
 
   <h3 id="uncalibrated">Lights that can't be calibrated</h3>
-  <p>A light can't be calibrated when a check set to flag Poor finds a gap: no
-  flat, though the library holds flats for its camera, as when every flat for
-  its filter was shot at another rotator angle; no bias or dark, though the
-  library holds either; or flats further away than <strong>Flat age
-  limit</strong> (60 days; 0 lifts it). Each rule counts only where the library
-  could have filled the gap, so a rig that never shoots flats is not
-  affected. A check set to <strong>Check only</strong> or <strong>Off</strong>
-  never marks a light as lacking calibration.</p>
+  <p>A light can't be calibrated when a check set to flag Poor finds a gap: no flat,
+  though the library contains flats for its camera, as when every flat for its filter
+  was shot at another rotator angle; no bias or dark, though the library contains bias
+  or dark frames; or flats further away than <strong>Flat age limit</strong> (60 days; 0
+  lifts it). Each rule counts only where the library could have filled the gap, so a rig
+  that never shoots flats is not affected. A check set to <strong>Check only</strong> or
+  <strong>Off</strong> never marks a light as lacking calibration.</p>
   <p><strong>Check lights</strong>, at the foot of the report, lists the
   project's lights that can't be calibrated, by night, filter and reason.
   <strong>Reject N lights</strong> then rejects them with that reason, so

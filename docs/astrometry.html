@@ -201,7 +201,8 @@ seiza setup
 
 <span class="c"># Or download the complete, SHA-256-verified bundle to a folder you choose.</span>
 seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
-  <p>The complete bundle holds every file. If you install files one by one, each has its own role:</p>
+  <p>The complete bundle contains all required files. If you install files one by one,
+  each has its own role:</p>
   <div class="table-wrap"><table>
     <tr><th>File</th><th>Role</th></tr>
     <tr><td><code>objects.bin</code></td><td>Coordinate-only object context, solved labels and catalog outlines.</td></tr>
@@ -246,7 +247,10 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
 
   <h2 id="use">4. Solve and inspect a frame</h2>
   <ol>
-    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and catalog context without solving. Click a panel's title to fold or open it; folded, Sky context keeps one line, such as whether the field solved and how many objects it holds.</li>
+    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and
+    catalog context without solving. Click a panel's title to fold or open it; folded,
+    Sky context keeps one line, such as whether the field solved and how many catalog
+    objects lie in the field.</li>
     <li>With a supported embedded WCS, the overlay is ready at once. Otherwise click <strong>Solve field</strong> or press <kbd>O</kbd>.</li>
     <li>PSF Guard tries a hinted solve from the header's mount coordinates and pixel scale, then the blind index if the hint is missing or stale.</li>
     <li>A solve you ask for turns the sky overlay on. After that, <kbd>O</kbd> toggles it while you zoom, pan or grade.</li>

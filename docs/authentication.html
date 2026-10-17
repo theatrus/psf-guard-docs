@@ -291,19 +291,18 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
   </ul>
 
   <h2 id="signing-in">Sign in</h2>
-  <p>Once <code>auth.json</code> holds a user, the browser shows a login page.
-  A login sets an HttpOnly, SameSite=Strict session cookie. Sessions live in
-  server memory, expire after <code>session_hours</code>, and end when the
-  server restarts or you sign out.</p>
+  <p>Once <code>auth.json</code> contains a user account, the browser shows a login
+  page. A login sets an HttpOnly, SameSite=Strict session cookie. Sessions live in
+  server memory, expire after <code>session_hours</code>, and end when the server
+  restarts or you sign out.</p>
   <figure>
     <img src="../assets/server-login.png" alt="The PSF Guard server login page" loading="lazy">
     <figcaption>The login page appears only when the server has
     accounts.</figcaption>
   </figure>
-  <p>Signed in, the menu at the right of the header says who you are and
-  holds <strong>Settings</strong> (editors only), <strong>Keyboard
-  shortcuts</strong>, <strong>Server information</strong> and <strong>Sign
-  out</strong>.</p>
+  <p>Signed in, the menu at the right of the header shows your username and includes
+  <strong>Settings</strong> (editors only), <strong>Keyboard shortcuts</strong>,
+  <strong>Server information</strong> and <strong>Sign out</strong>.</p>
   <!-- SHOT: header-menu.png | psf-guard.atpn.co signed in as an editor, any view (Library is fine): the menu button at the far right of the header clicked open, showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out; crop to the right end of the header and the open menu (same capture as the SHOT on configuration.html) | The menu at the right of the header: who is signed in, Settings, keyboard shortcuts, server information and Sign out. -->
   <pre><code>[server.auth]
 session_hours = 168
@@ -408,8 +407,7 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
   See <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin</a>.</p>
   <div class="callout info">
     Pairing and revoking take an editor. In Settings they sit in the catalog's
-    editor, which needs database management because it names the catalog's
-    folders. After pairing, sync and upload requests need only the client's
+    editor, which needs database management because it lets you set the catalog's folders. After pairing, sync and upload requests need only the client's
     key. Use HTTPS on any network you do not fully trust.
   </div>
   <p>The Director plugin pairs separately, with its own one-use codes and

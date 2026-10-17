@@ -147,11 +147,9 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1 id="config-api-title">Configuration and API</h1>
-  <p class="lede">
-    The JSON registry lists catalogs and holds the choices made in Settings; the
-    server's TOML file sets ports, caches and grants at start. The REST API
-    exposes what the UI does.
-  </p>
+  <p class="lede"> The JSON registry lists catalogs and stores the choices made in
+  Settings; the server's TOML file sets ports, caches and grants at start. The REST API
+  exposes what the UI does. </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
@@ -195,12 +193,12 @@ function gtag_report_demo() {
   <h3 id="unsaved">Unsaved edits</h3>
   <p>Settings asks before discarding unsaved edits when you click <strong>Done</strong>,
   <strong>×</strong> or outside the dialog. It checks changes to a rig's setup, a site,
-  calibration, scoring defaults, storage folders, PixInsight, the desktop
-  server port or the backup schedule. It names the forms and offers
-  <strong>Keep editing</strong> or <strong>Close without saving</strong>. The
-  rig and site forms say <strong>Unsaved changes</strong> beside Save; folding
-  a rig's setup or opening another site keeps its edits, and the browser asks
-  before a reload drops them.</p>
+  calibration, scoring defaults, storage folders, PixInsight, the desktop server port or
+  the backup schedule. The prompt lists the forms with unsaved changes and offers
+  <strong>Keep editing</strong> or <strong>Close without saving</strong>. The rig and
+  site forms say <strong>Unsaved changes</strong> beside Save; folding a rig's setup or
+  opening another site keeps its edits, and the browser asks before a reload drops
+  them.</p>
   <!-- SHOT: settings-unsaved-close.png | psf-guard.atpn.co as an editor, Settings › Calibration with one matching value changed and not saved, then Done clicked: the footer prompt "Unsaved changes in calibration settings. Close without saving them?" with Keep editing and Close without saving, and the Done button; crop to the bottom of the Settings dialog | Settings asks before it closes over edits a form has not saved. -->
 
   <h2 id="registry">Catalog registry</h2>
@@ -428,13 +426,12 @@ token_file = "/run/secrets/psf-guard-key"</code></pre>
   <a href="sync-plugin.html">N.I.N.A. Sync Plugin</a>.</p>
 
   <h2 id="guids">Fill in GUIDs</h2>
-  <p>Planning, sync and multi-rig projects find Target Scheduler rows by GUID.
-  Target Scheduler skips giving existing rows one when a database is upgraded
-  past schema 22 in one step, and such projects cannot be planned or synced.
-  <strong>Settings &rarr; Databases</strong> says how many rows lack one and
-  offers <strong>Fill in GUIDs</strong>. It copies the database beside itself
-  first, then fills only the empty GUIDs. Close N.I.N.A. on that rig before
-  filling.</p>
+  <p>Planning, sync and multi-rig projects find Target Scheduler rows by GUID. Target
+  Scheduler skips giving existing rows one when a database is upgraded past schema 22 in
+  one step, and such projects cannot be planned or synced. <strong>Settings &rarr;
+  Databases</strong> shows how many rows lack a GUID and offers <strong>Fill in
+  GUIDs</strong>. It copies the database beside itself first, then fills only the empty
+  GUIDs. Close N.I.N.A. on that rig before filling.</p>
   <pre><code>psf-guard -d schedulerdb.sqlite fill-guids --dry-run
 psf-guard -d schedulerdb.sqlite fill-guids</code></pre>
 
@@ -521,10 +518,10 @@ curl localhost:3000/api/stack-activity</code></pre>
       without the leading date, are recognized. For others,
       <a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">open an issue</a>
       with an example.</li>
-    <li><strong>Back up first.</strong> Back up catalogs before bulk edits
-      with <a href="backups.html">Settings › Backups</a> or
-      <code>psf-guard backup</code>. A backup holds no image files, so back
-      those up yourself before commands that move them.</li>
+    <li><strong>Back up first.</strong> Back up catalogs before bulk edits with <a
+    href="backups.html">Settings › Backups</a> or <code>psf-guard backup</code>. A
+    backup contains no image files, so back those up yourself before commands that move
+    them.</li>
   </ul>
 
   <nav class="next-prev" aria-label="Documentation pages">

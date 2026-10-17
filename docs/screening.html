@@ -173,7 +173,11 @@ function gtag_report_demo() {
     <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box reporting a possible obstruction, and sky context from a hinted solve" loading="lazy">
     <figcaption>Image detail. Quality analysis gives the score and its reason; Sky context gives the solve.</figcaption>
   </figure>
-  <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes you tick. The grid scores one target, project or database at a time and never compares frames from unrelated targets. It reads stored metadata and cached evidence and does not start a scan, and it says how many visible frames stay unscored for lack of a comparable sequence or evidence.</p>
+  <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes
+  you tick. The grid scores one target, project or database at a time and never compares
+  frames from unrelated targets. It reads stored metadata and cached evidence and does
+  not start a scan, It also shows how many visible frames remain unscored because they
+  lack a comparable sequence or enough evidence.</p>
   <p>To reject in bulk, choose a rule under <strong>Select</strong> in Sequence, then click <strong>Review rejection</strong>. Nothing is written until you confirm in the review. See <a href="#select">Select frames by rule</a>.</p>
 
   <div class="workflow-note cli">
@@ -209,7 +213,8 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <!-- SHOT: sequence-cutoff-hfr.jpg | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards. | Cutoff set to HFR. The bars, the dashed line and the marked cards follow it; the dots under the bars give each frame's grade. -->
 
   <h3 id="select">Select frames by rule</h3>
-  <p>The <strong>Select</strong> pill picks frames by a rule. Each choice says what it selects and how many frames it selects in the view on screen.</p>
+  <p>Use <strong>Select</strong> to select frames by a rule. Each option describes its
+  criteria and shows the number of matching frames in the current view.</p>
   <div class="table-wrap"><table>
     <tr><th>Rule</th><th>Selects</th></tr>
     <tr><td><strong>Below the cutoff</strong></td><td>Frames past the cutoff. With Cutoff on Stars or HFR it reads <strong>Fewer stars than the cutoff</strong> or <strong>HFR above the cutoff</strong>.</td></tr>
@@ -217,9 +222,14 @@ psf-guard move-rejects --db my-db-slug</code></pre>
     <tr><td><strong>Off target</strong></td><td>Frames off target, or with a pointing jump, drift or rotation skew.</td></tr>
     <tr><td><strong>Failed plate solve</strong></td><td>Frames that failed to solve and show image-quality evidence.</td></tr>
     <tr><td><strong>Recommended rejects</strong></td><td>Frames the analysis recommends rejecting.</td></tr>
-    <tr><td><strong>Poor calibration</strong></td><td>Lights the calibration library serves poorly. Until the calibration check catches up with recent changes, it reads <strong>Poor calibration (updating)</strong> and cannot be chosen. See <a href="calibration.html">Calibration Libraries</a>.</td></tr>
+    <tr><td><strong>Poor calibration</strong></td><td>Lights with Poor calibration findings. Until the calibration check catches up with recent changes, it reads <strong>Poor calibration (updating)</strong> and cannot be chosen. See <a href="calibration.html">Calibration Libraries</a>.</td></tr>
   </table></div>
-  <p>A chosen rule stays on. Moving the cutoff, changing its measure, rescoring or opening another session tab selects again without choosing the rule a second time. Frames you click by hand stay as you left them, and the row below the toolbar says how many you changed. The address keeps the rule as <code>selectRule</code>. <strong>×</strong> beside the pill turns the rule off and keeps the frames; <strong>Clear</strong> drops them and turns the rule off.</p>
+  <p>The rule stays active as you adjust the cutoff, change its measure, rescore or
+  switch sessions. PSF Guard updates the selection automatically while preserving frames
+  you selected or deselected manually. The row below the toolbar counts those manual
+  changes. The URL stores the rule as <code>selectRule</code>. Click <strong>×</strong>
+  beside the control to disable the rule and keep the selection, or
+  <strong>Clear</strong> to disable the rule and clear the selection.</p>
   <p><strong>Review rejection</strong> lists each selected frame with its evidence. Nothing is written until you confirm. See <a href="astrometry-quality.html#review">Astrometry Quality</a>.</p>
   <!-- SHOT: sequence-select-rule.png | Sequence toolbar for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, with the Recommended rejects rule on: the pill reads "Select: Recommended rejects (N)" with the × beside it, and the row below shows "N selected", "Rule: Recommended rejects", Review rejection and Clear. Crop: the toolbar and its selection row only. | A rule under Select stays on and says how many frames it picks. -->
 
@@ -320,7 +330,9 @@ psf-guard move-rejects --db my-db-slug</code></pre>
     <li>With the scan's values, a frame whose scan failed or has not run yet is left unmeasured, so a new frame waiting for its scan does not change how the rest score.</li>
     <li>A frame that can never be scanned, because its file is offline, loses its star dimension once most of its target is scanned.</li>
   </ul>
-  <p><strong>Max HFR</strong>, <strong>Min stars</strong> and the zero-star cap still judge each frame on its own measurement: the scan's when it counted stars, else the capture software's.</p>
+  <p><strong>Max HFR</strong>, <strong>Min stars</strong> and the zero-star cap still
+  judge each frame on its own measurement: PSF Guard uses scan measurements when
+  available, or measurements from the capture software otherwise.</p>
 
   <h3 id="zero-star-guards">Guards against false zero-star records</h3>
   <ul>
@@ -352,7 +364,16 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>Every view starts from your scoring defaults, set in <strong>Settings › Review › Sequence scoring</strong>. Each field shows its built-in value. <strong>Save defaults</strong> stores your changes, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
   <!-- SHOT: settings-review-scoring.png | Settings › Review, the Sequence scoring card at the built-in values: Penalties (Satellite trails, Pointing, Temporal anomalies, HFR rise, Star loss, each 100% with its hint and "Built in: 100%"), Reject limits (Max HFR and Min stars empty, reading "off"), Save defaults and Reset to built-in defaults. Crop: that card only. | Settings › Review › Sequence scoring holds the defaults every view starts from. -->
   <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>, and its popover offers <strong>Save as default</strong>, which makes the view's values your defaults, and <strong>Reset to default</strong>, which returns the view to them. For an editor, <strong>Edit defaults</strong> in the popover opens Settings.</p>
-  <p>Once a value differs from your defaults, the address names all of them: <code>penaltySatellite</code>, <code>penaltyPointing</code>, <code>penaltyTemporal</code>, <code>penaltyHfrRise</code>, <code>penaltyStarLoss</code> (1 is 100%), <code>maxHfr</code> and <code>minStars</code>, with <code>off</code> for a limit turned off. A link therefore scores the same for whoever opens it. A reload, the project's other targets, Images, the image detail and Stacks keep the view's scoring, so a frame scores the same everywhere in the project. Those views show <strong>Scoring (changed)</strong> with <strong>Reset</strong>, and Stacks says beside <strong>Build</strong> which values a build uses. Another project or database starts from your defaults.</p>
+  <p>Once a value differs from your defaults, the URL stores all scoring values:
+  <code>penaltySatellite</code>, <code>penaltyPointing</code>,
+  <code>penaltyTemporal</code>, <code>penaltyHfrRise</code>,
+  <code>penaltyStarLoss</code> (1 is 100%), <code>maxHfr</code> and
+  <code>minStars</code>, with <code>off</code> for a limit turned off. A link therefore
+  scores the same for whoever opens it. A reload, the project's other targets, Images,
+  the image detail and Stacks keep the view's scoring, so a frame scores the same
+  everywhere in the project. Those views show <strong>Scoring (changed)</strong> with
+  <strong>Reset</strong>, and Stacks shows the values used for the build beside
+  <strong>Build</strong>. Another project or database starts from your defaults.</p>
   <p>Signed in to a server with user accounts, your defaults follow you to any browser, like your other view choices; otherwise the browser keeps them. The values an earlier version's Scoring control remembered become your defaults. See <a href="authentication.html">Server Accounts</a>.</p>
 
   <h2 id="diagnostics">Read the annotated diagnostics</h2>

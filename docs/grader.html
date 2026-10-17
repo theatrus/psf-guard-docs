@@ -210,13 +210,12 @@ function gtag_report_demo() {
 
   <h3 id="library-calibration">Calibration pills</h3>
   <p>A <strong>🧪 Poor</strong> or <strong>🧪 Check</strong> pill marks a project whose
-  lights have calibration issues: Poor when some lights can't be
-  calibrated properly, Check when something is worth a look. Causes include lights
-  with no calibration frames to match, thin dark masters, flats with changing spots,
-  old or mixed flats, and suspect frames in use. A background check works it out. The
-  pill opens the project's Calibration report, and <strong>Show › Calibration
-  issues</strong> lists only these projects. See
-  <a href="calibration.html">Calibration Libraries</a>.</p>
+  lights have calibration issues: Poor when some lights can't be calibrated properly,
+  Check when calibration needs review. Causes include lights with no calibration frames
+  to match, thin dark masters, flats with changing spots, old or mixed flats, and
+  suspect frames in use. PSF Guard checks calibration in the background. The pill opens
+  the project's Calibration report, and <strong>Show › Calibration issues</strong> lists
+  only these projects. See <a href="calibration.html">Calibration Libraries</a>.</p>
   <!-- SHOT: library-calibration-pills.png | Library, Compact, Show: Calibration issues (the Show pill reads it, marked as set): five or six rows with 🧪 Poor (red) and 🧪 Check (yellow) pills in the calibration column, for example rigs c925-scheduler and starfront-redcat61; hover one pill so its tooltip ("Calibration: N lights can't be calibrated properly") shows; crop to the toolbar and the rows | Show › Calibration issues: projects whose lights the calibration library serves poorly. -->
 
   <h2 id="header">The header</h2>
@@ -233,7 +232,7 @@ function gtag_report_demo() {
   <p>At the right sit the jobs chip and one menu button, ☰, holding
   <strong>Settings</strong>, <strong>Keyboard shortcuts</strong>, <strong>Server
   information</strong> and <strong>Sign out</strong>. On a server with accounts the menu
-  says who is signed in, and only an editor sees Settings.</p>
+  shows who is signed in, and only an editor sees Settings.</p>
   <div class="shot-pair">
     <!-- RESHOOT: header-picker.png | Header with the project picker open, the search box holding "Heart": Heart Mosaic (rig askar107phq) and other matches, one opened to All images and its targets; the new icon tabs visible beside it -->
     <figure>
@@ -252,9 +251,9 @@ function gtag_report_demo() {
     <li>The switcher fits long target names. Mosaic panels show the part that sets
       them apart, such as <em>Panel 2</em>, with the full name as a tooltip.</li>
     <li><strong>Calibration</strong> shows the calibration library of the database in
-      scope. With a project in scope it opens on that project's rig and shows the
-      calibration that project uses; there the switcher names the rig only. See
-      <a href="calibration.html">Calibration Libraries</a>.</li>
+    scope. With a project in scope it opens on that project's rig and shows the
+    calibration that project uses; there the switcher shows only the rig name. See <a
+    href="calibration.html">Calibration Libraries</a>.</li>
     <li>The jobs chip counts running, waiting and queued work, and work that needs you,
       with a small icon each. Its list splits into <strong>Started by you</strong> and
       <strong>Automatic</strong>. Click a job to open what it works on. See
@@ -273,28 +272,28 @@ function gtag_report_demo() {
 
   <h3 id="toolbar">The toolbar</h3>
   <p>Images, Sequence and the Calibration page share one compact toolbar. Its first row
-  holds the filter pills, the thumbnail size slider and the tools. A pill names its
-  filter and its value, such as <strong>Status: All</strong>. <strong>View</strong>
-  holds the display settings, and <strong>⋯</strong> less-used tools. A slim row below
-  gives the counts. On a phone the filters and the slider
-  fold behind a <strong>Filters</strong> button that counts the filters in use.</p>
+  contains the filter controls, the thumbnail size slider and the tools. Each control
+  shows its filter and current value, such as <strong>Status: All</strong>.
+  <strong>View</strong> opens the display settings, and <strong>⋯</strong> less-used
+  tools. A slim row below gives the counts. On a phone the filters and the slider fold
+  behind a <strong>Filters</strong> button that counts the filters in use.</p>
   <ul>
     <li><strong>Status</strong>, <strong>Filter</strong>, <strong>Flag</strong> and
       <strong>Calibration</strong> open checkbox lists: Ha and OIII together, or frames
       with any of two flags. <strong>Dates</strong> and the search box narrow further;
       <strong>Clear</strong> drops every filter.</li>
-    <li><strong>View</strong> holds <strong>Group</strong> (filter, session, date, or
-      filter and date; project first when Images shows every project),
-      <strong>Sort</strong>, <strong>Marks</strong>, <strong>Nights end</strong>,
-      <strong>Chips</strong> and <strong>Separate exposure groups</strong>. The button
-      names a setting that is off its default, such as newest first.</li>
+    <li><strong>View</strong> includes <strong>Group</strong> (filter, session, date, or
+    filter and date; project first when Images shows every project),
+    <strong>Sort</strong>, <strong>Marks</strong>, <strong>Nights end</strong>,
+    <strong>Chips</strong> and <strong>Separate exposure groups</strong>. The button
+    shows which setting differs from its default, such as newest first.</li>
     <li>The tools are undo and redo, <strong>Compare</strong>, <strong>Stats</strong>,
       which opens image statistics under the toolbar, and the quality scan.</li>
-    <li>For an editor, <strong>⋯</strong> holds <strong>Move exposures</strong>, which
-      splits frames into another target or project (see
-      <a href="importing.html#organize">Organize projects and targets</a>), and
-      <strong>Rescan image folders</strong>, which replaces the header's reload button
-      (see <a href="importing.html#rescan">Files copied in by hand</a>).</li>
+    <li>For an editor, <strong>⋯</strong> includes <strong>Move exposures</strong>,
+    which splits frames into another target or project (see <a
+    href="importing.html#organize">Organize projects and targets</a>), and
+    <strong>Rescan image folders</strong>, which replaces the header's reload button
+    (see <a href="importing.html#rescan">Files copied in by hand</a>).</li>
     <li>Select with Shift+Click, Ctrl/Cmd+Click, or arrow keys and Space; Shift with an
       arrow extends the selection. Once two images are selected, the slim row offers
       <strong>Accept</strong>, <strong>Reject</strong>, <strong>Pending</strong> and
@@ -333,10 +332,10 @@ function gtag_report_demo() {
   <p>Nights split at each rig's local noon, not at midnight. A light finds its rig
   through its Target Scheduler profile, so lights a western rig shoots after midnight
   UTC stay on the night they began. <strong>Date</strong> groups are these observing
-  nights, and the detail view's next and previous walk the same nights.
+  nights, and next and previous navigation in the detail view follows the same nights.
   <strong>Nights end</strong> under <strong>Settings → Calibration</strong> can put
-  every light on one split with <strong>Same time for all rigs</strong>;
-  <strong>Nights end</strong> in the View panel shows the other split in one view.</p>
+  every light on one split with <strong>Same time for all rigs</strong>; <strong>Nights
+  end</strong> in the View panel shows the other split in one view.</p>
   <!-- SHOT: grid-time-marks.jpg | Images for Golf of Mexico (rig "ultra cat"), Group: Filter, the H-alpha group open across several nights including Jul 9 2026, Sort: Oldest first, Marks: Nights and hours, thumbnail size near the smallest step so two nights fit: a night line with its date label, the faint band on every other night, and thin hour lines | A line and the date start each night; thinner lines mark the hours. -->
 
   <h3 id="cards">Cards</h3>
@@ -403,8 +402,8 @@ function gtag_report_demo() {
       height.</li>
   </ul>
   <!-- SHOT: image-detail-folded.png | Image detail sidebar crop for a light with a 🧪 Check or Poor chip (find one with Library › Show › Calibration issues, then the Calibration pill in Images): Image Information, Quality analysis, Sky context and Satellite tracks folded to their one-line summaries (the score, "solved" or not, the crossing count), and Calibration open on its own listing the findings in words | Folded panels keep one line; Calibration opens for a light with findings. -->
-  <p>When the catalog holds a frame's calibrated or registered copies from WBPP, Siril,
-  ASTAP or DeepSkyStacker, <kbd>V</kbd> or the buttons beside the image switch
+  <p>When the catalog contains calibrated or registered copies of a frame from WBPP,
+  Siril, ASTAP or DeepSkyStacker, <kbd>V</kbd> or the buttons beside the image switch
   between them. Previews, star markers and the PSF view follow. Grid cards mark frames
   that have copies. See <a href="importing.html#calibrated">Calibrated copies</a>.</p>
 

@@ -189,7 +189,11 @@ function gtag_report_demo() {
     <li><strong>Short skew.</strong> A run shorter than three frames, or one that leaves the held angle and comes back to it, is skew. PSF Guard measures it against the nearest held framing.</li>
     <li><strong>Rotator slip.</strong> However long the run, a field that turned more than 5° from the framing the rest of the target shares, while the rotator's reported angle (N.I.N.A. <code>RotatorPosition</code>) did not turn with it, is skew. This catches a slip, a lost sync, or a camera turned by hand.</li>
   </ul>
-  <p>A turn the rotator reported is framing someone chose. A reading that moves while the field holds still changes nothing in the pixels. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames overlap the rest less and crop the stack, so they are capped, recommended for rejection and left out of stacks. The 2° tolerance is fixed.</p>
+  <p>PSF Guard treats a rotation reported by the rotator as intentional framing. A
+  changed rotator reading does not imply that the field rotated if the pixels remain
+  aligned. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames
+  overlap the rest less and crop the stack, so they are capped, recommended for
+  rejection and left out of stacks. The 2° tolerance is fixed.</p>
   <figure>
     <img src="../assets/stack-frame-weights.png" alt="A stack's frame decisions listing two frames excluded for rotation skew, at +89.7° and −89.2° from the sequence" loading="lazy">
     <figcaption>Two frames whose field turned about 90° while the rotator reported no turn,

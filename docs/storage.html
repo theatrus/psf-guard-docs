@@ -297,9 +297,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       <tr><td>WBPP run folders</td><td>Never: a run's output may exist nowhere else</td></tr>
     </table>
   </div>
-  <p>Masters are swept only while no stack build runs. An index that cannot be
-  read stops the sweep of that database rather than leaving what it refers to
-  unprotected; the server log says which file.</p>
+  <p>Masters are swept only while no stack build runs. An index that cannot be read
+  stops the sweep of that database rather than leaving what it refers to unprotected;
+  the server log identifies the file.</p>
   <p>Neither the disk limit nor the cleanup touches your frames. To free the
   space rejected frames take, <a href="workflows.html#remove-rejects">remove
   old rejects</a>.</p>
@@ -361,24 +361,22 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
   <figure>
     <img src="../assets/header-jobs.png" alt="The header's background jobs list: Started by you with a running build and a queued build three places back, and Automatic with a waiting stack refresh" loading="lazy">
-    <figcaption>Your work and automatic work under their own headings. A queued
-    build says its place in the whole line.</figcaption>
+    <figcaption>Your work and automatic work under their own headings. A queued build
+    shows its position in the queue.</figcaption>
   </figure>
   <ul>
-    <li><strong>Queued.</strong> Stack builds, color compositions and
-      processing runs share one line, and WBPP runs have another. Both
-      headings share each line, since an automatic refresh's build can wait
-      ahead of yours, so a queued row says its place in the whole line and
-      how many wait ahead of it: <code>queued · 4 · 3 ahead</code>, or
-      <code>queued · 1 · next</code>. <strong>↑</strong> and
-      <strong>↓</strong> move it within the whole line, past rows under the
-      other heading, and <strong>✕</strong> takes it out. The line, not the
-      order you asked, decides what runs next.</li>
-    <li><strong>Waiting.</strong> Automatic work steps aside whenever yours
-      runs. A database quality analysis, an automatic stack refresh or a
-      re-apply of processing that steps aside says what it waits for and keeps its
-      progress bar at the point where it paused. Waiting is normal, so these rows are
-      drawn muted.</li>
+    <li><strong>Queued.</strong> Stack builds, color compositions and processing runs
+    share one line, and WBPP runs have another. Both headings share each line, since an
+    automatic refresh's build can wait ahead of yours, so each queued row shows its
+    position in the queue and how many wait ahead of it: <code>queued · 4 · 3
+    ahead</code>, or <code>queued · 1 · next</code>. <strong>↑</strong> and
+    <strong>↓</strong> move it within the whole line, past rows under the other heading,
+    and <strong>✕</strong> takes it out. The line, not the order you asked, decides what
+    runs next.</li>
+    <li><strong>Waiting.</strong> Automatic work steps aside whenever yours runs. A
+    database quality analysis, an automatic stack refresh or a processing re-apply that
+    pauses shows which job it is waiting for and keeps its progress bar at the point
+    where it paused. Waiting is normal, so these rows are drawn muted.</li>
     <li><strong>Needs you.</strong> Only jobs that need your attention use the warning
     color, such as a collaboration transfer held for review, before
       upload or after it failed. A transfer row carries its own Pause, Resume,
@@ -501,11 +499,10 @@ curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre
       <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
     </table>
   </div>
-  <p>The log holds what a server prints to its console: folder moves, what a
-  stop waits for, the queue put back after a restart, and each frame a stack
-  leaves out or rejects, and why. <code>RUST_LOG</code> sets the level; the default is
-  <code>info</code>. A server run from the command line or in Docker logs to
-  its console.</p>
+  <p>The log records the server's console output: folder moves, what a stop waits for,
+  the queue put back after a restart, and each frame a stack leaves out or rejects, and
+  why. <code>RUST_LOG</code> sets the level; the default is <code>info</code>. A server
+  run from the command line or in Docker logs to its console.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="sync-plugin.html">&larr; N.I.N.A. Sync Plugin</a>

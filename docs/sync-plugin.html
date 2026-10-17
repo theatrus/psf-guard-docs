@@ -147,13 +147,18 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>N.I.N.A. Sync Plugin</h1>
-  <p class="lede">
-    The <strong>PSF Guard Sync</strong> plugin connects N.I.N.A. and its Target
-    Scheduler catalog to a PSF Guard server. It uploads saved lights and
-    calibration frames, pushes scheduler captures, pulls plans and reviewed
-    grades back, and syncs Target Scheduler's flat coverage, so nobody copies
-    database files by hand.
+  <p class="lede"> The <strong>PSF Guard Sync</strong> plugin connects N.I.N.A. and its
+  Target Scheduler catalog to a PSF Guard server. It uploads saved lights and
+  calibration frames, pushes scheduler captures, pulls plans and reviewed grades back,
+  and syncs Target Scheduler's flat coverage, without copying database files by hand.
   </p>
+
+  <div class="callout info">
+    <strong>Recommended for N.I.N.A. with Target Scheduler.</strong> Use this
+    plugin to keep your rig and PSF Guard in sync. Target Scheduler runs the
+    captures; PSF Guard handles planning, review and stacking. The upcoming
+    <a href="rigs.html#director">Director plugin</a> is separate and in early beta.
+  </div>
 
   <h2 id="install">Install the plugin</h2>
   <p>PSF Guard hosts a N.I.N.A. plugin repository. Add it once, and the plugin
@@ -209,9 +214,8 @@ function gtag_report_demo() {
   profile by machine and profile name. <strong>Revoke</strong> cuts off one
   and leaves the others alone.</p>
   <div class="callout info">
-    Generating pairing codes and revoking clients take an editor. In Settings
-    they sit in the catalog's editor, which needs database management because
-    it names the catalog's folders. See
+    Only editors can generate pairing codes or revoke clients. In Settings
+    they sit in the catalog's editor, which needs database management because it lets you set the catalog's folders. See
     <a href="authentication.html#sync">Server Accounts</a>.
   </div>
 

@@ -147,11 +147,10 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>Getting Started</h1>
-  <p class="lede">
-    Install PSF Guard, then build a catalog from FITS or XISF folders or open a
-    N.I.N.A. Target Scheduler database. Image files stay where they are. No
-    command line needed.
-  </p>
+  <p class="lede"> Install PSF Guard and connect N.I.N.A. through the PSF Guard Sync
+  plugin, import existing FITS or XISF folders, or open a Target Scheduler database.
+  Review your frames, plan future captures and build calibrated stacks without using the
+  command line. </p>
 
   <!-- RESHOOT: library-compact.jpg | Library, compact view, full width: rows in columns with state, progress, grades, dates, calibration Poor/Check pills, Sequence, Stacks, ⚙; new icon header -->
   <figure class="feature-shot">
@@ -166,6 +165,11 @@ function gtag_report_demo() {
 
   <h2 id="choose">2. Choose a starting point</h2>
   <div class="workflow-routes">
+    <div class="workflow-note sync">
+      <div class="workflow-tag">N.I.N.A.</div>
+      <div class="workflow-copy"><strong>Connect with PSF Guard Sync</strong><p>Recommended for N.I.N.A. with Target Scheduler: sync captures, plans and grades, and optionally upload images.</p></div>
+      <a class="workflow-link" href="#nina-sync">Connect N.I.N.A. ↓</a>
+    </div>
     <div class="workflow-note simple">
       <div class="workflow-tag">From FITS</div>
       <div class="workflow-copy"><strong>Build a catalog from image folders</strong><p>Headers first; pixel measurements run in the background.</p></div>
@@ -194,20 +198,40 @@ function gtag_report_demo() {
     Target Scheduler database layout, but Target Scheduler is optional.
   </div>
 
-  <h2 id="first-catalog">3. Build a catalog</h2>
+  <h2 id="nina-sync">3. Connect N.I.N.A. with PSF Guard Sync</h2>
+  <p>For N.I.N.A. with Target Scheduler, use the <a href="sync-plugin.html">PSF Guard
+  Sync plugin</a>. Target Scheduler runs your imaging sessions. The Sync plugin sends
+  capture records to PSF Guard and retrieves saved plans and reviewed grades. You can
+  also upload saved lights and calibration frames.</p>
+  <ol>
+    <li>Install <strong>PSF Guard Sync</strong> from the <a
+    href="sync-plugin.html#install">PSF Guard plugin repository</a> in N.I.N.A.</li>
+    <li>In PSF Guard, choose the destination catalog under <strong>Settings →
+    Databases</strong>. If you need a new catalog, create one from an empty image
+    folder; the plugin can populate it.</li>
+    <li>Edit the catalog and generate a pairing code. Enter the server URL and code in
+    the N.I.N.A. plugin, then click <strong>Pair</strong> and <strong>Test
+    connection</strong>.</li>
+    <li>Choose which data to sync. If you also want to transfer image files, enable
+    uploads and choose a receive folder in PSF Guard.</li>
+  </ol>
+  <p>Follow <a href="sync-plugin.html#server">Pair N.I.N.A. with a catalog</a> for the
+  full setup. The Sync plugin transfers data; Target Scheduler remains responsible for
+  capture. You do not need the Director beta for this setup.</p>
+
+  <h2 id="first-catalog">Or import existing images</h2>
   <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
   image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
   frames into projects, targets and exposure plans from the headers alone. Turn on
-  <strong>Automatic import</strong> to bring in new frames on a schedule; frames
-  for a target the catalog does not know wait for you to <strong>Review</strong>
-  them. See <a href="importing.html">Import Images</a>.</p>
+  <strong>Automatic import</strong> to bring in new frames on a schedule; PSF Guard
+  holds frames for unknown targets until you choose <strong>Review</strong> and approve
+  their import. See <a href="importing.html">Import Images</a>.</p>
 
   <h2 id="existing-database">Or open a Target Scheduler database</h2>
   <div class="callout">
     <strong>Back up the database before PSF Guard first writes to it.</strong>
     Grading writes to the file. Import and sync preview their changes first.
-    <a href="backups.html">Backups</a> copies every catalog safely while
-    N.I.N.A. runs.
+    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
   </div>
   <ol>
     <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
@@ -229,9 +253,9 @@ function gtag_report_demo() {
       <kbd>X</kbd>.</li>
     <li>Open <strong>Sequence</strong> to see a whole session scored, with the cause
       behind each low score.</li>
-    <li>Open <strong>Calibration</strong> to check the bias, darks and flats the
-      project's lights take. A <strong>Poor</strong> or <strong>Check</strong> pill
-      in the Library says a project needs a look.</li>
+    <li>Open <strong>Calibration</strong> to review the bias, dark and flat frames
+    matched to your lights. If the Library shows a <strong>Poor</strong> or
+    <strong>Check</strong> badge, click it to see the calibration findings.</li>
     <li>Open <strong>Stacks</strong> to stack the accepted frames per channel and
       combine them in color.</li>
     <li>Export the accepted lights for PixInsight, or run WBPP on the server.</li>
@@ -242,20 +266,28 @@ function gtag_report_demo() {
   and <a href="exporting.html">Export</a>.</p>
 
   <h2 id="planning">5. Plan across rigs</h2>
-  <p>Every database is a rig and every project a plan. Open a plan's
-  <strong>Planning</strong> workspace to frame it on the sky, set goals per filter,
-  and write it into each rig's Target Scheduler database. See
-  <a href="planning.html">Planning</a>.</p>
+  <p>PSF Guard creates rigs and plans from your registered databases and Target
+  Scheduler projects. Open a plan's <strong>Planning</strong> workspace to frame it on
+  the sky, set goals per filter, and write it into each rig's Target Scheduler database.
+  See <a href="planning.html">Planning</a>.</p>
 
-  <h2 id="two-machines">Two-machine setups</h2>
-  <p>Skip sync when PSF Guard can open the telescope's database directly. Sync is
-  for two separate database files: pull captures to the grading copy, then push
-  plans and reviewed grades back. A rig at another site can run its own PSF Guard;
-  sync with it over the network with <strong>Remote PSF Guard</strong>. See
-  <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
-  <p>N.I.N.A. can also sync its Target Scheduler database itself, and upload each
-  frame as it saves, with the <a href="sync-plugin.html">PSF Guard Sync
-  plugin</a>.</p>
+  <h2 id="two-machines">Other ways to connect a rig</h2>
+  <p>If PSF Guard can open the telescope's database directly, you can work on that file
+  without syncing a second copy. For separate database files, use <a
+  href="workflows.html#sync">Data Transfer</a> to copy captures, plans and grades. If
+  another site runs its own PSF Guard server, connect through <strong>Remote PSF
+  Guard</strong>. For N.I.N.A. rigs, the Sync plugin is the recommended way to automate
+  these transfers.</p>
+
+  <h2 id="beta">Early beta: Director and collaboration</h2>
+  <p>The upcoming <a href="rigs.html#director">N.I.N.A. Director plugin</a> is a
+  separate integration for plan execution and live rig status. Its early beta can
+  retrieve an activated program, report status and check in saved captures. Direct
+  acquisition is still upcoming, and pairing alone does not start a sequence or grant
+  equipment control. Use Target Scheduler with PSF Guard Sync for imaging today.</p>
+  <p><a href="collaboration.html">Collaboration</a> is also in early beta. It connects
+  rigs to shared imaging projects on services such as Starfront, imports assigned work
+  and submits accepted contributions.</p>
 
   <h2 id="requirements">Image formats</h2>
   <p>PSF Guard reads FITS (<code>.fits</code>, <code>.fit</code>, <code>.fts</code>)

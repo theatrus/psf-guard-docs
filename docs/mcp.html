@@ -369,34 +369,32 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
   <a href="activation.html">Exposures &amp; Activation</a>.</p>
 
   <h2 id="stacks">Look into a stack</h2>
-  <p>Ask where a pattern in a stack comes from. <code>get_stack_image</code>
-  with <code>stretch: "background"</code> shows it, and a crop shows it at full
-  detail. <code>get_stack_calibration</code> shows whether a session had no
-  flat, or a dark master built from two frames, and the temperatures those
-  frames were shot at; <code>get_stack</code> gives each light's to set
-  against them. <code>explain_calibration</code> on one light says why: flats
-  marked for later lights, flats at another rotator angle, darks of another
-  exposure, or darks shot warmer than the light. <code>get_stack</code> also
-  shows, per night, whether the frames were dithered: frames that walk one way
-  without dithers turn anything fixed to the sensor into streaks. See
-  <a href="calibration.html">Calibration Libraries</a>.</p>
+  <p>Ask where a pattern in a stack comes from. <code>get_stack_image</code> with
+  <code>stretch: "background"</code> shows it, and a crop shows it at full detail.
+  <code>get_stack_calibration</code> shows whether a session had no flat, or a dark
+  master built from two frames, and the temperatures those frames were shot at;
+  <code>get_stack</code> provides each light's temperature for comparison.
+  <code>explain_calibration</code> explains why a light cannot be calibrated: flats
+  marked for later lights, flats at another rotator angle, darks of another exposure, or
+  darks shot warmer than the light. <code>get_stack</code> also shows, per night,
+  whether the frames were dithered: frames that walk one way without dithers turn
+  anything fixed to the sensor into streaks. See <a href="calibration.html">Calibration
+  Libraries</a>.</p>
 
   <h2 id="flats">Flats and their changes</h2>
-  <p>Ask why some lights got last month's flats.
-  <code>explain_calibration</code> with <code>kinds: ["flat"]</code> names the
-  family, the change the light sits beside and the side its flats came from.
-  <code>get_flat_groups</code> shows the rig's groups and why each split: dust,
-  light pattern or vignetting against the limits, with the dust counted by kind
-  (new, gone, moved) and shape (compact, disk, donut, patch) and the deepest
-  three named. Dust that moved only as far as focus travel explains is
-  counted apart and does not split groups. <code>get_calibration_frame</code>
-  shows one flat's own dust beside its session's.</p>
-  <p>A person's choices change which flats lights take, and need write access
-  and database management, as in the app. <code>set_flat_group_override</code>
-  splits or joins groups by the sessions' <code>response_key</code>;
-  <code>set_light_flat_choice</code> puts lights on a side of a change by its
-  <code>key</code>, which <code>get_light_flat_options</code> lists for a set
-  of lights. Use anyway on a suspect frame
+  <p>Ask why some lights got last month's flats. <code>explain_calibration</code> with
+  <code>kinds: ["flat"]</code> lists the family, the change the light sits beside and
+  the side its flats came from. <code>get_flat_groups</code> shows the rig's groups and
+  why each split: dust, light pattern or vignetting against the limits, with the dust
+  counted by kind (new, gone, moved) and shape (compact, disk, donut, patch) and the
+  deepest three named. Dust that moved only as far as focus travel explains is counted
+  apart and does not split groups. <code>get_calibration_frame</code> shows one flat's
+  own dust beside its session's.</p>
+  <p>Changing flat assignments manually requires write access and database management,
+  as in the app. <code>set_flat_group_override</code> splits or joins groups by the
+  sessions' <code>response_key</code>; <code>set_light_flat_choice</code> puts lights on
+  a side of a change by its <code>key</code>, which <code>get_light_flat_options</code>
+  lists for a set of lights. Use anyway on a suspect frame
   (<code>set_calibration_frame_choice</code>) needs write access only.</p>
   <p>A duplicate repair needs a check first.
   <code>check_calibration_duplicates</code> starts it;

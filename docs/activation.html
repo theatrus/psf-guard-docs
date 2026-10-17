@@ -161,11 +161,11 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="exposures">Set goals per filter</h2>
-  <p>The <strong>Exposures</strong> tab says what the plan wants. An objective is
-  one bandpass and purpose (<strong>Faint detail</strong> or <strong>Unsaturated
-  stars</strong>) with a goal in accepted hours or accepted frames. For each rig
-  in the plan, it shows the template, exposure length and frames that meet the
-  goal, and the rig's progress.</p>
+  <p>Use the <strong>Exposures</strong> tab to set capture goals. An objective is one
+  bandpass and purpose (<strong>Faint detail</strong> or <strong>Unsaturated
+  stars</strong>) with a goal in accepted hours or accepted frames. For each rig in the
+  plan, it shows the template, exposure length and frames that meet the goal, and the
+  rig's progress.</p>
   <!-- RESHOOT: plan-objectives.png | Planning workspace for Heart Mosaic (rig askar107phq), Exposures tab, nothing unsaved and no bar up: crop to the plan summary (green Activated pill and Activate… button) and the Objectives box below it, with each objective's Bandpass, Purpose and Goal, down to Add objective. -->
   <figure>
     <img src="../assets/plan-objectives.png" alt="Exposures tab: objectives per band with purpose and goal in frames per rig" loading="lazy">
@@ -177,17 +177,17 @@ function gtag_report_demo() {
       skies for the same goal.</li>
     <li>Switching a goal between hours and frames converts the number: 6 h at
       300 s becomes 72 frames and back.</li>
-    <li>Each rig takes its first template whose filter resolves to the band.
-      Filter names map to bands: <code>L</code>, <code>Lum</code> and
-      <code>Clear</code> are luminance; <code>Ha</code>, <code>H-alpha</code> and
-      <code>Ha 3nm</code> are H-alpha; <code>OIII</code> and <code>O3</code> are
-      OIII.</li>
+    <li>For each rig, PSF Guard selects the first template whose filter matches the
+    band. Filter names map to bands: <code>L</code>, <code>Lum</code> and
+    <code>Clear</code> are luminance; <code>Ha</code>, <code>H-alpha</code> and <code>Ha
+    3nm</code> are H-alpha; <code>OIII</code> and <code>O3</code> are OIII.</li>
     <li>The exposure is the template's default, both when the rig joins and when
       you pick another template. When a database template's default is under a
       second, the rig's exposure for the band stands in, set by its optics and
       sky: 120 s broadband and 300 s narrowband at f/5 under Bortle 4 to 5,
       longer for slower optics and darker skies.</li>
-    <li>A rig with no template for a band sits that band out, and says so.</li>
+    <li>If a rig has no template for a band, PSF Guard skips that band for the rig and
+    shows the reason.</li>
   </ul>
 
   <h3 id="progress">Progress and status</h3>
@@ -230,17 +230,17 @@ function gtag_report_demo() {
   across the panels it owns.</p>
 
   <h2 id="templates">Exposure template library</h2>
-  <p><strong>Settings › Exposure templates</strong> holds templates that belong to
-  no database: a name, the filter as the rig calls it, gain, offset, binning,
-  readout mode and a starting exposure. Bind a rig to one when its database has
-  no template for a band, so a second or third rig joins a plan without
+  <p><strong>Settings › Exposure templates</strong> stores shared templates
+  independently of any database. Each template includes a name, the rig's filter name,
+  gain, offset, binning, readout mode and a starting exposure. Bind a rig to one when
+  its database has no template for a band, so a second or third rig joins a plan without
   templates of its own.</p>
   <ul>
     <li>Activation writes the template into the rig's database under the
       library's GUID, so every rig ends up with the same template.</li>
-    <li>Once a database holds the library template, written by activation or
-      with the same filter, camera settings and Moon rules, the plan uses the
-      rig's own copy.</li>
+    <li>If the database already contains the template, the plan uses that local copy. It
+    can match a template written by activation or an existing template with the same
+    filter, camera settings and Moon rules.</li>
     <li><strong>Copy from</strong> lists a rig's templates and copies any of them
       into the library.</li>
     <li>Edit rows in place. Removing a template asks first; plans that chose it
@@ -257,10 +257,9 @@ function gtag_report_demo() {
   activation writes them into the rig's template.</p>
 
   <h2 id="rigs-tab">The Rigs tab</h2>
-  <p>The <strong>Rigs</strong> tab holds one block per rig: its database's
-  project, its templates and frames, what activation does there, and its Target
-  Scheduler settings and targets once the database has the project. Rigs outside
-  the plan fold away.</p>
+  <p>The <strong>Rigs</strong> tab shows one block per rig: its database's project, its
+  templates and frames, what activation does there, and its Target Scheduler settings
+  and targets once the database has the project. Rigs outside the plan fold away.</p>
   <p>Each block's heading shows whether the rig matches the saved plan:
   <em>activated</em>; <em>behind</em> with why, such as <em>behind · not activated
   yet</em>, <em>behind · differs from the plan</em> or <em>behind · activation
@@ -295,7 +294,7 @@ function gtag_report_demo() {
     <table>
       <tr><th>Label</th><th>Meaning</th></tr>
       <tr><td><strong>Activated</strong></td><td>Every rig assigned to the plan matches what activation would write.</td></tr>
-      <tr><td><strong>Needs activating</strong></td><td>Activation would change a rig's Target Scheduler rows: the saved plan or framing is not activated yet, a rig joined, rows changed in N.I.N.A., an exposure plan with the old exposure length is still on, or a remote site lacks the last activation. The tooltip says why.</td></tr>
+      <tr><td><strong>Needs activating</strong></td><td>Activation would change a rig's Target Scheduler rows: the saved plan or framing is not activated yet, a rig joined, rows changed in N.I.N.A., an exposure plan with the old exposure length is still on, or a remote site lacks the last activation. The tooltip explains why.</td></tr>
       <tr><td><strong>Checking the rigs…</strong></td><td>The check is running, and the last activation cannot answer for the saved plan.</td></tr>
       <tr><td><strong>Couldn't check the rigs</strong></td><td>The check failed, or could not read a rig's database (<em>Couldn't check ultracat131</em>). The tooltip explains why. No activation prompt appears.</td></tr>
       <tr><td><strong>Can't activate yet</strong></td><td>The plan lacks something activation needs, such as a saved framing. Instructions appear beside the label in place of <strong>Activate…</strong>.</td></tr>
@@ -316,28 +315,27 @@ function gtag_report_demo() {
   recorded.</p>
 
   <h3 id="dialog">The activation dialog</h3>
-  <p><strong>Activate on the rigs</strong> loads a preview when it opens, and
-  again whenever the saved plan, the framing or the collaboration work chosen in
-  it changes. There is no Preview button. A status line says
-  <strong>Previewing…</strong>, <strong>Preview ready</strong> or
-  <strong>Preview failed</strong>, with <strong>Refresh</strong> to try a failed
-  preview again.</p>
-  <p>The preview reads a copy of each rig's planning tables, so it never waits
-  for N.I.N.A. or holds a rig database's lock. <strong>Activate</strong> runs the
-  same work on each rig database itself, holding its write lock, and writes only
-  when the result matches the preview. When something changed in between,
-  nothing is written: the dialog says what, such as "Changed since the preview:
-  the saved plan (revision 3 → 4) and ultracat131's rows", and previews again.
-  <strong>Activate</strong> stays disabled until the new preview is ready, with the reason
-  shown beside it.</p>
-  <p>The preview reads the saved plan, and the dialog asks before saving edits. With edits
-  unsaved, it names the sections and offers <strong>Save and
+  <p><strong>Activate on the rigs</strong> loads a preview when it opens, and again
+  whenever the saved plan, the framing or the collaboration work chosen in it changes.
+  There is no Preview button. The status line shows <strong>Previewing…</strong>,
+  <strong>Preview ready</strong> or <strong>Preview failed</strong>, with
+  <strong>Refresh</strong> to try a failed preview again.</p>
+  <p>The preview reads a copy of each rig's planning tables, so it never waits for
+  N.I.N.A. or holds a rig database's lock. <strong>Activate</strong> runs the same work
+  on each rig database itself, holding its write lock, and writes only when the result
+  matches the preview. When something changed in between, PSF Guard writes nothing. The
+  dialog explains what changed, such as "Changed since the preview: the saved plan
+  (revision 3 → 4) and ultracat131's rows", and previews again.
+  <strong>Activate</strong> stays disabled until the new preview is ready, with the
+  reason shown beside it.</p>
+  <p>The preview reads the saved plan, and the dialog asks before saving edits. If you
+  have unsaved edits, the dialog lists the affected sections and offers <strong>Save and
   activate…</strong>, which saves them; the preview follows, and
   <strong>Activate</strong> waits for it.</p>
   <!-- SHOT: activation-save-first.png | Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving. | Unsaved edits come first: Save and activate… saves them, and the preview follows. -->
-  <p>A plan that cannot be activated yet, with no framing saved or no panel
-  size, is not a failure. The status line says what to do first, with
-  <strong>Open Framing</strong> when the framing is what it lacks.</p>
+  <p>A plan that cannot be activated yet, with no framing saved or no panel size, is not
+  a failure. The status line explains what to do first, with <strong>Open
+  Framing</strong> when the framing is what it lacks.</p>
   <!-- RESHOOT: activation-preview.png | Activate on the rigs dialog for Heart Mosaic (rig askar107phq), opened from the summary's Activate… button, preview landed (status line "Preview ready"): crop to the top of the dialog, showing "Last activated … · 1 rig", the "Preview: framing revision …, plan revision …, 4 panels." line, the askar107phq counts line, the "After activation, Target Scheduler shoots" list, and the What changes in askar107phq heading. Do not press Activate. -->
   <figure>
     <img src="../assets/activation-preview.png" alt="Activate on the rigs preview: per rig, the project, four targets taken over and exposure plans unchanged, each with its frame counts" loading="lazy">
@@ -368,7 +366,7 @@ function gtag_report_demo() {
       <tr><td><strong>Taken over</strong></td><td>An existing row the plan takes over, with what changes.</td></tr>
       <tr><td><strong>Updated</strong></td><td>A row from an earlier activation that changes, such as <code>desired 100 → 150</code> or <code>exposure 120 s → 300 s</code>.</td></tr>
       <tr><td><strong>Turned off</strong></td><td>An exposure plan the plan does not have, or a project set Inactive.</td></tr>
-      <tr><td><strong>Unchanged</strong></td><td>A row that already holds the plan's values.</td></tr>
+      <tr><td><strong>Unchanged</strong></td><td>A row that already matches the saved plan.</td></tr>
     </table>
   </div>
   <p>After <strong>Activate</strong>, the same blocks read <strong>Target Scheduler
@@ -382,9 +380,10 @@ function gtag_report_demo() {
   schema older than 22, no N.I.N.A. profile yet, a row with no GUID (see
   <a href="planning.html#guids">Fill in GUIDs</a>), or a file that cannot be opened
   or written.</p>
-  <p>Each rig database commits on its own: a busy or read-only rig says why, and
-  the others apply. A rig database waits up to a minute for its write lock,
-  since N.I.N.A. can hold the file that long.</p>
+  <p>PSF Guard commits changes to each rig database separately. If a database is busy or
+  read-only, the dialog reports the error; changes to other databases still apply. A rig
+  database waits up to a minute for its write lock, since N.I.N.A. can hold the file
+  that long.</p>
 
   <h2 id="writes">What activation writes</h2>
   <p>The plan decides which Target Scheduler exposure plans run in each rig's
@@ -423,12 +422,12 @@ function gtag_report_demo() {
       An existing plan for the same work is taken over, keeping its acquired and
       accepted counts.</li>
   </ul>
-  <p>An existing target is taken over rather than doubled: the one with the
-  panel's name, else the one at the panel's place, else a single-panel plan's
-  only target. A lone target stands for a panel only within a quarter of the
-  panel's shorter side. A target with frames that sits further away, or turned
-  from the panel, is left as it is with its frames: the panel gets a new target,
-  and the preview says how far away the old one is.</p>
+  <p>An existing target is taken over rather than doubled: the one with the panel's
+  name, else the one at the panel's place, else a single-panel plan's only target. A
+  lone target stands for a panel only within a quarter of the panel's shorter side. A
+  target with frames that sits further away, or turned from the panel, is left as it is
+  with its frames: the panel gets a new target, and the preview shows the distance from
+  the previous position.</p>
   <p>A second activation updates the same rows in place. Names you edited stay.
   Acquired and accepted counts, captured frames and grades are never touched.
   Panels removed from the framing leave their targets behind.</p>
@@ -476,11 +475,11 @@ function gtag_report_demo() {
       peer through Sync's planning push. Captures and grades never travel this
       way.</li>
   </ol>
-  <p>Each rig's line says whether the peer took the rows. A site that missed
-  the activation leaves the plan at <strong>Needs activating</strong>, and the
-  bar and the dialog offer to send it again; the server also sends it on its
-  own once the site answers. See <a href="rigs.html#missed-activation">When a
-  site misses an activation</a>.</p>
+  <p>Each rig's status shows whether the peer received the changes. A site that missed
+  the activation leaves the plan at <strong>Needs activating</strong>, and the bar and
+  the dialog offer to send it again; the server also sends it on its own once the site
+  answers. See <a href="rigs.html#missed-activation">When a site misses an
+  activation</a>.</p>
 
   <nav class="next-prev">
     <a href="framing.html">← Framing</a>

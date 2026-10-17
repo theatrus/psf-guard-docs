@@ -201,13 +201,13 @@ function gtag_report_demo() {
 
   <h3 id="uncalibrated">Leave out lights that can't be calibrated</h3>
   <p>With <strong>Leave out lights that can't be calibrated</strong> on, under
-  <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>, every
-  export leaves out the lights a stack would: those a light check flags for a
-  missing flat, bias or dark, or flats past the age limit. A check set to
-  <strong>Check only</strong> or <strong>Off</strong> lets them go. This holds in either layout, from the dialog,
-  the server export directory, a download, the CLI and the
-  <a href="#astrobin">AstroBin export</a>. Each export says how many it left
-  out, with one and its reason:</p>
+  <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>, every export
+  leaves out the lights a stack would: those a light check flags for a missing flat,
+  bias or dark, or flats past the age limit. Checks set to <strong>Check only</strong>
+  or <strong>Off</strong> do not exclude lights. This holds in either layout, from the
+  dialog, the server export directory, a download, the CLI and the <a
+  href="#astrobin">AstroBin export</a>. Each export reports how many lights it excluded,
+  with an example and the reason for excluding it:</p>
   <ul>
     <li>the desktop app's summary and a server export's finished line, such as
       <code>3 lights that can't be calibrated left out (…)</code>;</li>
@@ -369,8 +369,8 @@ function gtag_report_demo() {
       who set them, such as <code>Use darks: off (for Askar 120 · ZWO ASI2600MM
       Pro)</code>, or that the defaults chose them;</li>
     <li>the rigs that export no darks;</li>
-    <li>how many lights were left out because they can't be calibrated, with
-      one and its reason;</li>
+    <li>how many lights were left out because they can't be calibrated, with an example
+    and the reason for excluding it;</li>
     <li>the flat changes the flats were chosen around, and the lights that
       take flats from across one;</li>
     <li>frames an earlier export left in the folder. An export into a folder
@@ -424,10 +424,10 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
       <tr><td><code>--registry PATH</code></td><td>The database registry, which also holds the <strong>Settings &rarr; Calibration</strong> values the export matches by; defaults to the platform config directory</td></tr>
     </table>
   </div>
-  <p>The CLI matches calibration frames by the same settings as the app,
-  read from the registry, and with <strong>Leave out lights that can't be
-  calibrated</strong> on it says how many lights it left out, with one and
-  its reason.</p>
+  <p>The CLI matches calibration frames by the same settings as the app, read from the
+  registry, and with <strong>Leave out lights that can't be calibrated</strong> on, the
+  export reports how many lights it excluded, with an example and the reason for
+  excluding it.</p>
 
   <h2 id="repeat">Export again after each session</h2>
   <ul>
@@ -471,11 +471,11 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   <p>Full detail reads one light per night and filter from disk, header only.
   Columns PSF Guard cannot know, such as <code>bortle</code> and
   <code>meanFwhm</code>, are left out, and AstroBin treats them as blank.</p>
-  <p>With <strong>Leave out lights that can't be calibrated</strong> on, either
-  level counts only the lights a stack would integrate. The export reads each
-  light's header, judges it as a stack does, and notes how many lights it
-  left out, with one and its reason. That needs the image folders; without
-  them it counts every light and says so.</p>
+  <p>With <strong>Leave out lights that can't be calibrated</strong> on, either level
+  counts only the lights a stack would integrate. The export reads each light's header,
+  judges it as a stack does, and notes how many lights it left out, with an example and
+  the reason for excluding it. That needs the image folders; without them, the export
+  counts every light and reports that choice.</p>
 
   <h3 id="astrobin-filters">Filter ids</h3>
   <p>AstroBin knows a filter by the number in its equipment page's address,
@@ -585,7 +585,7 @@ curl "http://localhost:3000/api/db/my-db/astrobin-export.csv?target_id=42&amp;de
       <tr><td>Hard links became copies</td><td>Hard links need the source and destination on one filesystem that supports them.</td></tr>
       <tr><td>Zip stops or will not open</td><td>A source file became unreadable during the stream. Check file access and download again.</td></tr>
       <tr><td>Calibration frames missing</td><td>Open the project's coverage report. Only frames that safely match the lights under <strong>Settings &rarr; Calibration</strong> are exported, and frames the library keeps out stay out.</td></tr>
-      <tr><td>Fewer lights than the project holds</td><td><strong>Leave out lights that can't be calibrated</strong> is on. The summary and the CLI output say how many, with one and its reason; <code>LEFT-OUT-UNCALIBRATED.txt</code> in a download lists every one.</td></tr>
+      <tr><td>Fewer lights than the project holds</td><td><strong>Leave out lights that can't be calibrated</strong> is on. The summary and the CLI output say how many, with an example and the reason for excluding it; <code>LEFT-OUT-UNCALIBRATED.txt</code> in a download lists every one.</td></tr>
       <tr><td>Frames from an earlier export in the WBPP tree</td><td>The runner warns about them. Remove them or export to an empty folder.</td></tr>
       <tr><td><strong>Reference in place</strong> unavailable</td><td>Choose the WBPP layout first.</td></tr>
       <tr><td>The runner reports frames it cannot find</td><td>The frames are not at the listed paths on the PixInsight machine. Check <strong>PixInsight path</strong>, or edit <code>psfSourceRoot</code> at the top of <code>run-wbpp.js</code>.</td></tr>

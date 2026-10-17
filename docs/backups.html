@@ -174,7 +174,7 @@ function gtag_report_demo() {
   </ul>
   <div class="table-wrap">
     <table>
-      <tr><th>Scope</th><th>Holds</th></tr>
+      <tr><th>Scope</th><th>Contents</th></tr>
       <tr><td><strong>Settings only</strong> (<code>meta</code>)</td><td>The registry
         and its settings, accounts, view preferences, processing setups, Planning's
         store, the desktop app's port, the server's TOML file when given, and the
@@ -243,10 +243,9 @@ function gtag_report_demo() {
     <li><strong>How many to keep</strong>: the newest 7 by default, or all archives from a
     set number of days. PSF Guard always keeps the newest archive.</li>
   </ul>
-  <p>A scheduled run is background work: it waits while work you started runs,
-  and shows as waiting in the job line. A server that was off at the
-  scheduled time runs once when it comes back. A failed run tries again an
-  hour later.</p>
+  <p>Scheduled backups wait for jobs you started. While paused, a backup appears as
+  waiting in the job list. A server that was off at the scheduled time runs once when it
+  comes back. A failed run tries again an hour later.</p>
   <p>After a complete scheduled backup, PSF Guard removes older scheduled archives. It
   never removes archives made by hand or by the CLI, another install's
   archives in a shared folder, or the last archive that holds a catalog a

@@ -83,15 +83,13 @@ function gtag_report_demo() {
   <div>
     <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
     <h1>Plan it, shoot it with N.I.N.A.,<br><span class="grad">keep the frames that matter, and stack them.</span></h1>
-    <p class="lede">
-      <strong>Plan</strong> the framing, mosaic and exposure plans for every rig.
-      <strong>Shoot with N.I.N.A.</strong>: activation writes Target Scheduler
-      projects, and the PSF Guard Sync plugin carries them to the rig and brings
-      frames and grades back. <strong>Grade</strong> every frame from its pixels
-      and reject the clouded, blocked, soft and off-target ones.
-      <strong>Stack and export</strong>: calibrated stacks, color previews, WBPP
-      runs and AstroBin exports.
-    </p>
+    <p class="lede"> <strong>Plan</strong> the framing, mosaic and exposure plans for
+    every rig. <strong>Shoot with N.I.N.A.</strong>: activation writes Target Scheduler
+    projects. The <a href="docs/sync-plugin.html">PSF Guard Sync plugin</a> sends plans
+    and reviewed grades to the rig and uploads capture records and image files to PSF
+    Guard. <strong>Grade</strong> every frame from its pixels and reject the clouded,
+    blocked, soft and off-target ones. <strong>Stack and export</strong>: calibrated
+    stacks, color previews, WBPP runs and AstroBin exports. </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
       <a class="btn" href="docs/">Get started</a>
@@ -228,8 +226,9 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🔁</div>
       <h3>Sync &amp; remote rigs</h3>
-      <p>Move projects, captures, plans and grades between a telescope database and a
-      grading copy, on one machine or between PSF Guard servers.</p>
+      <p>Connect N.I.N.A. through the <a href="docs/sync-plugin.html">PSF Guard Sync
+      plugin</a>, the recommended setup with Target Scheduler. Sync capture records,
+      plans and grades, and optionally upload image files.</p>
     </div>
     <div class="card">
       <div class="icon">🤝</div>
@@ -324,6 +323,15 @@ function gtag_report_demo() {
     <figcaption>A mosaic plan on the offline DSS map, with deep-sky marks and the rig's field.</figcaption>
   </figure>
   <p><a class="btn" href="docs/planning.html">Planning →</a></p>
+</section>
+
+<section class="section" id="beta">
+  <h2>Early beta: Director and collaboration</h2>
+  <p class="sub">The upcoming <a href="docs/rigs.html#director">N.I.N.A. Director
+  plugin</a> connects activated plans with live rig status and capture reports. Direct
+  acquisition is still upcoming. Use Target Scheduler with PSF Guard Sync for imaging
+  today. <a href="docs/collaboration.html">Collaboration</a> is also in early beta, with
+  shared assignments and contribution uploads for services such as Starfront.</p>
 </section>
 
 <section class="section" id="sky-coverage">

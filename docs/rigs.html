@@ -167,12 +167,12 @@ function gtag_report_demo() {
   database becomes a rig once the Library opens.
   <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
   opens its catalog.</p>
-  <p>Under <strong>Calibration:</strong>, each row names the calibration rigs its
-  catalog records, with how many values each sets for itself. A calibration rig
-  is a telescope, camera, frame size and binning, as the calibration library
-  records it. Each name opens that rig's settings under
-  <a href="calibration-masters.html#matching">Settings › Calibration</a>, and the note above
-  Calibration's rig list links back here.</p>
+  <p>Under <strong>Calibration:</strong>, each row lists the calibration rigs its
+  catalog records, with how many values each sets for itself. A calibration rig is a
+  telescope, camera, frame size and binning, as the calibration library records it. Each
+  name opens that rig's settings under <a
+  href="calibration-masters.html#matching">Settings › Calibration</a>, and the note
+  above Calibration's rig list links back here.</p>
   <!-- RESHOOT: settings-rigs.png | Settings › Rigs in the new card layout, desktop width: the Rigs card with its intro line and the five rigs (starfront-redcat61, starfront-ultracat131, askar107phq, c925-scheduler, ultra cat), each with field and pixel scale, its "Calibration:" links (camera · frame size · N own values), Library and Setup. Crop to the card. -->
   <figure>
     <img src="../assets/settings-rigs.png" alt="Settings › Rigs: five rigs with field of view and pixel scale, each with Library and Setup" loading="lazy">
@@ -202,23 +202,23 @@ function gtag_report_demo() {
   effective focal length and aperture in millimetres, and how the camera angle
   changes: a rotator, turned by hand between sessions, or fixed. The field of
   view and pixel scale update as you type.</p>
-  <p><strong>Use frame headers</strong> copies sensor size, pixel size, focal
-  length, aperture and site from the newest frame the server can find, and says
-  which file. Headers from N.I.N.A. record binned values; PSF Guard folds them back
-  to the sensor. Each section says where its values came from: frame headers, set
-  by hand, or reported by the plugin.</p>
+  <p><strong>Use frame headers</strong> copies sensor size, pixel size, focal length,
+  aperture and site from the newest frame the server can find, and says which file.
+  Headers from N.I.N.A. record binned values; PSF Guard folds them back to the sensor.
+  Each section shows the source of its values: frame headers, set by hand, or reported
+  by the plugin.</p>
 
   <h3 id="sites">Sites and horizons</h3>
-  <p>A site holds a location (latitude, east-positive longitude, elevation) and a
-  horizon. Add and edit sites under <strong>Settings › Rigs › Sites</strong>. Each
-  rig picks its <strong>Planning site</strong> and takes the site's location and
-  horizon, unless its own fields say otherwise: a location typed into the rig, or
-  a horizon pasted there or reported by the plugin.</p>
+  <p>A site defines a location (latitude, east-positive longitude, elevation) and a
+  horizon. Add and edit sites under <strong>Settings › Rigs › Sites</strong>. Each rig
+  picks its <strong>Planning site</strong> and takes the site's location and horizon,
+  unless its own fields say otherwise: a location typed into the rig, or a horizon
+  pasted there or reported by the plugin.</p>
   <p>A horizon is a N.I.N.A. <code>.hrz</code> file: one <code>azimuth altitude</code>
   pair per line in degrees, <code>#</code> for comments. Paste or upload it, and
-  download it back for N.I.N.A. PSF Guard sorts the points and closes the curve
-  at north. It refuses a line that is not two numbers, an azimuth outside 0–360,
-  an altitude outside −90–90, or a repeated azimuth, and says which line.</p>
+  download it back for N.I.N.A. PSF Guard sorts the points and closes the curve at
+  north. It refuses a line that is not two numbers, an azimuth outside 0–360, an
+  altitude outside −90–90, or a repeated azimuth, and identifies the invalid line.</p>
   <p>Visibility, feasibility and the program sent to the plugin all use the
   resolved location and horizon. A rig with neither has no location, and its
   horizon is flat at its minimum altitude.</p>
@@ -230,7 +230,7 @@ function gtag_report_demo() {
   <div class="shot-pair">
     <figure>
       <img src="../assets/settings-sites.png" alt="Settings › Rigs › Sites: a site's location fields and a pasted N.I.N.A. horizon" loading="lazy">
-      <figcaption>A site holds a location and a N.I.N.A. horizon.</figcaption>
+      <figcaption>A site defines a location and a N.I.N.A. horizon.</figcaption>
     </figure>
     <figure>
       <img src="../assets/rig-setup-site.png" alt="Rig setup, Site: Planning site select, frame-header location fields, Bortle class, sky brightness and a horizon box" loading="lazy">
@@ -239,18 +239,17 @@ function gtag_report_demo() {
   </div>
 
   <h3 id="limits">Limits and delivery</h3>
-  <p><strong>Limits and delivery</strong> holds the altitude and meridian limits
-  planning uses, the rig's Target Scheduler scheduling limits, and
-  <strong>Remote site</strong>.</p>
-  <p>The rig's Target Scheduler limits also reach projects no plan holds, such as
-  ones made in N.I.N.A. Below the fields, <strong>Target Scheduler
-  projects</strong> compares the saved limits with every project in the rig's
-  database and lists each one that differs, with what will change. Save the
-  rig profile first; <strong>Apply to N projects</strong> then writes them, and
-  sends the rows to the rig's <a href="#remote-site">remote site</a> when it has
-  one. A plan's own limits still win for its project. Apply is refused when a
-  project or the limits changed since the list was read. Nothing applies by
-  itself; a project made later waits for the next Apply.</p>
+  <p><strong>Limits and delivery</strong> contains the altitude and meridian limits
+  planning uses, the rig's Target Scheduler scheduling limits, and <strong>Remote
+  site</strong>.</p>
+  <p>The rig's Target Scheduler limits also reach projects outside a saved plan, such as
+  ones made in N.I.N.A. Below the fields, <strong>Target Scheduler projects</strong>
+  compares the saved limits with every project in the rig's database and lists each one
+  that differs, with what will change. Save the rig profile first; <strong>Apply to N
+  projects</strong> then writes them, and sends the rows to the rig's <a
+  href="#remote-site">remote site</a> when it has one. A plan's own limits still win for
+  its project. Apply is refused when a project or the limits changed since the list was
+  read. Nothing applies by itself; a project made later waits for the next Apply.</p>
   <!-- RESHOOT: rig-limits.png | Settings › Rigs › Setup for askar107phq, Limits and delivery section, new card layout: Planning limits and the Target Scheduler limits fields with their inherited values. Crop to those two boxes. -->
   <figure>
     <img src="../assets/rig-limits.png" alt="Limits and delivery: planning limits, and Target Scheduler limits with inherited values" loading="lazy">
@@ -286,13 +285,11 @@ function gtag_report_demo() {
   such rig with the error and when it was tried. Neither shows the button once
   every site has the activation.</p>
   <p>The server also sends it on its own once the site answers: a successful
-  <strong>Test connection</strong> under Settings › Sync, a sync with that peer
-  other than a pull that
-  writes, or another push that reaches it. It sends only the latest activation of
-  each plan, never one the site already applied. A pull that writes does not
-  send, since the site's rows may have replaced the ones here; the plan may then
-  ask to be activated again first. The server log says what it sent and what
-  failed.</p>
+  <strong>Test connection</strong> under Settings › Sync, a sync with that peer other
+  than a pull that writes, or another push that reaches it. It sends only the latest
+  activation of each plan, never one the site already applied. A pull that writes does
+  not send, since the site's rows may have replaced the ones here; the plan may then ask
+  to be activated again first. The server log records what it sent and what failed.</p>
   <!-- SHOT: plan-send-again.png | Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
 
   <h2 id="live">Live</h2>
@@ -332,19 +329,19 @@ function gtag_report_demo() {
   Settings, so Live on the Sky shows rig setup and the template library read only
   under the table.</p>
 
-  <h2 id="director">The Director plugin</h2>
+  <h2 id="director">Early beta: the upcoming Director plugin</h2>
   <div class="callout info">
-    <strong>Director pairing is an early beta.</strong> Target Scheduler with
+    <strong>Director is in early beta; direct acquisition is upcoming.</strong> Target Scheduler with
     the <a href="sync-plugin.html">PSF Guard Sync plugin</a> is the recommended
     way to run a rig.
   </div>
-  <p>A paired Director plugin pulls its
-  rig's program from the last activation over HTTP, keeps running on it through
-  a network outage, checks in each saved frame, and reports live status. Saved
-  frames count as pending credit until grading accepts them; a receipt is
-  evidence a frame was taken, not that it passed. Pairing uses one-use codes an
-  operator issues over the API; there is no pairing screen yet. Pairing grants
-  no control of equipment.</p>
+  <p>A paired Director plugin pulls its rig's program from the last activation over
+  HTTP, keeps running on it through a network outage, checks in each saved frame, and
+  reports live status. Saved frames count as pending credit until grading accepts them;
+  a receipt is evidence a frame was taken, not that it passed. Pairing uses one-use
+  codes an operator issues over the API; there is no pairing screen yet. Pairing does
+  not start a sequence or grant equipment control. The Director plugin is separate from
+  PSF Guard Sync, which transfers database changes and image files.</p>
   <p>Without the plugin, activation still writes ordinary Target Scheduler rows,
   and the Target Scheduler plugin runs them as before.</p>
 

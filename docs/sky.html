@@ -170,14 +170,22 @@ function gtag_report_demo() {
 
   <h2 id="turn">Turn the sky or view it as a globe</h2>
   <p><strong>Flat</strong> is the sky seen from inside the sphere, the whole of it at first. <strong>Globe</strong> is the same sphere seen from outside. In both, a drag turns the sky in any direction at every zoom, and the projection centres on where you turned it, so what you look at has the least distortion. Scroll to zoom about the centre of the view. The corner buttons step the zoom and return to the whole sky; a double click does the same.</p>
-  <p>The page remembers its frame, shape, turn, zoom and cuts for the browser session, so coming back from Images lands on the same sky.</p>
+  <p>The page remembers its frame, shape, turn, zoom and cuts for the browser session,
+  so returning from Images restores the same view.</p>
   <figure>
     <img src="../assets/sky-coverage-globe.jpg" alt="The sky drawn as a globe, turned toward Cygnus and the pole" loading="lazy">
     <figcaption>The globe, turned toward Cygnus and the pole.</figcaption>
   </figure>
 
   <h2 id="stacks">Stacks in place</h2>
-  <p>Past three times zoom, each field with a finished stack shows the picture inside its outline: the target's latest colour stack when one exists, else the mono stack with the most integration. A stack is placed by its reference frame's plate solve when the astrometry cache holds one, carried through the stack's own orientation, so it lands where the pixels are. Any channel with a solved frame can place a colour stack. Without a solve, the picture is laid in by the planned rotation, north up and east left, which can be a flip out. <strong>Stacks when zoomed</strong> turns the pictures off.</p>
+  <p>Past three times zoom, each field with a finished stack shows the picture inside
+  its outline: the target's latest colour stack when one exists, else the mono stack
+  with the most integration. When a reference frame has a cached plate solve, PSF Guard
+  uses it and the stack's orientation to place the stack on the sky. Any channel with a
+  solved frame can place a colour stack. Without a solve, the picture is laid in by the
+  planned rotation, north up and east left, which may differ from the captured
+  orientation by a meridian flip. <strong>Stacks when zoomed</strong> turns the pictures
+  off.</p>
   <figure>
     <img src="../assets/sky-coverage-zoomed.jpg" alt="The Iris Nebula's colour stack drawn inside its solved field outline" loading="lazy">
     <figcaption>The Iris Nebula's colour stack inside its solved outline, at the right rotation.</figcaption>
@@ -212,7 +220,11 @@ function gtag_report_demo() {
     <tr><td>Dashed red, "(old report)"</td><td>The rig still talks, but its last status is more than ten minutes old.</td></tr>
     <tr><td>Dotted ring, "at target"</td><td>Placed at the rig's stated target, not at a position its mount reported.</td></tr>
   </table></div>
-  <p>A list beside the map shows each rig, its state (<strong>Online</strong>, <strong>Quiet</strong>, <strong>Offline</strong> or <strong>Never seen</strong>) and what it says it is doing. Choose a rig to turn the map to it and zoom in. The full Live table sits under the timeline; see <a href="rigs.html#live">Rigs</a>. The choice stays in the address (<code>live=1</code>), and saved pictures leave the rigs out.</p>
+  <p>A list beside the map shows each rig, its state (<strong>Online</strong>,
+  <strong>Quiet</strong>, <strong>Offline</strong> or <strong>Never seen</strong>) and
+  its reported activity. Choose a rig to turn the map to it and zoom in. The full Live
+  table sits under the timeline; see <a href="rigs.html#live">Rigs</a>. The choice stays
+  in the address (<code>live=1</code>), and saved pictures leave the rigs out.</p>
   <!-- RESHOOT: sky-live.jpg | The Sky view with Live on, under the new narrow header (view icons, the Sky tab named, the jobs and Live chips, the menu at the right): the stat band, the rig and filter chips with Live on, the all-sky map, the Live list of rigs beside it with their states, and the top of the timeline below. Full window, from the header to the timeline's All rigs lane. -->
   <figure>
     <img src="../assets/sky-live.jpg" alt="Sky coverage with Live on: the all-sky map, the Live list of rigs beside it and the timeline below" loading="lazy">

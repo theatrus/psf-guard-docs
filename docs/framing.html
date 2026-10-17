@@ -201,11 +201,12 @@ function gtag_report_demo() {
   plan.</p>
 
   <h2 id="find">Find a target</h2>
-  <p><strong>Find a target</strong> offers names as you type. The server's Seiza
-  object catalog answers first, with no network: designations, common names and
-  aliases, one row per object with its kind. The last row looks the name up
-  online at CDS Sesame (Simbad, NED, VizieR). Enter takes the highlighted row,
-  else an exact local match, else goes online.</p>
+  <p><strong>Find a target</strong> offers names as you type. PSF Guard searches the
+  server's Seiza object catalog first, without a network request: designations, common
+  names and aliases, one row per object with its kind. The last row looks the name up
+  online at CDS Sesame (Simbad, NED, VizieR). Press Enter to choose the highlighted
+  result. If none is highlighted, PSF Guard uses an exact local match or searches
+  online.</p>
   <p>Choosing a result moves the target and the view without saving. <strong>Undo</strong>
   puts the previous target back; <strong>Back to saved framing</strong> drops
   every change since the last save. The server caches Sesame matches for 90 days and
@@ -217,12 +218,11 @@ function gtag_report_demo() {
   </figure>
 
   <h2 id="layers">Survey layers</h2>
-  <p>Chips on the sky switch the picture: the DSS2 color plates N.I.N.A. starts
-  from, and the narrowband surveys (Finkbeiner H-alpha and the Northern Sky
-  Narrowband Survey's H-alpha, O III, SHO and color layers). The
-  <strong>Survey</strong> list under <strong>View</strong> holds every layer:
-  DSS2 red, blue and near infrared, SDSS, DESI Legacy, SkyMapper, 2MASS,
-  CTA-FRAM and the Mellinger panorama.</p>
+  <p>Chips on the sky switch the picture: the DSS2 color plates N.I.N.A. starts from,
+  and the narrowband surveys (Finkbeiner H-alpha and the Northern Sky Narrowband
+  Survey's H-alpha, O III, SHO and color layers). The <strong>Survey</strong> list under
+  <strong>View</strong> includes every layer: DSS2 red, blue and near infrared, SDSS,
+  DESI Legacy, SkyMapper, 2MASS, CTA-FRAM and the Mellinger panorama.</p>
   <p>The layer is how the sky is shown, not part of the framing. Picking one is
   never an unsaved change, and the browser keeps it for every plan. The server
   fetches survey tiles from CDS HiPS2FITS and caches them, so a view you have
@@ -312,13 +312,13 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   Click a panel on the sky or in the list to choose it. The undo and redo
   buttons beside the list step back through panel edits, moves and turns
   alike.</p>
-  <p>On the <a href="activation.html#panels">Exposures</a> tab, each rig can take
-  every panel or only some, so a wide rig takes the whole field while a
-  long-focus rig takes one corner. A coverage note lists any panel no rig
-  shoots. Activation adds a Target Scheduler target for each new panel in the
-  same project and leaves shot panels' targets alone. The Library and the
-  header's target switcher show the panels as one mosaic, whatever their
-  shape. Existing saved grids open with their panels unchanged.</p>
+  <p>On the <a href="activation.html#panels">Exposures</a> tab, each rig can take every
+  panel or only some, so a wide-field rig can cover the whole field while a long-focus
+  rig covers one corner. A coverage note lists any panel no rig shoots. Activation adds
+  a Target Scheduler target for each new panel in the same project and leaves shot
+  panels' targets alone. The Library and the header's target switcher show the panels as
+  one mosaic, whatever their shape. Existing saved grids open with their panels
+  unchanged.</p>
 
   <h3 id="locked">Panels already shot</h3>
   <p>A panel whose target has frames starts locked where they were shot. It is
@@ -442,7 +442,8 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   planning-grade Sun and Moon positions; they help choose targets and nights.</p>
   <figure>
     <img src="../assets/framing-visibility.png" alt="Visibility strip: tonight's altitude chart with the meridian marked, and the verdict, hours owed and nights to finish" loading="lazy">
-    <figcaption>Tonight from one rig: the target's track, darkness bands, the meridian, and the hours the rig still owes.</figcaption>
+    <figcaption>Tonight from one rig: the target's track, darkness bands, the meridian,
+    and the exposure hours the rig still needs.</figcaption>
   </figure>
   <figure>
     <img src="../assets/framing-nights.png" alt="Legend and the next 7 nights unfolded: the chart legend and a table of dark hours, hours the target is up, hours with the Moon down too, and the Moon's phase and separation" loading="lazy" style="max-width:420px">
@@ -472,13 +473,13 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   where their solves put them, and the rectangles show the new plan.</p>
 
   <h2 id="save">Save the framing</h2>
-  <p><strong>Save framing</strong> keeps the draft on the plan; the page's save bar
-  does the same with the rest of your edits. A value the server would refuse is
-  marked at its field with the reason: a panel side outside 0.01° to 30°, or a
-  mosaic wider than 30°. A draft saved elsewhere since you loaded is refused until
-  you reload. The server refuses a save that would move a locked panel, and
-  names the panels to unlock first. Each save uses the frames to set a locked panel's
-  captured position, regardless of the position sent by the page.</p>
+  <p><strong>Save framing</strong> keeps the draft on the plan; the page's save bar does
+  the same with the rest of your edits. A value the server would refuse is marked at its
+  field with the reason: a panel side outside 0.01° to 30°, or a mosaic wider than 30°.
+  A draft saved elsewhere since you loaded is refused until you reload. The server
+  refuses a save that would move a locked panel, and lists the panels you must unlock
+  first. Each save uses the frames to set a locked panel's captured position, regardless
+  of the position sent by the page.</p>
   <p>Only a change to what activation writes (target, angle, panels) asks for
   another activation. Survey and view choices never do.</p>
 

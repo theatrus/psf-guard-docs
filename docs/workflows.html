@@ -218,9 +218,9 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
     <li>In <strong>Settings &rarr; Databases</strong>, click
       <strong>Purge Rejects</strong> beside the database's
       <strong>Import</strong>.</li>
-    <li>Choose how many days a frame must have been rejected (7 by default; 0
-      takes every reject) and click <strong>Preview</strong>. The preview
-      lists the frames and their size, and says why any reject stays.</li>
+    <li>Choose how many days a frame must have been rejected (7 by default; 0 takes
+    every reject) and click <strong>Preview</strong>. The preview lists the frames and
+    their size, and explains why any rejected frame will remain.</li>
     <li>Choose how many days to keep the files in the trash (14 by default)
       and click <strong>Remove N frames</strong>.</li>
   </ol>
@@ -291,10 +291,10 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   calibration choices and flat-group choices, and its preview counts
   them.</div>
   <p><strong>Merge catalogs</strong> and <code>sync pull</code> also copy the
-  calibration library: rigs, raw calibration-frame records and their grades.
-  Generated masters and cached files stay behind; the destination builds its
-  own. With them travel the choices that change which frames a master takes
-  or which flats a light takes:</p>
+  calibration library: rigs, raw calibration-frame records and their grades. Generated
+  masters and cached files stay behind; the destination builds its own. With them travel
+  the choices that change which frames a master takes or which flats PSF Guard uses for
+  a light:</p>
   <ul>
     <li><strong>Keep out</strong> and <strong>Use anyway</strong> on
       calibration frames. When both catalogs hold a choice for a frame, the
