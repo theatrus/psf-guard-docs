@@ -265,11 +265,10 @@ function gtag_report_demo() {
   or removing a user, signs out that user's sessions; changing only the email
   does not. Settings will not remove the account you are signed in with, or the
   last editor.</p>
-  <!-- RESHOOT: settings-users.png | psf-guard.atpn.co signed in as an editor, header menu › Settings › Users tab in the new card layout: the Browser users card (three users with their roles, the Current badge, Edit and Remove, + Add user) and the top of the API tokens card with Connect an agent and + New token; crop to those two cards, no email addresses -->
+
   <figure>
-    <img src="../assets/settings-users.png" alt="Settings › Users: three users with their roles, and the API tokens section" loading="lazy">
-    <figcaption>Editors manage accounts and API tokens under Settings → Users.
-    The desktop app has no Users tab.</figcaption>
+    <img src="../assets/settings-users.png" loading="lazy" alt="Editors can change the catalog; read-only users can review images and cached results." width="1666" height="740">
+    <figcaption>Editors can change the catalog; read-only users can review images and cached results.</figcaption>
   </figure>
   <p>The CLI does the same. Without <code>--password-file</code> it asks for
   the password twice and shows nothing:</p>
@@ -311,7 +310,10 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
   <p>Signed in, the menu at the right of the header shows your username and includes
   <strong>Settings</strong> (editors only), <strong>Keyboard shortcuts</strong>,
   <strong>Server information</strong> and <strong>Sign out</strong>.</p>
-  <!-- SHOT: header-menu.png | psf-guard.atpn.co signed in as an editor, any view (Library is fine): the menu button at the far right of the header clicked open, showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out; crop to the right end of the header and the open menu (same capture as the SHOT on configuration.html) | The menu at the right of the header: who is signed in, Settings, keyboard shortcuts, server information and Sign out. -->
+  <figure>
+    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
+    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
+  </figure>
   <pre><code>[server.auth]
 session_hours = 168
 <span class="c"># Omit to follow the browser's HTTP or HTTPS scheme.</span>
@@ -371,10 +373,10 @@ allow_read_only_compute = false</code></pre>
   how a viewer, who has no Settings, gets one. Click <strong>Create
   token</strong> and copy it: it is not shown again. <strong>Revoke</strong>
   stops a token at once.</p>
-  <!-- RESHOOT: settings-api-tokens.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card -->
+
   <figure>
-    <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
-    <figcaption>A new token: label, user, expiry and a read-only switch.</figcaption>
+    <img src="../assets/settings-api-tokens.png" loading="lazy" alt="Give a token a label and choose its access before creating it." width="1584" height="660">
+    <figcaption>Give a token a label and choose its access before creating it.</figcaption>
   </figure>
   <pre><code>psf-guard users token create editor --label "claude on laptop" --read-only --expires-days 90
 psf-guard users token list

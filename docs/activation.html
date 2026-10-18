@@ -174,10 +174,10 @@ function gtag_report_demo() {
   stars</strong>) with a goal in accepted hours or accepted frames. For each rig in the
   plan, it shows the template, exposure length and frames that meet the goal, and the
   rig's progress.</p>
-  <!-- RESHOOT: plan-objectives.png | Planning workspace for Heart Mosaic (rig askar107phq), Exposures tab, nothing unsaved and no bar up: crop to the plan summary (green Activated pill and Activate… button) and the Objectives box below it, with each objective's Bandpass, Purpose and Goal, down to Add objective. -->
+
   <figure>
-    <img src="../assets/plan-objectives.png" alt="Exposures tab: objectives per band with purpose and goal in frames per rig" loading="lazy">
-    <figcaption>Objectives: one band and purpose each, with a goal in hours or frames.</figcaption>
+    <img src="../assets/plan-objectives.png" loading="lazy" alt="Set the exposure goal and purpose for each bandpass." width="2966" height="1106">
+    <figcaption>Set the exposure goal and purpose for each bandpass.</figcaption>
   </figure>
   <ul>
     <li>Hours become frames per rig through that rig's exposure length, so a fast
@@ -254,10 +254,10 @@ function gtag_report_demo() {
     <li>Edit rows in place. Removing a template asks first; plans that chose it
       keep their copy of its settings.</li>
   </ul>
-  <!-- RESHOOT: settings-exposure-templates.png | Settings › Exposure templates in the new card layout: the template table with name, filter, band, gain, offset, binning, readout, exposure and Moon columns, Copy from, and one template's Moon row expanded. Crop to the card. -->
+
   <figure>
-    <img src="../assets/settings-exposure-templates.png" alt="Settings › Exposure templates: name, filter, band, gain, offset, binning, readout, exposure and Moon for each template" loading="lazy">
-    <figcaption>The shared template library. Any rig can shoot these; activation writes them into its database.</figcaption>
+    <img src="../assets/settings-exposure-templates.png" loading="lazy" alt="Shared exposure templates include optional Moon-avoidance rules." width="1878" height="1580">
+    <figcaption>Shared exposure templates include optional Moon-avoidance rules.</figcaption>
   </figure>
   <p>Expand <strong>Moon</strong> on a template for per-filter Moon avoidance:
   full-Moon separation, half-width in days, Moon-down only, and altitude
@@ -284,11 +284,10 @@ function gtag_report_demo() {
       Target Scheduler limits. See <a href="planning.html#scheduling">Scheduling
       limits</a>.</li>
   </ul>
-  <!-- RESHOOT: plan-rigs.png | Planning workspace for Heart Mosaic, Rigs tab: crop to the askar107phq block, with its heading reading 'project "Heart Mosaic" activated' (not the old "not activated"), Drop from plan and Target Scheduler settings, the Project box (name, state, priority) and the first target's coordinates. -->
+
   <figure>
-    <img src="../assets/plan-rigs.png" alt="Rigs tab: a rig's block with Drop from plan, Target Scheduler settings, project state and priority, and the first target's coordinates" loading="lazy">
-    <figcaption>One block per rig: its project, whether it matches the saved plan, its
-    Target Scheduler settings and its targets.</figcaption>
+    <img src="../assets/plan-rigs.png" loading="lazy" alt="Each rig shows whether it matches the saved plan, with scheduling limits below." width="2970" height="1144">
+    <figcaption>Each rig shows whether it matches the saved plan, with scheduling limits below.</figcaption>
   </figure>
 
   <h2 id="activate">Activate</h2>
@@ -340,15 +339,17 @@ function gtag_report_demo() {
   have unsaved edits, the dialog lists the affected sections and offers <strong>Save and
   activate…</strong>, which saves them; the preview follows, and
   <strong>Activate</strong> waits for it.</p>
-  <!-- SHOT: activation-save-first.png | Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving. | Unsaved edits come first: Save and activate… saves them, and the preview follows. -->
+  <figure>
+    <img src="../assets/activation-save-first.png" loading="lazy" alt="Save unsaved exposure changes before activating. PSF Guard then updates the preview." width="1626" height="464">
+    <figcaption>Save unsaved exposure changes before activating. PSF Guard then updates the preview.</figcaption>
+  </figure>
   <p>A plan that cannot be activated yet, with no framing saved or no panel size, is not
   a failure. The status line explains what to do first, with <strong>Open
   Framing</strong> when the framing is what it lacks.</p>
-  <!-- RESHOOT: activation-preview.png | Activate on the rigs dialog for Heart Mosaic (rig askar107phq), opened from the summary's Activate… button, preview landed (status line "Preview ready"): crop to the top of the dialog, showing "Last activated … · 1 rig", the "Preview: framing revision …, plan revision …, 4 panels." line, the askar107phq counts line, the "After activation, Target Scheduler shoots" list, and the What changes in askar107phq heading. Do not press Activate. -->
+
   <figure>
-    <img src="../assets/activation-preview.png" alt="Activate on the rigs preview: per rig, the project, four targets taken over and exposure plans unchanged, each with its frame counts" loading="lazy">
-    <figcaption>The dialog loads the preview automatically; <strong>Activate</strong>
-    writes only what it shows.</figcaption>
+    <img src="../assets/activation-preview.png" loading="lazy" alt="Review each rig&#x27;s changes before activating the saved plan." width="1642" height="1414">
+    <figcaption>Review each rig&#x27;s changes before activating the saved plan.</figcaption>
   </figure>
 
   <h3 id="preview">Read the preview</h3>
@@ -381,7 +382,10 @@ function gtag_report_demo() {
   now shoots</strong>, <strong>Turned off</strong> and <strong>Turned on</strong>.
   The count of turn-offs also shows in the rig's line on the Rigs tab and in the
   bar at the top.</p>
-  <!-- SHOT: activation-turns-off.png | Activate on the rigs dialog for a plan whose rig has a Target Scheduler exposure plan the plan does not have (for example rig starfront-ultracat131 or ultra cat, a project with an extra exposure length or filter made in N.I.N.A.): crop to one rig's block showing, in order, the counts line with "Turns off 1 plan", "After activation, Target Scheduler shoots", the amber "Turns off" block with a plan marked "replaced by …" or "not in the plan", "Turns on" if present, and Take Target Scheduler's values. Do not press Activate. | Each rig's block: what Target Scheduler will shoot, then what activation turns off and why, then what it turns back on. -->
+  <figure>
+    <img src="../assets/activation-turns-off.png" loading="lazy" alt="The preview lists the four Target Scheduler plans that activation would turn off." width="1562" height="832">
+    <figcaption>The preview lists the four Target Scheduler plans that activation would turn off.</figcaption>
+  </figure>
   <p>The preview also lists any objective and panel no rig covers, panels short
   of the minimum overlap or leaving sky uncovered across every framing the rigs
   shoot, and why a rig is skipped: no registered database, a Target Scheduler

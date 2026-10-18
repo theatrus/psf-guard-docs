@@ -168,18 +168,18 @@ function gtag_report_demo() {
   </div>
   <p>The scan runs in the background: spatial and photometric screening, then a fresh plate solve of each frame, then new sequence scores. Both stages work on several frames at once, up to the share set in <strong>Settings › Performance › Processor use</strong>. The header's jobs chip shows progress from any view and any database. A scan with failed frames leaves a note on the chip, with a link to the target's sequence, until you dismiss it; with nothing else running the chip reads <strong>Finished with errors</strong>. Results persist across restarts.</p>
   <p>Settings › <strong>Databases</strong> holds the database-wide actions. <strong>Analyze Missing Quality</strong> scans frames that have no results. <strong>Rescan All Quality</strong> forces a full rescan. <strong>Analyze new frames as they arrive</strong> scans frames that come by sync, peer pull, remote upload or auto-import a few minutes after they land. See <a href="importing.html#quality">Import Images</a>.</p>
-  <!-- RESHOOT: sequence-session.jpg | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, Cutoff on Score at its default, no Select rule, nothing selected. Show the new header, the compact Sequence toolbar (Filter pill, thumbnail slider, Cutoff, Scoring, Select, View, ⋯), the session tabs, the score chart with its grade dots under the bars, the Solved pointing scatter, and the first row of frame-shaped cards: three Soft Stars, then Possible Obstruction. Full window width, from the header to the first card row. -->
+
   <figure>
-    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing and cards with their causes" loading="lazy">
-    <figcaption>A session after a scan. Each card gives its cause.</figcaption>
+    <img src="../assets/sequence-session.jpg" loading="lazy" alt="Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames." width="3138" height="1652">
+    <figcaption>Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames.</figcaption>
   </figure>
 
   <p>Sequence shows coverage badges, causes, a solved-center scatter, a session view, and a stack comparison across all sessions for each filter. When the analysis finds a cause, the same cause and its evidence appear on the Sequence card, the grid card and the image detail's <strong>Quality analysis</strong> panel. For a local finding, that panel offers <strong>Show affected regions</strong>: the 8×6 scan cells behind the finding, with a legend. A whole-frame finding, such as a thin veil, has no region to draw.</p>
   <p>The panels beside the frame fold away: click a panel's title to fold or open it. Folded, <strong>Quality analysis</strong> keeps one line with the score and any reject reason, and each panel stays as you left it from image to image.</p>
-  <!-- RESHOOT: image-detail.jpg | Image detail of the rejected Golf of Mexico HA frame from Jul 9, 2026 (rig "ultra cat") marked Possible Obstruction. Side panels with their fold chevrons: Image Information folded to one line, Quality analysis open with the score, the reason and Show affected regions, Calibration folded, Sky context open with its Hinted solve badge, Satellite tracks folded. Full window. -->
+
   <figure>
-    <img src="../assets/image-detail.jpg" alt="Image detail for a rejected frame: the frame, image statistics, a Quality analysis box reporting a possible obstruction, and sky context from a hinted solve" loading="lazy">
-    <figcaption>Image detail. Quality analysis gives the score and its reason; Sky context gives the solve.</figcaption>
+    <img src="../assets/image-detail.jpg" loading="lazy" alt="Open a frame to inspect its pixels, quality findings and solved sky context." width="3138" height="2054">
+    <figcaption>Open a frame to inspect its pixels, quality findings and solved sky context.</figcaption>
   </figure>
   <p>In Images, <strong>Flag</strong> narrows the grid to frames with any of the causes
   you tick. The grid scores one target, project or database at a time and never compares
@@ -259,8 +259,14 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>After you confirm a rejection, the rule stays active with nothing selected.
   Rules exclude already rejected frames, so their counts show what remains to reject.
   Undo restores those frames to the counts, but does not select them again.</p>
-  <!-- SHOT: sequence-select-after-reject.png | Use a disposable local catalog, not the live capture server. In Sequence, choose Recommended rejects and confirm a rejection through Review rejection. Capture the toolbar with the rule still active, its updated count and no selected frames, plus the rejected frames in the strip. Do not change grades on a live catalog to obtain this state. | After rejection, the rule stays active but clears the selection and excludes rejected frames. -->
-  <!-- SHOT: sequence-select-rule.png | Sequence toolbar for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, with the Recommended rejects rule on: the pill reads "Select: Recommended rejects (N)" with the × beside it, and the row below shows "N selected", "Rule: Recommended rejects", Review rejection and Clear. Crop: the toolbar and its selection row only. | A rule under Select stays on and says how many frames it picks. -->
+  <figure>
+    <img src="../assets/sequence-select-after-reject.png" loading="lazy" alt="After rejection, Below the cutoff stays active with no matching frames selected. This example uses a disposable catalog with staged metadata." width="3020" height="1068">
+    <figcaption>After rejection, Below the cutoff stays active with no matching frames selected. This example uses a disposable catalog with staged metadata.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/sequence-select-rule.png" loading="lazy" alt="Recommended rejects stays active even when no frames match. These session frames already have Rejected grades." width="3020" height="150">
+    <figcaption>Recommended rejects stays active even when no frames match. These session frames already have Rejected grades.</figcaption>
+  </figure>
 
   <h2 id="why">Why star count and HFR are not enough</h2>
   <p>Star count and HFR barely move when part of a frame is ruined. On a real session where a tree line slowly covered the field:</p>
@@ -344,10 +350,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   </table></div>
   <pre><code>[Auto] Soft stars - HFR 4.10 px, 1.8× the target's best 2.28 px</code></pre>
   <p>On one rig's catalog, 96.7% of frames sat within 1.3× of their best, and 1.5% beyond 1.5×.</p>
-  <!-- RESHOOT: sequence-soft-stars.png | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM: the first five frame-shaped cards at the default thumbnail size, three marked Soft Stars with HFR above 6, then two marked Possible Obstruction, with their score chips and grades. Crop: that row of cards only. -->
+
   <figure>
-    <img src="../assets/sequence-soft-stars.png" alt="Sequence cards: three frames marked Soft Stars with HFR above 6, then frames marked Possible Obstruction" loading="lazy">
-    <figcaption>Frames at four times the target's best HFR are capped and marked Soft Stars.</figcaption>
+    <img src="../assets/sequence-soft-stars.png" loading="lazy" alt="The first three frames have fewer stars and much higher HFR than the next two." width="1652" height="454">
+    <figcaption>The first three frames have fewer stars and much higher HFR than the next two.</figcaption>
   </figure>
 
   <h2 id="star-counts">One star count per target</h2>
@@ -394,7 +400,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
 
   <h3 id="scoring-defaults">Defaults and the current view</h3>
   <p>Every view starts from your scoring defaults, set in <strong>Settings › Review › Sequence scoring</strong>. Each field shows its built-in value. <strong>Save defaults</strong> stores your changes, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
-  <!-- SHOT: settings-review-scoring.png | Settings › Review, the Sequence scoring card at the built-in values: Penalties (Satellite trails, Pointing, Temporal anomalies, HFR rise, Star loss, each 100% with its hint and "Built in: 100%"), Reject limits (Max HFR and Min stars empty, reading "off"), Save defaults and Reset to built-in defaults. Crop: that card only. | Settings › Review › Sequence scoring holds the defaults every view starts from. -->
+  <figure>
+    <img src="../assets/settings-review-scoring.png" loading="lazy" alt="Adjust Sequence scoring defaults and optional HFR and star-count limits." width="1878" height="1602">
+    <figcaption>Adjust Sequence scoring defaults and optional HFR and star-count limits.</figcaption>
+  </figure>
   <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>, and its popover offers <strong>Save as default</strong>, which makes the view's values your defaults, and <strong>Reset to default</strong>, which returns the view to them. For an editor, <strong>Edit defaults</strong> in the popover opens Settings.</p>
   <p>Once a value differs from your defaults, the URL stores all scoring values:
   <code>penaltySatellite</code>, <code>penaltyPointing</code>,

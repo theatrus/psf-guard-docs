@@ -159,10 +159,10 @@ function gtag_report_demo() {
     PSF Guard lists the objects expected around a frame, solves its pixels on demand with Seiza, and draws catalog labels, outlines, an RA/Dec grid and the target offset over the image. This page covers the catalogs, where PSF Guard finds them, and solving a frame.
   </p>
 
-  <!-- RESHOOT: sky-context.jpg | Image detail of a solved frame with the sky overlay on (RA/Dec grid, catalog labels and outlines), the Cocoon Nebula HA frame if the capture server has it, else an Iris Nebula frame (rig starfront-ultracat131), with the alt text and caption changed to name it. Side panels with their fold chevrons: Image Information, Quality analysis and Calibration folded to one line each, Sky context open with its Hinted solve badge, Sky overlay on, Center, Scale, Rotation, Target and the expected objects. Full window. -->
+
   <figure>
-    <img src="../assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and the Sky context panel">
-    <figcaption>A hinted solve of the Cocoon Nebula. The overlay and the side panel share one pixel-derived WCS.</figcaption>
+    <img src="../assets/sky-context.jpg" alt="The solved frame places catalog objects over the image and lists the expected objects in its field." width="3066" height="1566">
+    <figcaption>The solved frame places catalog objects over the image and lists the expected objects in its field.</figcaption>
   </figure>
 
   <h2 id="layers">Context, solution and overlay</h2>
@@ -196,10 +196,10 @@ function gtag_report_demo() {
     <tr><td><strong>Deepest blind solving</strong></td><td>G≤20 Gaia data plus the blind index. About 9 GB more.</td></tr>
   </table></div>
   <p>Quality scans measure <a href="screening.html#snr">SNR</a> only against a Gaia catalog. Tycho-2 mixes two bands and is not used for it.</p>
-  <!-- RESHOOT: settings-catalogs.png | Settings › Catalogs in the new card layout: the Seiza Catalogs card with its feature chips, the installed packages, the Catalog package select, Install / update catalogs and Validate installed files. Crop: that card only. -->
+
   <figure>
-    <img src="../assets/settings-catalogs.png" alt="Settings › Catalogs: Seiza Catalogs with feature chips, six installed packages, the Catalog package select and install buttons" loading="lazy">
-    <figcaption>Settings › Catalogs installs, updates and validates the Seiza catalogs.</figcaption>
+    <img src="../assets/settings-catalogs.png" loading="lazy" alt="Installed catalog packages support overlays, hinted solves and blind solves." width="1878" height="778">
+    <figcaption>Installed catalog packages support overlays, hinted solves and blind solves.</figcaption>
   </figure>
   <p>For a manual or headless install, get the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a> or with Cargo, then download a bundle:</p>
   <pre><code>cargo install seiza-cli --version 0.24.0

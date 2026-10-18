@@ -198,8 +198,14 @@ function gtag_report_demo() {
   as dew.</p>
 
   <!-- Note for the two dust SHOTs below: place them side by side in one <div class="shot-pair">. -->
-  <!-- SHOT: calibration-dust-disks.jpg | Calibration › Frames, rig starfront-redcat61, a flat (L or Ha) with Spots and Large dust on at Tight stretch: the large faint disks drawn as rims, each labelled like "disk 0.33% · ~11 mm, filter/window", and the frame panel's Spots row reading "N spots · M large disks" | Large dust on a RedCat61: faint out-of-focus disks, each with its depth and distance in front of the sensor. -->
-  <!-- SHOT: calibration-dust-donuts.jpg | Calibration › Frames, rig c925-scheduler, a flat with Spots and Large dust on at Tight stretch: donuts drawn as ring and hole with their depth labels, plus any dashed vignetting mark at an edge or corner | Donuts on an SCT: dust seen through the central obstruction. -->
+  <figure>
+    <img src="../assets/calibration-dust-disks.jpg" loading="lazy" alt="Three large dust disks are marked on this flat. Their presence alone does not make the frame poor." width="2468" height="1170">
+    <figcaption>Three large dust disks are marked on this flat. Their presence alone does not make the frame poor.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/calibration-dust-donuts.jpg" loading="lazy" alt="The SCT flat has seven measured dust donuts. The overlay shows their position and estimated distance." width="2474" height="1204">
+    <figcaption>The SCT flat has seven measured dust donuts. The overlay shows their position and estimated distance.</figcaption>
+  </figure>
 
   <h2 id="flat-groups">Flat groups</h2>
   <p>Dust can move, appear or disappear between nights. Calibrating a light with flats
@@ -308,8 +314,14 @@ function gtag_report_demo() {
   exactly those lights. In a project scope, the groups either side of the project's own
   show dimmed as <strong>Neighbour</strong>.</p>
 
-  <!-- SHOT: calibration-flat-groups.jpg | Calibration, Frames, Groups, full c925-scheduler library. Select Group 2 · OIII · 101.3–104.4° · 08-10 · 1 night · 10 flats. Show the list and Its edges: new dust 1.8% before this group, vignetting changed at bottom edge 2.1% after it. Keep the dates and Compare controls visible. Use the verified link in SCREENSHOT-PLAN.md; do not restrict to Bubble calibration. | Groups lists the flat groups newest first, with each split and its reason between them. -->
-  <!-- SHOT: calibration-flat-compare.jpg | Full c925-scheduler library, OIII Group 2 from August 10: Compare across the older edge. Show new dust: 1 donut near (507,2054), August 10 divided by May 19, the ratio image at Normal stretch and Spots on. Inspect the rendered overlay before capture. Use the verified link in SCREENSHOT-PLAN.md. | Compare on a split divides the later flats by the earlier and circles what changed. -->
+  <figure>
+    <img src="../assets/calibration-flat-groups.jpg" loading="lazy" alt="Measured changes in dust or illumination separate these O III flat groups." width="3052" height="1918">
+    <figcaption>Measured changes in dust or illumination separate these O III flat groups.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/calibration-flat-compare.jpg" loading="lazy" alt="Compare nights across a group boundary to see new, moved or missing dust and changes in illumination." width="1782" height="1866">
+    <figcaption>Compare nights across a group boundary to see new, moved or missing dust and changes in illumination.</figcaption>
+  </figure>
 
   <h3 id="by-hand">Choose by hand</h3>
   <p>You can override incorrect measurements:</p>

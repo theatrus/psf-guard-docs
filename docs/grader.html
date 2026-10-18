@@ -173,10 +173,10 @@ function gtag_report_demo() {
   the whole width of the window, up to 2400 px. The band at the top totals images,
   projects, targets, accepted frames, frames to review, missing files and grading
   progress.</p>
-  <!-- RESHOOT: library-compact.jpg | Library at about 2000 px wide, Compact, Show: All projects, Database: All databases, Sort: Newest first; the "Last 7 days" group with 10 or more rows lined up in columns (database, state pill with its caret inside, progress, grade counts, dates reading "N h ago", calibration, Sequence, Stacks, ⚙); at least one "N new" badge and one 🧪 Poor or Check pill in view; keep the new icon header and the catalog band at the top in the crop -->
+
   <figure class="feature-shot">
-    <img src="../assets/library-compact.jpg" alt="The Library: catalog totals, the Projects toolbar pills, and one row per project with its pills in columns" loading="lazy">
-    <figcaption>The compact Library: one row per project, each kind of pill in its own column.</figcaption>
+    <img src="../assets/library-compact.jpg" loading="lazy" alt="The compact Library lists projects across all databases, with counts and review status." width="3138" height="1260">
+    <figcaption>The compact Library lists projects across all databases, with counts and review status.</figcaption>
   </figure>
   <p>In the compact view each project is one row, and each kind of badge has its own
   column: database, Target Scheduler state, accepted against desired (it reads
@@ -189,7 +189,10 @@ function gtag_report_demo() {
   <p>On laptop and wider screens each row stays on one line, and the dates say how long ago
   the last frame was, with the range in the tooltip. On a tablet a row takes two or
   three lines. On a phone, the badges stack inside a rounded box.</p>
-  <!-- SHOT: library-phone.png | Library on a phone, 375 px wide, Compact, Show: All projects: three or four project rows (for example Teddy Bear Nebula QMark, Golf of Mexico, Iris Nebula) as rounded boxes with one pill kind per place; crop from the Projects heading down | On a phone each row is a box with one kind of pill per place. -->
+  <figure>
+    <img src="../assets/library-phone.png" loading="lazy" alt="Compact project rows keep counts, calibration warnings and actions together at phone width." width="337" height="679">
+    <figcaption>Compact project rows keep counts, calibration warnings and actions together at phone width.</figcaption>
+  </figure>
   <ul>
     <li><strong>Compact</strong> and <strong>Detailed</strong> switch the whole list.
       The arrow at a row's left opens it into its full card, and folds it back. The
@@ -210,10 +213,10 @@ function gtag_report_demo() {
     <li>A plan shot by several rigs is one outer pill, <strong>N rigs</strong>, with a
       row per rig under it.</li>
   </ul>
-  <!-- RESHOOT: library-card.png | Library, Compact, the Teddy Bear Nebula QMark row (rig starfront-redcat61) opened into its card with the ▸ arrow: recent frames strip, image and grading counts, desired progress, and the Sequence, Stacks, Planning, Calibration and Edit buttons; crop to the card and the rows just above and below it -->
+
   <figure>
-    <img src="../assets/library-card.png" alt="A Library project card: recent frames, image and grading counts, desired progress, and Sequence, Stacks, Planning, Calibration and Edit buttons" loading="lazy">
-    <figcaption>A row opened into its card: recent frames, progress, and the project's actions.</figcaption>
+    <img src="../assets/library-card.png" loading="lazy" alt="Expand a project to see its filters, progress and target actions. This is Golf of Mexico." width="2988" height="1136">
+    <figcaption>Expand a project to see its filters, progress and target actions. This is Golf of Mexico.</figcaption>
   </figure>
 
   <h3 id="library-calibration">Calibration pills</h3>
@@ -224,7 +227,10 @@ function gtag_report_demo() {
   suspect frames in use. PSF Guard checks calibration in the background. The pill opens
   the project's Calibration report, and <strong>Show › Calibration issues</strong> lists
   only these projects. See <a href="calibration.html">Calibration Libraries</a>.</p>
-  <!-- SHOT: library-calibration-pills.png | Library, Compact, Show: Calibration issues (the Show pill reads it, marked as set): five or six rows with 🧪 Poor (red) and 🧪 Check (yellow) pills in the calibration column, for example rigs c925-scheduler and starfront-redcat61; hover one pill so its tooltip ("Calibration: N lights can't be calibrated properly") shows; crop to the toolbar and the rows | Show › Calibration issues: projects whose lights the calibration library serves poorly. -->
+  <figure>
+    <img src="../assets/library-calibration-pills.png" loading="lazy" alt="Poor and Check pills identify projects whose calibration needs attention." width="2996" height="270">
+    <figcaption>Poor and Check pills identify projects whose calibration needs attention.</figcaption>
+  </figure>
 
   <h2 id="header">The header</h2>
   <p>The header shows each view as an icon. The current view keeps its name; rest the
@@ -235,22 +241,28 @@ function gtag_report_demo() {
   project's plan, the rig and target switcher, then <strong>Images</strong>,
   <strong>Sequence</strong>, <strong>Calibration</strong> and <strong>Stacks</strong>.
   Images, Sequence and Stacks become available when you pick a project or database.</p>
-  <!-- SHOT: header-tab-hover.png | Header crop, left half, in Images for Teddy Bear Nebula QMark (rig starfront-redcat61): Sky and Library as icons, the project picker, Planning icon, rig · target switcher, the Images tab showing its name as the current view, and the pointer resting on the Calibration tab with its name slid out; Sequence and Stacks as icons. Pair it with header-menu.png in a shot-pair | Hover a view to see its name. -->
-  <!-- SHOT: header-menu.png | Header crop, right end, on psf-guard.atpn.co signed in as an editor: the jobs chip, the rigs chip, and the menu button open showing "Signed in as …", Settings, Keyboard shortcuts, Server information and Sign out. Pair it with header-tab-hover.png in a shot-pair | Settings, shortcuts, server information and sign out share one menu. -->
+  <figure>
+    <img src="../assets/header-tab-hover.png" loading="lazy" alt="Hover a view or move keyboard focus to it to reveal its name. Calibration has keyboard focus here." width="1710" height="104">
+    <figcaption>Hover a view or move keyboard focus to it to reveal its name. Calibration has keyboard focus here.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
+    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
+  </figure>
   <p>At the right sit the jobs chip and one menu button, ☰, holding
   <strong>Settings</strong>, <strong>Keyboard shortcuts</strong>, <strong>Server
   information</strong> and <strong>Sign out</strong>. On a server with accounts the menu
   shows who is signed in, and only an editor sees Settings.</p>
   <div class="shot-pair">
-    <!-- RESHOOT: header-picker.png | Header with the project picker open, the search box holding "Heart": Heart Mosaic (rig askar107phq) and other matches, one opened to All images and its targets; the new icon tabs visible beside it -->
+
     <figure>
-      <img src="../assets/header-picker.png" alt="Project picker searching Heart: matching projects, each opening to All images and its targets" loading="lazy">
-      <figcaption>The picker finds projects by name, target or database. A project opens to its targets.</figcaption>
+      <img src="../assets/header-picker.png" loading="lazy" alt="Search for a project, then choose all its images or a single target." width="1350" height="1116">
+      <figcaption>Search for a project, then choose all its images or a single target.</figcaption>
     </figure>
-    <!-- RESHOOT: header-jobs.png | Header jobs chip open while work runs: the chip with its running, waiting and queued icons; the list split into "Started by you" (for example a stack build of Teddy Bear Nebula QMark running, one queued "queued · 1 ahead") and "Automatic" (for example a database quality analysis waiting, with what it waits for); crop to the chip and its popover -->
+
     <figure>
-      <img src="../assets/header-jobs.png" alt="The header jobs popup: work started by you and automatic work, with progress and Stop buttons" loading="lazy">
-      <figcaption>The jobs chip opens the queue of builds, scans and refreshes.</figcaption>
+      <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
+      <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
     </figure>
   </div>
   <ul>
@@ -307,13 +319,19 @@ function gtag_report_demo() {
       <strong>Stack selected</strong>, and <strong>Flat side…</strong> for
       <a href="calibration.html">flat choices</a>.</li>
   </ul>
-  <!-- SHOT: grid-view-panel.png | Images for Golf of Mexico (rig "ultra cat"), the View panel open under the View button: Group: Filter, Sort with Newest first chosen, Marks: Nights and hours, Nights end: At each rig's noon (setting), Chips with all three chip boxes ticked, Separate exposure groups; the View button marked set and naming "newest first"; crop to the toolbar and the open panel | View holds how the grid draws its frames: grouping, sort, marks and chips. -->
-  <!-- RESHOOT: grid-filter-list.png | Images toolbar for Teddy Bear Nebula QMark (rig starfront-redcat61, Foraxx SHO), the Filter pill's list open with HA and OIII ticked and the pill reading "Filter: HA, OIII"; the Status, Flag, Calibration and Dates pills beside it; crop to the toolbar and the open list -->
   <figure>
-    <img src="../assets/grid-filter-list.png" alt="Images toolbar with the Filter pill's list open and HA and OIII ticked" loading="lazy">
-    <figcaption>Tick several filters at once. Links that set one value still work.</figcaption>
+    <img src="../assets/grid-view-panel.png" loading="lazy" alt="Choose grouping, order, night marks and score chips in View." width="520" height="652">
+    <figcaption>Choose grouping, order, night marks and score chips in View.</figcaption>
   </figure>
-  <!-- SHOT: grid-phone-filters.png | Images for Teddy Bear Nebula QMark on a phone, 375 px wide: the toolbar with the Filters button showing a count of 2 (Status: Rejected and Filter: HA set), pressed open so the folded pills and the size slider show under it; crop to the toolbar | On a phone the filters fold behind one button. -->
+
+  <figure>
+    <img src="../assets/grid-filter-list.png" loading="lazy" alt="Choose one or more filters, or keep All selected." width="404" height="554">
+    <figcaption>Choose one or more filters, or keep All selected.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/grid-phone-filters.png" loading="lazy" alt="At phone width, expand Filters to reach the grid controls." width="337" height="730">
+    <figcaption>At phone width, expand Filters to reach the grid controls.</figcaption>
+  </figure>
 
   <h3 id="sort">Newest first and new frames</h3>
   <p><strong>View › Sort › Newest first</strong> turns each group around, and in
@@ -327,7 +345,10 @@ function gtag_report_demo() {
   dot before their date, in Images and Sequence: the frames the Library's "new" badge
   counted, plus any captured since. They keep it until you next open the project from
   the Library.</p>
-  <!-- SHOT: grid-newest-first.jpg | Images for a project opened from its Library row while the row shows an "N new" badge (for example Teddy Bear Nebula QMark or Golf of Mexico), View › Sort › Newest first, View button reading "newest first": the top of the first group with the newest cards first, each new card with the small dot before its date; about 1600 px wide | Newest first, with a dot on each frame captured since your last visit. -->
+  <figure>
+    <img src="../assets/grid-newest-first.jpg" loading="lazy" alt="Newest first puts the latest captures at the start of each group." width="2502" height="990">
+    <figcaption>Newest first puts the latest captures at the start of each group.</figcaption>
+  </figure>
 
   <h3 id="marks">Night and hour marks</h3>
   <p>Images and Sequence mark where frames cross into another night or hour. A line and
@@ -343,7 +364,10 @@ function gtag_report_demo() {
   <strong>Nights end</strong> under <strong>Settings → Calibration</strong> can put
   every light on one split with <strong>Same time for all rigs</strong>; <strong>Nights
   end</strong> in the View panel shows the other split in one view.</p>
-  <!-- SHOT: grid-time-marks.jpg | Images for Golf of Mexico (rig "ultra cat"), Group: Filter, the H-alpha group open across several nights including Jul 9 2026, Sort: Oldest first, Marks: Nights and hours, thumbnail size near the smallest step so two nights fit: a night line with its date label, the faint band on every other night, and thin hour lines | A line and the date start each night; thinner lines mark the hours. -->
+  <figure>
+    <img src="../assets/grid-time-marks.jpg" loading="lazy" alt="Night breaks and hour marks place frames in capture order." width="2322" height="1016">
+    <figcaption>Night breaks and hour marks place frames in capture order.</figcaption>
+  </figure>
 
   <h3 id="cards">Cards</h3>
   <ul>
@@ -388,10 +412,10 @@ function gtag_report_demo() {
   <strong>Quality analysis</strong> (the score and its reason),
   <strong>Calibration</strong>, <strong>Sky context</strong> from the plate solve, and
   <strong>Satellite tracks</strong>.</p>
-  <!-- RESHOOT: image-detail.jpg | Image detail of a rejected H-alpha frame from Golf of Mexico (rig "ultra cat", session Jul 9 2026) marked Possible Obstruction, about 1600 px wide: the frame on the left; on the right Image Information, Quality analysis with the score and its reason, Calibration, and Sky context, each open with its fold chevron -->
+
   <figure class="feature-shot">
-    <img src="../assets/image-detail.jpg" alt="Image detail of a rejected H-alpha frame: image information, quality analysis reporting a possible obstruction, calibration and sky context" loading="lazy">
-    <figcaption>Image detail: the score and its reason beside the frame.</figcaption>
+    <img src="../assets/image-detail.jpg" loading="lazy" alt="Open a frame to inspect its pixels, quality findings and solved sky context." width="3138" height="2054">
+    <figcaption>Open a frame to inspect its pixels, quality findings and solved sky context.</figcaption>
   </figure>
   <ul>
     <li>Click a panel's title to fold or open it. A folded panel keeps one line, such
@@ -407,7 +431,10 @@ function gtag_report_demo() {
       with no black band above and below, and a portrait frame stops at 60% of the
       height.</li>
   </ul>
-  <!-- SHOT: image-detail-folded.png | Image detail sidebar crop for a light with a 🧪 Check or Poor chip (find one with Library › Show › Calibration issues, then the Calibration pill in Images): Image Information, Quality analysis, Sky context and Satellite tracks folded to their one-line summaries (the score, "solved" or not, the crossing count), and Calibration open on its own listing the findings in words | Folded panels keep one line; Calibration opens for a light with findings. -->
+  <figure>
+    <img src="../assets/image-detail-folded.png" loading="lazy" alt="Collapsed detail sections keep their key findings visible beside the image." width="684" height="512">
+    <figcaption>Collapsed detail sections keep their key findings visible beside the image.</figcaption>
+  </figure>
   <p>When the catalog contains calibrated or registered copies of a frame from WBPP,
   Siril, ASTAP or DeepSkyStacker, <kbd>V</kbd> or the buttons beside the image switch
   between them. Previews, star markers and the PSF view follow. Grid cards mark frames
@@ -417,10 +444,10 @@ function gtag_report_demo() {
   <p>Press <kbd>S</kbd> for the star overlay: each detection circled and labeled with
   its HFR. Detection uses the frame's focal length and pixel size when both headers
   exist, so wide fields keep small stars. <kbd>P</kbd> shows the PSF fit.</p>
-  <!-- RESHOOT: annotated-hfr-labels.png | Image detail with S pressed on a good H-alpha frame from Golf of Mexico (rig "ultra cat", Jul 9 2026): stars circled with their HFR labels; the right sidebar showing the new folding panels (Image Information open, the others folded to one line); about 1440 px wide -->
+
   <figure>
-    <img src="../assets/annotated-hfr-labels.png" alt="Image inspector with every detected star labeled by its measured HFR" loading="lazy">
-    <figcaption><kbd>S</kbd> labels each detected star with its HFR.</figcaption>
+    <img src="../assets/annotated-hfr-labels.png" loading="lazy" alt="The star overlay labels measured HFR values. These measurements can differ from imported capture metadata." width="3138" height="2054">
+    <figcaption>The star overlay labels measured HFR values. These measurements can differ from imported capture metadata.</figcaption>
   </figure>
 
   <h3 id="tilt">Sensor tilt inspector</h3>
@@ -462,10 +489,10 @@ function gtag_report_demo() {
   so two rigs merged into one catalog are not scored against each other. The profile
   stands for the rig, so one rig kept under two N.I.N.A. profiles scores as two. See
   <a href="screening.html#scoring">Scores and causes</a>.</p>
-  <!-- RESHOOT: sequence-session.jpg | Sequence for Golf of Mexico (rig "ultra cat"), H-alpha, the Jul 9 2026 session tab: the compact toolbar (Filter pill, Select pill, Cutoff, size slider, View, ⋯), the score chart with grade dots under the bars, the pointing scatter, and cards marked Soft Stars and Possible Obstruction with a night mark in view; about 2000 px wide -->
+
   <figure class="feature-shot">
-    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing scatter, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
-    <figcaption>One session: three soft frames, then a run of possible obstructions.</figcaption>
+    <img src="../assets/sequence-session.jpg" loading="lazy" alt="Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames." width="3138" height="1652">
+    <figcaption>Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames.</figcaption>
   </figure>
 
   <h2 id="mosaic">A mosaic as one view</h2>
@@ -474,10 +501,10 @@ function gtag_report_demo() {
   groups frames under each panel in grid order. <strong>Sequence</strong> shows every
   panel's frames in capture order. <strong>Stacks</strong> lays each panel's stack out
   as the grid and on the sky. Grading and stacking stay per panel.</p>
-  <!-- RESHOOT: stacks-mosaic.jpg | Stacks for Heart Mosaic (rig askar107phq) with "Heart Mosaic mosaic (4 panels)" chosen in the rig · target switcher: each panel's stack in grid order and the panels placed on the sky by plate solve; include the new icon header with Stacks named as the current view -->
+
   <figure>
-    <img src="../assets/stacks-mosaic.jpg" alt="Stacks for a four-panel mosaic: each panel's stack in the grid, and the panels placed on the sky by plate solve" loading="lazy">
-    <figcaption>A mosaic in Stacks: panels in grid order, and on the sky by plate solve.</figcaption>
+    <img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
+    <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
   </figure>
 
   <h2 id="shortcuts">Keyboard shortcuts</h2>

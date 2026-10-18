@@ -230,7 +230,10 @@ function gtag_report_demo() {
   with no flat, or with neither bias nor dark, is one that
   <a href="#uncalibrated">can't be calibrated</a>.</p>
 
-  <!-- SHOT: calibration-frame-keep-out.png | Calibration › Frames, a dark session with a frame graded "Suspect · noise" or "Poor · stray light" chosen; crop to the frame panel: file, capture time with UTC offset, settings, the grade badge, the reason line, the Measure/Frame/Session table with Level and Spread in ADU, the findings with their limits, and the buttons Keep out, Use anyway, Forget and ◂ Before only / Both / After only ▸ | A frame's panel: its grade, its numbers beside its session's, and Keep out or Use anyway. -->
+  <figure>
+    <img src="../assets/calibration-frame-keep-out.png" loading="lazy" alt="This flat&#x27;s illumination differs from its session by 13.9%, above the 5% limit, so it is left out of masters." width="566" height="1144">
+    <figcaption>This flat&#x27;s illumination differs from its session by 13.9%, above the 5% limit, so it is left out of masters.</figcaption>
+  </figure>
 
   <h3 id="stray-light">Darks that caught stray light</h3>
   <p>A dark shot while light reached the sensor, such as dawn through an open
@@ -290,7 +293,10 @@ function gtag_report_demo() {
   validity mark or a setting changes, and when a light's missing file turns
   up. It reads only the lights whose file changed.</p>
 
-  <!-- SHOT: library-calibration-pills.png | Library, compact view, Show set to Calibration issues: three or four project rows (such as Golf of Mexico and Iris Nebula) with their 🧪 Poor or 🧪 Check pill in the calibration column, the Show pill visible in the Projects toolbar | Show › Calibration issues lists the projects the library serves poorly; each 🧪 pill opens its coverage report. -->
+  <figure>
+    <img src="../assets/library-calibration-pills.png" loading="lazy" alt="Poor and Check pills identify projects whose calibration needs attention." width="2996" height="270">
+    <figcaption>Poor and Check pills identify projects whose calibration needs attention.</figcaption>
+  </figure>
 
   <h3 id="light-panel">A light's Calibration panel</h3>
   <p>An image's detail view has a <strong>Calibration</strong> panel. It lists findings
@@ -311,7 +317,10 @@ function gtag_report_demo() {
   flats</strong>. It opens by itself on a Poor or Check light, and when you come from
   the 🧪 chip.</p>
 
-  <!-- SHOT: image-calibration-panel.png | Image detail of a Golf of Mexico H-alpha light from the Jul 9 2026 session (rig "ultra cat") that carries a Check or Poor finding; crop to the side panel with Calibration open: the findings list with one finding chosen, the Flats part with nights, temperatures, Flat family and Chosen by, the Darks part, and "Checked by …" with Tune checks for … | A light's Calibration panel names its findings and the frames behind each. -->
+  <figure>
+    <img src="../assets/image-calibration-panel.png" loading="lazy" alt="This light has a dark master made from one frame, below the minimum count." width="680" height="910">
+    <figcaption>This light has a dark master made from one frame, below the minimum count.</figcaption>
+  </figure>
 
   <h2 id="coverage">Check coverage for a project</h2>
   <p>Click <strong>Calibration</strong> on a project's full card in the
@@ -342,10 +351,10 @@ function gtag_report_demo() {
   lights out, so a night rejected for cloud does not show as lacking flats;
   <strong>Include N rejected lights</strong> adds them back.</p>
 
-  <!-- RESHOOT: calibration-coverage-report.png | Library › Golf of Mexico full card › Calibration: the "Calibration coverage — Golf of Mexico" dialog with Browse calibration, the Quality section listing Poor/Check findings with lights by night and filter, the warnings, the per-kind counts, the Night/Filter/Lights/Flats/Darks/Bias table, the Include N rejected lights control, and Lights that can't be calibrated with Check lights -->
+
   <figure>
-    <img src="../assets/calibration-coverage-report.png" alt="Calibration coverage for Golf of Mexico: warnings, frame counts per kind, and flats and darks matched per night and filter" loading="lazy">
-    <figcaption>The coverage report matches one light per night and filter exactly as a stack would.</figcaption>
+    <img src="../assets/calibration-coverage-report.png" loading="lazy" alt="The report separates Poor calibration from findings that need review and lists the affected lights." width="1240" height="1414">
+    <figcaption>The report separates Poor calibration from findings that need review and lists the affected lights.</figcaption>
   </figure>
 
   <h3 id="uncalibrated">Lights that can't be calibrated</h3>

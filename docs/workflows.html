@@ -272,11 +272,10 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   GUID (schema 22 or later).</p>
 
   <h3 id="data-transfer">Data Transfer in Settings</h3>
-  <!-- RESHOOT: data-transfer.png | psf-guard.atpn.co as an editor, header menu › Settings › Sync, the Data Transfer card in the new card layout: Merge catalogs selected, Source starfront-redcat61, Destination starfront-ultracat131, Include stored image thumbnails ticked, Preview changes button, before any preview; crop to the Data Transfer card -->
+
   <figure>
-    <img src="../assets/data-transfer.png" alt="Data Transfer with Merge catalogs, Send planning and Send reviewed grades, and source and destination catalogs" loading="lazy">
-    <figcaption>Data Transfer lists both catalogs and shows a preview before
-    any Apply.</figcaption>
+    <img src="../assets/data-transfer.png" loading="lazy" alt="Choose the source, destination and action, then preview the changes before applying them." width="1878" height="788">
+    <figcaption>Choose the source, destination and action, then preview the changes before applying them.</figcaption>
   </figure>
   <p>Open <strong>Settings &rarr; Sync</strong>. <strong>Data Transfer</strong>
   takes a <strong>Source</strong> and a <strong>Destination</strong> and offers
@@ -409,10 +408,10 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   sync</strong>. A server with no Settings grants the same with a
   <code>[[remote_sync]]</code> block in its config file; see
   <a href="configuration.html#remote-blocks">Configuration</a>.</p>
-  <!-- RESHOOT: settings-remote-psf-guard.png | psf-guard.atpn.co as an editor, Settings › Sync, the Remote PSF Guard card in the new card layout with one peer saved and selected (its Base URL shown, no key), Test connection, Add peer, Pull from peer selected, Local catalog chosen, Preview changes; crop to the Remote PSF Guard card -->
+
   <figure>
-    <img src="../assets/settings-remote-psf-guard.png" alt="Remote PSF Guard in Settings › Sync: peer select, Test connection, Add peer, and Pull from peer, Send planning and Send grades" loading="lazy">
-    <figcaption>Remote PSF Guard: add a peer once, then preview and apply in either direction.</figcaption>
+    <img src="../assets/settings-remote-psf-guard.png" loading="lazy" alt="Add a peer before testing a connection or previewing a remote transfer." width="1878" height="720">
+    <figcaption>Add a peer before testing a connection or previewing a remote transfer.</figcaption>
   </figure>
   <p>Then, on this server, open <strong>Settings &rarr; Sync &rarr; Remote PSF
   Guard</strong>:</p>

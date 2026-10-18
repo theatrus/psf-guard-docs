@@ -224,7 +224,10 @@ function gtag_report_demo() {
     <li>the CLI's output;</li>
     <li>the WBPP runner scripts.</li>
   </ul>
-  <!-- SHOT: settings-calibration-stacks-exports.png | Settings › Calibration in the new card layout, any server: the Stacks and exports box with Leave out lights that can't be calibrated ticked and its help line, and the Save button below; crop to that box and the button | Settings → Calibration → Stacks and exports: leave out the lights a stack would, in stacks, WBPP runs and exports. -->
+  <figure>
+    <img src="../assets/settings-calibration-stacks-exports.png" loading="lazy" alt="Leave out lights that cannot be calibrated. This example is an unsaved setting." width="1800" height="284">
+    <figcaption>Leave out lights that cannot be calibrated. This example is an unsaved setting.</figcaption>
+  </figure>
   <!-- SHOT: export-left-out.png | Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under | A finished export says how many lights it left out, with one and its reason. -->
 
   <h2 id="overview">Export from the Library</h2>
@@ -241,16 +244,16 @@ function gtag_report_demo() {
       export</strong> when the database has a server export directory.</li>
   </ol>
 
-  <!-- RESHOOT: library-card.png | Library in the Detailed view, Teddy Bear Nebula QMark (rig starfront-redcat61) opened to its full card: the project's actions and its target rows, each with Export and AstroBin; crop to that card -->
+
   <figure>
-    <img src="../assets/library-card.png" alt="A Library project card with Open image grid, Sequence, Stacks, Planning, Calibration and Edit project" loading="lazy">
-    <figcaption>A project's card. Export and AstroBin sit on each target row below it.</figcaption>
+    <img src="../assets/library-card.png" loading="lazy" alt="Expand a project to see its filters, progress and target actions. This is Golf of Mexico." width="2988" height="1136">
+    <figcaption>Expand a project to see its filters, progress and target actions. This is Golf of Mexico.</figcaption>
   </figure>
 
-  <!-- RESHOOT: export-dialog.png | Library on psf-guard.atpn.co, Teddy Bear Nebula QMark (rig starfront-redcat61) › Export: the Export dialog with Include ungraded lights ticked, Layout set to WBPP, its WBPP settings (Quality, Fast Integration, Drizzle, Autocrop, Light rejection) and the Files choices; crop to the dialog -->
+
   <figure>
-    <img src="../assets/export-dialog.png" alt="Export dialog with the WBPP layout and WBPP settings" loading="lazy">
-    <figcaption>The Export dialog. Layout and WBPP settings start from the defaults under Settings → Setups → Export.</figcaption>
+    <img src="../assets/export-dialog.png" loading="lazy" alt="Choose the frame selection, folder layout and output format before exporting." width="896" height="1242">
+    <figcaption>Choose the frame selection, folder layout and output format before exporting.</figcaption>
   </figure>
 
   <p><strong>Export</strong> appears when the project or target has at least
@@ -458,10 +461,10 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   rows, offers <strong>Copy CSV</strong> and <strong>Download CSV</strong>, and
   asks for the AstroBin id of any filter it does not know yet.</p>
 
-  <!-- RESHOOT: astrobin-dialog.png | Library on psf-guard.atpn.co, a Teddy Bear Nebula QMark target row (rig starfront-redcat61) › AstroBin, with Leave out lights that can't be calibrated on under Settings › Calibration: the AstroBin dialog on Full detail with Count ungraded lights ticked, the frames-nights-exposure summary, the note "N light(s) that can't be calibrated were left out, …" if any, any filter-id fields, and the first rows of the table; crop to the dialog -->
+
   <figure>
-    <img src="../assets/astrobin-dialog.png" alt="AstroBin acquisitions dialog: Essentials or Full detail, Count ungraded lights, filter ids and the row table" loading="lazy">
-    <figcaption>One row per night, filter and exposure length, ready for AstroBin's CSV import.</figcaption>
+    <img src="../assets/astrobin-dialog.png" loading="lazy" alt="AstroBin export summarizes the accepted exposure time and warns when filter IDs are missing." width="1530" height="1412">
+    <figcaption>AstroBin export summarizes the accepted exposure time and warns when filter IDs are missing.</figcaption>
   </figure>
 
   <p>A row is one night, one filter and one exposure length. Nights split where

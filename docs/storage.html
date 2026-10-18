@@ -199,10 +199,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   use the cache. A folder the server's config file fixes reads <em>Set by the
   server config file</em> and cannot change here. Choosing folders needs
   database management. Settings asks before closing if you have unsaved folder changes.</p>
-  <!-- RESHOOT: settings-storage-folders.png | Settings › Storage in the new card layout, desktop app or a server allowing database management: the Folders card with Cache, Stacks and Calibration masters fields (Stacks and Calibration masters empty, showing they use the cache) and Save folders; crop to the Folders card -->
+
   <figure>
-    <img src="../assets/settings-storage-folders.png" alt="Settings › Storage › Folders: Cache, Stacks and Calibration masters" loading="lazy">
-    <figcaption>Folders saved here take effect at the next start, which moves the files across first.</figcaption>
+    <img src="../assets/settings-storage-folders.png" loading="lazy" alt="The cache, stacks and calibration masters can use separate folders." width="1800" height="710">
+    <figcaption>The cache, stacks and calibration masters can use separate folders.</figcaption>
   </figure>
   <p>A folder saved in Settings takes effect at the next start, which moves the
   files there first. Until then the field shows the folder still in use. In
@@ -234,10 +234,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   volume the three folders sit on: how full it is, its limit, which folders and
   databases it holds, and how much of it is stacks, calibration masters and
   image previews.</p>
-  <!-- RESHOOT: settings-storage-disk-use.png | Settings › Storage in the new card layout on a server whose three folders sit on two or more volumes: the Disk use card with each volume's usage bar and limit mark, what it holds, the Most of the cache volume to use slider and Separate limits for stacks and calibration masters ticked with its two sliders; crop to the Disk use card -->
+
   <figure>
-    <img src="../assets/settings-storage-disk-use.png" alt="Settings › Storage › Disk use: three volumes with usage bars and limit marks, the Most of the volume to use slider and Separate limits" loading="lazy">
-    <figcaption>Each volume shows how full it is and what PSF Guard keeps on it.</figcaption>
+    <img src="../assets/settings-storage-disk-use.png" loading="lazy" alt="Review each volume&#x27;s use and set the cache limit before cleanup." width="1878" height="978">
+    <figcaption>Review each volume&#x27;s use and set the cache limit before cleanup.</figcaption>
   </figure>
   <p><strong>Most of the volume to use</strong> (90% by default) is the highest
   share of the whole volume, other files included, that PSF Guard lets it
@@ -316,10 +316,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p><strong>Settings &rarr; Performance &rarr; Processor use</strong> sets how
   many cores each kind of work may use, as a share of the logical cores. A
   change applies to work that starts after it, without a restart.</p>
-  <!-- RESHOOT: settings-performance.png | Settings › Performance in the new card layout, any server: the Processor use card with the Work you wait on and Background work sliders, one of them moved off its default so Use the default shows; crop to that card -->
+
   <figure>
-    <img src="../assets/settings-performance.png" alt="Settings › Performance › Processor use: Work you wait on and Background work sliders" loading="lazy">
-    <figcaption>Each share limits all work of its kind together.</figcaption>
+    <img src="../assets/settings-performance.png" loading="lazy" alt="Allocate more processor time to interactive work than to background jobs." width="1878" height="564">
+    <figcaption>Allocate more processor time to interactive work than to background jobs.</figcaption>
   </figure>
   <div class="table-wrap">
     <table>
@@ -354,7 +354,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   hourglass) and needs you (a warning triangle). Hover a count to read its
   name. On a phone the chip leaves out the running count, since the progress percentage
   already shows running work. Hover, focus or click the chip to open the list.</p>
-  <!-- SHOT: header-jobs-chip.png | The header's right end on a desktop browser with the background jobs chip closed while work runs: progress ring, percent, and the running, queued and waiting counts each with its icon (one build running, two queued, one automatic refresh waiting), with the tooltip of the hourglass count ("1 waiting") showing; crop tightly around the chip and its tooltip | The chip counts running, queued, waiting and needs-you jobs, one icon each. -->
+  <figure>
+    <img src="../assets/header-jobs-chip.png" loading="lazy" alt="The jobs chip shows progress and the counts of running, queued and waiting jobs." width="342" height="90">
+    <figcaption>The jobs chip shows progress and the counts of running, queued and waiting jobs.</figcaption>
+  </figure>
   <p>The list shows jobs across all databases under two headings, each with
   its own counts:</p>
   <div class="table-wrap">
@@ -366,11 +369,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   </div>
   <p>Under each heading, jobs that need your attention come first, then running work,
   then queued work, then waiting work.</p>
-  <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
+
   <figure>
-    <img src="../assets/header-jobs.png" alt="The header's background jobs list: Started by you with a running build and a queued build three places back, and Automatic with a waiting stack refresh" loading="lazy">
-    <figcaption>Your work and automatic work under their own headings. A queued build
-    shows its position in the queue.</figcaption>
+    <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
+    <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
   </figure>
   <ul>
     <li><strong>Queued.</strong> Stack builds, color compositions and processing runs
@@ -413,7 +415,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       offers <strong>Open the sequence</strong> and stays until you dismiss
       it.</li>
   </ul>
-  <!-- SHOT: header-jobs-automatic.png | Header background jobs list on psf-guard.atpn.co while flat measuring runs (for example after new flats for rig c925-scheduler arrive) and a stack build you started runs: Started by you with the running Stacking row and its Stop, and Automatic with a Measuring flats row (rig name, "… of … sessions") drawn muted and marked waiting, its line reading "Waiting for a stack build · …" with a still bar at how far it had got; crop the open list | Automatic work keeps its place in the list, muted while it waits for yours. -->
+  <figure>
+    <img src="../assets/header-jobs-automatic.png" loading="lazy" alt="Waiting jobs identify the stack build that must finish first." width="720" height="736">
+    <figcaption>Waiting jobs identify the stack build that must finish first.</figcaption>
+  </figure>
   <p>Changing a line or stopping work needs write access. A stack build's row
   reads, for example, <em>Rejecting transients · pass 2/3 · frame 4/14</em>
   through the final rejection pass, a calibration master build shows which

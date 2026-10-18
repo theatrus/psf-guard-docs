@@ -176,10 +176,10 @@ function gtag_report_demo() {
   with that set. <strong>Stack every image instead</strong> goes back to the
   whole project.</p>
 
-  <!-- RESHOOT: stacks-view.jpg | Stacks view, desktop browser about 2200 px wide, Golf of Mexico (rig "ultra cat") chosen in the new narrow header's Rig · target control, Stacks tab current; Card size on Fit, so two channel cards fill the row (H-alpha and OIII, both READY), each with its counts and Signal-to-noise vs depth curve; job chip closed; crop from the top of the window to just below the SNR curves -->
+
   <figure>
-    <img src="../assets/stacks-view.jpg" alt="Stacks view for one target: B and G channel stacks with integrated, rejected and excluded counts and signal-to-noise curves" loading="lazy">
-    <figcaption>Channel stacks for one target, each with its counts and signal-to-noise curve.</figcaption>
+    <img src="../assets/stacks-view.jpg" loading="lazy" alt="Cached H-alpha and luminance stacks show exposure time and SNR history. Both previews are marked out of date here." width="2036" height="1804">
+    <figcaption>Cached H-alpha and luminance stacks show exposure time and SNR history. Both previews are marked out of date here.</figcaption>
   </figure>
 
   <p><strong>Card size</strong>, at the top of the view, sets how wide the stack
@@ -314,10 +314,10 @@ function gtag_report_demo() {
     1.00; noisier frames count for less. Rejected and rotation-skewed frames stay out.</figcaption>
   </figure>
 
-  <!-- RESHOOT: settings-stacking.png | Settings › Stacking in the new card layout, any server: the Stacking method card with the Recommended preset chosen and its choices (Final pass, Normalization, Frame weights, Reference frame, Registration, Resampling, Color cameras box); crop to that card alone, so Stack previews below stays out of frame -->
+
   <figure>
-    <img src="../assets/settings-stacking.png" alt="Settings › Stacking: Recommended, Draft and Classic presets with Final pass, Normalization, Frame weights and Reference frame choices" loading="lazy">
-    <figcaption>Settings → Stacking → Stacking method sets how every stack on the server integrates its frames.</figcaption>
+    <img src="../assets/settings-stacking.png" loading="lazy" alt="The Recommended preset combines reintegration, local background normalization and noise weighting." width="1878" height="1332">
+    <figcaption>The Recommended preset combines reintegration, local background normalization and noise weighting.</figcaption>
   </figure>
 
   <p>The stack panel shows the method in use beside <strong>Method:</strong>;
@@ -415,11 +415,10 @@ function gtag_report_demo() {
   ends the running one after asking once. Click a build's target to open its stacks.
   Progress keeps moving through the final rejection pass, for example <code>Rejecting
   transients · pass 2/3 · frame 4/14</code>.</p>
-  <!-- RESHOOT: header-jobs.png | Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only -->
+
   <figure>
-    <img src="../assets/header-jobs.png" alt="The header's background jobs list: Started by you with a running build and a queued build three places back, and Automatic with a waiting stack refresh" loading="lazy">
-    <figcaption>The header's background jobs. A queued build shows its position in the
-    queue; click a row's target to open what it works on.</figcaption>
+    <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
+    <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
   </figure>
 
   <p>A running color composition also has <strong>Stop</strong>. It stops at the
@@ -717,7 +716,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <code>Waiting for the stack build of M44 · Ha to finish</code>. Once it runs, the
   button shows its progress and the step under way: <code>Applying… 42% ·
   BlurXTerminator</code>.</p>
-  <!-- SHOT: stack-processing-waiting.png | Stacks view, Teddy Bear Nebula QMark (rig starfront-redcat61): start a build of the OIII channel, then on the H-alpha card open View processing, turn on RC-Astro BlurXTerminator and press Apply processing; crop the H-alpha card's View processing panel so its button reads "Waiting for the stack build of … · OIII to finish", with the header's background jobs list open beside it showing the BlurXTerminator row queued behind the build | A processing run waits in the build line and says what it waits for. -->
+  <figure>
+    <img src="../assets/stack-processing-waiting.png" loading="lazy" alt="The jobs list shows which stack build the waiting processing jobs depend on." width="2242" height="1350">
+    <figcaption>The jobs list shows which stack build the waiting processing jobs depend on.</figcaption>
+  </figure>
   <p>The header's background jobs list each run beside the builds: what it does
   (<code>BlurXTerminator</code>, <code>Deconvolution</code>, <code>Stretch</code>, or a
   chain's steps joined with <code>+</code>), the target and channel, and its place in
@@ -759,8 +761,14 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       processing</strong> on the new stack replaces the re-apply.</li>
     <li>Turning the setting off drops re-applies that have not started.</li>
   </ul>
-  <!-- SHOT: stack-reprocessing.jpg | Stacks view, Teddy Bear Nebula QMark (rig starfront-redcat61): an H-alpha card that had a stretch plus RC-Astro NoiseXTerminator applied, right after Rebuild, while the re-apply waits or runs; crop that one card so its image and the line "From the previous stack · reprocessing · …" under it both show | Until the rebuilt stack is processed again, the card shows the previous stack's result. -->
-  <!-- SHOT: settings-stack-previews.png | Settings › Stacking in the new card layout, any server: the Stack previews card with its Automatic refresh box (Rebuild stack previews on their own, the two waits, Also stack channels that have no stack yet) and its Processing box with Re-apply processing when a stack refreshes ticked; crop to that card | Settings → Stacking → Stack previews: automatic refresh, and processing re-applied to a refreshed stack. -->
+  <figure>
+    <img src="../assets/stack-reprocessing.jpg" loading="lazy" alt="The card keeps the previous processed image visible while reprocessing waits." width="996" height="982">
+    <figcaption>The card keeps the previous processed image visible while reprocessing waits.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/settings-stack-previews.png" loading="lazy" alt="Choose when to refresh stack previews and whether to reapply their processing." width="1878" height="1354">
+    <figcaption>Choose when to refresh stack previews and whether to reapply their processing.</figcaption>
+  </figure>
 
   <h2 id="artifact">Find which frame made a defect</h2>
   <p>A stack can make a trail, reflection, dust shadow or hot pixel easier to
@@ -789,10 +797,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   and calibrates on its own. The caption lists panels with no stack or no
   solve yet.</p>
 
-  <!-- RESHOOT: stacks-mosaic.jpg | Stacks view for Heart Mosaic (rig askar107phq) with "Heart Mosaic mosaic (4 panels)" chosen in the new narrow header's Rig · target control: the panels' latest stacks in grid order on the left and the solved panels on the sky, north up, on the right, with the caption listing unsolved panels; job chip closed; crop from the top of the window to just above the Stacks panel's build buttons -->
+
   <figure>
-    <img src="../assets/stacks-mosaic.jpg" alt="Stacks for Heart Mosaic mosaic (4 panels): each panel's stack in the grid, and the panels placed on the sky by plate solve" loading="lazy">
-    <figcaption>A mosaic in Stacks: panels in grid order, and on the sky by plate solve.</figcaption>
+    <img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
+    <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
   </figure>
 
   <h2 id="takeout">Export for other stackers</h2>

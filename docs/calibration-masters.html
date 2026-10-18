@@ -385,12 +385,15 @@ function gtag_report_demo() {
   Light checks change only what is flagged, and Frame grades grade again from
   the stored numbers; neither rereads the image pixels.</p>
 
-  <!-- RESHOOT: settings-calibration.png | Settings › Calibration, top of the tab in the new card layout: the "For every rig without its own value…" note, the Matching box (Flat rotation, Flat focal length, Dark temperature, Flat session, Use darks, External masters, Rig's time zone, Nights end) with help text, and the Dark masters box (Dark reach, Complete night, Dark choice) -->
+
   <figure>
-    <img src="../assets/settings-calibration.png" alt="Settings › Calibration: Rotation tolerance, Masters from other software, Dark reach, Complete night and Mask stars in flats" loading="lazy">
-    <figcaption>Calibration settings apply to every database on the server.</figcaption>
+    <img src="../assets/settings-calibration.png" loading="lazy" alt="Global matching limits control which calibration frames can serve a light." width="1800" height="1508">
+    <figcaption>Global matching limits control which calibration frames can serve a light.</figcaption>
   </figure>
-  <!-- SHOT: settings-calibration-flat-groups.png | Settings › Calibration scrolled to the Flat groups box (Group flats, Dust split, Light pattern split, each with help and its default) and the Light checks box below it showing a few checks with their Poor / Check only / Off controls; open it from Edit limits in Calibration › Frames so the Dust split row is the one in focus | The Flat groups and Light checks boxes. Edit limits in Frames opens this tab on the dust limit. -->
+  <figure>
+    <img src="../assets/settings-calibration-flat-groups.png" loading="lazy" alt="Flat-group limits separate nights when dust or illumination changes." width="1800" height="1620">
+    <figcaption>Flat-group limits separate nights when dust or illumination changes.</figcaption>
+  </figure>
 
   <h3 id="rig-settings">Settings for one rig</h3>
   <p><strong>Rigs</strong>, below the global settings, lists every rig an open catalog
@@ -412,7 +415,10 @@ function gtag_report_demo() {
   here, and this list links back. An older PSF Guard that saves its settings
   drops the rigs' values, so set them again after a downgrade.</p>
 
-  <!-- SHOT: settings-calibration-rig.png | Settings › Calibration › Rigs with rig starfront-redcat61 expanded, Start from › Sky flats pressed and its note "… Review the values below, then save." showing; the Matching and Light checks groups open, with Flat session and Flats from several nights set as own values (Own value pressed) and other rows showing their inherited value and "· global" or "· default"; Save rig and Inherit everything at the foot | A rig's own settings, filled from the Sky flats preset. -->
+  <figure>
+    <img src="../assets/settings-calibration-rig.png" loading="lazy" alt="Start from a preset, then override only the calibration limits this rig needs." width="1800" height="1302">
+    <figcaption>Start from a preset, then override only the calibration limits this rig needs.</figcaption>
+  </figure>
 
   <nav class="next-prev" aria-label="Documentation pages">
     <a href="calibration-flats.html">&larr; Flats &amp; Dust Changes</a>

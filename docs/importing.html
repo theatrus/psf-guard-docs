@@ -184,10 +184,10 @@ function gtag_report_demo() {
     <li>Choose <strong>Create &amp; Import</strong>. Progress survives closing or
       reloading the page.</li>
   </ol>
-  <!-- RESHOOT: import-from-images.png | Settings → Databases → New Database from Images in the new card layout: a display name typed (for example "2026 Archive"), one absolute image folder added, Queue background quality analysis unticked, Cancel and Create & Import at the bottom; crop to the form -->
+
   <figure>
-    <img src="../assets/import-from-images.png" alt="New Database from Images form with header-only import and optional background quality analysis">
-    <figcaption>The first pass reads headers only. Quality analysis is off by default.</figcaption>
+    <img src="../assets/import-from-images.png" alt="Name the catalog, add image folders and choose whether to queue quality analysis." width="1878" height="900">
+    <figcaption>Name the catalog, add image folders and choose whether to queue quality analysis.</figcaption>
   </figure>
   <p>The UI saves the SQLite file under <code>databases/</code> beside the registry and
   shows its path on the database card. An empty folder is fine for a catalog that will
@@ -358,7 +358,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Analyze quality of the new frames in the background</strong> and
       <strong>Include frames from other rigs</strong> work as for a manual import.</li>
   </ul>
-  <!-- SHOT: settings-autoimport-scan-rules.png | Settings → Databases → Edit on the starfront-redcat61 catalog, scrolled to the Scan rules and Automatic import boxes: Exclude holding **/Hocus Focus/** and **/PierCam/**, Include only empty, Lights need a target name and Match targets by position ticked, Shortest light (s) 10; Automatic import ticked with Run when the app or server opens this database, Schedule: Every hour, Import: Lights and calibration frames, New targets: Ask first; crop to the two boxes | Scan rules and Automatic import in a database's edit form. -->
+  <figure>
+    <img src="../assets/settings-autoimport-scan-rules.png" loading="lazy" alt="Set scan exclusions, target matching and review rules before enabling automatic import." width="1724" height="1620">
+    <figcaption>Set scan exclusions, target matching and review rules before enabling automatic import.</figcaption>
+  </figure>
   <p>Under Ask first, a run attaches frames for targets the catalog has and writes
   nothing for the rest. The database's status line then says, for example,
   "11 held: no matching project", with a <strong>Review</strong> button that opens the
@@ -367,7 +370,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   scan rule leaves them out. Ask first is the default because the scheduler database is
   often shared with N.I.N.A. and synced to the rig, so a project a run made would land
   on the live rig before anyone saw it.</p>
-  <!-- SHOT: autoimport-held-review.png | Settings → Databases, one database card after an automatic run that held frames: the status line with the schedule, last result and next run, Run now, the notes "12 skipped by scan rules" and "11 held: no matching project", and the Review button beside the held note; crop to the card's status area | Frames for new targets wait for Review. -->
+  <figure>
+    <img src="../assets/autoimport-held-review.png" loading="lazy" alt="Automatic import holds a new target for review when no project matches it." width="1900" height="186">
+    <figcaption>Automatic import holds a new target for review when no project matches it.</figcaption>
+  </figure>
 
   <h3 id="scheduler-plans">What a run changes in Target Scheduler</h3>
   <p>Under Ask first and Leave out, a run leaves scheduling alone in projects it did not
@@ -378,7 +384,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   previews it with the rest. In projects an import made, a run adds plans and raises
   counts. <strong>Create a project</strong> and every import a person starts do both
   everywhere; the preview says which plans they add or raise.</p>
-  <!-- SHOT: import-preview-plans.png | The import preview opened by Review on that card: the held folders ticked under Folders, "↳ existing <project> / <target> — +N frame(s) (name match) · adds 1 exposure plan" and "· raises acquired on 2 plans" lines, "NEW <project> — 1 target(s), N frame(s)" lines for the new targets, "Adds 1 exposure template(s)", Queue background quality analysis, and the Import N frame(s) and Cancel buttons; crop to the preview panel | The preview lists new targets and the plans an import adds or raises. -->
+  <figure>
+    <img src="../assets/import-preview-plans.png" loading="lazy" alt="The preview separates additions to an existing target from a new project and shows which exposure-plan count will change." width="1966" height="1164">
+    <figcaption>The preview separates additions to an existing target from a new project and shows which exposure-plan count will change.</figcaption>
+  </figure>
   <p>A run reads only the configured folders, so it works without database management.
   It drops every file the catalog already holds before reading a header, so a folder of
   known frames costs a directory walk and one query. Lights the scan rule filters left
@@ -404,10 +413,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
       one finishes. At startup, the server also finds frames that arrived while it was stopped. Off
       by default.</li>
   </ul>
-  <!-- RESHOOT: settings-database-options.png | Settings → Databases in the new card layout, one database card (for example the c925-scheduler catalog): calibration library summary, AstroBin filters, Analyze Missing Quality, Rescan All Quality, Analyze new frames as they arrive, Write star count and HFR into image metadata, Pair calibrated and registered copies with their lights, Measure quality on the calibrated copy, and the automatic import status line with Run now; Import and Edit buttons at the right -->
+
   <figure>
-    <img src="../assets/settings-database-options.png" alt="A database card in Settings: calibration library, AstroBin filters, Analyze Missing Quality, Rescan All Quality, and the options for new frames, star metadata and calibrated copies" loading="lazy">
-    <figcaption>Each database's quality controls and options.</figcaption>
+    <img src="../assets/settings-database-options.png" loading="lazy" alt="Each database has its own image folders, calibration library and analysis options." width="1800" height="946">
+    <figcaption>Each database has its own image folders, calibration library and analysis options.</figcaption>
   </figure>
   <p>The scan uses the N.I.N.A. Fast detector, so star counts and HFR compare with
   Target Scheduler's. When it finds no stars, HocusFocus measures the frame instead. A
@@ -450,10 +459,10 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Send reviewed grades</strong> sends Accepted and Rejected grades for
       matching image GUIDs.</li>
   </ul>
-  <!-- RESHOOT: settings-sync.png | Settings → Sync in the new card layout: Data Transfer with a source (for example the c925-scheduler telescope catalog) and a destination catalog picked and Merge catalogs chosen, before Preview; Remote PSF Guard below it -->
+
   <figure>
-    <img src="../assets/settings-sync.png" alt="Settings › Sync: Data Transfer with source and destination catalogs, and Remote PSF Guard" loading="lazy">
-    <figcaption>Pick a direction and an action, then preview before Apply.</figcaption>
+    <img src="../assets/settings-sync.png" loading="lazy" alt="Choose a local transfer or configure a remote peer, then preview before Apply." width="1856" height="1494">
+    <figcaption>Choose a local transfer or configure a remote peer, then preview before Apply.</figcaption>
   </figure>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
 psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run

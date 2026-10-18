@@ -181,10 +181,10 @@ function gtag_report_demo() {
   name opens that rig's settings under <a
   href="calibration-masters.html#matching">Settings › Calibration</a>, and the note
   above Calibration's rig list links back here.</p>
-  <!-- RESHOOT: settings-rigs.png | Settings › Rigs in the new card layout, desktop width: the Rigs card with its intro line and the five rigs (starfront-redcat61, starfront-ultracat131, askar107phq, c925-scheduler, ultra cat), each with field and pixel scale, its "Calibration:" links (camera · frame size · N own values), Library and Setup. Crop to the card. -->
+
   <figure>
-    <img src="../assets/settings-rigs.png" alt="Settings › Rigs: five rigs with field of view and pixel scale, each with Library and Setup" loading="lazy">
-    <figcaption>Settings › Rigs: one row per registered database.</figcaption>
+    <img src="../assets/settings-rigs.png" loading="lazy" alt="Review each rig&#x27;s field of view, pixel scale and calibration settings." width="1878" height="1568">
+    <figcaption>Review each rig&#x27;s field of view, pixel scale and calibration settings.</figcaption>
   </figure>
 
   <h2 id="setup">Rig setup</h2>
@@ -199,10 +199,10 @@ function gtag_report_demo() {
   outside closes it over edits a form has not saved: <strong>Keep
   editing</strong> or <strong>Close without saving</strong>. The browser asks
   before a reload drops them.</p>
-  <!-- RESHOOT: rig-setup-optics.png | Settings › Rigs › Setup for askar107phq in the new card layout: the section rail (Optics, Site, Limits and delivery, Collaboration) with Optics open, sensor size, pixel size, focal length, aperture, camera angle, the computed field, and Use frame headers naming the frame it read. Crop to the setup. -->
+
   <figure>
-    <img src="../assets/rig-setup-optics.png" alt="Rig setup, Optics: sensor size, pixel size, focal length, aperture, camera angle and the computed field" loading="lazy">
-    <figcaption>Optics, with Use frame headers showing the frame it reads.</figcaption>
+    <img src="../assets/rig-setup-optics.png" loading="lazy" alt="The rig&#x27;s sensor and optics determine its field of view and pixel scale." width="1800" height="1136">
+    <figcaption>The rig&#x27;s sensor and optics determine its field of view and pixel scale.</figcaption>
   </figure>
 
   <h3 id="optics">Optics</h3>
@@ -233,16 +233,16 @@ function gtag_report_demo() {
   <p>Opening another site keeps the edits of the one you left; <strong>Save
   site</strong> saves them, with <strong>Unsaved changes</strong> beside it until
   then.</p>
-  <!-- RESHOOT: settings-sites.png | Settings › Rigs, scrolled to the Sites card in the new layout: one site open with Name and Location fields and a pasted N.I.N.A. horizon, and Save site. Blank or blur the latitude and longitude values; never show a real site's coordinates. -->
-  <!-- RESHOOT: rig-setup-site.png | Settings › Rigs › Setup for askar107phq, Site section, new card layout: Planning site select, the location fields (blank or blur the latitude and longitude values), Bortle class, sky brightness and the horizon box, with Use frame headers. -->
+
+
   <div class="shot-pair">
     <figure>
-      <img src="../assets/settings-sites.png" alt="Settings › Rigs › Sites: a site's location fields and a pasted N.I.N.A. horizon" loading="lazy">
-      <figcaption>A site defines a location and a N.I.N.A. horizon.</figcaption>
+      <img src="../assets/settings-sites.png" loading="lazy" alt="A site can use a pasted horizon. This example has no coordinates and was not saved." width="1800" height="912">
+      <figcaption>A site can use a pasted horizon. This example has no coordinates and was not saved.</figcaption>
     </figure>
     <figure>
-      <img src="../assets/rig-setup-site.png" alt="Rig setup, Site: Planning site select, frame-header location fields, Bortle class, sky brightness and a horizon box" loading="lazy">
-      <figcaption>A rig picks its planning site, and overrides it only where it differs.</figcaption>
+      <img src="../assets/rig-setup-site.png" loading="lazy" alt="Set the rig&#x27;s planning site and horizon. Coordinates are blank in this example." width="1768" height="1176">
+      <figcaption>Set the rig&#x27;s planning site and horizon. Coordinates are blank in this example.</figcaption>
     </figure>
   </div>
 
@@ -258,15 +258,15 @@ function gtag_report_demo() {
   href="#remote-site">remote site</a> when it has one. A plan's own limits still win for
   its project. Apply is refused when a project or the limits changed since the list was
   read. Nothing applies by itself; a project made later waits for the next Apply.</p>
-  <!-- RESHOOT: rig-limits.png | Settings › Rigs › Setup for askar107phq, Limits and delivery section, new card layout: Planning limits and the Target Scheduler limits fields with their inherited values. Crop to those two boxes. -->
+
   <figure>
-    <img src="../assets/rig-limits.png" alt="Limits and delivery: planning limits, and Target Scheduler limits with inherited values" loading="lazy">
-    <figcaption>A rig's planning limits and its Target Scheduler limits for every project in its database.</figcaption>
+    <img src="../assets/rig-limits.png" loading="lazy" alt="Planning limits and Target Scheduler limits have separate controls." width="1396" height="1098">
+    <figcaption>Planning limits and Target Scheduler limits have separate controls.</figcaption>
   </figure>
-  <!-- RESHOOT: rig-ts-projects.png | Same setup, Limits and delivery, scrolled down: the Target Scheduler projects comparison (each differing project with what will change, or "all N projects … have these limits"), Apply to N projects, and the Remote site box with Plans push to set to This server only. New card layout. -->
+
   <figure>
-    <img src="../assets/rig-ts-projects.png" alt="Target Scheduler projects: all 7 projects in the rig's database have these limits; Remote site set to This server only" loading="lazy">
-    <figcaption>The comparison with every project in the rig's database, and <strong>Remote site</strong> below it.</figcaption>
+    <img src="../assets/rig-ts-projects.png" loading="lazy" alt="Check existing projects and choose where to send plans. No remote peer is configured here." width="1396" height="684">
+    <figcaption>Check existing projects and choose where to send plans. No remote peer is configured here.</figcaption>
   </figure>
 
   <h3 id="remote-site">Remote site</h3>
@@ -311,10 +311,10 @@ function gtag_report_demo() {
   now. A list of rigs sits beside the map; choosing one turns the map to it. A
   quiet rig is drawn dashed red. A rig that reports no mount position is placed
   at its planned target, dotted and labeled <em>at target</em>.</p>
-  <!-- RESHOOT: sky-live.jpg | Sky view with Live on, opened from the header's Live chip, desktop width with the new icon header: the all-sky coverage map with each reporting rig drawn where it points, the Live list of rigs beside the map, and the Live table under it. -->
+
   <figure>
-    <img src="../assets/sky-live.jpg" alt="Sky coverage with Live on: the all-sky map, the Live list of rigs beside it and the timeline below" loading="lazy">
-    <figcaption>Live on the Sky. Each reporting rig is drawn where it points; the list sits beside the map.</figcaption>
+    <img src="../assets/sky-live.jpg" loading="lazy" alt="Live lists the rigs and their latest reports. These five rigs have not reported yet." width="3138" height="1854">
+    <figcaption>Live lists the rigs and their latest reports. These five rigs have not reported yet.</figcaption>
   </figure>
   <p>The Live table under the map has one row per rig:</p>
   <div class="table-wrap">

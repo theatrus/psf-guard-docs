@@ -170,14 +170,17 @@ function gtag_report_demo() {
   Guard makes a token of your own and shows what to paste into Claude Code and
   into Codex, with this server's URL. Copy the token then: it is shown
   once.</p>
-  <!-- SHOT: settings-connect-agent.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card after Connect an agent: Let it grade and start jobs left unticked, Create token clicked, showing the Claude Code and Codex setup snippets with their Copy buttons; blur or crop out the token itself; crop to the API tokens card | Connect an agent makes a token and shows the Claude Code and Codex setup with this server's URL. -->
+  <figure>
+    <img src="../assets/settings-connect-agent.png" loading="lazy" alt="Choose whether an agent may grade images and start jobs before creating its token." width="1584" height="400">
+    <figcaption>Choose whether an agent may grade images and start jobs before creating its token.</figcaption>
+  </figure>
   <p><strong>+ New token</strong> does the same with a <strong>Label</strong>,
   an expiry or another user of your choosing, and <strong>Read only, whatever
   the user's role</strong> for a token that only reads.</p>
-  <!-- RESHOOT: settings-api-tokens.png | psf-guard.atpn.co signed in as an editor, Settings › Users, API tokens card in the new card layout with + New token clicked: the New token form with Label filled ("claude on laptop"), User (optional), Expires after (days, optional), the Read only, whatever the user's role checkbox, Create token and Cancel; crop to the API tokens card (same capture as authentication.html) -->
+
   <figure>
-    <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
-    <figcaption>The <strong>+ New token</strong> form under Settings › Users › API tokens.</figcaption>
+    <img src="../assets/settings-api-tokens.png" loading="lazy" alt="Give a token a label and choose its access before creating it." width="1584" height="660">
+    <figcaption>Give a token a label and choose its access before creating it.</figcaption>
   </figure>
   <p>The CLI makes tokens too and prints each once. Restart the server after a
   CLI change:</p>
@@ -198,7 +201,10 @@ psf-guard users token revoke &lt;id&gt;</code></pre>
     network server with no accounts answers 401 here as everywhere else; see
     <a href="authentication.html#bind">Server Accounts</a>.
   </div>
-  <!-- SHOT: settings-agents.png | desktop app on macOS with no accounts, header menu › Settings › Agents tab: the Agents card with the /api/mcp URL, the Claude Code and Codex snippets with Copy buttons, and the "Choose a fixed server port" link; crop to the Agents card | Settings › Agents on the desktop app: the setup to paste, and a link to fix the server port. -->
+  <figure>
+    <img src="../assets/settings-agents.png" loading="lazy" alt="A local server without accounts shows the MCP address and client configuration snippets." width="2060" height="710">
+    <figcaption>A local server without accounts shows the MCP address and client configuration snippets.</figcaption>
+  </figure>
   <p>The desktop app picks a new port each time it starts unless you fix one.
   <strong>Agents</strong> links to <strong>Settings &rarr; Server</strong>,
   where <strong>Fixed port</strong> keeps the agent's URL across restarts; see
