@@ -247,7 +247,7 @@ function gtag_report_demo() {
   </figure>
 
   <h2 id="api">Where the numbers come from</h2>
-  <p><code>GET /api/db/{db}/sky/coverage</code> returns, for one database: every target with its coordinates in degrees, frame and second totals per filter, the nights it was shot and its footprint; every night, target and filter row; the filters seen; and the totals, including the hour the catalog's nights split at. Seconds come from each frame's recorded exposure. A target with a finished stack also carries <code>preview</code>: the preview URL, the pixel grid it covers, whether it is colour or one filter, and a TAN solution on that grid when the reference frame was solved. The page asks every registered database and merges the answers.</p>
+  <p><code>GET /api/db/{db}/sky/coverage</code> returns, for one database: every target with its coordinates in degrees, frame and second totals per filter, the nights it was shot and its footprint; every night, target and filter row; the filters seen; and the totals, including the hour the catalog's nights split at. Seconds come from each frame's recorded exposure. A target with a finished stack also carries <code>preview</code>: the preview URL, the pixel grid it covers, whether it is colour or one filter, and a TAN solution on that grid when the reference frame was solved. PSF Guard combines coverage from every registered database in this view.</p>
   <p>The constellation figures, constellation names and stars drawn behind the fields come from the d3-celestial data set, Copyright (c) 2015, Olaf Frohn, under the BSD 3-Clause License.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">

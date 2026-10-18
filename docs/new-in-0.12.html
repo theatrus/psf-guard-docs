@@ -161,14 +161,12 @@ function gtag_report_demo() {
   <p><a href="#upgrade">Before upgrading from 0.11 ↓</a> ·
   <a href="release-notes-0.12.html">All changes in 0.12 →</a></p>
 
-  <div class="callout info"><strong>Direct Target Scheduler access is deprecated.</strong>
-  <p>Existing registrations and direct CLI/API access still work through 0.12.
-  This release leaves registrations unchanged. A later release will automatically
-  migrate them to PSF Guard-owned catalogs with Target Scheduler sync. New
-  connections already use this model. Removal of direct access is planned for
-  0.13 or later.</p>
-  <p>Separate catalogs give each product control of its own data and help us support
-  both PSF Guard and Target Scheduler as they develop.</p></div>
+  <div class="callout info"><strong>PSF Guard is moving to its own catalogs</strong>
+  <p>Your current Target Scheduler setup will keep working in 0.12. A later
+  update will create a PSF Guard catalog for you and keep captures, plans and
+  grades in sync with Target Scheduler.</p>
+  <p>Separate catalogs let us add features to PSF Guard and support new Target
+  Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
   <h2 id="catalogs">Keep your catalog separate from Target Scheduler</h2>
   <p>Import a local TS database into a PSF Guard-owned catalog, or create a catalog
   and pair the PSF Guard Sync plugin without a local TS file. Choose automatic capture
@@ -283,8 +281,8 @@ function gtag_report_demo() {
   <ul>
     <li><strong>Review new TS connections.</strong> Local-file imports enable
     automatic capture sync and grade writeback. Review the settings after importing.
-    Existing direct-open registrations stay unchanged through 0.12; a later
-    release will migrate them automatically.</li>
+    Your current Target Scheduler setup will keep working in 0.12. A later update
+    will create a PSF Guard catalog for you and set up sync.</li>
     <li><strong>Back up first.</strong> Keep a copy of catalogs and settings before
     the upgrade. See <a href="backups.html">Backups</a> for available methods.</li>
     <li><strong>Allow time for background checks.</strong> The first calibration

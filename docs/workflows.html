@@ -266,12 +266,11 @@ psf-guard empty-reject-trash --db my-db    <span class="c"># files past their ti
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
   <h2 id="existing-database">Direct database access (deprecated)</h2>
-  <p>Existing registrations that open a live Target Scheduler database, and direct
-  CLI/API access, remain supported through 0.12. This release leaves registrations
-  unchanged. A later release will automatically migrate them to PSF Guard-owned
-  catalogs with Target Scheduler sync. Separate catalogs give each product control
-  of its own data and help us support both products as they develop. Removal of
-  direct access is planned for 0.13 or later. For a new setup,
+  <p>Your current Target Scheduler setup will keep working in 0.12, including
+  direct CLI/API access. A later update will create a PSF Guard catalog for you
+  and keep captures, plans and grades in sync with Target Scheduler. Separate
+  catalogs let us add features to PSF Guard and support new Target Scheduler
+  versions. We plan to remove direct database access in 0.13 or later. For a new setup,
   <a href="importing.html#target-scheduler">import the TS file into an owned catalog</a>
   and keep its source connected, or use the
   <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a>.</p>

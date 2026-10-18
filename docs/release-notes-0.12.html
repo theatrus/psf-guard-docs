@@ -171,14 +171,12 @@ function gtag_report_demo() {
     </ul>
   </nav>
 
-  <div class="callout info"><strong>Direct Target Scheduler access is deprecated.</strong>
-  <p>Existing registrations and direct CLI/API access still work through 0.12.
-  This release leaves registrations unchanged. A later release will automatically
-  migrate them to PSF Guard-owned catalogs with Target Scheduler sync. New
-  connections already use this model. Removal of direct access is planned for
-  0.13 or later.</p>
-  <p>Separate catalogs give each product control of its own data and help us support
-  both PSF Guard and Target Scheduler as they develop.</p></div>
+  <div class="callout info"><strong>PSF Guard is moving to its own catalogs</strong>
+  <p>Your current Target Scheduler setup will keep working in 0.12. A later
+  update will create a PSF Guard catalog for you and keep captures, plans and
+  grades in sync with Target Scheduler.</p>
+  <p>Separate catalogs let us add features to PSF Guard and support new Target
+  Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
 
   <h2 id="calibration">Review calibration and match flats</h2>
   <p>The new <a href="calibration.html">Calibration page</a> replaces the library

@@ -194,11 +194,12 @@ function gtag_report_demo() {
   <h3 id="first-catalog">Import your images</h3>
   <p>Already use Target Scheduler? Choose <strong>Import from Target Scheduler</strong>
   to create an owned working catalog and keep the source connected. Review the
-  automatic sync and grade writeback settings after import. Direct TS access is
-  deprecated; existing registrations stay supported unchanged through 0.12.
-  A later release will automatically migrate them to owned catalogs with TS sync.
-  Separate catalogs help us support both products as they develop. Removal of
-  direct access is planned for 0.13 or later. See
+  automatic sync and grade writeback settings after import. Your current Target
+  Scheduler setup will keep working in 0.12. A later update will create a PSF
+  Guard catalog for you and keep captures, plans and grades in sync with Target
+  Scheduler. Separate catalogs let us add features to PSF Guard and support new
+  Target Scheduler versions. We plan to remove direct database access in 0.13 or
+  later. See
   <a href="importing.html#target-scheduler">Import from Target Scheduler</a>.</p>
   <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
   image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
@@ -211,7 +212,7 @@ function gtag_report_demo() {
   <ol>
     <li><a href="install.html#server">Install with Docker</a> on your server or NAS,
     or run the <a href="cli.html#server">standalone server</a>.</li>
-    <li>Give PSF Guard access to your image folders and a persistent location for its
+    <li>Give PSF Guard access to your image folders and a folder that survives container restarts for its
     catalogs and settings. Follow the <a href="install.html#docker-data">storage setup</a>
     for Docker.</li>
     <li>Open the server URL in a browser and <a href="importing.html">import your images</a>.
@@ -275,10 +276,11 @@ function gtag_report_demo() {
   <a href="sync-plugin.html">N.I.N.A. Sync plugin</a> with a server.</p>
 
   <h3 id="existing-database">Existing Target Scheduler databases</h3>
-  <p>Opening a Target Scheduler database directly is deprecated. Existing setups
-  can continue to use it, including saving grades and plans, through 0.12. A later
-  release will migrate these registrations automatically to owned catalogs with
-  Target Scheduler sync. For the steps and backup requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
+  <p>Your current Target Scheduler setup will keep working in 0.12, including
+  saving grades and plans. A later update will create a PSF Guard catalog for you
+  and keep captures, plans and grades in sync with Target Scheduler. We plan to
+  remove direct database access in 0.13 or later. For the steps and backup
+  requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
 
   <h3 id="manual-transfer">Transfer between separate databases</h3>
   <p>If you keep separate telescope and grading databases, use
