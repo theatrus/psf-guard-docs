@@ -1609,3 +1609,8 @@ counts or flat-change notes requested by the original shot plan.
   in the log outside the crop. Timing and step will differ on a new run.
 - **Verification:** setup and progress images inspected at full size. Docs build,
   screenshot-plan generation, link checks and diff checks passed.
+
+**Reshoot after the UI update:** the run's free-space label now reads
+`<value> free at start.` in the app source. The saved progress image still shows
+the live server's earlier wording. Replace it after that UI change is deployed;
+keep these entries as the record of the current image.
