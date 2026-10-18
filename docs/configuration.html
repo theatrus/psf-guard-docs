@@ -283,9 +283,11 @@ function gtag_report_demo() {
   <div class="callout">
     Keep the config folder writable only by the PSF Guard user. Back these
     files and every catalog up with <a href="backups.html">Settings › Backups</a>
-    or <code>psf-guard backup</code>, which leave
-    <code>collaboration-credentials.json</code> and other secrets out unless
-    you ask for them.
+    or <code>psf-guard backup</code>. Manual desktop backups and new desktop
+    schedules include <code>collaboration-credentials.json</code> and other secrets
+    by default; browser backups and the CLI exclude them by default. Saved schedules
+    keep their existing choice. Check <a href="backups.html#secrets">Include secrets</a>
+    before starting a backup or saving a schedule.
   </div>
 
   <h2 id="planning-store">Planning store</h2>

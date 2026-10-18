@@ -217,10 +217,13 @@ function gtag_report_demo() {
 
   <h3 id="secrets">Secrets</h3>
   <p>Outgoing peer keys, collaboration service tokens and any
-  <code>token</code> in the server's TOML file are stored as plain text, so a backup
-  leaves them out unless you tick <strong>Include secrets</strong>
-  (<code>--include-secrets</code>). Peer keys are blanked, the collaboration
-  credentials file is left out, and TOML tokens become <code>REDACTED</code>.
+  <code>token</code> in the server's TOML file are stored as plain text.
+  <strong>Include secrets</strong> starts on for manual desktop backups and new
+  desktop schedules. Saved schedules keep their existing choice. In a browser,
+  the option starts off; the CLI requires <code>--include-secrets</code>.</p>
+  <p>Check <strong>Include secrets</strong> before starting a backup or saving a
+  schedule. When it is off, PSF Guard blanks peer keys, leaves out the collaboration
+  credentials file, and replaces TOML tokens with <code>REDACTED</code>.
   Account password hashes and API token hashes are always kept, so a restore
   keeps every account.</p>
   <p>An archive with secrets is never offered as a download; it stays in the
@@ -250,7 +253,8 @@ function gtag_report_demo() {
       folder; a run never does, so an unmounted disk fails the run instead of
       filling the system disk.</li>
     <li><strong>What to back up</strong>: settings and catalogs by default.</li>
-    <li><strong>Include secrets</strong>: off by default.</li>
+    <li><strong>Include secrets</strong>: on for a new desktop schedule and off
+    for a new browser schedule. Saved schedules keep their existing choice.</li>
     <li><strong>How many to keep</strong>: the newest 7 by default, or all archives from a
     set number of days. PSF Guard always keeps the newest archive.</li>
   </ul>
