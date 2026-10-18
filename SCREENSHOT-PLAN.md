@@ -277,10 +277,11 @@ and progress/Stop shots. No builds or settings changes were started during scout
 ## Deployment required for new captures
 
 Wait for the main server build before taking new screenshots. The WBPP color
-card needs #919; the scrolling Server information dialog needs its follow-up
-fix. Verify the deployed build and visible labels, then record the actual
-state in the capture record. Local browser checks can test these changes
-without saving documentation screenshots.
+card requires #919 (merged at `8b8a7ec8`); the scrolling Server information
+dialog requires #921. A merge does not confirm deployment. Verify the deployed
+build and visible labels, then record the actual state in the capture record.
+Local browser checks can test these changes without saving documentation
+screenshots.
 
 ## How to update this plan
 
