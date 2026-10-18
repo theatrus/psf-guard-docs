@@ -162,9 +162,9 @@ function gtag_report_demo() {
   </p>
 
   <div class="workflow-note sync">
-    <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Sync only when the telescope and the grading machine keep separate copies</strong><p>A desktop app that opens the telescope's database directly needs no sync.</p></div>
-    <a class="workflow-link" href="#sync">Sync ↓</a>
+    <div class="workflow-tag">Manual transfer</div>
+    <div class="workflow-copy"><strong>Use the Sync plugin for N.I.N.A.</strong><p>The plugin transfers captures, plans and grades between the telescope and PSF Guard. Use the database transfer steps below when you need to copy between separate database files by hand.</p></div>
+    <a class="workflow-link" href="sync-plugin.html">Connect N.I.N.A. →</a>
   </div>
 
   <h2 id="rejects">Archive rejected files</h2>
@@ -264,6 +264,27 @@ psf-guard list-removed --db my-db
 psf-guard restore-removed --db my-db --batch &lt;batch&gt;
 psf-guard empty-reject-trash --db my-db    <span class="c"># files past their time in the trash</span>
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
+
+  <h2 id="existing-database">Direct database access (deprecated)</h2>
+  <p>PSF Guard can still open an existing Target Scheduler database and save
+  grades and plans to it. This path is deprecated for new setups. Instead,
+  <a href="importing.html">import image folders</a> into a PSF Guard catalog, or
+  use the <a href="sync-plugin.html">N.I.N.A. Sync plugin</a> to transfer captures,
+  plans and grades between the telescope and a PSF Guard server.</p>
+  <div class="callout">
+    <strong>Back up the database before PSF Guard first writes to it.</strong>
+    Grading writes to the file. Import and sync preview their changes first.
+    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
+  </div>
+  <ol>
+    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
+    <li>Pick the SQLite file and add the folders that contain its images. On Windows
+    the file is usually <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
+    <li>Choose a project in the <strong>Library</strong> to open its images.</li>
+  </ol>
+  <p>Image folders can be read only. The database file must be writable to save
+  grades and plans. If PSF Guard and Target Scheduler use the same file, those
+  changes need no database transfer.</p>
 
   <h2 id="sync">Sync two database files</h2>
   <p>Grade on one machine while the telescope keeps capturing on another. Sync

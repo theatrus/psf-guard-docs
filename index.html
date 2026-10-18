@@ -8,7 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/site.css?v=7">
   <meta property="og:title" content="PSF Guard">
-  <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Build from FITS folders or open a Target Scheduler database.">
+  <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Import FITS or XISF folders, or receive captures from N.I.N.A. with PSF Guard Sync.">
   <meta property="og:image" content="https://psf-guard.com/assets/sky-context.jpg">
   <meta property="og:url" content="https://psf-guard.com/">
   <meta property="og:type" content="website">
@@ -106,9 +106,9 @@ function gtag_report_demo() {
 <section class="section compact">
   <div class="callout info">
     <strong>Like Lightroom Classic, for astrophotography data.</strong> PSF Guard
-    catalogs files where they are. It keeps its image map, plans and grades in the
-    Target Scheduler database layout, so it opens a live scheduler database the
-    same way as one it built. Target Scheduler is optional.
+    catalogs files where they are. Import your image folders, or use the
+    <a href="docs/sync-plugin.html">PSF Guard Sync plugin</a> to receive captures
+    from N.I.N.A. Target Scheduler is optional.
   </div>
 </section>
 
@@ -159,8 +159,8 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🗃️</div>
       <h3>Catalog in place</h3>
-      <p>Build a catalog from FITS or XISF folders, or open a Target Scheduler
-      database. New frames come in on a schedule. Files never move.</p>
+      <p>Build a catalog from FITS or XISF folders and check for new frames
+      on a schedule. Imported files stay in their folders.</p>
     </div>
     <div class="card">
       <div class="icon">🖼️</div>
@@ -432,10 +432,9 @@ psf-guard server catalog.sqlite ./images</code></pre>
     </div>
   </div>
   <div class="callout" style="margin-top:2rem">
-    <strong>Back up your Target Scheduler database</strong> before PSF Guard first
-    writes to it. Grading writes to the file directly. Imports, sync and activation
-    preview their changes before they apply. <a href="docs/backups.html">Backups</a>
-    copies every catalog safely, from Settings or <code>psf-guard backup</code>.
+    <strong>Back up your catalogs and settings</strong> before an upgrade.
+    Use <a href="docs/backups.html">Backups</a> in Settings or
+    <code>psf-guard backup</code>, and keep a copy on another disk.
   </div>
 </section>
 

@@ -262,27 +262,14 @@ function gtag_report_demo() {
   the sky, set goals per filter, and write it into each rig's Target Scheduler database.
   See <a href="planning.html">Planning</a>.</p>
 
-  <h2 id="two-machines">Other database workflows</h2>
-  <p>Most setups can start by importing images or connecting N.I.N.A. to a server.
-  If you need to work with existing Target Scheduler databases, these options remain
-  available on desktop and server.</p>
+  <h2 id="two-machines">Legacy and manual database workflows</h2>
+  <p>For a new setup, import image folders into a PSF Guard catalog or use the
+  <a href="sync-plugin.html">N.I.N.A. Sync plugin</a> with a server.</p>
 
-  <h3 id="existing-database">Open an existing Target Scheduler database</h3>
-  <div class="callout">
-    <strong>Back up the database before PSF Guard first writes to it.</strong>
-    Grading writes to the file. Import and sync preview their changes first.
-    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
-  </div>
-  <ol>
-    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
-    <li>Pick the SQLite file and add the folders that hold its images. On Windows
-      the file is usually
-      <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
-    <li>Choose a project in the <strong>Library</strong>; it opens in
-      <strong>Images</strong>.</li>
-  </ol>
-  <p>Image folders can be read only. The database file must be writable to save
-  grades and plans.</p>
+  <h3 id="existing-database">Existing Target Scheduler databases</h3>
+  <p>Opening a Target Scheduler database directly is deprecated. Existing setups
+  can continue to use it, including saving grades and plans. For the steps and
+  backup requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
 
   <h3 id="manual-transfer">Transfer between separate databases</h3>
   <p>If you keep separate telescope and grading databases, use
