@@ -367,9 +367,16 @@ function gtag_report_demo() {
   stacks before PixInsight starts the next run. They show under <strong>WBPP
   stacks</strong>, below PSF Guard's own stacks in <strong>Stacks</strong>, each with a
   preview and its <strong>FITS</strong>. In <strong>Combine channel stacks</strong> they
-  appear as channel sources marked <em>WBPP</em>: choose L, R, G and B from WBPP, for
-  example, and PSF Guard composes the color preview with the same background, stretch
-  and processing as for its own stacks.</p>
+  appear as channel sources marked <em>WBPP</em>. A separate <strong>WBPP</strong>
+  color card combines masters that cover the required channels, alongside PSF
+  Guard's own stacks and exposure groups. A target with only WBPP masters and no
+  exposure split uses the standard color card. See
+  <a href="stacking.html#wbpp-color">Compose WBPP masters</a>.</p>
+  <p>Source labels include the sub-exposure when known, such as <strong>R (WBPP,
+  300 s)</strong>. If WBPP made several masters for one filter, choose the inputs
+  in <strong>Custom combination</strong>, or in the card's source menus when
+  exposure groups are off. PSF Guard does not mix WBPP and its own stacks
+  automatically.</p>
   <ul>
     <li>One master is taken per filter and exposure. PSF Guard prefers one
       without drizzle, since color composition aligns channels of one scale,

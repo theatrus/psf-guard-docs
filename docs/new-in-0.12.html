@@ -255,12 +255,24 @@ function gtag_report_demo() {
   The app remembers the scale on this device. Image zoom stays separate.</p>
   <p><a href="install.html#desktop-zoom">Change the UI scale →</a></p>
 
-  <h2 id="stacks">Keep stack processing through rebuilds and restarts</h2>
+  <h2 id="stacks">Keep stacks through updates and restarts</h2>
   <p>Processing runs show their queue position and progress, survive restarts, and
   reapply your choices after a stack refreshes. Color processing reports each channel
   and tool, supports Stop, and reuses unchanged channel results. Improved resampling removes
   cross-hatched bands from slightly rotated frames. Stacks, WBPP and exports use
   the same calibration settings and flat groups.</p>
+  <p>Engine updates reuse completed stacks and masters when their output is
+  unchanged. If only the display stretch or an OSC stack's color calibration
+  needs an update, <strong>Build current set</strong> refreshes the card preview
+  from the saved FITS. The stack and its processing stay available.</p>
+  <h3>Combine WBPP masters in color</h3>
+  <p><strong>Combine channel stacks</strong> gives WBPP masters their own
+  <strong>WBPP</strong> card, including projects split by exposure. Source labels
+  show the sub-exposure, such as <strong>R (WBPP, 300 s)</strong>. Use
+  <strong>Custom combination</strong> when a filter has several masters or you
+  want to mix WBPP and PSF Guard sources.</p>
+  <p><a href="stacking.html#engine-updates">Reuse stacks after updates →</a> ·
+  <a href="stacking.html#wbpp-color">Compose WBPP masters →</a></p>
   <p><a href="stacking.html">Build and process stacks →</a> ·
   <a href="wbpp.html">Run WBPP →</a></p>
 
@@ -291,10 +303,11 @@ function gtag_report_demo() {
     health pass reads every light's header. Frame-site discovery, calibration grading
     and flat measurements can add work, especially on a NAS. Jobs report progress
     and yield to work you start.</li>
-    <li><strong>Expect rebuilt results.</strong> Engine changes invalidate stacks
-    and masters; each rebuilds when needed. Revised dark grading can also rebuild
-    dependent flat masters and stacks. Updated noise measurement can lower the
-    reported SNR without a loss of signal.</li>
+    <li><strong>Allow affected results to rebuild.</strong> Changes to stacking
+    output and dark grading can rebuild affected stacks and masters once. Later
+    engine updates reuse results when their output is unchanged. A display-only
+    update refreshes card previews from the saved FITS. Updated noise measurement
+    can lower reported SNR without a loss of signal.</li>
     <li><strong>Check saved calibration links.</strong> Session identifiers change
     once in this version. An old session link opens the first session instead.
     New identifiers stay stable when warmer or colder frames join a session.</li>
