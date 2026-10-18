@@ -203,6 +203,9 @@ function gtag_report_demo() {
   <p>Add, move and rotate individual panels while checking overlap across rigs.
   Captured panels stay locked to their actual fields until you unlock them.
   Activation previews show what Target Scheduler will run, turn off or restore.</p>
+  <p>The <strong>Planning</strong> button also opens plans from image-folder
+  imports. If a catalog cannot be planned, it shows the catalog warnings and
+  <strong>Retry planning</strong>.</p>
   <figure>
     <img src="../assets/release-012-mosaic-editing.jpg" alt="Heart Mosaic on the DSS map with four captured panels locked, r1c2 selected, and overlap below the saved 20% minimum." width="2936" height="1524" loading="lazy">
     <figcaption>Select a captured panel to check its field and overlap. All four panels remain locked; their measured overlaps fall below the saved 20% minimum.</figcaption>
@@ -248,7 +251,9 @@ function gtag_report_demo() {
   <ul>
     <li id="imports"><a href="importing.html">Import rules and review</a> protect
     existing capture plans and keep unwanted files out.</li>
-    <li><a href="storage.html">Background jobs</a> show queued and waiting work;
+    <li><a href="storage.html">Background jobs</a> show queued and waiting work.
+    <strong>Move to top</strong> makes a queued stack, processing or WBPP task
+    run next after the current task finishes;
     <a href="configuration.html">settings</a> protect unsaved edits.</li>
     <li id="integrations"><a href="mcp.html">MCP tools</a> add flat-group and backup
     actions. The <a href="collaboration.html">collaboration beta</a> adds file delivery

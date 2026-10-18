@@ -352,7 +352,9 @@ function gtag_report_demo() {
   background jobs list the running job and queued jobs across all databases,
   under <strong>Started by you</strong>, a queued run with its place, such as
   <code>queued · 2 · 1 ahead</code>. <strong>↑</strong> and <strong>↓</strong>
-  change the order, <strong>×</strong> takes a run out, and
+  change the order one place at a time. <strong>Move to top</strong> moves a
+  queued run to the front so it starts after the current run ends. The button
+  is disabled when the run is already next. <strong>×</strong> removes a run, and
   <strong>Stop</strong> ends the running one after asking once. These controls
   need an editor.</p>
   <p>The line survives a restart: waiting runs keep their order. A run the

@@ -284,6 +284,11 @@ function gtag_report_demo() {
 
   <h2 id="planning">Edit mosaics and activate plans</h2>
   <ul>
+    <li><strong>Open planning for the selected project.</strong> The
+    <strong>Planning</strong> button works for image-folder imports and opens
+    catalog warnings with <strong>Retry planning</strong> when no plan is
+    available. Catalog copies that share an identity no longer leave the
+    button disabled or show incorrect missing-GUID guidance.</li>
     <li><strong>Place panels individually.</strong> Add panels beside a target, around
     a mosaic, or into gaps. Drag, nudge and rotate each panel, undo edits, and check
     overlap. Snap keeps the minimum overlap; you can override it when needed.</li>
@@ -407,6 +412,11 @@ function gtag_report_demo() {
     started from automatic work, with running, waiting, queued and needs-attention
     counts. Queued builds show their position; measurements show remaining work.
     Automatic jobs yield to your work and can resume once it settles.</li>
+    <li><strong>Choose which task runs next.</strong> <strong>Move to top</strong>
+    moves a queued task under <strong>Started by you</strong> to the front of
+    its stack/processing or WBPP queue, including past automatic work. The
+    current task keeps running. The button is disabled when the task is
+    already next.</li>
     <li><strong>Restart without losing work.</strong> Shutdown stops jobs at safe
     points. Quality scans save results, stack builds checkpoint, and processing runs
     resume after restart. Desktop restarts wait for the old server to finish saving

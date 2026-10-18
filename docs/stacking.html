@@ -411,8 +411,12 @@ function gtag_report_demo() {
   automatic refreshes under <strong>Automatic</strong>. Both share one build line, so a
   queued build shows its position in the queue and the number of jobs ahead, as
   <code>queued · 4 · 3 ahead</code>. <strong>↑</strong> and <strong>↓</strong> move a
-  queued build, <strong>×</strong> takes it out of the line, and <strong>Stop</strong>
-  ends the running one after asking once. Click a build's target to open its stacks.
+  queued build one place. Under <strong>Started by you</strong>,
+  <strong>Move to top</strong> moves a task to the front, including past
+  automatic builds; it runs after the current task finishes. The button is
+  disabled when the task is already next. <strong>×</strong> removes a queued
+  task, and <strong>Stop</strong> ends the running task after asking once.
+  Click a build's target to open its stacks.
   Progress keeps moving through the final rejection pass, for example <code>Rejecting
   transients · pass 2/3 · frame 4/14</code>.</p>
 
