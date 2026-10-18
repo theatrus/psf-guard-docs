@@ -1,14 +1,15 @@
 # Screenshot plan — docs site, next release
 
-The October 17 capture passes now cover **105 assets**: ten from the earlier
+The October 17 capture passes now cover **106 assets**: ten from the earlier
 batches, 94 from the full-guide pass (93 screenshots and one rebuilt collage),
-and the SNR G132 satellite follow-up.
+the SNR G132 satellite follow-up, and WBPP progress. The WBPP setup image
+was also reshot for the same run.
 Captures include the available live-server views and settings, phone layouts,
 calibration comparisons, planning states, queued processing and local import and
 grading examples. Every image has a state, source and reshoot record in
 [assets/screenshot-captures.md](assets/screenshot-captures.md).
 
-The generated lists below contain the **10 remaining shots**. They remain pending;
+The generated lists below contain the **9 remaining shots**. They remain pending;
 their prerequisites must be met before replacing the old image or adding a figure.
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
@@ -26,11 +27,19 @@ and differences from the original plan.
 | `export-left-out.png` | A local export with exclusion enabled copied its sole light because the fixture has no calibration library or findings. Needs a real missing-calibration finding in a disposable catalog. |
 | `stack-color-progress.png` | No color composition with RC-Astro is running. Needs a configured, licensed local processing setup and suitable channel stacks. |
 | `stack-copy-channel-processing.png` | Needs at least two completed channel stacks with distinct processing settings in a disposable catalog. The local fixture contains only B lights. |
-| `wbpp-run-progress.png` | No suitable WBPP run is active. Needs a local WBPP setup and calibration inputs that demonstrate the exclusion counts. |
 
 For reshoots that require writes, use the disposable fixture or a disposable copy
 with the required real inputs. Do not stage grades, repairs, transfers, activations
 or processing jobs on the live catalogs. Never fabricate a measured finding.
+
+## WBPP: captured October 17
+
+At the user's request, started WBPP for Heart of the Soul Nebula on
+starfront-ultracat131 (`db-93617230`, project and target 2). The setup and progress
+images show the actual run: 57 lights, 155 calibration frames, Maximum quality,
+Fast Integration and drizzle off. Progress shows counts and free space; this run
+did not report the exclusions or flat-change notes in the original shot plan.
+The capture record lists the settings and the permission to start this live run.
 
 ## Satellite overlay: captured October 17
 
@@ -259,7 +268,7 @@ capture record and its history.
 - `astrobin-filter-map.png` — pages: exporting
   - Settings › Databases in the new card layout, one rig's catalog › AstroBin filters (pick a catalog with a filter that changed between nights, or add a dated second G entry): the filter map with name, AstroBin id linked to its page, description, and first and last nights; crop to the filter map
 
-## New screenshots (9)
+## New screenshots (8)
 
 - `calibration-repair-duplicates.png` — pages: calibration
   - Calibration page with the Duplicates filter ticked on a database that has duplicates: the count "N exposures recorded more than once", "Checked … ago", Check again and Repair duplicates…, and the Repair duplicates dialog open on its preview (rows to merge, missing files, second copies, masters built again) or running with "Merging 37 of 203" and Stop
@@ -277,5 +286,3 @@ capture record and its history.
   - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
 - `stack-copy-channel-processing.png` — pages: stacking
   - In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot.
-- `wbpp-run-progress.png` — pages: wbpp
-  - WBPP run dialog on psf-guard.atpn.co for a project of rig c925-scheduler or starfront-redcat61 with Leave out lights that can't be calibrated on (Settings › Calibration › Stacks and exports) and a light that lacks flats: the dialog while the run is under way, showing the stage and elapsed time, the free space line, the counts line ending "… light(s) that can't be calibrated were left out, as stacks leave them out", the "Flats chosen around measured changes: …" line and the "Calibration frames matched with: …" line if any setting differs; crop the progress part of the dialog

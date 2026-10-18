@@ -236,7 +236,7 @@ function gtag_report_demo() {
 
 
   <figure>
-    <img src="../assets/wbpp-run-dialog.png" loading="lazy" alt="Review WBPP&#x27;s quality, integration and rejection choices before starting the run." width="1352" height="1414">
+    <img src="../assets/wbpp-run-dialog.png" loading="lazy" alt="Review WBPP&#x27;s quality, integration and rejection choices before starting the run." width="1332" height="1388">
     <figcaption>Review WBPP&#x27;s quality, integration and rejection choices before starting the run.</figcaption>
   </figure>
 
@@ -319,7 +319,10 @@ function gtag_report_demo() {
   disk, kept-out calibration frames, and lights that can't be calibrated. It
   shows the space free at the run folder when the run began, and the
   calibration notes <a href="#darks">above</a>.</p>
-  <!-- SHOT: wbpp-run-progress.png | WBPP run dialog on psf-guard.atpn.co for a project of rig c925-scheduler or starfront-redcat61 with Leave out lights that can't be calibrated on (Settings › Calibration › Stacks and exports) and a light that lacks flats: the dialog while the run is under way, showing the stage and elapsed time, the free space line, the counts line ending "… light(s) that can't be calibrated were left out, as stacks leave them out", the "Flats chosen around measured changes: …" line and the "Calibration frames matched with: …" line if any setting differs; crop the progress part of the dialog | The run dialog counts what it left out and names the flat changes and settings it matched by. -->
+  <figure>
+    <img src="../assets/wbpp-run-progress.png" alt="WBPP running on Heart of the Soul Nebula with 57 lights and 155 calibration frames" width="1332" height="430" loading="lazy">
+    <figcaption>WBPP is writing a master dark. The run dialog shows the current step, elapsed time, input counts and free space at startup.</figcaption>
+  </figure>
   <p>WBPP writes its log between steps, so a long integration shows nothing
   new for a while; the clock keeps counting while PixInsight works.
   <strong>Stop PixInsight</strong> ends the run.</p>

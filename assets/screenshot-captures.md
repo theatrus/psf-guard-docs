@@ -1548,3 +1548,64 @@ bookmarks. The 11 remaining shots and their prerequisites stay in the shot plan.
   (0, 0, 1569.6, 1083.6), scale 1. Direct browser PNG; no retouching or redaction.
 - **Verification:** inspected the saved image: target heading, green matched
   path, candidate label, counts and identity qualification are legible.
+
+## WBPP run — October 17, 2026
+
+The user explicitly requested this live run for Heart of the Soul Nebula on
+starfront-ultracat131. Starting it was part of the task, not staging a screenshot.
+Database `db-93617230`, project 2, target 2; the linked current frame is 960.
+The Stacks view listed HA 600 s, OIII 600 s and R 300 s.
+
+The run uses Maximum quality, includes ungraded lights, disables Fast Integration
+and drizzle, and uses WBPP's defaults for autocrop (on) and rejection (automatic).
+Extra parameters and Run folder were blank, so the configured runs folder applies.
+Save the masters when done was off. No global settings or stored grades changed.
+
+Reshooting the setup needs only opening Stack in WBPP from the recorded URL.
+Reshooting progress should use this run while active, or another separately
+authorized run. Do not start a duplicate run just to reproduce the elapsed time.
+This example shows frame counts and free space; it does not show the exclusion
+counts or flat-change notes requested by the original shot plan.
+
+### assets/wbpp-run-dialog.png
+
+#### 2026-10-18T02:40:25.436Z — capture
+
+- **File:** 1332 × 1388 px, PNG; SHA-256 `f50ade2b9033b4fce718ab13e427fd5f26de90fccdbf8550489043386909bcdb`.
+- **Used by:** `docs/wbpp.html`, Stack in WBPP.
+- **Build/environment:** shared live server at psf-guard.atpn.co, previously
+  reported version 0.11.0; deployed commit unknown. WBPP 3.1.0. macOS 27.0.1,
+  Chrome 155.0.8059.82, English, dark theme, 90% zoom. Viewport
+  1744 × 1204 CSS px, effective DPR 1.8.
+- **URL:** https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=2&current=960&scoreScope=target-filter%3AR&target=2
+- **State and reshoot:** Heart of the Soul Nebula on starfront-ultracat131; WBPP 3.1.0 configured, Include ungraded lights on, Maximum quality, Fast Integration off, Drizzle off, Autocrop default on, rejection default automatic. More parameters and run-folder fields blank; Save masters off. Setup dialog before starting user-authorized live run.
+- **Composition:** CSS crop (502, 216, 740, 772);
+  multiply by 0.9 for the CDP clip, scale 1. Direct browser capture, no retouching.
+
+### assets/wbpp-run-progress.png
+
+#### 2026-10-18T02:40:47.803Z — capture
+
+- **File:** 1332 × 740 px, PNG; SHA-256 `9b77319ef7ea7dd117046de1f69fef3b88683e1a933dc56bf0dd0138985fe3de`.
+- **Used by:** `docs/wbpp.html`, Follow the run.
+- **Build/environment:** shared live server at psf-guard.atpn.co, previously
+  reported version 0.11.0; deployed commit unknown. WBPP 3.1.0. macOS 27.0.1,
+  Chrome 155.0.8059.82, English, dark theme, 90% zoom. Viewport
+  1744 × 1204 CSS px, effective DPR 1.8.
+- **URL:** https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=2&current=960&scoreScope=target-filter%3AR&target=2
+- **State and reshoot:** User-authorized run for Heart of the Soul Nebula, starfront-ultracat131, project/target 2, db-93617230. PixInsight is running WBPP, 57 lights and 155 calibration frames; 525.3 GiB free at start. Startup log reports PixInsight Core 1.9.5 Lockhart x64 and WBPP 3.1.0. No excluded-frame counts shown.
+- **Composition:** CSS crop (502, 396, 740, 412);
+  multiply by 0.9 for the CDP clip, scale 1. Direct browser capture, no retouching.
+
+#### 2026-10-18T02:42:35.482Z — active processing reshoot
+
+- **File:** 1332 × 430 px, PNG; SHA-256 `6b1b1af2df03808d5d25fe05af8f1dc4cc9fd5dd62fd68178c63b0062aa8a94e`.
+- **Source, build and settings:** same authorized run and environment as above.
+- **State:** WBPP is actively writing a master Dark frame (step 4). 57 lights, 155 calibration frames, 525.3 GiB free at start. Crop shows title, elapsed time, input counts and current step; the log below is outside the crop to omit private source paths. Run began 2026-10-18 02:40:25 UTC; run folder basename Heart_of_the_Soul_Nebula-20261018-024025. No excluded-frame counts shown.
+- **Composition:** CSS crop (502, 320, 740, 239); CDP clip
+  (451.8, 288, 666, 215.1), scale 1. No retouching.
+- **Reshoot:** reopen this run from its target's Stacks view. Capture the title
+  and progress summary while a processing step is visible; keep source paths
+  in the log outside the crop. Timing and step will differ on a new run.
+- **Verification:** setup and progress images inspected at full size. Docs build,
+  screenshot-plan generation, link checks and diff checks passed.
