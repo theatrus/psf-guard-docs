@@ -235,8 +235,8 @@ function gtag_report_demo() {
   desktop app, pick a folder with <strong>Browse…</strong>. The run shows in
   Settings and in the header's job line, with <strong>Stop</strong>.</p>
   <figure>
-    <img src="../assets/settings-backups.png" loading="lazy" alt="Back up settings and catalogs now, or enable a schedule. Secrets are excluded here." width="1878" height="1416">
-    <figcaption>Back up settings and catalogs now, or enable a schedule. Secrets are excluded here.</figcaption>
+    <img src="../assets/settings-backups.png" loading="lazy" alt="Back up settings and catalogs. Leave the server folder blank to download an archive without secrets." width="1044" height="455">
+    <figcaption>Back up settings and catalogs. Leave the server folder blank to download an archive without secrets.</figcaption>
   </figure>
   <p>Backing up from Settings needs an editor account, and on a server,
   <code>--allow-database-management</code>. The desktop app always allows it.</p>
@@ -254,6 +254,10 @@ function gtag_report_demo() {
     <li><strong>How many to keep</strong>: the newest 7 by default, or all archives from a
     set number of days. PSF Guard always keeps the newest archive.</li>
   </ul>
+  <figure>
+    <img src="../assets/backup-retention.png" loading="lazy" alt="Backup retention set to keep the newest seven scheduled backups, with an existing manual backup available to download" width="1044" height="492">
+    <figcaption>Choose how many scheduled backups to keep. This schedule is off; the existing manual backup remains available to download.</figcaption>
+  </figure>
   <p>Scheduled backups wait for jobs you started. While paused, a backup appears as
   waiting in the job list. A server that was off at the scheduled time runs once when it
   comes back. A failed run tries again an hour later.</p>

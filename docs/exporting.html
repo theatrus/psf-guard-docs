@@ -504,10 +504,15 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   entry covers. A filter with no id gets a blank cell, and the rest of the row
   still imports.</p>
 
-  <!-- RESHOOT: astrobin-filter-map.png | Settings › Databases in the new card layout, one rig's catalog › AstroBin filters (pick a catalog with a filter that changed between nights, or add a dated second G entry): the filter map with name, AstroBin id linked to its page, description, and first and last nights; crop to the filter map -->
+  <p>Click <strong>Edit filters</strong> for the catalog. Under <strong>Not in
+  the map</strong>, choose a filter or click <strong>Add all</strong>. PSF Guard
+  adds the catalog's filter names and fills in any server-wide default IDs.
+  Enter each filter's AstroBin ID or page address. Use <strong>First night</strong>
+  and <strong>Last night</strong> when an entry applies only to part of the capture
+  history, then click <strong>Save map</strong>.</p>
   <figure>
-    <img src="../assets/astrobin-filter-map.png" alt="AstroBin filters for one catalog, with a G filter that changed on a date" loading="lazy">
-    <figcaption>A catalog's filter map; a filter that changed between nights gets two entries.</figcaption>
+    <img src="../assets/astrobin-filter-map.png" alt="An unsaved G filter entry with AstroBin ID and date fields, and suggestions for the catalog's other filters" width="944" height="409" loading="lazy">
+    <figcaption>Choose a catalog filter to add its row. This G entry still needs an AstroBin ID before the map can be saved.</figcaption>
   </figure>
 
   <p>The CLI writes the same file:</p>

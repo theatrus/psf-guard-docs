@@ -1673,3 +1673,33 @@ browser captures remain unchanged. Render with `scripts/screenshot-hero.py`;
 the output is now 2400 × 1860. Checked the saved image for label fit and arrows.
 
 SHA-256: `af2d3af7328e175df2b0183c51da018404fc3c6e83e969d34aa4d53438725f49`.
+
+## Filter editor and settings wording — October 17, 2026
+
+Source: https://psf-guard.atpn.co/ in Chrome, signed in as an editor. Local
+source main was pulled to `eb61c41e` (#908 and #909 included). The live site
+showed the new controls and wording; its exact deployed commit was not exposed.
+Viewport and saved full browser captures: 1744 × 1204, reported DPR 1.8.
+Crops below use screenshot pixels, left/top/right/bottom; no UI was altered.
+
+- `astrobin-filter-map.png`: Settings → Databases → starfront-redcat61 →
+  Edit filters. Click the suggested G filter (222 lights, August 25–September 11).
+  Capture the unsaved row with blank ID and date fields, validation and all
+  controls visible. Close without Save map. Crop (400, 398, 1344, 807).
+- `settings-backups.png`: Settings → Backups, at the top. Settings and catalogs
+  selected, secrets excluded, server folder blank. No backup started.
+  Crop (210, 160, 1254, 615).
+- `backup-retention.png`: scroll down in Backups to How many to keep and history.
+  Schedule off, newest seven selected, no changes saved. Existing manual backup
+  shown; no download requested. Crop (210, 590, 1254, 1082).
+- `settings-storage-disk-use.png`: Settings → Storage, at the top. Existing
+  70% shared volume limit and three storage locations. No values changed.
+  Crop (210, 160, 1254, 700).
+
+Repeat these navigation steps and capture the actual values then present.
+All four crops were visually checked against the browser captures.
+
+- `astrobin-filter-map.png` SHA-256: `27566f2284cea8bcef33087aa5e74067b23af1df6e62b2affe53788e996c33f9`.
+- `settings-backups.png` SHA-256: `d264e1428a6679873c8920b87fa9009ba5d5a4fbba72ef4c37001c7b7e080cff`.
+- `backup-retention.png` SHA-256: `73e34b62c3bc6ae77b483c4336486dd6cd2e005ac6d556d654550f5ab573a6bc`.
+- `settings-storage-disk-use.png` SHA-256: `b0da969daedca91d224c087d4433fc1f41b2a9660362bc37ca67c5ae8adc98a3`.

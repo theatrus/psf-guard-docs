@@ -9,7 +9,7 @@ calibration comparisons, planning states, queued processing and local import and
 grading examples. Every image has a state, source and reshoot record in
 [assets/screenshot-captures.md](assets/screenshot-captures.md).
 
-The generated lists below contain the **9 remaining shots**. They remain pending;
+The generated lists below contain the **8 remaining shots**. They remain pending;
 their prerequisites must be met before replacing the old image or adding a figure.
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
@@ -18,7 +18,6 @@ and differences from the original plan.
 
 | Shot | What still prevents the planned capture |
 |---|---|
-| `astrobin-filter-map.png` | The current filter-map dialog clips its rightmost controls. Reproduced on both the live server and local build; fix the layout before reshooting. Unsaved rows were discarded. |
 | `settings-server.png` | The installed desktop app uses the old setup dialog. A current native build with an isolated registry is needed; the browser server has no Server tab. |
 | `header-transfers.png` | No contribution transfer is active; the inspected visit has no accepted files to send. |
 | `plan-send-again.png` | No remote peers are configured. Needs a disposable peer and an activation that has not reached it. |
@@ -31,6 +30,13 @@ and differences from the original plan.
 For reshoots that require writes, use the disposable fixture or a disposable copy
 with the required real inputs. Do not stage grades, repairs, transfers, activations
 or processing jobs on the live catalogs. Never fabricate a measured finding.
+
+## Filter and settings follow-up: captured October 17
+
+The fixed AstroBin filter dialog now shows the full row, date pickers and catalog
+filter suggestions. The unsaved G entry was discarded after capture. Backup and
+storage figures now show the revised download, retention and cleanup explanations.
+See the capture record for crops and repeat steps.
 
 ## WBPP: captured October 17
 
@@ -263,10 +269,8 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (1)
+## Redo (existing images) (0)
 
-- `astrobin-filter-map.png` — pages: exporting
-  - Settings › Databases in the new card layout, one rig's catalog › AstroBin filters (pick a catalog with a filter that changed between nights, or add a dated second G entry): the filter map with name, AstroBin id linked to its page, description, and first and last nights; crop to the filter map
 
 ## New screenshots (8)
 
