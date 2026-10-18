@@ -412,6 +412,10 @@ function gtag_report_demo() {
     Database IDs, files and image folders have separate labels; long paths wrap
     on small screens. Server details and databases have separate loading and
     error messages. Retry reloads only the failed request.</li>
+    <li><strong>Load the current UI after signing in.</strong> Successful browser
+    sign-ins reload the current URL after PSF Guard checks that the session was
+    saved. This picks up server updates while keeping your view and catalog
+    scope. Failed sign-ins stay on the login form.</li>
     <li><strong>Follow WBPP master copies.</strong> The dialog and jobs list show
     the current file and file counts. Copy controls stay disabled during a copy;
     a run requested as a copy starts joins the queue. The dialog also explains

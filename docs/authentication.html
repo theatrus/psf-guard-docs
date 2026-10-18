@@ -302,6 +302,10 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
   page. A login sets an HttpOnly, SameSite=Strict session cookie. Sessions live in
   server memory, expire after <code>session_hours</code>, and end when the server
   restarts or you sign out.</p>
+  <p>After signing in, PSF Guard checks that the browser saved the session, then
+  reloads the current URL. This loads the current UI after a server update
+  while keeping your view and catalog scope. Failed sign-ins stay on the login
+  form with an error message.</p>
   <figure>
     <img src="../assets/server-login.png" alt="The PSF Guard server login page" loading="lazy">
     <figcaption>The login page appears only when the server has
