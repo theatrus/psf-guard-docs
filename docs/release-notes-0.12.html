@@ -374,6 +374,20 @@ function gtag_report_demo() {
     <li><strong>Avoid bands in rotated frames.</strong> Stacks with small rotations
     between nights no longer show cross-hatched bands on faint backgrounds. Reported
     SNR measures the real sky noise and may be about a tenth lower than before.</li>
+    <li><strong>Reuse stacks after engine updates.</strong> Updates that leave
+    stacking output unchanged keep completed stacks, checkpoints and calibration
+    masters. <strong>Build current set</strong> reuses them.</li>
+    <li><strong>Refresh previews without restacking.</strong> When an engine update
+    changes only the display stretch, or an OSC stack's color calibration is out
+    of date, <strong>Build current set</strong> refreshes the card preview from the
+    saved FITS. The card and jobs list show <strong>Waiting to render preview</strong>
+    and <strong>Rendering preview</strong>; processing and downloads stay available.
+    Stopping preserves the stack, and a failure keeps the old preview.</li>
+    <li><strong>Compose WBPP masters in their own card.</strong> <strong>Combine
+    channel stacks</strong> shows a <strong>WBPP</strong> card alongside PSF Guard's
+    stacks, including exposure groups. Source labels show the sub-exposure when
+    known. Use <strong>Custom combination</strong> to choose between several masters
+    of one filter or to mix WBPP and PSF Guard sources.</li>
     <li><strong>Track processing as a job.</strong> Stretch, deconvolution and
     RC-Astro processing share the build queue, report what they are waiting for,
     and show progress. Runs survive server restarts and resume after the last
@@ -393,6 +407,11 @@ function gtag_report_demo() {
     <li><strong>Map catalog filters to AstroBin.</strong> The filter editor offers
     missing catalog filters, fills in server-wide default IDs, and uses date pickers.
     Fields wrap to fit narrow windows.</li>
+    <li><strong>Read long server details.</strong> <strong>Server information</strong>
+    scrolls its database list while its heading and close controls stay visible.
+    Database IDs, files and image folders have separate labels; long paths wrap
+    on small screens. Server details and databases have separate loading and
+    error messages. Retry reloads only the failed request.</li>
     <li><strong>Follow WBPP master copies.</strong> The dialog and jobs list show
     the current file and file counts. Copy controls stay disabled during a copy;
     a run requested as a copy starts joins the queue. The dialog also explains

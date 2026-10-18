@@ -333,12 +333,24 @@ function gtag_report_demo() {
   refresh. Within a channel it prepares several frames at once while it
   integrates earlier ones. See <a href="storage.html#processor">Processor
   use</a>.</p>
-  <p>After a Seiza stacking upgrade, each stack and master rebuilds once, the
-  first time it is used; the move to Seiza 0.33 and stacking 0.36 is one such
-  upgrade. Stacks of frames rotated slightly between nights no longer show
-  cross-hatched bands on a faint sky, and report a lower SNR there, often by
-  about a tenth: they now measure the sky's real noise, which the old
-  resampling smoothed without gaining any signal.</p>
+  <h3 id="engine-updates">Keep stacks through engine updates</h3>
+  <p>A Seiza update keeps completed stacks, checkpoints and calibration masters
+  when its calculated output is unchanged. <strong>Build current set</strong>
+  reuses them. Changes to stacking output still rebuild affected channels and
+  masters when needed.</p>
+  <p>When an engine update changes only the display stretch, <strong>Build
+  current set</strong> or automatic refresh renders the card preview again from
+  the saved FITS. The card and job list show <strong>Waiting to render
+  preview</strong>, then <strong>Rendering preview</strong>. The stack stays
+  ready, with its processing, FITS and source-frame searches available.</p>
+  <p>A stopped refresh keeps the completed stack. A failed refresh keeps the
+  old preview and shows the error on the card; it does not retry at the same
+  stretch output version unless you rebuild the stack. Color combinations and
+  WBPP previews keep their previous stretch until you create them again.</p>
+  <p>The new resampling removes cross-hatched bands from stacks of frames
+  rotated slightly between nights. Reported SNR on a faint sky may be about
+  a tenth lower because it measures the sky's real noise; the old resampling
+  smoothed that noise without gaining signal.</p>
   <p>On the command line, <code>psf-guard stack-snr --weight-by-noise</code>
   applies the same noise weights; see <a href="#cli">below</a>.</p>
 
@@ -627,9 +639,24 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   Automatic refreshes compose only what was composed before.</p>
   <p>With exposure groups on, each card matches channels of one exposure band,
   so 30&nbsp;s and 300&nbsp;s RGB give two cards. A band missing a channel
-  says what it lacks. <strong>Custom combination</strong>, below the target's
-  cards, picks sources by hand: mixed exposures, ambiguous filter names, or
-  WBPP channels.</p>
+  lists its missing channels. <strong>Custom combination</strong>, below the target's
+  cards, lets you choose sources for mixed exposures or ambiguous filters.</p>
+
+  <h3 id="wbpp-color">Compose WBPP masters</h3>
+  <p>When WBPP masters cover the channels a preview needs, <strong>Combine
+  channel stacks</strong> shows a card marked <strong>WBPP</strong>. This works
+  alongside PSF Guard's stacks, including projects split by exposure. A target
+  with only WBPP masters and no exposure split uses the standard color card.</p>
+  <p>RGB needs R, G and B; LRGB also needs L. Narrowband needs at least H-alpha
+  and OIII, with SII for the palettes that use it. Source labels include the
+  sub-exposure when known, such as <strong>R (WBPP, 300 s)</strong>.</p>
+  <p>If a filter has several WBPP masters, the automatic card stays disabled
+  with a message such as <strong>Multiple R stacks</strong>. Open <strong>Custom
+  combination</strong> and choose the master for each channel. In a project
+  without exposure groups, you can also use the card's source menus.</p>
+  <p>PSF Guard does not automatically mix its stacks with WBPP masters. Choose
+  each input yourself when you want a mixed combination.</p>
+  <!-- SHOT: wbpp-color-card.png | Wait for the main server build containing #919. Open Heart and Soul on askar107 (db-a01c581c, project 20) in Stacks. Show the WBPP card under Combine channel stacks beside PSF Guard exposure cards and a source label such as R (WBPP, 300 s). Verify the deployed source and actual labels before capture. Do not start a build solely for the screenshot. | Combine imported WBPP masters in their own color card, or choose individual inputs in Custom combination. -->
 
 
   <figure>
@@ -661,7 +688,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     <li>Plate solve the reference frame used by the stack. Calibration requires a
     fresh pixel-derived solution; embedded FITS WCS alone is not enough.</li>
     <li>Build or refresh the color preview. For an existing one-shot-color stack,
-    rebuild it or use <strong>Apply processing</strong> in <strong>View processing</strong>.</li>
+    click <strong>Build current set</strong> to refresh its card preview from the
+    saved FITS. If the message refers to applied processing, use <strong>Apply
+    processing</strong> in <strong>View processing</strong> instead. Changes to
+    frames or stacking settings still rebuild the affected stack.</li>
     <li>Check the card's calibration line for the number of stars and channel gains,
     or the reason calibration was skipped.</li>
   </ol>
