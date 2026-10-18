@@ -156,7 +156,8 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>New in 0.12</h1>
   <p class="lede">Owned catalogs with Target Scheduler sync, better calibration decisions,
-  flexible mosaics and scheduled backups. Direct TS access is deprecated in this release.</p>
+  flexible mosaics, new stretch modes, Gaia color calibration and scheduled backups.
+  Direct TS access is deprecated in this release.</p>
   <p><a href="#upgrade">Before upgrading from 0.11 ↓</a> ·
   <a href="release-notes-0.12.html">All changes in 0.12 →</a></p>
 
@@ -213,6 +214,19 @@ function gtag_report_demo() {
   <p><a href="framing.html">Edit mosaic panels →</a> ·
   <a href="activation.html">Activate plans →</a></p>
 
+  <h2 id="stretch-color">Stretch faint detail and calibrate star colors</h2>
+  <p>Choose <strong>Median anchor</strong> to set the background brightness and
+  control bright highlights, or <strong>Layered</strong> to retain local contrast
+  in bright structure, compress star cores and adjust saturation.
+  <strong>Auto MTF</strong> remains the default.</p>
+  <p><strong>Gaia color calibration</strong> balances RGB, LRGB and one-shot-color
+  stacks against measured star colors, with a Sun-colored star as white and a neutral
+  sky background. Install <strong>Gaia colors</strong> in Settings and plate solve
+  the reference frame. The card shows the calibration result or explains why it
+  could not run. Narrowband palettes keep their chosen colors.</p>
+  <p><a href="stacking.html#stretch-modes">Choose a stretch →</a> ·
+  <a href="stacking.html#color-calibration">Set up color calibration →</a></p>
+
   <h2 id="operations">Back up catalogs and settings together</h2>
   <p>Create one archive of your settings and catalogs, even while N.I.N.A. writes
   to them. Schedule daily or weekly backups and choose how long to keep them.
@@ -241,9 +255,7 @@ function gtag_report_demo() {
   reapply your choices after a stack refreshes. Color processing reports each channel
   and tool, supports Stop, and reuses unchanged channel results. Improved resampling removes
   cross-hatched bands from slightly rotated frames. Stacks, WBPP and exports use
-  the same calibration settings and flat groups. Median anchor and Layered stretches
-  join Auto MTF, which stays the default. Install the optional Gaia colors catalog
-  to calibrate RGB, LRGB and one-shot-color stacks against star colors.</p>
+  the same calibration settings and flat groups.</p>
   <p><a href="stacking.html">Build and process stacks →</a> ·
   <a href="wbpp.html">Run WBPP →</a></p>
 
