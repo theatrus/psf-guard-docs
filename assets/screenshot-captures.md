@@ -1632,3 +1632,30 @@ overview and portrait color card. The four steps remain in reading order.
   sources have no loading placeholders. Detailed UI text belongs in the guides;
   the hero shows the four tasks and their results.
 - SHA-256: `db3a8bc75443a2b55bcfd1b29eef52576d0bcab58498543a06996c661093150d`.
+
+## California hero captures — October 17, 2026
+
+Captured in Chrome from https://psf-guard.atpn.co, ultra cat, database
+`db-e075b4ec`, project 4. All four hero panels now show California Nebula.
+The existing Foraxx SHO capture remains the fourth panel.
+
+- `hero-california-planning.jpg`: Framing, DSS (offline), 7.82° view,
+  equatorial grid on, constellation and deep-sky marks off. One locked panel
+  at 35°; plan state Not activated yet. No framing edits or saves.
+  URL: https://psf-guard.atpn.co/#/plan?dbfilter=db-e075b4ec&db=db-e075b4ec&project=4&plan=b7be7938-7c29-4926-a794-43a98494f680
+- `hero-california-activation.jpg`: open Activate… and wait for Preview ready.
+  Capture the full dialog: six exposure plans unchanged, two turned off in the
+  preview. The warning and Activate button remain visible. Closed without applying.
+- `hero-california-grid.jpg`: Images, HA filter, 300 px cards, newest first,
+  all statuses. 534 HA frames: 181 accepted, 353 rejected. Visible cards show
+  accepted frames with scores; no grades changed.
+  URL: https://psf-guard.atpn.co/#/grid?dbfilter=db-e075b4ec&db=db-e075b4ec&project=4&current=17122&filter=HA&size=300
+- Reshoot through those views, then run `scripts/screenshot-hero.py`. The hero
+  crops the grid at y=1088 to omit a partial row; the activation crop (424, 190) to (1320, 953) includes the full dialog.
+  Both standalone captures retain the full browser viewport. Other sources fit
+  without cropping.
+- All three browser captures and the rebuilt collage were checked visually.
+- `hero-california-planning.jpg` SHA-256: `6eef0eb11a2e4af0bc2b66527b2497e690d01f2277079766f142fd33d9c7015a`.
+- `hero-california-activation.jpg` SHA-256: `e0b702e9afd799822481d47c30234a16f9fb3071d311ab1e0df1b39d2dc51767`.
+- `hero-california-grid.jpg` SHA-256: `c259b6f265e03f2e0c3390077018e3904540be743d8fdfc2477b5f684185637e`.
+- `hero-flow.jpg` SHA-256: `39f712e8e28593b34c60c1944e61e517a99493abcd05c7f9862fc1a675ed6d6e`.

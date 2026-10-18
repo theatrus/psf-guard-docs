@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """Render the homepage collage from recorded UI captures (requires Pillow).
 
-Keep source pixels unchanged apart from scaling. The activation crop shows the
-first rig's preview and its complete warning; the second rig remains in the guide.
+Keep source pixels unchanged apart from scaling. The grid crop removes a
+partial row at the bottom; the activation dialog remains complete.
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 root = Path(__file__).resolve().parents[1]
 shots = [
-    ('1  Plan the mosaic', 'release-012-mosaic-editing.jpg', None),
-    ('2  Review what N.I.N.A. will shoot', 'activation-preview.png', (0, 0, 1642, 1120)),
-    ('3  Review the session', 'sequence-session.jpg', None),
+    ('1  Frame California Nebula', 'hero-california-planning.jpg', None),
+    ('2  Review what N.I.N.A. will shoot', 'hero-california-activation.jpg', (424, 190, 1320, 953)),
+    ('3  Review the images', 'hero-california-grid.jpg', (0, 0, 1744, 1088)),
     ('4  Preview California in Foraxx SHO', 'stack-foraxx-california.jpg', None),
 ]
 canvas = Image.new('RGB', (2400, 1500), '#111820')
