@@ -1955,3 +1955,35 @@ isolated server, not the live observatory catalogs.
 - **Verification:** inspected the saved image: counts, choice explanation,
   expiry and both action buttons are complete. The caption describes the
   pending update and does not imply that the merge was applied.
+
+## Target Scheduler migration notices — October 18, 2026
+
+These two captures document the informational notice in the 0.12 guide for PR
+review. They use a local preview of commit `391c0b5c838f4a9963796b38473951fad37089e9`, not the
+published site. The [capture manifest](captures-ts-migration-notice-2026-10-18.json)
+records source, time, viewport, DPR, crop, state, hashes and reshoot steps.
+The notice explains the future automatic migration and the benefit of separate
+catalogs. Its teal border and light fill replace the warning color. No product
+or catalog data changed. The temporary viewport override was reset afterward.
+
+### assets/ts-migration-notice-desktop.png
+
+#### 2026-10-18T18:58:33.309860+00:00 — initial capture
+
+- **File:** 65536 × 4292542531 px; SHA-256 `09a0e5921e5d7a8aa94a9fd973df78730cfacd15b138c56913d9a6618d79a4ed`.
+- **Use:** PR review of `docs/new-in-0.12.html`; no figure added to the guide.
+- **Source/build:** docs commit `391c0b5c838f4a9963796b38473951fad37089e9`, local URL `http://127.0.0.1:21083/docs/new-in-0.12.html`. Browser version not recorded.
+- **State and reshoot:** New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport. Serve the recorded docs checkout, open that URL and leave page scroll at `(0, 0)`.
+- **Composition:** viewport 1280 × 720 CSS px, DPR 2; full viewport, no crop, image editing or annotations.
+- **Verification:** desktop notice, heading and both paragraphs visible. Phone has no horizontal overflow; its notice continues below the viewport.
+
+### assets/ts-migration-notice-mobile.png
+
+#### 2026-10-18T18:58:33.345781+00:00 — initial capture
+
+- **File:** 65536 × 4292542531 px; SHA-256 `56472b6825147362d12d38434429359b5e9069ebcfaa974af19dd838fc1bce3e`.
+- **Use:** PR review of `docs/new-in-0.12.html`; no figure added to the guide.
+- **Source/build:** docs commit `391c0b5c838f4a9963796b38473951fad37089e9`, local URL `http://127.0.0.1:21083/docs/new-in-0.12.html`. Browser version not recorded.
+- **State and reshoot:** New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport. Serve the recorded docs checkout, open that URL and leave page scroll at `(0, 0)`.
+- **Composition:** viewport 390 × 844 CSS px, DPR 1; full viewport, no crop, image editing or annotations.
+- **Verification:** desktop notice, heading and both paragraphs visible. Phone has no horizontal overflow; its notice continues below the viewport.

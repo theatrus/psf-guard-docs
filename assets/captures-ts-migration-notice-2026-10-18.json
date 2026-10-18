@@ -1,0 +1,78 @@
+{
+  "source_commit": "391c0b5c838f4a9963796b38473951fad37089e9",
+  "reshoot": "Serve the docs repository root on localhost, open /docs/new-in-0.12.html, leave page at top and navigation in its default state. Capture at the recorded viewport and DPR, then restore the browser viewport. No app, catalog or account state is involved.",
+  "captures": [
+    {
+      "file": "ts-migration-notice-desktop.png",
+      "source_commit": "391c0b5c838f4a9963796b38473951fad37089e9",
+      "url": "http://127.0.0.1:21083/docs/new-in-0.12.html",
+      "viewport_css": {
+        "width": 1280,
+        "height": 720
+      },
+      "device_scale_factor": 2,
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "notice_rect_css": {
+        "x": 372,
+        "y": 287.8984375,
+        "width": 824,
+        "height": 228.890625
+      },
+      "state": "New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "capture_method": "Browser screenshot, full viewport PNG, unchanged pixels.",
+      "pixels": [
+        65536,
+        4292542531
+      ],
+      "sha256": "09a0e5921e5d7a8aa94a9fd973df78730cfacd15b138c56913d9a6618d79a4ed",
+      "time_utc": "2026-10-18T18:58:33.309860+00:00"
+    },
+    {
+      "file": "ts-migration-notice-mobile.png",
+      "source_commit": "391c0b5c838f4a9963796b38473951fad37089e9",
+      "url": "http://127.0.0.1:21083/docs/new-in-0.12.html",
+      "viewport_css": {
+        "width": 390,
+        "height": 844
+      },
+      "device_scale_factor": 1,
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "notice_rect_css": {
+        "x": 20,
+        "y": 474.3671875,
+        "width": 350,
+        "height": 431.578125
+      },
+      "state": "New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "capture_method": "Browser screenshot, full viewport PNG, unchanged pixels.",
+      "pixels": [
+        65536,
+        4292542531
+      ],
+      "sha256": "56472b6825147362d12d38434429359b5e9069ebcfaa974af19dd838fc1bce3e",
+      "time_utc": "2026-10-18T18:58:33.345781+00:00"
+    }
+  ]
+}
