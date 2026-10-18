@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Configuration &amp; API — PSF Guard</title>
-  <meta name="description" content="The PSF Guard registry and the files beside it, the server TOML file, the planning store, offline sky maps, Docker paths, GUID repair, and the REST API.">
+  <meta name="description" content="PSF Guard's Settings tabs, the registry and the files beside it, the server TOML file, the planning store, offline sky maps, Docker paths, GUID repair, and the REST API.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html" class="active" aria-current="page">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -143,11 +155,9 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1 id="config-api-title">Configuration and API</h1>
-  <p class="lede">
-    The JSON registry lists catalogs and holds the choices made in Settings; the
-    server's TOML file sets ports, caches and grants at start. The REST API
-    exposes what the UI does.
-  </p>
+  <p class="lede"> The JSON registry lists catalogs and stores the choices made in
+  Settings; the server's TOML file sets ports, caches and grants at start. The REST API
+  exposes what the UI does. </p>
 
   <div class="workflow-note cli">
     <div class="workflow-tag">CLI / NAS</div>
@@ -156,25 +166,61 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="settings">Settings tabs</h2>
-  <p>Settings opens on <strong>Databases</strong>. A tab shows only when it
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> The
+  <strong>Server</strong> and <strong>Backups</strong> tabs, and a prompt
+  before closing Settings with unsaved edits.</div>
+  <p>Open <strong>Settings</strong> from the menu at the right of the header,
+  beside <strong>Keyboard shortcuts</strong>, <strong>Server
+  information</strong> and, on a server with accounts, <strong>Sign
+  out</strong>. Only editors can open Settings.</p>
+  <figure>
+    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
+    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
+  </figure>
+  <p>Every tab has the same layout: cards share a consistent width, related fields appear
+  in named groups, and controls sit beside their labels.
+  Settings opens on <strong>Databases</strong>. A tab shows only when it
   applies:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Tab</th><th>Holds</th><th>See</th></tr>
-      <tr><td><strong>Databases</strong></td><td>Catalogs, imports, quality backfill, per-database options, <strong>Purge Rejects</strong>, N.I.N.A. pairing</td><td><a href="importing.html">Import Images</a></td></tr>
-      <tr><td><strong>Catalogs</strong></td><td>Seiza data packages. Needs database management.</td><td><a href="astrometry.html#install">Sky Context &amp; Solver</a></td></tr>
-      <tr><td><strong>Sync</strong></td><td>Data Transfer, staged previews, Remote PSF Guard. Needs database management and a catalog.</td><td><a href="workflows.html#sync">Rejects &amp; Sync</a></td></tr>
-      <tr><td><strong>Setups</strong></td><td>Processing setups, export defaults, PixInsight, AstroBin filter IDs</td><td><a href="exporting.html">Export</a>, <a href="wbpp.html#setup">WBPP</a></td></tr>
-      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, which lights stacks keep</td><td><a href="calibration.html#matching">Calibration</a></td></tr>
+      <tr><td><strong>Databases</strong></td><td>Catalogs, imports, quality backfill, per-database options, <strong>Purge Rejects</strong>, <strong>Open Calibration</strong>, N.I.N.A. pairing. Adding or editing a catalog needs database management.</td><td><a href="importing.html">Import Images</a></td></tr>
+      <tr><td><strong>Server</strong></td><td>The desktop app's localhost port. Desktop app only.</td><td><a href="install.html#desktop-port">Installation</a></td></tr>
+      <tr><td><strong>Catalogs</strong></td><td>Seiza data packages</td><td><a href="astrometry.html#install">Sky Context &amp; Solver</a></td></tr>
+      <tr><td><strong>Sync</strong></td><td>Data Transfer, staged previews, Remote PSF Guard. Shows once a catalog exists.</td><td><a href="workflows.html#sync">Rejects &amp; Sync</a></td></tr>
+      <tr><td><strong>Setups</strong></td><td>Processing setups, export defaults, PixInsight, AstroBin filter IDs. The PixInsight program and runs folder need database management.</td><td><a href="exporting.html">Export</a>, <a href="wbpp.html#setup">WBPP</a></td></tr>
+      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, flat groups, light checks, frame grades, which lights stacks and exports keep, and settings for one rig</td><td><a href="calibration-masters.html#matching">Calibration</a></td></tr>
       <tr><td><strong>Stacking</strong></td><td>Stacking method and automatic previews</td><td><a href="stacking.html#method">Stacks</a></td></tr>
       <tr><td><strong>Storage</strong></td><td>Folders and disk limits. Changes need database management.</td><td><a href="storage.html">Storage</a></td></tr>
+      <tr><td><strong>Backups</strong></td><td><strong>Back up now</strong> and scheduled backups. Needs database management.</td><td><a href="backups.html">Backups</a></td></tr>
       <tr><td><strong>Performance</strong></td><td>Processor use</td><td><a href="storage.html#processor">Processor use</a></td></tr>
-      <tr><td><strong>Review</strong></td><td>Score chips and review choices, kept in this browser</td><td><a href="grader.html#review-preferences">Library &amp; Grader</a></td></tr>
+      <tr><td><strong>Review</strong></td><td>Grading, score chips, Sequence scoring defaults, night and hour marks, the project list and Library views. Signed in, they follow your account; otherwise this browser keeps them.</td><td><a href="grader.html#review-preferences">Library &amp; Grader</a>, <a href="authentication.html#preferences">Server Accounts</a></td></tr>
       <tr><td><strong>Rigs</strong>, <strong>Exposure templates</strong></td><td>Planning's rigs, sites and template library</td><td><a href="rigs.html">Rigs</a>, <a href="activation.html#templates">Templates</a></td></tr>
       <tr><td><strong>Users</strong></td><td>Accounts and API tokens, on a server with accounts</td><td><a href="authentication.html">Server Accounts</a></td></tr>
       <tr><td><strong>Agents</strong></td><td>MCP setup, on the desktop app or a server without accounts</td><td><a href="mcp.html">MCP for Agents</a></td></tr>
     </table>
   </div>
+
+  <p><strong>Databases</strong> offers image-folder import, a local TS file and
+  the Sync plugin in one setup form. New TS file imports create an owned catalog
+  and keep the source connected. Review automatic sync and grade writeback on the
+  catalog's card. Existing direct-open registrations still work through 0.12;
+  removal is planned for 0.13 or later. See
+  <a href="importing.html#target-scheduler">Import from Target Scheduler</a>.</p>
+
+  <h3 id="unsaved">Unsaved edits</h3>
+  <p>Settings asks before discarding unsaved edits when you click <strong>Done</strong>,
+  <strong>×</strong> or outside the dialog. It checks changes to a rig's setup, a site,
+  calibration, scoring defaults, storage folders, PixInsight, the desktop server port or
+  the backup schedule. The prompt lists the forms with unsaved changes and offers
+  <strong>Keep editing</strong> or <strong>Close without saving</strong>. The rig and
+  site forms say <strong>Unsaved changes</strong> beside Save; folding a rig's setup or
+  opening another site keeps its edits, and the browser asks before a reload drops
+  them.</p>
+  <figure>
+    <img src="../assets/settings-unsaved-close.png" loading="lazy" alt="Settings asks before discarding unsaved changes." width="3002" height="242">
+    <figcaption>Settings asks before discarding unsaved changes.</figcaption>
+  </figure>
 
   <h2 id="registry">Catalog registry</h2>
   <p>The server can serve many catalogs, each a database with Target Scheduler's
@@ -213,8 +259,9 @@ function gtag_report_demo() {
   </ul>
   <p>Settings saves server-wide choices in the same file: processor shares,
   storage folders and disk limits, stacking, calibration, export
-  defaults, AstroBin filter IDs, PixInsight, and Remote PSF Guard peers. A peer's
-  key is kept in the clear there, so protect the file.</p>
+  defaults, AstroBin filter IDs, PixInsight, Remote PSF Guard peers and the
+  backup schedule. A peer's key is kept in the clear there, so protect the
+  file.</p>
 
   <h3 id="files">Files beside the registry</h3>
   <p>PSF Guard keeps its other state next to the registry. With a registry
@@ -225,15 +272,22 @@ function gtag_report_demo() {
     <table>
       <tr><th>File</th><th>Holds</th></tr>
       <tr><td><code>auth.json</code></td><td>Browser users and API tokens, as hashes. See <a href="authentication.html">Server Accounts</a>.</td></tr>
+      <tr><td><code>user-preferences.json</code></td><td>Each account's view choices. See <a href="authentication.html#preferences">Server Accounts</a>.</td></tr>
+      <tr><td><code>desktop.json</code></td><td>The desktop app's server port. See <a href="install.html#desktop-port">Installation</a>.</td></tr>
       <tr><td><code>director-meta.sqlite</code></td><td>The planning store: plans, framing, rigs, sites, exposure templates</td></tr>
       <tr><td><code>config.jobs.json</code></td><td>The job queue, kept across restarts. See <a href="storage.html#restart">Storage &amp; Performance</a>.</td></tr>
       <tr><td><code>collaboration-credentials.json</code></td><td>AstroCollab agent tokens, in plain text, mode <code>0600</code> on Unix and a user-only ACL on Windows. See <a href="collaboration.html">Collaboration</a>.</td></tr>
+      <tr><td><code>backup-state.json</code></td><td>The backup schedule's last run and any retry. See <a href="backups.html#schedule">Backups</a>.</td></tr>
     </table>
   </div>
   <div class="callout">
-    Keep the config folder writable only by the PSF Guard user, and leave
-    <code>collaboration-credentials.json</code> out of backups you share and
-    diagnostic bundles.
+    Keep the config folder writable only by the PSF Guard user. Back these
+    files and every catalog up with <a href="backups.html">Settings › Backups</a>
+    or <code>psf-guard backup</code>. Manual desktop backups and new desktop
+    schedules include <code>collaboration-credentials.json</code> and other secrets
+    by default; browser backups and the CLI exclude them by default. Saved schedules
+    keep their existing choice. Check <a href="backups.html#secrets">Include secrets</a>
+    before starting a backup or saving a schedule.
   </div>
 
   <h2 id="planning-store">Planning store</h2>
@@ -250,8 +304,10 @@ psf-guard server --allow-database-management \
   <p><code>--director-meta</code> needs <code>--allow-database-management</code>.
   Its folder must exist. A missing file is created; an existing file must be a
   planning store, never a catalog or another SQLite database. Back the store up
-  with an SQLite-aware tool before an upgrade, and never copy a live main file
-  without its WAL. See <a href="planning.html">Planning</a>.</p>
+  before an upgrade: <a href="backups.html">Settings › Backups</a> and
+  <code>psf-guard backup</code> copy it safely; give the command
+  <code>--director-meta</code> when the store sits elsewhere. Never copy a live
+  main file without its WAL. See <a href="planning.html">Planning</a>.</p>
 
   <h2 id="sky-maps">Offline sky maps</h2>
   <p>Framing can draw on N.I.N.A.'s whole-sky caches with no network. Install
@@ -393,13 +449,12 @@ token_file = "/run/secrets/psf-guard-key"</code></pre>
   <a href="sync-plugin.html">N.I.N.A. Sync Plugin</a>.</p>
 
   <h2 id="guids">Fill in GUIDs</h2>
-  <p>Planning, sync and multi-rig projects find Target Scheduler rows by GUID.
-  Target Scheduler skips giving existing rows one when a database is upgraded
-  past schema 22 in one step, and such projects cannot be planned or synced.
-  <strong>Settings &rarr; Databases</strong> says how many rows lack one and
-  offers <strong>Fill in GUIDs</strong>. It copies the database beside itself
-  first, then fills only the empty GUIDs. Close N.I.N.A. on that rig before
-  filling.</p>
+  <p>Planning, sync and multi-rig projects find Target Scheduler rows by GUID. Target
+  Scheduler skips giving existing rows one when a database is upgraded past schema 22 in
+  one step, and such projects cannot be planned or synced. <strong>Settings &rarr;
+  Databases</strong> shows how many rows lack a GUID and offers <strong>Fill in
+  GUIDs</strong>. It copies the database beside itself first, then fills only the empty
+  GUIDs. Close N.I.N.A. on that rig before filling.</p>
   <pre><code>psf-guard -d schedulerdb.sqlite fill-guids --dry-run
 psf-guard -d schedulerdb.sqlite fill-guids</code></pre>
 
@@ -454,15 +509,25 @@ curl localhost:3000/api/stack-activity</code></pre>
       <code>GET/POST /api/db/{db_id}/export/server</code>, which writes only
       below <code>export_dir</code> and reports progress. See
       <a href="exporting.html#api">Export &amp; AstroBin</a>.</li>
-    <li>Database management routes such as
-      <code>POST/PUT/DELETE /api/databases</code> are off unless the server
-      starts with <code>--allow-database-management</code>. The desktop app
-      always turns them on for its own local server.</li>
-    <li>Reject removal is one of them. <code>POST
+    <li>Routes that name a server path, such as
+      <code>POST/PUT/DELETE /api/databases</code>, answer <code>403</code>
+      unless the server starts with <code>--allow-database-management</code>.
+      The desktop app always turns them on for its own local server. See
+      <a href="authentication.html#management">Server Accounts</a> for the
+      full list.</li>
+    <li>Reject removal needs an editor. <code>POST
       /api/db/{db_id}/rejects/removal/preview</code> lists what would go and
       returns a <code>digest</code>; <code>.../removal/apply</code> takes it and
       refuses with <code>409</code> if the rejects changed since. See
       <a href="workflows.html#remove-rejects">Rejects &amp; Sync</a>.</li>
+    <li>A write that meets N.I.N.A. or a background pass writing the same
+      catalog waits for that write to finish instead of failing with
+      "database is locked": saving a project or an exposure plan, imports,
+      syncs, forgetting calibration frames, and moving or restoring
+      rejects.</li>
+    <li><code>GET</code> and <code>PATCH /api/me/preferences</code> read and
+      change the signed-in account's view choices. See
+      <a href="authentication.html#preferences">Server Accounts</a>.</li>
   </ul>
 
   <h2 id="limitations">Known limitations</h2>
@@ -476,13 +541,15 @@ curl localhost:3000/api/stack-activity</code></pre>
       without the leading date, are recognized. For others,
       <a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">open an issue</a>
       with an example.</li>
-    <li><strong>Back up first.</strong> Back up a catalog before bulk edits, and
-      your image files before commands that move them.</li>
+    <li><strong>Back up first.</strong> Back up catalogs before bulk edits with <a
+    href="backups.html">Settings › Backups</a> or <code>psf-guard backup</code>. A
+    backup contains no image files, so back those up yourself before commands that move
+    them.</li>
   </ul>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="cli.html">&larr; CLI Reference</a>
-    <a href="authentication.html">Server Accounts &rarr;</a>
+    <a href="backups.html">← Backups</a>
+    <a href="authentication.html">Server Accounts →</a>
   </nav>
 </main>
 </div>

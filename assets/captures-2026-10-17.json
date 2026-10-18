@@ -1,0 +1,2813 @@
+[
+  {
+    "name": "header-menu.png",
+    "time": "2026-10-18T01:20:55.499Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 1320,
+      "y": 0,
+      "width": 424,
+      "height": 255
+    },
+    "clip": {
+      "x": 1188,
+      "y": 0,
+      "width": 381.6,
+      "height": 229.5,
+      "scale": 1
+    },
+    "state": "Iris grid. Menu open. Signed in as atrus. Jobs 30%, 1 running, 22 queued, 5 waiting; 5 rigs, 0 online.",
+    "pixels": [
+      762,
+      458
+    ],
+    "sha256": "eef74b6757c59908fba4f91e947f1a4cecb186dae9c07340a9184c51484cd593",
+    "used_by": [
+      "docs/authentication.html",
+      "docs/configuration.html",
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "settings-database-options.png",
+    "time": "2026-10-18T01:21:04.081Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 211,
+      "width": 1000,
+      "height": 526
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 189.9,
+      "width": 900,
+      "height": 473.40000000000003,
+      "scale": 1
+    },
+    "state": "Settings > Databases, starfront-redcat61 card, 1753 calibration frames, 1424 cached masters. Automatic analysis, metadata fill and pairing on; calibrated-copy measurements disabled. No changes.",
+    "pixels": [
+      1800,
+      946
+    ],
+    "sha256": "19b3af3bdbe177013a7d1615952ac67eaf980c99a89534d34daf5a97893f3c66",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "settings-catalogs.png",
+    "time": "2026-10-18T01:21:11.883Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 433
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 389.7,
+      "scale": 1
+    },
+    "state": "Settings > Catalogs; six packages installed. Blind solving recommended selected. Overlays, Hinted solve and Blind solve available. No install or validation run.",
+    "pixels": [
+      1878,
+      778
+    ],
+    "sha256": "d1f9b01ea27999b4d31dcf9e7ed43de1441d9a6b20a79261177d8a7505302ec4",
+    "used_by": [
+      "docs/astrometry.html"
+    ]
+  },
+  {
+    "name": "data-transfer.png",
+    "time": "2026-10-18T01:21:21.119Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 438
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 394.2,
+      "scale": 1
+    },
+    "state": "Settings > Sync > Data Transfer. Merge catalogs, source starfront-redcat61, destination starfront-ultracat131, thumbnails checked. Preview not run.",
+    "pixels": [
+      1878,
+      788
+    ],
+    "sha256": "d9c3df1ee953c69c32f2940b0c6d4c8400305e7d4fcc319f2a103df16551b0cd",
+    "used_by": [
+      "docs/workflows.html"
+    ]
+  },
+  {
+    "name": "settings-remote-psf-guard.png",
+    "time": "2026-10-18T01:21:21.171Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 597,
+      "width": 1044,
+      "height": 400
+    },
+    "clip": {
+      "x": 189,
+      "y": 537.3000000000001,
+      "width": 939.6,
+      "height": 360,
+      "scale": 1
+    },
+    "state": "Settings > Sync > Remote PSF Guard. No peers configured; Pull from peer; local starfront-redcat61. Actual empty state, so Test connection and Preview disabled.",
+    "pixels": [
+      1878,
+      720
+    ],
+    "sha256": "87475f2833614e6cdf2b6dd95e6b56e08c9c089b836dd6df0c2f7555402ef19a",
+    "used_by": [
+      "docs/workflows.html"
+    ]
+  },
+  {
+    "name": "settings-pixinsight.png",
+    "time": "2026-10-18T01:21:30.960Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 546,
+      "width": 1044,
+      "height": 439
+    },
+    "clip": {
+      "x": 189,
+      "y": 491.40000000000003,
+      "width": 939.6,
+      "height": 395.1,
+      "scale": 1
+    },
+    "state": "Settings > Setups > PixInsight. WBPP 3.1.0; /opt/PixInsight/bin/PixInsight.sh through xvfb-run. WBPP runs /var/lib/psf-guard/wbpp-runs, 525.2 GiB free.",
+    "pixels": [
+      1878,
+      790
+    ],
+    "sha256": "b5999b7e4988e89ed7afc9d81d1c56360546c681d2cf8502fc4f5869ea7d0b89",
+    "used_by": [
+      "docs/wbpp.html"
+    ]
+  },
+  {
+    "name": "settings-calibration.png",
+    "time": "2026-10-18T01:22:08.524Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 145,
+      "width": 1000,
+      "height": 838
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 130.5,
+      "width": 900,
+      "height": 754.2,
+      "scale": 1
+    },
+    "state": "Settings > Calibration > Matching. Global defaults: rotation 2 degrees, focal length 1 mm, dark temperature 3 C, flat session 24 h; darks On, external masters Whenever one matches, automatic timezone, nights at rig noon. Crop Matching only to keep every field readable; Dark masters below not included.",
+    "pixels": [
+      1800,
+      1508
+    ],
+    "sha256": "5690914d1427c18e3a43be52eb84a82b1a7d17061d1bf57c6d5bfcc7670edb4d",
+    "used_by": [
+      "docs/calibration-masters.html"
+    ]
+  },
+  {
+    "name": "settings-calibration-flat-groups.png",
+    "time": "2026-10-18T01:22:18.057Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 143,
+      "width": 1000,
+      "height": 900
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 128.70000000000002,
+      "width": 900,
+      "height": 810,
+      "scale": 1
+    },
+    "state": "Settings > Calibration > Flat groups and start of Light checks. By measurement; Dust split 1%, Light pattern split 2%; flat age 60/30 days, minimum master 5 frames, missing camera and flat Poor. Opened through Settings, not Edit limits.",
+    "pixels": [
+      1800,
+      1620
+    ],
+    "sha256": "768d0423de319787a7df1d514b38d8644304f6f107c1237ad9f25bf0ea166850",
+    "used_by": [
+      "docs/calibration-masters.html"
+    ]
+  },
+  {
+    "name": "settings-calibration-stacks-exports.png",
+    "time": "2026-10-18T01:22:46.000Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 575,
+      "width": 1000,
+      "height": 158
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 517.5,
+      "width": 900,
+      "height": 142.20000000000002,
+      "scale": 1
+    },
+    "state": "Settings > Calibration > Stacks and exports. Exclusion checked as an UNSAVED example. Original value off; discarded after capture, no Save.",
+    "pixels": [
+      1800,
+      284
+    ],
+    "sha256": "8edfc2007b58580aab22f44c24f52f9331b86cf03dd1cc0b5c370f937f05635f",
+    "used_by": [
+      "docs/exporting.html"
+    ]
+  },
+  {
+    "name": "settings-unsaved-close.png",
+    "time": "2026-10-18T01:22:56.347Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 38,
+      "y": 997,
+      "width": 1668,
+      "height": 135
+    },
+    "clip": {
+      "x": 34.2,
+      "y": 897.3000000000001,
+      "width": 1501.2,
+      "height": 121.5,
+      "scale": 1
+    },
+    "state": "Settings > Calibration; change Stacks and exports checkbox without saving; Done opens unsaved-changes footer. Close without saving used next.",
+    "pixels": [
+      3002,
+      242
+    ],
+    "sha256": "9372b0b75f35e9102a39f4dcace324dcf38b42a1c524f90ddd24c351de007b9c",
+    "used_by": [
+      "docs/configuration.html"
+    ]
+  },
+  {
+    "name": "settings-stacking.png",
+    "time": "2026-10-18T01:23:08.311Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 740
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 666,
+      "scale": 1
+    },
+    "state": "Settings > Stacking. Recommended preset with Reintegrate, Local background, By noise and Chosen by Seiza. Crop upper method choices; registration and resampling continue below. No changes.",
+    "pixels": [
+      1878,
+      1332
+    ],
+    "sha256": "6e71fd7466a84ea7ff44b80528e2d23de48a12a9c63b20bc55f48bbb4d529019",
+    "used_by": [
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "settings-stack-previews.png",
+    "time": "2026-10-18T01:23:21.179Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 267,
+      "width": 1044,
+      "height": 753
+    },
+    "clip": {
+      "x": 189,
+      "y": 240.3,
+      "width": 939.6,
+      "height": 677.7,
+      "scale": 1
+    },
+    "state": "Settings > Stacking > Stack previews. Refresh on, wait 5 minutes after new frames and 15 after grades; missing channels on, old channels on, re-apply processing on. No changes.",
+    "pixels": [
+      1878,
+      1354
+    ],
+    "sha256": "2132a6c78eb729aea8ad92821d30788010ab8585fbef030e6a5ddd2480593cfa",
+    "used_by": [
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "settings-storage-disk-use.png",
+    "time": "2026-10-18T01:23:31.273Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 544
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 489.6,
+      "scale": 1
+    },
+    "state": "Settings > Storage > Disk use. Cache 49.4% of 1 TiB; stack and master volumes below 1%; limit 70%. Actual measurements at capture; no cleanup run.",
+    "pixels": [
+      1878,
+      978
+    ],
+    "sha256": "dbe365aed8c17fb07dbab89350b9df2eacecd1659c5f111fd060a3a76867153c",
+    "used_by": [
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "settings-storage-folders.png",
+    "time": "2026-10-18T01:23:36.773Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 606,
+      "width": 1000,
+      "height": 395
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 545.4,
+      "width": 900,
+      "height": 355.5,
+      "scale": 1
+    },
+    "state": "Settings > Storage > Folders. Cache ./cache set by config; stacks and calibration masters use separate folders under /mnt/barium/astrobin/_PsfGuard. No edits.",
+    "pixels": [
+      1800,
+      710
+    ],
+    "sha256": "c3ede53398c2f98c4e9b41b18e6e0ae81b59b2f82742105136b1acf3716a0268",
+    "used_by": [
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "settings-backups.png",
+    "time": "2026-10-18T01:23:47.982Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 787
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 708.3000000000001,
+      "scale": 1
+    },
+    "state": "Settings > Backups. Settings and catalogs selected; Include secrets off; browser download default. Schedule off, day 1 PM shown disabled. Crop manual card and upper schedule. Existing archive below not included. No backup started.",
+    "pixels": [
+      1878,
+      1416
+    ],
+    "sha256": "3b3b9137010d8dea35228270ddabdd29f56ec01d5cf14f652e229dd215cb8654",
+    "used_by": [
+      "docs/backups.html"
+    ]
+  },
+  {
+    "name": "settings-performance.png",
+    "time": "2026-10-18T01:24:00.013Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 314
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 282.6,
+      "scale": 1
+    },
+    "state": "Settings > Performance. Existing 20-core server setting Interactive 75% (15), Background 25% (5); Use the default shown. No changes needed.",
+    "pixels": [
+      1878,
+      564
+    ],
+    "sha256": "58316cb929f3398216423fea8f05ecae3c3b564ee0298afa9bc36242740aad9c",
+    "used_by": [
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "settings-review-scoring.png",
+    "time": "2026-10-18T01:24:25.597Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 122,
+      "width": 1044,
+      "height": 891
+    },
+    "clip": {
+      "x": 189,
+      "y": 109.8,
+      "width": 939.6,
+      "height": 801.9,
+      "scale": 1
+    },
+    "state": "Settings > Review > Sequence scoring. Penalties 100%, Max HFR and Min stars off. Satellite penalty temporarily entered as 100 without Save defaults; original 0 restored after capture. Save/reset buttons just below crop.",
+    "pixels": [
+      1878,
+      1602
+    ],
+    "sha256": "cf17a16f39baf6cc5d3aab48acc37dbb663814e9cc821885ec4afd50c7af451a",
+    "used_by": [
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "settings-users.png",
+    "time": "2026-10-18T01:24:39.750Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 926,
+      "height": 412
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 833.4,
+      "height": 370.8,
+      "scale": 1
+    },
+    "state": "Settings > Users > Browser users. atrus current Editor, claude Editor, viewer Read only. Token list omitted from crop. No account changes.",
+    "pixels": [
+      1666,
+      740
+    ],
+    "sha256": "0d5d5e06b6704ae3ed4058592e41c05c4a352f92c480f7ea212ea0f8eaae0b97",
+    "used_by": [
+      "docs/authentication.html"
+    ]
+  },
+  {
+    "name": "settings-api-tokens.png",
+    "time": "2026-10-18T01:24:50.214Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 631,
+      "width": 881,
+      "height": 367
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 567.9,
+      "width": 792.9,
+      "height": 330.3,
+      "scale": 1
+    },
+    "state": "Settings > Users > New token form; label claude on laptop, user and expiry blank, Read only unchecked. Crop excludes existing token list. Create token not pressed; Cancel next.",
+    "pixels": [
+      1584,
+      660
+    ],
+    "sha256": "3c21a1124b45715b24b40ec4d461a8a8ac01c056080a3746de7a62a14f3d6025",
+    "used_by": [
+      "docs/authentication.html",
+      "docs/mcp.html"
+    ]
+  },
+  {
+    "name": "settings-connect-agent.png",
+    "time": "2026-10-18T01:25:01.464Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 600,
+      "width": 881,
+      "height": 223
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 540,
+      "width": 792.9,
+      "height": 200.70000000000002,
+      "scale": 1
+    },
+    "state": "Settings > Users > Connect an agent, before token creation. Let it grade and start jobs unchecked. This shows access choice, not generated snippets; no credential created.",
+    "pixels": [
+      1584,
+      400
+    ],
+    "sha256": "e7cde723621ef61bb4545d4948da7d728999b008c3cf10f7ab590781bcacc79a",
+    "used_by": [
+      "docs/mcp.html"
+    ]
+  },
+  {
+    "name": "settings-rigs.png",
+    "time": "2026-10-18T01:25:10.235Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 872
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 784.8000000000001,
+      "scale": 1
+    },
+    "state": "Settings > Rigs. Five rigs and measured fields/pixel scales with Calibration links, Library and Setup. All use global calibration values.",
+    "pixels": [
+      1878,
+      1568
+    ],
+    "sha256": "56cdd7ff791733fcd65dfcb1e392beaade749ec3b023957878be0476b6d2f743",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "rig-setup-optics.png",
+    "time": "2026-10-18T01:25:46.844Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 263,
+      "width": 1000,
+      "height": 632
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 236.70000000000002,
+      "width": 900,
+      "height": 568.8000000000001,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > Setup askar107phq > Optics. 6248x4176, 3.76 um, 749 mm, aperture 108.55072463768116 mm from frame header; hand-turned angle 0, field 1.80x1.20 degrees at 1.04 arcsec/pixel f/6.9. No edits.",
+    "pixels": [
+      1800,
+      1136
+    ],
+    "sha256": "6c67ec1f4ab66db96bbc61be1443034586c39e7cc051530f6df9eedd2a90285a",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "rig-limits.png",
+    "time": "2026-10-18T01:25:58.081Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 439,
+      "y": 337,
+      "width": 776,
+      "height": 611
+    },
+    "clip": {
+      "x": 395.1,
+      "y": 303.3,
+      "width": 698.4,
+      "height": 549.9,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > askar107phq > Limits and delivery. Planning altitude 20\u201390, meridian waits 0; all Target Scheduler limits inherited.",
+    "pixels": [
+      1396,
+      1098
+    ],
+    "sha256": "f5d700327d32bdc54fe6e9d19a6c6ba2f681f3abb97ad03c9551152b3e588bec",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "rig-ts-projects.png",
+    "time": "2026-10-18T01:26:04.320Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 439,
+      "y": 554,
+      "width": 776,
+      "height": 381
+    },
+    "clip": {
+      "x": 395.1,
+      "y": 498.6,
+      "width": 698.4,
+      "height": 342.90000000000003,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > askar107phq > Limits and delivery. All 26 projects already have these limits, unset values preserve per-project settings. Send plans to This server only; no peers registered. No Apply.",
+    "pixels": [
+      1396,
+      684
+    ],
+    "sha256": "f9bc1529c69b8bd96e560be1a44ad96515ea96f24ec67ea312dee6b08edca02d",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "rig-setup-site.png",
+    "time": "2026-10-18T01:26:24.114Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 328,
+      "width": 983,
+      "height": 654
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 295.2,
+      "width": 884.7,
+      "height": 588.6,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > askar107phq > Site. Planning site folsom-patio-se, flat horizon. Latitude and longitude cleared in unsaved form for privacy. No Save; Reload rig profile discards temporary blanks.",
+    "pixels": [
+      1768,
+      1176
+    ],
+    "sha256": "6cf56238998d7f3fc034f80995f12a97db861f671f95da6b09dc4e1448d83d71",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "settings-sites.png",
+    "time": "2026-10-18T01:26:42.120Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 505,
+      "width": 1000,
+      "height": 507
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 454.5,
+      "width": 900,
+      "height": 456.3,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > Sites > Edit sfro. Coordinates blank for privacy; example horizon text 0 12 / 90 20 / 180 15 / 270 18 entered but neither Use pasted horizon nor Save site pressed. Close editor discards.",
+    "pixels": [
+      1800,
+      912
+    ],
+    "sha256": "98defe1ee3c072e96f447171d53f2efe2e5fdd26cb0afa352f5a8f446023a4d0",
+    "used_by": [
+      "docs/rigs.html"
+    ]
+  },
+  {
+    "name": "rig-collaboration.png",
+    "time": "2026-10-18T01:26:53.793Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 223,
+      "width": 1000,
+      "height": 572
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 200.70000000000002,
+      "width": 900,
+      "height": 514.8000000000001,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > starfront-redcat61 > Collaboration > Tonight. Connected collab.starfront.space. No work requested; Night override folded; Check in and Pull not pressed.",
+    "pixels": [
+      1800,
+      1028
+    ],
+    "sha256": "0bc5a272af0e2a66ea4fef287d50e247c2e2f86f3e242b8a773c0cc89a03734e",
+    "used_by": [
+      "docs/collaboration.html"
+    ]
+  },
+  {
+    "name": "collaboration-automation.png",
+    "time": "2026-10-18T01:27:09.129Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 439,
+      "y": 420,
+      "width": 776,
+      "height": 515
+    },
+    "clip": {
+      "x": 395.1,
+      "y": 378,
+      "width": 698.4,
+      "height": 463.5,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > starfront-redcat61 > Collaboration > Automation. Rig resolved, M31 NINA TEST COLLAB listed, all automation off, Last success Not yet / Next refresh Off. No Save or Refresh.",
+    "pixels": [
+      1396,
+      926
+    ],
+    "sha256": "f6a18f32f800c1e3b8584489d98f76690b5da4b96bd9c862887e01d7aa0b57aa",
+    "used_by": [
+      "docs/collaboration.html"
+    ]
+  },
+  {
+    "name": "collaboration-contribution-files.png",
+    "time": "2026-10-18T01:27:36.849Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 439,
+      "y": 573,
+      "width": 776,
+      "height": 239
+    },
+    "clip": {
+      "x": 395.1,
+      "y": 515.7,
+      "width": 698.4,
+      "height": 215.1,
+      "scale": 1
+    },
+    "state": "Settings > Rigs > starfront-redcat61 > Collaboration > Reports. Existing M31 NINA TEST COLLAB visit 2026-10-07, panel 0, night 2026-10-07 has 0 accepted images. Contribution files controls shown; no pending transfer and Upload disabled. Actual empty state.",
+    "pixels": [
+      1396,
+      430
+    ],
+    "sha256": "c04212c2b729dd90d09483d6fdb9c3ba65107e2862d50565016da19380cea7e1",
+    "used_by": [
+      "docs/collaboration.html"
+    ]
+  },
+  {
+    "name": "settings-exposure-templates.png",
+    "time": "2026-10-18T01:27:48.711Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 160,
+      "width": 1044,
+      "height": 878
+    },
+    "clip": {
+      "x": 189,
+      "y": 144,
+      "width": 939.6,
+      "height": 790.2,
+      "scale": 1
+    },
+    "state": "Settings > Exposure templates. 11 shared templates; B_120 Moon controls expanded, avoidance off; 60 degree separation, 7 day half-width, 0 relaxation, -15/5 altitude. No values edited.",
+    "pixels": [
+      1878,
+      1580
+    ],
+    "sha256": "eeb82b4ede1bc9ac1780423ec60603e5bf97d1b34e3d2fab2f8bd1c96dca219c",
+    "used_by": [
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "settings-autoimport-scan-rules.png",
+    "time": "2026-10-18T01:28:18.494Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 253,
+      "y": 145,
+      "width": 958,
+      "height": 900
+    },
+    "clip": {
+      "x": 227.70000000000002,
+      "y": 130.5,
+      "width": 862.2,
+      "height": 810,
+      "scale": 1
+    },
+    "state": "Settings > Databases > Edit starfront-redcat61. UNSAVED example: exclude **/Hocus Focus/** and **/PierCam/**; include blank; target name and position matching checked; minimum 10 seconds; automatic on-open plus hourly, lights and calibration, Ask first. Cancel next; no scheduler enabled.",
+    "pixels": [
+      1724,
+      1620
+    ],
+    "sha256": "5d5aeaa5e576d3873bc32f96d488c25c7a65b7ac6ea84ebab5ca3b8b72275026",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "import-from-images.png",
+    "time": "2026-10-18T01:28:32.970Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 210,
+      "y": 557,
+      "width": 1044,
+      "height": 500
+    },
+    "clip": {
+      "x": 189,
+      "y": 501.3,
+      "width": 939.6,
+      "height": 450,
+      "scale": 1
+    },
+    "state": "Settings > Databases > New Database from Images. Name 2026 Archive; redcat61 _Source folder added only to form. Background quality unchecked. Create & Import not pressed; Cancel next.",
+    "pixels": [
+      1878,
+      900
+    ],
+    "sha256": "619275cff127abdab5b47ebd1b059c686c0c228927f6402dd76c65eae3702108",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "settings-calibration-rig.png",
+    "time": "2026-10-18T01:29:22.931Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 232,
+      "y": 217,
+      "width": 1000,
+      "height": 724
+    },
+    "clip": {
+      "x": 208.8,
+      "y": 195.3,
+      "width": 900,
+      "height": 651.6,
+      "scale": 1
+    },
+    "state": "Settings > Calibration > Rigs > redcat61/ASI2600MM > Start from Sky flats. UNSAVED preset: 72-hour flat session is own value, surrounding matching fields inherit defaults. Crop preset and upper matching rows; Light checks and Save rig below. Done then Close without saving discards preset.",
+    "pixels": [
+      1800,
+      1302
+    ],
+    "sha256": "f94e235e043efb1c82c1e6c64e212c925db8cf9a4047178069e14eba858947e5",
+    "used_by": [
+      "docs/calibration-masters.html"
+    ]
+  },
+  {
+    "name": "header-jobs.png",
+    "time": "2026-10-18T01:29:39.116Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 1135,
+      "y": 12,
+      "width": 428,
+      "height": 526
+    },
+    "clip": {
+      "x": 1021.5,
+      "y": 10.8,
+      "width": 385.2,
+      "height": 473.40000000000003,
+      "scale": 1
+    },
+    "state": "Iris Images, jobs popover. Existing Automatic Heart and Soul panel1 R10s stacking around 43%, queued SII and panel2 B/G/HA; 1 running,19queued,5waiting. No Started by you jobs available. No jobs started/stopped/reordered.",
+    "pixels": [
+      770,
+      946
+    ],
+    "sha256": "61da32b9895c698b0f5b44e1666cedc00eed33030421e6bef97884ebaf542986",
+    "used_by": [
+      "docs/grader.html",
+      "docs/stacking.html",
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "header-jobs-automatic.png",
+    "time": "2026-10-18T01:29:48.432Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 1148,
+      "y": 114,
+      "width": 400,
+      "height": 409
+    },
+    "clip": {
+      "x": 1033.2,
+      "y": 102.60000000000001,
+      "width": 360,
+      "height": 368.1,
+      "scale": 1
+    },
+    "state": "Existing Automatic jobs, popover scrolled to bottom. ultra cat Refreshing stacks and Sh2 119 HA/OIII plus IC447 R Re-applying processing wait for automatic Heart and Soul Panel1 R10s build. No flat measurement active; caption must describe actual waiting processing.",
+    "pixels": [
+      720,
+      736
+    ],
+    "sha256": "e3d735fe0a0cc3f2e24f0b4ac5cd258ecaa5adb22b275a5190b4ef64fdd3b35e",
+    "used_by": [
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "header-jobs-chip.png",
+    "time": "2026-10-18T01:29:48.797Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 1372,
+      "y": 13,
+      "width": 190,
+      "height": 50
+    },
+    "clip": {
+      "x": 1234.8,
+      "y": 11.700000000000001,
+      "width": 171,
+      "height": 45,
+      "scale": 1
+    },
+    "state": "Closed jobs chip during existing automatic stack build; about 45%,1 running,19 queued,5 waiting. No hover tooltip.",
+    "pixels": [
+      342,
+      90
+    ],
+    "sha256": "5dba3871f4466c909d370d8136eb56fe0bd44e7eb9df46b760d3c909c281beee",
+    "used_by": [
+      "docs/storage.html"
+    ]
+  },
+  {
+    "name": "header-picker.png",
+    "time": "2026-10-18T01:30:04.705Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776",
+    "w": 1744,
+    "rect": {
+      "x": 165,
+      "y": 0,
+      "width": 750,
+      "height": 620
+    },
+    "clip": {
+      "x": 148.5,
+      "y": 0,
+      "width": 675,
+      "height": 558,
+      "scale": 1
+    },
+    "state": "Images > project picker; search Heart. Heart of the Soul and Heart Mosaic expand automatically with All images and target rows. Current scope remains Iris.",
+    "pixels": [
+      1350,
+      1116
+    ],
+    "sha256": "391d9022945ce3eb05848cdc09eb5e30a28ee6473d10bd59f11d0cbad90d0b44",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "sequence-session.jpg",
+    "time": "2026-10-18T01:30:24.522Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10952&filterName=HA",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 918
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 826.2,
+      "scale": 1
+    },
+    "state": "Golf of Mexico ultra cat db-e075b4ec project12 target12, HA Jul9 2026 10:08 PM session57. Score cutoff50, By hand,0selected,150px,night/all/calibration chips. Three Soft Stars25 then Possible Obstruction62/60. All stored grades Rejected.",
+    "pixels": [
+      3138,
+      1652
+    ],
+    "sha256": "707112f1981979c6056d9dd1e70c777d1a58c4656130849c9708cf06be6938ad",
+    "used_by": [
+      "index.html",
+      "docs/astrometry-quality.html",
+      "docs/grader.html",
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "sequence-soft-stars.png",
+    "time": "2026-10-18T01:30:24.591Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10952&filterName=HA",
+    "w": 1744,
+    "rect": {
+      "x": 45,
+      "y": 665,
+      "width": 918,
+      "height": 253
+    },
+    "clip": {
+      "x": 40.5,
+      "y": 598.5,
+      "width": 826.2,
+      "height": 227.70000000000002,
+      "scale": 1
+    },
+    "state": "Same HA Jul9 session, first five cards: HFR6.62/6.28/5.99 Soft Stars25, then HFR1.49/1.47 Possible Obstruction62/60. All already Rejected.",
+    "pixels": [
+      1652,
+      454
+    ],
+    "sha256": "b565860f37fedf2212618d0c68192a62ac9053ea17d504b9489baae07ad3d4ae",
+    "used_by": [
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "image-detail.jpg",
+    "time": "2026-10-18T01:30:52.887Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/detail/10955?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&returnTo=sequence",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 1142
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 1027.8,
+      "scale": 1
+    },
+    "state": "Golf of Mexico HA frame10955, Jul9 23:11:10, 300s, HFR1.49,5340stars. Rejected. Detail score82% (Sequence card62), reason star count dropped63% stable background; no Show affected regions available. Image Information folded, Quality/Sky open, Calibration no findings folded; Hinted solve55 objects. Fit65%.",
+    "pixels": [
+      3138,
+      2054
+    ],
+    "sha256": "218ab50d9b1b7d83c94a9846fdcf60aa741652cd35fe13a8c9d817223c807530",
+    "used_by": [
+      "docs/grader.html",
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "annotated-hfr-labels.png",
+    "time": "2026-10-18T01:31:28.992Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/detail/10955?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&returnTo=sequence",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 1142
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 1027.8,
+      "scale": 1
+    },
+    "state": "Golf HA frame10955. S Stars on; annotation847 stars AvgHFR2.68 AvgFWHM5.29 versus imported HFR1.49/5340 stars. Fit65%. Image Information open, others folded. This frame is stored Rejected with possible obstruction, not a clean accepted example. Wait until loading overlay clears.",
+    "pixels": [
+      3138,
+      2054
+    ],
+    "sha256": "f262f33b6e5a21e7b7f93c429940599794a0455ba20e1fcc8637649414c3ea2a",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "grid-view-panel.png",
+    "time": "2026-10-18T01:31:49.618Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 1128,
+      "y": 72,
+      "width": 289,
+      "height": 363
+    },
+    "clip": {
+      "x": 1015.2,
+      "y": 64.8,
+      "width": 260.1,
+      "height": 326.7,
+      "scale": 1
+    },
+    "state": "Golf of Mexico Images > View. Group Filter, Newest first, Nights and hours, each rig noon, all score/calibration chips, separate exposure groups. View uses highlighted state; this build does not append newest first text.",
+    "pixels": [
+      520,
+      652
+    ],
+    "sha256": "a5166d31c789617448eb9d6aea21a0989c196589bed4c54e67fec1d5a3a6a7f1",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "grid-time-marks.jpg",
+    "time": "2026-10-18T01:34:32.103Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&size=150",
+    "w": 1744,
+    "rect": {
+      "x": 410,
+      "y": 420,
+      "width": 1290,
+      "height": 565
+    },
+    "clip": {
+      "x": 369,
+      "y": 378,
+      "width": 1161,
+      "height": 508.5,
+      "scale": 1
+    },
+    "state": "Golf of Mexico; Filter grouping, Oldest first, 150 px, Nights and hours. Crop shows July 9 night break and 23:00/00:00 hour marks around frame 10955; stored grades unchanged.",
+    "pixels": [
+      2322,
+      1016
+    ],
+    "sha256": "391abb9da34a9d4cfba6d47c7858db7825bc9099a0cc1eea3abd5960f57ddefa",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "grid-newest-first.jpg",
+    "time": "2026-10-18T01:35:02.649Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&size=150&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 25,
+      "y": 73,
+      "width": 1390,
+      "height": 550
+    },
+    "clip": {
+      "x": 22.5,
+      "y": 65.7,
+      "width": 1251,
+      "height": 495,
+      "scale": 1
+    },
+    "state": "Golf of Mexico, Filter grouping, B 60 s first group, 150 px, Newest first selected in open View. First frames descend 20:38 to 20:24; 603 B frames, 300 accepted and 303 rejected.",
+    "pixels": [
+      2502,
+      990
+    ],
+    "sha256": "e64f6a46725bdfb135935d3a7cf0d1ebeba60cb8f0acf3408602ff7398f204bd",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "grid-filter-list.png",
+    "time": "2026-10-18T01:35:07.551Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&size=150&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 135,
+      "y": 74,
+      "width": 225,
+      "height": 308
+    },
+    "clip": {
+      "x": 121.5,
+      "y": 66.60000000000001,
+      "width": 202.5,
+      "height": 277.2,
+      "scale": 1
+    },
+    "state": "Golf of Mexico Images; Filter dropdown open, All selected; B, G, HA, L, OIII, R and SII choices.",
+    "pixels": [
+      404,
+      554
+    ],
+    "sha256": "56821631934153dcc0fef3b739a0cefd6cda72e74c4673f7b155d83dc83f27d0",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "grid-phone-filters.png",
+    "time": "2026-10-18T01:35:25.271Z",
+    "dpr": 0.8999999761581421,
+    "h": 812,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&size=150&order=newest",
+    "w": 375,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 812
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 337.5,
+      "height": 730.8000000000001,
+      "scale": 1
+    },
+    "state": "375 CSS px phone view (viewport override 338x731 DIP with 90% zoom; DPR 0.9). Golf of Mexico, Filters expanded, 150 px, newest first. All filters unchanged.",
+    "pixels": [
+      337,
+      730
+    ],
+    "sha256": "242ff40c7954b9160b69164cce198c96cac4e0bf617765d4d8595729959cdec8",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "library-phone.png",
+    "time": "2026-10-18T01:35:41.762Z",
+    "dpr": 0.8999999761581421,
+    "h": 812,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest",
+    "w": 375,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 755
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 337.5,
+      "height": 679.5,
+      "scale": 1
+    },
+    "state": "Phone 375 CSS px, Compact Library, all databases, newest first, scrolled to Last 7 days. California, NGC 1931 with Poor calibration and 3 new frames, Medusa with 11 new.",
+    "pixels": [
+      337,
+      679
+    ],
+    "sha256": "7b3c980b899eeeb16af1c585af60f57bdec11d16562cdbf8ad6c13a818e83447",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "library-compact.jpg",
+    "time": "2026-10-18T01:35:48.475Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 701
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 630.9,
+      "scale": 1
+    },
+    "state": "All databases Library, Compact, newest first. Catalog 38,691 images, 25,562 accepted, 3,645 to review. Last 7 days rows through LDN798; counts are capture-time observations.",
+    "pixels": [
+      3138,
+      1260
+    ],
+    "sha256": "03e4159c97b5fbd281b94095c69cbd260540cf6550ffe5680630db3fb2b71093",
+    "used_by": [
+      "index.html",
+      "docs/grader.html",
+      "docs/index.html"
+    ]
+  },
+  {
+    "name": "library-calibration-pills.png",
+    "time": "2026-10-18T01:35:48.525Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 40,
+      "y": 549,
+      "width": 1665,
+      "height": 150
+    },
+    "clip": {
+      "x": 36,
+      "y": 494.1,
+      "width": 1498.5,
+      "height": 135,
+      "scale": 1
+    },
+    "state": "Compact Library rows: Elephant Trunk Check, Sh2 119 Poor, LDN798 Check. All databases.",
+    "pixels": [
+      2996,
+      270
+    ],
+    "sha256": "4d6deb466dccc46dba6b677ad7db252394f4f0e38800e5d90a7aa1f04e4b0da2",
+    "used_by": [
+      "docs/calibration-grading.html",
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "library-card.png",
+    "time": "2026-10-18T01:35:56.545Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&q=Golf+of+Mexico",
+    "w": 1744,
+    "rect": {
+      "x": 42,
+      "y": 351,
+      "width": 1660,
+      "height": 632
+    },
+    "clip": {
+      "x": 37.800000000000004,
+      "y": 315.90000000000003,
+      "width": 1494,
+      "height": 568.8000000000001,
+      "scale": 1
+    },
+    "state": "Library Golf of Mexico expanded card, search Golf of Mexico. 2785 images, 1238 accepted, 1547 rejected, 0 pending; 14 new, 1238/1593 desired. Poor calibration pill; project and target actions.",
+    "pixels": [
+      2988,
+      1136
+    ],
+    "sha256": "cc91d500a2b3ac178fb245e3fdb43cd44f020a59ffca6338bb360c15207502e1",
+    "used_by": [
+      "docs/exporting.html",
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "export-dialog.png",
+    "time": "2026-10-18T01:36:05.172Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&q=Golf+of+Mexico",
+    "w": 1744,
+    "rect": {
+      "x": 623,
+      "y": 225,
+      "width": 498,
+      "height": 691
+    },
+    "clip": {
+      "x": 560.7,
+      "y": 202.5,
+      "width": 448.2,
+      "height": 621.9,
+      "scale": 1
+    },
+    "state": "Golf of Mexico project Export. Include ungraded on; Grouped by target; Zip of frames. No export started.",
+    "pixels": [
+      896,
+      1242
+    ],
+    "sha256": "bc85cd615628f1d5475b97a57eb0d2b3001a41895160ba34ff69f7de1d8d981c",
+    "used_by": [
+      "docs/exporting.html"
+    ]
+  },
+  {
+    "name": "astrobin-dialog.png",
+    "time": "2026-10-18T01:36:17.126Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&q=Golf+of+Mexico",
+    "w": 1744,
+    "rect": {
+      "x": 447,
+      "y": 178,
+      "width": 850,
+      "height": 785
+    },
+    "clip": {
+      "x": 402.3,
+      "y": 160.20000000000002,
+      "width": 765,
+      "height": 706.5,
+      "scale": 1
+    },
+    "state": "Golf of Mexico AstroBin Essentials with Count ungraded on: 1238 frames, 19 nights, 23 hours. Filter IDs missing, so mapping warning visible; table continues below viewport. No mapping saved or CSV copied/downloaded.",
+    "pixels": [
+      1530,
+      1412
+    ],
+    "sha256": "52450f562497dc5f4802c63fca7abb1418b42242ef1ff198d0b2e7fc85d72f63",
+    "used_by": [
+      "docs/exporting.html"
+    ]
+  },
+  {
+    "name": "wbpp-run-dialog.png",
+    "time": "2026-10-18T01:36:28.781Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&q=Golf+of+Mexico",
+    "w": 1744,
+    "rect": {
+      "x": 496,
+      "y": 178,
+      "width": 752,
+      "height": 786
+    },
+    "clip": {
+      "x": 446.40000000000003,
+      "y": 160.20000000000002,
+      "width": 676.8000000000001,
+      "height": 707.4,
+      "scale": 1
+    },
+    "state": "Golf of Mexico WBPP dialog upper options. WBPP 3.1.0 configured; Include ungraded on; Maximum quality; Fast Integration Off; Drizzle Off; default Autocrop and rejection. No run started. More parameters and run folder are below the scroll.",
+    "pixels": [
+      1352,
+      1414
+    ],
+    "sha256": "d851f85f108d937bee3605b7a6f0e0e0b0f830fe35df66668b3eca41dc9c1a36",
+    "used_by": [
+      "docs/wbpp.html"
+    ]
+  },
+  {
+    "name": "library-plans.png",
+    "time": "2026-10-18T01:36:38.500Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest",
+    "w": 1744,
+    "rect": {
+      "x": 40,
+      "y": 587,
+      "width": 1665,
+      "height": 535
+    },
+    "clip": {
+      "x": 36,
+      "y": 528.3000000000001,
+      "width": 1498.5,
+      "height": 481.5,
+      "scale": 1
+    },
+    "state": "Library Plans with nothing captured yet, all databases. Includes SNRG150 Activated on 2 rigs, Flaming Star Framed, Cocoon Darks/Elephants Mosaic Planned and M31 NINA TEST COLLAB Activated on 1 rig.",
+    "pixels": [
+      2996,
+      962
+    ],
+    "sha256": "39d5b6bbc875c2c9351934e99ea7c49cb4c2ee239e9ab8b205d62e1fc7cbdf3e",
+    "used_by": [
+      "docs/planning.html"
+    ]
+  },
+  {
+    "name": "plan-needs-activating.png",
+    "time": "2026-10-18T01:36:52.488Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&plan=48bc9107-ccc0-4440-bb3b-fb2f5ccd29a0",
+    "w": 1744,
+    "rect": {
+      "x": 48,
+      "y": 88,
+      "width": 1650,
+      "height": 140
+    },
+    "clip": {
+      "x": 43.2,
+      "y": 79.2,
+      "width": 1485,
+      "height": 126,
+      "scale": 1
+    },
+    "state": "2026 - SNRG150 saved plan, two rigs already set up. Needs activating banner warns turns off 4 plans in ultra cat. Existing state, no activation or saved changes.",
+    "pixels": [
+      2970,
+      252
+    ],
+    "sha256": "494b51ffbc2da8a9a25a7aef65366021dd0918dd6ff4b176ad3a915ad469b6fb",
+    "used_by": [
+      "docs/planning.html"
+    ]
+  },
+  {
+    "name": "activation-turns-off.png",
+    "time": "2026-10-18T01:37:02.237Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&plan=48bc9107-ccc0-4440-bb3b-fb2f5ccd29a0",
+    "w": 1744,
+    "rect": {
+      "x": 438,
+      "y": 403,
+      "width": 868,
+      "height": 463
+    },
+    "clip": {
+      "x": 394.2,
+      "y": 362.7,
+      "width": 781.2,
+      "height": 416.7,
+      "scale": 1
+    },
+    "state": "SNRG150 activation preview; ultra cat would keep HA 120 and OIII 360 at 300s and turn off R/L/G/B 60s plans 45\u201348, each 0/400. No Activate or Take values pressed.",
+    "pixels": [
+      1562,
+      832
+    ],
+    "sha256": "3138379fa147c88a77bd2572c799151beaeff9628e9d3a65aecf7b8d2ec0d9aa",
+    "used_by": [
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "activation-preview.png",
+    "time": "2026-10-18T01:37:02.309Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&plan=48bc9107-ccc0-4440-bb3b-fb2f5ccd29a0",
+    "w": 1744,
+    "rect": {
+      "x": 415,
+      "y": 178,
+      "width": 913,
+      "height": 786
+    },
+    "clip": {
+      "x": 373.5,
+      "y": 160.20000000000002,
+      "width": 821.7,
+      "height": 707.4,
+      "scale": 1
+    },
+    "state": "SNRG150 activation preview ready, framing revision2, plan revision3, 1 panel. Ultra cat turns off4 extra plans; redcat61 unchanged. Preview only; Activate below scroll, not pressed.",
+    "pixels": [
+      1642,
+      1414
+    ],
+    "sha256": "3c5d2f7f484f065609a5574bd4558893be9b2481f74fccb1639a6312b0f74ecf",
+    "used_by": [
+      "index.html",
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "plan-objectives.png",
+    "time": "2026-10-18T01:37:08.053Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&plan=48bc9107-ccc0-4440-bb3b-fb2f5ccd29a0&planTab=exposures",
+    "w": 1744,
+    "rect": {
+      "x": 48,
+      "y": 244,
+      "width": 1648,
+      "height": 615
+    },
+    "clip": {
+      "x": 43.2,
+      "y": 219.6,
+      "width": 1483.2,
+      "height": 553.5,
+      "scale": 1
+    },
+    "state": "SNRG150 Exposures objectives: Blue8h, Green8h, Luminance40h, Red8h, H-alpha10h, OIII30h, all Faint detail. No edits.",
+    "pixels": [
+      2966,
+      1106
+    ],
+    "sha256": "3619f8c94b754b2f235baa6a292bef463893ff0ba1354cfb186fc0ccdc80e1be",
+    "used_by": [
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "plan-rigs.png",
+    "time": "2026-10-18T01:37:27.769Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&grouping=filter&order=newest&plan=48bc9107-ccc0-4440-bb3b-fb2f5ccd29a0&planTab=rigs",
+    "w": 1744,
+    "rect": {
+      "x": 48,
+      "y": 184,
+      "width": 1650,
+      "height": 636
+    },
+    "clip": {
+      "x": 43.2,
+      "y": 165.6,
+      "width": 1485,
+      "height": 572.4,
+      "scale": 1
+    },
+    "state": "SNRG150 Rigs: ultra cat behind, redcat61 activated; scheduler settings folded, Add rig and inherited scheduling limits shown. No edits.",
+    "pixels": [
+      2970,
+      1144
+    ],
+    "sha256": "0e9ebf3409f5d435bce6d49097333141f128b9edcc501eefaa66fdbfc9239c32",
+    "used_by": [
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "plan-workspace.jpg",
+    "time": "2026-10-18T01:37:42.946Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 1142
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 1027.8,
+      "scale": 1
+    },
+    "state": "Heart Mosaic plan, Framing, four captured locked panels, Not activated yet. DSS offline, 5.17 degrees across, equatorial grid/constellations on, deep-sky marks off. No plan edits.",
+    "pixels": [
+      3138,
+      2054
+    ],
+    "sha256": "8afd7abf8cc7f802c7d2cc7f61bc02f14d241db3ede3ce9cbbc1c0112c83ffee",
+    "used_by": [
+      "index.html",
+      "docs/planning.html"
+    ]
+  },
+  {
+    "name": "framing-stage.jpg",
+    "time": "2026-10-18T01:37:43.026Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b",
+    "w": 1744,
+    "rect": {
+      "x": 48,
+      "y": 272,
+      "width": 1648,
+      "height": 861
+    },
+    "clip": {
+      "x": 43.2,
+      "y": 244.8,
+      "width": 1483.2,
+      "height": 774.9,
+      "scale": 1
+    },
+    "state": "Heart Mosaic framing sky and target/rig controls, four locked captured panels. Deep-sky marks off; other state as plan-workspace.",
+    "pixels": [
+      2966,
+      1548
+    ],
+    "sha256": "7d2f40607b1511a5de12f8bff91207ea8ae018a7e6df7c3ec5d4d05ef88cf789",
+    "used_by": [
+      "docs/framing.html"
+    ]
+  },
+  {
+    "name": "framing-mosaic-panels.png",
+    "time": "2026-10-18T01:37:53.893Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b",
+    "w": 1744,
+    "rect": {
+      "x": 1320,
+      "y": 274,
+      "width": 371,
+      "height": 743
+    },
+    "clip": {
+      "x": 1188,
+      "y": 246.6,
+      "width": 333.90000000000003,
+      "height": 668.7,
+      "scale": 1
+    },
+    "state": "Heart Mosaic, Mosaic panels with r1c2 selected, all4 locked. Minimum overlap20%, measured neighbor overlaps18.1\u201319.4 belowminimum. Add panel compass, 4 panel list and warnings; no edits.",
+    "pixels": [
+      666,
+      1336
+    ],
+    "sha256": "748b479df1cc387a6d45c2bc47e52ab75d9cb443449de2f90158926ec3d22e79",
+    "used_by": [
+      "docs/framing.html"
+    ]
+  },
+  {
+    "name": "framing-locked-panel.png",
+    "time": "2026-10-18T01:37:53.925Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b",
+    "w": 1744,
+    "rect": {
+      "x": 1331,
+      "y": 646,
+      "width": 349,
+      "height": 201
+    },
+    "clip": {
+      "x": 1197.9,
+      "y": 581.4,
+      "width": 314.1,
+      "height": 180.9,
+      "scale": 1
+    },
+    "state": "Heart Mosaic selected r1c2 locked,336frames, drawn as shot1.79x1.20 degrees at0.6degrees; Unlock available, Remove disabled. No unlock.",
+    "pixels": [
+      628,
+      360
+    ],
+    "sha256": "74e622e25d0ea693415a93e7e7b66da100d7123f68a20a91772121eff03cc35e",
+    "used_by": [
+      "docs/framing.html"
+    ]
+  },
+  {
+    "name": "calibration-frame-keep-out.png",
+    "time": "2026-10-18T01:38:07.141Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=c86f7ba628d954df&calKind=flat&calGrade=poor&calFrame=b28da39d-e31d-43f9-a226-944aa648e997",
+    "w": 1744,
+    "rect": {
+      "x": 1404,
+      "y": 492,
+      "width": 315,
+      "height": 636
+    },
+    "clip": {
+      "x": 1263.6000000000001,
+      "y": 442.8,
+      "width": 283.5,
+      "height": 572.4,
+      "scale": 1
+    },
+    "state": "Teddy Bear poor OIII flat b28da39d-e31d-43f9-a226-944aa648e997; uneven light13.9% vs5%limit, automatically left out of masters. Keep out, Use anyway and Forget shown but untouched.",
+    "pixels": [
+      566,
+      1144
+    ],
+    "sha256": "68771ebdb4c619b395352a490e2fbaff17081e883663076461e4b13ee4019528",
+    "used_by": [
+      "docs/calibration-grading.html"
+    ]
+  },
+  {
+    "name": "calibration-scope-chip.png",
+    "time": "2026-10-18T01:38:07.184Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=c86f7ba628d954df&calKind=flat&calGrade=poor&calFrame=b28da39d-e31d-43f9-a226-944aa648e997",
+    "w": 1744,
+    "rect": {
+      "x": 24,
+      "y": 88,
+      "width": 1495,
+      "height": 177
+    },
+    "clip": {
+      "x": 21.6,
+      "y": 79.2,
+      "width": 1345.5,
+      "height": 159.3,
+      "scale": 1
+    },
+    "state": "Calibration scoped to Teddy Bear Nebula QMark on starfront-redcat61. 835lights,58sessions,1040masters. Scope chip, clear scope link, TypeFlat and GradePoor.",
+    "pixels": [
+      2690,
+      318
+    ],
+    "sha256": "65080759cb0feb58497f15ae5b6c7172b78b08427fed962b1acebafdacc7f968",
+    "used_by": [
+      "docs/calibration.html"
+    ]
+  },
+  {
+    "name": "calibration-compare-session.jpg",
+    "time": "2026-10-18T01:38:14.849Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=c86f7ba628d954df&calKind=flat&calGrade=poor&calFrame=b28da39d-e31d-43f9-a226-944aa648e997&calView=session",
+    "w": 1744,
+    "rect": {
+      "x": 345,
+      "y": 492,
+      "width": 1373,
+      "height": 636
+    },
+    "clip": {
+      "x": 310.5,
+      "y": 442.8,
+      "width": 1235.7,
+      "height": 572.4,
+      "scale": 1
+    },
+    "state": "Teddy Bear OIII poorflat divided by its session, Compare with session on, Normal stretch100%. Measured13.9%illumination deviation shown, no saved changes.",
+    "pixels": [
+      2470,
+      1144
+    ],
+    "sha256": "7b5f85f0f6c524ce4770cc75a3e75093b214bb6e9127e6d112493d6c2b3c70d0",
+    "used_by": [
+      "docs/calibration.html"
+    ]
+  },
+  {
+    "name": "calibration-library.png",
+    "time": "2026-10-18T01:38:26.423Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=c86f7ba628d954df&calKind=flat&calFrame=b28da39d-e31d-43f9-a226-944aa648e997",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 1142
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 1027.8,
+      "scale": 1
+    },
+    "state": "Calibration Frames/Sessions scoped to Teddy Bear, TypeFlat, GradeAll. 32sessions290frames, Sep13 OIII session10frames, poor third flat selected. Normal stretch, comparison off,85%fit.",
+    "pixels": [
+      3138,
+      2054
+    ],
+    "sha256": "2d79e2b2ca2973e2b14e7114c4e7cf5250f65724fef8ff133c806d7ac16dee82",
+    "used_by": [
+      "docs/calibration.html"
+    ]
+  },
+  {
+    "name": "calibration-dust-disks.jpg",
+    "time": "2026-10-18T01:38:48.985Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=ebbfc7314b5cf7b4&calKind=flat&calSpots=1&calFrame=77bdbaf5-c62c-4c44-b8d0-1af0151c79bf",
+    "w": 1744,
+    "rect": {
+      "x": 346,
+      "y": 491,
+      "width": 1372,
+      "height": 651
+    },
+    "clip": {
+      "x": 311.40000000000003,
+      "y": 441.90000000000003,
+      "width": 1234.8,
+      "height": 585.9,
+      "scale": 1
+    },
+    "state": "Teddy Bear HA flat2026-10-08_07-23-46_HA_-5.00_12.00s_0000.fits. GradeOK, Spots and Large dust on, 3disks at0.26/0.40/0.38%, estimated11mm filter/window. Normal stretch85%.",
+    "pixels": [
+      2468,
+      1170
+    ],
+    "sha256": "f5fcb4cbe71515d65c8f78cd62c2905fd799403f273f0abfb5253d2552a88e4b",
+    "used_by": [
+      "docs/calibration-flats.html"
+    ]
+  },
+  {
+    "name": "calibration-masters-tab.png",
+    "time": "2026-10-18T01:38:58.022Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-49b9f973&project=2&current=1415&calProject=2&calSession=ebbfc7314b5cf7b4&calKind=flat&calSpots=1&calFrame=77bdbaf5-c62c-4c44-b8d0-1af0151c79bf&calTab=masters",
+    "w": 1744,
+    "rect": {
+      "x": 24,
+      "y": 84,
+      "width": 1696,
+      "height": 817
+    },
+    "clip": {
+      "x": 21.6,
+      "y": 75.60000000000001,
+      "width": 1526.4,
+      "height": 735.3000000000001,
+      "scale": 1
+    },
+    "state": "Teddy Bear Masters tab, all types, files-on-disk filter off;1055masters in list, project banner1040. Dark600/120s and SII flats, input counts, dates and used-by provenance. No builds.",
+    "pixels": [
+      3052,
+      1470
+    ],
+    "sha256": "ee3588c516f58f2f71a1259b8974644bbf2a3ac4177c1355ee2ceaf9fecd78d8",
+    "used_by": [
+      "docs/calibration.html"
+    ]
+  },
+  {
+    "name": "calibration-flat-groups.jpg",
+    "time": "2026-10-18T01:39:33.264Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-d6eaaf55&project=1&current=8620&calBrowse=groups&calGroup=d067a2659094e08f&calFrame=766f5294-a5c8-4974-8fe0-d77a440d91bb",
+    "w": 1744,
+    "rect": {
+      "x": 24,
+      "y": 76,
+      "width": 1696,
+      "height": 1066
+    },
+    "clip": {
+      "x": 21.6,
+      "y": 68.4,
+      "width": 1526.4,
+      "height": 959.4,
+      "scale": 1
+    },
+    "state": "C925 OIII100.9\u2013104.4degrees, Group2Aug10 selected; groups1\u20134 with newdust1.8% and vignetting2.1/2.4% boundaries. Frame2026-08-11_06-05-44_OIII_-10.00_36.28s_0000.fits OK7donuts. No join/split.",
+    "pixels": [
+      3052,
+      1918
+    ],
+    "sha256": "3d16b7b85c9088ef614442772e81d47c2d9b9ddab3513515e29c2c90fdead092",
+    "used_by": [
+      "index.html",
+      "docs/calibration-flats.html"
+    ]
+  },
+  {
+    "name": "calibration-dust-donuts.jpg",
+    "time": "2026-10-18T01:39:40.976Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-d6eaaf55&project=1&current=8620&calBrowse=groups&calGroup=d067a2659094e08f&calFrame=766f5294-a5c8-4974-8fe0-d77a440d91bb&calSpots=1",
+    "w": 1744,
+    "rect": {
+      "x": 345,
+      "y": 459,
+      "width": 1375,
+      "height": 669
+    },
+    "clip": {
+      "x": 310.5,
+      "y": 413.1,
+      "width": 1237.5,
+      "height": 602.1,
+      "scale": 1
+    },
+    "state": "C925Aug10 OIII firstflat2026-08-11_06-05-44_OIII_-10.00_36.28s_0000.fits, Spots+Large duston, Normal85%.7donuts, estimates10\u201330mm, bottom-leftvignetting4.78%. GradeOK.",
+    "pixels": [
+      2474,
+      1204
+    ],
+    "sha256": "238c050b718b0fede78f9083dcf24bb66ebec6e1931fba1345ce134afc1d20eb",
+    "used_by": [
+      "docs/calibration-flats.html"
+    ]
+  },
+  {
+    "name": "calibration-flat-compare.jpg",
+    "time": "2026-10-18T01:39:47.607Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-d6eaaf55&project=1&current=8620&calBrowse=groups&calGroup=d067a2659094e08f&calFrame=766f5294-a5c8-4974-8fe0-d77a440d91bb&calSpots=1&calEarlier=1c0d0817c025cfba0ea865842557a062&calLater=c7749f98b0cd8d918e699165e342f5f2",
+    "w": 1744,
+    "rect": {
+      "x": 345,
+      "y": 77,
+      "width": 990,
+      "height": 1037
+    },
+    "clip": {
+      "x": 310.5,
+      "y": 69.3,
+      "width": 891,
+      "height": 933.3000000000001,
+      "scale": 1
+    },
+    "state": "C925 OIII Group2 Aug10 divided by May19, Normal, Spots+Large dust. New donut1.78%near507,2054; gone/moved dust and vignetting2.34%bottomedge. Compare older edge only, no group changes.",
+    "pixels": [
+      1782,
+      1866
+    ],
+    "sha256": "230bd202c0029fe9e1c6c7ae6777642012209eb7e360cbb463e16e1a0d7f7d1d",
+    "used_by": [
+      "docs/calibration-flats.html"
+    ]
+  },
+  {
+    "name": "calibration-scheduler-flats.png",
+    "time": "2026-10-18T01:40:24.945Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/calibration?db=db-d6eaaf55&project=1&current=8620&calBrowse=groups&calGroup=d067a2659094e08f&calFrame=766f5294-a5c8-4974-8fe0-d77a440d91bb&calSpots=1&calTab=scheduler",
+    "w": 1744,
+    "rect": {
+      "x": 24,
+      "y": 99,
+      "width": 1696,
+      "height": 602
+    },
+    "clip": {
+      "x": 21.6,
+      "y": 89.10000000000001,
+      "width": 1526.4,
+      "height": 541.8000000000001,
+      "scale": 1
+    },
+    "state": "C925 Scheduler flats Recorded,148records. Select148Sh2 140 and147Elephant Trunk, Oct16sessions; Invalidate2confirmationshown, Reasonblank so actiondisabled. Canceled aftercapture; no invalidation.",
+    "pixels": [
+      3052,
+      1082
+    ],
+    "sha256": "d0213d8c3fe4ab0986f6292844722983735496c6992a3f9c9c2b5176f55eb2ca",
+    "used_by": [
+      "docs/sync-plugin.html"
+    ]
+  },
+  {
+    "name": "calibration-coverage-report.png",
+    "time": "2026-10-18T01:40:51.413Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/?db=db-d6eaaf55&project=1&current=8620&q=Golf+of+Mexico",
+    "w": 1744,
+    "rect": {
+      "x": 527,
+      "y": 178,
+      "width": 689,
+      "height": 786
+    },
+    "clip": {
+      "x": 474.3,
+      "y": 160.20000000000002,
+      "width": 620.1,
+      "height": 707.4,
+      "scale": 1
+    },
+    "state": "Golf of Mexico coverage report:10of1238lightsPoor,384Check, include1547rejectedunchecked. Quality findings, calibration totals and firsttable rows visible; Check lights below scroll untouched.",
+    "pixels": [
+      1240,
+      1414
+    ],
+    "sha256": "a79750df69fa14a5457fa4f9a3a7070758d65a52cad3f6100d6f5ca8ede13a97",
+    "used_by": [
+      "docs/calibration-grading.html"
+    ]
+  },
+  {
+    "name": "image-calibration-panel.png",
+    "time": "2026-10-18T01:41:15.054Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/detail/16966?db=db-e075b4ec&project=12&q=Golf+of+Mexico&calib=thin_dark&filter=OIII&current=16966&calibFocus=thin_dark",
+    "w": 1744,
+    "rect": {
+      "x": 1355,
+      "y": 198,
+      "width": 378,
+      "height": 506
+    },
+    "clip": {
+      "x": 1219.5,
+      "y": 178.20000000000002,
+      "width": 340.2,
+      "height": 455.40000000000003,
+      "scale": 1
+    },
+    "state": "Golf OIII light16966 Oct7 20:02:21, accepted,300s,-6.6C. CalibrationPoor: dark master1frame; Check kept-outdarks. Poorfindingselected, globalchecks/defaults, Bias116andDarks1Aug18provenance. Restofexcludedlistbelowcrop.",
+    "pixels": [
+      680,
+      910
+    ],
+    "sha256": "4fc99b65e6e2f5be3ed805fbe720024fe6ba9390cd6ccba93b8ca0b44865d120",
+    "used_by": [
+      "docs/calibration-grading.html"
+    ]
+  },
+  {
+    "name": "image-detail-folded.png",
+    "time": "2026-10-18T01:41:27.031Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/detail/16966?db=db-e075b4ec&project=12&q=Golf+of+Mexico&calib=thin_dark&filter=OIII&current=16966&calibFocus=none",
+    "w": 1744,
+    "rect": {
+      "x": 1353,
+      "y": 78,
+      "width": 381,
+      "height": 285
+    },
+    "clip": {
+      "x": 1217.7,
+      "y": 70.2,
+      "width": 342.90000000000003,
+      "height": 256.5,
+      "scale": 1
+    },
+    "state": "Golf OIII16966, allfivepanelsfolded: ImageInformationOct7,Quality73%,CalibrationPoor thin dark, SkyHintedsolve, SatellitesOn demand.",
+    "pixels": [
+      684,
+      512
+    ],
+    "sha256": "e228a408bc6bddd15a8c93a8127fdbf90c3834e62b3a438f1c11072a43b7676e",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "stacks-toolbar.png",
+    "time": "2026-10-18T01:41:39.081Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/stacks?db=db-e075b4ec&project=12&q=Golf+of+Mexico&calib=thin_dark&filter=OIII&current=16966",
+    "w": 1744,
+    "rect": {
+      "x": 56,
+      "y": 80,
+      "width": 1632,
+      "height": 182
+    },
+    "clip": {
+      "x": 50.4,
+      "y": 72,
+      "width": 1468.8,
+      "height": 163.8,
+      "scale": 1
+    },
+    "state": "Golf of Mexico Stacks header, Card sizeFit, SeparateexposuregroupsON, AcceptedonlyOFF, Recommended, Auto calibration, Capturesequence, Build/Rebuildcurrentset, WBPP.31h5minintegrated. No builds.",
+    "pixels": [
+      2936,
+      326
+    ],
+    "sha256": "093172406ffa44b476aa9be77ad9ac13fc5e72dae7bcc0cd84118e7c9a3df4ca",
+    "used_by": [
+      "docs/wbpp.html"
+    ]
+  },
+  {
+    "name": "stacks-view.jpg",
+    "time": "2026-10-18T01:42:28.239Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/stacks?db=db-e075b4ec&project=12&q=Golf+of+Mexico&calib=thin_dark&filter=OIII&current=16966&cardsize=550",
+    "w": 1744,
+    "rect": {
+      "x": 306,
+      "y": 139,
+      "width": 1132,
+      "height": 1003
+    },
+    "clip": {
+      "x": 275.40000000000003,
+      "y": 125.10000000000001,
+      "width": 1018.8000000000001,
+      "height": 902.7,
+      "scale": 1
+    },
+    "state": "Golf of Mexico Stacks,550pxcards, HA300s and L60s readycachedpreviews. HA100integrated8h20m, L268integrated4h28m, SNRcurves88%and66%ideal. Bothoutofdate banners retained; no rebuild.",
+    "pixels": [
+      2036,
+      1804
+    ],
+    "sha256": "10412ad02cb65464c2cd76d6879016c249a8a94644b3ab7ccff5eb372ebcb39b",
+    "used_by": [
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "stacks-mosaic.jpg",
+    "time": "2026-10-18T01:42:42.667Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&current=8620&q=Heart&mosaic=1",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 880
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 792,
+      "scale": 1
+    },
+    "state": "Heart Mosaic4panels, existingSHOstacks, gridleft and solveplacednorthup right.550pxcards, all4panels solved. Automaticbuildscontinuingbelowcrop; none startedbyus.",
+    "pixels": [
+      3138,
+      1584
+    ],
+    "sha256": "aee3a571aa32ac26348b4a93ab672fbbf713aff2f3b79a02cb6b39547bfb1a7b",
+    "used_by": [
+      "index.html",
+      "docs/grader.html",
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "sky-live.jpg",
+    "time": "2026-10-18T01:43:00.439Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/sky?db=db-a01c581c&project=21&current=8620&q=Heart&mosaic=1&live=1",
+    "w": 1744,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1744,
+      "height": 1030
+    },
+    "clip": {
+      "x": 0,
+      "y": 0,
+      "width": 1569.6000000000001,
+      "height": 927,
+      "scale": 1
+    },
+    "state": "SkycoverageEquatorialFlat,all5rigs/filters,183nightsAug6 2025\u2013Oct16 2026,1699h38691frames72targets. Liveon;all5Neverseen/No reportyet,0online. No live pointings available.",
+    "pixels": [
+      3138,
+      1854
+    ],
+    "sha256": "52e8a57e2c1a18dd6e81fcbcf991eda88de5ade97ffbd3132b7988546c850e42",
+    "used_by": [
+      "index.html",
+      "docs/rigs.html",
+      "docs/sky.html"
+    ]
+  },
+  {
+    "name": "sky-context.jpg",
+    "time": "2026-10-18T01:45:49.388Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/detail/10955?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&returnTo=sequence",
+    "w": 1744,
+    "rect": {
+      "x": 24,
+      "y": 174,
+      "width": 1704,
+      "height": 870
+    },
+    "clip": {
+      "x": 21.6,
+      "y": 156.6,
+      "width": 1533.6000000000001,
+      "height": 783,
+      "scale": 1
+    },
+    "state": "Golf of Mexico HA frame 10955, Jul 9 2026 23:11, Rejected, hinted solve; Sky context expanded and sky overlay on. Fit 65%. 55 expected objects, center 20h56m49.8s +43d53m29s, scale 1.491 arcsec/px, rotation -179.7 deg, target in frame 91 arcsec from center. Image Information, Quality, Calibration, Satellite tracks folded. Crop image and sky context.",
+    "pixels": [
+      3066,
+      1566
+    ],
+    "sha256": "5091e673493d5c0a989392890e072abfca8e426ee08802df9a63dfc645b663d0",
+    "used_by": [
+      "index.html",
+      "docs/astrometry.html"
+    ]
+  },
+  {
+    "name": "sequence-select-rule.png",
+    "time": "2026-10-18T01:46:09.405Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&selectRule=recommended",
+    "w": 1744,
+    "rect": {
+      "x": 34,
+      "y": 76,
+      "width": 1678,
+      "height": 84
+    },
+    "clip": {
+      "x": 30.6,
+      "y": 68.4,
+      "width": 1510.2,
+      "height": 75.60000000000001,
+      "scale": 1
+    },
+    "state": "Golf of Mexico HA Jul 9 2026 22:08 session (57). Recommended rejects rule selected; count 0 and 0 selected because all frames already have stored Rejected grades. Score cutoff 50, size 150, newest first. No grading performed. Reshoot: choose this session, select Recommended rejects, crop sticky toolbar.",
+    "pixels": [
+      3020,
+      150
+    ],
+    "sha256": "47f36e730ef6a2894c2566b328d4cafa81eb533fd374c4a4ae4f0e5b3e770646",
+    "used_by": [
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "settings-sync.png",
+    "time": "2026-10-18T01:46:49.941Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10955&filterName=HA&selectRule=recommended",
+    "w": 1744,
+    "rect": {
+      "x": 216,
+      "y": 164,
+      "width": 1032,
+      "height": 830
+    },
+    "clip": {
+      "x": 194.4,
+      "y": 147.6,
+      "width": 928.8000000000001,
+      "height": 747,
+      "scale": 1
+    },
+    "state": "Settings > Sync. Merge catalogs from starfront-redcat61 to starfront-ultracat131, stored thumbnails on, before Preview. Remote PSF Guard below: no peers configured, Pull from peer, local redcat. No transfer preview or apply.",
+    "pixels": [
+      1856,
+      1494
+    ],
+    "sha256": "93bec74f28cd4cb009d7027491ffe696b84d1d28f3f2e1e01ed3f97e9e91bfb6",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "activation-save-first.png",
+    "time": "2026-10-18T01:47:04.393Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b&planTab=exposures",
+    "w": 1744,
+    "rect": {
+      "x": 420,
+      "y": 442,
+      "width": 904,
+      "height": 258
+    },
+    "clip": {
+      "x": 378,
+      "y": 397.8,
+      "width": 813.6,
+      "height": 232.20000000000002,
+      "scale": 1
+    },
+    "state": "Heart Mosaic > Exposures. Unsaved Blue goal changed 60 to61 frames per rig. Activate opens Save your changes before activating prompt. Save and activate not pressed. Reload next discards draft; captured saved plan remains Not activated yet.",
+    "pixels": [
+      1626,
+      464
+    ],
+    "sha256": "0824b76ca1f9ae398ae3c2ef23294acf091f33418542399ebd9cdaf1f51b2ddc",
+    "used_by": [
+      "docs/activation.html"
+    ]
+  },
+  {
+    "name": "plan-summary-activated.png",
+    "time": "2026-10-18T01:50:31.973Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=M31+NINA&plan=1312f371-6571-4b47-b189-cda507588c2c",
+    "w": 1744,
+    "rect": {
+      "x": 54,
+      "y": 92,
+      "width": 1638,
+      "height": 82
+    },
+    "clip": {
+      "x": 48.6,
+      "y": 82.8,
+      "width": 1474.2,
+      "height": 73.8,
+      "scale": 1
+    },
+    "state": "M31 NINA TEST COLLAB plan 1312f371-6571-4b47-b189-cda507588c2c. Existing Activated state on starfront-redcat61, no unsaved edits or warning bar. Blue/Green/Red14 frames, HA/OIII10 per rig, Framing tab. Crop summary only.",
+    "pixels": [
+      2948,
+      146
+    ],
+    "sha256": "8816df144c730e6ba1180f4b990c671fc2fb31043698a859def682b5c7f9e290",
+    "used_by": [
+      "docs/planning.html"
+    ]
+  },
+  {
+    "name": "settings-agents.png",
+    "time": "2026-10-18T01:51:06.164Z",
+    "dpr": 2,
+    "h": 1028,
+    "url": "http://127.0.0.1:13179/",
+    "w": 1570,
+    "rect": {
+      "x": 130,
+      "y": 166,
+      "width": 1030,
+      "height": 355
+    },
+    "clip": {
+      "x": 130,
+      "y": 166,
+      "width": 1030,
+      "height": 355,
+      "scale": 1
+    },
+    "state": "Disposable localhost server with no accounts, Settings > Agents. Claude Code and Codex configuration snippets for http://127.0.0.1:13179/api/mcp. No token or connection created. Browser server has no Choose a fixed server port link. App debug binary0.11.0, checkout88634571; built binary commit not independently verified. Fixture scripts/screenshot-fixture.py. Chrome default100% zoom DPR2.",
+    "pixels": [
+      2060,
+      710
+    ],
+    "sha256": "14ac2fb706386460e767176d4263b1249f49fc2bcc3a2bf8abb96bccdb626de3",
+    "used_by": [
+      "docs/mcp.html"
+    ]
+  },
+  {
+    "name": "sequence-select-after-reject.png",
+    "time": "2026-10-18T01:51:31.263Z",
+    "dpr": 2,
+    "h": 1028,
+    "url": "http://127.0.0.1:13179/#/sequence?db=db-94d9b627&project=1&target=1&current=1&selectRule=below-cutoff",
+    "w": 1570,
+    "rect": {
+      "x": 30,
+      "y": 78,
+      "width": 1510,
+      "height": 534
+    },
+    "clip": {
+      "x": 30,
+      "y": 78,
+      "width": 1510,
+      "height": 534,
+      "scale": 1
+    },
+    "state": "Disposable M44 screenshot fixture, db-94d9b627 project1 target1, three real e2e B frames with staged HFR/star-count metadata (2.4/520,6.5/150,2.6/500). Select Below the cutoff at Score50, Review rejection, Reject selected(1). Frame2 now Rejected; rule stays active with0 matches/0selected; other2Pending. Uses Below the cutoff instead of Recommended rejects because catalog-only evidence has no automatic recommendation. No live catalog changed. Recreate with scripts/screenshot-fixture.py, local debug0.11.0 checkout88634571, Chrome100% DPR2.",
+    "pixels": [
+      3020,
+      1068
+    ],
+    "sha256": "4812f704c67d0917d207df5c6a243b9a58d8c9bf81be72549dec494a9f8bd0fe",
+    "used_by": [
+      "docs/screening.html"
+    ]
+  },
+  {
+    "name": "autoimport-held-review.png",
+    "time": "2026-10-18T01:53:45.444Z",
+    "dpr": 2,
+    "h": 1028,
+    "url": "http://127.0.0.1:13179/#/sequence?db=db-94d9b627&project=1&target=1&current=1&selectRule=below-cutoff",
+    "w": 1570,
+    "rect": {
+      "x": 168,
+      "y": 670,
+      "width": 950,
+      "height": 93
+    },
+    "clip": {
+      "x": 168,
+      "y": 670,
+      "width": 950,
+      "height": 93,
+      "scale": 1
+    },
+    "state": "Disposable scheduler catalog, Settings > Databases. Enabled automatic import on open, both lights and calibration, Ask first; quality analysis off and position matching off. Run now scanned four copied FITS files:3already present,1held no matching project. No skipped-by-rule count. Reshoot from scripts/screenshot-fixture.py, apply these settings only to disposable catalog then Run now.",
+    "pixels": [
+      1900,
+      186
+    ],
+    "sha256": "e6df302f27a8797ec5da4058aef49c204d0f97a096d431c52a854f64a139b4af",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "import-preview-plans.png",
+    "time": "2026-10-18T01:54:44.668Z",
+    "dpr": 2,
+    "h": 1028,
+    "url": "http://127.0.0.1:13179/#/sequence?db=db-94d9b627&project=1&target=1&current=1&selectRule=below-cutoff",
+    "w": 1570,
+    "rect": {
+      "x": 154,
+      "y": 210,
+      "width": 983,
+      "height": 582
+    },
+    "clip": {
+      "x": 154,
+      "y": 210,
+      "width": 983,
+      "height": 582,
+      "scale": 1
+    },
+    "state": "Disposable full-schema Import review fixture. Created import-review.sqlite using create-db with first e2e FITS0028 only and --no-register. Added through local Settings with all4files image directory. Import preview:3newlights,2matchPraesepe byname and raise acquired on1plan,1NEWComaCluster,1alreadypresent. Backgroundqualityoff. Import notpressed;Cancel. No template-addition line because existing B template reused.",
+    "pixels": [
+      1966,
+      1164
+    ],
+    "sha256": "830830ef25f5cb39a690104f8a6e4c0d2aefba31525a4a6eee839d4065283785",
+    "used_by": [
+      "docs/importing.html"
+    ]
+  },
+  {
+    "name": "header-tab-hover.png",
+    "time": "2026-10-18T02:01:59.658Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/grid?db=db-e075b4ec&project=12&target=12&current=10955",
+    "w": 1744,
+    "rect": {
+      "x": 14,
+      "y": 8,
+      "width": 950,
+      "height": 58
+    },
+    "clip": {
+      "x": 12.6,
+      "y": 7.2,
+      "width": 855,
+      "height": 52.2,
+      "scale": 1
+    },
+    "state": "Golf of Mexico Images; keyboard focus on Calibration reveals its name and focus outline. Reshoot: focus Sequence then press Tab, without opening Calibration. Captures focus rather than hover; labels behave the same.",
+    "pixels": [
+      1710,
+      104
+    ],
+    "sha256": "eab7b3f44902d6e29e1af0b5ce4120dd0607440ead60cf9702c1cb8857e654d6",
+    "used_by": [
+      "docs/grader.html"
+    ]
+  },
+  {
+    "name": "stack-reprocessing.jpg",
+    "time": "2026-10-18T02:02:23.550Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=5&target=5",
+    "w": 1744,
+    "rect": {
+      "x": 312,
+      "y": 579,
+      "width": 554,
+      "height": 546
+    },
+    "clip": {
+      "x": 280.8,
+      "y": 521.1,
+      "width": 498.6,
+      "height": 491.40000000000003,
+      "scale": 1
+    },
+    "state": "Sh2 119 redcat61 HA600s cached stack,19frames3h10m. Existing status From the previous stack \u00b7 reprocessing \u00b7 waiting for the stack to settle. RC-Astro x2 and Auto MTF applied to previous stack; full restack calibration changed. Card550px. No build or reprocessing started by us.",
+    "pixels": [
+      996,
+      982
+    ],
+    "sha256": "b6dd6e78fe03064b0db877bc113bcc0f43d11f3a082223309e450896849f3b6a",
+    "used_by": [
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "stack-processing-waiting.png",
+    "time": "2026-10-18T02:04:53.130Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=5&target=5",
+    "w": 1744,
+    "rect": {
+      "x": 310,
+      "y": 16,
+      "width": 1246,
+      "height": 751
+    },
+    "clip": {
+      "x": 279,
+      "y": 14.4,
+      "width": 1121.4,
+      "height": 675.9,
+      "scale": 1
+    },
+    "state": "Live Sh2 119, starfront-redcat61. Existing HA 600 s (19 frames, 3 h 10 m) and OIII 600 s (197 frames, 32 h 50 m) previews remain visible while reprocessing waits. Open Background jobs and scroll its list to the bottom: Sh2 119 HA/OIII and IC 447 R 300 s wait for the automatic Heart and Soul Nebula Panel 3 G 10 s stack. No job started or changed.",
+    "pixels": [
+      2242,
+      1350
+    ],
+    "sha256": "4ad686135a30be00deab88b9fd3498f6bb5cc740eaccec8c7974df81e1906942",
+    "used_by": [
+      "docs/stacking.html"
+    ]
+  },
+  {
+    "name": "framing-panel-drag.png",
+    "time": "2026-10-18T02:05:20.276Z",
+    "dpr": 1.7999999523162842,
+    "h": 1142,
+    "url": "https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&current=8620&q=Heart&plan=051751d1-6b05-444e-9485-afbc6177dd5b",
+    "w": 1744,
+    "rect": {
+      "x": 286,
+      "y": 428,
+      "width": 802,
+      "height": 551
+    },
+    "clip": {
+      "x": 257.40000000000003,
+      "y": 385.2,
+      "width": 721.8000000000001,
+      "height": 495.90000000000003,
+      "scale": 1
+    },
+    "state": "Heart Mosaic / askar107phq, four panels. Framing, DSS (offline), 5.17 degrees across, Panel drag mode, Snap on, Deep-sky marks off. Select r2c2 (331 frames), Unlock in the browser draft, drag from CSS (854,790) to (835,755). Capture after release: selected panel overlaps 20%, 29.8%, 20.5%, three other panels locked. Unsaved draft only; discard and confirm afterward, verify four locked and no unsaved changes, restore Deep-sky marks. Do not Save or Activate.",
+    "pixels": [
+      1442,
+      990
+    ],
+    "sha256": "df256da6743269c893915af9e1e71481a29a647e14d865a2aaeacb12eaad9d19",
+    "used_by": [
+      "docs/framing.html"
+    ]
+  }
+]

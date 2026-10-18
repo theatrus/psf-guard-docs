@@ -8,7 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/site.css?v=7">
   <meta property="og:title" content="PSF Guard">
-  <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Build from FITS folders or open a Target Scheduler database.">
+  <meta property="og:description" content="An astrophotography image catalog, grader, and quality workbench. Import FITS or XISF folders, or receive captures from N.I.N.A. with PSF Guard Sync.">
   <meta property="og:image" content="https://psf-guard.com/assets/sky-context.jpg">
   <meta property="og:url" content="https://psf-guard.com/">
   <meta property="og:type" content="website">
@@ -83,33 +83,32 @@ function gtag_report_demo() {
   <div>
     <img class="hero-logo" src="assets/logo.svg" alt="PSF Guard logo">
     <h1>Plan it, shoot it with N.I.N.A.,<br><span class="grad">keep the frames that matter, and stack them.</span></h1>
-    <p class="lede">
-      <strong>Plan</strong> the framing, mosaic and exposure plans for every rig.
-      <strong>Shoot with N.I.N.A.</strong>: activation writes Target Scheduler
-      projects, and the PSF Guard Sync plugin carries them to the rig and brings
-      frames and grades back. <strong>Grade</strong> every frame from its pixels
-      and reject the clouded, blocked, soft and off-target ones.
-      <strong>Stack and export</strong>: calibrated stacks, color previews, WBPP
-      runs and AstroBin exports.
-    </p>
+    <p class="lede"> <strong>Plan</strong> the framing, mosaic and exposure plans for
+    every rig. <strong>Shoot with N.I.N.A.</strong>: activation writes Target Scheduler
+    projects. The <a href="docs/sync-plugin.html">PSF Guard Sync plugin</a> sends plans
+    and reviewed grades to the rig and uploads capture records and image files to PSF
+    Guard. <strong>Grade</strong> every frame from its pixels and reject the clouded,
+    blocked, soft and off-target ones. <strong>Stack and export</strong>: calibrated
+    stacks, color previews, WBPP runs and AstroBin exports. </p>
     <div class="btn-row">
       <a class="btn primary" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
       <a class="btn" href="docs/">Get started</a>
+      <a class="btn" href="docs/new-in-0.12.html">New in 0.12</a>
       <a class="btn" href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">Source on GitHub</a>
     </div>
   </div>
   <figure class="hero-shot">
-    <img src="assets/hero-flow.jpg" alt="PSF Guard in four steps: plan a mosaic over the Heart Nebula, activate it as Target Scheduler projects for N.I.N.A., grade a session with soft-star and obstruction frames rejected, and stack a Foraxx SHO color image of the Teddy Bear Nebula" width="2400" height="1733">
-    <figcaption>Plan, shoot with N.I.N.A., grade, then stack and export.</figcaption>
+    <img src="assets/hero-flow.jpg" alt="California Nebula workflow: frame and preview the plan, capture at the telescope with N.I.N.A., then repeat image review and stacking" width="2400" height="1860">
+    <figcaption>Plan California Nebula, capture with N.I.N.A., then review and rebuild the stack. Repeat as you refine grades and processing.</figcaption>
   </figure>
 </section>
 
 <section class="section compact">
   <div class="callout info">
     <strong>Like Lightroom Classic, for astrophotography data.</strong> PSF Guard
-    catalogs files where they are. It keeps its image map, plans and grades in the
-    Target Scheduler database layout, so it opens a live scheduler database the
-    same way as one it built. Target Scheduler is optional.
+    catalogs files where they are. Import your image folders, or use the
+    <a href="docs/sync-plugin.html">PSF Guard Sync plugin</a> to receive captures
+    from N.I.N.A. Target Scheduler is optional.
   </div>
 </section>
 
@@ -160,8 +159,8 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🗃️</div>
       <h3>Catalog in place</h3>
-      <p>Build a catalog from FITS or XISF folders, or open a Target Scheduler
-      database. New frames come in on a schedule. Files never move.</p>
+      <p>Build a catalog from FITS or XISF folders and check for new frames
+      on a schedule. Imported files stay in their folders.</p>
     </div>
     <div class="card">
       <div class="icon">🖼️</div>
@@ -189,6 +188,14 @@ function gtag_report_demo() {
       <h3>WBPP on the server</h3>
       <p>Run PixInsight's WeightedBatchPreprocessing from Stacks, headless, with each
       night's flats and darks matched. Its masters come back as stacks.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧫</div>
+      <h3>Calibration you can check</h3>
+      <p>Every bias, dark and flat is graded. Flats are grouped by what they
+      measure, dust and vignetting are drawn, and each light says which
+      flats it takes and why. Projects the library serves poorly are
+      flagged.</p>
     </div>
     <div class="card">
       <div class="icon">🎯</div>
@@ -219,8 +226,9 @@ function gtag_report_demo() {
     <div class="card">
       <div class="icon">🔁</div>
       <h3>Sync &amp; remote rigs</h3>
-      <p>Move projects, captures, plans and grades between a telescope database and a
-      grading copy, on one machine or between PSF Guard servers.</p>
+      <p>Connect N.I.N.A. through the <a href="docs/sync-plugin.html">PSF Guard Sync
+      plugin</a>, the recommended setup with Target Scheduler. Sync capture records,
+      plans and grades, and optionally upload image files.</p>
     </div>
     <div class="card">
       <div class="icon">🤝</div>
@@ -235,6 +243,13 @@ function gtag_report_demo() {
       calibration and plans, and changes them as you would, with your
       permissions.</p>
     </div>
+    <div class="card">
+      <div class="icon">💾</div>
+      <h3>Backups</h3>
+      <p>Back up the settings and every catalog into one archive, now or on a
+      schedule, while N.I.N.A. keeps writing. <code>psf-guard backup</code>
+      does the same from cron or a timer.</p>
+    </div>
   </div>
 </section>
 
@@ -244,9 +259,10 @@ function gtag_report_demo() {
     Sequence scores a whole session at once and gives the cause of each low
     score. Annotated diagnostics mark the cells where a frame broke its own baseline.
   </p>
+
   <figure class="feature-shot">
-    <img src="assets/sequence-session.jpg" alt="Sequence for one H-alpha session: score chart, solved pointing, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
-    <figcaption>One night: three frames with soft stars, then a run of obstructions.</figcaption>
+    <img src="assets/sequence-session.jpg" loading="lazy" alt="Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames." width="3138" height="1652">
+    <figcaption>Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames.</figcaption>
   </figure>
   <div class="shot-pair">
     <figure>
@@ -270,14 +286,29 @@ function gtag_report_demo() {
     WBPP on the server.
   </p>
   <figure class="feature-shot">
-    <img src="assets/stack-foraxx-teddy.jpg" alt="Foraxx SHO color preview of the Teddy Bear Nebula built from PSF Guard channel stacks" loading="lazy">
-    <figcaption>Foraxx SHO of the Teddy Bear Nebula: 517 frames, 86 hours of H-alpha, OIII and SII. Change the palette without restacking.</figcaption>
+    <img src="assets/stack-foraxx-california.jpg" alt="Foraxx SHO color preview of the California Nebula from 918 inputs and 76 hours 30 minutes of integration" width="2886" height="1806" loading="lazy">
+    <figcaption>Foraxx SHO of the California Nebula: 918 inputs, 76 hours 30 minutes of H-alpha, OIII and SII. Change the palette without restacking.</figcaption>
   </figure>
   <p>
     <a class="btn" href="docs/stacking.html">Stacks →</a>
     <a class="btn" href="docs/wbpp.html">WBPP runs →</a>
     <a class="btn" href="docs/exporting.html">Export →</a>
   </p>
+</section>
+
+<section class="section" id="calibration">
+  <h2>See the calibration each light gets</h2>
+  <p class="sub">
+    The Calibration page shows a rig's bias, darks and flats night by night, each
+    graded against the frames like it. Flats are grouped by what they measure, so new dust
+    or a moved camera starts a new group, and each light takes flats from its own
+    side of the change. Keep a frame out, use it anyway, or split a group by hand.
+  </p>
+  <figure>
+    <img src="assets/calibration-flat-groups.jpg" loading="lazy" alt="Measured changes in dust or illumination separate these O III flat groups." width="3052" height="1918">
+    <figcaption>Measured changes in dust or illumination separate these O III flat groups.</figcaption>
+  </figure>
+  <p><a class="btn" href="docs/calibration.html">Calibration Libraries →</a></p>
 </section>
 
 <section class="section" id="planning">
@@ -289,11 +320,21 @@ function gtag_report_demo() {
     to write Target Scheduler projects, targets and exposure plans, with a preview of
     every row.
   </p>
+
   <figure class="feature-shot">
-    <img src="assets/plan-workspace.jpg" alt="A plan's workspace: a 2 by 2 mosaic over the Heart Nebula on the offline DSS map, with the target and rig panels" loading="lazy">
-    <figcaption>A mosaic plan on the offline DSS map, with deep-sky marks and the rig's field.</figcaption>
+    <img src="assets/plan-workspace.jpg" loading="lazy" alt="Frame Heart Mosaic over the survey image. Its four captured panels remain locked." width="3138" height="2054">
+    <figcaption>Frame Heart Mosaic over the survey image. Its four captured panels remain locked.</figcaption>
   </figure>
   <p><a class="btn" href="docs/planning.html">Planning →</a></p>
+</section>
+
+<section class="section" id="beta">
+  <h2>Early beta: Director and collaboration</h2>
+  <p class="sub">The upcoming <a href="docs/rigs.html#director">N.I.N.A. Director
+  plugin</a> connects activated plans with live rig status and capture reports. Direct
+  acquisition is still upcoming. Use Target Scheduler with PSF Guard Sync for imaging
+  today. <a href="docs/collaboration.html">Collaboration</a> is also in early beta, with
+  shared assignments and contribution uploads for services such as Starfront.</p>
 </section>
 
 <section class="section" id="sky-coverage">
@@ -304,9 +345,10 @@ function gtag_report_demo() {
     A timeline replays every night per rig, and Live shows where each rig on the
     Director plugin points now.
   </p>
+
   <figure class="feature-shot">
-    <img src="assets/sky-live.jpg" alt="Sky coverage with totals, rig and filter chips, the all-sky map, and the Live list of rigs" loading="lazy">
-    <figcaption>Totals, the all-sky map and the Live list of rigs.</figcaption>
+    <img src="assets/sky-live.jpg" loading="lazy" alt="Live lists the rigs and their latest reports. These five rigs have not reported yet." width="3138" height="1854">
+    <figcaption>Live lists the rigs and their latest reports. These five rigs have not reported yet.</figcaption>
   </figure>
   <p><a class="btn" href="docs/sky.html">Sky Coverage →</a></p>
 </section>
@@ -319,8 +361,8 @@ function gtag_report_demo() {
     the result, and draws the overlay.
   </p>
   <figure class="feature-shot">
-    <img src="assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines and target offset" loading="lazy">
-    <figcaption>Catalog labels, outlines, an RA/Dec grid, the pixel scale and the offset from the target.</figcaption>
+    <img src="assets/sky-context.jpg" loading="lazy" alt="The solved frame places catalog objects over the image and lists the expected objects in its field." width="3066" height="1566">
+    <figcaption>The solved frame places catalog objects over the image and lists the expected objects in its field.</figcaption>
   </figure>
   <p><a class="btn" href="docs/astrometry.html">Catalogs and plate solving →</a></p>
 </section>
@@ -328,21 +370,24 @@ function gtag_report_demo() {
 <section class="section" id="tour">
   <h2>A quick tour</h2>
   <div class="gallery">
+
     <figure>
-      <img src="assets/library-compact.jpg" alt="The Library with one row of pills per project" loading="lazy">
-      <figcaption>The Library: every project in every catalog, newest work first.</figcaption>
+      <img src="assets/library-compact.jpg" loading="lazy" alt="The compact Library lists projects across all databases, with counts and review status." width="3138" height="1260">
+      <figcaption>The compact Library lists projects across all databases, with counts and review status.</figcaption>
     </figure>
+
     <figure>
-      <img src="assets/stacks-mosaic.jpg" alt="A four-panel mosaic in Stacks, in grid order and on the sky" loading="lazy">
-      <figcaption>A mosaic's panel stacks, in grid order and on the sky.</figcaption>
+      <img src="assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
+      <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
     </figure>
     <figure>
       <img src="assets/compare.jpg" alt="Side-by-side comparison with linked zoom" loading="lazy">
       <figcaption>Compare two frames with linked zoom and pan.</figcaption>
     </figure>
+
     <figure>
-      <img src="assets/activation-preview.png" alt="Activation preview listing every Target Scheduler row per rig" loading="lazy">
-      <figcaption>Activation lists every row before it writes.</figcaption>
+      <img src="assets/activation-preview.png" loading="lazy" alt="Review each rig&#x27;s changes before activating the saved plan." width="1642" height="1414">
+      <figcaption>Review each rig&#x27;s changes before activating the saved plan.</figcaption>
     </figure>
     <figure>
       <img src="assets/annotated-stars.jpg" alt="Annotated star detection output" loading="lazy">
@@ -387,9 +432,9 @@ psf-guard server catalog.sqlite ./images</code></pre>
     </div>
   </div>
   <div class="callout" style="margin-top:2rem">
-    <strong>Back up your Target Scheduler database</strong> before PSF Guard first
-    writes to it. Grading writes to the file directly. Imports, sync and activation
-    preview their changes before they apply.
+    <strong>Back up your catalogs and settings</strong> before an upgrade.
+    Use <a href="docs/backups.html">Backups</a> in Settings or
+    <code>psf-guard backup</code>, and keep a copy on another disk.
   </div>
 </section>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stacks — PSF Guard</title>
-  <meta name="description" content="Stack graded frames on the server in PSF Guard's Stacks view: stacking method, calibration, build queue, automatic refresh, signal-to-noise by depth, color previews and mosaic panels.">
+  <meta name="description" content="Stack graded frames on the server in PSF Guard's Stacks view: stacking method, calibration, the build line, processing runs, automatic refresh, signal-to-noise by depth, color previews and mosaic panels.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html" class="active" aria-current="page">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -145,8 +157,13 @@ function gtag_report_demo() {
   <h1>Stacks</h1>
   <p class="lede">Stack a project's graded frames on the server and check the result
   before full processing. This page covers the <strong>Stacks</strong> view, the
-  stacking method, calibration, the build queue, automatic refresh,
-  signal-to-noise by depth, and color previews.</p>
+  stacking method, calibration, the build line, processing runs, automatic
+  refresh, signal-to-noise by depth, and color previews.</p>
+
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Processing runs wait
+  in the build line, show in the header's background jobs and survive a
+  restart, and a refreshed stack gets its card's processing again. Stacks take
+  flats by flat group.</div>
 
   <h2 id="view">Open Stacks</h2>
   <p><strong>Stacks</strong> sits beside <strong>Images</strong> and
@@ -159,9 +176,10 @@ function gtag_report_demo() {
   with that set. <strong>Stack every image instead</strong> goes back to the
   whole project.</p>
 
+
   <figure>
-    <img src="../assets/stacks-view.jpg" alt="Stacks view for one target: B and G channel stacks with integrated, rejected and excluded counts and signal-to-noise curves" loading="lazy">
-    <figcaption>Channel stacks for one target, each with its counts and signal-to-noise curve.</figcaption>
+    <img src="../assets/stacks-view.jpg" loading="lazy" alt="Cached H-alpha and luminance stacks show exposure time and SNR history. Both previews are marked out of date here." width="2036" height="1804">
+    <figcaption>Cached H-alpha and luminance stacks show exposure time and SNR history. Both previews are marked out of date here.</figcaption>
   </figure>
 
   <p><strong>Card size</strong>, at the top of the view, sets how wide the stack
@@ -170,7 +188,7 @@ function gtag_report_demo() {
   browser and in the page address; <strong>Fit</strong> goes back to filling the
   row.</p>
   <p>Click the panel's <strong>Stacks</strong> title to fold the whole panel. A
-  folded panel shows how many channels it holds, or that a build is running.</p>
+  collapsed panel shows the channel count, or that a build is running.</p>
 
   <h2 id="mono">Build stacks</h2>
   <p>Click <strong>Build stacks</strong>. PSF Guard queues one build per target
@@ -193,10 +211,15 @@ function gtag_report_demo() {
       slipped. See <a href="screening.html">Quality Screening</a>.</li>
     <li>Lights the calibration library can't calibrate, only when
       <strong>Leave out lights that can't be calibrated</strong> is on under
-      <strong>Settings &rarr; Calibration</strong>. The card counts them under
-      <strong>can't calibrate</strong>. See
-      <a href="calibration.html#uncalibrated">Calibration Libraries</a>.</li>
+      <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>. The
+      card counts them under <strong>can't calibrate</strong>. See
+      <a href="calibration-grading.html#uncalibrated">Calibration Libraries</a>.</li>
   </ul>
+  <p>Sequence analysis scores frames with your defaults from
+  <strong>Settings &rarr; Review &rarr; Sequence scoring</strong>. When
+  Sequence's <strong>Scoring</strong> was changed for this project,
+  <strong>Scoring (changed)</strong> beside the build buttons says that builds
+  use the changed values, with <strong>Reset to default</strong>.</p>
   <p>The server log lists each frame a build leaves out or Seiza rejects, and
   why. The desktop app writes this log to a daily file; <strong>Open
   logs</strong> in Settings opens the folder.</p>
@@ -220,7 +243,7 @@ function gtag_report_demo() {
   <strong>Unknown exposure</strong>.</p>
   <p>Turn it off to mix lengths in one stack. The choice is saved per project
   in that database, and a project that chose either way keeps its choice.
-  Changing it needs database management. It changes stacking and grid
+  Changing it needs an editor. It changes stacking and grid
   grouping, not grades or Target Scheduler plans.</p>
 
   <h2 id="method">Choose the stacking method</h2>
@@ -228,9 +251,9 @@ function gtag_report_demo() {
   every stack on the server integrates its frames. Three presets fill in the
   choices below; each choice can also be changed on its own.</p>
   <ul>
-    <li><strong>Recommended</strong>, the default, is Seiza 0.19's method:
-      local background normalization, frames weighted by their noise, a
-      reference chosen from each frame's stars and sky, quadratic registration
+    <li><strong>Recommended</strong>, the default, follows the Seiza stacking
+      command line's defaults: local background normalization, frames
+      weighted by their noise, a reference chosen from each frame's stars and sky, quadratic registration
       for lens distortion, and Lanczos-3 resampling.</li>
     <li><strong>Draft</strong> is Recommended without the final rejection pass,
       for a quick look.</li>
@@ -275,7 +298,10 @@ function gtag_report_demo() {
       distortion. A frame with too few paired stars keeps the similarity
       fit.</li>
     <li><strong>Resampling.</strong> Lanczos-3 gives sharper stars and clamps
-      ringing at bright edges. Bilinear is faster.</li>
+      ringing at edges that stand above the noise. Faint sky is left
+      unclamped, so frames rotated slightly against each other leave no
+      cross-hatch, and the stack's noise is the sky's own. Bilinear is
+      faster.</li>
     <li><strong>Bayer drizzle.</strong> For color cameras. Each registered
       pixel takes only the nearest photosite of its own color, so nothing is
       interpolated. It pays only when frames are dithered by several pixels;
@@ -288,9 +314,10 @@ function gtag_report_demo() {
     1.00; noisier frames count for less. Rejected and rotation-skewed frames stay out.</figcaption>
   </figure>
 
+
   <figure>
-    <img src="../assets/settings-stacking.png" alt="Settings › Stacking: Recommended, Draft and Classic presets with Final pass, Normalization, Frame weights and Reference frame choices" loading="lazy">
-    <figcaption>Settings → Stacking sets the method for every stack on the server and the automatic refresh.</figcaption>
+    <img src="../assets/settings-stacking.png" loading="lazy" alt="The Recommended preset combines reintegration, local background normalization and noise weighting." width="1878" height="1332">
+    <figcaption>The Recommended preset combines reintegration, local background normalization and noise weighting.</figcaption>
   </figure>
 
   <p>The stack panel shows the method in use beside <strong>Method:</strong>;
@@ -305,8 +332,13 @@ function gtag_report_demo() {
   share for work you wait on, or the background share for an automatic
   refresh. Within a channel it prepares several frames at once while it
   integrates earlier ones. See <a href="storage.html#processor">Processor
-  use</a>. After each Seiza stacking upgrade, existing stacks and masters
-  rebuild once.</p>
+  use</a>.</p>
+  <p>After a Seiza stacking upgrade, each stack and master rebuilds once, the
+  first time it is used; the move to Seiza 0.33 and stacking 0.36 is one such
+  upgrade. Stacks of frames rotated slightly between nights no longer show
+  cross-hatched bands on a faint sky, and report a lower SNR there, often by
+  about a tenth: they now measure the sky's real noise, which the old
+  resampling smoothed without gaining any signal.</p>
   <p>On the command line, <code>psf-guard stack-snr --weight-by-noise</code>
   applies the same noise weights; see <a href="#cli">below</a>.</p>
 
@@ -327,11 +359,20 @@ function gtag_report_demo() {
   overrides it for that channel; <strong>Project</strong> follows the panel. A
   stack built under another mode shows as out of date.</p>
   <p><strong>Settings &rarr; Calibration</strong> sets the rules every stack
-  matches by: rotation tolerance, dark reach, <strong>Dark choice</strong>,
-  the flat age limit, and whether to leave out lights the library can't
-  calibrate. See <a href="calibration.html#darks">Dark masters</a> and
-  <a href="calibration.html#uncalibrated">Lights that can't be
+  matches by: the matching tolerances, the dark-master choices such as
+  <strong>Dark choice</strong>, and the light checks, for every rig or, under
+  <strong>Rigs</strong>, for one. With <strong>Leave out lights that can't be
+  calibrated</strong> on, under <strong>Stacks and exports</strong>, a build
+  leaves out the lights a check flags for a missing flat, bias or dark, or
+  flats past the age limit. See <a href="calibration-masters.html#darks">Dark
+  masters</a> and <a href="calibration-grading.html#uncalibrated">Lights that can't be
   calibrated</a>.</p>
+  <p>Flats follow the rig's flat groups: PSF Guard matches each light to flats from the
+  same side of every measured change in the rig's flats, as the
+  <strong>Calibration</strong> page's <strong>Frames</strong> view shows them, and
+  nights whose flats differ stay out of one master. A light's
+  <strong>Calibration</strong> panel in image detail explains how its flats were chosen.
+  See <a href="calibration-flats.html#flat-groups">Flat groups</a>.</p>
   <p>A multi-night stack whose lights need different flats or darks splits into
   calibration sessions, and the build swaps masters between them. A master
   that fails to build does not fail the stack: the card shows the skipped
@@ -347,36 +388,55 @@ function gtag_report_demo() {
   dark-flat and flat files that stack used, with the sessions and channels
   that used each, fitted pedestals, the sensor temperatures and nights of each
   master's frames, pan and zoom, a display stretch, and an unchanged FITS
-  download. Matching rules, flats-only pedestals and master caching are on
+  download. <strong>Open in Calibration</strong> in that inspector opens the
+  master on the Calibration page, while the library still records it.
+  Matching rules, flats-only pedestals and master caching are on
   <a href="calibration.html">Calibration Libraries</a>.</p>
 
   <h2 id="queue">Queue builds</h2>
   <p>Build buttons stay live while a build runs. Each click queues another
   build behind it. One stack build runs at a time on the server, across every
-  database, so memory use does not grow with the queue. Cards show
-  <code>queued</code> or live progress.</p>
+  database, so memory use does not grow with the line. Color compositions and
+  <a href="#processing-runs">processing runs</a> wait in the same line. Cards
+  show <code>queued</code> or live progress.</p>
   <p><strong>Stop</strong> appears while a build is queued or running, and
   reads <strong>Stop all</strong> with a count when more than one is waiting.
-  A stop lands between frames, channels, or the frames of a master. Nothing
+  The build stops between frames, channels, or master input frames. Nothing
   partial is published: a channel stopped before its FITS is written leaves no
   stack, and channels already finished keep theirs.</p>
-  <p>A build belongs to the server, not to the page that started it. Leave the
-  page or reload it and the cards pick up the running build. The header's
-  background jobs chip shows overall progress and the number of jobs; hover or
-  click it to see the queue. There <strong>↑</strong> and <strong>↓</strong>
-  move a waiting build, <strong>×</strong> takes it out, and
-  <strong>Stop</strong> ends the running one after asking once. Click a build
-  to open its target's stacks. Progress keeps moving through the final
-  rejection pass, for example <code>Rejecting transients · pass 2/3 · frame
-  4/14</code>.</p>
+  <p>A build belongs to the server, not to the page that started it. Leave the page or
+  reload it and the cards pick up the running build. The header's background jobs chip
+  shows overall progress and a count of running, queued and waiting jobs; hover or click
+  it to see the list. Builds you started sit under <strong>Started by you</strong>,
+  automatic refreshes under <strong>Automatic</strong>. Both share one build line, so a
+  queued build shows its position in the queue and the number of jobs ahead, as
+  <code>queued · 4 · 3 ahead</code>. <strong>↑</strong> and <strong>↓</strong> move a
+  queued build one place. Under <strong>Started by you</strong>,
+  <strong>Move to top</strong> moves a task to the front, including past
+  automatic builds; it runs after the current task finishes. The button is
+  disabled when the task is already next. <strong>×</strong> removes a queued
+  task, and <strong>Stop</strong> ends the running task after asking once.
+  Click a build's target to open its stacks.
+  Progress keeps moving through the final rejection pass, for example <code>Rejecting
+  transients · pass 2/3 · frame 4/14</code>.</p>
+
   <figure>
-    <img src="../assets/header-jobs.png" alt="The header's background jobs popup: running stack builds with progress, the queue and Stop" loading="lazy">
-    <figcaption>The header's job queue. Click a job to open what it works on.</figcaption>
+    <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
+    <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
   </figure>
 
-  <p>The queue survives a restart: queued and running builds come back in
-  order. See <a href="storage.html">Storage &amp; Performance</a> for the job
-  journal and the share of processor cores each kind of work gets.</p>
+  <p>A running color composition also has <strong>Stop</strong>. It stops at the
+  next channel or step and ends a running RC-Astro tool immediately. Completed tool
+  steps stay cached. The job row shows the current channel, tool and progress, such
+  as <code>H-alpha: BlurXTerminator (42%)</code>.</p>
+  <!-- SHOT: stack-color-progress.png | Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
+
+  <p>The line survives a restart: queued and running builds and processing
+  runs come back in order. A server stop lets a running build checkpoint the
+  frames it has integrated, and the build resumes after the restart. See
+  <a href="storage.html#stop">Storage &amp; Performance</a> for how the server
+  stops, the job journal, and the share of processor cores each kind of work
+  gets.</p>
 
   <h3 id="resume">Add frames without restacking</h3>
   <p>A finished or stopped build saves a checkpoint. A later build of the same
@@ -410,9 +470,20 @@ function gtag_report_demo() {
   </div>
   <p>Automatic builds use the background share of the processor and step aside
   when you start a build, a color composition, a stretch or an artifact
-  search. A refresh that is still waiting stays out of the header's queue; it
-  appears when it starts building, marked <code>automatic</code>. A refresh
-  never changes grades, files or the calibration library.</p>
+  search. A refresh still settling stays out of the header's background jobs.
+  Once due, it starts when the stacker is free and nothing you started has run
+  for 30 seconds. While your work, another build or a quality analysis of its
+  database holds it back, the header lists it under
+  <strong>Automatic</strong> as <strong>Refreshing stacks</strong>, waiting,
+  with what it waits for and how many channels it will stack.</p>
+  <p>A build you start stops a running automatic build. Its refresh then
+  waits, with the progress the build had made, and starts again once your work has
+  been quiet for 30 seconds: from where it stopped when no frame or grade
+  changed meanwhile, else restacking what changed. Its row then turns into
+  the running build; it is never listed twice. An automatic build you stop
+  yourself stays stopped. A refresh never changes grades, files or the
+  calibration library. A refreshed stack gets its card's processing again;
+  see <a href="#reapply">Re-apply processing</a>.</p>
 
   <h2 id="snr">Measure signal-to-noise by depth</h2>
   <p>Each build measures how its signal-to-noise ratio grows with depth, at
@@ -477,10 +548,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <kbd>1</kbd> for one image pixel per screen pixel. <strong>FITS</strong>
   downloads the linear, unstretched 32-bit float integration with its WCS and
   Seiza's frame counters, ready for other processing software.</p>
-  <p><strong>View processing</strong> on a card sets a display stretch and
-  optional deconvolution. <strong>Apply processing</strong> renders new
-  previews from the cached FITS; <strong>Revert processing</strong> returns to
-  the original. The stack itself is never rewritten.</p>
+  <p><strong>View processing</strong> on a card sets a display stretch,
+  optional deconvolution and, where the server has them, RC-Astro tools.
+  <strong>Apply processing</strong> renders new previews from the cached FITS
+  as a <a href="#processing-runs">processing run</a>; <strong>Revert
+  processing</strong> returns to the original. The stack itself is never
+  rewritten.</p>
   <div class="shot-pair">
     <figure>
       <img src="../assets/stack-preview-inspection.png" alt="Native-resolution stack inspection with zoom and pan" loading="lazy">
@@ -496,7 +569,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 
   <h2 id="orientation">Keep channels the same way up</h2>
   <p>A German equatorial mount turns the field 180° at a meridian flip.
-  Registration lands both halves on one grid, but the reference frame sets
+  Registration aligns both halves on one grid, but the reference frame sets
   which way up the stack comes out, and two channels can disagree. PSF Guard
   turns a finished stack by a half turn when its reference faces the wrong
   way. The turn reverses the pixel order: no resampling, and the camera angle
@@ -544,14 +617,14 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     100 H-alpha, 100 OIII and 94 SII.</figcaption>
   </figure>
   <figure>
-    <img src="../assets/stack-foraxx-card.jpg" alt="A Foraxx SHO color card for the Teddy Bear Nebula: palette and edges pickers, the color preview, and its H-alpha, OIII and SII inputs, 517 frames and 86 hours" loading="lazy" style="max-width:640px">
-    <figcaption>A color card: Foraxx SHO of the Teddy Bear Nebula from 517 frames, 86 h
-    of H-alpha, OIII and SII. <strong>Masters</strong> lists the calibration behind each input.</figcaption>
-  </figure>
-  <figure>
     <img src="../assets/stack-narrowband-sho-real.jpg" alt="The same channel stacks combined as standard SHO" loading="lazy">
     <figcaption>The same three channel stacks as standard SHO. Switching
     palettes reuses the mono stacks.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/stack-foraxx-card.jpg" alt="California Nebula Foraxx SHO card with palette and edges controls, preview, and 918 channel inputs totaling 76 hours 30 minutes" width="1108" height="1306" loading="lazy" style="max-width:640px">
+    <figcaption>California Nebula in Foraxx SHO: 181 H-alpha, 577 OIII and 160 SII inputs,
+    totaling 76 h 30 m. <strong>Masters</strong> lists the calibration behind each input.</figcaption>
   </figure>
   <p>Rebuilding a channel marks its color previews <strong>Out of date</strong>
   but leaves them visible. <strong>FITS</strong> on a color card downloads the
@@ -569,10 +642,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       <tr><td><strong>Trim to full coverage</strong></td><td>The largest rectangle every channel covers. Removes the corners a meridian flip or rotator leaves.</td></tr>
     </table>
   </div>
-  <p>The crop happens before normalization, so every channel scales from the
-  same sky, and the FITS moves <code>CRPIX</code> to keep the plate solution.
-  The card reports the kept size and share. When one channel's coverage looks
-  like a pointing error rather than dither, the card says which channel.</p>
+  <p>The crop happens before normalization, so every channel scales from the same sky,
+  and the FITS moves <code>CRPIX</code> to keep the plate solution. The card reports the
+  kept size and share. When one channel's coverage looks like a pointing error rather
+  than dither, the card identifies the channel.</p>
 
   <h3 id="background">Remove the background</h3>
   <p>Before registration, PSF Guard fits and subtracts each channel's
@@ -612,17 +685,94 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   When the server refuses a color card's build or processing, the reason shows
   beside the button you pressed.</p>
 
+  <h3 id="channel-processing">Use channel processing in a color composition</h3>
+  <p>In the color editor, click <strong>Use each channel's processing</strong> to
+  copy the deconvolution and RC-Astro settings shown on each channel card into that
+  color input. This copies settings, not processed pixels: the composition runs the
+  steps on the registered channel.</p>
+  <p>A card with only deconvolution clears that input's RC-Astro steps; a card with
+  only RC-Astro steps clears its deconvolution. If the card shows neither, the input
+  keeps its current settings.</p>
+  <p>PSF Guard caches tool results per channel. New frames in OIII rerun its tools
+  while unchanged H-alpha and SII results are reused. Changing the reference stack
+  reruns every channel: red for RGB, L for LRGB, or H-alpha for narrowband. With
+  background extraction on, all channels rerun because they share a background model.</p>
+  <!-- SHOT: stack-copy-channel-processing.png | In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot. | Copy each channel card's deconvolution and RC-Astro settings into the color composition. -->
+
   <h3 id="setups">Save processing setups</h3>
-  <p><strong>Setups</strong> at the top of <strong>View processing</strong> and
-  the color <strong>Processing stack</strong> saves the current parameters
-  under a name. Choosing a setup fills the editor; nothing renders until you
-  apply it. A view setup holds the stretch, deconvolution and RC-Astro steps. A
-  color setup holds background extraction, per-channel processing and output
-  stretches, and matches channels by name on another target.</p>
+  <p><strong>Setups</strong> at the top of <strong>View processing</strong> and the
+  color <strong>Processing stack</strong> saves the current parameters under a name.
+  Choosing a setup fills the editor; nothing renders until you apply it. A view setup
+  stores the stretch, deconvolution and RC-Astro steps. A color setup stores background
+  extraction, per-channel processing and output stretches, and matches channels by name
+  on another target.</p>
   <p>Setups serve every database on the server. <strong>Settings &rarr;
   Setups</strong> lists, deletes, imports and exports them. On a server with
   accounts, viewers can list, apply and export; saving, deleting and importing
   need an editor.</p>
+
+  <h2 id="processing-runs">Processing runs</h2>
+  <p>Every <strong>Apply processing</strong>, whether a stretch, deconvolution or
+  RC-Astro tools, runs on the server as a processing run, apart from the page that asked
+  for it. A plain stretch usually finishes at once. A run needs the same stack worker as
+  builds and color compositions, so it joins their line at the back. While it waits, the
+  button shows which job is using the worker and how many runs are ahead, such as
+  <code>Waiting for the stack build of M44 · Ha to finish</code>. Once it runs, the
+  button shows its progress and the step under way: <code>Applying… 42% ·
+  BlurXTerminator</code>.</p>
+  <figure>
+    <img src="../assets/stack-processing-waiting.png" loading="lazy" alt="The jobs list shows which stack build the waiting processing jobs depend on." width="2242" height="1350">
+    <figcaption>The jobs list shows which stack build the waiting processing jobs depend on.</figcaption>
+  </figure>
+  <p>The header's background jobs list each run beside the builds: what it does
+  (<code>BlurXTerminator</code>, <code>Deconvolution</code>, <code>Stretch</code>, or a
+  chain's steps joined with <code>+</code>), the target and channel, and its place in
+  the line or its progress. Click the target to open its stacks. <strong>↑</strong> and
+  <strong>↓</strong> move a queued run and <strong>×</strong> takes it out of the line.
+  <strong>Stop</strong> ends a running RC-Astro run: the tool is killed, the steps
+  already finished stay cached, and the button shows <code>Processing was
+  stopped</code>. A running stretch or deconvolution has no Stop; it finishes in
+  moments. A build you start waits behind processing runs asked for earlier unless you
+  move it.</p>
+  <p>Processing runs survive a restart. A server stop kills a running RC-Astro
+  tool rather than wait minutes for it. After the restart the run comes back
+  in its place in the line and resumes after the last tool step that
+  finished, and an open page resumes showing its progress. A run cut off by two
+  restarts in a row, clean stops included, is not started a third time.</p>
+
+  <h3 id="reapply">Re-apply processing when a stack refreshes</h3>
+  <p>A rebuilt stack, from an automatic refresh or <strong>Rebuild</strong>,
+  gets the processing its card showed: the same stretch, deconvolution and
+  RC-Astro tools run again on the new stack, with no page open.
+  <strong>Re-apply processing when a stack refreshes</strong>, under
+  <strong>Settings &rarr; Stacking &rarr; Stack previews &rarr;
+  Processing</strong>, is on by default.</p>
+  <ul>
+    <li>The re-apply waits until no refresh of its project is still settling,
+      then for the stack worker: anything you start and every stack build go
+      first. Meanwhile the header lists it under <strong>Automatic</strong> as
+      <strong>Re-applying processing</strong>, waiting, with what it waits
+      for.</li>
+    <li>Until processing finishes, the card shows the previous stack's result, marked
+      <code>From the previous stack · reprocessing</code> with the run's
+      status. The new result then becomes the card's processing.</li>
+    <li>Only the newest stack is processed. A newer stack cancels any queued or running
+    re-apply for the older stack.</li>
+    <li>A re-apply that fails keeps the previous result, says
+      <code>reprocessing failed</code> with the reason, and is not tried again
+      on its own.</li>
+    <li>Your own <strong>Apply processing</strong> or <strong>Revert
+      processing</strong> on the new stack replaces the re-apply.</li>
+    <li>Turning the setting off drops re-applies that have not started.</li>
+  </ul>
+  <figure>
+    <img src="../assets/stack-reprocessing.jpg" loading="lazy" alt="The card keeps the previous processed image visible while reprocessing waits." width="996" height="982">
+    <figcaption>The card keeps the previous processed image visible while reprocessing waits.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/settings-stack-previews.png" loading="lazy" alt="Choose when to refresh stack previews and whether to reapply their processing." width="1878" height="1354">
+    <figcaption>Choose when to refresh stack previews and whether to reapply their processing.</figcaption>
+  </figure>
 
   <h2 id="artifact">Find which frame made a defect</h2>
   <p>A stack can make a trail, reflection, dust shadow or hot pixel easier to
@@ -651,9 +801,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   and calibrates on its own. The caption lists panels with no stack or no
   solve yet.</p>
 
+
   <figure>
-    <img src="../assets/stacks-mosaic.jpg" alt="Stacks for Heart Mosaic mosaic (4 panels): each panel's stack in the grid, and the panels placed on the sky by plate solve" loading="lazy">
-    <figcaption>A mosaic in Stacks: panels in grid order, and on the sky by plate solve.</figcaption>
+    <img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
+    <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
   </figure>
 
   <h2 id="takeout">Export for other stackers</h2>

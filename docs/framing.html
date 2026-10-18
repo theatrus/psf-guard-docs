@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Framing — PSF Guard</title>
-  <meta name="description" content="Frame a target on survey images and offline N.I.N.A. sky maps, lay out mosaics, frame rigs separately, and check tonight's visibility from each rig.">
+  <meta name="description" content="Frame a target on survey images and offline N.I.N.A. sky maps, place mosaic panels one by one, frame rigs separately, and check tonight's visibility from each rig.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -145,13 +157,20 @@ function gtag_report_demo() {
   <h1>Framing</h1>
   <p class="lede">
     Place the target and each rig's field on a survey image, the way N.I.N.A.'s
-    framing assistant does. Lay out mosaics, check tonight's visibility from
-    every rig, and see finished panels on the sky.
+    framing assistant does. Place mosaic panels one by one, check tonight's
+    visibility from every rig, and see finished panels on the sky.
   </p>
 
+  <div class="callout info">
+    <strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Mosaic panels are placed one by one: add,
+    drag, nudge, turn and lock each panel. Panels already shot are drawn where
+    their frames were taken.
+  </div>
+
+
   <figure>
-    <img src="../assets/framing-stage.jpg" alt="Framing stage on the offline DSS map: a 2 by 2 mosaic over the Heart Nebula, deep-sky marks, grid, layer buttons and survey chips" loading="lazy">
-    <figcaption>The framing stage. Drag mode and layer buttons sit at the top; survey chips sit at the bottom.</figcaption>
+    <img src="../assets/framing-stage.jpg" loading="lazy" alt="Compare the mosaic footprint with the survey image and the rig&#x27;s field of view." width="2966" height="1548">
+    <figcaption>Compare the mosaic footprint with the survey image and the rig&#x27;s field of view.</figcaption>
   </figure>
 
   <h2 id="stage">Move and turn the field</h2>
@@ -169,45 +188,49 @@ function gtag_report_demo() {
       Coordinates show five decimals of a degree and angles two; the draft keeps
       every digit.</li>
   </ul>
-  <p>Drags work both of N.I.N.A.'s ways. The buttons at the top of the stage
-  pick one:</p>
+  <p>Choose a drag mode at the top of the view. Two match N.I.N.A.'s modes; the third
+  moves one mosaic panel:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Mode</th><th>Drag the rectangle</th><th>Drag the sky</th></tr>
       <tr><td><strong>Rectangle</strong> (default)</td><td>Moves the target.</td><td>Looks around; the target stays.</td></tr>
+      <tr><td><strong>Panel</strong></td><td>Moves the panel under the pointer. See <a href="#drag-panel">Drag a panel</a>.</td><td>Looks around.</td></tr>
       <tr><td><strong>Sky</strong></td><td>—</td><td>Turns the sky and the target under a fixed rectangle. Shift-drag looks around.</td></tr>
     </table>
   </div>
+  <p>While a panel is locked, dragging the rectangle looks around instead, and the view
+  lists the locked panels.</p>
   <p><strong>Turn the sky with the camera</strong> keeps the rectangle upright
   and turns the sky by the camera angle, as N.I.N.A.'s "rotate sky" does. The
   stage is a stereographic globe about the view center, so a drag turns the sky
   under the pointer. The browser remembers these choices.</p>
   <p><strong>Move target to view center</strong> and <strong>Center view on
-  target</strong> keep looking and planning apart: panning never moves the
+  target</strong> let you browse the sky without changing the plan: panning never moves the
   plan.</p>
 
   <h2 id="find">Find a target</h2>
-  <p><strong>Find a target</strong> offers names as you type. The server's Seiza
-  object catalog answers first, with no network: designations, common names and
-  aliases, one row per object with its kind. The last row looks the name up
-  online at CDS Sesame (Simbad, NED, VizieR). Enter takes the highlighted row,
-  else an exact local match, else goes online.</p>
-  <p>A pick moves the target and the view without saving. <strong>Undo</strong>
+  <p><strong>Find a target</strong> offers names as you type. PSF Guard searches the
+  server's Seiza object catalog first, without a network request: designations, common
+  names and aliases, one row per object with its kind. The last row looks the name up
+  online at CDS Sesame (Simbad, NED, VizieR). Press Enter to choose the highlighted
+  result. If none is highlighted, PSF Guard uses an exact local match or searches
+  online.</p>
+  <p>Choosing a result moves the target and the view without saving. <strong>Undo</strong>
   puts the previous target back; <strong>Back to saved framing</strong> drops
-  every change since the last save. The server keeps Sesame answers, hits for
-  90 days and misses for a day, so a name goes online once.</p>
+  every change since the last save. The server caches Sesame matches for 90 days and
+  failed searches for a day, so repeated searches need no network request during that
+  time.</p>
   <figure>
     <img src="../assets/framing-find-target.png" alt="Find a target suggestions for M 4: local catalog rows with object kinds and a Look up online row" loading="lazy">
     <figcaption>Names come from the server's Seiza catalog first; the last row asks CDS Sesame.</figcaption>
   </figure>
 
   <h2 id="layers">Survey layers</h2>
-  <p>Chips on the sky switch the picture: the DSS2 color plates N.I.N.A. starts
-  from, and the narrowband surveys (Finkbeiner H-alpha and the Northern Sky
-  Narrowband Survey's H-alpha, O III, SHO and color layers). The
-  <strong>Survey</strong> list under <strong>View</strong> holds every layer:
-  DSS2 red, blue and near infrared, SDSS, DESI Legacy, SkyMapper, 2MASS,
-  CTA-FRAM and the Mellinger panorama.</p>
+  <p>Chips on the sky switch the picture: the DSS2 color plates N.I.N.A. starts from,
+  and the narrowband surveys (Finkbeiner H-alpha and the Northern Sky Narrowband
+  Survey's H-alpha, O III, SHO and color layers). The <strong>Survey</strong> list under
+  <strong>View</strong> includes every layer: DSS2 red, blue and near infrared, SDSS,
+  DESI Legacy, SkyMapper, 2MASS, CTA-FRAM and the Mellinger panorama.</p>
   <p>The layer is how the sky is shown, not part of the framing. Picking one is
   never an unsaved change, and the browser keeps it for every plan. The server
   fetches survey tiles from CDS HiPS2FITS and caches them, so a view you have
@@ -249,8 +272,8 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   <p><strong>Catalogs marked</strong> under <strong>View</strong> picks which
   catalog families get marks. Messier, NGC, IC, Sh2, LDN, LBN and SNR start on;
   Barnard, vdB, UGC, PGC, HD and WR wait for a chip. A layer whose catalog
-  is not on the server says so on the stage. A mark is a catalog place, not
-  pointing evidence.</p>
+  is not on the server says so on the stage. A mark shows a catalog position, not evidence
+  of where the telescope pointed.</p>
 
   <h2 id="rigs">Rigs and panel size</h2>
   <p>The sidebar has one card per rig, this plan's rigs first. Each card shows
@@ -260,39 +283,161 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
     <li>The <strong>On</strong> switch adds a rig to the plan. Rigs are grouped
       <strong>On</strong> and <strong>Off</strong>; several can be on.</li>
     <li>Turning a rig on, or clicking an on rig's heading, frames the plan with
-      it: its field sets the panel size and its card is highlighted.</li>
+      it: its field sets the panel size, its card is highlighted, and it reads
+      <strong>Frames the plan</strong>.</li>
+    <li>A shared mosaic of more than one panel keeps its panels where they are.
+      When a picked rig's field differs, its card says "Its field moves all 4
+      panels" and offers <strong>Frame separately</strong>, which gives the rig
+      its own copy of the panels, <strong>Use its field</strong>, which sizes
+      the shared mosaic by the rig anyway, or <strong>Cancel</strong>. Until
+      then the card reads <strong>field differs</strong>, and activation warns
+      about it.</li>
     <li><strong>Shared framing</strong> shows the rig the size comes from.
       <strong>Type a size</strong> sets one by hand. <strong>Use current
       field</strong> appears when that rig's optics changed since.</li>
+    <li>When the rig that sets the size goes off, the first rig that is on and
+      shoots the shared framing takes over, one with the same field first. When
+      no such rig is on, or the next would resize a mosaic of more than one
+      panel, the size stays and the line says its rig is off.</li>
     <li><strong>Outline</strong> draws a rig's field on the sky, labeled with its
       name.</li>
   </ul>
   <p>Rigs take their optics from their own frames when PSF Guard adopts them.
   Correct them in <a href="rigs.html#optics">rig setup</a>.</p>
 
-  <h2 id="mosaic">Lay out a mosaic</h2>
-  <p>Set rows, columns and overlap under <strong>Shared framing</strong>. The view
-  draws and labels every panel. On the <a href="activation.html#panels">Exposures</a>
-  tab, each rig can take every panel or only some, so a wide rig takes the whole
-  field while a long-focus rig takes one corner. A coverage note lists any panel
-  no rig shoots.</p>
-  <p>Growing the grid or turning the mosaic never moves frames to other sky. A
-  panel that moves by more than a quarter of its size and already has frames
-  gets a new target at activation; the old target keeps its frames.</p>
+  <h2 id="mosaic">Lay out mosaic panels</h2>
+  <p>A framing's panels are placed one by one under <strong>Mosaic
+  panels</strong>. Each keeps its name wherever it moves: <code>r1c2</code> for a
+  panel a grid made, <code>p5</code> for one added since. While no panel is
+  locked, <strong>Rows</strong>, <strong>Columns</strong> and
+  <strong>Overlap</strong> lay the panels out as a grid. Once panels are placed
+  otherwise, the box shows <strong>Minimum overlap</strong> instead, and
+  <strong>Lay out as a grid instead</strong> offers to start again.</p>
+  <figure>
+    <img src="../assets/framing-mosaic-panels.png" loading="lazy" alt="Select a panel and check its overlap with neighboring panels before changing the layout." width="666" height="1336">
+    <figcaption>Select a panel and check its overlap with neighboring panels before changing the layout.</figcaption>
+  </figure>
+  <p>The sky draws every panel, with its name in small type when the mosaic has
+  more than one. The panel list gives each panel's frames, a padlock on a
+  locked one, and <em>check overlap</em> on one that breaks the overlap rule.
+  Click a panel on the sky or in the list to choose it. The undo and redo
+  buttons beside the list step back through panel edits, moves and turns
+  alike.</p>
+  <p>On the <a href="activation.html#panels">Exposures</a> tab, each rig can take every
+  panel or only some, so a wide-field rig can cover the whole field while a long-focus
+  rig covers one corner. A coverage note lists any panel no rig shoots. Activation adds
+  a Target Scheduler target for each new panel in the same project and leaves shot
+  panels' targets alone. The Library and the header's target switcher show the panels as
+  one mosaic, whatever their shape. Existing saved grids open with their panels
+  unchanged.</p>
+
+  <h3 id="locked">Panels already shot</h3>
+  <p>A panel whose target has frames starts locked where they were shot. It is
+  drawn solid with a padlock, with the field and camera angle the frames were
+  shot with, not the plan's current camera. Fresh plate solves of the frames
+  say where it was taken; without them, the frames' FITS headers or rotator
+  readings, then the target as planned. The chosen panel reads, for example,
+  "Drawn as shot: 1.80° × 1.20° at 0.0°."</p>
+  <ul>
+    <li>A locked panel does not move or turn. While one is locked, the target's center,
+    camera angle and search controls are disabled because each would move it.</li>
+    <li><strong>Unlock</strong> frees the chosen panel, and it stays unlocked.
+      Moved more than a quarter of a panel, or turned more than a degree, it
+      gets a new Target Scheduler target at activation; the old target keeps
+      its frames. <strong>Lock</strong> holds any chosen panel the same way.</li>
+    <li>New panels use the rig's current field and meet a shot panel at its
+      real edges.</li>
+    <li>Every other rig that is on and did not shoot the panel shows its field
+      as an outline where the panel was shot, so turning a rig on or picking
+      it shows what it would take there. Untick that rig's
+      <strong>Outline</strong> to hide it until you leave the page; nothing is
+      saved.</li>
+  </ul>
+  <figure>
+    <img src="../assets/framing-locked-panel.png" loading="lazy" alt="A captured panel stays locked until you unlock it; Remove is disabled while it is locked." width="628" height="360">
+    <figcaption>A captured panel stays locked until you unlock it; Remove is disabled while it is locked.</figcaption>
+  </figure>
+
+  <h3 id="add-panels">Add panels</h3>
+  <p><strong>Add panels</strong> works <strong>Beside</strong> the chosen panel or
+  on the <strong>Whole mosaic</strong>:</p>
+  <ul>
+    <li>N, E, S, W and the corners are directions on the sky: each adds on the
+      panel side that faces nearest that way at this camera angle. On the whole
+      mosaic, each adds a panel at the end of every row or column that way.</li>
+    <li><strong>Ring around</strong> puts a panel on every side of the whole
+      mosaic, corners too.</li>
+    <li><strong>Fill holes</strong> fills the gaps in the mosaic's rectangle.</li>
+    <li>A + on each side and corner of the chosen panel adds one there.</li>
+  </ul>
+  <p>New panels go in at the <strong>Overlap</strong> set beside the pad, never
+  less than the minimum.</p>
+
+  <h3 id="drag-panel">Drag a panel</h3>
+  <p>With <strong>Panel</strong> chosen at the top of the stage, drag one panel on
+  the sky. While it moves, its overlap with each neighbor is shaded with its
+  share in percent. It settles lined up with another panel, or at the minimum
+  overlap beside one. If a drop would leave a gap, too little overlap or an isolated
+  panel, the panel returns to its previous position and the view explains why. Hold Alt
+  (Option) while dropping, or press
+  <strong>Place anyway</strong> in the note, to keep it there.</p>
+  <p>Turn <strong>Snap</strong> off to drag and turn freely: a panel stays where
+  you drop it. One that breaks the overlap rule is dashed in the warning color
+  and listed under the panels. Escape, or a cancelled touch, puts a dragged
+  panel back.</p>
+  <figure>
+    <img src="../assets/framing-panel-drag.png" loading="lazy" alt="Moving an unlocked panel shows its overlap with each neighbor. This unsaved example was discarded." width="1442" height="990">
+    <figcaption>Moving an unlocked panel shows its overlap with each neighbor. This unsaved example was discarded.</figcaption>
+  </figure>
+
+  <h3 id="turn-panel">Turn a panel</h3>
+  <p>Each panel is shot at its own camera angle: the framing's, plus its own
+  turn, plus north's lean at its center (about Δα · sin δ). So a wide mosaic in
+  the north stays square on the sky. Targets already shot keep their
+  angle.</p>
+  <p>Turn the chosen panel by dragging the handle past its top edge, with
+  <kbd>[</kbd> and <kbd>]</kbd>, or by typing a <strong>Turn</strong>;
+  <strong>Framing angle</strong> puts it back. A turn settles on the framing's
+  angle, a neighbor's or a shot panel's within 2°. A turn that leaves too little overlap
+  is undone, just like a drop; Alt, or <strong>Turn anyway</strong>,
+  keeps it.</p>
+  <p>Every rig gets each panel's angle, whether it has a rotator, turns its
+  camera by hand, or has a fixed camera.</p>
+
+  <h3 id="panel-keys">Keys</h3>
+  <p>With a panel chosen and the sky focused:</p>
+  <table class="kbd-table">
+    <tr><th>Key</th><th>Action</th><th>Key</th><th>Action</th></tr>
+    <tr><td>Arrows</td><td>Nudge 1% of a panel (Shift: 10%)</td><td>[ / ]</td><td>Turn 1° (Shift: 10°)</td></tr>
+    <tr><td>L</td><td>Lock or unlock</td><td>Delete</td><td>Remove the panel</td></tr>
+    <tr><td>Esc</td><td>Cancel a drag, or let go</td><td>Ctrl+Z / Ctrl+Shift+Z</td><td>Undo / redo</td></tr>
+  </table>
+  <p><kbd>[</kbd>, <kbd>]</kbd> and <kbd>L</kbd> go by the key's place, so every
+  keyboard layout has them.</p>
 
   <h2 id="separate">Frame a rig on its own</h2>
-  <p><strong>Frame separately</strong> gives a rig its own grid, camera angle and
-  panel size, drawn in its own color beside the shared framing and edited in its
-  card. It follows the shared center until you drag it, type a center, or move it
-  to the view center. <strong>Shared center</strong> puts it back in step;
-  <strong>Use shared</strong> drops it.</p>
+  <p><strong>Frame separately</strong> gives a rig its own panels, camera angle and
+  panel size, drawn in its own color beside the shared framing. Choose
+  <strong>Edit</strong> on its card: while its editor is open, <strong>Mosaic
+  panels</strong> and the sky work on its panels with the same tools as the
+  shared framing's. It follows the shared center until you drag it, type a
+  center, or move it to the view center. <strong>Shared center</strong> puts it
+  back in step; <strong>Use shared</strong> drops it.</p>
+  <p>Coverage checks combine the shared framing, if a rig uses it, with the separate
+  framing of each enabled rig. A
+  rig's own panels need not touch where another rig's panels cover the sky
+  between them. The view reports gaps, isolated panels and disconnected groups across the
+  whole object, with another framing's panel named by its rig, or
+  <code>shared</code>, before its name. A seam between two rigs' panels needs the
+  larger of their two minimum overlaps, counted on the smaller panel, or it is
+  flagged as thin.</p>
   <p>The separate framing of a rig that is off is drawn dim and stays put. One
   whose rig is gone is listed with <strong>Remove</strong>. When every rig that is
   on frames separately, nobody shoots the shared framing, so its rectangle is
   hidden and activation plans no target for it.</p>
 
   <h2 id="visibility">Visibility tonight</h2>
-  <p>Under the sky, a strip times the target from each rig with a site. Tonight
+  <p>Below the sky, a chart shows target visibility for each rig with a site. Tonight
   runs from local noon to the next noon. The verdict gives dark hours (Sun below
   −12°), hours inside the limits Target Scheduler applies, peak altitude, and the
   Moon's phase, separation and hours up.</p>
@@ -307,14 +452,15 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
       meridian window, and the rig's meridian pause.</li>
     <li>A rig framed on its own is timed at its own center, and follows it as you
       drag.</li>
-    <li>A folded table gives the coming week. A rig in the plan also gets the
-      hours it still owes and the nights that takes at this week's rate.</li>
+    <li>A folded table gives the coming week. A rig in the plan also gets the exposure
+    hours it still needs and the nights that takes at this week's rate.</li>
   </ul>
   <p>Pick another rig from the list to compare sites. Times come from
   planning-grade Sun and Moon positions; they help choose targets and nights.</p>
   <figure>
     <img src="../assets/framing-visibility.png" alt="Visibility strip: tonight's altitude chart with the meridian marked, and the verdict, hours owed and nights to finish" loading="lazy">
-    <figcaption>Tonight from one rig: the target's track, darkness bands, the meridian, and the hours the rig still owes.</figcaption>
+    <figcaption>Tonight from one rig: the target's track, darkness bands, the meridian,
+    and the exposure hours the rig still needs.</figcaption>
   </figure>
   <figure>
     <img src="../assets/framing-nights.png" alt="Legend and the next 7 nights unfolded: the chart legend and a table of dark hours, hours the target is up, hours with the Moon down too, and the Moon's phase and separation" loading="lazy" style="max-width:420px">
@@ -344,13 +490,15 @@ psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
   where their solves put them, and the rectangles show the new plan.</p>
 
   <h2 id="save">Save the framing</h2>
-  <p><strong>Save framing</strong> keeps the draft on the plan; the page's save bar
-  does the same with the rest of your edits. A value the server would refuse is
-  marked at its field with the reason: a panel side outside 0.01° to 30°, or a
-  mosaic wider than 30°. A draft saved elsewhere since you loaded is refused until
-  you reload.</p>
-  <p>Only a change to what activation writes (target, angle, grid, panels) asks
-  for another activation. Survey and view choices never do.</p>
+  <p><strong>Save framing</strong> keeps the draft on the plan; the page's save bar does
+  the same with the rest of your edits. A value the server would refuse is marked at its
+  field with the reason: a panel side outside 0.01° to 30°, or a mosaic wider than 30°.
+  A draft saved elsewhere since you loaded is refused until you reload. The server
+  refuses a save that would move a locked panel, and lists the panels you must unlock
+  first. Each save uses the frames to set a locked panel's captured position, regardless
+  of the position sent by the page.</p>
+  <p>Only a change to what activation writes (target, angle, panels) asks for
+  another activation. Survey and view choices never do.</p>
 
   <nav class="next-prev">
     <a href="planning.html">← Planning</a>

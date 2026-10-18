@@ -23,6 +23,8 @@ const docsNavigation = [
     label: "Start",
     pages: [
       ["index.html", "Getting Started"],
+      ["new-in-0.12.html", "New in 0.12"],
+      ["release-notes-0.12.html", "0.12 Release Notes"],
       ["install.html", "Installation"],
       ["grader.html", "Library & Grader"],
       ["importing.html", "Import Images"],
@@ -44,6 +46,9 @@ const docsNavigation = [
       ["stacking.html", "Stacks"],
       ["wbpp.html", "WBPP Runs"],
       ["calibration.html", "Calibration Libraries"],
+      ["calibration-grading.html", "Calibration Grades & Coverage"],
+      ["calibration-flats.html", "Flats & Dust Changes"],
+      ["calibration-masters.html", "Calibration Masters & Settings"],
       ["exporting.html", "Export & AstroBin"],
     ],
   },
@@ -60,13 +65,24 @@ const docsNavigation = [
   {
     label: "Operate",
     pages: [
-      ["workflows.html", "Rejects & Sync"],
-      ["sync-plugin.html", "N.I.N.A. Sync Plugin"],
       ["storage.html", "Storage & Performance"],
-      ["cli.html", "CLI Reference"],
+      ["backups.html", "Backups"],
+    ],
+  },
+  {
+    label: "Server",
+    pages: [
       ["configuration.html", "Configuration & API"],
       ["authentication.html", "Server Accounts"],
+      ["sync-plugin.html", "Connect N.I.N.A."],
       ["mcp.html", "MCP for Agents"],
+    ],
+  },
+  {
+    label: "Advanced workflows",
+    pages: [
+      ["workflows.html", "Rejects & Database Transfer"],
+      ["cli.html", "CLI Reference"],
     ],
   },
   {

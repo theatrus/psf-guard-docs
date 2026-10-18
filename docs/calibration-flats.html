@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flats &amp; Dust Changes — PSF Guard</title>
+  <meta name="description" content="Inspect dust shadows and compare flats across nights. Flat groups keep each light matched to flats from the same optical state.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html" class="active" aria-current="page">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Flats &amp; Dust Changes</h1>
+  <p class="lede">Inspect dust shadows and compare flats across nights. Flat groups keep each light matched to flats from the same optical state.</p>
+
+  <h2>Calibration guides</h2>
+  <ul>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades &amp; Coverage</a></li>
+    <li><strong>Flats &amp; Dust Changes</strong></li>
+    <li><a href="calibration-masters.html">Calibration Masters &amp; Settings</a></li>
+  </ul>
+
+  <nav aria-label="On this page">
+    <h2>On this page</h2>
+    <ul>
+      <li><a href="#dust">Dust in flats</a></li>
+      <li><a href="#flat-groups">Flat groups</a></li>
+    </ul>
+  </nav>
+
+  <h2 id="dust">Dust in flats</h2>
+  <p>Grading finds the shadows in each flat. A spot is a small patch that
+  passes less light than the response around it. Dust further up the train
+  casts large, faint shadows: out-of-focus <strong>disks</strong>, such as a
+  RedCat61's 600-pixel disks under half a percent deep, and
+  <strong>donuts</strong>, dust seen through an SCT's central obstruction.
+  These count apart, as large dust: <code>15 spots · 3 large disks</code>. A
+  spot of a few pixels must clear a threshold raised for the size of the
+  frame, so a large sensor does not count its own noise.</p>
+  <p><strong>Spots</strong>, above the viewer, draws what grading found at its
+  shape: a spot as its box, a disk as its rim, a donut as its ring and hole.
+  <strong>Large dust</strong>, nested under Spots, turns the disks, donuts and
+  vignetting on and off. Vignetting, a shadow hanging from an edge or corner
+  such as an off-axis guider's prism, draws dashed and never counts as dust.
+  Each large mark gives its depth and, when the header gives the focal ratio
+  and pixel size, how far in front of the sensor the dust sits:
+  <code>disk 0.33% · ~11 mm, filter/window</code>. Hover or tap a mark for its
+  numbers.</p>
+  <p>With <strong>Compare with session</strong> on, the marks show the session's own
+  dust, found on the stack of its flats, with the number of flats each shows in. A
+  feature found in only one flat, such as a drying drop of dew, appears as a transient.
+  Only shadows count: a star in a sky flat adds light, so it never counts as a spot or
+  as dew.</p>
+
+  <!-- Note for the two dust SHOTs below: place them side by side in one <div class="shot-pair">. -->
+  <figure>
+    <img src="../assets/calibration-dust-disks.jpg" loading="lazy" alt="Three large dust disks are marked on this flat. Their presence alone does not make the frame poor." width="2468" height="1170">
+    <figcaption>Three large dust disks are marked on this flat. Their presence alone does not make the frame poor.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/calibration-dust-donuts.jpg" loading="lazy" alt="The SCT flat has seven measured dust donuts. The overlay shows their position and estimated distance." width="2474" height="1204">
+    <figcaption>The SCT flat has seven measured dust donuts. The overlay shows their position and estimated distance.</figcaption>
+  </figure>
+
+  <h2 id="flat-groups">Flat groups</h2>
+  <p>Dust can move, appear or disappear between nights. Calibrating a light with flats
+  from the other side of that change leaves a faint residual pattern. PSF Guard measures
+  how alike each night's flats are, keeps nights
+  that differ out of one master, and gives each light flats from its own side
+  of each change. The full rules are in
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/CALIBRATION_LIBRARY.md#flat-groups">docs/CALIBRATION_LIBRARY.md</a>.</p>
+
+  <h3 id="measuring">Measuring flats</h3>
+  <p>PSF Guard combines each session of at least two flats into one response, and compares
+  two responses as later ÷ earlier. That gives two
+  numbers, in percent of the sky background a light would be left with:
+  <strong>dust</strong>, the deepest shadow that arrived, left or moved, and
+  <strong>light pattern</strong>, the largest broad difference, such as a
+  changed vignette, after removing a linear gradient. The view shows dust movement that
+  focus travel can explain, such as movement of an SCT's donuts, but excludes it from the
+  measurement. A guider's corner shadow that turns with the camera counts as
+  vignetting, held to the light-pattern limit, not as new dust.</p>
+  <p><strong>Measuring flats</strong> is a job of its own in the header's job
+  line, with the rig, <code>12 of 40 sessions</code> and
+  <strong>Stop</strong>. It measures only the sessions an import, sync, upload,
+  forget or duplicate repair touched, so an up-to-date catalog needs no pixel reads.
+  The rig on screen in Frames goes first. Stop pauses measuring until the flats change,
+  you click <strong>Resume now</strong>, or the server restarts. A changed limit regroups
+  at once from the stored numbers.</p>
+
+  <h3 id="families">Angles and response families</h3>
+  <p>A rotator angle in the header is a guide, not proof of the light path.
+  Within one rig, filter, focal length and sensor mode, angles whose gaps stay
+  within the rig's rotation tolerance (at most 2°) count as one, so a rotator
+  that wanders by a degree or two still compares its flats. Angles whose
+  flats measure alike form one <strong>response family</strong>, named in
+  Frames by its measured angle range: <code>100.1–104.4°</code>, or
+  <code>72.6° &amp; 82.2°</code>. Flats shot through a reducer are never
+  compared with flats shot without it. Flats that record no angle join the one
+  family they measure alike with, or else serve a light only when no flat of
+  its angle does.</p>
+
+  <h3 id="changes">Groups, splits and changes</h3>
+  <p>Within a family, nights join into <strong>groups</strong> in time order
+  while their dust and light pattern stay within the limits, 1% and 2% by
+  default. Every night in a group must match every other night within these limits. A
+  gradual drift therefore cannot combine dissimilar nights into one master. Between two
+  groups lies a
+  <strong>split</strong>. Splits that overlap in time, with shadows at the
+  same place on the sensor, form one <strong>change</strong>. A change seen in
+  two filters, or in two families of one filter, is on the camera side and
+  applies to every light of the rig; one seen in one filter applies to that
+  filter only.</p>
+
+  <h3 id="light-flats">How PSF Guard chooses flats for a light</h3>
+  <p>PSF Guard selects flats in three steps:</p>
+  <ol>
+    <li><strong>Determine which side of each change the light belongs to.</strong> PSF
+    Guard uses the capture time if it falls outside the change's time window. Otherwise,
+    it checks the imaging session, then compares the light's pixels with the change map.
+    If none of these methods can place the light, its side remains undetermined.</li>
+    <li><strong>Choose a response family.</strong> PSF Guard starts with the family at
+    the light's recorded angle. If two families lie within 10°, as can happen after a
+    rotator re-homes, it compares the light's pixels. It chooses a family at a different
+    angle only when the rotator's epochs or lights from another filter support that
+    choice.</li>
+    <li><strong>Choose flats within that family.</strong> PSF Guard uses flats at the
+    light's angle and on the same side of every change. It can use another angle's flats
+    if measurements agree across several nights or the light's pixels identified that
+    family. If no flats match on the light's side, PSF Guard tries these alternatives in
+    order: flats at the nearest angle, if angle has little effect on the rig's flats;
+    flats at the original angle corrected across a camera-side change; or flats at the
+    original angle from the other side, with a warning.</li>
+  </ol>
+  <p>A light's <a href="calibration-grading.html#light-panel">Calibration panel</a>
+  explains how PSF Guard chose its flats, under <strong>Chosen by</strong>, and shows
+  its <strong>Flat family</strong> when that was not the one at its recorded angle.
+  <strong>Flats from across a change</strong> raises a Check on a light that had to take
+  flats from the other side, or whose side remains undetermined. Nights measured alike
+  mix in one master with no Check.</p>
+
+  <h3 id="groups-view">Flat groups in Frames</h3>
+  <p>When the list includes flats (<strong>Type</strong> All or Flat):</p>
+  <ul>
+    <li>Each flat session carries its group, such as <strong>Group 3 · 09-07 →
+      09-16, 4 nights</strong>, with a coloured band down its edge.</li>
+    <li>A split is a line above the newest session of the older group, with its
+      reason: <em>the light pattern changed by 2.6% (limit 2%)</em>. A
+      camera-side change shows once, with its depth, the filters it was seen in,
+      and its window on the rig's clock.</li>
+    <li><strong>Compare</strong>, on a split or a change, shows the later flats
+      divided by the earlier, at ±3%, ±1% or ±0.5%, with new and departed
+      shadows circled.</li>
+    <li>A line above the list gives each rig's limits and unmeasured sessions,
+      and ends in <strong>Edit limits</strong>, which opens Settings ›
+      Calibration › Flat groups on the rig's own value or the global one.</li>
+  </ul>
+  <p><strong>Groups</strong>, under <strong>Sessions | Groups</strong>, lists the groups
+  themselves, newest first by rig, filter and angle (such as <strong>G · 3.2°</strong>),
+  with the split between neighbours and its reason in between: <strong>Change · new dust
+  1.6%</strong>, <strong>Split · pattern 2.6%</strong>. Badges identify the
+  <strong>Current</strong> group used for new lights, groups that are <strong>Partly
+  measured</strong>, and groups with a <strong>Change after</strong> them. ↑ and ↓ move
+  between groups. A group shows its flats in the strip night by night, then
+  <strong>Members</strong> (its nights), <strong>Why they belong together</strong> (how
+  far apart they measured, against the limits), <strong>Its edges</strong> (each side's
+  split or change, with Compare) and <strong>What it feeds</strong>: its flat masters,
+  and the lights calibrated with those flats, grouped by project, each opening Images on
+  exactly those lights. In a project scope, the groups either side of the project's own
+  show dimmed as <strong>Neighbour</strong>.</p>
+
+  <figure>
+    <img src="../assets/calibration-flat-groups.jpg" loading="lazy" alt="Measured changes in dust or illumination separate these O III flat groups." width="3052" height="1918">
+    <figcaption>Measured changes in dust or illumination separate these O III flat groups.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/calibration-flat-compare.jpg" loading="lazy" alt="Compare nights across a group boundary to see new, moved or missing dust and changes in illumination." width="1782" height="1866">
+    <figcaption>Compare nights across a group boundary to see new, moved or missing dust and changes in illumination.</figcaption>
+  </figure>
+
+  <h3 id="by-hand">Choose by hand</h3>
+  <p>You can override incorrect measurements:</p>
+  <ul>
+    <li><strong>Split here</strong>, on a night under Members, starts a new group at
+    that night. PSF Guard uses capture times to match lights with flats from the same
+    side of the split.</li>
+    <li><strong>Join</strong>, on the edge between two groups in the list, or
+    <strong>Join with next</strong> and <strong>Join with previous</strong> under Its
+    edges, makes two groups one, without the mixed-flats Check. Joining groups across a
+    camera-side change displays a warning. That change still determines which side's
+    flats PSF Guard uses for the filter's lights.</li>
+    <li>A light's Calibration panel, under <strong>Choose its flats</strong>,
+      offers <strong>Before</strong> and <strong>After</strong> for each change
+      it was shot during, and <strong>Use group</strong> for one group's flats.
+      <strong>Every light of its imaging session</strong> applies the choice to
+      the whole run.</li>
+    <li><strong>Flat side…</strong>, in Images, sets Before, After or Reset on
+      the selected lights, for each change they were shot during.</li>
+  </ul>
+  <p>Edges chosen by hand read <em>Split by you</em> or <em>Joined by
+  you</em>, with the measured numbers beside them and <strong>Reset</strong>.
+  A choice whose flats or change are gone stays, shown as no longer applied,
+  until reset. Choices travel with Merge catalogs and <code>sync pull</code>.
+  Changing them needs write access and database management: the desktop app,
+  or a server started with <code>--allow-database-management</code>.</p>
+
+  <h3 id="flat-settings">Flat group settings</h3>
+  <p>Three settings sit under Settings › Calibration › <strong>Flat
+  groups</strong>, for every rig or one. A change rebuilds the masters and
+  stacks whose flats it changes.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+      <tr><td><strong>Group flats</strong></td><td>By measurement</td><td><strong>By time only</strong> keeps one master per flat session, as before, and never measures the rig.</td></tr>
+      <tr><td><strong>Dust split</strong></td><td>1%</td><td>Two nights share a master while their dust differs by less than this.</td></tr>
+      <tr><td><strong>Light pattern split</strong></td><td>2%</td><td>The same for broad differences, such as a changed vignette.</td></tr>
+    </table>
+  </div>
+  <p>A read-only catalog, or one from an older build, groups flats by
+  time.</p>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="calibration-grading.html">&larr; Calibration Grades &amp; Coverage</a>
+    <a href="calibration-masters.html">Calibration Masters &amp; Settings &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

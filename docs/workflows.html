@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rejects &amp; Sync — PSF Guard</title>
-  <meta name="description" content="Archive rejected frames out of the stacking tree and sync captures, plans and grades between two catalogs or two PSF Guard servers.">
+  <meta name="description" content="Archive rejected frames out of the stacking tree, remove old rejects, and sync captures, plans, grades and calibration choices between two catalogs or two PSF Guard servers.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html" class="active" aria-current="page">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html" class="active" aria-current="page">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -150,9 +162,9 @@ function gtag_report_demo() {
   </p>
 
   <div class="workflow-note sync">
-    <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Sync only when the telescope and the grading machine keep separate copies</strong><p>A desktop app that opens the telescope's database directly needs no sync.</p></div>
-    <a class="workflow-link" href="#sync">Sync ↓</a>
+    <div class="workflow-tag">Manual transfer</div>
+    <div class="workflow-copy"><strong>Use the Sync plugin for N.I.N.A.</strong><p>The plugin transfers captures, plans and grades between the telescope and PSF Guard. Use the database transfer steps below when you need to copy between separate database files by hand.</p></div>
+    <a class="workflow-link" href="sync-plugin.html">Connect N.I.N.A. →</a>
   </div>
 
   <h2 id="rejects">Archive rejected files</h2>
@@ -208,15 +220,15 @@ psf-guard restore-rejects --db my-db --all    <span class="c"># everything in th
   <h2 id="remove-rejects">Remove old rejects</h2>
   <p>An archived reject stays in the catalog. To take frames that are truly
   bad out of it, and free their disk space, remove them. Removal runs only
-  when you ask, and you can undo it until the trash is emptied. In Settings it
-  needs database management.</p>
+  when you ask, and a restore undoes it until the trash is emptied. It needs
+  an editor.</p>
   <ol>
     <li>In <strong>Settings &rarr; Databases</strong>, click
       <strong>Purge Rejects</strong> beside the database's
       <strong>Import</strong>.</li>
-    <li>Choose how many days a frame must have been rejected (7 by default; 0
-      takes every reject) and click <strong>Preview</strong>. The preview
-      lists the frames and their size, and says why any reject stays.</li>
+    <li>Choose how many days a frame must have been rejected (7 by default; 0 takes
+    every reject) and click <strong>Preview</strong>. The preview lists the frames and
+    their size, and explains why any rejected frame will remain.</li>
     <li>Choose how many days to keep the files in the trash (14 by default)
       and click <strong>Remove N frames</strong>.</li>
   </ol>
@@ -253,6 +265,22 @@ psf-guard restore-removed --db my-db --batch &lt;batch&gt;
 psf-guard empty-reject-trash --db my-db    <span class="c"># files past their time in the trash</span>
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
+  <h2 id="existing-database">Direct database access (deprecated)</h2>
+  <p>Existing registrations that open a live Target Scheduler database, and direct
+  CLI/API access, remain supported through 0.12. They are not converted automatically.
+  Removal is planned for 0.13 or later. For a new setup,
+  <a href="importing.html#target-scheduler">import the TS file into an owned catalog</a>
+  and keep its source connected, or use the
+  <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a>.</p>
+  <div class="callout">
+    <strong>Back up before writing through an existing direct registration.</strong>
+    Grading and planning edits write to the shared file. Use
+    <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
+  </div>
+  <p>Image folders can be read-only. A directly opened database must be writable
+  to save grades and plans. When both applications use that file, those edits need
+  no transfer. New imports use a separate working catalog instead.</p>
+
   <h2 id="sync">Sync two database files</h2>
   <p>Grade on one machine while the telescope keeps capturing on another. Sync
   copies chosen state between two Target Scheduler databases, each given as a
@@ -260,11 +288,15 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   GUID (schema 22 or later).</p>
 
   <h3 id="data-transfer">Data Transfer in Settings</h3>
+
   <figure>
-    <img src="../assets/data-transfer.png" alt="Data Transfer with Merge catalogs, Send planning and Send reviewed grades, and source and destination catalogs" loading="lazy">
-    <figcaption>Data Transfer lists both catalogs and shows a preview before
-    any Apply.</figcaption>
+    <img src="../assets/data-transfer.png" loading="lazy" alt="Choose the source, destination and action, then preview the changes before applying them." width="1878" height="788">
+    <figcaption>Choose the source, destination and action, then preview the changes before applying them.</figcaption>
   </figure>
+  <p>For an imported TS catalog, the saved <strong>Target Scheduler</strong>
+  connection appears beside the owned catalog in the source and destination lists.
+  You do not need to register the source as a second catalog. Turn off automatic
+  grade writeback if you want to send grades only after review.</p>
   <p>Open <strong>Settings &rarr; Sync</strong>. <strong>Data Transfer</strong>
   takes a <strong>Source</strong> and a <strong>Destination</strong> and offers
   three directions:</p>
@@ -278,8 +310,44 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   </div>
   <p>Each direction makes a preview on the server first. The preview keeps a
   frozen copy of the source and comes back after a page reload. Apply refuses
-  if the destination changed since the preview. The Sync tab needs database
-  management.</p>
+  if the destination changed since the preview. The Sync tab needs an
+  editor.</p>
+
+  <h3 id="calibration-sync">Calibration travels with a merge</h3>
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> A merge carries
+  calibration choices and flat-group choices, and its preview counts
+  them.</div>
+  <p><strong>Merge catalogs</strong> and <code>sync pull</code> also copy the
+  calibration library: rigs, raw calibration-frame records and their grades. Generated
+  masters and cached files stay behind; the destination builds its own. With them travel
+  the choices that change which frames a master takes or which flats PSF Guard uses for
+  a light:</p>
+  <ul>
+    <li><strong>Keep out</strong> and <strong>Use anyway</strong> on
+      calibration frames. When both catalogs hold a choice for a frame, the
+      later one wins. A choice made on the destination stays with its file
+      when the source catalogued that file under another ID.</li>
+    <li>Flat groups split or joined by hand, and lights put on a side of a
+      change or given one group's flats, matched by flat and light GUID. The
+      later choice or reset wins.</li>
+  </ul>
+  <p>The preview counts these choices, such as "Calibration choices: 3 kept
+  out, 1 used anyway. Masters built from these frames change.", because they
+  change the destination's masters. The Remote PSF Guard preview counts them
+  as <code>calibration choices</code>.</p>
+  <figure>
+    <img src="../assets/data-transfer-calibration-choices.png" loading="lazy" alt="Merge preview with zero new rows, two updated rows, one calibration frame kept out and one used anyway." width="2000" height="320">
+    <figcaption>The merge preview includes one Keep out choice and one Use anyway choice. Apply this preview would update two rows.</figcaption>
+  </figure>
+  <p>An import catalogues a calibration frame that is on disk twice, such as
+  a copy a filer has not yet cleaned out of the drop folder, once; when the
+  original goes, its row moves to the copy and keeps its grade and marks. A
+  later pull does not undo a <a href="cli.html#repair-duplicates">duplicate
+  repair</a>: a row a repair merged here is never brought back from a catalog
+  that still holds it, and a row the source's repair merged is merged here
+  too, its masters built again. The source keeps its own duplicates until it
+  is repaired there. See <a href="calibration.html#transfer">Calibration
+  Libraries</a>.</p>
 
   <h3 id="sync-cli">Sync from the command line</h3>
   <pre><code><span class="c"># Captures and structure FROM the telescope INTO your copy.
@@ -294,8 +362,10 @@ psf-guard sync planning --from my-db --to telescope.sqlite --dry-run
 psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   <ul>
     <li><strong><code>sync pull</code></strong> copies projects, targets,
-      templates, exposure plans, rule weights and captured images. The
-      telescope wins for structure. An existing frame keeps its local grade
+      templates, exposure plans, rule weights and captured images, and the
+      calibration library with its choices, as
+      <a href="#calibration-sync">above</a>. The telescope wins for
+      structure. An existing frame keeps its local grade
       unless that is Pending, in which case it takes the telescope's.
       <code>--no-image-data</code> skips the thumbnails.</li>
     <li><strong><code>sync planning</code></strong> copies project and target
@@ -320,6 +390,8 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
       <tr><td>A frame PSF Guard catalogued itself (import or upload) before the telescope's row arrived</td><td>Target, file name, and capture time within 2 s</td><td>Updated in place: it takes the telescope's GUID and keeps a reviewed grade</td></tr>
       <tr><td>A frame catalogued from its calibrated copy before the raw file arrived</td><td>Target, capture time, exposure and filter</td><td>Updated in place: the raw file becomes the light, and a reviewed grade stays</td></tr>
       <tr><td>Reviewed grade during a merge</td><td>GUID</td><td>The destination wins</td></tr>
+      <tr><td>Keep out or Use anyway on a calibration frame</td><td>Frame ID</td><td>The later choice wins; a destination choice stays with its file</td></tr>
+      <tr><td>Flat-group split or join, a light's flat side</td><td>Flat and light GUID</td><td>The later choice or reset wins</td></tr>
       <tr><td>Pending grade during a merge</td><td>GUID</td><td>Filled from the source</td></tr>
       <tr><td>Grade push</td><td>GUID</td><td>The source grade and reason win</td></tr>
       <tr><td>Row only at the destination</td><td></td><td>Kept</td></tr>
@@ -359,9 +431,10 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
   sync</strong>. A server with no Settings grants the same with a
   <code>[[remote_sync]]</code> block in its config file; see
   <a href="configuration.html#remote-blocks">Configuration</a>.</p>
+
   <figure>
-    <img src="../assets/settings-remote-psf-guard.png" alt="Remote PSF Guard in Settings › Sync: peer select, Test connection, Add peer, and Pull from peer, Send planning and Send grades" loading="lazy">
-    <figcaption>Remote PSF Guard: add a peer once, then preview and apply in either direction.</figcaption>
+    <img src="../assets/settings-remote-psf-guard.png" loading="lazy" alt="Add a peer before testing a connection or previewing a remote transfer." width="1878" height="720">
+    <figcaption>Add a peer before testing a connection or previewing a remote transfer.</figcaption>
   </figure>
   <p>Then, on this server, open <strong>Settings &rarr; Sync &rarr; Remote PSF
   Guard</strong>:</p>
@@ -413,8 +486,8 @@ psf-guard sync planning --from my-db --to telescope.sqlite
 psf-guard sync grades --from my-db --to telescope.sqlite</code></pre>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="collaboration.html">&larr; Collaboration</a>
-    <a href="sync-plugin.html">N.I.N.A. Sync Plugin &rarr;</a>
+    <a href="mcp.html">← MCP for Agents</a>
+    <a href="cli.html">CLI Reference →</a>
   </nav>
 </main>
 </div>

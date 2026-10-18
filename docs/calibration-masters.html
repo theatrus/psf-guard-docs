@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calibration Masters &amp; Settings — PSF Guard</title>
+  <meta name="description" content="See how PSF Guard matches calibration frames, builds masters and applies them to lights. Set matching limits for the server or one rig.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html" class="active" aria-current="page">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+  <h1>Calibration Masters &amp; Settings</h1>
+  <p class="lede">See how PSF Guard matches calibration frames, builds masters and applies them to lights. Set matching limits for the server or one rig.</p>
+
+  <h2>Calibration guides</h2>
+  <ul>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades &amp; Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats &amp; Dust Changes</a></li>
+    <li><strong>Calibration Masters &amp; Settings</strong></li>
+  </ul>
+
+  <nav aria-label="On this page">
+    <h2>On this page</h2>
+    <ul>
+      <li><a href="#matching">Safe matching</a></li>
+      <li><a href="#stacking">Calibration in stacks</a></li>
+      <li><a href="#flats">Flats</a></li>
+      <li><a href="#masters">Masters</a></li>
+      <li><a href="#export">Export with calibration frames</a></li>
+      <li><a href="#settings">Settings › Calibration</a></li>
+    </ul>
+  </nav>
+
+  <h2 id="matching">Safe matching</h2>
+  <p>A calibration frame must agree with every setting the light records. If
+  the light records a value and the frame does not, they do not match. A frame
+  with no known camera name or sensor size never matches.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Master</th><th>Must agree</th></tr>
+      <tr><td>Bias</td><td>Camera, dimensions, channels, binning, gain, offset, readout mode, Bayer layout</td></tr>
+      <tr><td>Dark</td><td>Bias fields; exposure within the larger of 0.1% or 0.05&nbsp;s; temperature within <strong>Dark temperature</strong> (3&nbsp;°C); shot within <strong>Dark reach</strong> of the light</td></tr>
+      <tr><td>Dark flat</td><td>The flat's sensor settings, exposure and temperature</td></tr>
+      <tr><td>Flat</td><td>Bias fields, filter, telescope, focal length within <strong>Flat focal length</strong> (1&nbsp;mm), and rotator angle within <strong>Flat rotation</strong> (2°) when both record it</td></tr>
+    </table>
+  </div>
+  <p>Readout mode names must match, ignoring case. N.I.N.A. writes a name such as
+  <code>Extend Fullwell 2CMS</code>; PSF Guard compares names ignoring case, so a High
+  Gain dark never serves an Extend Fullwell light.</p>
+  <p>Frames in one master must also agree with each other: temperatures
+  within 1&nbsp;°C, and flats within 2°, 1&nbsp;mm and one <strong>Flat
+  session</strong> of each other. With flats grouped by measurement, only
+  nights that measured alike pool. The nearest group with enough frames builds
+  the master, up to 64 frames. Before integrating, Seiza checks the inputs
+  again and leaves out any it will not accept, such as a frame filed under the
+  wrong filter, camera or readout mode; the stack warning lists them.</p>
+
+  <h3 id="boundaries">Mark where calibration stops being valid</h3>
+  <p>Nearest in time is the right default, but it cannot know about a dust
+  cleaning or a re-spaced imaging train. Flat groups catch many such changes
+  in flats; mark the rest by hand. On the Calibration page, the session's
+  header marks every frame of a session, and the frame panel one frame:
+  <strong>◂ Before only</strong> for the last set before the change,
+  <strong>After only ▸</strong> for a set shot right after it, and
+  <strong>Both</strong> to clear the mark. Matching never takes a marked frame
+  across its boundary, for any kind. A light shot at the boundary instant
+  matches either way, and a frame with no capture time keeps matching. Marks
+  survive rescans and sync with the library.</p>
+
+  <h3 id="darks">Dark masters</h3>
+  <p>Darks keep for months, so a dark master can draw on several nights. It uses the
+  nearest complete night of darks alone. When no night is complete, it pools the nights
+  within reach, nearest first. Three settings under <strong>Settings › Calibration ›
+  Dark masters</strong> shape this, globally or for one rig:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+      <tr><td><strong>Dark reach</strong></td><td>183 days</td><td>A dark shot further than this from the light does not match. A dark marked to serve lights before or after it follows its mark instead, however old.</td></tr>
+      <tr><td><strong>Complete night</strong></td><td>10 darks</td><td>The nearest night with this many matching darks makes the master alone. With fewer, nights pool.</td></tr>
+      <tr><td><strong>Dark choice</strong></td><td>Complete set first</td><td>Which set of darks, or bias, builds the master when several match.</td></tr>
+    </table>
+  </div>
+  <p>A dark matches a light within 3&nbsp;°C, but one master takes only darks within
+  1&nbsp;°C of each other, so several sets can match. With <strong>Complete set
+  first</strong>, the nearest set with at least <strong>Complete night</strong> frames
+  builds the master, and a nearer, smaller set serves only when no set is complete.
+  <strong>Nearest set</strong> keeps the old rule, the nearest two or more frames
+  however few, and a two-frame master puts its own read noise into every light as row
+  banding. Bias masters follow the same choice, and WBPP runs and exports take the same
+  frames. A rig with no matching darks can turn <strong>Use darks</strong> off: PSF
+  Guard calibrates its lights with bias and flats, with no missing-dark flag.</p>
+
+  <h3 id="external">Masters from other software</h3>
+  <p>A master bias, dark or flat from WBPP, Siril or another tool imports like
+  any calibration frame. A master <code>IMAGETYP</code> or an
+  <code>NCOMBINE</code> card marks it, and the frame panel shows a
+  <strong>Master</strong> badge. PSF Guard uses it as-is, never integrated
+  again, and does not grade it.</p>
+  <ul>
+    <li>Matching is lenient, since such files often drop gain, offset and
+      temperature: what both sides record must agree, and the camera name or
+      sensor size must still match. A dark's exposure must still match. The
+      stack report shows which missing fields it accepted.</li>
+    <li>A master dark that records no sensor temperature, such as one from
+      WBPP, calibrates cooled lights.</li>
+    <li>WBPP's FITS masters are floats scaled 0 to 1. PSF Guard copies such a
+      master into its cache once, on the same 16-bit scale as every other
+      frame. PSF Guard leaves the original unchanged.</li>
+  </ul>
+  <p><strong>External masters</strong>, under Settings › Calibration › Matching, decides
+  how they take part, globally or for one rig: <strong>Whenever one matches</strong>
+  (default), <strong>Only if raw frames can't build one</strong>, or
+  <strong>Never</strong>.</p>
+
+  <h2 id="stacking">Calibration in stacks</h2>
+  <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
+  has three modes:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Mode</th><th>What it does</th></tr>
+      <tr><td><strong>Auto</strong></td><td>Default. Applies only masters whose matching and dependencies are safe.</td></tr>
+      <tr><td><strong>Force on</strong></td><td>Applies every master that can be built, including a flat with no trusted pedestal. The card warns about the risk.</td></tr>
+      <tr><td><strong>Off</strong></td><td>Skips matching and stacks the raw lights.</td></tr>
+    </table>
+  </div>
+  <p>The project-wide choice is saved, and each channel card can override it.
+  A stack whose lights need different flats or darks splits into calibration
+  sessions and swaps masters between them; the card reports the session count.
+  Calibration runs on raw CFA data before debayering. To keep lights the
+  library can't calibrate out of stacks, see <a href="calibration-grading.html#uncalibrated">Lights that can't be calibrated</a>.</p>
+  <div class="callout info">
+    A master that fails to build does not fail the stack. The lights stack
+    without it, and the card shows the skipped master and why. A master whose
+    input master failed, such as a flat whose bias did not build, is skipped
+    rather than built without it.
+  </div>
+
+  <h2 id="flats">Flats</h2>
+  <p>A flat divides correctly only after the light's pedestal is removed,
+  which a bias or dark master does. With flats only, PSF Guard fits the
+  pedestal from the lights when the field has enough vignetting and the fit
+  passes its checks; otherwise Auto leaves the flat out and says to import bias
+  or dark frames.</p>
+  <p>A flat master gets a defect pass after integration, since a hot or dead
+  pixel repeats in every flat and would print into every light. Darks keep
+  their hot pixels, which subtract the lights' own; lights with no dark master
+  get the same pixel filter before stacking.</p>
+  <div class="callout">
+    <strong>Let stars move between sky flats.</strong> Dither or let the sky
+    drift. A star that stays on the same pixels survives clipping, and star
+    images are too wide for the defect pass to remove.
+  </div>
+  <p><strong>Mask stars in flats</strong>, under Settings › Calibration ›
+  Flat masters, detects stars in each raw flat and leaves them out before
+  integration. It is off by default, applies to every rig, and does not touch
+  imported masters. Every pixel must keep at least two unmasked frames, or the
+  flat build fails and the stack goes on without it.</p>
+  <p>Dew drying off the sensor window leaves spots that fade from one flat to the next.
+  PSF Guard reads each new flat master back against its frames, counting only dips, so
+  stars in sky flats do not count. When a minority disagree, the master rebuilds without
+  them; when the whole set disagrees with itself, the next-nearest flat set takes its
+  place; with no other set, the PSF Guard uses the master and the card recommends taking
+  new flats.</p>
+
+  <h2 id="masters">Masters</h2>
+  <p>Each master requires at least two frames. Bias and dark masters use a two-pass,
+  leave-one-out sigma-clipped mean; flat masters use median/MAD clipping after
+  calibrating and normalizing each frame. The FITS records the method, thresholds, frame
+  count and rejected samples. A master builds on the cores its stack build was given;
+  see <a href="storage.html#processor">Processor use</a>. While it builds, the stack
+  card and the header queue show which master and the frame or tile under way, and
+  <strong>Stop</strong> ends the build and writes nothing.</p>
+  <p>Each master's file name comes from its input frames, file fingerprints,
+  upstream masters and algorithm versions, so a changed bias rebuilds the dark
+  and flat masters that used it, and an unchanged master is reused. Masters live
+  in the calibration masters folder, which is the cache unless
+  <code>--calibration-dir</code> or <strong>Settings › Storage ›
+  Folders</strong> sets another:</p>
+  <pre><code>&lt;calibration masters folder&gt;/&lt;database&gt;/calibration-masters/</code></pre>
+  <p>PSF Guard removes old and half-written masters once unused, keeps any
+  master whose frames are gone, and builds a removed master again when a stack
+  needs it. See <a href="storage.html#disk-use">Disk use</a>.</p>
+  <p><strong>Masters</strong> on a finished stack shows the files that stack
+  used, with the sensor temperatures and nights of their frames, so a dark
+  master shot warmer than its lights stands out. <strong>Open in
+  Calibration</strong> opens a master on the Calibration page's
+  <a href="calibration.html#masters-tab">Masters tab</a>.</p>
+
+  <h2 id="export">Export with calibration frames</h2>
+  <p>Project and target exports add, for each light, the raw frames a stack
+  would build its masters from, matched by the settings for the light's rig.
+  Poor frames, frames kept out and darks that caught stray light stay
+  out.</p>
+  <ul>
+    <li>Flats go under their target and night, placed by flat group as a stack
+      takes them, and lights of one night that need different flats get a
+      session each. WBPP cannot carry flats across a change, so such a light
+      keeps its flats as shot and is named in the export summary and the
+      runner.</li>
+    <li>When lights of one exposure were matched to different darks, each set
+      of darks goes in its own <code>DARKSET_&lt;night&gt;</code> folder, so WBPP
+      does not average every night's darks into one master.</li>
+    <li>With <strong>Leave out lights that can't be calibrated</strong> on, every export
+    leaves out the lights a stack would, in either layout, from the dialog, the CLI and
+    the AstroBin export, and reports how many lights it excluded and why.</li>
+  </ul>
+  <p>Layouts, options and the WBPP runner are on
+  <a href="exporting.html">Export &amp; AstroBin</a>.</p>
+
+  <h2 id="settings">Settings › Calibration</h2>
+  <p>Calibration limits are settings under <strong>Settings ›
+  Calibration</strong>. Values apply to every database on the server from the
+  next match, check and stack. The defaults are the limits PSF Guard used
+  before, so an untuned library behaves as it did. Anyone can read them;
+  saving needs an editor account.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Box</th><th>Settings (default)</th></tr>
+      <tr><td><strong>Matching</strong></td><td><strong>Flat rotation</strong> (2°), <strong>Flat focal length</strong> (1 mm), <strong>Dark temperature</strong> (3 °C), <strong>Flat session</strong>, the longest span of flats one master takes (24 h), <strong>Use darks</strong> (on), <strong>External masters</strong> (Whenever one matches), <strong>Rig's time zone</strong> (Automatic), <strong>Nights end</strong> (At each rig's noon)</td></tr>
+      <tr><td><strong>Dark masters</strong></td><td><strong>Dark reach</strong> (183 days), <strong>Complete night</strong> (10 darks), <strong>Dark choice</strong> (Complete set first); see <a href="#darks">Dark masters</a></td></tr>
+      <tr><td><strong>Flat groups</strong></td><td><strong>Group flats</strong>, <strong>Dust split</strong>, <strong>Light pattern split</strong>; see <a href="calibration-flats.html#flat-settings">Flat group settings</a></td></tr>
+      <tr><td><strong>Flat masters</strong></td><td><strong>Mask stars in flats</strong> (off); see <a href="#flats">Flats</a></td></tr>
+      <tr><td><strong>Light checks</strong></td><td><strong>Flat age limit</strong> (60 days), <strong>Flat age warning</strong> (30 days), <strong>Thin master</strong> (5 frames), and each <a href="calibration-grading.html#health">light check</a></td></tr>
+      <tr><td><strong>Frame grades</strong></td><td>The suspect and poor limits of each <a href="calibration-grading.html#grades">frame check</a>, folded until opened</td></tr>
+      <tr><td><strong>Stacks and exports</strong></td><td><strong>Leave out lights that can't be calibrated</strong> (off)</td></tr>
+    </table>
+  </div>
+  <p>A light check that can raise Poor offers <strong>Poor</strong> (or
+  <strong>Flag</strong>, where it raises Poor or Check by itself),
+  <strong>Check only</strong> and <strong>Off</strong>; one that only raises
+  Check offers <strong>Check</strong> and <strong>Off</strong>. Check only
+  shows the finding as Check at most, so stacks keep the light and the Library
+  pill reads Check at most. Off does not flag it, and the light's panel lists
+  it under Not flagged.</p>
+  <p>Matching, Dark masters and Flat groups change which frames a light's
+  masters take, so the masters and stacks they touch build again; WBPP exports
+  and runs, and <code>psf-guard export</code>, match by the same settings.
+  <strong>Rig's time zone</strong> grades frames and plans flat groups again.
+  Light checks change only what is flagged, and Frame grades grade again from
+  the stored numbers; neither rereads the image pixels.</p>
+
+
+  <figure>
+    <img src="../assets/settings-calibration.png" loading="lazy" alt="Global matching limits control which calibration frames can serve a light." width="1800" height="1508">
+    <figcaption>Global matching limits control which calibration frames can serve a light.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/settings-calibration-flat-groups.png" loading="lazy" alt="Flat-group limits separate nights when dust or illumination changes." width="1800" height="1620">
+    <figcaption>Flat-group limits separate nights when dust or illumination changes.</figcaption>
+  </figure>
+
+  <h3 id="rig-settings">Settings for one rig</h3>
+  <p><strong>Rigs</strong>, below the global settings, lists every rig an open catalog
+  records. Open a rig and press <strong>Own value</strong> beside a setting to give the
+  rig its own; the rest inherit, and each row shows which settings it inherits.
+  <strong>Save rig</strong> keeps the values, and <strong>Inherit everything</strong>
+  clears them. <strong>Start from</strong> fills the form with a preset to review before
+  saving:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Preset</th><th>For</th><th>Sets</th></tr>
+      <tr><td><strong>Sky flats</strong></td><td>Twilight flats, whose light pattern and level change with the sky</td><td>Flat session 72 h, Flats from several nights off, Flat light pattern 5% and 10%, Flat too dim 5% and 2%</td></tr>
+      <tr><td><strong>Dark library</strong></td><td>A rig that cannot cap for darks and uses a library shot elsewhere</td><td>Dark reach 730 days, No matching bias or dark as Check only</td></tr>
+      <tr><td><strong>No darks</strong></td><td>Bias, dark flats and flats only</td><td>Use darks off</td></tr>
+    </table>
+  </div>
+  <p>A light's checks and a calibration frame's grade both use its own rig's
+  values. Each catalog in <strong>Settings › Rigs</strong> links to its rigs
+  here, and this list links back. An older PSF Guard that saves its settings
+  drops the rigs' values, so set them again after a downgrade.</p>
+
+  <figure>
+    <img src="../assets/settings-calibration-rig.png" loading="lazy" alt="Start from a preset, then override only the calibration limits this rig needs." width="1800" height="1302">
+    <figcaption>Start from a preset, then override only the calibration limits this rig needs.</figcaption>
+  </figure>
+
+  <nav class="next-prev" aria-label="Documentation pages">
+    <a href="calibration-flats.html">&larr; Flats &amp; Dust Changes</a>
+    <a href="exporting.html">Export &amp; AstroBin &rarr;</a>
+  </nav>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

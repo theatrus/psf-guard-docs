@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CLI Reference — PSF Guard</title>
-  <meta name="description" content="Every psf-guard command: serve, import, screen, export, archive and remove rejects, sync, users and tokens, sky maps, GUID repair, and single-file analysis.">
+  <meta name="description" content="Every psf-guard command: serve, import, screen, export, archive and remove rejects, sync, back up, repair calibration duplicates, measure flat groups, users and tokens, sky maps, GUID repair, and single-file analysis.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html" class="active" aria-current="page">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html" class="active" aria-current="page">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -145,8 +157,9 @@ function gtag_report_demo() {
   <h1>CLI Reference</h1>
   <p class="lede">
     Every <code>psf-guard</code> command: serve the UI, import image folders,
-    screen frames, export, remove rejects, sync, manage users, and analyze
-    single files. The desktop app needs none of them.
+    screen frames, export, remove rejects, sync, back up, repair calibration
+    duplicates, measure flat groups, manage users, and analyze single files.
+    The desktop app needs none of them.
   </p>
 
   <div class="workflow-note cli">
@@ -174,6 +187,9 @@ function gtag_report_demo() {
       <tr><td><code>empty-reject-trash</code>, <code>purge-removed</code></td><td>Delete trashed files past their time; then forget their saved rows</td></tr>
       <tr><td><code>filter-rejected</code></td><td>Legacy reject mover with statistical flags</td></tr>
       <tr><td><code>sync pull</code>, <code>planning</code>, <code>grades</code>, <code>remote</code></td><td>Copy captures, plans or grades between two databases or two servers</td></tr>
+      <tr><td><code>backup</code></td><td>Back up the settings and every catalog into one zip archive</td></tr>
+      <tr><td><code>calibration repair-duplicates</code></td><td>Merge calibration rows that record one exposure more than once</td></tr>
+      <tr><td><code>flat-groups</code></td><td>Measure a catalog's flat groups on a copy</td></tr>
       <tr><td><code>users</code></td><td>Manage browser users and API tokens</td></tr>
       <tr><td><code>sky-maps install</code>, <code>list</code></td><td>Install N.I.N.A.'s offline sky maps for framing</td></tr>
       <tr><td><code>fill-guids</code></td><td>Give Target Scheduler rows without a GUID a new one</td></tr>
@@ -224,7 +240,7 @@ psf-guard server --host 127.0.0.1 &lt;db&gt; &lt;dirs...&gt;</code></pre>
       <tr><td><code>--calibration-dir</code></td><td>Folder for calibration masters; default Settings, else the cache</td></tr>
       <tr><td><code>--pregenerate-screen</code>, <code>--pregenerate-large</code>, <code>--pregenerate-original</code>, <code>--pregenerate-annotated</code>, <code>--pregenerate-all</code></td><td>Make those previews in the background</td></tr>
       <tr><td><code>--cache-expiry</code></td><td>How long pre-generated previews last (default <code>1y</code>)</td></tr>
-      <tr><td><code>--allow-database-management</code></td><td>Allow database, catalog and path changes from the browser. On a network address it also needs an account.</td></tr>
+      <tr><td><code>--allow-database-management</code></td><td>Let editors name server paths from the browser: databases and their folders, imports from other folders, local exports, storage, PixInsight. Flat-group choices, duplicate repair, backups and Planning's activation need it too. On a network address it also needs an account. See <a href="authentication.html#management">Server Accounts</a>.</td></tr>
       <tr><td><code>--director-meta</code></td><td>Keep the planning store at another path; needs <code>--allow-database-management</code></td></tr>
       <tr><td><code>--allow-anonymous-access</code></td><td>Serve a network address with no accounts, open to everyone</td></tr>
       <tr><td><code>--static-dir</code></td><td>Serve the frontend from a folder instead of the built-in copy</td></tr>
@@ -254,6 +270,9 @@ psf-guard import archive ./processing-tree --skip-processed
 <span class="c"># Take frames from a rig this catalog has not recorded</span>
 psf-guard import archive ./new-camera --accept-other-rigs
 
+<span class="c"># Leave out folders that match a pattern; repeat for more</span>
+psf-guard import archive ./new-frames --exclude '**/Hocus Focus/**'
+
 <span class="c"># Preview removing the projects an import made</span>
 psf-guard remove-imported archive --dry-run</code></pre>
   <p>The first pass reads headers only. Lights arrive as Pending frames and
@@ -270,6 +289,10 @@ psf-guard remove-imported archive --dry-run</code></pre>
     <li><code>--time-gap-days</code> sets the gap between a rig's frames that
       starts a new project. <code>--profile-id</code> picks the Target Scheduler
       profile.</li>
+    <li><code>--exclude PATTERN</code> leaves files and folders out, as an
+      exclude scan rule does; <code>create-db</code> takes it too. A
+      registered database's own scan rules apply as well, and a folder that
+      holds a <code>.psfguardignore</code> file is always skipped.</li>
     <li><code>create-db</code> registers the new database unless you pass
       <code>--no-register</code>.</li>
     <li>The scanner reads <code>.fits</code>, <code>.fit</code>,
@@ -394,6 +417,68 @@ psf-guard sync remote --direction pull --local my-db \
   --peer https://telescope.example:3000 --token-file key.txt</code></pre>
   <p>See <a href="workflows.html#sync">Rejects &amp; Sync</a>.</p>
 
+  <h2 id="backup">Back up settings and catalogs</h2>
+  <pre><code>psf-guard backup /mnt/backups/psf-guard                  <span class="c"># settings and catalogs</span>
+psf-guard backup /mnt/backups/psf-guard --scope meta     <span class="c"># settings only</span>
+psf-guard backup /mnt/backups/psf-guard --dry-run
+psf-guard backup /mnt/backups/psf-guard --registry /var/lib/psf-guard/registry.json \
+  --config /etc/psf-guard/psf-guard.toml</code></pre>
+  <p>Catalogs are copied with SQLite's online backup, so it can run while the
+  server and N.I.N.A. write. It exits non-zero when it writes no archive; a
+  catalog it skipped is named in the manifest. The schedule never prunes
+  archives this command makes. See <a href="backups.html#cli">Backups</a> for
+  every option, a completeness check and scheduled runs from cron, systemd,
+  Docker or Task Scheduler.</p>
+
+  <h2 id="calibration">Work on the calibration library</h2>
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong>
+  <code>calibration repair-duplicates</code> and <code>flat-groups</code>
+  work on a catalog's calibration library from the command line.</div>
+
+  <h3 id="repair-duplicates">Repair duplicates</h3>
+  <pre><code><span class="c"># Preview, then merge rows that record one exposure more than once</span>
+psf-guard calibration repair-duplicates /data/catalog.sqlite --dry-run
+psf-guard calibration repair-duplicates /data/catalog.sqlite
+
+<span class="c"># A dry run on a catalog copied from another machine</span>
+psf-guard calibration repair-duplicates copy.sqlite --dry-run \
+  --map-prefix /mnt/share=/Volumes/share</code></pre>
+  <p><code>repair-duplicates</code> takes the catalog's <code>.sqlite</code>
+  path. It keeps the oldest row of each exposure, moves that row to a copy
+  still on disk when its own file is gone, and removes the masters built from
+  merged rows so stacks build them again. No file is moved or deleted.
+  <code>--dry-run</code> prints the plan and writes nothing;
+  <code>--map-prefix FROM=TO</code>, with <code>--dry-run</code> only, reads
+  the recorded paths through this machine's mount. Progress and timings go to
+  standard error.</p>
+  <p>A repair holds a lock file beside the catalog
+  (<code>&lt;catalog&gt;.psf-guard-repair.lock</code>), so the command line and
+  a server never repair one catalog at once. A server open on the catalog
+  sees the change at its next scan, regrade or restart. The Calibration page's
+  <strong>Repair duplicates…</strong> does the same; see
+  <a href="calibration.html">Calibration Libraries</a>.</p>
+
+  <h3 id="flat-groups">Measure flat groups on a copy</h3>
+  <pre><code>psf-guard flat-groups /data/catalog.sqlite --work /tmp/flat-work
+psf-guard flat-groups /data/catalog.sqlite --work /tmp/flat-work \
+  --images /data/images --lights --report flat-groups.json</code></pre>
+  <p><code>flat-groups</code> opens the catalog read-only, copies it into the
+  <code>--work</code> folder, and measures there. It prints each family's
+  groups, the splits between them and why, the rig's changes, and the angle
+  difference. It never writes the catalog or a frame.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Option</th><th>Does</th></tr>
+      <tr><td><code>--work</code></td><td>Folder for the copy, the measurements and the report. A later run reuses the copy there.</td></tr>
+      <tr><td><code>--images</code></td><td>Image folders that hold the lights, for their pixel evidence and <code>--lights</code>; repeat for more</td></tr>
+      <tr><td><code>--lights</code></td><td>Also say how each light's flats are chosen; reads each light's header</td></tr>
+      <tr><td><code>--map-prefix FROM=TO</code></td><td>Rewrite calibration paths in the copy when the catalog was made on another machine; repeat for more</td></tr>
+      <tr><td><code>--report</code></td><td>Write the report as JSON</td></tr>
+      <tr><td><code>--fresh</code></td><td>Copy the catalog again and measure everything again</td></tr>
+    </table>
+  </div>
+  <p>See <a href="calibration-masters.html#flats">Calibration Libraries</a>.</p>
+
   <h2 id="users">Manage users and API tokens</h2>
   <pre><code>psf-guard users add editor --role read-write [--email ...] [--password-file PATH] [--replace]
 psf-guard users add viewer --role read-only
@@ -470,8 +555,8 @@ psf-guard regrade database.sqlite [--dry-run] [--days 90]     <span class="c"># 
   <a href="https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/docs/STATISTICAL_GRADING.md')">docs/STATISTICAL_GRADING.md</a>.</p>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="storage.html">&larr; Storage &amp; Performance</a>
-    <a href="configuration.html">Configuration &amp; API &rarr;</a>
+    <a href="workflows.html">← Rejects &amp; Database Transfer</a>
+    <a href="pixinsight.html">PixInsight Scripts →</a>
   </nav>
 </main>
 </div>

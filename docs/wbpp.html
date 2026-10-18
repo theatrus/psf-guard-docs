@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WBPP Runs — PSF Guard</title>
-  <meta name="description" content="Run PixInsight's WBPP on the PSF Guard server: setup, settings, per-night darks and flats, the run queue, masters as stacks, and saving masters with your finished work.">
+  <meta name="description" content="Run PixInsight's WBPP on the PSF Guard server: setup, settings, calibration frames matched as a stack would take them, the run queue, masters as stacks, and saving masters with your finished work.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html" class="active" aria-current="page">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -154,11 +166,17 @@ function gtag_report_demo() {
     <a href="exporting.html#wbpp">Export &amp; AstroBin</a>.
   </div>
 
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> A run matches
+  calibration by <strong>Settings &rarr; Calibration</strong>, places flats by
+  flat group, and can leave out lights that can't be calibrated. Starting a
+  run no longer needs the database-management grant.</div>
+
   <h2 id="setup">Point PSF Guard at PixInsight</h2>
-  <p>A run starts a program on the server, so it needs write access, the
-  database-management grant, and a PixInsight install the server can reach.
-  Set it up once under <strong>Settings &rarr; Setups &rarr;
-  PixInsight</strong>:</p>
+  <p>A run needs an editor and a PixInsight install the server can reach. Choosing the
+  program and runs folder sets paths on the server, so it needs the database-management
+  grant, which the desktop app always has; see <a
+  href="authentication.html#management">Server Accounts</a>. Set it up once under
+  <strong>Settings &rarr; Setups &rarr; PixInsight</strong>:</p>
   <ul>
     <li><strong>Executable</strong>: leave empty to look in the standard places
       (<code>/opt/PixInsight</code>, <code>~/PixInsight</code>, the macOS
@@ -173,19 +191,21 @@ function gtag_report_demo() {
       under the database's server export directory, else its stack
       folder.</li>
   </ul>
-  <p>The panel says what it found, which WBPP version, and whether the server
-  has a display. PixInsight's licence must already be activated for the
-  account the server runs as; activation needs the real GUI once.</p>
+  <p>The panel shows the PixInsight installation, the WBPP version and whether the
+  server has a display. PixInsight's licence must already be activated for the account
+  the server runs as; activation needs the real GUI once. Settings asks before closing
+  if you have unsaved PixInsight changes.</p>
+
 
   <figure>
-    <img src="../assets/settings-pixinsight.png" alt="Settings › Setups › PixInsight: found WBPP version, Executable and WBPP runs folder with free space" loading="lazy">
-    <figcaption>The PixInsight panel shows the install it found, its WBPP version, and whether runs go through xvfb-run.</figcaption>
+    <img src="../assets/settings-pixinsight.png" loading="lazy" alt="Check the PixInsight executable and WBPP run folder before starting a run." width="1878" height="790">
+    <figcaption>Check the PixInsight executable and WBPP run folder before starting a run.</figcaption>
   </figure>
 
   <h3 id="headless">Run on a headless server</h3>
   <p>PixInsight needs a display. On a Linux server without one, install the
-  <code>xvfb</code> package. PSF Guard then runs PixInsight through
-  <code>xvfb-run -a</code> on its own, and the settings panel says so. For an
+  <code>xvfb</code> package. PSF Guard then runs PixInsight through <code>xvfb-run
+  -a</code> on its own, and the settings panel shows that it uses xvfb-run. For an
   exported runner script, put <code>xvfb-run -a</code> in front of
   <code>run-wbpp.sh</code>.</p>
 
@@ -205,7 +225,8 @@ function gtag_report_demo() {
       pair WBPP accepts, one per line. WBPP lists them with Alt+A in its
       dialog.</li>
     <li><strong>Run folder</strong>: a folder for this run only, in place of
-      the runs folder from Settings.</li>
+      the runs folder from Settings. A folder outside the runs folder needs
+      the database-management grant.</li>
     <li><strong>Save the masters when done</strong>: copy the masters next to
       your finished work; see <a href="#process">below</a>.</li>
   </ul>
@@ -213,18 +234,18 @@ function gtag_report_demo() {
   export would, writes <code>run-wbpp.js</code> into the run folder, and starts
   PixInsight on it headless.</p>
 
+
   <figure>
-    <img src="../assets/wbpp-run-dialog.png" alt="Stack with WBPP dialog: Include ungraded lights and the Quality, Fast Integration, Drizzle, Autocrop and Light rejection settings" loading="lazy">
-    <figcaption>The run dialog. Settings start from the defaults under Settings → Setups → Export.</figcaption>
+    <img src="../assets/wbpp-run-dialog.png" loading="lazy" alt="Review WBPP&#x27;s quality, integration and rejection choices before starting the run." width="1332" height="1388">
+    <figcaption>Review WBPP&#x27;s quality, integration and rejection choices before starting the run.</figcaption>
   </figure>
 
   <h2 id="settings">WBPP settings</h2>
-  <p>A headless run starts from WBPP's own defaults, not from what its dialog
-  last saved, so these settings are the whole story. Drizzle and Fast
-  Integration have no WBPP command-line parameter; the runner script sets them
-  on every light group itself. <strong>Settings &rarr; Setups &rarr;
-  Export</strong> holds the defaults that runs and WBPP exports start
-  from.</p>
+  <p>A headless run starts from WBPP's own defaults, not from what its dialog last
+  saved. Set the run's options here. Drizzle and Fast Integration have no WBPP
+  command-line parameter; the runner script sets them on every light group itself.
+  <strong>Settings &rarr; Setups &rarr; Export</strong> stores the defaults that runs
+  and WBPP exports start from.</p>
   <div class="table-wrap">
     <table>
       <tr><th>Setting</th><th>Choices</th><th>What it does</th></tr>
@@ -236,19 +257,55 @@ function gtag_report_demo() {
     </table>
   </div>
 
-  <h2 id="darks">Darks and flats per night</h2>
+  <h2 id="darks">Calibration frames per light</h2>
   <p>A run gets the calibration frames a PSF Guard stack would build its
   masters from: per light, one coherent set of each kind, not every frame the
-  library matched. Darks and bias follow <strong>Dark choice</strong> under
-  <strong>Settings &rarr; Calibration</strong>, so by default a complete set
-  beats a nearer, smaller one; see <a href="calibration.html#darks">Dark
-  masters</a>. Darks that caught stray light stay out, and the dialog counts
-  them. See <a href="calibration.html#stray-light">Calibration
-  Libraries</a>.</p>
+  library matched. Matching uses the settings for each light's rig under <strong>Settings
+  &rarr; Calibration</strong>:</p>
+  <ul>
+    <li>The flat rotation, focal length and session limits decide which flats
+      share a light's session.</li>
+    <li>The dark settings decide its darks and bias. By default <strong>Dark
+    choice</strong> prefers a complete set to a nearer, smaller one; see <a
+    href="calibration-masters.html#darks">Dark masters</a>. A rig set to do without
+    darks gets none.</li>
+    <li>Masters from other software go only when their setting uses them.</li>
+    <li>Frames the library keeps out stay out, and the dialog counts them:
+      frames graded poor, such as
+      <a href="calibration-grading.html#stray-light">darks that caught stray
+      light</a>, and frames kept out by hand.</li>
+  </ul>
+  <p>With <strong>Leave out lights that can't be calibrated</strong> on, under
+  <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>, the run leaves
+  out the lights a stack would, and the dialog shows how many lights it excluded. The
+  dialog lists the matching settings that differ from the defaults, after
+  <em>Calibration frames matched with:</em>, and <code>run-wbpp.js</code> lists them
+  too, with the rigs that get no darks and the lights left out. A run always plans
+  afresh into a new folder.</p>
+
+  <h3 id="flat-groups">Flats by flat group</h3>
   <p>Each light carries a <code>SESSION</code> keyword for its night, so
   each night's lights calibrate with that night's flats, and the nights
-  integrate together afterwards. When lights of one exposure were matched to
-  different darks, say each to its own complete night, each set of darks gets
+  integrate together afterwards. The flats follow the rig's
+  <a href="calibration-flats.html#flat-groups">flat groups</a>: a light gets flats from
+  its own side of each measured change, as a stack would.</p>
+  <ul>
+    <li>Lights of one night that take different flats get a session each,
+      <code>SESSION_&lt;night&gt;-&lt;digest&gt;</code>, so WBPP builds each
+      its own master.</li>
+    <li>WBPP cannot correct flats across a change. A light a stack would give
+      corrected flats gets the flats as shot, in a
+      <code>SESSION_&lt;night&gt;-across-&lt;key&gt;</code> session of its
+      own.</li>
+    <li>The dialog lists the measured changes used for matching, after <em>Flats chosen
+    around measured changes:</em>, and counts the lights that take flats from across
+    one, which WBPP may not calibrate as a PSF Guard stack would. The runner's notes
+    list those lights.</li>
+  </ul>
+
+  <h3 id="darksets">Dark sets per night</h3>
+  <p>When lights of one exposure were matched to different darks, say each
+  to its own complete night, each set of darks gets
   a <code>DARKSET_&lt;night&gt;</code> keyword named for its nearest dark, and
   WBPP pairs each set only with its own lights instead of averaging every
   night's darks into one master. Bias, dark flats and flats carry no
@@ -258,9 +315,14 @@ function gtag_report_demo() {
   <h2 id="progress">Follow the run</h2>
   <p>The dialog follows WBPP's own log: the step it is on, the time so far,
   the last lines, and every line WBPP marks as an error. It counts the lights
-  and calibration frames, the catalog rows with no file on disk, and the
-  stray-light darks left out, and shows the space free at the run folder when
-  the run began.</p>
+  and calibration frames, and what it left out: catalog rows with no file on
+  disk, kept-out calibration frames, and lights that can't be calibrated. It
+  shows free space at start and the
+  calibration notes <a href="#darks">above</a>.</p>
+  <figure>
+    <img src="../assets/wbpp-run-progress.png" alt="WBPP running on Heart of the Soul Nebula with 57 lights and 155 calibration frames" width="1332" height="430" loading="lazy">
+    <figcaption>WBPP is writing a master dark. The run dialog shows the current step, elapsed time, input counts and free space at startup.</figcaption>
+  </figure>
   <p>WBPP writes its log between steps, so a long integration shows nothing
   new for a while; the clock keeps counting while PixInsight works.
   <strong>Stop PixInsight</strong> ends the run.</p>
@@ -269,7 +331,8 @@ function gtag_report_demo() {
   download, and links to <code>run-wbpp.js</code>, the WBPP log and
   PixInsight's console output. Everything stays in the run folder on the
   server's disk. A run that wrote no master is reported as failed, with the
-  last error WBPP logged.</p>
+  last error WBPP logged. Only an editor reads a run's files, and a link in a
+  run folder cannot lead outside it.</p>
   <p>The Library shows every database's run under way, just finished or in
   line, in any browser tab. The project's action then reads <strong>Stacking in
   WBPP…</strong>, <strong>Queued for WBPP</strong>, <strong>WBPP masters
@@ -286,25 +349,27 @@ function gtag_report_demo() {
   one ends, with the settings it was queued with.</p>
   <p>The Library lists queued runs with their place; <strong>×</strong> or
   <strong>Remove from queue</strong> in the dialog takes one out. The header's
-  background jobs chip lists the running run and the whole line on every
-  database: <strong>↑</strong> and <strong>↓</strong> change the order,
-  <strong>×</strong> takes a run out, and <strong>Stop</strong> ends the running
-  one after asking once. These controls need write access and database
-  management.</p>
+  background jobs list the running job and queued jobs across all databases,
+  under <strong>Started by you</strong>, a queued run with its place, such as
+  <code>queued · 2 · 1 ahead</code>. <strong>↑</strong> and <strong>↓</strong>
+  change the order one place at a time. <strong>Move to top</strong> moves a
+  queued run to the front so it starts after the current run ends. The button
+  is disabled when the run is already next. <strong>×</strong> removes a run, and
+  <strong>Stop</strong> ends the running one after asking once. These controls
+  need an editor.</p>
   <p>The line survives a restart: waiting runs keep their order. A run the
   restart cut off shows as stopped rather than starting again from nothing;
-  start it again when you are ready. See <a href="storage.html">Storage &amp;
-  Performance</a>.</p>
+  start it again when you are ready. See <a href="storage.html#restart">Storage
+  &amp; Performance</a>.</p>
 
   <h2 id="stacks">See the masters as stacks</h2>
-  <p>When a run started from PSF Guard ends, it takes its master lights in as
-  stacks before PixInsight starts the next run. They show under
-  <strong>WBPP stacks</strong>, below PSF Guard's own stacks in
-  <strong>Stacks</strong>, each with a preview and its <strong>FITS</strong>.
-  In <strong>Combine channel stacks</strong> they appear as channel sources
-  marked <em>WBPP</em>: choose L, R, G and B from WBPP, for example, and PSF
-  Guard composes the color preview with the same background, stretch and
-  processing as for its own stacks.</p>
+  <p>When a run started from PSF Guard finishes, PSF Guard imports its master lights as
+  stacks before PixInsight starts the next run. They show under <strong>WBPP
+  stacks</strong>, below PSF Guard's own stacks in <strong>Stacks</strong>, each with a
+  preview and its <strong>FITS</strong>. In <strong>Combine channel stacks</strong> they
+  appear as channel sources marked <em>WBPP</em>: choose L, R, G and B from WBPP, for
+  example, and PSF Guard composes the color preview with the same background, stretch
+  and processing as for its own stacks.</p>
   <ul>
     <li>One master is taken per filter and exposure. PSF Guard prefers one
       without drizzle, since color composition aligns channels of one scale,
@@ -321,13 +386,14 @@ function gtag_report_demo() {
     <li>An RGB master, such as one from a color camera, previews in color with
       a stretch per channel.</li>
   </ul>
-  <p>When taking the masters in fails, the section says why and offers
-  <strong>Take in the last run</strong> to try again. It reads only that run's
-  folder and needs database management.</p>
+  <p>If importing the masters fails, the section explains the error and offers
+  <strong>Take in the last run</strong> to try again. It reads only that run's folder
+  and needs an editor.</p>
+
 
   <figure>
-    <img src="../assets/stacks-toolbar.png" alt="Stacks toolbar: Accepted only, Method, Calibration, Order, Build current set, Rebuild current set and Stack in WBPP" loading="lazy">
-    <figcaption>Stack in WBPP sits beside the build buttons.</figcaption>
+    <img src="../assets/stacks-toolbar.png" loading="lazy" alt="Choose the stack method, calibration and grouping before building the current set." width="2936" height="326">
+    <figcaption>Choose the stack method, calibration and grouping before building the current set.</figcaption>
   </figure>
 
   <h2 id="process">Keep the masters with your finished work</h2>
@@ -349,9 +415,8 @@ function gtag_report_demo() {
   <h2 id="agents">Start runs from an agent</h2>
   <p>The MCP tools <code>start_wbpp_run</code> and
   <code>cancel_wbpp_run</code> start and stop a run, and
-  <code>get_jobs</code> reports its progress. They need write access and
-  database management, as the dialog does. See <a href="mcp.html#tools">MCP
-  for Agents</a>.</p>
+  <code>get_jobs</code> reports its progress. They need write access, as the
+  dialog does. See <a href="mcp.html#tools">MCP for Agents</a>.</p>
 
   <h2 id="troubleshooting">What can go wrong</h2>
   <div class="table-wrap">
@@ -360,10 +425,12 @@ function gtag_report_demo() {
       <tr><td>PixInsight not found</td><td>The settings panel lists where it looked. Enter the executable's path in <strong>Executable</strong>.</td></tr>
       <tr><td>No display</td><td>Install <code>xvfb</code> on the Linux server.</td></tr>
       <tr><td>Frames left out</td><td>The run lists each frame by its full path. A catalog row whose file is not under the database's image folders is left out and counted.</td></tr>
-      <tr><td>Fewer darks than the library holds</td><td>Darks marked for stray light stay out, and the dialog counts them.</td></tr>
+      <tr><td>Fewer calibration frames than expected</td><td>Frames the library keeps out, graded poor or kept out by hand, stay out, and the dialog counts them.</td></tr>
+      <tr><td>Fewer lights than expected</td><td><strong>Leave out lights that can't be calibrated</strong> is on. The dialog counts the lights left out, and <code>run-wbpp.js</code> lists an example and the reason for excluding it.</td></tr>
+      <tr><td>A light's flats may not match</td><td>The light uses flats from the other side of a measured change, which WBPP cannot correct. The runner's notes list such lights.</td></tr>
       <tr><td>WBPP wrote no master</td><td>Read WBPP's log from the dialog. The usual causes are a group WBPP could not register, or calibration frames that do not match. PixInsight's console output is empty in this mode.</td></tr>
       <tr><td><code>*** Error: No database files have been selected.</code></td><td>The server's PixInsight has no local star catalog for WBPP's plate solver. WBPP solves another way and goes on.</td></tr>
-      <tr><td>A path with a comma</td><td>WBPP's command line separates parameters with commas, so PSF Guard refuses a run folder or frame path that holds one.</td></tr>
+      <tr><td>A path with a comma</td><td>WBPP's command line separates parameters with commas, so PSF Guard refuses a run folder or frame path containing a comma.</td></tr>
       <tr><td>Masters not in Stacks</td><td>The run covered several targets, or taking them in failed; use <strong>Take in the last run</strong>.</td></tr>
     </table>
   </div>

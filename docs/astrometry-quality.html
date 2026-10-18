@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -147,9 +159,10 @@ function gtag_report_demo() {
     A quality scan plate-solves each frame from its pixels with Seiza and compares the solved center and rotation with the intended target and the rest of the sequence. This page covers the pointing and rotation flags, how they score, and how to review and apply them.
   </p>
 
+
   <figure>
-    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: score chart, solved pointing scatter, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
-    <figcaption>One session after a scan: scores, solved pointing, and each frame's cause.</figcaption>
+    <img src="../assets/sequence-session.jpg" loading="lazy" alt="Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames." width="3138" height="1652">
+    <figcaption>Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames.</figcaption>
   </figure>
 
   <h2 id="run">Run a quality scan</h2>
@@ -184,7 +197,11 @@ function gtag_report_demo() {
     <li><strong>Short skew.</strong> A run shorter than three frames, or one that leaves the held angle and comes back to it, is skew. PSF Guard measures it against the nearest held framing.</li>
     <li><strong>Rotator slip.</strong> However long the run, a field that turned more than 5° from the framing the rest of the target shares, while the rotator's reported angle (N.I.N.A. <code>RotatorPosition</code>) did not turn with it, is skew. This catches a slip, a lost sync, or a camera turned by hand.</li>
   </ul>
-  <p>A turn the rotator reported is framing someone chose. A reading that moves while the field holds still changes nothing in the pixels. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames overlap the rest less and crop the stack, so they are capped, recommended for rejection and left out of stacks. The 2° tolerance is fixed.</p>
+  <p>PSF Guard treats a rotation reported by the rotator as intentional framing. A
+  changed rotator reading does not imply that the field rotated if the pixels remain
+  aligned. A rotator N.I.N.A. records as disconnected gives no reading. Skewed frames
+  overlap the rest less and crop the stack, so they are capped, recommended for
+  rejection and left out of stacks. The 2° tolerance is fixed.</p>
   <figure>
     <img src="../assets/stack-frame-weights.png" alt="A stack's frame decisions listing two frames excluded for rotation skew, at +89.7° and −89.2° from the sequence" loading="lazy">
     <figcaption>Two frames whose field turned about 90° while the rotator reported no turn,
@@ -198,7 +215,7 @@ function gtag_report_demo() {
 
   <h2 id="review">Review and apply recommendations</h2>
   <ol>
-    <li>In Sequence, pick <strong>Off target</strong>, <strong>Unsolved</strong> or <strong>Recommended</strong> from <strong>Select:</strong>.</li>
+    <li>In Sequence, choose <strong>Off target</strong>, <strong>Failed plate solve</strong> or <strong>Recommended rejects</strong> under <strong>Select</strong>. The rule stays on as the scores change; see <a href="screening.html#select">Select frames by rule</a>.</li>
     <li>Click <strong>Review rejection</strong>. The review lists every selected image with its score, the proposed <code>[Auto]</code> reason and the evidence.</li>
     <li>Click <strong>Reject selected</strong> to write the grades, or <strong>Cancel</strong>.</li>
   </ol>

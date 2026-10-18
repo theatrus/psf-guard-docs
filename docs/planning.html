@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Planning — PSF Guard</title>
-  <meta name="description" content="Plan a target once for every rig that shoots it: plans in the Library, the plan workspace, project order, scheduling limits and missing GUIDs.">
+  <meta name="description" content="Plan a target once for every rig that shoots it: plans in the Library, the plan workspace and whether its rigs hold it, project order, scheduling limits and missing GUIDs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -150,30 +162,40 @@ function gtag_report_demo() {
   </p>
 
   <div class="callout info">
-    <strong>New in 0.11.</strong> Planning is on for every server. A server
-    without database management plans read only: framing and goals save as
-    drafts, and activation and Target Scheduler edits are refused.
+    <strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> A plan reads <strong>Activated</strong> or
+    <strong>Needs activating</strong>, with its own <strong>Activate…</strong>
+    button, and the Library says <strong>Activated on N rigs</strong>. A Library
+    state pill asks before it changes Target Scheduler.
   </div>
 
+  <p>Planning is on for every server. A server without database management
+  plans read only: framing and goals save as drafts, and activation and Target
+  Scheduler edits are refused.</p>
+
+
   <figure>
-    <img src="../assets/plan-workspace.jpg" alt="A mosaic plan's workspace: summary, Framing, Exposures, Rigs and Priority and defaults tabs, the framing sky with a 2 by 2 mosaic, and the Target and Rigs panels" loading="lazy">
-    <figcaption>A plan's workspace. The summary sits above four tabs; Framing fills the window with the sky.</figcaption>
+    <img src="../assets/plan-workspace.jpg" loading="lazy" alt="Frame Heart Mosaic over the survey image. Its four captured panels remain locked." width="3138" height="2054">
+    <figcaption>Frame Heart Mosaic over the survey image. Its four captured panels remain locked.</figcaption>
   </figure>
 
   <h2 id="model">Rigs and plans appear on their own</h2>
-  <p>There is nothing to set up. Opening the Library takes every registered
-  database in as a <strong>rig</strong> and every Target Scheduler project in
-  it as a <strong>plan</strong>.</p>
+  <p>When you open the Library, PSF Guard creates a <strong>rig</strong> for each
+  registered database and a <strong>plan</strong> for each Target Scheduler project. No
+  separate setup is needed.</p>
   <ul>
     <li>Projects that share a Target Scheduler GUID across databases, as Sync
       copies do, become one plan shot by several rigs. Projects that only share
       a name stay separate plans.</li>
-    <li>What Target Scheduler already holds becomes the plan's first draft:
-      its targets become the framing, with a mosaic grid when the targets form
-      one, and its exposure plans become goals per filter. Each band's template
-      and exposure come from its main exposure plan: one of a second or more,
-      then the one asking for the most frames, so a short test plan never sets
-      them.</li>
+    <li>Existing Target Scheduler data supplies the plan's first draft: its targets
+    become the framing, with a mosaic grid when the targets form one, and its exposure
+    plans become goals per filter. Each band's template and exposure come from its main
+    exposure plan: one of a second or more, then the one asking for the most frames, so
+    a short test plan never sets them.</li>
+    <li>Planning never adds objectives on its own: an imported project keeps one
+      objective per filter. A second exposure length on a filter is listed
+      under <strong>Turns off</strong> at activation until
+      <a href="activation.html#take-ts">Take Target Scheduler's values</a>
+      brings it in as an objective of its own.</li>
     <li>Until you save or activate the plan, it follows Target Scheduler. A
       desired count raised or a target moved in N.I.N.A. shows up on the next
       listing. After the first save, the drafts are yours.</li>
@@ -186,40 +208,54 @@ function gtag_report_demo() {
   Target Scheduler open the file as before.</p>
 
   <h2 id="library">Plans in the Library</h2>
-  <p>A plan has no list of its own: it is its projects in the
-  <a href="grader.html#overview">Library</a>. A plan shot by several rigs is an
-  outer pill, <strong>N rigs</strong>, with the plan's total progress, its stage
-  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Active on N
-  rigs</strong>) and a <strong>Planning</strong> button. Under it sits one row per
-  rig, since each rig holds its own targets and frame counts.</p>
+  <p>A plan has no list of its own: it is its projects in the <a
+  href="grader.html#overview">Library</a>. A plan shot by several rigs is an outer pill,
+  <strong>N rigs</strong>, with the plan's total progress, its stage
+  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Activated on N
+  rigs</strong>) and ⚙, which opens its workspace. Under it sits one row per rig, with
+  separate targets and frame counts for each rig.</p>
+  <p><strong>Activated on N rigs</strong> counts the rigs the last activation
+  wrote. It is not Target Scheduler's <strong>Active</strong> state, which each
+  rig's row shows in its own pill.</p>
+
   <figure>
-    <img src="../assets/library-plans.png" alt="Plans with nothing captured yet, with each plan's stage, rig database and Target Scheduler state" loading="lazy">
-    <figcaption>Plans framed or activated before any rig captures a frame wait below the projects.</figcaption>
+    <img src="../assets/library-plans.png" loading="lazy" alt="Plans without captured images appear together, with their framing and activation status." width="2996" height="962">
+    <figcaption>Plans without captured images appear together, with their framing and activation status.</figcaption>
   </figure>
   <ul>
-    <li><strong>Planning</strong> (⚙ on a compact row) opens the plan's
-      workspace.</li>
-    <li><strong>Plans with nothing captured yet</strong>, below the projects,
-      lists plans framed before any rig takes them and plans activated on rigs
-      that have not captured a frame. <strong>New plan</strong> starts one; the
-      pencil renames one.</li>
+    <li><strong>Planning</strong> on a detailed card, or ⚙ on a compact row,
+      opens the plan's workspace.</li>
+    <li><strong>Plans with nothing captured yet</strong>, below the projects, lists
+    framed plans with no assigned rig and plans activated on rigs that have not captured
+    a frame. <strong>New plan</strong> starts one; the pencil renames one.</li>
     <li>The <strong>Show</strong> select and the search box narrow plans and
       projects together. <strong>No database</strong> keeps plans nothing shoots
       yet.</li>
-    <li>On a server with database management, a row's state pill is a select:
-      <strong>Active</strong>, <strong>Inactive</strong>, <strong>Draft</strong> or
-      <strong>Closed</strong> writes that project in Target Scheduler at once.</li>
+    <li>On a server with database management, a row's state pill is a select.
+      Choosing <strong>Active</strong>, <strong>Inactive</strong>,
+      <strong>Draft</strong> or <strong>Closed</strong> asks first, naming the
+      project, the state and the database, then writes that project in Target
+      Scheduler. Target Scheduler acts on it from its next pick. Refused, the
+      pill stays on the saved state.</li>
   </ul>
 
   <h2 id="workspace">Open a plan's workspace</h2>
-  <p>Choose <strong>Planning</strong> on a Library row, or pick the project in
-  the header and choose <strong>Planning</strong> there. A plan with no
-  database yet starts its framing from a name or typed coordinates.</p>
-  <p>The workspace has a summary at the top (target, goals, each rig's setup
-  and the activation state) and four tabs:</p>
+  <p>Choose a project, then click <strong>Planning</strong>, including for a
+  project imported from image folders. If the catalog cannot be planned,
+  Planning shows its warnings and <strong>Retry planning</strong>. A copied
+  database with the same catalog identity as another registered database
+  stays out of planning so it cannot become a second rig. Use the original
+  catalog. PSF Guard shows <strong>Fill in GUIDs</strong> guidance only when
+  the selected project has no GUID.</p>
+  <p>Choose <strong>Planning</strong> or ⚙ on a Library row, or pick the
+  project in the header and choose the <strong>Planning</strong> tab there. A
+  plan with no database yet starts its framing from a name or typed
+  coordinates.</p>
+  <p>The workspace has a summary at the top (target, goals, each rig's setup,
+  and whether each rig matches the saved plan) and four tabs:</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Tab</th><th>What it holds</th></tr>
+      <tr><th>Tab</th><th>Contents</th></tr>
       <tr><td><strong>Framing</strong></td><td>The target, camera angle, mosaic
         grid and each rig's field on a survey image, with tonight's visibility.
         See <a href="framing.html">Framing</a>.</td></tr>
@@ -233,31 +269,52 @@ function gtag_report_demo() {
         scheduling defaults for every plan, a site or a rig.</td></tr>
     </table>
   </div>
-  <p>The workspace address is <code>/plan?plan=&lt;key&gt;</code>. The key is the
-  Target Scheduler GUID the plan's rigs share, so one link opens the same plan
-  on any PSF Guard that holds those databases. The open tab is part of the
-  address.</p>
+  <p>The workspace address is <code>/plan?plan=&lt;key&gt;</code>. The key is the Target
+  Scheduler GUID the plan's rigs share, so one link opens the same plan on any PSF Guard
+  server with those databases. The open tab is part of the address.</p>
 
   <h2 id="save">Save from one bar</h2>
   <p>Edits wait for the save bar at the top of the page. It shows every section
   with unsaved changes and lists what changed. Switching tabs keeps edits.
   Leaving the page, closing the tab, or opening another plan with edits unsaved
   asks first.</p>
-  <p>A copy saved elsewhere never replaces your edits. The tab says the plan
+  <p>A copy saved elsewhere never replaces your edits. The page reports that the plan
   changed and offers <strong>Reload</strong>; the bar will not save over it.</p>
 
   <h2 id="activate">Activate</h2>
   <p>Activation writes the saved plan into each rig's Target Scheduler
-  database. Once every edit is saved, a bar asks for an activation while the
-  rigs lack the saved plan; <strong>Activate…</strong> opens the preview. The
-  summary reads <strong>On the rigs</strong> when nothing is missing, and
-  <strong>Drafts only</strong> on a server that does not write rig databases.
-  See <a href="activation.html#activate">Activation</a>.</p>
-  <p>Target Scheduler then runs the rows as it runs any project. When N.I.N.A.
-  runs on another machine, the
-  <a href="sync-plugin.html">PSF Guard Sync plugin</a>'s <strong>Pull
-  planning</strong> takes them into its Target Scheduler database. Target
-  Scheduler with the Sync plugin is the recommended way to run a rig.</p>
+  database, and decides which of the project's exposure plans run there. The summary shows
+  the activation status:</p>
+  <ul>
+    <li><strong>Activated</strong>: each rig matches the saved plan.</li>
+    <li><strong>Needs activating</strong>: activation would change a rig's Target
+    Scheduler rows. The tooltip explains why.</li>
+    <li><strong>Couldn't check the rigs</strong>, or <strong>Couldn't
+      check</strong> and a rig's name: a rig database could not be read. The tooltip
+      explains why. No activation prompt appears.</li>
+    <li><strong>Can't activate yet</strong>: what to do first, such as saving
+      a framing.</li>
+    <li><strong>Drafts only</strong>: this server does not write rig
+      databases.</li>
+  </ul>
+  <p><strong>Activate…</strong>, a separate button beside the label, opens the
+  activation dialog at any time. Once every edit is saved, a banner at the top explains
+  why activation is needed; its button reads
+  <strong>Activate again…</strong> after the first activation. See
+  <a href="activation.html#status">Activation</a>.</p>
+  <figure>
+    <img src="../assets/plan-summary-activated.png" loading="lazy" alt="The Activated badge confirms that the rig has the saved plan. Activate opens its preview again." width="2948" height="146">
+    <figcaption>The Activated badge confirms that the rig has the saved plan. Activate opens its preview again.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/plan-needs-activating.png" loading="lazy" alt="This saved plan needs activation; the preview warns that four extra plans would turn off." width="2970" height="252">
+    <figcaption>This saved plan needs activation; the preview warns that four extra plans would turn off.</figcaption>
+  </figure>
+  <p>Target Scheduler then runs the rows as it runs any project. When N.I.N.A. runs on
+  another machine, the <a href="sync-plugin.html">PSF Guard Sync plugin</a>'s
+  <strong>Pull planning</strong> imports those changes into its Target Scheduler
+  database. Target Scheduler with the Sync plugin is the recommended way to run a
+  rig.</p>
 
   <h2 id="priority">Order projects</h2>
   <p>Open <strong>Priority and defaults</strong> and unfold <strong>Project
@@ -272,7 +329,8 @@ function gtag_report_demo() {
   projects.</p>
   <figure>
     <img src="../assets/plan-priority.png" alt="Project priority: Scope and Rig selects and the Global order with up and down buttons" loading="lazy">
-    <figcaption>Project priority, folded, says where the plan stands in the order.</figcaption>
+    <figcaption>Collapsed Project priority shows the plan's position in the
+    order.</figcaption>
   </figure>
 
   <h2 id="scheduling">Scheduling limits</h2>
@@ -288,11 +346,10 @@ function gtag_report_demo() {
       <strong>Scheduling limits for every rig</strong>. A table shows what each
       rig gets and where each value comes from.</li>
   </ul>
-  <p>The nearest scope that sets a limit wins: plan, then rig, then the rig's
-  site, then global. An empty field inherits and says from where. A limit nobody
-  sets keeps Target Scheduler's default. Activation writes the resolved limits
-  into each rig's project, so they hold when Target Scheduler runs the rig on
-  its own.</p>
+  <p>The nearest scope that sets a limit wins: plan, then rig, then the rig's site, then
+  global. An empty field inherits its value and shows the source. A limit nobody sets
+  keeps Target Scheduler's default. Activation writes the resolved limits into each
+  rig's project, so they hold when Target Scheduler runs the rig on its own.</p>
   <figure>
     <img src="../assets/plan-scheduling-limits.png" alt="Scheduling limits for every rig: inherited fields and a per-rig table showing where each value comes from" loading="lazy">
     <figcaption>Empty fields inherit. The table shows what each rig gets and where it comes from.</figcaption>

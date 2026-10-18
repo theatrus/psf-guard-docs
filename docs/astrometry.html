@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -147,9 +159,10 @@ function gtag_report_demo() {
     PSF Guard lists the objects expected around a frame, solves its pixels on demand with Seiza, and draws catalog labels, outlines, an RA/Dec grid and the target offset over the image. This page covers the catalogs, where PSF Guard finds them, and solving a frame.
   </p>
 
+
   <figure>
-    <img src="../assets/sky-context.jpg" alt="A Seiza-solved Cocoon Nebula frame with coordinate grid, catalog labels, object outlines, and the Sky context panel">
-    <figcaption>A hinted solve of the Cocoon Nebula. The overlay and the side panel share one pixel-derived WCS.</figcaption>
+    <img src="../assets/sky-context.jpg" alt="The solved frame places catalog objects over the image and lists the expected objects in its field." width="3066" height="1566">
+    <figcaption>The solved frame places catalog objects over the image and lists the expected objects in its field.</figcaption>
   </figure>
 
   <h2 id="layers">Context, solution and overlay</h2>
@@ -173,7 +186,7 @@ function gtag_report_demo() {
   </table></div>
 
   <h2 id="install">1. Install the Seiza catalogs</h2>
-  <p>PSF Guard embeds Seiza 0.24.0's solver but not its multi-gigabyte catalogs. Install them from Settings → <strong>Catalogs</strong> in the desktop app, or in a browser when the server runs with <code>--allow-database-management</code>. The <strong>Seiza Catalogs</strong> card shows which features are ready, keeps download progress across reloads, and checks files with <strong>Validate installed files</strong>.</p>
+  <p>PSF Guard embeds Seiza's solver but not its multi-gigabyte catalogs. Install them from Settings › <strong>Catalogs</strong> in the desktop app, or in a browser when the server runs with <code>--allow-database-management</code>. The <strong>Seiza Catalogs</strong> card shows which features are ready, keeps download progress across reloads, and checks files with <strong>Validate installed files</strong>.</p>
   <p>Choose a <strong>Catalog package</strong> and click <strong>Install / update catalogs</strong>. Packages add to each other, and PSF Guard uses the deepest star catalog it finds.</p>
   <div class="table-wrap"><table>
     <tr><th>Package</th><th>Contents</th></tr>
@@ -183,9 +196,10 @@ function gtag_report_demo() {
     <tr><td><strong>Deepest blind solving</strong></td><td>G≤20 Gaia data plus the blind index. About 9 GB more.</td></tr>
   </table></div>
   <p>Quality scans measure <a href="screening.html#snr">SNR</a> only against a Gaia catalog. Tycho-2 mixes two bands and is not used for it.</p>
+
   <figure>
-    <img src="../assets/settings-catalogs.png" alt="Settings › Catalogs: Seiza Catalogs with feature chips, six installed packages, the Catalog package select and install buttons" loading="lazy">
-    <figcaption>Settings → Catalogs installs, updates and validates the Seiza catalogs.</figcaption>
+    <img src="../assets/settings-catalogs.png" loading="lazy" alt="Installed catalog packages support overlays, hinted solves and blind solves." width="1878" height="778">
+    <figcaption>Installed catalog packages support overlays, hinted solves and blind solves.</figcaption>
   </figure>
   <p>For a manual or headless install, get the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a> or with Cargo, then download a bundle:</p>
   <pre><code>cargo install seiza-cli --version 0.24.0
@@ -195,7 +209,8 @@ seiza setup
 
 <span class="c"># Or download the complete, SHA-256-verified bundle to a folder you choose.</span>
 seiza download-data prebuilt --output /path/to/seiza-data</code></pre>
-  <p>The complete bundle holds every file. If you install files one by one, each has its own role:</p>
+  <p>The complete bundle contains all required files. If you install files one by one,
+  each has its own role:</p>
   <div class="table-wrap"><table>
     <tr><th>File</th><th>Role</th></tr>
     <tr><td><code>objects.bin</code></td><td>Coordinate-only object context, solved labels and catalog outlines.</td></tr>
@@ -240,7 +255,10 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
 
   <h2 id="use">4. Solve and inspect a frame</h2>
   <ol>
-    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and catalog context without solving.</li>
+    <li>Open an image. The <strong>Sky context</strong> panel reads the headers and
+    catalog context without solving. Click a panel's title to fold or open it; folded,
+    Sky context keeps one line, such as whether the field solved and how many catalog
+    objects lie in the field.</li>
     <li>With a supported embedded WCS, the overlay is ready at once. Otherwise click <strong>Solve field</strong> or press <kbd>O</kbd>.</li>
     <li>PSF Guard tries a hinted solve from the header's mount coordinates and pixel scale, then the blind index if the hint is missing or stale.</li>
     <li>A solve you ask for turns the sky overlay on. After that, <kbd>O</kbd> toggles it while you zoom, pan or grade.</li>
@@ -257,7 +275,7 @@ curl -X POST http://localhost:3000/api/astrometry/catalogs/validate</code></pre>
   <p>A failed solve offers <strong>Retry plate solve</strong>. A read-only account can view cached solutions but cannot start a solve.</p>
 
   <h2 id="cache">Cache and concurrency</h2>
-  <p>Solutions are stored under <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code> and reused until the source file, the catalog files or the Seiza version change. Seiza 0.24.0 reads more FITS layouts, such as tile-compressed images and images kept in an extension, but frames from N.I.N.A. read as before, so cached solves stay valid.</p>
+  <p>Solutions are stored under <code>&lt;cache&gt;/&lt;db-slug&gt;/astrometry/&lt;image-id&gt;.json</code> and reused until the source file, the catalog files or the installed Seiza version change.</p>
   <p><strong>Solve field</strong> runs one solve at a time per database, and requests for the same frame share the result. Quality scans solve several frames at once, up to the processor share; see <a href="astrometry-quality.html#run">Astrometry Quality</a>.</p>
 
   <h2 id="api">API</h2>

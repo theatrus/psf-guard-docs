@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Installation — PSF Guard</title>
-  <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or a source build; where logs and data live.">
+  <meta name="description" content="Install the PSF Guard desktop app, Docker image, standalone CLI, Fedora RPM, or a source build; fix the desktop port; where logs and data live; back up before an upgrade.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html" class="active" aria-current="page">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -163,7 +175,45 @@ function gtag_report_demo() {
   <p>The NSIS installer also installs <code>psf-guard-cli.exe</code> and adds it
   to your user <code>PATH</code>, so the full CLI runs from any terminal.</p>
   <p>Launch the app, then go to <a href="./#choose">Getting Started</a> to build
-  a catalog from image folders or open a Target Scheduler database.</p>
+  a catalog from your image folders.</p>
+
+  <h3 id="desktop-zoom">Resize the UI</h3>
+  <p>Open the hamburger menu and choose <strong>Zoom in</strong>,
+  <strong>Zoom out</strong> or <strong>Reset to 100%</strong>. Use Cmd on
+  macOS or Ctrl on Windows and Linux with +, − or 0, including while
+  Settings is open. The app changes the whole UI from 50% to 200% and saves
+  the scale on this device. Image zoom has separate controls. In a browser,
+  use the browser's zoom controls.</p>
+
+  <h3 id="desktop-port">Fix the server port</h3>
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> The desktop app's
+  server port can be fixed, so browser, API and agent connections keep one
+  address across restarts.</div>
+  <p>The desktop app runs its own server on localhost. By default it picks a
+  free port each time it starts. To keep one address:</p>
+  <ol>
+    <li>Open <strong>Settings &rarr; Server</strong>.</li>
+    <li>Under <strong>Port selection</strong>, choose <strong>Fixed
+      port</strong> and enter a <strong>Server port</strong> from 1024 to
+      65535.</li>
+    <li>Click <strong>Save port</strong>, then <strong>Restart
+      server</strong>.</li>
+  </ol>
+  <p>The port applies to the whole desktop server: the app, browser access,
+  the REST API and the <a href="mcp.html">MCP endpoint</a>. It is kept in
+  <code>desktop.json</code> beside the registry. If another program holds the
+  port at a later start, the app shows the error and the Server settings:
+  choose another port or <strong>Automatic</strong>, then restart the
+  server.</p>
+  <figure>
+    <img src="../assets/settings-server.png" loading="lazy" alt="Native desktop Server settings showing Fixed port selected, server port 3000 and Restart server." width="1650" height="1080">
+    <figcaption>Settings › Server keeps the desktop app, browser access, API and agents on the same fixed localhost port.</figcaption>
+  </figure>
+  <p><strong>Restart server</strong>, and <strong>Restart Server</strong> at
+  the foot of other tabs, wait for the server's running work to stop at a safe
+  point, so the job queue it saves is kept, then reload the interface. If that
+  work still runs after two minutes, Settings and the log say what it waits
+  for; restart the app to end it.</p>
 
   <h3 id="logs">Log files</h3>
   <p>The desktop app writes one log file a day and keeps a week of them.
@@ -176,9 +226,9 @@ function gtag_report_demo() {
       <tr><td>Linux</td><td><code>~/.local/share/com.theatrus.psf-guard/logs</code></td></tr>
     </table>
   </div>
-  <p>The log holds what a server prints to its console, including each frame a
-  stack leaves out or rejects, and why. <code>RUST_LOG</code> sets the level;
-  the default is <code>info</code>.</p>
+  <p>The log records the server's console output, including each frame a stack leaves
+  out or rejects, and why. <code>RUST_LOG</code> sets the level; the default is
+  <code>info</code>.</p>
 
   <h2 id="server">Docker on a Linux server or NAS</h2>
   <div class="workflow-note cli">
@@ -208,7 +258,7 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
   <div class="table-wrap">
     <table>
       <tr><th>Path</th><th>Holds</th></tr>
-      <tr><td><code>/data/config/psf-guard</code></td><td>Database registry (<code>config.json</code>), browser users and API tokens (<code>auth.json</code>), planning store (<code>director-meta.sqlite</code>), job queue journal (<code>config.jobs.json</code>), collaboration credentials</td></tr>
+      <tr><td><code>/data/config/psf-guard</code></td><td>Database registry (<code>config.json</code>), browser users and API tokens (<code>auth.json</code>), each account's view choices (<code>user-preferences.json</code>), planning store (<code>director-meta.sqlite</code>), job queue journal (<code>config.jobs.json</code>), backup schedule state, collaboration credentials</td></tr>
       <tr><td><code>/data/cache</code></td><td>Previews, plate solves, quality scans, stacks, calibration masters, offline sky maps</td></tr>
       <tr><td><code>/data/seiza</code></td><td>Seiza catalogs installed under <strong>Settings &rarr; Catalogs</strong></td></tr>
       <tr><td><code>/data/database.sqlite</code></td><td>The catalog you mount. Writable: grading updates it.</td></tr>
@@ -285,6 +335,11 @@ psf-guard-windows-x64.exe server "%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerd
   unit that runs the server as a daemon. To build for another Fedora release,
   see
   <a href="https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/blob/main/packaging/rpm/README.md')">packaging/rpm/README.md</a>.</p>
+  <p>Stopping or restarting the service lets background work stop at its next safe
+  point: a quality scan saves what it measured, a stack build checkpoints and resumes
+  after the restart, and imports and calibration grading stop at a commit. The log lists
+  the work still blocking shutdown. See <a href="storage.html#restart">Storage &amp;
+  Performance</a>.</p>
 
   <h2 id="source">Build from source</h2>
   <pre><code>git clone https://github.com/theatrus/psf-guard.git
@@ -308,9 +363,16 @@ cargo build --release
   <p>The desktop app can also download, verify and install a signed update:
   click <strong>Install update</strong>. A server never downloads or installs
   an executable. Update its binary, package or Docker image yourself.</p>
+  <div class="callout">
+    <strong>Back up before you upgrade</strong>, to keep a way back to the
+    release you had: an older PSF Guard that saves its settings drops the
+    ones it does not know. Run <strong>Back up now</strong> under
+    <strong>Settings &rarr; Backups</strong>, or <code>psf-guard backup</code>
+    on a server. See <a href="backups.html">Backups</a>.
+  </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="./">← Getting Started</a>
+    <a href="release-notes-0.12.html">← 0.12 Release Notes</a>
     <a href="grader.html">Library &amp; Grader →</a>
   </nav>
 </main>

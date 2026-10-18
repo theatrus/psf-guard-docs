@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Import Images — PSF Guard</title>
-  <meta name="description" content="Build a catalog from FITS or XISF folders, import new frames by hand or on a schedule, pair calibrated copies, and fill in quality data.">
+  <meta name="description" content="Build a catalog from FITS or XISF folders, import new frames by hand or on a schedule, set scan rules, review new targets, pair calibrated copies, and fill in quality data.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html" class="active" aria-current="page">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -144,9 +156,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Import Images</h1>
   <p class="lede">
-    Build a Target Scheduler-compatible catalog from FITS or XISF folders, add new
-    frames by hand or on a schedule, and fill in quality measurements in the
-    background.
+    Import Target Scheduler into a PSF Guard-owned catalog, connect the N.I.N.A.
+    Sync plugin, or build a catalog from FITS or XISF folders. Keep captures and
+    grades in sync while quality measurements run in the background.
   </p>
 
   <div class="workflow-note import">
@@ -154,6 +166,98 @@ function gtag_report_demo() {
     <div class="workflow-copy"><strong>Start here for a FITS or XISF archive, or for frames a catalog is missing.</strong><p>The importer reads headers first and leaves pixel work for later.</p></div>
     <a class="workflow-link" href="#create">Create a catalog ↓</a>
   </div>
+
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Automatic import holds frames for new targets until you review them, and leaves Target Scheduler's plans alone in projects it did not create. Scan rules keep autofocus frames, tests and other folders out of every import.</div>
+
+  <figure>
+    <img src="../assets/import-first-run.png" alt="First-run Settings offers a new catalog from images or an import from Target Scheduler." width="2880" height="756" loading="lazy">
+    <figcaption>Start with image folders, a local TS file or the Sync plugin. The TS import form includes all three choices.</figcaption>
+  </figure>
+
+  <h2 id="target-scheduler">Import from Target Scheduler</h2>
+  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
+  Existing registrations and direct CLI/API access still work through 0.12, with no
+  automatic conversion. Removal is planned for 0.13 or later. Use an owned catalog
+  with a saved TS connection for new setups.</div>
+  <p>The desktop app allows database management. A browser server needs
+  <code>--allow-database-management</code>; see <a href="#create">server setup</a>.</p>
+  <ol>
+    <li>Open <strong>Settings → Databases → Import from Target Scheduler</strong>.</li>
+    <li>Choose <strong>Import a local TS file</strong>, enter the source file and an
+    optional display name, then add the folders containing your images. The source
+    needs Target Scheduler schema 22 or newer, with stable GUIDs.</li>
+    <li>Leave <strong>Keep the source connected for Target Scheduler sync</strong>
+    on, then click <strong>Import from Target Scheduler</strong>.</li>
+    <li>Review the catalog's <a href="#automatic-sync">automatic sync settings</a>.
+    New local-file imports enable capture sync and grade writeback.</li>
+  </ol>
+  <figure>
+    <img src="../assets/import-local-ts.png" alt="Local TS import with source file, image folders and the option to keep Target Scheduler connected." loading="lazy" width="2048" height="1606">
+    <figcaption>Import a working copy and keep Target Scheduler connected. Raw image files stay in their folders.</figcaption>
+  </figure>
+  <p>PSF Guard reads the source through a consistent, read-only SQLite snapshot.
+  The copy keeps IDs, GUIDs, thumbnails and existing PSF Guard analysis and calibration
+  records. The import does not write to the source.</p>
+
+  <h3 id="catalog-copy">Import a standalone copy or choose storage</h3>
+  <p>Turn off <strong>Keep the source connected for Target Scheduler sync</strong>
+  and choose <strong>Import catalog copy</strong> for a standalone catalog. PSF Guard
+  keeps the embedded data without enabling source sync or writeback.</p>
+  <p>New catalogs use the <code>databases/</code> folder beside the registry.
+  Under <strong>Catalog storage</strong>, choose <strong>Use a custom database path
+  (advanced)</strong> to enter an absolute path to a new file on the server. This
+  option also works for image folders and plugin catalogs. Existing files are never
+  replaced. A file import needs an existing destination folder.</p>
+  <figure>
+    <img src="../assets/import-catalog-copy.png" alt="Standalone catalog copy with a custom destination path and source sync turned off." loading="lazy" width="2048" height="1854">
+    <figcaption>Choose a standalone copy and a custom destination when restoring or moving a catalog.</figcaption>
+  </figure>
+  <p>A catalog copy is not a full installation restore. Settings, accounts,
+  image-folder registrations and global Director plans need a
+  <a href="backups.html">full backup</a>. Raw images remain in their original folders.</p>
+
+  <h3 id="automatic-sync">Set automatic sync</h3>
+  <p>Under <strong>Target Scheduler sync</strong> on the imported catalog, choose
+  when to import captures:</p>
+  <ul>
+    <li><strong>Sync when the desktop app or server starts</strong>.</li>
+    <li><strong>Sync when new images or grades arrive</strong>. PSF Guard checks
+    about every ten seconds and starts runs no more than once per thirty seconds.</li>
+    <li><strong>Sync interval (minutes; 0 disables the schedule)</strong>. The default
+    is five minutes. Zero leaves startup and change detection unchanged.</li>
+  </ul>
+  <p><strong>Automatically write grade changes back to Target Scheduler</strong>
+  controls automatic grade delivery separately. Click <strong>Save sync settings</strong>
+  after changing these choices. Capture imports preserve local planning and reviewed
+  grades. Writeback updates grades, reject reasons and accepted counts together;
+  conflicting TS grades stay unchanged and appear for review.</p>
+  <figure>
+    <img src="../assets/import-automatic-sync.png" alt="Automatic sync settings showing startup and change detection enabled, a five-minute interval and grade writeback enabled." loading="lazy" width="1952" height="758">
+    <figcaption>Review these defaults after a local-file import. Grade writeback has its own switch.</figcaption>
+  </figure>
+  <p>Turn grade writeback off to use <a href="#sync">reviewed transfers</a> instead.
+  If the source is unavailable, the working catalog stays usable and the sync job
+  reports the error. Pending local changes survive restarts.</p>
+  <p>Director activation sends approved planning through the same saved TS
+  connection, even when automatic grade writeback is off. Its preview shows the
+  destination and transfer counts. Failed deliveries stay pending and retry through
+  the saved sync settings; a changed TS project needs a new activation preview.
+  See <a href="activation.html">Exposures &amp; Activation</a>.</p>
+
+  <h3 id="plugin-catalog">Start with the Sync plugin</h3>
+  <p>Choose <strong>Use the PSF Guard Sync plugin</strong>, add a shared image
+  folder or an empty folder for incoming uploads, then click <strong>Create catalog
+  for plugin</strong>. No local TS file is required. PSF Guard opens the catalog's
+  pairing controls; the plugin controls its own sync schedule.</p>
+  <figure>
+    <img src="../assets/import-sync-plugin.png" alt="Sync plugin catalog setup with an image folder and no local Target Scheduler file." loading="lazy" width="2048" height="1276">
+    <figcaption>Create a catalog for the plugin without choosing a local TS database.</figcaption>
+  </figure>
+  <p>Click <strong>Generate pairing code</strong> and enter the server URL and
+  code in N.I.N.A.'s PSF Guard Sync plugin. Click <strong>Pair</strong>, then
+  <strong>Test connection</strong>. To upload image files too, enable
+  <strong>Accept remote image uploads</strong> and choose a <strong>Receive directory</strong>.
+  See <a href="sync-plugin.html#server">Connect N.I.N.A.</a>.</p>
 
   <h2 id="create">Create a catalog from images</h2>
   <p>The desktop app always allows database changes. A web server needs them turned on,
@@ -163,16 +267,17 @@ function gtag_report_demo() {
   <a href="authentication.html">Server Accounts</a>.</p>
   <ol>
     <li>Open <strong>Settings → Databases → New Database from Images</strong>.</li>
-    <li>Enter a name and one or more absolute folder paths. A bad path stays in the
-      form, and the error says which one.</li>
+    <li>Enter a name and one or more absolute folder paths. If a path is invalid, the
+    form keeps your entry and shows which path to correct.</li>
     <li>Leave <strong>Queue background quality analysis</strong> off for a quick first
       import.</li>
     <li>Choose <strong>Create &amp; Import</strong>. Progress survives closing or
       reloading the page.</li>
   </ol>
+
   <figure>
-    <img src="../assets/import-from-images.png" alt="New Database from Images form with header-only import and optional background quality analysis">
-    <figcaption>The first pass reads headers only. Quality analysis is off by default.</figcaption>
+    <img src="../assets/import-image-folders.png" alt="Name the catalog, add image folders and choose whether to queue quality analysis." width="2048" height="1524">
+    <figcaption>Name the catalog, add image folders and choose whether to queue quality analysis.</figcaption>
   </figure>
   <p>The UI saves the SQLite file under <code>databases/</code> beside the registry and
   shows its path on the database card. An empty folder is fine for a catalog that will
@@ -193,9 +298,9 @@ function gtag_report_demo() {
   are kept.</p>
 
   <h2 id="derived">What the header import builds</h2>
-  <p>The catalog uses the full Target Scheduler schema, so PSF Guard can open a real
-  Target Scheduler database the same way. Target Scheduler itself is optional. Lights
-  start as Pending. From their headers PSF Guard builds:</p>
+  <p>PSF Guard creates a catalog compatible with Target Scheduler; you do not need
+  Target Scheduler to import images. Lights start as Pending. From their headers
+  PSF Guard builds:</p>
   <ul>
     <li><strong>Targets</strong> from <code>OBJECT</code> names, one project each by
       default, across any number of nights. A different telescope, camera, focal length
@@ -204,14 +309,22 @@ function gtag_report_demo() {
       within five degrees, and dates fall within 14 days.</li>
     <li><strong>Coordinates</strong> from the median header position. Target Scheduler
       stores RA in decimal hours and Dec in degrees.</li>
-    <li><strong>Exposure templates</strong> from filter, gain, offset, binning and readout
-      mode, with the most common exposure as default.</li>
-    <li><strong>Exposure plans</strong> per template and exposure length, with desired
-      and acquired counts seeded from the frames.</li>
+    <li><strong>Exposure plans</strong> per filter, gain, offset, binning, readout mode
+      and exposure length, with desired and acquired counts seeded from the frames.</li>
+    <li><strong>Exposure templates</strong> for those plans. A plan goes on an existing
+      template with the lights' filter, binning and default length, whose gain, offset
+      and readout mode each equal the lights' or are left at -1, the camera's default.
+      An exact match comes first, and groups that land on one template share one plan.
+      With no such template, import makes one pinned to the lights' gain, offset and
+      readout mode, with their length as its default, such as
+      <code>L G100 O30 1x1 300s</code>. A template whose default is another length
+      never takes a new plan, so lights of two lengths get two templates.</li>
   </ul>
   <p>Bias, dark, dark-flat and flat frames go to PSF Guard's own calibration tables in
-  the same file, never to <code>acquiredimage</code>. Twilight flats count as flats.
-  See <a href="calibration.html">Calibration Libraries</a>.</p>
+  the same file, never to <code>acquiredimage</code>. Twilight flats count as flats. A
+  calibration frame on disk twice is catalogued once, and <strong>Repair
+  duplicates…</strong> on the Calibration page merges rows an older import recorded
+  twice. See <a href="calibration.html">Calibration Libraries</a>.</p>
   <div class="callout info">
     The header import does not plate-solve frames or check <code>OBJECT</code> against
     the pixels. The quality scan adds star measurements, photometry, spatial screening
@@ -220,8 +333,11 @@ function gtag_report_demo() {
 
   <h2 id="top-up">Add new frames</h2>
   <p>Click <strong>Import</strong> on a database card. A dry preview lists frames that
-  attach to existing targets and frames that start new projects. Set the scope, choose
-  <strong>Update preview</strong>, then confirm.</p>
+  attach to existing targets and frames that start new projects. It also says what the
+  import changes in what Target Scheduler will shoot: an existing target's line ends
+  with, for example, "adds 1 exposure plan" or "raises acquired on 2 plans", and a line
+  counts any new exposure templates. Set the scope, choose <strong>Update
+  preview</strong>, then confirm.</p>
   <ul>
     <li><strong>Import</strong>: lights and calibration (default), lights only, or
       calibration only.</li>
@@ -235,23 +351,37 @@ function gtag_report_demo() {
       often a filing mistake. Turn this on after a real equipment change.</li>
   </ul>
   <p>A basename the catalog holds is skipped, as is one a
-  <a href="workflows.html#remove-rejects">removed reject</a> held. A new light joins a target with the same
-  <code>OBJECT</code> name, else one within 0.5°, else starts a new project and target.
-  Calibration frames are matched by path and file fingerprint.</p>
+  <a href="workflows.html#remove-rejects">removed reject</a> held. A new light joins a
+  target with the same <code>OBJECT</code> name, else one within 0.5° unless the scan
+  rules turn <strong>Match targets by position</strong> off, else starts a new project
+  and target. Calibration frames are matched by path and file fingerprint.</p>
+  <p>A light that joins an existing target goes on one of its exposure plans of the same
+  length whose template has the light's filter and binning, with gain, offset and
+  readout mode equal to the light's or left at -1. A plan on an exact match comes first.
+  When no plan fits and the run may add one, the new plan's template is chosen as for a
+  new target. Automatic import, <strong>Review</strong>, remote uploads and the CLI
+  follow the same rules.</p>
+  <p>Imports, syncs and project saves that meet a write by N.I.N.A. or a background pass
+  wait for it to finish, instead of failing with "database is locked".</p>
   <pre><code>psf-guard import archive ./new-frames --dry-run
 psf-guard import archive ./new-frames
 psf-guard import archive ./new-flats --calibration-only
 psf-guard import archive ./processing-tree --skip-processed
-psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
-  <p><code>--no-attach</code> makes every new frame start its own structure.</p>
+psf-guard import archive ./new-camera --accept-other-rigs
+psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
+  <p><code>--no-attach</code> makes every new frame start its own structure.
+  <code>--exclude</code> leaves files and folders out, as an exclude scan rule does;
+  repeat it for more patterns. <code>create-db</code> takes it too, and an import into a
+  registered database also follows that database's scan rules.</p>
 
   <h2 id="calibrated">Calibrated and registered copies</h2>
   <p>A calibrated or registered copy that WBPP, Siril, ASTAP, DeepSkyStacker or another
   tool wrote is paired with the light it came from, matched by capture time, exposure,
   filter, target and camera. It is not imported as another light.</p>
   <ul>
-    <li>A calibrated copy with no raw light becomes the light. A raw frame imported or
-      synced later takes that row over, grade and all.</li>
+    <li>A calibrated copy with no raw light becomes the light. If the raw frame arrives
+    later through import or sync, it replaces the copy in that row and keeps the
+    grade.</li>
     <li>Copies already on disk pair after each folder refresh.</li>
     <li>Image detail switches between a frame and its copies with <kbd>V</kbd>.</li>
     <li>A rejected frame's copies go into the reject archive with it, and come back
@@ -263,18 +393,104 @@ psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
   <p>Turn pairing off per database with <strong>Pair calibrated and registered copies
   with their lights</strong>, or <code>--no-pairing</code> on the CLI.</p>
 
+  <h2 id="scan-rules">Scan rules</h2>
+  <p>Image folders often hold more than lights: autofocus frames, plate-solve tests,
+  pier-camera timelapses, processing output. Scan rules leave them out of every import
+  from a database's folders, so the files can stay where they are. Set them under
+  <strong>Settings → Databases → Edit → Scan rules</strong>:</p>
+  <ul>
+    <li><strong>Exclude</strong>: one pattern per line. A matching file or folder is left
+      out, and nothing below a matching folder is read. <code>**/Hocus Focus/**</code>
+      keeps Hocus Focus's autofocus frames out.</li>
+    <li><strong>Include only</strong>: when set, only files that match a pattern, or sit
+      in a folder that does, are read. <code>LIGHT</code> keeps N.I.N.A.'s
+      <code>LIGHT</code> folders.</li>
+    <li><strong>Lights must say LIGHT</strong>: leave out a frame with no
+      <code>IMAGETYP</code> (or <code>FRAME</code>), instead of treating it as a light.</li>
+    <li><strong>Lights need a target name</strong>: leave out a light with no
+      <code>OBJECT</code>, as is common with autofocus and test frames.</li>
+    <li><strong>Shortest light (s)</strong>: leave out lights shorter than this, or with
+      no exposure time.</li>
+    <li><strong>Match targets by position</strong>, on by default: a light whose
+      <code>OBJECT</code> matches no target joins the nearest one within 0.5°. Off, only
+      an exact name match joins.</li>
+  </ul>
+  <p>Patterns match a path relative to the image folder, in any letter case, with
+  <code>/</code> or <code>\</code> between folders. A pattern with no <code>/</code>
+  matches a name at any depth; one with a <code>/</code> reads from the image folder, so
+  <code>/FLAT</code> matches only at the top. <code>*</code> stays within one folder
+  name and <code>**</code> crosses folders. A bad pattern is refused on save, with the
+  reason. So is a full path such as <code>/data/Images/Hocus Focus</code>, which could
+  never match; the error gives the pattern to write instead, here
+  <code>/Hocus Focus</code>.</p>
+  <p>A <code>.psfguardignore</code> file skips its folder and everything below it on
+  every import: manual, automatic, the CLI, and a new catalog made from images. Its
+  contents are not read. Both rules hold when an import starts inside an excluded or
+  ignored folder, as <strong>Review</strong> does: it reads nothing there.</p>
+  <p>The three light filters apply only to frames that would become lights; exclude and
+  include patterns apply to calibration frames too. The preview and automatic import
+  status summarize what the scan rules excluded, such as "12 skipped by scan rules", "1
+  folder(s) skipped by .psfguardignore" or "3 left out: no target name". Frames already
+  in a catalog stay. A remote upload from N.I.N.A. does not use scan rules.</p>
+
   <h2 id="automatic">Import new frames automatically</h2>
   <p>Edit a database under <strong>Settings → Databases</strong> and turn on
-  <strong>Automatic import</strong>. It scans the database's image folders when the app
-  or server opens it, on a schedule from every 15 minutes to once a day, or both.
-  Choose lights, calibration or both; whether to analyze quality afterwards; and
-  whether to accept frames from other rigs.</p>
-  <p>A run needs no confirmation and reads only the configured folders, so it works
-  without database management. It drops every file the catalog already holds before
-  reading a header, so a folder of known frames costs a directory walk and one query.
-  The database row shows the schedule, the last result, the next run and <strong>Run
-  now</strong>. A run waits while another import, an upload or an interactive job is
-  under way.</p>
+  <strong>Automatic import</strong>:</p>
+  <ul>
+    <li><strong>Run when the app or server opens this database</strong>, on a
+      <strong>Schedule</strong> from every 15 minutes to every day, or both.</li>
+    <li><strong>Import</strong>: lights and calibration frames, lights only, or
+      calibration frames only.</li>
+    <li><strong>New targets</strong>: what a run does with lights that match no target
+      in the catalog. <strong>Ask first</strong>, the default, holds them.
+      <strong>Leave out</strong> lists them and does nothing more. <strong>Create a
+      project</strong> creates projects and targets for them.</li>
+    <li><strong>Analyze quality of the new frames in the background</strong> and
+      <strong>Include frames from other rigs</strong> work as for a manual import.</li>
+  </ul>
+  <figure>
+    <img src="../assets/settings-autoimport-scan-rules.png" loading="lazy" alt="Set scan exclusions, target matching and review rules before enabling automatic import." width="1724" height="1620">
+    <figcaption>Set scan exclusions, target matching and review rules before enabling automatic import.</figcaption>
+  </figure>
+  <p>Under Ask first, a run attaches frames for targets the catalog has and writes
+  nothing for the rest. The database's status line then says, for example,
+  "11 held: no matching project", with a <strong>Review</strong> button that opens the
+  import preview for the folders that hold them; confirm new projects there as for a
+  manual import. Held frames are read again on each run until they are imported or a
+  scan rule leaves them out. Ask first is the default because the scheduler database is
+  often shared with N.I.N.A. and synced to the rig, so a project a run made would land
+  on the live rig before anyone saw it.</p>
+  <figure>
+    <img src="../assets/autoimport-held-review.png" loading="lazy" alt="Automatic import holds a new target for review when no project matches it." width="1900" height="186">
+    <figcaption>Automatic import holds a new target for review when no project matches it.</figcaption>
+  </figure>
+
+  <h3 id="scheduler-plans">What a run changes in Target Scheduler</h3>
+  <p>Under Ask first and Leave out, a run leaves scheduling alone in projects it did not
+  make, those whose description does not start with "Imported by PSF Guard". There it
+  only adds image rows to exposure plans the target already has for the frame's filter
+  settings and exposure, and leaves their counts alone. A frame that would need a new
+  template or plan there is held, "no exposure plan", and <strong>Review</strong>
+  previews it with the rest. In projects an import made, a run adds plans and raises
+  counts. <strong>Create a project</strong> and every import a person starts do both
+  everywhere; the preview says which plans they add or raise.</p>
+  <figure>
+    <img src="../assets/import-preview-plans.png" loading="lazy" alt="The preview separates additions to an existing target from a new project and shows which exposure-plan count will change." width="1966" height="1164">
+    <figcaption>The preview separates additions to an existing target from a new project and shows which exposure-plan count will change.</figcaption>
+  </figure>
+  <p>A run reads only the configured folders, so it works without database management.
+  It drops every file the catalog already holds before reading a header, so a folder of
+  known frames costs a directory walk and one query. Lights the scan rule filters left
+  out are not read again while their file is unchanged. The database row shows the
+  schedule, the last result, the next run and <strong>Run now</strong>. A run waits
+  while another import, an upload or an interactive job is under way.</p>
+
+  <h3 id="rescan">Files copied in by hand</h3>
+  <p>PSF Guard rescans each database's image folders on its own every five minutes, and
+  after a sync or an automatic import. To look sooner, an editor chooses
+  <strong>⋯ → Rescan image folders</strong> in Images or Sequence. It finds image files
+  added since the last scan, so their frames find them at once. It imports nothing;
+  <strong>Import</strong> or automatic import does that.</p>
 
   <h2 id="quality">Fill in quality data</h2>
   <p>Each database card has three quality controls:</p>
@@ -284,12 +500,13 @@ psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
     <li><strong>Rescan All Quality</strong> measures everything again.</li>
     <li><strong>Analyze new frames as they arrive</strong> measures frames that come by
       sync, peer pull, remote upload or automatic import, a few minutes after the last
-      one lands. Each server start also catches frames that came while it was down. Off
+      one finishes. At startup, the server also finds frames that arrived while it was stopped. Off
       by default.</li>
   </ul>
+
   <figure>
-    <img src="../assets/settings-database-options.png" alt="A database card in Settings: calibration library, AstroBin filters, Analyze Missing Quality, Rescan All Quality, and the options for new frames, star metadata and calibrated copies" loading="lazy">
-    <figcaption>Each database's quality controls and options.</figcaption>
+    <img src="../assets/settings-database-options.png" loading="lazy" alt="Each database has its own image folders, calibration library and analysis options." width="1800" height="946">
+    <figcaption>Each database has its own image folders, calibration library and analysis options.</figcaption>
   </figure>
   <p>The scan uses the N.I.N.A. Fast detector, so star counts and HFR compare with
   Target Scheduler's. When it finds no stars, HocusFocus measures the frame instead. A
@@ -305,10 +522,10 @@ psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
   <p>The Library's <strong>Edit project</strong> renames projects and targets, moves a
   target to another project, and merges projects. <strong>Merge target</strong> joins
   two names for one target after <strong>Preview merge</strong>. To split a target,
-  select frames in Images and choose <strong>Move exposures</strong>; <strong>Preview
-  move</strong> shows the result before <strong>Apply move</strong>. Files, grades and
-  image GUIDs never change. These edits need an editor account and database
-  management.</p>
+  select frames in Images and choose <strong>⋯ → Move exposures</strong>;
+  <strong>Preview move</strong> shows the result before <strong>Apply move</strong>.
+  Files, grades and image GUIDs never change. These edits need an editor account, not
+  database management.</p>
 
   <h2 id="plan">Correct the imported plan</h2>
   <p>Choose <strong>⚙</strong> (or <strong>Planning</strong> on a card) in the Library.
@@ -319,11 +536,13 @@ psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
 
   <h2 id="sync">Sync with the telescope database</h2>
   <div class="workflow-note sync">
-    <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Sync only when grading and acquisition use separate database files.</strong><p>Preview every change before Apply.</p></div>
+    <div class="workflow-tag">Reviewed transfer</div>
+    <div class="workflow-copy"><strong>Preview a merge, planning delivery or grade transfer.</strong><p>Preview every change before Apply.</p></div>
     <a class="workflow-link" href="workflows.html#sync">Rejects &amp; Sync →</a>
   </div>
-  <p>Add both databases, then open <strong>Settings → Sync</strong>:</p>
+  <p>Open <strong>Settings → Sync</strong> and select the owned catalog and its
+  <strong>Target Scheduler</strong> connection. You do not need to register the source
+  as another catalog. For transfers between other catalogs, register both first.</p>
   <ul>
     <li><strong>Merge catalogs</strong> copies new or changed projects, targets, plans,
       captures and grades from the telescope copy. Grades already reviewed here win.</li>
@@ -332,9 +551,10 @@ psf-guard import archive ./new-camera --accept-other-rigs</code></pre>
     <li><strong>Send reviewed grades</strong> sends Accepted and Rejected grades for
       matching image GUIDs.</li>
   </ul>
+
   <figure>
-    <img src="../assets/settings-sync.png" alt="Settings › Sync: Data Transfer with source and destination catalogs, and Remote PSF Guard" loading="lazy">
-    <figcaption>Pick a direction and an action, then preview before Apply.</figcaption>
+    <img src="../assets/import-reviewed-transfer.png" loading="lazy" alt="Choose the TS connection and working catalog, then review the changes before Apply." width="2048" height="1120">
+    <figcaption>Choose the TS connection and working catalog, then review the changes before Apply.</figcaption>
   </figure>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
 psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run

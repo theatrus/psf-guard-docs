@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Server Accounts — PSF Guard</title>
-  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, mint API tokens, and pair remote clients safely.">
+  <meta name="description" content="Turn on logins for a PSF Guard server, assign editor and read-only roles, see what database management adds, create API tokens, and pair remote clients safely.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html" class="active" aria-current="page">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -144,7 +156,7 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1 id="server-accounts-title">Server Accounts</h1>
   <p class="lede">Turn on logins for a PSF Guard web server, give people editor
-  or read-only access, and mint API tokens for scripts and agents. The desktop
+  or read-only access, and create API tokens for scripts and agents. The desktop
   app needs none of this: its own server listens on localhost only.</p>
 
   <h2 id="bind">What a server with no accounts serves</h2>
@@ -160,7 +172,7 @@ function gtag_report_demo() {
   </div>
   <p><code>--allow-database-management</code> goes further: on a network
   address the server will not start until an account exists, because those
-  routes take paths the server then reads and writes. Once it starts, only
+  routes name paths the server then reads and writes. Once it starts, only
   editors can use them.</p>
   <div class="callout">
     <strong>Upgrading a server already on the network?</strong> It answers 401
@@ -173,7 +185,7 @@ function gtag_report_demo() {
   <p><code>--allow-anonymous-access</code> gives every caller on a network
   address what a localhost server gives, with no accounts and no login:</p>
   <pre><code>psf-guard server --host 0.0.0.0 --allow-anonymous-access</code></pre>
-  <p>It hands full editor access to anyone who can reach the port: grading,
+  <p>It gives full editor access to anyone who can reach the port: grading,
   imports, and, with <code>--allow-database-management</code>, the registry.
   Use it only on a network you trust as much as the machine, or to upgrade an
   older deployment without an outage. Then add accounts and drop the flag.</p>
@@ -182,18 +194,69 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Role</th><th>Can</th></tr>
-      <tr><td>Read only (<code>read-only</code>)</td><td>Browse catalogs, images, quality results, exports and cached analysis. List, apply and export processing setups. Cannot grade, edit, or open Settings.</td></tr>
-      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus grade with undo and redo, edit projects, targets and exposure plans, start quality scans and imports, save processing setups, write local exports, and apply sync previews. With database management on, also manage databases, peers, catalogs and calibration records, and remove rejects.</td></tr>
+      <tr><td>Read only (<code>read-only</code>)</td><td>Browse catalogs, images, quality results, exports and cached analysis. List, apply and export processing setups. Check the calibration library for duplicates. Save their own view choices. Cannot grade, edit, or open Settings.</td></tr>
+      <tr><td>Editor (<code>read-write</code>)</td><td>Everything above, plus the work listed below. <a href="#management">Database management</a> adds the server paths.</td></tr>
     </table>
   </div>
+  <p>An editor can, with or without database management:</p>
+  <ul>
+    <li>grade, with undo and redo;</li>
+    <li>edit projects, targets, coordinates and exposure plans, and move
+      targets and exposures between projects;</li>
+    <li>start quality scans, and imports from the database's own image
+      folders;</li>
+    <li>save, delete and import processing setups;</li>
+    <li>keep calibration frames out or use them anyway, mark their validity,
+      forget them, clear masters, and invalidate Target Scheduler flat
+      coverage;</li>
+    <li>set a project's exposure grouping and a catalog's AstroBin filter map,
+      and fill in missing GUIDs;</li>
+    <li>start, queue, cancel and publish WBPP runs in the runs folder the
+      PixInsight settings name, take a run's masters in as stacks, and read a
+      run's files;</li>
+    <li>install Seiza catalogs into the configured catalog folder;</li>
+    <li>add, check, change and remove sync peers, sync with them, and pair or
+      unpair remote clients;</li>
+    <li>move rejects to the trash, bring them back, and empty the trash;</li>
+    <li>write server exports into the database's export folder, and apply
+      sync previews.</li>
+  </ul>
   <p>By default a viewer cannot start costly work: stack builds, plate solves,
   satellite predictions, or view processing. Cached results stay available.
   <code>allow_read_only_compute = true</code> lets viewers start that work;
-  fit for a trusted private server, not a public demo where repeated jobs could
+  suitable for a trusted private server, not a public demo where repeated jobs could
   use up CPU, network and cache space.</p>
   <p>The server checks the role on every request, so a client calling the API
-  directly gets no more. The UI marks a viewer's session <strong>Read
-  only</strong>, hides Settings, and disables grading.</p>
+  directly gets no more. A viewer's header menu has no
+  <strong>Settings</strong>, and grading controls are disabled.</p>
+
+  <h2 id="management">What database management adds</h2>
+  <p><code>--allow-database-management</code>, always on in the desktop app,
+  guards what lets a client name a path on the server: a folder the server
+  reads, writes, lists or runs a program from. Without it, nobody can point a
+  server at the rest of its disk through the API. Work inside the folders an
+  operator already set, and edits to rows inside a catalog, stay an editor's.
+  With the gate on, an editor can also:</p>
+  <ul>
+    <li>register, create, change or remove databases, and set their image,
+      export, process and remote-upload folders;</li>
+    <li>import from a folder outside the database's image folders, and write
+      a local export to a path of their choosing;</li>
+    <li>choose storage folders and disk limits;</li>
+    <li>set the PixInsight program and the WBPP runs folder, and give one run a
+      folder outside that runs folder;</li>
+    <li>switch <strong>Analyze new frames as they arrive</strong>,
+      <strong>Pair calibrated and registered copies with their lights</strong>
+      and <strong>Measure quality on the calibrated copy</strong>.</li>
+  </ul>
+  <p>The gate also covers flat-group splits and joins and a light's flat side,
+  the calibration duplicate repair, <a href="backups.html">backups</a>, and
+  Planning's activation and pushes to the rigs. A viewer never gets any of
+  these.</p>
+  <p>Whatever the gate, only an editor reads a WBPP run's files, a link inside
+  a run folder cannot lead outside it, and no route reads a calibration frame
+  outside the database's folders: a catalog that records one elsewhere, as a
+  catalog synced from another machine may, shows it as missing.</p>
 
   <h2 id="users">Manage users</h2>
   <p>An editor signed in to a web server gets a <strong>Users</strong> tab in
@@ -202,10 +265,10 @@ function gtag_report_demo() {
   or removing a user, signs out that user's sessions; changing only the email
   does not. Settings will not remove the account you are signed in with, or the
   last editor.</p>
+
   <figure>
-    <img src="../assets/settings-users.png" alt="Settings › Users: three users with their roles, and the API tokens section" loading="lazy">
-    <figcaption>Editors manage accounts and API tokens under Settings → Users.
-    The desktop app has no Users tab.</figcaption>
+    <img src="../assets/settings-users.png" loading="lazy" alt="Editors can change the catalog; read-only users can review images and cached results." width="1666" height="740">
+    <figcaption>Editors can change the catalog; read-only users can review images and cached results.</figcaption>
   </figure>
   <p>The CLI does the same. Without <code>--password-file</code> it asks for
   the password twice and shows nothing:</p>
@@ -235,14 +298,21 @@ docker exec -it psf-guard psf-guard users add admin --role read-write</code></pr
   </ul>
 
   <h2 id="signing-in">Sign in</h2>
-  <p>Once <code>auth.json</code> holds a user, the browser shows a login page.
-  A login sets an HttpOnly, SameSite=Strict session cookie. Sessions live in
-  server memory, expire after <code>session_hours</code>, and end when the
-  server restarts or you sign out.</p>
+  <p>Once <code>auth.json</code> contains a user account, the browser shows a login
+  page. A login sets an HttpOnly, SameSite=Strict session cookie. Sessions live in
+  server memory, expire after <code>session_hours</code>, and end when the server
+  restarts or you sign out.</p>
   <figure>
     <img src="../assets/server-login.png" alt="The PSF Guard server login page" loading="lazy">
     <figcaption>The login page appears only when the server has
     accounts.</figcaption>
+  </figure>
+  <p>Signed in, the menu at the right of the header shows your username and includes
+  <strong>Settings</strong> (editors only), <strong>Keyboard shortcuts</strong>,
+  <strong>Server information</strong> and <strong>Sign out</strong>.</p>
+  <figure>
+    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
+    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
   </figure>
   <pre><code>[server.auth]
 session_hours = 168
@@ -261,6 +331,32 @@ allow_read_only_compute = false</code></pre>
   and the session. Each port uses its own cookie name, so two local servers no
   longer sign each other out.</p>
 
+  <h2 id="preferences">View choices follow the account</h2>
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Signed in to a
+  server with accounts, your view choices follow you to any browser or
+  device.</div>
+  <ul>
+    <li>Images and Sequence: the sort order, the grouping, the thumbnail
+      sizes, the chips, and the night and hour marks.</li>
+    <li>Sequence scoring: the defaults each view's <strong>Scoring</strong>
+      control starts from.</li>
+    <li>The Library's compact or detailed rows, the project picker's grouping,
+      and moving on after a grade.</li>
+  </ul>
+  <p>Sort order, grouping and scoring values in a link override saved preferences.
+  Each change saves only what it changed, so a tab left open never undoes a
+  choice made since on another device. The first account to sign in inherits that
+  browser's saved choices; later accounts start
+  from the defaults. Viewers can save their choices too, including scoring defaults
+  with the <strong>Scoring</strong> control's <strong>Save as
+  default</strong>.</p>
+  <p>The server keeps them in <code>user-preferences.json</code> beside
+  <code>auth.json</code>, mode <code>0600</code> on Unix. Removing a user
+  removes their choices. The image detail's folded panels stay in each
+  browser, and exposure grouping stays a project setting shared by everyone.
+  Without accounts, and in the desktop app, the browser keeps the
+  choices.</p>
+
   <h2 id="tokens">API tokens for scripts and agents</h2>
   <p>A personal API token lets a script or an MCP client act as a user without
   a browser login. Send it as a bearer credential:</p>
@@ -277,9 +373,10 @@ allow_read_only_compute = false</code></pre>
   how a viewer, who has no Settings, gets one. Click <strong>Create
   token</strong> and copy it: it is not shown again. <strong>Revoke</strong>
   stops a token at once.</p>
+
   <figure>
-    <img src="../assets/settings-api-tokens.png" alt="New token form: Label, User, Expires after and Read only" loading="lazy">
-    <figcaption>A new token: label, user, expiry and a read-only switch.</figcaption>
+    <img src="../assets/settings-api-tokens.png" loading="lazy" alt="Give a token a label and choose its access before creating it." width="1584" height="660">
+    <figcaption>Give a token a label and choose its access before creating it.</figcaption>
   </figure>
   <pre><code>psf-guard users token create editor --label "claude on laptop" --read-only --expires-days 90
 psf-guard users token list
@@ -319,8 +416,8 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
   key</strong> alone, and replacing the manual key leaves paired clients alone.
   See <a href="sync-plugin.html#server">N.I.N.A. Sync Plugin</a>.</p>
   <div class="callout info">
-    Pairing and revoking change who can reach a catalog, so they need database
-    management. After pairing, sync and upload requests need only the client's
+    Pairing and revoking take an editor. In Settings they sit in the catalog's
+    editor, which needs database management because it lets you set the catalog's folders. After pairing, sync and upload requests need only the client's
     key. Use HTTPS on any network you do not fully trust.
   </div>
   <p>The Director plugin pairs separately, with its own one-use codes and
@@ -336,10 +433,10 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
     <li>Keep <code>auth.json</code> readable only by the PSF Guard user.</li>
     <li>Seed the first account from an existing secret with
       <code>--password-file</code>; only the hash is written.</li>
-    <li>Leave <code>--allow-database-management</code> off unless you need
-      database changes from the browser. An editor login does not bypass it,
-      and it does not bypass the login: on a network address the server needs
-      both.</li>
+    <li>Leave <code>--allow-database-management</code> off unless editors need
+      to name server paths from the browser. An editor login does not bypass
+      it, and it does not bypass the login: on a network address the server
+      needs both.</li>
     <li>Treat <code>--allow-anonymous-access</code> as temporary. A public
       server running it has no access control.</li>
     <li>Signing out ends that session. A restart ends every browser
@@ -352,8 +449,8 @@ curl -b psf-guard.cookies https://guard.example/api/databases</code></pre>
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="configuration.html">&larr; Configuration &amp; API</a>
-    <a href="mcp.html">MCP for Agents &rarr;</a>
+    <a href="configuration.html">← Configuration &amp; API</a>
+    <a href="sync-plugin.html">Connect N.I.N.A. →</a>
   </nav>
 </main>
 </div>

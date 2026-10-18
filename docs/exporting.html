@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Export &amp; AstroBin — PSF Guard</title>
-  <meta name="description" content="Export accepted lights and matched calibration frames as a zip, a folder or a server export, in grouped or WBPP layouts, and write AstroBin acquisition CSVs.">
+  <meta name="description" content="Export accepted lights and the calibration frames a stack would take as a zip, a folder or a server export, in grouped or WBPP layouts, leave out lights that can't be calibrated, and write AstroBin acquisition CSVs.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html" class="active" aria-current="page">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -154,6 +166,12 @@ function gtag_report_demo() {
     <a class="workflow-link" href="#overview">Export from the Library ↓</a>
   </div>
 
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Exports match
+  calibration by <strong>Settings &rarr; Calibration</strong>, place flats by
+  flat group, and can leave out lights that can't be calibrated, saying how
+  many and why. WBPP runner scripts list the current settings and warn about
+  frames an earlier export left in the folder.</div>
+
   <h2 id="modes">Where to export</h2>
   <div class="table-wrap">
     <table>
@@ -179,12 +197,38 @@ function gtag_report_demo() {
   anything out of the source library.</p>
   <div class="callout info">
     Each light brings the raw bias, dark, dark-flat and flat frames a stack
-    would build its masters from: the nearest safe set of each kind, except
-    that darks and bias come from the nearest complete set when one matches,
-    as <strong>Settings &rarr; Calibration &rarr; Dark choice</strong> sets.
-    Darks that caught stray light stay out. See
-    <a href="calibration.html#export">Calibration Libraries</a>.
+    would build its masters from, matched by the current settings for its
+    rig under <strong>Settings &rarr; Calibration</strong>. By default darks
+    and bias come from the nearest complete set when one matches, as
+    <strong>Dark choice</strong> sets, and a rig set to do without darks gets
+    none. Flats come from the light's own side of each measured change, as
+    its flat group sets. Frames the library keeps out, graded poor or kept out
+    by hand, stay out. See <a href="calibration-masters.html#export">Calibration
+    Libraries</a>.
   </div>
+
+  <h3 id="uncalibrated">Leave out lights that can't be calibrated</h3>
+  <p>With <strong>Leave out lights that can't be calibrated</strong> on, under
+  <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>, every export
+  leaves out the lights a stack would: those a light check flags for a missing flat,
+  bias or dark, or flats past the age limit. Checks set to <strong>Check only</strong>
+  or <strong>Off</strong> do not exclude lights. This holds in either layout, from the
+  dialog, the server export directory, a download, the CLI and the <a
+  href="#astrobin">AstroBin export</a>. Each export reports how many lights it excluded,
+  with an example and the reason for excluding it:</p>
+  <ul>
+    <li>the desktop app's summary and a server export's finished line, such as
+      <code>3 lights that can't be calibrated left out (…)</code>;</li>
+    <li>a <code>LEFT-OUT-UNCALIBRATED.txt</code> note in a download, listing
+      every one;</li>
+    <li>the CLI's output;</li>
+    <li>the WBPP runner scripts.</li>
+  </ul>
+  <figure>
+    <img src="../assets/settings-calibration-stacks-exports.png" loading="lazy" alt="Leave out lights that cannot be calibrated. This example is an unsaved setting." width="1800" height="284">
+    <figcaption>Leave out lights that cannot be calibrated. This example is an unsaved setting.</figcaption>
+  </figure>
+  <!-- SHOT: export-left-out.png | Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under | A finished export says how many lights it left out, with one and its reason. -->
 
   <h2 id="overview">Export from the Library</h2>
   <ol>
@@ -200,14 +244,16 @@ function gtag_report_demo() {
       export</strong> when the database has a server export directory.</li>
   </ol>
 
-  <figure>
-    <img src="../assets/library-card.png" alt="A Library project card with Open image grid, Sequence, Stacks, Planning, Calibration and Edit project" loading="lazy">
-    <figcaption>A project's card. Export and AstroBin sit on each target row below it.</figcaption>
-  </figure>
 
   <figure>
-    <img src="../assets/export-dialog.png" alt="Export dialog with the WBPP layout and WBPP settings" loading="lazy">
-    <figcaption>The Export dialog. Layout and WBPP settings start from the defaults under Settings → Setups → Export.</figcaption>
+    <img src="../assets/library-card.png" loading="lazy" alt="Expand a project to see its filters, progress and target actions. This is Golf of Mexico." width="2988" height="1136">
+    <figcaption>Expand a project to see its filters, progress and target actions. This is Golf of Mexico.</figcaption>
+  </figure>
+
+
+  <figure>
+    <img src="../assets/export-dialog.png" loading="lazy" alt="Choose the frame selection, folder layout and output format before exporting." width="896" height="1242">
+    <figcaption>Choose the frame selection, folder layout and output format before exporting.</figcaption>
   </figure>
 
   <p><strong>Export</strong> appears when the project or target has at least
@@ -238,7 +284,8 @@ function gtag_report_demo() {
   <p>The desktop app writes into the chosen folder. It tries a hard link first,
   which is instant and takes no extra space on the same filesystem, and copies
   when it cannot link. A summary counts linked, copied, already present,
-  missing and failed files.</p>
+  missing and failed files, the lights left out because they can't be
+  calibrated, and the lights with flats from across a measured change.</p>
 
   <h3>Browser</h3>
   <p>Without a server export directory, the browser streams an uncompressed
@@ -270,8 +317,18 @@ function gtag_report_demo() {
   <p>Flats stay under the target whose lights chose them, in a folder per
   night: two targets, or two nights of one target, can need different flats
   for one filter, and merging them would build the wrong master. Folders are
-  dated by the catalog's observing night, so dusk and dawn flats share one
-  date.</p>
+  dated by the night calibration gives the flats, split at local noon where
+  they were shot, so dusk and dawn flats share one date.</p>
+  <p>In either layout, flats follow the rig's
+  <a href="calibration-flats.html#flat-groups">flat groups</a>, as a stack's do: a light
+  takes flats from its own side of each measured change. Lights of one night
+  that take different flats get a folder each,
+  <code>SESSION_&lt;night&gt;-&lt;digest&gt;</code>. A light a stack would
+  give flats corrected across a change gets the flats as shot, in a
+  <code>SESSION_&lt;night&gt;-across-&lt;key&gt;</code> folder of its own,
+  since other stackers cannot apply the correction. The export summary
+  counts those lights, and a download carries a
+  <code>FLATS-ACROSS-A-CHANGE.txt</code> note that lists them.</p>
   <p><strong>WBPP</strong> uses the frame-type roots that PixInsight's
   WeightedBatchPreprocessing expects:</p>
   <pre><code>destination/
@@ -283,9 +340,10 @@ function gtag_report_demo() {
 ├── run-wbpp.sh
 └── run-wbpp.cmd</code></pre>
   <p>Dark flats go in <code>darks/</code>, since WBPP pairs a dark to a flat by
-  exposure. Each light's path includes the same night as its flats, and the runner
-  tells WBPP to group by <code>SESSION</code>, so each night's lights calibrate
-  with that night's flats while bias and darks serve every night.</p>
+  exposure. Each light's path includes the same session as its flats, and the
+  runner tells WBPP to group by <code>SESSION</code>, so each night's lights
+  calibrate with that night's flats while bias and darks serve every
+  night.</p>
 
   <h3 id="darksets">Dark sets per night</h3>
   <p>A WBPP export builds the same dark masters a stack would. When lights of
@@ -315,6 +373,22 @@ function gtag_report_demo() {
   <code>,run</code> to <code>PARAMS</code> in the launcher to go straight
   through. Anything else appended to <code>PARAMS</code> reaches WBPP. On a
   Linux machine without a display, run <code>xvfb-run -a ./run-wbpp.sh</code>.</p>
+  <p>The runner scripts carry notes on how the calibration frames were
+  chosen:</p>
+  <ul>
+    <li>the current matching settings that differ from the defaults, with
+      who set them, such as <code>Use darks: off (for Askar 120 · ZWO ASI2600MM
+      Pro)</code>, or that the defaults chose them;</li>
+    <li>the rigs that export no darks;</li>
+    <li>how many lights were left out because they can't be calibrated, with an example
+    and the reason for excluding it;</li>
+    <li>the flat changes the flats were chosen around, and the lights that
+      take flats from across one;</li>
+    <li>frames an earlier export left in the folder. An export into a folder
+      that already holds one keeps the earlier files, and WBPP scans each
+      frame folder whole, so the runner warns when it finds frames this export
+      did not place. Remove them or export to an empty folder.</li>
+  </ul>
   <p>WBPP writes to its own console and logs, not the terminal. Masters land in
   <code>wbpp-out/master</code> and calibrated frames in
   <code>wbpp-out/calibrated</code>; read <code>wbpp-out/logs/*.log</code> for
@@ -358,8 +432,13 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
       <tr><td><code>--wbpp-rejection</code></td><td><code>auto</code>, <code>winsorized-sigma</code>, <code>linear-fit</code>, <code>esd</code>, <code>rcr</code>, <code>percentile-clip</code></td></tr>
       <tr><td><code>--dry-run</code></td><td>Print the plan without writing files</td></tr>
       <tr><td><code>--image-dirs DIRS</code></td><td>Comma-separated image folders for a raw database path</td></tr>
+      <tr><td><code>--registry PATH</code></td><td>The database registry, which also holds the <strong>Settings &rarr; Calibration</strong> values the export matches by; defaults to the platform config directory</td></tr>
     </table>
   </div>
+  <p>The CLI matches calibration frames by the same settings as the app, read from the
+  registry, and with <strong>Leave out lights that can't be calibrated</strong> on, the
+  export reports how many lights it excluded, with an example and the reason for
+  excluding it.</p>
 
   <h2 id="repeat">Export again after each session</h2>
   <ul>
@@ -370,7 +449,9 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   </ul>
   <div class="callout">
     Export does not remove a file you rejected after an earlier export. Start a
-    new destination, or delete that copy, before the final stacking run.
+    new destination, or delete that copy, before the final stacking run. In
+    the WBPP layout the runner warns about frames it finds that this export
+    did not place.
   </div>
 
   <h2 id="astrobin">Write the AstroBin acquisition CSV</h2>
@@ -380,9 +461,10 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   rows, offers <strong>Copy CSV</strong> and <strong>Download CSV</strong>, and
   asks for the AstroBin id of any filter it does not know yet.</p>
 
+
   <figure>
-    <img src="../assets/astrobin-dialog.png" alt="AstroBin acquisitions dialog: Essentials or Full detail, Count ungraded lights, filter ids and the row table" loading="lazy">
-    <figcaption>One row per night, filter and exposure length, ready for AstroBin's CSV import.</figcaption>
+    <img src="../assets/astrobin-dialog.png" loading="lazy" alt="AstroBin export summarizes the accepted exposure time and warns when filter IDs are missing." width="1530" height="1412">
+    <figcaption>AstroBin export summarizes the accepted exposure time and warns when filter IDs are missing.</figcaption>
   </figure>
 
   <p>A row is one night, one filter and one exposure length. Nights split where
@@ -393,13 +475,18 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   <div class="table-wrap">
     <table>
       <tr><th>Detail</th><th>Columns</th></tr>
-      <tr><td><strong>Essentials</strong> (default)</td><td><code>date</code>, <code>filter</code>, <code>number</code>, <code>duration</code>. Reads only the catalog, so it is instant.</td></tr>
+      <tr><td><strong>Essentials</strong> (default)</td><td><code>date</code>, <code>filter</code>, <code>number</code>, <code>duration</code>. Reads only the catalog, so it is instant, unless lights that can't be calibrated are left out.</td></tr>
       <tr><td><strong>Full</strong></td><td>Adds <code>binning</code>, <code>gain</code>, <code>sensorCooling</code> (mean sensor temperature), <code>fNumber</code>, the <code>darks</code>, <code>flats</code>, <code>flatDarks</code> and <code>bias</code> a stack would use for that night and filter, and <code>temperature</code> (mean focuser probe temperature). Rows also split by binning and gain.</td></tr>
     </table>
   </div>
   <p>Full detail reads one light per night and filter from disk, header only.
   Columns PSF Guard cannot know, such as <code>bortle</code> and
   <code>meanFwhm</code>, are left out, and AstroBin treats them as blank.</p>
+  <p>With <strong>Leave out lights that can't be calibrated</strong> on, either level
+  counts only the lights a stack would integrate. The export reads each light's header,
+  judges it as a stack does, and notes how many lights it left out, with an example and
+  the reason for excluding it. That needs the image folders; without them, the export
+  counts every light and reports that choice.</p>
 
   <h3 id="astrobin-filters">Filter ids</h3>
   <p>AstroBin knows a filter by the number in its equipment page's address,
@@ -411,15 +498,21 @@ psf-guard export schedulerdb.sqlite --dest ./stacking \
   the entry covers. Paste the filter's page address or the number alone. Each
   saved id links back to its page.</p>
   <p>The map lives in the catalog, so it travels with the rig's database, and
-  editing it needs database management. Ids you enter in the export dialog are
+  an editor can change it. Ids you enter in the export dialog are
   saved to this catalog's map with <strong>Save filter ids</strong>. <strong>Settings &rarr; Setups &rarr;
   AstroBin</strong> holds server-wide defaults by name for names no catalog
   entry covers. A filter with no id gets a blank cell, and the rest of the row
   still imports.</p>
 
+  <p>Click <strong>Edit filters</strong> for the catalog. Under <strong>Not in
+  the map</strong>, choose a filter or click <strong>Add all</strong>. PSF Guard
+  adds the catalog's filter names and fills in any server-wide default IDs.
+  Enter each filter's AstroBin ID or page address. Use <strong>First night</strong>
+  and <strong>Last night</strong> when an entry applies only to part of the capture
+  history, then click <strong>Save map</strong>.</p>
   <figure>
-    <img src="../assets/astrobin-filter-map.png" alt="AstroBin filters for one catalog, with a G filter that changed on a date" loading="lazy">
-    <figcaption>A catalog's filter map; a filter that changed between nights gets two entries.</figcaption>
+    <img src="../assets/astrobin-filter-map.png" alt="An unsaved G filter entry with AstroBin ID and date fields, and suggestions for the catalog's other filters" width="944" height="409" loading="lazy">
+    <figcaption>Choose a catalog filter to add its row. This G entry still needs an AstroBin ID before the map can be saved.</figcaption>
   </figure>
 
   <p>The CLI writes the same file:</p>
@@ -507,7 +600,9 @@ curl "http://localhost:3000/api/db/my-db/astrobin-export.csv?target_id=42&amp;de
       <tr><td><code>nothing to export</code></td><td>Check the project, target and filter scope, the grades, the image folders, and whether Pending frames should count.</td></tr>
       <tr><td>Hard links became copies</td><td>Hard links need the source and destination on one filesystem that supports them.</td></tr>
       <tr><td>Zip stops or will not open</td><td>A source file became unreadable during the stream. Check file access and download again.</td></tr>
-      <tr><td>Calibration frames missing</td><td>Open the project's coverage report. Only frames that safely match the lights are exported, and stray-light darks stay out.</td></tr>
+      <tr><td>Calibration frames missing</td><td>Open the project's coverage report. Only frames that safely match the lights under <strong>Settings &rarr; Calibration</strong> are exported, and frames the library keeps out stay out.</td></tr>
+      <tr><td>Fewer lights than the project holds</td><td><strong>Leave out lights that can't be calibrated</strong> is on. The summary and the CLI output say how many, with an example and the reason for excluding it; <code>LEFT-OUT-UNCALIBRATED.txt</code> in a download lists every one.</td></tr>
+      <tr><td>Frames from an earlier export in the WBPP tree</td><td>The runner warns about them. Remove them or export to an empty folder.</td></tr>
       <tr><td><strong>Reference in place</strong> unavailable</td><td>Choose the WBPP layout first.</td></tr>
       <tr><td>The runner reports frames it cannot find</td><td>The frames are not at the listed paths on the PixInsight machine. Check <strong>PixInsight path</strong>, or edit <code>psfSourceRoot</code> at the top of <code>run-wbpp.js</code>.</td></tr>
       <tr><td>AstroBin shows no filter</td><td>Give the filter an id in the catalog's AstroBin filter map or the dialog.</td></tr>
@@ -515,7 +610,7 @@ curl "http://localhost:3000/api/db/my-db/astrobin-export.csv?target_id=42&amp;de
   </div>
 
   <nav class="next-prev" aria-label="Documentation pages">
-    <a href="calibration.html">&larr; Calibration Libraries</a>
+    <a href="calibration-masters.html">&larr; Calibration Masters &amp; Settings</a>
     <a href="planning.html">Planning &rarr;</a>
   </nav>
 </main>

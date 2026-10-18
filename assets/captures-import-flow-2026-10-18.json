@@ -1,0 +1,181 @@
+{
+  "commit": "6392a9a47f38542d86dfa3c30dd21c0d627cfea1",
+  "version": "0.12.0",
+  "browser": "chromium",
+  "browserVersion": "156.0.8078.4",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "deviceScaleFactor": 2,
+  "theme": "dark",
+  "locale": "en-US",
+  "timezone": "America/Los_Angeles",
+  "source": "/tmp/psf-guard-012-flow/TargetScheduler.sqlite",
+  "imageDirectory": "/tmp/psf-guard-012-flow/images",
+  "fixture": "global-setup.ts plus applyRealSchema; two projects, four images, stable GUIDs",
+  "captures": [
+    {
+      "name": "import-first-run.png",
+      "catalogs": [],
+      "time": "2026-10-18T07:06:49.169Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Empty registry. Settings > Databases auto-open; neither starting point selected. Release notes acknowledged by Playwright storage state. Crop ends after welcome choices.",
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 378.8125
+      },
+      "pixels": [
+        2880,
+        756
+      ],
+      "sha256": "74e0d8a8e834455278ba6de583a05ed623ab5faff91839f720c683e1254b2195"
+    },
+    {
+      "name": "import-local-ts.png",
+      "catalogs": [],
+      "time": "2026-10-18T07:06:49.399Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Local TS file selected; Observatory name; source and images entered; managed storage; keep source connected on; import not started.",
+      "crop": {
+        "x": 68,
+        "y": 267.1875,
+        "width": 1024,
+        "height": 802.015625
+      },
+      "pixels": [
+        2048,
+        1606
+      ],
+      "sha256": "6b8ab43fc8361de44c90e2ffbe5ccfb341ba8f8cb63c7f30b6758a424f7913a5"
+    },
+    {
+      "name": "import-catalog-copy.png",
+      "catalogs": [],
+      "time": "2026-10-18T07:06:49.602Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Standalone copy selected; custom destination restored.sqlite; no sync or source writeback; not submitted.",
+      "crop": {
+        "x": 68,
+        "y": 188.1875,
+        "width": 1024,
+        "height": 926.046875
+      },
+      "pixels": [
+        2048,
+        1854
+      ],
+      "sha256": "374e7a5fcfe2d59a2c31ae6c28c3e08f99a3b5e1c99de5825eb443ca9e64d991"
+    },
+    {
+      "name": "import-automatic-sync.png",
+      "catalogs": [
+        {
+          "id": "db-969a90ea",
+          "name": "Observatory",
+          "databasePath": "/private/tmp/psf-guard-012-flow/databases/1c1e28f8-4148-4a95-bd46-fdfc5deeb28d.sqlite"
+        }
+      ],
+      "time": "2026-10-18T07:06:51.097Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Import complete. Own catalog created. Defaults saved: startup on, change detection on, interval 5 minutes, automatic grade writeback on.",
+      "crop": {
+        "x": 92,
+        "y": 680.078125,
+        "width": 976,
+        "height": 378.65625
+      },
+      "pixels": [
+        1952,
+        758
+      ],
+      "sha256": "5568d71d648817aba4f3e7b5a47f5e7feb548bf5188543e7fbd71e20d6ffe731"
+    },
+    {
+      "name": "import-reviewed-transfer.png",
+      "catalogs": [
+        {
+          "id": "db-969a90ea",
+          "name": "Observatory",
+          "databasePath": "/private/tmp/psf-guard-012-flow/databases/1c1e28f8-4148-4a95-bd46-fdfc5deeb28d.sqlite"
+        }
+      ],
+      "time": "2026-10-18T07:06:51.470Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Automatic sync and writeback saved off. Merge catalogs: Observatory — Target Scheduler to Observatory. Include thumbnails on. Preview of new project 100 and target 100; Apply not clicked.",
+      "crop": {
+        "x": 68,
+        "y": 172,
+        "width": 1024,
+        "height": 559.859375
+      },
+      "pixels": [
+        2048,
+        1120
+      ],
+      "sha256": "9d34a2fafe12a5543d2babfbb648dea15b522b1fa3f373accebe1c4cbfa52d54"
+    },
+    {
+      "name": "import-image-folders.png",
+      "catalogs": [],
+      "time": "2026-10-18T07:06:51.809Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Image folders selected; Image archive name; real FITS fixture directory added; managed storage; background quality analysis off; not submitted.",
+      "crop": {
+        "x": 68,
+        "y": 267.1875,
+        "width": 1024,
+        "height": 761.296875
+      },
+      "pixels": [
+        2048,
+        1524
+      ],
+      "sha256": "c6b7aa40fc58ffbdbc11c39931d835afd51f2dc2a29bdc4377b732078820186d"
+    },
+    {
+      "name": "import-sync-plugin.png",
+      "catalogs": [],
+      "time": "2026-10-18T07:06:51.969Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Sync plugin selected; Remote observatory name; shared fixture image folder retained when switching; no local TS file; managed storage; catalog not yet created.",
+      "crop": {
+        "x": 68,
+        "y": 267.1875,
+        "width": 1024,
+        "height": 636.953125
+      },
+      "pixels": [
+        2048,
+        1276
+      ],
+      "sha256": "70466f1d75c714a3b8f2701604cff0aca8d05cebacc8db16778e48c8e54c251c"
+    },
+    {
+      "name": "import-plugin-pairing.png",
+      "catalogs": [
+        {
+          "id": "db-5644f5cf",
+          "name": "Remote observatory",
+          "databasePath": "/tmp/psf-guard-012-flow/databases/remote-observatory.sqlite"
+        }
+      ],
+      "time": "2026-10-18T07:06:52.106Z",
+      "url": "http://127.0.0.1:23652/",
+      "state": "Remote observatory catalog created. Pairing controls open automatically; no code issued, no client paired, no uploads enabled. Crop ends after Generate pairing code.",
+      "crop": {
+        "x": 112,
+        "y": 454.8125,
+        "width": 936,
+        "height": 153.59375
+      },
+      "pixels": [
+        1872,
+        306
+      ],
+      "sha256": "ffc7fa7f49e5133b852f104ee9adab1141f84bd7d38cdca42a4ebb5165d24d30"
+    }
+  ]
+}

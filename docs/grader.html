@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Library &amp; Grader — PSF Guard</title>
-  <meta name="description" content="The Library, the header scope, the image grid, image detail, Sequence, mosaics, comparison and keyboard shortcuts for grading astrophotography frames.">
+  <meta name="description" content="The Library, the header, the Images and Sequence toolbar, night and hour marks, image detail, Sequence, mosaics, comparison and keyboard shortcuts for grading astrophotography frames.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html" class="active" aria-current="page">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -150,54 +162,107 @@ function gtag_report_demo() {
     rejected frames.
   </p>
 
+  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> The header shows its views as
+  icons and keeps Settings and help in one menu; the Library aligns project details in
+  columns. Images and Sequence share one compact toolbar, with newest first, night and
+  hour marks, and a dot on new frames.</div>
+
   <h2 id="overview">The Library</h2>
   <p>The <strong>Library</strong> lists every project in every registered catalog,
-  grouped by when it was last shot: last 7 days, last 30 days, earlier work. The band
-  at the top totals images, projects, targets, accepted frames, frames to review,
-  missing files and grading progress.</p>
+  grouped by when it was last shot: last 7 days, last 30 days, earlier work. It uses
+  the whole width of the window, up to 2400 px. The band at the top totals images,
+  projects, targets, accepted frames, frames to review, missing files and grading
+  progress.</p>
+
   <figure class="feature-shot">
-    <img src="../assets/library-compact.jpg" alt="The Library: catalog totals, Database, Show, search and sort controls, and one row of pills per project" loading="lazy">
-    <figcaption>The compact Library: one row of pills per project.</figcaption>
+    <img src="../assets/library-compact.jpg" loading="lazy" alt="The compact Library lists projects across all databases, with counts and review status." width="3138" height="1260">
+    <figcaption>The compact Library lists projects across all databases, with counts and review status.</figcaption>
   </figure>
-  <p>Each row is one row of pills: database, Target Scheduler state, accepted against
-  desired (it reads <strong>Done</strong> once the goal is met), grading counts,
-  capture dates and how long ago, and new frames since you last opened it.
-  <strong>Sequence</strong> and <strong>Stacks</strong> open those views;
-  <strong>⚙</strong> opens the plan's <a href="planning.html">workspace</a>.</p>
+  <p>In the compact view each project is one row, and each kind of badge has its own
+  column: database, Target Scheduler state, accepted against desired (it reads
+  <strong>Done</strong> once the goal is met), grade counts, capture dates and
+  calibration. <strong>Sequence</strong> and <strong>Stacks</strong> open those views;
+  <strong>⚙</strong> opens the plan's <a href="planning.html">workspace</a>. A project
+  without a pill leaves its cell empty, so the columns stay aligned. A long name ends
+  in "…" and shows in full on hover. A badge beside the name counts frames new since
+  you last opened the project.</p>
+  <p>On laptop and wider screens each row stays on one line, and the dates say how long ago
+  the last frame was, with the range in the tooltip. On a tablet a row takes two or
+  three lines. On a phone, the badges stack inside a rounded box.</p>
+  <figure>
+    <img src="../assets/library-phone.png" loading="lazy" alt="Compact project rows keep counts, calibration warnings and actions together at phone width." width="337" height="679">
+    <figcaption>Compact project rows keep counts, calibration warnings and actions together at phone width.</figcaption>
+  </figure>
   <ul>
     <li><strong>Compact</strong> and <strong>Detailed</strong> switch the whole list.
-      The arrow at a row's left opens it into its full card, and folds it back.
-      Set the default under <strong>Settings → Review → Library</strong>.</li>
-    <li><strong>Show</strong> narrows to <strong>Active</strong>, <strong>Still to
-      shoot</strong>, <strong>Done</strong>, <strong>Draft</strong>,
-      <strong>Inactive</strong>, <strong>Closed</strong> or <strong>No
-      database</strong>. The search box matches project and target names. Both stay
-      in the address.</li>
-    <li>With database management on, the state pill is a select: choose
+      The arrow at a row's left opens it into its full card, and folds it back. The
+      project you came from opens as a card. Set the default under
+      <strong>Settings → Review → Library</strong>.</li>
+    <li>The Projects toolbar uses the pills Images and Sequence use, and wraps into
+      rows on a narrow window. <strong>Show</strong> narrows to <strong>Active</strong>,
+      <strong>Still to shoot</strong>, <strong>Done</strong>, <strong>Draft</strong>,
+      <strong>Inactive</strong>, <strong>Closed</strong>, <strong>Calibration
+      issues</strong> or, for plans with none, <strong>No database</strong>. The search
+      box matches project and target names. Both stay in the address.
+      <strong>Sort</strong> orders projects within each group: <strong>Newest
+      first</strong>, <strong>Name A–Z</strong> or <strong>Most images</strong>.</li>
+    <li>For an editor, the state pill is a menu with its caret inside. Choose
       <strong>Active</strong>, <strong>Inactive</strong>, <strong>Draft</strong> or
-      <strong>Closed</strong> to change the project in Target Scheduler at once.</li>
+      <strong>Closed</strong>; PSF Guard asks first, then writes the state into the
+      project in Target Scheduler, which acts on it from its next pick.</li>
     <li>A plan shot by several rigs is one outer pill, <strong>N rigs</strong>, with a
       row per rig under it.</li>
   </ul>
+
   <figure>
-    <img src="../assets/library-card.png" alt="A Library project card: recent frames, image and grading counts, desired progress, and Open image grid, Sequence, Stacks, Planning, Calibration and Edit project" loading="lazy">
-    <figcaption>A row opened into its card: recent frames, progress, and the project's actions.</figcaption>
+    <img src="../assets/library-card.png" loading="lazy" alt="Expand a project to see its filters, progress and target actions. This is Golf of Mexico." width="2988" height="1136">
+    <figcaption>Expand a project to see its filters, progress and target actions. This is Golf of Mexico.</figcaption>
+  </figure>
+
+  <h3 id="library-calibration">Calibration pills</h3>
+  <p>A <strong>🧪 Poor</strong> or <strong>🧪 Check</strong> pill marks a project whose
+  lights have calibration issues: Poor when some lights can't be calibrated properly,
+  Check when calibration needs review. Causes include lights with no calibration frames
+  to match, thin dark masters, flats with changing spots, old or mixed flats, and
+  suspect frames in use. PSF Guard checks calibration in the background. The pill opens
+  the project's Calibration report, and <strong>Show › Calibration issues</strong> lists
+  only these projects. See <a href="calibration.html">Calibration Libraries</a>.</p>
+  <figure>
+    <img src="../assets/library-calibration-pills.png" loading="lazy" alt="Poor and Check pills identify projects whose calibration needs attention." width="2996" height="270">
+    <figcaption>Poor and Check pills identify projects whose calibration needs attention.</figcaption>
   </figure>
 
   <h2 id="header">The header</h2>
-  <p>The header reads left to right, from the whole to the part:
-  <strong>Library</strong>, the project picker, <strong>Planning</strong> for that
+  <p>The header shows each view as an icon. The current view keeps its name; rest the
+  pointer on another, or move focus to it, and its name slides out. <strong>Sky</strong>
+  comes first, since it covers all projects and databases, then <strong>Library</strong>.
+  The remaining controls follow the project and database scope: the project picker,
+  <strong>Planning</strong> for that
   project's plan, the rig and target switcher, then <strong>Images</strong>,
-  <strong>Sequence</strong> and <strong>Stacks</strong>, and <strong>Sky</strong>.
-  The views wait until you pick a project.</p>
+  <strong>Sequence</strong>, <strong>Calibration</strong> and <strong>Stacks</strong>.
+  Images, Sequence and Stacks become available when you pick a project or database.</p>
+  <figure>
+    <img src="../assets/header-tab-hover.png" loading="lazy" alt="Hover a view or move keyboard focus to it to reveal its name. Calibration has keyboard focus here." width="1710" height="104">
+    <figcaption>Hover a view or move keyboard focus to it to reveal its name. Calibration has keyboard focus here.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
+    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
+  </figure>
+  <p>At the right sit the jobs chip and one menu button, ☰, holding
+  <strong>Settings</strong>, <strong>Keyboard shortcuts</strong>, <strong>Server
+  information</strong> and <strong>Sign out</strong>. On a server with accounts the menu
+  shows who is signed in, and only an editor sees Settings.</p>
   <div class="shot-pair">
+
     <figure>
-      <img src="../assets/header-picker.png" alt="Project picker searching Heart: matching projects, each opening to All images and its targets" loading="lazy">
-      <figcaption>The picker finds projects by name, target or database. A project opens to its targets.</figcaption>
+      <img src="../assets/header-picker.png" loading="lazy" alt="Search for a project, then choose all its images or a single target." width="1350" height="1116">
+      <figcaption>Search for a project, then choose all its images or a single target.</figcaption>
     </figure>
+
     <figure>
-      <img src="../assets/header-jobs.png" alt="The header jobs popup: running builds with progress and a Stop button" loading="lazy">
-      <figcaption>The jobs chip opens the queue of builds, scans and refreshes.</figcaption>
+      <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
+      <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
     </figure>
   </div>
   <ul>
@@ -205,9 +270,14 @@ function gtag_report_demo() {
       count. Its switcher lists each rig with its targets.</li>
     <li>The switcher fits long target names. Mosaic panels show the part that sets
       them apart, such as <em>Panel 2</em>, with the full name as a tooltip.</li>
-    <li>The jobs chip shows overall progress and the job count. Click a job to open
-      what it works on. See <a href="storage.html#jobs">Storage &amp;
-      Performance</a>.</li>
+    <li><strong>Calibration</strong> shows the calibration library of the database in
+    scope. With a project in scope it opens on that project's rig and shows the
+    calibration that project uses; there the switcher shows only the rig name. See <a
+    href="calibration.html">Calibration Libraries</a>.</li>
+    <li>The jobs chip counts running, waiting and queued work, and work that needs you,
+      with a small icon each. Its list splits into <strong>Started by you</strong> and
+      <strong>Automatic</strong>. Click a job to open what it works on. See
+      <a href="storage.html#jobs">Storage &amp; Performance</a>.</li>
     <li>Once a rig runs the N.I.N.A. Director plugin, an early beta, a chip such
       as <strong>2 rigs · 1 exposing</strong> counts those rigs and opens
       <a href="rigs.html#live">Live on the Sky</a>.</li>
@@ -215,52 +285,158 @@ function gtag_report_demo() {
 
   <h2 id="grid">Images</h2>
   <figure class="feature-shot">
-    <img src="../assets/grid.jpg" alt="Images grid for the Iris Nebula: status, filter, flag and date controls above cards with score chips, filter, time, HFR, stars and grade" loading="lazy">
-    <figcaption>The grid. Each card shows its score, filter, time, HFR, stars and grade in one short block.</figcaption>
+    <img src="../assets/grid.jpg" width="3138" height="1674" alt="Images for the Iris Nebula: the compact toolbar of filter pills and tools above cards with score chips, filter, time, HFR, stars and grade" loading="lazy">
+    <figcaption>The grid. Each card shows its score, filter, time, HFR, stars and grade. These Iris Nebula frames also show quality warnings and calibration chips.</figcaption>
   </figure>
+
+  <h3 id="toolbar">The toolbar</h3>
+  <p>Images, Sequence and the Calibration page share one compact toolbar. Its first row
+  contains the filter controls, the thumbnail size slider and the tools. Each control
+  shows its filter and current value, such as <strong>Status: All</strong>.
+  <strong>View</strong> opens the display settings, and <strong>⋯</strong> less-used
+  tools. A slim row below gives the counts. On a phone the filters and the slider fold
+  behind a <strong>Filters</strong> button that counts the filters in use.</p>
   <ul>
-    <li><strong>Status</strong> has one box per grade, so everything but Rejected is
-      one click.</li>
-    <li><strong>Filter</strong> and <strong>Flag</strong> open lists of boxes: Ha and
-      OIII together, or frames with any of two flags.</li>
-    <li>Group by filter, session, date, or filter and date. <strong>Stats</strong>
-      sits with the other tools and expands the image count.</li>
-    <li>Select with Shift+Click, Ctrl/Cmd+Click, or arrow keys and Space. Shift with an
-      arrow extends the selection. Accept, reject or unmark the whole selection.</li>
-    <li><strong>Move exposures</strong> splits frames into another target or project.
-      See <a href="importing.html#organize">Organize projects and targets</a>.</li>
+    <li><strong>Status</strong>, <strong>Filter</strong>, <strong>Flag</strong> and
+      <strong>Calibration</strong> open checkbox lists: Ha and OIII together, or frames
+      with any of two flags. <strong>Dates</strong> and the search box narrow further;
+      <strong>Clear</strong> drops every filter.</li>
+    <li><strong>View</strong> includes <strong>Group</strong> (filter, session, date, or
+    filter and date; project first when Images shows every project),
+    <strong>Sort</strong>, <strong>Marks</strong>, <strong>Nights end</strong>,
+    <strong>Chips</strong> and <strong>Separate exposure groups</strong>. The button
+    shows which setting differs from its default, such as newest first.</li>
+    <li>The tools are undo and redo, <strong>Compare</strong>, <strong>Stats</strong>,
+      which opens image statistics under the toolbar, and the quality scan.</li>
+    <li>For an editor, <strong>⋯</strong> includes <strong>Move exposures</strong>,
+    which splits frames into another target or project (see <a
+    href="importing.html#organize">Organize projects and targets</a>), and
+    <strong>Rescan image folders</strong>, which replaces the header's reload button
+    (see <a href="importing.html#rescan">Files copied in by hand</a>).</li>
+    <li>Select with Shift+Click, Ctrl/Cmd+Click, or arrow keys and Space; Shift with an
+      arrow extends the selection. Once two images are selected, the slim row offers
+      <strong>Accept</strong>, <strong>Reject</strong>, <strong>Pending</strong> and
+      <strong>Stack selected</strong>, and <strong>Flat side…</strong> for
+      <a href="calibration.html">flat choices</a>.</li>
+  </ul>
+  <figure>
+    <img src="../assets/grid-view-panel.png" loading="lazy" alt="Choose grouping, order, night marks and score chips in View." width="520" height="652">
+    <figcaption>Choose grouping, order, night marks and score chips in View.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="../assets/grid-filter-list.png" loading="lazy" alt="Choose one or more filters, or keep All selected." width="404" height="554">
+    <figcaption>Choose one or more filters, or keep All selected.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/grid-phone-filters.png" loading="lazy" alt="At phone width, expand Filters to reach the grid controls." width="337" height="730">
+    <figcaption>At phone width, expand Filters to reach the grid controls.</figcaption>
+  </figure>
+
+  <h3 id="sort">Newest first and new frames</h3>
+  <p><strong>View › Sort › Newest first</strong> turns each group around, and in
+  Sequence the strip and its session tabs; the score chart keeps time left to right.
+  The arrow keys, Shift-click, the detail view's next and previous, and Compare follow
+  the order on screen. A project's exposure groups keep their order, so they do not
+  trade places as frames arrive. The address keeps the choice as
+  <code>order=newest</code>, and it becomes the default for links that name no
+  order.</p>
+  <p>Frames captured since you last opened the project from the Library carry a small
+  dot before their date, in Images and Sequence: the frames the Library's "new" badge
+  counted, plus any captured since. They keep it until you next open the project from
+  the Library.</p>
+  <figure>
+    <img src="../assets/grid-newest-first.jpg" loading="lazy" alt="Newest first puts the latest captures at the start of each group." width="2502" height="990">
+    <figcaption>Newest first puts the latest captures at the start of each group.</figcaption>
+  </figure>
+
+  <h3 id="marks">Night and hour marks</h3>
+  <p>Images and Sequence mark where frames cross into another night or hour. A line and
+  the night's date sit in the gap before a night's first frame, every other night takes
+  a faint band, and thinner lines mark the hours when frames are dense enough for them
+  to help. No card moves for a mark. <strong>View › Marks</strong> sets
+  <strong>Nights and hours</strong>, <strong>Nights only</strong> or
+  <strong>Off</strong>, as does <strong>Settings → Review</strong>.</p>
+  <p>Nights split at each rig's local noon, not at midnight. A light finds its rig
+  through its Target Scheduler profile, so lights a western rig shoots after midnight
+  UTC stay on the night they began. <strong>Date</strong> groups are these observing
+  nights, and next and previous navigation in the detail view follows the same nights.
+  <strong>Nights end</strong> under <strong>Settings → Calibration</strong> can put
+  every light on one split with <strong>Same time for all rigs</strong>; <strong>Nights
+  end</strong> in the View panel shows the other split in one view.</p>
+  <figure>
+    <img src="../assets/grid-time-marks.jpg" loading="lazy" alt="Night breaks and hour marks place frames in capture order." width="2322" height="1016">
+    <figcaption>Night breaks and hour marks place frames in capture order.</figcaption>
+  </figure>
+
+  <h3 id="cards">Cards</h3>
+  <ul>
+    <li>Cards take the shape of the frame, read once per camera setup from one frame's
+      header, so a square or 4:3 sensor fills its card as a 3:2 one does. Sequence
+      spaces its cards as Images does.</li>
+    <li>Images and Sequence each keep their own thumbnail size.</li>
     <li>Cards show the target only when the grid mixes targets. A frame from this year
       shows its time; an older one shows its year.</li>
     <li>Previews load small first and fill in on zoom. Cards far off screen are not
       drawn, so a grid of thousands scrolls smoothly.</li>
   </ul>
-  <figure>
-    <img src="../assets/grid-filter-list.png" alt="Grid toolbar with the Filter list open and HA and OIII ticked" loading="lazy">
-    <figcaption>Tick several filters at once. Links that set one value still work.</figcaption>
-  </figure>
 
-  <h2 id="review-preferences">Score chips and review settings</h2>
-  <p>Each card's main badge is its quality score. Two chips rank it further: the
-  moon chip within its night, the stacked-layers chip against every comparable frame
-  of the target and filter. Toggle them in the grid and Sequence toolbars, or under
-  <strong>Settings → Review</strong>, which also sets whether a grade moves to the
-  next image. Hold Shift with <kbd>A</kbd>, <kbd>X</kbd> or <kbd>U</kbd> to invert
-  that once.</p>
+  <h2 id="review-preferences">Chips and view settings</h2>
+  <p>Each card's main badge is its quality score. Two chips rank it further: the moon
+  chip within its night, the stacked-layers chip against every comparable frame of the
+  target and filter. A 🧪 chip marks a light the calibration library serves poorly,
+  red for Poor and yellow for Check, and opens the light on its Calibration panel. The
+  <strong>Calibration</strong> pill in Images keeps only such lights, and Sequence's
+  <strong>Select</strong> offers <strong>Poor calibration</strong>. See
+  <a href="calibration.html">Calibration Libraries</a>.</p>
   <figure>
-    <img src="../assets/grid-score-chips.png" alt="Grid cards with the main score, night-session score and all-sessions score" loading="lazy">
-    <figcaption>The main score, the night chip and the all-sessions chip.</figcaption>
+    <img src="../assets/grid-score-chips.jpg" width="1800" height="530" alt="Grid cards with the main score, night-session score and all-sessions score" loading="lazy">
+    <figcaption>The first Iris frame scores 94 overall, 99 within its night session and 94 across all sessions. Its stored grade remains Accepted despite the Sky Brightening warning.</figcaption>
   </figure>
+  <p>Toggle each chip under <strong>View › Chips</strong> or in <strong>Settings →
+  Review</strong>, which also sets whether a grade moves to the next image. Hold Shift
+  with <kbd>A</kbd>, <kbd>X</kbd> or <kbd>U</kbd> to invert that once. Sequence's
+  scoring defaults sit under <strong>Settings → Review → Sequence scoring</strong>; see
+  <a href="screening.html">Quality Screening</a>.</p>
+  <p>Signed in to a server with user accounts, your view choices follow you to any
+  browser: the sort order, the grouping, the thumbnail sizes, the chips, the Library's
+  rows and the project picker's grouping. Settings in a link override your saved choices.
+  Each change
+  saves only what it changed, so a tab left open does not undo a choice made since on
+  another device. Without accounts, and in the desktop app, the browser keeps
+  them.</p>
 
   <h2 id="detail">Image detail</h2>
-  <p>Press Enter or double-click a card. The panel beside the frame gives its
-  statistics, the resolved file path, the quality score with its reason, and sky
-  context from the plate solve.</p>
+  <p>Press Enter or double-click a card. Panels beside the frame give
+  <strong>Image Information</strong> (statistics and the resolved file path),
+  <strong>Quality analysis</strong> (the score and its reason),
+  <strong>Calibration</strong>, <strong>Sky context</strong> from the plate solve, and
+  <strong>Satellite tracks</strong>.</p>
+
   <figure class="feature-shot">
-    <img src="../assets/image-detail.jpg" alt="Image detail of a rejected H-alpha frame: statistics, quality analysis reporting a possible obstruction, and sky context" loading="lazy">
-    <figcaption>Image detail: the score and its reason beside the frame.</figcaption>
+    <img src="../assets/image-detail.jpg" loading="lazy" alt="Open a frame to inspect its pixels, quality findings and solved sky context." width="3138" height="2054">
+    <figcaption>Open a frame to inspect its pixels, quality findings and solved sky context.</figcaption>
   </figure>
-  <p>When the catalog holds a frame's calibrated or registered copies from WBPP, Siril,
-  ASTAP or DeepSkyStacker, <kbd>V</kbd> or the buttons beside the image switch
+  <ul>
+    <li>Click a panel's title to fold or open it. A folded panel keeps one line, such
+      as the quality score, whether the field solved, or the calibration findings by
+      name. Each stays as you left it from image to image and after a reload.</li>
+    <li><strong>Calibration</strong> opens on its own only for a light with a Poor or
+      Check finding, or when you came from the 🧪 chip or from Images filtered by
+      calibration. Folded on a light with no findings, it reads "no findings". Open or
+      fold it by hand, and that choice holds for every light.</li>
+    <li>The arrow keys keep the sidebar on the panel you were reading as you move
+      between images.</li>
+    <li>On a phone the image takes the frame's shape: a landscape frame spans the width
+      with no black band above and below, and a portrait frame stops at 60% of the
+      height.</li>
+  </ul>
+  <figure>
+    <img src="../assets/image-detail-folded.png" loading="lazy" alt="Collapsed detail sections keep their key findings visible beside the image." width="684" height="512">
+    <figcaption>Collapsed detail sections keep their key findings visible beside the image.</figcaption>
+  </figure>
+  <p>When the catalog contains calibrated or registered copies of a frame from WBPP,
+  Siril, ASTAP or DeepSkyStacker, <kbd>V</kbd> or the buttons beside the image switch
   between them. Previews, star markers and the PSF view follow. Grid cards mark frames
   that have copies. See <a href="importing.html#calibrated">Calibrated copies</a>.</p>
 
@@ -268,9 +444,10 @@ function gtag_report_demo() {
   <p>Press <kbd>S</kbd> for the star overlay: each detection circled and labeled with
   its HFR. Detection uses the frame's focal length and pixel size when both headers
   exist, so wide fields keep small stars. <kbd>P</kbd> shows the PSF fit.</p>
+
   <figure>
-    <img src="../assets/annotated-hfr-labels.png" alt="Image inspector with every detected star labeled by its measured HFR" loading="lazy">
-    <figcaption><kbd>S</kbd> labels each detected star with its HFR.</figcaption>
+    <img src="../assets/annotated-hfr-labels.png" loading="lazy" alt="The star overlay labels measured HFR values. These measurements can differ from imported capture metadata." width="3138" height="2054">
+    <figcaption>The star overlay labels measured HFR values. These measurements can differ from imported capture metadata.</figcaption>
   </figure>
 
   <h3 id="tilt">Sensor tilt inspector</h3>
@@ -301,13 +478,21 @@ function gtag_report_demo() {
 
   <h2 id="sequence">Sequence</h2>
   <p><strong>Sequence</strong> scores a target's frames in capture order, one session
-  or all sessions per filter. The chart shows each score; the scatter shows each
-  solved center against the target; each card gives the cause of a low score. Use
-  the same arrow keys and Space as the grid. See <a href="screening.html">Quality
-  Screening</a>.</p>
+  or all sessions per filter. The chart shows each score, with a dot under each bar for
+  the frame's grade; the scatter shows each solved center against the target; each card
+  gives the cause of a low score. It shares the toolbar, the arrow keys and Space with
+  Images, adds a <strong>Select</strong> pill for selection rules, and offers
+  <strong>Review rejection</strong> for a selection. See
+  <a href="screening.html">Quality Screening</a>.</p>
+  <p>Where one target and filter hold frames from two or more Target Scheduler
+  profiles, Sequence scoring and statistical grading compare each profile with itself,
+  so two rigs merged into one catalog are not scored against each other. The profile
+  stands for the rig, so one rig kept under two N.I.N.A. profiles scores as two. See
+  <a href="screening.html#scoring">Scores and causes</a>.</p>
+
   <figure class="feature-shot">
-    <img src="../assets/sequence-session.jpg" alt="Sequence for one H-alpha session: session tabs, score chart, solved pointing scatter, and cards marked Soft Stars and Possible Obstruction" loading="lazy">
-    <figcaption>One session: three soft frames, then a run of possible obstructions.</figcaption>
+    <img src="../assets/sequence-session.jpg" loading="lazy" alt="Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames." width="3138" height="1652">
+    <figcaption>Compare one capture session. These stored grades are Rejected; the scores still show the differences between frames.</figcaption>
   </figure>
 
   <h2 id="mosaic">A mosaic as one view</h2>
@@ -316,9 +501,10 @@ function gtag_report_demo() {
   groups frames under each panel in grid order. <strong>Sequence</strong> shows every
   panel's frames in capture order. <strong>Stacks</strong> lays each panel's stack out
   as the grid and on the sky. Grading and stacking stay per panel.</p>
+
   <figure>
-    <img src="../assets/stacks-mosaic.jpg" alt="Stacks for a four-panel mosaic: each panel's stack in the grid, and the panels placed on the sky by plate solve" loading="lazy">
-    <figcaption>A mosaic in Stacks: panels in grid order, and on the sky by plate solve.</figcaption>
+    <img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
+    <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
   </figure>
 
   <h2 id="shortcuts">Keyboard shortcuts</h2>
@@ -337,6 +523,10 @@ function gtag_report_demo() {
     <tr><td>Z</td><td>Image size</td><td>Ctrl+Z / Ctrl+Y</td><td>Undo / redo</td></tr>
     <tr><td>G</td><td>Change grid grouping</td><td>?</td><td>Shortcut help</td></tr>
   </table>
+  <p>In Images, Enter and Space on a focused toolbar button, such as
+  <strong>View</strong>, press that button only; they do not open or select the
+  current image. <strong>Keyboard shortcuts</strong> in the header's menu, or
+  <kbd>?</kbd>, lists the keys.</p>
 
   <h2 id="write-back">Where grades go</h2>
   <p>Every grade sets <code>gradingStatus</code> in the active catalog, with undo and

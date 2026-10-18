@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
     <li><a href="grader.html">Library & Grader</a></li>
     <li><a href="importing.html">Import Images</a></li>
@@ -91,6 +93,9 @@ function gtag_report_demo() {
     <li><a href="stacking.html">Stacks</a></li>
     <li><a href="wbpp.html">WBPP Runs</a></li>
     <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
     <li><a href="exporting.html">Export & AstroBin</a></li>
   </ul>
   <h4>Plan</h4>
@@ -103,13 +108,20 @@ function gtag_report_demo() {
   </ul>
   <h4>Operate</h4>
   <ul>
-    <li><a href="workflows.html">Rejects & Sync</a></li>
-    <li><a href="sync-plugin.html">N.I.N.A. Sync Plugin</a></li>
     <li><a href="storage.html">Storage & Performance</a></li>
-    <li><a href="cli.html">CLI Reference</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
     <li><a href="configuration.html">Configuration & API</a></li>
     <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
     <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
   </ul>
   <h4>PixInsight</h4>
   <ul>
@@ -148,24 +160,24 @@ function gtag_report_demo() {
   </p>
 
   <figure>
-    <img src="../assets/satellite-california-overlay.png" alt="California Nebula exposure with dashed orbital candidates and solid green pixel-aligned satellite trails" loading="lazy">
-    <figcaption>Dashed lines are orbital predictions. Solid green lines are trails found in the FITS pixels along a prediction.</figcaption>
+    <img src="../assets/satellite-pixel-match.png" alt="SNR G132 red exposure with five predicted crossings and one green pixel-aligned trail; Satellite tracks lists the BREEZE-M debris candidate" width="3138" height="2166" loading="lazy">
+    <figcaption>This 300-second red exposure of SNR G132 has five predicted crossings and one pixel-aligned trail, shown in green. The match supports the BREEZE-M debris candidate; it does not prove the satellite's identity.</figcaption>
   </figure>
 
   <h2 id="identify">Identify satellite tracks</h2>
   <ol>
-    <li>Open an image and find the <strong>Satellite tracks</strong> panel.</li>
+    <li>Open an image and find the <strong>Satellite tracks</strong> panel. If it is folded, click its title to open it.</li>
     <li>Click <strong>Identify satellite tracks</strong>, or press <kbd>T</kbd>. PSF Guard solves the frame first when no valid solution is cached.</li>
     <li>Use <strong>Show track identifiers</strong> to turn the overlay on and off. Red, yellow and cyan dashed lines are high, possible and low-risk predictions; a solid green line is the fitted pixel path.</li>
     <li>Click a named result to open its satellite information page.</li>
   </ol>
   <p>The panel lists <strong>Crossings</strong>, <strong>Bright risk</strong>, <strong>Pixel matches</strong>, <strong>Exposure</strong> and the <strong>Element source</strong> (<strong>CelesTrak active</strong>, <strong>Seiza mirror</strong> or <strong>IAU SatChecker</strong>). Its badge reads <strong>Predicted</strong> or, once a trail matches, <strong>Pixel aligned</strong>.</p>
   <div class="callout info">
-    <strong>Predictions and pixels stay apart.</strong> A dashed line says a cataloged object should have crossed the solved footprint. A solid green line says a linear feature in the pixels passed the contrast and continuity checks. The name is a candidate, not proof that this object made the trail.
+    <strong>Predictions and pixels stay apart.</strong> A dashed line shows a predicted crossing of the solved footprint. A solid green line marks a linear feature in the pixels that passed the contrast and continuity checks. The name is a candidate, not proof that this object made the trail.
   </div>
 
   <h2 id="prediction">Track prediction</h2>
-  <p>PSF Guard uses Seiza 0.24.0 and <code>seiza-satellites</code> 0.13.0. Since Seiza 0.23.1, tracks are predicted with the WGS72 constants their orbital elements were fitted with. This moves a track by up to tens of arcseconds. Predictions cached by an earlier version are recomputed by the next quality scan.</p>
+  <p>PSF Guard uses Seiza 0.36.0 and <code>seiza-satellites</code> 0.22.0. Since Seiza 0.23.1, tracks are predicted with the WGS72 constants their orbital elements were fitted with. This moves a track by up to tens of arcseconds. Predictions cached by an earlier version are recomputed by the next quality scan.</p>
 
   <h2 id="metadata">Required metadata</h2>
   <p>A prediction needs three inputs. Without any one of them the check abstains instead of calling the frame clean.</p>
