@@ -1659,3 +1659,17 @@ The existing Foraxx SHO capture remains the fourth panel.
 - `hero-california-activation.jpg` SHA-256: `e0b702e9afd799822481d47c30234a16f9fb3071d311ab1e0df1b39d2dc51767`.
 - `hero-california-grid.jpg` SHA-256: `c259b6f265e03f2e0c3390077018e3904540be743d8fdfc2477b5f684185637e`.
 - `hero-flow.jpg` SHA-256: `39f712e8e28593b34c60c1944e61e517a99493abcd05c7f9862fc1a675ed6d6e`.
+
+## Capture step and review loop — October 17, 2026
+
+The homepage hero now has five steps. A telescope and labelled computer diagram
+connect the activation preview to image review. It explains that N.I.N.A.
+Target Scheduler runs the plan and PSF Guard Sync transfers capture records
+and optional image files. This is an illustration, not a N.I.N.A. screenshot.
+
+Two arrows below the review and stack panels show the repeated cycle: review
+grades and processing, rebuild, inspect, then review again. The four California
+browser captures remain unchanged. Render with `scripts/screenshot-hero.py`;
+the output is now 2400 × 1860. Checked the saved image for label fit and arrows.
+
+SHA-256: `af2d3af7328e175df2b0183c51da018404fc3c6e83e969d34aa4d53438725f49`.
