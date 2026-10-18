@@ -166,7 +166,10 @@ function gtag_report_demo() {
   <p>The new Calibration page grades bias, dark, dark-flat and flat frames, keeps
   poor frames out of masters, and shows which lights are affected. Inspect the
   evidence, override a grade, and set checks for each rig.</p>
-  <!-- SHOT: release-012-calibration.jpg | Priority: 0.12 highlights. Use the verified Teddy Bear OIII flat in SCREENSHOT-PLAN.md: starfront-redcat61, September 13 session, frame 2026-09-14_07-05-02_OIII_-5.10_32.62s_0002.fits. Frames, Sessions, Type Flat, Grade Poor. Show the viewer, Poor · uneven light reason (13.9% against a 5.0% limit), and Frame/Session measurements including zero clipping. Capture at about 1440 px wide at 2x; keep the reason readable at docs-column width. Do not change grades. | Review a flat against its session and check the measurements that explain its grade. -->
+  <figure>
+    <img src="../assets/release-012-calibration.jpg" alt="Teddy Bear OIII flat marked Poor for 13.9% uneven illumination, with zero clipped pixels and frame-versus-session measurements." width="2476" height="1152" loading="lazy">
+    <figcaption>This flat has no clipped pixels, but its illumination differs from the session by 13.9%, above the 5% limit. PSF Guard excludes it from masters.</figcaption>
+  </figure>
   <p><a href="calibration.html">Browse calibration frames →</a> ·
   <a href="calibration-grading.html">Grades and coverage →</a></p>
 
@@ -175,14 +178,20 @@ function gtag_report_demo() {
   flats from the right side of a dust or illumination change. Inspect dust shadows,
   compare groups, and split, join or override a group when needed. Matching also
   checks whether flats at different rotator angles can serve the same lights.</p>
-  <!-- SHOT: release-012-flat-groups.jpg | Priority: 0.12 highlights. Use the verified C925 OIII Group 2 from August 10 in SCREENSHOT-PLAN.md, with the full rig calibration library visible. Compare across the older edge: August 10 divided by May 19, new dust 1.8%, one donut near (507,2054). Show the group list, change reason, dated ratio at Normal stretch and Spots overlay after checking the rendered image. Capture at about 1440 px wide at 2x. Do not change groups, limits or light assignments. | Compare flat groups to see what changed between nights and why PSF Guard keeps their flats apart. -->
+  <figure>
+    <img src="../assets/release-012-flat-groups.jpg" alt="C925 OIII flat groups with August 10 divided by May 19, showing the new dust donut and the 1.8% group boundary." width="2358" height="1356" loading="lazy">
+    <figcaption>Compare flat groups to see what changed between nights. The August 10 flats show a new dust donut, measured at 1.8% against a 1% limit.</figcaption>
+  </figure>
   <p><a href="calibration-flats.html">Flat matching and dust changes →</a></p>
 
   <h2 id="planning">Build mosaics one panel at a time</h2>
   <p>Add, move and rotate individual panels while checking overlap across rigs.
   Captured panels stay locked to their actual fields until you unlock them.
   Activation previews show what Target Scheduler will run, turn off or restore.</p>
-  <!-- SHOT: release-012-mosaic-editing.jpg | Priority: 0.12 highlights. Heart Mosaic, askar107phq, Framing. Select r1c2 locked 336 frames. Show the DSS image, four captured panels with padlocks, shaded overlap bands and percentages, and the selected panel controls together. This view needs no edit. Actual overlaps are below the saved 20% minimum; keep the warning if visible. The plan currently shows Not activated yet. Capture at about 1440 px wide at 2x. Do not unlock, Save or Activate. See the verified link in SCREENSHOT-PLAN.md. | Select a captured panel to check its field and overlap. Captured panels stay locked until you unlock them. -->
+  <figure>
+    <img src="../assets/release-012-mosaic-editing.jpg" alt="Heart Mosaic on the DSS map with four captured panels locked, r1c2 selected, and overlap below the saved 20% minimum." width="2936" height="1524" loading="lazy">
+    <figcaption>Select a captured panel to check its field and overlap. All four panels remain locked; their measured overlaps fall below the saved 20% minimum.</figcaption>
+  </figure>
   <p><a href="framing.html">Edit mosaic panels →</a> ·
   <a href="activation.html">Activate plans →</a></p>
 

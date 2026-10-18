@@ -1,7 +1,9 @@
 # Screenshot plan — docs site, next release
 
 Capture server: psf-guard.atpn.co (Chrome, 2× tiles). Targets checked on
-October 16, 2026; final screenshot files are still pending.
+October 16, 2026. The three 0.12 highlight images were captured on October 17;
+remaining shots are pending. See the [capture record](assets/screenshot-captures.md)
+for the saved images and their actual state.
 Each entry lists the pages that use it and what to show, taken from the
 `RESHOOT` / `SHOT` comments left in the pages.
 
@@ -25,11 +27,11 @@ Each entry lists the pages that use it and what to show, taken from the
 - **Built from other captures, last:** `hero-flow.jpg`.
 - **Privacy:** blank any site latitude/longitude (`rig-setup-site.png`, `settings-sites.png`).
 
-## 0.12 highlights: capture first
+## 0.12 highlights: captured October 17
 
-Three new images belong on `docs/new-in-0.12.html`, one beneath each of its
-first three feature descriptions. The page comments specify the UI state,
-crop, caption and file name:
+Three images now appear on `docs/new-in-0.12.html`, one beneath each of its
+first three feature descriptions. Their reshoot details are in the permanent
+capture record:
 
 1. `release-012-calibration.jpg`: a calibration frame with a real grade finding,
    its session, and the measurements that explain the grade.
@@ -44,9 +46,8 @@ images focused on the feature; the linked guides cover the smaller controls.
 The mosaic highlight needs only a panel selection. Use a disposable copy for
 separate shots that require moving or unlocking panels.
 Do not fabricate a calibration finding or flat-group change for a screenshot.
-Replace each `SHOT` comment with a figure and its supplied caption once the
-image exists. Until then, the page has capture instructions, not broken images
-or screenshots from an older interface.
+These three captures have figures and captions. For future reshoots, check the
+current build and data, then append a new capture entry with the replacement.
 
 ## Latest Sequence and color-processing changes
 
@@ -359,7 +360,7 @@ capture record and its history.
 - `wbpp-run-dialog.png` — pages: wbpp
   - Stacks view for Teddy Bear Nebula QMark (rig starfront-redcat61) on psf-guard.atpn.co, Stack in WBPP clicked: the run dialog before Start stacking, with Include ungraded lights ticked, the WBPP settings (Quality, Fast Integration, Drizzle, Autocrop, Light rejection), More WBPP parameters and Run folder; crop to the dialog
 
-## New screenshots (60)
+## New screenshots (57)
 
 - `activation-save-first.png` — pages: activation
   - Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving.
@@ -437,12 +438,6 @@ capture record and its history.
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
 - `plan-summary-activated.png` — pages: planning
   - Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills.
-- `release-012-calibration.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Use the verified Teddy Bear OIII flat in SCREENSHOT-PLAN.md: starfront-redcat61, September 13 session, frame 2026-09-14_07-05-02_OIII_-5.10_32.62s_0002.fits. Frames, Sessions, Type Flat, Grade Poor. Show the viewer, Poor · uneven light reason (13.9% against a 5.0% limit), and Frame/Session measurements including zero clipping. Capture at about 1440 px wide at 2x; keep the reason readable at docs-column width. Do not change grades.
-- `release-012-flat-groups.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Use the verified C925 OIII Group 2 from August 10 in SCREENSHOT-PLAN.md, with the full rig calibration library visible. Compare across the older edge: August 10 divided by May 19, new dust 1.8%, one donut near (507,2054). Show the group list, change reason, dated ratio at Normal stretch and Spots overlay after checking the rendered image. Capture at about 1440 px wide at 2x. Do not change groups, limits or light assignments.
-- `release-012-mosaic-editing.jpg` — pages: new-in-0.12
-  - Priority: 0.12 highlights. Heart Mosaic, askar107phq, Framing. Select r1c2 locked 336 frames. Show the DSS image, four captured panels with padlocks, shaded overlap bands and percentages, and the selected panel controls together. This view needs no edit. Actual overlaps are below the saved 20% minimum; keep the warning if visible. The plan currently shows Not activated yet. Capture at about 1440 px wide at 2x. Do not unlock, Save or Activate. See the verified link in SCREENSHOT-PLAN.md.
 - `scoring-popover.png` — pages: screening
   - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover.
 - `sequence-cutoff-hfr.jpg` — pages: screening
