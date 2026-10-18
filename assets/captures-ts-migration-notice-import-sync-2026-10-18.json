@@ -1,0 +1,81 @@
+{
+  "source_commit": "9cf89ff9f8f181499fd6766cc1320edcad4591bb",
+  "url": "http://127.0.0.1:21100/docs/new-in-0.12.html",
+  "reshoot": "Serve the repository root on localhost, open /docs/new-in-0.12.html and set the recorded viewport. Desktop stays at scroll 0. On phone, click the final notice paragraph to bring it into view; this capture scrolled to y=418. Capture the viewport and reset its size. Save returned JPEG bytes as .jpg. No app, catalog or account state is involved.",
+  "captures": [
+    {
+      "device_scale_factor": 1,
+      "horizontal_overflow": false,
+      "notice_rect_css": {
+        "height": 269.5859375,
+        "width": 824,
+        "x": 372,
+        "y": 287.8984375
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "viewport_css": {
+        "height": 720,
+        "width": 1280
+      },
+      "file": "ts-migration-notice-desktop-import-sync.jpg",
+      "source_commit": "9cf89ff9f8f181499fd6766cc1320edcad4591bb",
+      "time_utc": "2026-10-18T20:04:51.618891+00:00",
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "height": 720,
+        "width": 1280
+      },
+      "pixels": [
+        1280,
+        720
+      ],
+      "sha256": "bab87e9bdbbe30d6b8a484f975614bef696b76f70764174eed7b1104c690033a",
+      "format": "JPEG",
+      "capture_method": "Codex in-app browser viewport screenshot; unchanged returned bytes.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "state": "Informational notice with three paragraphs. First recommends Import from Target Scheduler for new databases and sync. Existing setup, future migration and removal guidance follows. Desktop sidebar visible; phone navigation collapsed. All notice text is visible."
+    },
+    {
+      "device_scale_factor": 1,
+      "horizontal_overflow": false,
+      "notice_rect_css": {
+        "height": 446.9375,
+        "width": 350,
+        "x": 20,
+        "y": 56.3671875
+      },
+      "scroll": {
+        "x": 0,
+        "y": 418
+      },
+      "viewport_css": {
+        "height": 844,
+        "width": 390
+      },
+      "file": "ts-migration-notice-mobile-import-sync.jpg",
+      "source_commit": "9cf89ff9f8f181499fd6766cc1320edcad4591bb",
+      "time_utc": "2026-10-18T20:05:22.335564+00:00",
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "height": 844,
+        "width": 390
+      },
+      "pixels": [
+        390,
+        844
+      ],
+      "sha256": "0362b8cfe15e6d418f2ce6d52dac0a4a6e55c18c984d2b86fb8cdd329c9f8afd",
+      "format": "JPEG",
+      "capture_method": "Codex in-app browser viewport screenshot; unchanged returned bytes.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "state": "Informational notice with three paragraphs. First recommends Import from Target Scheduler for new databases and sync. Existing setup, future migration and removal guidance follows. Desktop sidebar visible; phone navigation collapsed. All notice text is visible."
+    }
+  ]
+}

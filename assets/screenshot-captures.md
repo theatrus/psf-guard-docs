@@ -1955,3 +1955,93 @@ isolated server, not the live observatory catalogs.
 - **Verification:** inspected the saved image: counts, choice explanation,
   expiry and both action buttons are complete. The caption describes the
   pending update and does not imply that the merge was applied.
+
+## Target Scheduler migration notices — October 18, 2026
+
+These two captures document the informational notice in the 0.12 guide for PR
+review. They use a local preview of commit `391c0b5c838f4a9963796b38473951fad37089e9`, not the
+published site. The [capture manifest](captures-ts-migration-notice-2026-10-18.json)
+records source, time, viewport, DPR, crop, state, hashes and reshoot steps.
+The notice explains the future automatic migration and the benefit of separate
+catalogs. Its teal border and light fill replace the warning color. No product
+or catalog data changed. The temporary viewport override was reset afterward.
+
+### assets/ts-migration-notice-desktop.png
+
+#### 2026-10-18T18:58:33.309860+00:00 — initial capture
+
+- **File:** 65536 × 4292542531 px; SHA-256 `09a0e5921e5d7a8aa94a9fd973df78730cfacd15b138c56913d9a6618d79a4ed`.
+- **Use:** PR review of `docs/new-in-0.12.html`; no figure added to the guide.
+- **Source/build:** docs commit `391c0b5c838f4a9963796b38473951fad37089e9`, local URL `http://127.0.0.1:21083/docs/new-in-0.12.html`. Browser version not recorded.
+- **State and reshoot:** New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport. Serve the recorded docs checkout, open that URL and leave page scroll at `(0, 0)`.
+- **Composition:** viewport 1280 × 720 CSS px, DPR 2; full viewport, no crop, image editing or annotations.
+- **Verification:** desktop notice, heading and both paragraphs visible. Phone has no horizontal overflow; its notice continues below the viewport.
+
+### assets/ts-migration-notice-mobile.png
+
+#### 2026-10-18T18:58:33.345781+00:00 — initial capture
+
+- **File:** 65536 × 4292542531 px; SHA-256 `56472b6825147362d12d38434429359b5e9069ebcfaa974af19dd838fc1bce3e`.
+- **Use:** PR review of `docs/new-in-0.12.html`; no figure added to the guide.
+- **Source/build:** docs commit `391c0b5c838f4a9963796b38473951fad37089e9`, local URL `http://127.0.0.1:21083/docs/new-in-0.12.html`. Browser version not recorded.
+- **State and reshoot:** New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport. Serve the recorded docs checkout, open that URL and leave page scroll at `(0, 0)`.
+- **Composition:** viewport 390 × 844 CSS px, DPR 1; full viewport, no crop, image editing or annotations.
+- **Verification:** desktop notice, heading and both paragraphs visible. Phone has no horizontal overflow; its notice continues below the viewport.
+
+## 2026-10-18: approved catalog notice wording
+
+Source: local preview of commit `21711bab3b84b0f80ab22fc46dc3a3fc3e9ac6df`, served from this worktree
+on port 21083. [Capture manifest](captures-ts-migration-notice-plain-copy-2026-10-18.json).
+The earlier images and records remain unchanged.
+
+### assets/ts-migration-notice-desktop-plain-copy.jpg
+
+- Page: `/docs/new-in-0.12.html`, scroll 0, 0; default desktop navigation.
+- Viewport and crop: 1280 × 720 CSS px, DPR 1; 1280 × 720 image pixels.
+- State: informational catalog notice, with the approved title and two paragraphs.
+  The complete notice is visible. Dark site theme; no app or catalog state.
+- Method: Codex in-app browser viewport screenshot. The tool returned JPEG bytes;
+  the file preserves them without edits. Exact browser version was not recorded.
+- Reshoot: serve the recorded source, open the page, set this viewport, stay at the
+  top, capture, then reset the viewport.
+
+### assets/ts-migration-notice-mobile-plain-copy.jpg
+
+- Page and content state: as above, with phone navigation collapsed.
+- Viewport and crop: 390 × 844 CSS px, DPR 1; 390 × 844 image pixels.
+- The complete notice is visible, with no horizontal overflow.
+- Method and reshoot: as above, using this phone viewport.
+
+### Correction to the earlier notice capture metadata
+
+The earlier `ts-migration-notice-desktop.png` and
+`ts-migration-notice-mobile.png` files contain JPEG bytes despite their names.
+Their recorded pixel arrays came from reading those bytes as a PNG header and
+are invalid. The actual image sizes are 1280 × 720 and 390 × 844 pixels.
+The original files and entries stay in the record; use this reshoot for the
+current wording and its verified dimensions.
+
+## 2026-10-18: recommend import and sync for new TS databases
+
+Source: local preview of commit `9cf89ff9f8f181499fd6766cc1320edcad4591bb`, served on port 21100.
+[Capture manifest](captures-ts-migration-notice-import-sync-2026-10-18.json).
+The earlier captures and records remain unchanged.
+
+### assets/ts-migration-notice-desktop-import-sync.jpg
+
+- Page: `/docs/new-in-0.12.html`, scroll 0, 0; desktop navigation visible.
+- Viewport and crop: 1280 × 720 CSS px, DPR 1; 1280 × 720 image pixels.
+- State: the notice now starts with import and sync guidance for new Target
+  Scheduler databases. All three paragraphs are visible. Dark theme.
+- Method: Codex in-app browser viewport screenshot, unchanged JPEG bytes.
+  Exact browser version was not recorded. No app, account or catalog state.
+- Reshoot: serve the recorded source, open the page, set the viewport and
+  capture from the top. Reset the viewport afterwards.
+
+### assets/ts-migration-notice-mobile-import-sync.jpg
+
+- Same page and content; phone navigation collapsed.
+- Viewport and crop: 390 × 844 CSS px, DPR 1; 390 × 844 image pixels.
+- Scroll: x=0, y=418. Clicking the final notice paragraph brought it into
+  view. All notice text is visible below the fixed header; no horizontal overflow.
+- Method: as above. Reshoot with this phone viewport and scroll, then reset it.

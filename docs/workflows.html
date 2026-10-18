@@ -266,12 +266,16 @@ psf-guard empty-reject-trash --db my-db    <span class="c"># files past their ti
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
   <h2 id="existing-database">Direct database access (deprecated)</h2>
-  <p>Existing registrations that open a live Target Scheduler database, and direct
-  CLI/API access, remain supported through 0.12. They are not converted automatically.
-  Removal is planned for 0.13 or later. For a new setup,
-  <a href="importing.html#target-scheduler">import the TS file into an owned catalog</a>
-  and keep its source connected, or use the
-  <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a>.</p>
+  <p>Your current Target Scheduler setup will keep working in 0.12, including
+  direct CLI/API access. A later update will create a PSF Guard catalog for you
+  and keep captures, plans and grades in sync with Target Scheduler. Separate
+  catalogs let us add features to PSF Guard and support new Target Scheduler
+  versions. We plan to remove direct database access in 0.13 or later.</p>
+  <p>For new Target Scheduler databases, choose <strong>Settings → Databases →
+  Import from Target Scheduler</strong> to import the database and set up sync.</p>
+  <p><a href="importing.html#target-scheduler">Import a local TS file</a> and
+  keep the source connected, or choose the
+  <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a> for a network connection.</p>
   <div class="callout">
     <strong>Back up before writing through an existing direct registration.</strong>
     Grading and planning edits write to the shared file. Use

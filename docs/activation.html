@@ -372,7 +372,7 @@ function gtag_report_demo() {
     <table>
       <tr><th>Label</th><th>Meaning</th></tr>
       <tr><td><strong>New</strong></td><td>A new project, target, exposure plan or template.</td></tr>
-      <tr><td><strong>Taken over</strong></td><td>An existing row the plan takes over, with what changes.</td></tr>
+      <tr><td><strong>Taken over</strong></td><td>An existing Target Scheduler record that activation will manage. The preview shows what will change.</td></tr>
       <tr><td><strong>Updated</strong></td><td>A row from an earlier activation that changes, such as <code>desired 100 → 150</code> or <code>exposure 120 s → 300 s</code>.</td></tr>
       <tr><td><strong>Turned off</strong></td><td>An exposure plan the plan does not have, or a project set Inactive.</td></tr>
       <tr><td><strong>Unchanged</strong></td><td>A row that already matches the saved plan.</td></tr>
@@ -412,9 +412,10 @@ function gtag_report_demo() {
       own.</li>
     <li><strong>Every other plan is turned off</strong>, frames and counts kept:
       another length of a filter the plan shoots, or a filter it does not shoot
-      at all, such as an SII plan made in N.I.N.A. A plan that takes the same
-      frames at another length is listed as replaced, and the plan asks to be
-      activated until it is off. To keep one, <a href="#take-ts">take Target
+      at all, such as an SII plan made in N.I.N.A. The preview lists an exposure
+      plan for the same filter at another exposure length as replaced. The plan
+      shows <strong>Needs activating</strong> until you apply that change. To keep
+      the exposure plan, <a href="#take-ts">take Target
       Scheduler's values</a> first, or add it to the plan.</li>
   </ul>
   <p>The rows:</p>

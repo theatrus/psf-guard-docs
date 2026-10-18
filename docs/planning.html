@@ -203,16 +203,15 @@ function gtag_report_demo() {
       is drafted from its first target, and Target Scheduler keeps running the
       rest.</li>
   </ul>
-  <p>Each rig database gets a small identity table, so a moved or renamed file
-  stays the same rig. The tables PSF Guard adds are plain SQL; N.I.N.A. and
-  Target Scheduler open the file as before.</p>
+  <p>PSF Guard recognizes the same rig after you move or rename its database.
+  N.I.N.A. and Target Scheduler can still open the database.</p>
 
   <h2 id="library">Plans in the Library</h2>
-  <p>A plan has no list of its own: it is its projects in the <a
-  href="grader.html#overview">Library</a>. A plan shot by several rigs is an outer pill,
-  <strong>N rigs</strong>, with the plan's total progress, its stage
-  (<strong>Framed</strong>, <strong>Planned</strong> or <strong>Activated on N
-  rigs</strong>) and ⚙, which opens its workspace. Under it sits one row per rig, with
+  <p>Find plans in the <a href="grader.html#overview">Library</a>, alongside their
+  projects. A plan shared by several rigs shows <strong>N rigs</strong>, total
+  progress and its stage (<strong>Framed</strong>, <strong>Planned</strong> or
+  <strong>Activated on N rigs</strong>). Click ⚙ to open the plan's workspace.
+  Each rig has its own row, with
   separate targets and frame counts for each rig.</p>
   <p><strong>Activated on N rigs</strong> counts the rigs the last activation
   wrote. It is not Target Scheduler's <strong>Active</strong> state, which each
@@ -228,24 +227,22 @@ function gtag_report_demo() {
     <li><strong>Plans with nothing captured yet</strong>, below the projects, lists
     framed plans with no assigned rig and plans activated on rigs that have not captured
     a frame. <strong>New plan</strong> starts one; the pencil renames one.</li>
-    <li>The <strong>Show</strong> select and the search box narrow plans and
-      projects together. <strong>No database</strong> keeps plans nothing shoots
-      yet.</li>
-    <li>On a server with database management, a row's state pill is a select.
-      Choosing <strong>Active</strong>, <strong>Inactive</strong>,
-      <strong>Draft</strong> or <strong>Closed</strong> asks first, naming the
-      project, the state and the database, then writes that project in Target
-      Scheduler. Target Scheduler acts on it from its next pick. Refused, the
-      pill stays on the saved state.</li>
+    <li>The <strong>Show</strong> menu and search box filter plans and projects
+      together. Choose <strong>No database</strong> to see plans with no assigned rig.</li>
+    <li>On a server that allows database management, use a row's state menu to
+      choose <strong>Active</strong>, <strong>Inactive</strong>,
+      <strong>Draft</strong> or <strong>Closed</strong>. PSF Guard asks you to confirm
+      the project, state and database before saving the change to Target Scheduler.
+      Target Scheduler uses the new state when it next chooses a target.
+      Canceling leaves the saved state unchanged.</li>
   </ul>
 
   <h2 id="workspace">Open a plan's workspace</h2>
   <p>Choose a project, then click <strong>Planning</strong>, including for a
   project imported from image folders. If the catalog cannot be planned,
-  Planning shows its warnings and <strong>Retry planning</strong>. A copied
-  database with the same catalog identity as another registered database
-  stays out of planning so it cannot become a second rig. Use the original
-  catalog. PSF Guard shows <strong>Fill in GUIDs</strong> guidance only when
+  Planning shows the problem and <strong>Retry planning</strong>. Copying a
+  database does not create a second rig: PSF Guard excludes the copy from planning
+  while the original is registered. Use the original catalog. PSF Guard shows <strong>Fill in GUIDs</strong> guidance only when
   the selected project has no GUID.</p>
   <p>Choose <strong>Planning</strong> or ⚙ on a Library row, or pick the
   project in the header and choose the <strong>Planning</strong> tab there. A

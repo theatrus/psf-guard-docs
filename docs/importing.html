@@ -175,10 +175,14 @@ function gtag_report_demo() {
   </figure>
 
   <h2 id="target-scheduler">Import from Target Scheduler</h2>
-  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
-  Existing registrations and direct CLI/API access still work through 0.12, with no
-  automatic conversion. Removal is planned for 0.13 or later. Use an owned catalog
-  with a saved TS connection for new setups.</div>
+  <div class="callout info"><strong>PSF Guard is moving to its own catalogs</strong>
+  <p>For new Target Scheduler databases, choose <strong>Settings → Databases →
+  Import from Target Scheduler</strong> to import the database and set up sync.</p>
+  <p>Your current Target Scheduler setup will keep working in 0.12. A later
+  update will create a PSF Guard catalog for you and keep captures, plans and
+  grades in sync with Target Scheduler.</p>
+  <p>Separate catalogs let us add features to PSF Guard and support new Target
+  Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
   <p>The desktop app allows database management. A browser server needs
   <code>--allow-database-management</code>; see <a href="#create">server setup</a>.</p>
   <ol>
@@ -212,9 +216,9 @@ function gtag_report_demo() {
     <img src="../assets/import-catalog-copy.png" alt="Standalone catalog copy with a custom destination path and source sync turned off." loading="lazy" width="2048" height="1854">
     <figcaption>Choose a standalone copy and a custom destination when restoring or moving a catalog.</figcaption>
   </figure>
-  <p>A catalog copy is not a full installation restore. Settings, accounts,
-  image-folder registrations and global Director plans need a
-  <a href="backups.html">full backup</a>. Raw images remain in their original folders.</p>
+  <p>Use a <a href="backups.html">full backup</a> to restore settings, accounts,
+  configured image folders and saved Director plans as well as catalogs.
+  A catalog copy restores only that catalog. Raw images remain in their original folders.</p>
 
   <h3 id="automatic-sync">Set automatic sync</h3>
   <p>Under <strong>Target Scheduler sync</strong> on the imported catalog, choose
@@ -343,12 +347,13 @@ function gtag_report_demo() {
       calibration only.</li>
     <li><strong>Folders</strong>: each image root and two levels below it. Tick one
       night's folder to import just that night.</li>
-    <li><strong>Skip processing artifacts</strong>: leave out integration masters. Off by
-      default.</li>
-    <li><strong>Include frames from other rigs</strong>: off by default. A catalog learns
-      its telescope and camera from the frames it holds; a light from another
-      telescope is listed by rig with an example file and left out, since it is far more
-      often a filing mistake. Turn this on after a real equipment change.</li>
+    <li><strong>Skip processed files</strong>: skip integration masters. When pairing
+      is off, also skip calibrated and registered copies. Off by default.</li>
+    <li><strong>Include frames from other rigs</strong>: import lights from a telescope
+      the catalog has not seen before. By default, PSF Guard lists those lights
+      by rig, with an example file, without importing them. When telescope headers
+      are missing, it checks the camera instead. Turn this on when you change
+      telescopes; later imports will accept the new rig's frames.</li>
   </ul>
   <p>A basename the catalog holds is skipped, as is one a
   <a href="workflows.html#remove-rejects">removed reject</a> held. A new light joins a
