@@ -567,6 +567,27 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     </figure>
   </div>
 
+  <h3 id="stretch-modes">Choose a stretch</h3>
+  <p>Open <strong>View processing</strong> on a stack card and choose a stretch
+  model. Click <strong>Apply processing</strong> to render the preview.
+  <strong>Auto MTF</strong> remains the default; the linear stack stays unchanged.</p>
+  <ul>
+    <li><strong>Median anchor</strong> sets the background median to
+    <strong>Target median</strong>. Adjust <strong>Black point σ</strong> to set the
+    black point relative to background noise. <strong>Curves boost</strong> lifts
+    tones above the target; <strong>Highlight compression</strong> limits bright
+    highlights above its <strong>Knee</strong>.</li>
+    <li><strong>Layered</strong> treats broad structure and fine detail separately.
+    Set <strong>Target background</strong>, then adjust <strong>Contrast recovery</strong>
+    to retain detail in bright structure. <strong>Scale (px)</strong> sets the size
+    that separates structure from detail. <strong>Dynamic range compression</strong>
+    reduces bright star cores. For color images, <strong>Saturation</strong> and
+    <strong>Saturation boost</strong> increase color while <strong>Lightness mask</strong>
+    keeps dark background noise from gaining color.</li>
+  </ul>
+  <p>Layered preserves the existing color balance. Calibrate color first if the
+  image has a color cast.</p>
+
   <h2 id="orientation">Keep channels the same way up</h2>
   <p>A German equatorial mount turns the field 180° at a meridian flip.
   Registration aligns both halves on one grid, but the reference frame sets
@@ -629,6 +650,29 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>Rebuilding a channel marks its color previews <strong>Out of date</strong>
   but leaves them visible. <strong>FITS</strong> on a color card downloads the
   RGB result as 32-bit float, with the palette recorded in its header.</p>
+
+  <h3 id="color-calibration">Calibrate color against Gaia stars</h3>
+  <p>Color calibration is on by default for RGB and LRGB compositions and
+  one-shot-color stacks. It balances star colors against Gaia measurements and
+  neutralizes the sky background. It does not apply to narrowband palettes.</p>
+  <ol>
+    <li>Open <strong>Settings → Catalogs</strong> and install <strong>Gaia colors</strong>
+    (about 480 MB). Installation runs as a background job.</li>
+    <li>Plate solve the reference frame used by the stack. Calibration requires a
+    fresh pixel-derived solution; embedded FITS WCS alone is not enough.</li>
+    <li>Build or refresh the color preview. For an existing one-shot-color stack,
+    rebuild it or use <strong>Apply processing</strong> in <strong>View processing</strong>.</li>
+    <li>Check the card's calibration line for the number of stars and channel gains,
+    or the reason calibration was skipped.</li>
+  </ol>
+  <p>A narrow field may have too few suitable stars: calibration needs at least
+  20 clean, uncrowded stars per fit. If calibration cannot run, PSF Guard still
+  produces the preview and explains why it skipped calibration.</p>
+  <p>Keep the channels' stretch stages shared to preserve the calibrated balance.
+  Separate channel stretches can undo much of the balance; the card reports
+  <strong>channels stretched separately</strong>. To disable calibration, turn off
+  <strong>Color calibration</strong> in the composition's <strong>Processing stack</strong>
+  editor or the one-shot-color stack's <strong>View processing</strong>.</p>
 
   <h3 id="edges">Trim registration edges</h3>
   <p>Registering one channel onto another leaves blank edges where it did not
