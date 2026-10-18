@@ -9,7 +9,7 @@ calibration comparisons, planning states, queued processing and local import and
 grading examples. Every image has a state, source and reshoot record in
 [assets/screenshot-captures.md](assets/screenshot-captures.md).
 
-The generated lists below contain the **8 remaining shots**. They remain pending;
+The generated lists below contain the **5 remaining shots**. They remain pending;
 their prerequisites must be met before replacing the old image or adding a figure.
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
@@ -21,19 +21,25 @@ image folders, automatic sync, reviewed transfer, plugin setup and pairing.
 They use PSF Guard 0.12.0 on merged PR #911 with disposable catalogs. The import,
 plugin and release guides now use them. See the
 [capture record](assets/screenshot-captures.md#owned-catalog-import-flow--october-18-2026)
-for states and the repeatable capture command. The eight pending shots below
+for states and the repeatable capture command. The five pending shots below
 need different fixtures and remain pending.
+
+## Native desktop follow-up: captured October 18
+
+Three new native captures cover Server settings, a duplicate-repair preview and
+a calibration-choice merge preview. They use main commit `1fef4d27`, which still
+reports 0.11.0; the 0.12 version update is in the separate release PR. These
+captures do not show the launch screen. The two previews were canceled.
+The [capture record](assets/screenshot-captures.md#native-desktop-environment--october-18-2026)
+includes the disposable fixture script, real input identities and exact crops.
 
 ## Remaining capture prerequisites
 
 | Shot | What still prevents the planned capture |
 |---|---|
-| `settings-server.png` | The installed desktop app uses the old setup dialog. A current native build with an isolated registry is needed; the browser server has no Server tab. |
 | `header-transfers.png` | No contribution transfer is active; the inspected visit has no accepted files to send. |
 | `plan-send-again.png` | No remote peers are configured. Needs a disposable peer and an activation that has not reached it. |
-| `calibration-repair-duplicates.png` | Needs a disposable calibration library with duplicate records and its real source frames. The local fixture contains only lights. |
-| `data-transfer-calibration-choices.png` | Needs two disposable catalogs with matching calibration records and saved Keep out or Use anyway choices. The live catalogs were not used for a staged transfer. |
-| `export-left-out.png` | A local export with exclusion enabled copied its sole light because the fixture has no calibration library or findings. Needs a real missing-calibration finding in a disposable catalog. |
+| `export-left-out.png` | The native fixture now has six real lights with a missing matching-flat finding. The completed export summary still needs capture, with exclusion enabled and a disposable output folder. |
 | `stack-color-progress.png` | No color composition with RC-Astro is running. Needs a configured, licensed local processing setup and suitable channel stacks. |
 | `stack-copy-channel-processing.png` | Needs at least two completed channel stacks with distinct processing settings in a disposable catalog. The local fixture contains only B lights. |
 
@@ -282,20 +288,14 @@ capture record and its history.
 ## Redo (existing images) (0)
 
 
-## New screenshots (8)
+## New screenshots (5)
 
-- `calibration-repair-duplicates.png` — pages: calibration
-  - Calibration page with the Duplicates filter ticked on a database that has duplicates: the count "N exposures recorded more than once", "Checked … ago", Check again and Repair duplicates…, and the Repair duplicates dialog open on its preview (rows to merge, missing files, second copies, masters built again) or running with "Merging 37 of 203" and Stop
-- `data-transfer-calibration-choices.png` — pages: workflows
-  - psf-guard.atpn.co as an editor, Settings › Sync › Data Transfer: Merge catalogs from a source catalog holding Keep out or Use anyway choices (e.g. starfront-redcat61) into a scratch copy of it registered for the capture, after Preview changes: the preview block with "N rows will be added and N updated", the per-table counts, the "Calibration choices: … kept out, … used anyway. Masters built from these frames change." line, the expiry note, and Apply this preview / Cancel; do not apply; crop to the Data Transfer card
 - `export-left-out.png` — pages: exporting
   - Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
 - `header-transfers.png` — pages: collaboration
   - Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
 - `plan-send-again.png` — pages: rigs
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
-- `settings-server.png` — pages: install
-  - desktop app on macOS, header menu › Settings › Server tab: "Running at …", Port selection with Fixed port chosen and Server port 3000, Save port, and the Restart server button with its note; crop to the Server card
 - `stack-color-progress.png` — pages: stacking
   - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
 - `stack-copy-channel-processing.png` — pages: stacking

@@ -426,7 +426,10 @@ function gtag_report_demo() {
   management: the desktop app, or a server started with
   <code>--allow-database-management</code>.</p>
 
-  <!-- SHOT: calibration-repair-duplicates.png | Calibration page with the Duplicates filter ticked on a database that has duplicates: the count "N exposures recorded more than once", "Checked … ago", Check again and Repair duplicates…, and the Repair duplicates dialog open on its preview (rows to merge, missing files, second copies, masters built again) or running with "Merging 37 of 203" and Stop | Repair duplicates previews the merge, then runs as a job with Stop. -->
+  <figure>
+    <img src="../assets/calibration-repair-duplicates.png" loading="lazy" alt="Repair duplicates preview: three exposures recorded more than once, three rows to merge, no missing files and no masters to rebuild." width="1170" height="835">
+    <figcaption>Repair duplicates previews three rows to merge. In this example, all files exist and no masters need rebuilding.</figcaption>
+  </figure>
 
   <h2 id="cli">From the command line</h2>
   <pre><code><span class="c"># Preview the duplicate repair, then apply it</span>

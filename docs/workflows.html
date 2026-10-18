@@ -335,7 +335,10 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
   out, 1 used anyway. Masters built from these frames change.", because they
   change the destination's masters. The Remote PSF Guard preview counts them
   as <code>calibration choices</code>.</p>
-  <!-- SHOT: data-transfer-calibration-choices.png | psf-guard.atpn.co as an editor, Settings › Sync › Data Transfer: Merge catalogs from a source catalog holding Keep out or Use anyway choices (e.g. starfront-redcat61) into a scratch copy of it registered for the capture, after Preview changes: the preview block with "N rows will be added and N updated", the per-table counts, the "Calibration choices: … kept out, … used anyway. Masters built from these frames change." line, the expiry note, and Apply this preview / Cancel; do not apply; crop to the Data Transfer card | A merge preview counts the Keep out and Use anyway choices it brings, since they change the destination's masters. -->
+  <figure>
+    <img src="../assets/data-transfer-calibration-choices.png" loading="lazy" alt="Merge preview with zero new rows, two updated rows, one calibration frame kept out and one used anyway." width="2000" height="320">
+    <figcaption>The merge preview includes one Keep out choice and one Use anyway choice. Apply this preview would update two rows.</figcaption>
+  </figure>
   <p>An import catalogues a calibration frame that is on disk twice, such as
   a copy a filer has not yet cleaned out of the drop folder, once; when the
   original goes, its row moves to the copy and keeps its grade and marks. A

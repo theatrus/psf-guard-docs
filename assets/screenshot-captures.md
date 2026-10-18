@@ -1824,3 +1824,134 @@ isolated server, not the live observatory catalogs.
 - **UI and observed state:** Remote observatory catalog created. Pairing controls open automatically; no code issued, no client paired, no uploads enabled. Crop ends after Generate pairing code.
 - **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 112, "y": 454.8125, "width": 936, "height": 153.59375}`. No overlays, image processing or zoom/pan apply to these forms.
 - **Catalog IDs:** Remote observatory: `db-5644f5cf`.
+
+### Native desktop environment — October 18, 2026
+
+- **Build:** native Tauri app built from PSF Guard main `1fef4d27` with
+  `cargo build --features tauri --bin psf-guard`. The embedded frontend is from
+  the same checkout. This commit reports **0.11.0**. The separate release
+  version PR #912 was not applied; these images do not show a launch screen.
+- **Environment:** macOS 27.0.1 (26A434), native WKWebView; the WebKit version
+  was not read. Window capture: 1875 × 1050 CSS px, 2× display, 3750 × 2100
+  image pixels. App zoom was not changed. Dark theme, English UI, PDT.
+- **Isolation:** temporary bundle label **PSF Guard Docs**, identifier
+  `com.theatrus.psf-guard.docs-validation`, using its own HOME, registry,
+  catalogs, caches and output folders. This label distinguishes the test
+  bundle from the installed app; it is not a product rename. The server uses
+  fixed loopback port 3000. No live catalog was used for these previews.
+- **Inputs:** six real 300-second HA lights from August 16, 2025, and three
+  real HA flats from August 6, 2025, copied from the user's AstroBin files.
+  The native build measured the flats. No calibration finding or measured
+  value was invented. The light and flat rotations differ, producing a real
+  missing matching-flat finding; this is not evidence that the flats are poor.
+- **Fixture:** `scripts/screenshot-calibration-fixture.py` in this commit.
+  Run `python3 scripts/screenshot-calibration-fixture.py SOURCE_CATALOG
+  IMAGE_ROOT NEW_OUTPUT_DIRECTORY` on a disposable catalog containing those
+  real frames. The script uses SQLite backup with the source opened read-only,
+  copies the real input files, saves an input SHA-256 manifest and refuses to
+  overwrite an existing output directory. Register its `source.sqlite`,
+  `review.sqlite` and `duplicates.sqlite` with `images` as their image root.
+  Keep the six lights and three original flats in the source until the capture
+  is complete. The original import and its catalog are prerequisites; this
+  script does not reconstruct their measured caches from filenames alone.
+- **Flat identities:**
+
+  | Filename | Original frame UUID | SHA-256 |
+  |---|---|---|
+  | `2025-08-06_19-27-15_HA_34.60_4.70s_0000.fits` | `92badc16-5253-4b50-860d-f570dcf3d3ef` | `cd5b25c1688c2852b9fa7f0408ea6e893474c9026d6a24213843b6784c80197f` |
+  | `2025-08-06_19-27-20_HA_34.60_4.70s_0001.fits` | `ebb8e8a3-6ac6-4779-aec8-aca4139d31c9` | `ca872f7307b80f5ab7d670a1e38e7208f9ed4cc8d68c6cf8008297562fb07939` |
+  | `2025-08-06_19-27-26_HA_34.60_4.70s_0002.fits` | `89fccd9b-6210-4839-8b3b-d7c70dd8e2b0` | `6741a8188c0b4aaf115418742456d3242566bfd499dd1940c4bb0cb67ba2faaa` |
+
+- **Capture method:** native Computer Use window screenshots, cropped from
+  3750 × 2100 pixels. Crop coordinates below are image pixels, written as
+  left, top, right, bottom. No resizing, annotations, compositing or redactions.
+  Crops exclude private folder paths. Pointer/hover appearance was checked in
+  each saved crop; no pointer covers a control or text.
+
+### assets/settings-server.png
+
+#### 2026-10-18 00:06 PDT — initial capture
+
+- **File:** SHA-256 `4c6cda4cfbcfd19fd53679d62bae972b7d5457c1d75da53b2eb6172b90c46b70`;
+  1650 × 1080 pixels; PNG.
+- **Used by:** `docs/install.html`, desktop server port settings.
+- **Build and environment:** native desktop environment above.
+- **Source:** isolated registry; primary catalog `docs-bubble`, Askar 107PHQ,
+  Bubble Nebula project 1 / target 1. No frame selection is relevant.
+- **URL:** `tauri://localhost`; Settings is an overlay and is not stored in
+  this route.
+- **UI and observed state:** Settings → Server, Fixed port selected, port
+  3000 saved and in use. Save port is disabled; Restart server is enabled.
+  The full explanatory note is visible below the buttons.
+- **Preparation and reshoot:** launch the native build with an isolated
+  registry and desktop settings selecting fixed port 3000. Confirm that port
+  is available before launch. Open Menu → Settings → Server and wait for its
+  active address. Zoom the window to the dimensions above, then capture the
+  complete Server card. This capture did not restart the server.
+- **Composition:** crop `(560, 400, 2210, 1480)`; Server card only.
+- **Verification:** inspected the saved image: port, address, button states
+  and explanatory text are complete and readable. The temporary app label
+  and private catalog paths are outside the crop.
+
+### assets/calibration-repair-duplicates.png
+
+#### 2026-10-18 00:07 PDT — initial capture
+
+- **File:** SHA-256 `03226745062aba21b050e8f406897758142f9c55fe04fade3001d530306f38cc`;
+  1170 × 835 pixels; PNG.
+- **Used by:** `docs/calibration.html`, duplicate-repair preview.
+- **Build and environment:** native desktop environment above.
+- **Source:** `docs-calibration-duplicates`, Calibration duplicate check;
+  Askar 107PHQ, Bubble Nebula project 1 / target 1. Session
+  `bb6c8951d48fc1ae`. The fixture copies each of the three real flats to a
+  second folder and inserts the corresponding duplicate record. Duplicate
+  UUIDs use UUIDv5, URL namespace, seed `psf-guard-docs-duplicate:` followed
+  by the original frame UUID. No measured finding is changed.
+- **URL:** `tauri://localhost#/calibration?db=docs-calibration-duplicates&calSession=bb6c8951d48fc1ae&calFrame=ee529a4c-9658-552a-9cb6-b0a41feb652c&calDupes=true`.
+- **UI and observed state:** Calibration, Duplicates enabled, Type All;
+  Repair duplicates dialog after the check completed. Three exposures are
+  recorded more than once; three rows would merge, zero files are missing,
+  three have duplicate files on disk. No masters need rebuilding. Cancel
+  and Apply are visible. This is a preview, not a running repair.
+- **Preparation and reshoot:** create and register the fixture above. Open
+  the route, enable Duplicates, run Check again, then Repair duplicates…;
+  wait for the preview. Capture, then Cancel. Apply was not clicked and no
+  repair was performed. All original and duplicate source files remain.
+- **Composition:** crop `(1290, 665, 2460, 1500)`; dialog only. The crop
+  omits the duplicate-count controls behind it and the underlying file paths.
+- **Verification:** inspected the saved image for the complete preview,
+  counts, explanation and buttons. This image does not show running progress
+  or Stop; the caption describes only the preview.
+
+### assets/data-transfer-calibration-choices.png
+
+#### 2026-10-18 00:08 PDT — initial capture
+
+- **File:** SHA-256 `bb5806a4a27d96cfc376c7dd1ee3230cd63c6ccaa92f1c06504c790fa7d45ba2`;
+  2000 × 320 pixels; PNG.
+- **Used by:** `docs/workflows.html`, calibration choices in a merge preview.
+- **Build and environment:** native desktop environment above.
+- **Source:** fixture `docs-calibration-source` (Calibration choices — Source)
+  to `docs-calibration-review` (Calibration choices — Review). Both are
+  separate catalog copies with matching real frame UUIDs. The script stages
+  Keep out on flat `92badc16-5253-4b50-860d-f570dcf3d3ef` and Use anyway on
+  `ebb8e8a3-6ac6-4779-aec8-aca4139d31c9` in the source only. These are manual
+  choices, not measured poor grades. The destination has neither choice.
+- **URL:** underlying route
+  `tauri://localhost#/calibration?db=docs-calibration-duplicates&calSession=bb6c8951d48fc1ae&calFrame=ee529a4c-9658-552a-9cb6-b0a41feb652c&calDupes=true`;
+  Settings and transfer selections require the steps below.
+- **UI and observed state:** Settings → Sync → Data Transfer, Merge catalogs,
+  include thumbnails checked, source and destination selected, Preview
+  changes complete. Zero rows added, two updated. Projects, targets, plans
+  and captures each show +0/0. Calibration choices: one kept out, one used
+  anyway. Preview expiry 12:38:02 AM; Apply this preview and Cancel visible.
+- **Preparation and reshoot:** register the fixture source and review
+  catalogs with disposable export folders. Open Settings → Sync, select
+  Merge catalogs and the two catalogs, then Preview changes. Wait for the
+  counts, capture the preview block and Cancel. No merge was applied; the
+  destination's choices stayed unchanged. Expiry time varies on a reshoot.
+- **Composition:** crop `(600, 990, 2600, 1310)`; preview block only, excluding
+  the source/destination selectors and their folder paths.
+- **Verification:** inspected the saved image: counts, choice explanation,
+  expiry and both action buttons are complete. The caption describes the
+  pending update and does not imply that the merge was applied.
