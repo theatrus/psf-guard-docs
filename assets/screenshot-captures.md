@@ -1703,3 +1703,124 @@ All four crops were visually checked against the browser captures.
 - `settings-backups.png` SHA-256: `d264e1428a6679873c8920b87fa9009ba5d5a4fbba72ef4c37001c7b7e080cff`.
 - `backup-retention.png` SHA-256: `73e34b62c3bc6ae77b483c4336486dd6cd2e005ac6d556d654550f5ab573a6bc`.
 - `settings-storage-disk-use.png` SHA-256: `b0da969daedca91d224c087d4433fc1f41b2a9660362bc37ca67c5ae8adc98a3`.
+
+## Owned catalog import flow — October 18, 2026
+
+These eight captures use the merged TS import flow from PSF Guard PR #911 and
+release preparation PR #912. They show real forms and real API results from an
+isolated server, not the live observatory catalogs.
+
+- **Build:** PSF Guard 0.12.0. Product source at `b6177fff` on merged main
+  `1fef4d27`; capture spec and instructions at `6392a9a4`. The latter adds no
+  product changes. The server embeds the same frontend as the captured source.
+- **Environment:** macOS 27.0.1; Playwright Chromium 156.0.8078.4; viewport
+  1440 × 1200 CSS px; device scale 2; browser zoom 100%; dark theme; reduced
+  motion; en-US; America/Los_Angeles. No annotations, image resizing or redactions.
+  The mouse pointer is absent. Focus follows the last action in the capture spec.
+- **Source:** `static/e2e/global-setup.ts` creates two projects and four real FITS
+  images. The capture spec copies the rows into the vendored TS schema with GUIDs
+  `project-<Id>`, `target-<Id>` and `image-<Id>`. No random image data or live data.
+  The source file is `/tmp/psf-guard-012-flow/TargetScheduler.sqlite`; images are
+  `/tmp/psf-guard-012-flow/images`. On macOS saved paths resolve below `/private/tmp`.
+- **URL:** all captures use `http://127.0.0.1:23652/`. Settings is modal state and
+  is not restored by the URL. The version's What's new popup is acknowledged.
+- **Capture:** element PNGs at device scale 2. Exact CSS crop rectangles, times,
+  pixel sizes, checksums and state are in
+  [captures-import-flow-2026-10-18.json](captures-import-flow-2026-10-18.json).
+- **Reshoot:** check out the capture commit or a later source with the spec, build
+  the server, and run from the PSF Guard repository root:
+
+  ```bash
+  PSF_GUARD_E2E_BINARY=/absolute/path/to/psf-guard \
+  PSF_GUARD_E2E_TMP=/tmp/psf-guard-012-flow \
+  PSF_GUARD_CAPTURE_DIR=/absolute/path/to/new-captures \
+  scripts/e2e-local.mjs e2e/import-flow-captures.spec.ts --project=chromium
+  ```
+
+  Use an empty output folder. Global setup clears the disposable fixture path;
+  teardown removes the test catalogs. The spec writes only there: it imports a
+  TS snapshot, saves automatic sync off for the reviewed transfer, adds project
+  and target 100 to the fixture source, previews and applies their merge, removes
+  that catalog registration, creates a plugin catalog, and tests code generation
+  after the last screenshot. No credentials appear in these images or records.
+  Catalog UUIDs, preview expiry times and PNG checksums will change on a reshoot.
+- **Verification:** inspected all eight PNGs for complete labels and controls.
+  Local import, saved sync settings, reviewed Preview/Apply, plugin creation and
+  pairing-code generation passed against the real server. No Windows N.I.N.A.
+  Pair/Test connection was run. The images do not claim a paired client or a
+  completed remote sync.
+
+### assets/import-first-run.png
+
+#### 2026-10-18T07:06:49.169Z — initial capture
+
+- **File:** SHA-256 `74e0d8a8e834455278ba6de583a05ed623ab5faff91839f720c683e1254b2195`; 2880 × 756 px; PNG.
+- **Used by:** docs/importing.html — first-run choices.
+- **UI and observed state:** Empty registry. Settings > Databases auto-open; neither starting point selected. Release notes acknowledged by Playwright storage state. Crop ends after welcome choices.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 0, "y": 0, "width": 1440, "height": 378.8125}`. No overlays, image processing or zoom/pan apply to these forms.
+
+### assets/import-local-ts.png
+
+#### 2026-10-18T07:06:49.399Z — initial capture
+
+- **File:** SHA-256 `6b8ab43fc8361de44c90e2ffbe5ccfb341ba8f8cb63c7f30b6758a424f7913a5`; 2048 × 1606 px; PNG.
+- **Used by:** docs/importing.html — Import from Target Scheduler; docs/new-in-0.12.html — Keep your catalog separate from Target Scheduler.
+- **UI and observed state:** Local TS file selected; Observatory name; source and images entered; managed storage; keep source connected on; import not started.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 68, "y": 267.1875, "width": 1024, "height": 802.015625}`. No overlays, image processing or zoom/pan apply to these forms.
+
+### assets/import-catalog-copy.png
+
+#### 2026-10-18T07:06:49.602Z — initial capture
+
+- **File:** SHA-256 `374e7a5fcfe2d59a2c31ae6c28c3e08f99a3b5e1c99de5825eb443ca9e64d991`; 2048 × 1854 px; PNG.
+- **Used by:** docs/importing.html — Import a standalone copy or choose storage.
+- **UI and observed state:** Standalone copy selected; custom destination restored.sqlite; no sync or source writeback; not submitted.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 68, "y": 188.1875, "width": 1024, "height": 926.046875}`. No overlays, image processing or zoom/pan apply to these forms.
+
+### assets/import-automatic-sync.png
+
+#### 2026-10-18T07:06:51.097Z — initial capture
+
+- **File:** SHA-256 `5568d71d648817aba4f3e7b5a47f5e7feb548bf5188543e7fbd71e20d6ffe731`; 1952 × 758 px; PNG.
+- **Used by:** docs/importing.html — Set automatic sync.
+- **UI and observed state:** Import complete. Own catalog created. Defaults saved: startup on, change detection on, interval 5 minutes, automatic grade writeback on.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 92, "y": 680.078125, "width": 976, "height": 378.65625}`. No overlays, image processing or zoom/pan apply to these forms.
+- **Catalog IDs:** Observatory: `db-969a90ea`.
+
+### assets/import-reviewed-transfer.png
+
+#### 2026-10-18T07:06:51.470Z — initial capture
+
+- **File:** SHA-256 `9d34a2fafe12a5543d2babfbb648dea15b522b1fa3f373accebe1c4cbfa52d54`; 2048 × 1120 px; PNG.
+- **Used by:** docs/importing.html — Sync with the telescope database.
+- **UI and observed state:** Automatic sync and writeback saved off. Merge catalogs: Observatory — Target Scheduler to Observatory. Include thumbnails on. Preview of new project 100 and target 100; Apply not clicked.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 68, "y": 172, "width": 1024, "height": 559.859375}`. No overlays, image processing or zoom/pan apply to these forms.
+- **Catalog IDs:** Observatory: `db-969a90ea`.
+
+### assets/import-image-folders.png
+
+#### 2026-10-18T07:06:51.809Z — initial capture
+
+- **File:** SHA-256 `c6b7aa40fc58ffbdbc11c39931d835afd51f2dc2a29bdc4377b732078820186d`; 2048 × 1524 px; PNG.
+- **Used by:** docs/importing.html — Create a catalog from images.
+- **UI and observed state:** Image folders selected; Image archive name; real FITS fixture directory added; managed storage; background quality analysis off; not submitted.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 68, "y": 267.1875, "width": 1024, "height": 761.296875}`. No overlays, image processing or zoom/pan apply to these forms.
+
+### assets/import-sync-plugin.png
+
+#### 2026-10-18T07:06:51.969Z — initial capture
+
+- **File:** SHA-256 `70466f1d75c714a3b8f2701604cff0aca8d05cebacc8db16778e48c8e54c251c`; 2048 × 1276 px; PNG.
+- **Used by:** docs/importing.html — Start with the Sync plugin.
+- **UI and observed state:** Sync plugin selected; Remote observatory name; shared fixture image folder retained when switching; no local TS file; managed storage; catalog not yet created.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 68, "y": 267.1875, "width": 1024, "height": 636.953125}`. No overlays, image processing or zoom/pan apply to these forms.
+
+### assets/import-plugin-pairing.png
+
+#### 2026-10-18T07:06:52.106Z — initial capture
+
+- **File:** SHA-256 `ffc7fa7f49e5133b852f104ee9adab1141f84bd7d38cdca42a4ebb5165d24d30`; 1872 × 306 px; PNG.
+- **Used by:** docs/sync-plugin.html — Pair N.I.N.A. with a catalog.
+- **UI and observed state:** Remote observatory catalog created. Pairing controls open automatically; no code issued, no client paired, no uploads enabled. Crop ends after Generate pairing code.
+- **Composition and reshoot:** follow the shared environment and capture spec above; CSS crop `{"x": 112, "y": 454.8125, "width": 936, "height": 153.59375}`. No overlays, image processing or zoom/pan apply to these forms.
+- **Catalog IDs:** Remote observatory: `db-5644f5cf`.

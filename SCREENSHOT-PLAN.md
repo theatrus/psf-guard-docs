@@ -14,6 +14,16 @@ their prerequisites must be met before replacing the old image or adding a figur
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
 
+## TS import follow-up: captured October 18
+
+Eight new captures cover first-run choices, local TS import, standalone copies,
+image folders, automatic sync, reviewed transfer, plugin setup and pairing.
+They use PSF Guard 0.12.0 on merged PR #911 with disposable catalogs. The import,
+plugin and release guides now use them. See the
+[capture record](assets/screenshot-captures.md#owned-catalog-import-flow--october-18-2026)
+for states and the repeatable capture command. The eight pending shots below
+need different fixtures and remain pending.
+
 ## Remaining capture prerequisites
 
 | Shot | What still prevents the planned capture |

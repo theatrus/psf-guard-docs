@@ -191,6 +191,16 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="server">Pair N.I.N.A. with a catalog</h2>
+  <p>For a new catalog in 0.12, open <strong>Settings → Databases → Import from
+  Target Scheduler</strong> and choose <strong>Use the PSF Guard Sync plugin</strong>.
+  Add a shared image folder or an empty folder for uploads, then click
+  <strong>Create catalog for plugin</strong>. The pairing controls open automatically;
+  no local TS database file is required. For an existing catalog, click its
+  <strong>Edit</strong> button instead.</p>
+  <figure>
+    <img src="../assets/import-plugin-pairing.png" alt="Generate a one-use pairing code for the newly created plugin catalog." loading="lazy" width="1872" height="306">
+    <figcaption>Generate a fresh code for each client. This example uses a disposable test catalog.</figcaption>
+  </figure>
   <ol>
     <li>In PSF Guard, open <strong>Settings &rarr; Databases</strong> and edit
       the destination catalog.</li>
@@ -200,8 +210,7 @@ function gtag_report_demo() {
       <strong>Receive directory</strong> keeps every upload in that folder;
       <strong>Match catalog</strong> files each one into folders laid out like
       the rest of the catalog. Save the catalog.</li>
-    <li>Click <strong>Generate pairing code</strong> beside <strong>Pair a
-      client</strong>, and copy the code.</li>
+    <li>Click <strong>Generate pairing code</strong> under <strong>Connect PSF Guard Sync in N.I.N.A.</strong>, and copy the code.</li>
     <li>In N.I.N.A., open <strong>Plugins &rarr; Installed &rarr; PSF Guard
       Sync</strong>. Enter the <strong>Server URL</strong>, paste the code into
       <strong>One-time pairing code</strong>, and click <strong>Pair</strong>.

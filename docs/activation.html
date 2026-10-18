@@ -493,6 +493,18 @@ function gtag_report_demo() {
   answers. See <a href="rigs.html#missed-activation">When a site misses an
   activation</a>.</p>
 
+  <h2 id="ts-delivery">Deliver planning through a saved TS connection</h2>
+  <p>When a rig uses an <a href="importing.html#target-scheduler">imported TS
+  catalog</a>, activation shows the saved Target Scheduler destination and transfer
+  counts in its preview. Activation commits the owned catalog, then sends only the
+  approved project's planning. Captures, grades and acquisition counts stay unchanged.</p>
+  <p>Automatic grade writeback does not control this explicit planning delivery.
+  Failed deliveries stay pending and retry through the saved sync settings, or use
+  the pending delivery's send button. Grade conflicts do not block planning delivery.
+  Changes to the TS project or its referenced templates, or an expired transfer,
+  require a new activation preview. Refreshing a preview in Settings does not
+  approve an activation.</p>
+
   <nav class="next-prev">
     <a href="framing.html">← Framing</a>
     <a href="rigs.html">Rigs, Sites &amp; Live →</a>

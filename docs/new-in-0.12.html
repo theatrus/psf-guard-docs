@@ -155,10 +155,27 @@ function gtag_report_demo() {
 
 <main class="docs-main">
   <h1>New in 0.12</h1>
-  <p class="lede">Better calibration decisions, flexible mosaics and scheduled
-  backups. Here are the main changes since 0.11.</p>
+  <p class="lede">Owned catalogs with Target Scheduler sync, better calibration decisions,
+  flexible mosaics and scheduled backups. Direct TS access is deprecated in this release.</p>
   <p><a href="#upgrade">Before upgrading from 0.11 ↓</a> ·
   <a href="release-notes-0.12.html">All changes in 0.12 →</a></p>
+
+  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
+  Existing registrations and CLI/API access still work through 0.12. PSF Guard does
+  not convert them automatically. Removal is planned for 0.13 or later.</div>
+  <h2 id="catalogs">Keep your catalog separate from Target Scheduler</h2>
+  <p>Import a local TS database into a PSF Guard-owned catalog, or create a catalog
+  and pair the PSF Guard Sync plugin without a local TS file. Choose automatic capture
+  sync on startup, when images or grades change, or on a schedule. Grade writeback
+  has its own switch and reports conflicts instead of overwriting TS edits.</p>
+  <p>You can also import a standalone catalog copy or choose a custom storage path.
+  Director activation sends approved planning through the saved TS connection and
+  retries failed deliveries. Manual transfers still use Preview and Apply.</p>
+  <figure>
+    <img src="../assets/import-local-ts.png" alt="Import Target Scheduler into a PSF Guard-owned catalog and keep the source connected for sync." loading="lazy" width="2048" height="1606">
+    <figcaption>New TS connections use an owned catalog. The original database and raw images stay in place.</figcaption>
+  </figure>
+  <p><a href="importing.html#target-scheduler">Import Target Scheduler and set sync →</a></p>
 
   <h2 id="calibration">Review calibration as closely as your lights</h2>
   <p>The new Calibration page grades bias, dark, dark-flat and flat frames, keeps
@@ -196,7 +213,9 @@ function gtag_report_demo() {
   <h2 id="operations">Back up catalogs and settings together</h2>
   <p>Create one archive of your settings and catalogs, even while N.I.N.A. writes
   to them. Schedule daily or weekly backups and choose how long to keep them.
-  Secrets stay out unless you include them; restoration remains manual.</p>
+  Manual desktop backups and new desktop schedules include secrets by default;
+  browser backups leave them out by default. Check the choice before backing up.
+  Restoration remains manual.</p>
   <p><a href="backups.html">Set up backups →</a></p>
 
   <h2 id="review">Review by observing night, with better scoring controls</h2>
@@ -212,7 +231,9 @@ function gtag_report_demo() {
   reapply your choices after a stack refreshes. Color processing reports each channel
   and tool, supports Stop, and reuses unchanged channel results. Improved resampling removes
   cross-hatched bands from slightly rotated frames. Stacks, WBPP and exports use
-  the same calibration settings and flat groups.</p>
+  the same calibration settings and flat groups. Median anchor and Layered stretches
+  join Auto MTF, which stays the default. Install the optional Gaia colors catalog
+  to calibrate RGB, LRGB and one-shot-color stacks against star colors.</p>
   <p><a href="stacking.html">Build and process stacks →</a> ·
   <a href="wbpp.html">Run WBPP →</a></p>
 
@@ -231,6 +252,9 @@ function gtag_report_demo() {
 
   <h2 id="upgrade">Before upgrading from 0.11</h2>
   <ul>
+    <li><strong>Review new TS connections.</strong> Local-file imports enable
+    automatic capture sync and grade writeback. Review the settings after importing.
+    Existing direct-open registrations stay unchanged through 0.12.</li>
     <li><strong>Back up first.</strong> Keep a copy of catalogs and settings before
     the upgrade. See <a href="backups.html">Backups</a> for available methods.</li>
     <li><strong>Allow time for background checks.</strong> The first calibration

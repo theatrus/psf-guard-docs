@@ -266,25 +266,20 @@ psf-guard empty-reject-trash --db my-db    <span class="c"># files past their ti
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
   <h2 id="existing-database">Direct database access (deprecated)</h2>
-  <p>PSF Guard can still open an existing Target Scheduler database and save
-  grades and plans to it. This path is deprecated for new setups. Instead,
-  <a href="importing.html">import image folders</a> into a PSF Guard catalog, or
-  use the <a href="sync-plugin.html">N.I.N.A. Sync plugin</a> to transfer captures,
-  plans and grades between the telescope and a PSF Guard server.</p>
+  <p>Existing registrations that open a live Target Scheduler database, and direct
+  CLI/API access, remain supported through 0.12. They are not converted automatically.
+  Removal is planned for 0.13 or later. For a new setup,
+  <a href="importing.html#target-scheduler">import the TS file into an owned catalog</a>
+  and keep its source connected, or use the
+  <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a>.</p>
   <div class="callout">
-    <strong>Back up the database before PSF Guard first writes to it.</strong>
-    Grading writes to the file. Import and sync preview their changes first.
-    Use <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
+    <strong>Back up before writing through an existing direct registration.</strong>
+    Grading and planning edits write to the shared file. Use
+    <a href="backups.html">Backups</a> to copy catalogs safely while N.I.N.A. runs.
   </div>
-  <ol>
-    <li>Open <strong>Settings → Databases → Add Database</strong>.</li>
-    <li>Pick the SQLite file and add the folders that contain its images. On Windows
-    the file is usually <code>%LOCALAPPDATA%\NINA\SchedulerPlugin\schedulerdb.sqlite</code>.</li>
-    <li>Choose a project in the <strong>Library</strong> to open its images.</li>
-  </ol>
-  <p>Image folders can be read only. The database file must be writable to save
-  grades and plans. If PSF Guard and Target Scheduler use the same file, those
-  changes need no database transfer.</p>
+  <p>Image folders can be read-only. A directly opened database must be writable
+  to save grades and plans. When both applications use that file, those edits need
+  no transfer. New imports use a separate working catalog instead.</p>
 
   <h2 id="sync">Sync two database files</h2>
   <p>Grade on one machine while the telescope keeps capturing on another. Sync
@@ -298,6 +293,10 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
     <img src="../assets/data-transfer.png" loading="lazy" alt="Choose the source, destination and action, then preview the changes before applying them." width="1878" height="788">
     <figcaption>Choose the source, destination and action, then preview the changes before applying them.</figcaption>
   </figure>
+  <p>For an imported TS catalog, the saved <strong>Target Scheduler</strong>
+  connection appears beside the owned catalog in the source and destination lists.
+  You do not need to register the source as a second catalog. Turn off automatic
+  grade writeback if you want to send grades only after review.</p>
   <p>Open <strong>Settings &rarr; Sync</strong>. <strong>Data Transfer</strong>
   takes a <strong>Source</strong> and a <strong>Destination</strong> and offers
   three directions:</p>

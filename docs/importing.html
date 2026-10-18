@@ -156,9 +156,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Import Images</h1>
   <p class="lede">
-    Build a Target Scheduler-compatible catalog from FITS or XISF folders, add new
-    frames by hand or on a schedule, and fill in quality measurements in the
-    background.
+    Import Target Scheduler into a PSF Guard-owned catalog, connect the N.I.N.A.
+    Sync plugin, or build a catalog from FITS or XISF folders. Keep captures and
+    grades in sync while quality measurements run in the background.
   </p>
 
   <div class="workflow-note import">
@@ -168,6 +168,96 @@ function gtag_report_demo() {
   </div>
 
   <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Automatic import holds frames for new targets until you review them, and leaves Target Scheduler's plans alone in projects it did not create. Scan rules keep autofocus frames, tests and other folders out of every import.</div>
+
+  <figure>
+    <img src="../assets/import-first-run.png" alt="First-run Settings offers a new catalog from images or an import from Target Scheduler." width="2880" height="756" loading="lazy">
+    <figcaption>Start with image folders, a local TS file or the Sync plugin. The TS import form includes all three choices.</figcaption>
+  </figure>
+
+  <h2 id="target-scheduler">Import from Target Scheduler</h2>
+  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
+  Existing registrations and direct CLI/API access still work through 0.12, with no
+  automatic conversion. Removal is planned for 0.13 or later. Use an owned catalog
+  with a saved TS connection for new setups.</div>
+  <p>The desktop app allows database management. A browser server needs
+  <code>--allow-database-management</code>; see <a href="#create">server setup</a>.</p>
+  <ol>
+    <li>Open <strong>Settings → Databases → Import from Target Scheduler</strong>.</li>
+    <li>Choose <strong>Import a local TS file</strong>, enter the source file and an
+    optional display name, then add the folders containing your images. The source
+    needs Target Scheduler schema 22 or newer, with stable GUIDs.</li>
+    <li>Leave <strong>Keep the source connected for Target Scheduler sync</strong>
+    on, then click <strong>Import from Target Scheduler</strong>.</li>
+    <li>Review the catalog's <a href="#automatic-sync">automatic sync settings</a>.
+    New local-file imports enable capture sync and grade writeback.</li>
+  </ol>
+  <figure>
+    <img src="../assets/import-local-ts.png" alt="Local TS import with source file, image folders and the option to keep Target Scheduler connected." loading="lazy" width="2048" height="1606">
+    <figcaption>Import a working copy and keep Target Scheduler connected. Raw image files stay in their folders.</figcaption>
+  </figure>
+  <p>PSF Guard reads the source through a consistent, read-only SQLite snapshot.
+  The copy keeps IDs, GUIDs, thumbnails and existing PSF Guard analysis and calibration
+  records. The import does not write to the source.</p>
+
+  <h3 id="catalog-copy">Import a standalone copy or choose storage</h3>
+  <p>Turn off <strong>Keep the source connected for Target Scheduler sync</strong>
+  and choose <strong>Import catalog copy</strong> for a standalone catalog. PSF Guard
+  keeps the embedded data without enabling source sync or writeback.</p>
+  <p>New catalogs use the <code>databases/</code> folder beside the registry.
+  Under <strong>Catalog storage</strong>, choose <strong>Use a custom database path
+  (advanced)</strong> to enter an absolute path to a new file on the server. This
+  option also works for image folders and plugin catalogs. Existing files are never
+  replaced. A file import needs an existing destination folder.</p>
+  <figure>
+    <img src="../assets/import-catalog-copy.png" alt="Standalone catalog copy with a custom destination path and source sync turned off." loading="lazy" width="2048" height="1854">
+    <figcaption>Choose a standalone copy and a custom destination when restoring or moving a catalog.</figcaption>
+  </figure>
+  <p>A catalog copy is not a full installation restore. Settings, accounts,
+  image-folder registrations and global Director plans need a
+  <a href="backups.html">full backup</a>. Raw images remain in their original folders.</p>
+
+  <h3 id="automatic-sync">Set automatic sync</h3>
+  <p>Under <strong>Target Scheduler sync</strong> on the imported catalog, choose
+  when to import captures:</p>
+  <ul>
+    <li><strong>Sync when the desktop app or server starts</strong>.</li>
+    <li><strong>Sync when new images or grades arrive</strong>. PSF Guard checks
+    about every ten seconds and starts runs no more than once per thirty seconds.</li>
+    <li><strong>Sync interval (minutes; 0 disables the schedule)</strong>. The default
+    is five minutes. Zero leaves startup and change detection unchanged.</li>
+  </ul>
+  <p><strong>Automatically write grade changes back to Target Scheduler</strong>
+  controls automatic grade delivery separately. Click <strong>Save sync settings</strong>
+  after changing these choices. Capture imports preserve local planning and reviewed
+  grades. Writeback updates grades, reject reasons and accepted counts together;
+  conflicting TS grades stay unchanged and appear for review.</p>
+  <figure>
+    <img src="../assets/import-automatic-sync.png" alt="Automatic sync settings showing startup and change detection enabled, a five-minute interval and grade writeback enabled." loading="lazy" width="1952" height="758">
+    <figcaption>Review these defaults after a local-file import. Grade writeback has its own switch.</figcaption>
+  </figure>
+  <p>Turn grade writeback off to use <a href="#sync">reviewed transfers</a> instead.
+  If the source is unavailable, the working catalog stays usable and the sync job
+  reports the error. Pending local changes survive restarts.</p>
+  <p>Director activation sends approved planning through the same saved TS
+  connection, even when automatic grade writeback is off. Its preview shows the
+  destination and transfer counts. Failed deliveries stay pending and retry through
+  the saved sync settings; a changed TS project needs a new activation preview.
+  See <a href="activation.html">Exposures &amp; Activation</a>.</p>
+
+  <h3 id="plugin-catalog">Start with the Sync plugin</h3>
+  <p>Choose <strong>Use the PSF Guard Sync plugin</strong>, add a shared image
+  folder or an empty folder for incoming uploads, then click <strong>Create catalog
+  for plugin</strong>. No local TS file is required. PSF Guard opens the catalog's
+  pairing controls; the plugin controls its own sync schedule.</p>
+  <figure>
+    <img src="../assets/import-sync-plugin.png" alt="Sync plugin catalog setup with an image folder and no local Target Scheduler file." loading="lazy" width="2048" height="1276">
+    <figcaption>Create a catalog for the plugin without choosing a local TS database.</figcaption>
+  </figure>
+  <p>Click <strong>Generate pairing code</strong> and enter the server URL and
+  code in N.I.N.A.'s PSF Guard Sync plugin. Click <strong>Pair</strong>, then
+  <strong>Test connection</strong>. To upload image files too, enable
+  <strong>Accept remote image uploads</strong> and choose a <strong>Receive directory</strong>.
+  See <a href="sync-plugin.html#server">Connect N.I.N.A.</a>.</p>
 
   <h2 id="create">Create a catalog from images</h2>
   <p>The desktop app always allows database changes. A web server needs them turned on,
@@ -186,7 +276,7 @@ function gtag_report_demo() {
   </ol>
 
   <figure>
-    <img src="../assets/import-from-images.png" alt="Name the catalog, add image folders and choose whether to queue quality analysis." width="1878" height="900">
+    <img src="../assets/import-image-folders.png" alt="Name the catalog, add image folders and choose whether to queue quality analysis." width="2048" height="1524">
     <figcaption>Name the catalog, add image folders and choose whether to queue quality analysis.</figcaption>
   </figure>
   <p>The UI saves the SQLite file under <code>databases/</code> beside the registry and
@@ -446,11 +536,13 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
 
   <h2 id="sync">Sync with the telescope database</h2>
   <div class="workflow-note sync">
-    <div class="workflow-tag">Two DBs</div>
-    <div class="workflow-copy"><strong>Sync only when grading and acquisition use separate database files.</strong><p>Preview every change before Apply.</p></div>
+    <div class="workflow-tag">Reviewed transfer</div>
+    <div class="workflow-copy"><strong>Preview a merge, planning delivery or grade transfer.</strong><p>Preview every change before Apply.</p></div>
     <a class="workflow-link" href="workflows.html#sync">Rejects &amp; Sync →</a>
   </div>
-  <p>Add both databases, then open <strong>Settings → Sync</strong>:</p>
+  <p>Open <strong>Settings → Sync</strong> and select the owned catalog and its
+  <strong>Target Scheduler</strong> connection. You do not need to register the source
+  as another catalog. For transfers between other catalogs, register both first.</p>
   <ul>
     <li><strong>Merge catalogs</strong> copies new or changed projects, targets, plans,
       captures and grades from the telescope copy. Grades already reviewed here win.</li>
@@ -461,8 +553,8 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   </ul>
 
   <figure>
-    <img src="../assets/settings-sync.png" loading="lazy" alt="Choose a local transfer or configure a remote peer, then preview before Apply." width="1856" height="1494">
-    <figcaption>Choose a local transfer or configure a remote peer, then preview before Apply.</figcaption>
+    <img src="../assets/import-reviewed-transfer.png" loading="lazy" alt="Choose the TS connection and working catalog, then review the changes before Apply." width="2048" height="1120">
+    <figcaption>Choose the TS connection and working catalog, then review the changes before Apply.</figcaption>
   </figure>
   <pre><code>psf-guard sync pull --from telescope.sqlite --to archive.sqlite --dry-run
 psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run

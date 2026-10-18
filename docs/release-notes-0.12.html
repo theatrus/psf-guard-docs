@@ -171,6 +171,11 @@ function gtag_report_demo() {
     </ul>
   </nav>
 
+  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
+  Existing direct-open registrations and CLI/API access remain supported through
+  0.12, with no automatic conversion. Removal is planned for 0.13 or later. New
+  connections use a PSF Guard-owned catalog with a saved TS connection.</div>
+
   <h2 id="calibration">Review calibration and match flats</h2>
   <p>The new <a href="calibration.html">Calibration page</a> replaces the library
   dialog. Browse sessions or flat groups, inspect frames, and open masters with their
@@ -312,6 +317,19 @@ function gtag_report_demo() {
 
   <h2 id="imports">Import and transfer catalogs</h2>
   <ul>
+    <li><strong>Import into an owned catalog.</strong> Copy a local Target Scheduler
+    file and keep its source connected, or create a catalog and pair the Sync plugin.
+    Image-folder import stays alongside both choices. Standalone copies preserve
+    embedded PSF Guard data without enabling sync. All three choices allow a custom
+    destination path and never replace an existing catalog.</li>
+    <li><strong>Choose automatic sync.</strong> Local-file imports enable startup,
+    change detection and five-minute scheduled sync, with grade writeback on a separate
+    switch. Capture imports preserve local planning and reviewed grades; conflicting
+    TS grades stay unchanged. Manual transfers still require Preview and Apply.</li>
+    <li><strong>Deliver approved planning.</strong> Director activation uses the saved
+    TS connection and shows it in the preview. Failed deliveries remain pending and
+    retry; grade conflicts do not block approved planning. Changes to the TS project
+    require a fresh activation preview.</li>
     <li><strong>Review new targets.</strong> Automatic import waits for your review
     before creating projects for unknown targets. Change <strong>New targets</strong>
     to skip them or create projects automatically.</li>
