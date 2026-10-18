@@ -2020,3 +2020,28 @@ Their recorded pixel arrays came from reading those bytes as a PNG header and
 are invalid. The actual image sizes are 1280 × 720 and 390 × 844 pixels.
 The original files and entries stay in the record; use this reshoot for the
 current wording and its verified dimensions.
+
+## 2026-10-18: recommend import and sync for new TS databases
+
+Source: local preview of commit `9cf89ff9f8f181499fd6766cc1320edcad4591bb`, served on port 21100.
+[Capture manifest](captures-ts-migration-notice-import-sync-2026-10-18.json).
+The earlier captures and records remain unchanged.
+
+### assets/ts-migration-notice-desktop-import-sync.jpg
+
+- Page: `/docs/new-in-0.12.html`, scroll 0, 0; desktop navigation visible.
+- Viewport and crop: 1280 × 720 CSS px, DPR 1; 1280 × 720 image pixels.
+- State: the notice now starts with import and sync guidance for new Target
+  Scheduler databases. All three paragraphs are visible. Dark theme.
+- Method: Codex in-app browser viewport screenshot, unchanged JPEG bytes.
+  Exact browser version was not recorded. No app, account or catalog state.
+- Reshoot: serve the recorded source, open the page, set the viewport and
+  capture from the top. Reset the viewport afterwards.
+
+### assets/ts-migration-notice-mobile-import-sync.jpg
+
+- Same page and content; phone navigation collapsed.
+- Viewport and crop: 390 × 844 CSS px, DPR 1; 390 × 844 image pixels.
+- Scroll: x=0, y=418. Clicking the final notice paragraph brought it into
+  view. All notice text is visible below the fixed header; no horizontal overflow.
+- Method: as above. Reshoot with this phone viewport and scroll, then reset it.
