@@ -195,8 +195,10 @@ function gtag_report_demo() {
   <p>Already use Target Scheduler? Choose <strong>Import from Target Scheduler</strong>
   to create an owned working catalog and keep the source connected. Review the
   automatic sync and grade writeback settings after import. Direct TS access is
-  deprecated; existing registrations stay supported through 0.12, with removal
-  planned for 0.13 or later. See
+  deprecated; existing registrations stay supported unchanged through 0.12.
+  A later release will automatically migrate them to owned catalogs with TS sync.
+  Separate catalogs help us support both products as they develop. Removal of
+  direct access is planned for 0.13 or later. See
   <a href="importing.html#target-scheduler">Import from Target Scheduler</a>.</p>
   <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
   image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
@@ -274,8 +276,9 @@ function gtag_report_demo() {
 
   <h3 id="existing-database">Existing Target Scheduler databases</h3>
   <p>Opening a Target Scheduler database directly is deprecated. Existing setups
-  can continue to use it, including saving grades and plans. For the steps and
-  backup requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
+  can continue to use it, including saving grades and plans, through 0.12. A later
+  release will migrate these registrations automatically to owned catalogs with
+  Target Scheduler sync. For the steps and backup requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
 
   <h3 id="manual-transfer">Transfer between separate databases</h3>
   <p>If you keep separate telescope and grading databases, use

@@ -175,10 +175,14 @@ function gtag_report_demo() {
   </figure>
 
   <h2 id="target-scheduler">Import from Target Scheduler</h2>
-  <div class="callout"><strong>Direct Target Scheduler access is deprecated.</strong>
-  Existing registrations and direct CLI/API access still work through 0.12, with no
-  automatic conversion. Removal is planned for 0.13 or later. Use an owned catalog
-  with a saved TS connection for new setups.</div>
+  <div class="callout info"><strong>Direct Target Scheduler access is deprecated.</strong>
+  <p>Existing registrations and direct CLI/API access still work through 0.12.
+  This release leaves registrations unchanged. A later release will automatically
+  migrate them to PSF Guard-owned catalogs with Target Scheduler sync. New
+  connections already use this model. Removal of direct access is planned for
+  0.13 or later.</p>
+  <p>Separate catalogs give each product control of its own data and help us support
+  both PSF Guard and Target Scheduler as they develop.</p></div>
   <p>The desktop app allows database management. A browser server needs
   <code>--allow-database-management</code>; see <a href="#create">server setup</a>.</p>
   <ol>

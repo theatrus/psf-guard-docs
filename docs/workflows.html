@@ -267,8 +267,11 @@ psf-guard purge-removed --db my-db         <span class="c"># saved rows of empti
 
   <h2 id="existing-database">Direct database access (deprecated)</h2>
   <p>Existing registrations that open a live Target Scheduler database, and direct
-  CLI/API access, remain supported through 0.12. They are not converted automatically.
-  Removal is planned for 0.13 or later. For a new setup,
+  CLI/API access, remain supported through 0.12. This release leaves registrations
+  unchanged. A later release will automatically migrate them to PSF Guard-owned
+  catalogs with Target Scheduler sync. Separate catalogs give each product control
+  of its own data and help us support both products as they develop. Removal of
+  direct access is planned for 0.13 or later. For a new setup,
   <a href="importing.html#target-scheduler">import the TS file into an owned catalog</a>
   and keep its source connected, or use the
   <a href="sync-plugin.html#server">N.I.N.A. Sync plugin</a>.</p>
