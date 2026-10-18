@@ -204,3 +204,121 @@ another dated entry under its existing asset heading. Mark unused fields
   r1c2 remains locked. Center overlap labels partly overlap in the app; the
   complete values remain readable in the warning list. Do not claim the saved
   overlap minimum was achieved or that this plan has been activated.
+
+### Second capture session — October 17, 2026
+
+The seven entries below use the shared build, OS, browser and JPEG capture
+method above. Viewport was **1744 × 1204 CSS px**, measured in this session;
+effective device pixel ratio remained **1.8** and CDP coordinates use the same
+0.9 factor. Theme stayed dark. No browser viewport override was used.
+All captures used existing data and cached stacks. No grades, builds, saved
+processing settings or jobs were changed. Temporary scoring changes were reset;
+stack card size returned to its original Fit/1600 value.
+
+Local browser review checked the grader, screening and stacking guides and the
+homepage. Guide overviews render at 824 CSS px; the scoring crop at 420 px;
+the color card at 640 px; the homepage preview at 1112 px. Aspect ratios stayed
+intact. The issue list, score chips, scoring controls and color card also
+opened in the lightbox with their captions and full-resolution links.
+
+### assets/grid.jpg
+
+#### 2026-10-17 18:09 PDT — reshoot
+
+- **File:** 3138 × 1674 px, JPEG. SHA-256: `acce8b543106e2402ce43f5e77e56745cac2c27b9e0c6b0fc60e4fac28a2becc`.
+- **Used by:** `docs/grader.html#grid`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source:** Iris Nebula, starfront-ultracat131, database `db-93617230`, project 1; target NGC 7023. Current frame 776, September 17 at 23:02:13.
+- **URL:** https://psf-guard.atpn.co/#/grid?db=db-93617230&project=1&current=776
+- **UI state:** Images, page top; Status, Filter, Flag and Calibration All; Dates Any; search empty; Size 300 px; Stats off. View: Group Date, Oldest first, Nights and hours, nights end at each rig's noon; night, all-sessions and calibration chips on; Separate exposure groups on. Zero selected; current frame has a cyan outline.
+- **Observed state:** 822/822 images scored, 27 groups. First group September 17, L, 300 s: five Accepted frames, all with Sky Brightening warnings. Next group G, 120 s: 12 frames, 11 Accepted and one Rejected. Four visible G cards warn that their dark master has too few frames. Background jobs: 60%, one running, six waiting.
+- **Reshoot steps:** open the URL; wait for Quality: 822 scored and the previews. Check View against the settings above, then close it. Keep the L row and first G row visible. The plan originally requested Group Filter; this capture uses Date to keep the verified score examples together.
+- **Composition:** CSS crop `(0, 0, 1744, 930)`; CDP `(0, 0, 1569.6, 837)`. Header, toolbar and first two card rows. No tooltip.
+- **Verification:** all visible previews loaded; score chips, grades and calibration icons readable. Scores and warnings do not replace the stored grades. Frame time zone was not exposed in this view; preserve the displayed timestamps when locating frames.
+
+### assets/grid-score-chips.jpg
+
+#### 2026-10-17 18:09 PDT — reshoot; replaces grid-score-chips.png
+
+- **File:** 1800 × 530 px, JPEG. SHA-256: `76f14e9d166008c1a850a6f6163a87e400699436fb3c825a1409a8acb1361191`.
+- **Used by:** `docs/grader.html#review-preferences`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source and URL:** same Iris catalog, frame 776 and route as `grid.jpg` above.
+- **UI state and reshoot steps:** same grid state as `grid.jpg`; crop the first three L cards from September 17, 300 s. No selection or grading.
+- **Observed state:** at 23:02:13, main/night/all-sessions scores 94/99/94, HFR 1.41, 22,149 stars; 23:07:21 gives 93/97/93, HFR 1.41, 21,898 stars; 23:12:30 gives 95/98/95, HFR 1.42, 22,270 stars. All three show Sky Brightening and a stored Accepted grade.
+- **Composition:** CSS `(40, 243, 1000, 295)`; CDP `(36, 218.7, 900, 265.5)`. Three complete cards, no header or group title.
+- **Verification:** checked final JPEG for all three chips, timestamps, HFR, stars, reasons and grades. Earlier PNG predates this record; its capture state is unknown.
+
+### assets/sequence-issue-frames.jpg
+
+#### 2026-10-17 18:11 PDT — initial capture
+
+- **File:** 3138 × 1016 px, JPEG. SHA-256: `5b7f187439984c5e1bbfbfe3468e2057505cefbdbb3f6ccd34f216cfb8dc0699`.
+- **Used by:** `docs/screening.html#issues`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source:** Golf of Mexico, ultra cat, database `db-e075b4ec`, project/target 12. Current frame 9568, June 28 at 02:09 AM.
+- **URL:** https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=9568&filterName=G&scoreScope=target-filter%3AG
+- **UI state:** Filter G; G · All sessions (612); Size 150 px; Cutoff Score 50; Select By hand, zero selected. Seven cloud events expanded; first event highlighted. Scoring defaults: Satellite trails off; Pointing, Temporal anomalies, HFR rise and Star loss 100%; Max HFR and Min stars off. Main scroll 0; Scoring closed.
+- **Observed state:** score bands 122 at 90–100, 409 at 70–89, 81 at 50–69, none lower. Seven likely-cloud frame scores 65, 67, 73, 71, 70, 71, 70. Red and green grade dots appear under the chart. Background jobs at 99%, one running and six waiting.
+- **Reshoot steps:** open the URL and wait for analysis. If changing Filter resets the scope, choose G · All sessions again. Expand 7 cloud events, click Jun 28, 02:09 AM, score 65, then let cursor scrolling finish. Scroll back to the top; keep zero selected. Do not grade. The list's times have no explicit zone label in this view.
+- **Composition:** CSS `(0, 0, 1744, 565)`; CDP `(0, 0, 1569.6, 508.5)`. Header, toolbar, selected tab, list and full chart. No tooltip; highlighted chart bar marks the current frame.
+- **Verification:** final JPEG shows the complete header and chart. Clicking the event changed the current frame without selecting it. Scores use all-session comparison; they differ from the same frame's single-session score.
+
+### assets/sequence-cutoff-hfr.jpg
+
+#### 2026-10-17 18:10 PDT — initial capture
+
+- **File:** 3138 × 1650 px, JPEG. SHA-256: `a6318ffebcf5e254d30b469e81dbce3e017f32cf446357d9d4c2c253c8052871`.
+- **Used by:** `docs/screening.html#cutoff`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source:** Golf of Mexico, ultra cat, database `db-e075b4ec`, project/target 12; HA · Jul 9, 2026, 10:08 PM (57), current frame 10952.
+- **URL:** https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10952&filterName=HA&cutoffBy=hfr
+- **UI state:** Filter HA; session above; Size 150 px; Cutoff HFR 1.84 (initial value, not moved); Select By hand, zero selected. Scoring defaults as in the issue-list entry. Main scroll 0; scoring closed; solved-pointing plot visible.
+- **Observed state:** first three frames score 25 with Soft Stars; HFR 6.62, 6.28, 5.99. Later visible HFR values are around 1.4–1.6, below the line. Score bands: 11 at 90–100, 21 at 70–89, 22 at 50–69, none at 30–49, three below 30. The visible grade dots and first row's grades are Rejected. Background jobs 87%, one running, six waiting.
+- **Reshoot steps:** open the URL; select the exact HA session if needed. Choose HFR, verify the 1.84 cutoff and wait for previews. Leave Select at By hand. No grading needed. Times have no explicit zone label in this view.
+- **Composition:** CSS `(0, 0, 1744, 917)`; CDP `(0, 0, 1569.6, 825.3)`. Header through first card row, including pointing plot. No hover tooltip.
+- **Verification:** final JPEG contains complete first-row cards and the three tall bars. The plan requested mixed grade colors and a rejected-bar tooltip; the actual catalog shows red dots here. No grades were staged. Caption explains that the cutoff does not change grades.
+
+### assets/scoring-popover.jpg
+
+#### 2026-10-17 18:11 PDT — initial capture
+
+- **File:** 564 × 698 px, JPEG. SHA-256: `fc2fd9fd12fd6f02a7bd73421e12de5100bb12681d8e8020e05dbf091b10c3c5`.
+- **Used by:** `docs/screening.html#limits`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source:** same Golf of Mexico HA session and current frame 10952 as the HFR-cutoff entry.
+- **URL:** https://psf-guard.atpn.co/#/sequence?db=db-e075b4ec&project=12&target=12&current=10952&filterName=HA&cutoffBy=hfr&penaltySatellite=0&penaltyPointing=1&penaltyTemporal=1&penaltyHfrRise=1.5&penaltyStarLoss=0.5&maxHfr=off&minStars=off
+- **UI state:** Scoring open; HFR rise 150%, Star loss 50%; Satellite trails off, Pointing and Temporal anomalies 100%; Max HFR and Min stars off. Select By hand. Star loss slider focused. Main scroll 0. The HFR cutoff recalculates to 1.70 outside this crop.
+- **Reshoot steps:** open the HA session; open Scoring. From 100%, increase HFR rise five 10% steps and decrease Star loss five 10% steps. Wait for Changed for this view. Capture before touching Save as default. After capture, click Reset to default; verify both penalties return to 100% and Save as default becomes disabled. This reset was checked.
+- **Observed state:** Scoring (changed), two highlighted penalties, Changed for this view, Reset to default and Save as default. Satellite trails was already off in this user's defaults; do not describe this as built-in defaults.
+- **Composition:** CSS `(640, 74, 314, 388)`; CDP `(576, 66.6, 282.6, 349.2)`. Scoring control and complete popover, plus By hand control. No tooltip.
+- **Verification:** final JPEG shows all controls, values and the view-only status. Saved defaults and catalog grades were not changed.
+
+### assets/stack-foraxx-card.jpg
+
+#### 2026-10-17 18:11 PDT — reshoot
+
+- **File:** 1108 × 1306 px, JPEG. SHA-256: `344bac447ce065f240df3bd9ec7b947b613393479b45435cf718e1dba137d781`.
+- **Used by:** `docs/stacking.html#color`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source:** California Nebula, ultra cat, database `db-e075b4ec`, project/target 4. Foraxx SHO, 300 s exposure group. Color key `da718ffafabc7efe24623a1b2beefe4084c3d3eea029367dc30f677245d7fd35`, source revision `18df75db6d20fd1c-1e32e6` from its visible download link.
+- **URL:** https://psf-guard.atpn.co/#/stacks?db=db-e075b4ec&project=4&target=4&current=561&cardsize=600
+- **UI state:** Card size 600 px; separate exposure groups on; Accepted only off; Method Recommended; Calibration Auto; Order Capture sequence. Foraxx SHO already selected; Keep blank edges; completed. Pipeline phases and Processing stack collapsed. Page top. No settings changed except card size, restored to Fit/1600 after capture.
+- **Observed state:** preview ready, 29/29 steps. Hα 181 frames / 15 h 5 m; OIII 577 / 48 h 5 m; SII 160 / 13 h 20 m; total 918 / 76 h 30 m. Processing summary: BG subtract, DC off, RC-Astro 6, Hα 1, OIII 1, SII 1, RGB 0. Auto MTF is selected for the three channels; deeper RC-Astro settings were not inspected.
+- **Reshoot steps:** open Stacks and wait for cached metadata and previews; the initial loading state can briefly say Not built. Set card size 600, verify Foraxx SHO and the input counts, and crop the complete card. Do not build or change processing to recreate the image. The existing cache is a prerequisite.
+- **Composition:** CSS `(872, 365, 616, 726)`; CDP `(784.8, 328.5, 554.4, 653.4)`. Complete card with a narrow margin. Source preview bitmap 2400 × 1601.
+- **Verification:** palette, edges, loaded preview, completed status, processing summary, inputs and Masters button visible. Replaces an older Teddy Bear card whose capture state was not recorded. Blank registration edges remain, as selected.
+
+### assets/stack-foraxx-california.jpg
+
+#### 2026-10-17 18:12 PDT — initial capture; replaces stack-foraxx-teddy.jpg
+
+- **File:** 2886 × 1806 px, JPEG. SHA-256: `1680caa3eb4ec1c5e234b36934db6fe1e259b49608300449bc152c48e6129ec1`.
+- **Used by:** `index.html#stacking`.
+- **Build/environment:** shared environment and second-session viewport above.
+- **Source, build and processing:** same California Foraxx SHO cache and channel inputs as `stack-foraxx-card.jpg` above; source revision `18df75db6d20fd1c-1e32e6`.
+- **URL:** https://psf-guard.atpn.co/#/stacks?db=db-e075b4ec&project=4&target=4&current=561&cardsize=600
+- **UI state:** Inspect Foraxx SHO 300 s full size open; fit view at 13%; no manual pan. Keep blank edges. Full-resolution image reported 9576 × 6388, three channel stacks, 918 inputs, 76 h 30 m.
+- **Reshoot steps:** prepare the card as above, click Inspect, and wait until the loading message disappears and dimensions show 9576 × 6388. Use Fit if needed. Crop the full dialog including its title, counts and zoom controls. Close inspector and restore card size afterwards. No build, download or processing change is needed.
+- **Composition:** CSS `(70, 100, 1604, 1004)`; CDP `(63, 90, 1443.6, 903.6)`. Dialog only. Native capture, no image-only export or added labels.
+- **Verification:** checked loaded nebula, title, counts, image dimensions and fit controls in final JPEG. Cached processing includes RC-Astro operations; this is not an untouched linear stack. Old Teddy Bear image predates the capture record.

@@ -1,9 +1,10 @@
 # Screenshot plan — docs site, next release
 
 Capture server: psf-guard.atpn.co (Chrome, 2× tiles). Targets checked on
-October 16, 2026. The three 0.12 highlight images were captured on October 17;
-remaining shots are pending. See the [capture record](assets/screenshot-captures.md)
-for the saved images and their actual state.
+October 16, 2026. Ten images were captured on October 17: the three 0.12
+highlights and seven grid, Sequence and California stack views. Remaining shots
+are pending. See the [capture record](assets/screenshot-captures.md) for the saved
+images and their actual state.
 Each entry lists the pages that use it and what to show, taken from the
 `RESHOOT` / `SHOT` comments left in the pages.
 
@@ -49,10 +50,23 @@ Do not fabricate a calibration finding or flat-group change for a screenshot.
 These three captures have figures and captions. For future reshoots, check the
 current build and data, then append a new capture entry with the replacement.
 
+## Grid, Sequence and California: captured October 17
+
+The grader now uses new Iris grid and score-chip images. Screening has new
+cloud-event, HFR-cutoff and changed-scoring examples. California Foraxx SHO
+replaces Teddy Bear in the homepage preview and stacking color card: 918
+inputs, 76 h 30 m. Each image has a [capture entry](assets/screenshot-captures.md)
+with its actual state and reshoot steps.
+
+The HFR view has stored Rejected grades throughout the visible row; no grades
+were changed to stage mixed dots. The scoring example used view-only changes,
+then Reset to default. All stack previews came from the existing cache.
+
 ## Latest Sequence and color-processing changes
 
-Capture `sequence-issue-frames.png` for the issue frame list and revised
-All sessions tab, `sequence-select-after-reject.png` for the rule after rejection,
+The issue frame list and revised All sessions tab are captured in
+`sequence-issue-frames.jpg`. Still needed: `sequence-select-after-reject.png`
+for the rule after rejection,
 `stack-copy-channel-processing.png` for copying channel settings, and
 `stack-color-progress.png` for per-channel progress and Stop.
 Use a disposable local catalog for the rejection and channel-settings states.
@@ -233,7 +247,7 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (55)
+## Redo (existing images) (51)
 
 - `activation-preview.png` — pages: home, activation
   - Activate on the rigs dialog for Heart Mosaic: auto preview in the new order (what Target Scheduler will shoot, what it turns off and why, what it turns back on)
@@ -258,10 +272,6 @@ capture record and its history.
   - Planning workspace for Heart Mosaic (rig askar107phq), Framing tab, crop to the sky stage only: offline DSS map, the 2×2 mosaic with its shot panels locked (padlocks) and their small names r1c1…r2c2, deep-sky marks and grid on, the Rectangle / Panel / Sky buttons, Snap and the layer icons along the top, survey chips along the bottom.
 - `grid-filter-list.png` — pages: grader
   - Images toolbar for Teddy Bear Nebula QMark (rig starfront-redcat61, Foraxx SHO), the Filter pill's list open with HA and OIII ticked and the pill reading "Filter: HA, OIII"; the Status, Flag, Calibration and Dates pills beside it; crop to the toolbar and the open list
-- `grid-score-chips.png` — pages: grader
-  - Iris Nebula, starfront-ultracat131, project 1 (Library search Iris, Archived projects). Crop three or four cards from 2026-09-17 · L · 300 s: main, night-session and all-sessions scores. The 23:02:13 frame shows 94 / 99 / 94. A wider companion crop can include the following G · 120 s group: the 23:47:55 frame scores 99 but warns Thin dark master. Use the verified links and explanation in SCREENSHOT-PLAN.md.
-- `grid.jpg` — pages: grader
-  - Images for Iris Nebula (rig starfront-ultracat131) at about 2000 px wide, View › Group: Filter, Status: All, no other filters: the compact toolbar (filter pills, size slider, View, undo/redo, Compare, Stats, quality scan, ⋯) with the slim count row under it, then the first group's cards in the frame's shape with score chips, filter, time, HFR, stars and grade; include the icon header
 - `header-jobs.png` — pages: grader, stacking, storage
   - Header jobs chip open while work runs: the chip with its running, waiting and queued icons; the list split into "Started by you" (for example a stack build of Teddy Bear Nebula QMark running, one queued "queued · 1 ahead") and "Automatic" (for example a database quality analysis waiting, with what it waits for); crop to the chip and its popover
   - Header background jobs list opened from the chip (desktop browser), with Started by you holding a running Stacking row with its bar and Stop and a queued Stacking row reading "queued · 4 · 3 ahead" with ↑ ↓ ✕, and Automatic holding at least one queued automatic Stacking row and a muted Refreshing stacks row marked waiting ("Waiting for a stack build · stopped at 40/120 frames"); e.g. Teddy Bear Nebula QMark (starfront-redcat61) and Iris Nebula (starfront-ultracat131); crop the chip and the open list only
@@ -345,10 +355,6 @@ capture record and its history.
   - Sky view with Live on: new icon header, stat band, all-sky map, Live list of rigs
   - Sky view with Live on, opened from the header's Live chip, desktop width with the new icon header: the all-sky coverage map with each reporting rig drawn where it points, the Live list of rigs beside the map, and the Live table under it.
   - The Sky view with Live on, under the new narrow header (view icons, the Sky tab named, the jobs and Live chips, the menu at the right): the stat band, the rig and filter chips with Live on, the all-sky map, the Live list of rigs beside it with their states, and the top of the timeline below. Full window, from the header to the timeline's All rigs lane.
-- `stack-foraxx-card.jpg` — pages: stacking
-  - Use California Nebula Foraxx SHO, ultra cat, project 4. Show the palette and edges controls, nebula preview and H-alpha, OIII and SII inputs. Record actual counts and integration time; update the alt text and caption when replacing the image. See SCREENSHOT-PLAN.md.
-- `stack-foraxx-teddy.jpg` — pages: home
-  - Replace with California Nebula Foraxx SHO, ultra cat, project 4, chosen by the user. Save as stack-foraxx-california.jpg and update the image path, alt text and caption together. Use the actual frame counts and integration time shown at capture. Keep the nebula prominent. See SCREENSHOT-PLAN.md.
 - `stacks-mosaic.jpg` — pages: home, grader, stacking
   - Stacks for Heart Mosaic mosaic (4 panels): panel stacks in grid order and on the sky; new header
   - Stacks for Heart Mosaic (rig askar107phq) with "Heart Mosaic mosaic (4 panels)" chosen in the rig · target switcher: each panel's stack in grid order and the panels placed on the sky by plate solve; include the new icon header with Stacks named as the current view
@@ -360,7 +366,7 @@ capture record and its history.
 - `wbpp-run-dialog.png` — pages: wbpp
   - Stacks view for Teddy Bear Nebula QMark (rig starfront-redcat61) on psf-guard.atpn.co, Stack in WBPP clicked: the run dialog before Start stacking, with Include ungraded lights ticked, the WBPP settings (Quality, Fast Integration, Drizzle, Autocrop, Light rejection), More WBPP parameters and Run folder; crop to the dialog
 
-## New screenshots (57)
+## New screenshots (54)
 
 - `activation-save-first.png` — pages: activation
   - Planning workspace for Heart Mosaic (rig askar107phq): change one objective's goal on Exposures without saving, then open Activate… in the summary. Crop to the Activate on the rigs dialog showing "Unsaved changes in Exposures. Activation writes the saved plan, so save first; the preview follows." and the Save and activate… button. Close without saving.
@@ -438,12 +444,6 @@ capture record and its history.
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
 - `plan-summary-activated.png` — pages: planning
   - Planning workspace for Heart Mosaic (rig askar107phq), any tab, nothing unsaved and no bar up: crop to the plan summary at the top, showing ← Library, the plan name, the green "Activated" pill with its check mark and the "Activate…" button beside it, then the target, goal and rig pills.
-- `scoring-popover.png` — pages: screening
-  - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover.
-- `sequence-cutoff-hfr.jpg` — pages: screening
-  - Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards.
-- `sequence-issue-frames.png` — pages: screening
-  - Golf of Mexico, ultra cat, G · All sessions (612). Open 7 cloud events to show the Likely clouds list. Click Jun 28, 02:09 AM, score 65 (frame 9568): the cursor moves and 0 selected remains. Show the selected All sessions tab, issue pill, list with times and scores, and chart. Use the verified link in SCREENSHOT-PLAN.md. Do not grade frames.
 - `sequence-select-after-reject.png` — pages: screening
   - Use a disposable local catalog, not the live capture server. In Sequence, choose Recommended rejects and confirm a rejection through Review rejection. Capture the toolbar with the rule still active, its updated count and no selected frames, plus the rejected frames in the strip. Do not change grades on a live catalog to obtain this state.
 - `sequence-select-rule.png` — pages: screening

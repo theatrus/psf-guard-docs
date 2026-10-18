@@ -221,7 +221,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   tracking issues, off target or unsolved—to list its frames in strip order, with
   their times and scores. Click a frame to move to it in the strip without changing
   your selection. Click the pill again to close the list.</p>
-  <!-- SHOT: sequence-issue-frames.png | Golf of Mexico, ultra cat, G · All sessions (612). Open 7 cloud events to show the Likely clouds list. Click Jun 28, 02:09 AM, score 65 (frame 9568): the cursor moves and 0 selected remains. Show the selected All sessions tab, issue pill, list with times and scores, and chart. Use the verified link in SCREENSHOT-PLAN.md. Do not grade frames. | Open an issue to find its frames without changing your selection. -->
+  <figure>
+    <img src="../assets/sequence-issue-frames.jpg" alt="Golf of Mexico G all-sessions chart with seven likely-cloud frames, the 02:09 AM frame highlighted, and zero selected." width="3138" height="1016" loading="lazy">
+    <figcaption>Open an issue to find its frames without changing your selection. The highlighted frame scores 65 across the 612 G frames.</figcaption>
+  </figure>
 
   <h3 id="chart">Score chart</h3>
   <p>The chart draws one bar per frame, in capture order from left to right, even when <strong>View › Sort › Newest first</strong> turns the strip around. A dot under each bar gives the frame's grade: green for accepted, red for rejected, faint grey for pending. A bar's tooltip starts with the grade and the reject reason. The dots change as you grade, undo and redo.</p>
@@ -229,7 +232,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <h3 id="cutoff">Cutoff</h3>
   <p><strong>Cutoff</strong> measures <strong>Score</strong>, <strong>Stars</strong> or <strong>HFR</strong>. The chart's bars, its dashed line, the slider, the marked cards and the cutoff rule under <strong>Select</strong> follow the measure chosen. The score cutoff reads 0 to 100, as the chips do. A lower score and fewer stars fall below the cutoff; a larger HFR falls above it.</p>
   <p>The Stars and HFR sliders run over the star counts and HFR the cards show for the session on screen. Their cutoff starts where the score's own star or HFR term reaches zero under the view's <strong>Star loss</strong> or <strong>HFR rise</strong> penalty: at 100%, 40% fewer stars than the session's 90th percentile, or an HFR 30% over its 10th. The cutoff is kept as a share of that reference, so it means the same on every session tab and filter. The address keeps the measure as <code>cutoffBy</code> and each measure's cutoff on its own key, <code>cutoff</code>, <code>starCutoff</code> or <code>hfrCutoff</code>, so switching back finds the cutoff where you left it.</p>
-  <!-- SHOT: sequence-cutoff-hfr.jpg | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM. Cutoff set to HFR, its slider placed just above the bulk of the readings so the three Soft Stars frames' bars rise above the dashed line in the poor colour. Grade dots under the bars (green, red and grey all present); the pointer resting on a rejected bar so its tooltip shows "Rejected: …". Crop: the toolbar, the session tabs, the chart and the first row of cards. | Cutoff set to HFR. The bars, the dashed line and the marked cards follow it; the dots under the bars give each frame's grade. -->
+  <figure>
+    <img src="../assets/sequence-cutoff-hfr.jpg" alt="Golf of Mexico H-alpha session with an HFR cutoff of 1.84 and three Soft Stars frames above the line." width="3138" height="1650" loading="lazy">
+    <figcaption>The first three frames have HFR values of 6.62, 6.28 and 5.99, above the 1.84 cutoff. The red dots show their stored Rejected grades; changing the cutoff does not grade frames.</figcaption>
+  </figure>
 
   <h3 id="select">Select frames by rule</h3>
   <p>Use <strong>Select</strong> to select frames by a rule. Each option describes its
@@ -381,7 +387,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p><strong>Max HFR</strong> and <strong>Min stars</strong> reject only past a fixed line. A frame past a limit is capped and gets an <code>[Auto]</code> reject recommendation, whatever the rest of the sequence looks like. A frame missing the measurement is exempt. An empty limit is off. A value outside the ranges above is refused and shown, never quietly changed.</p>
   <p>One limit is always on: <strong>Sensor Temperature</strong>. A frame whose sensor ran more than 10 °C warmer than the median of its session, or more than 20 °C above the cooler's set point, is capped and recommended for rejection. Dark current and hot pixels climb steeply with temperature, and no dark shot at the set point removes them. Colder never flags, and a frame with no temperature reading is exempt.</p>
   <p>The zero-star cap does not scale. The CLI takes <code>--ignore-satellites</code>, <code>--max-hfr</code> and <code>--min-stars</code>; API callers pass <code>penalty_satellite</code>, <code>penalty_pointing</code>, <code>penalty_temporal</code>, <code>penalty_hfr_rise</code>, <code>penalty_star_loss</code>, <code>hfr_reject_above</code>, <code>star_count_reject_below</code> or <code>sensor_temp_tolerance_c</code>.</p>
-  <!-- SHOT: scoring-popover.png | Sequence for project Golf of Mexico (rig "ultra cat"), session tab HA · Jul 9, 2026, 10:08 PM, after setting HFR rise to 150% and Star loss to 50% in the toolbar. The Scoring popover open: its button reads "Scoring (changed)"; Penalties lists Satellite trails, Pointing, Temporal anomalies, HFR rise and Star loss, the two changed sliders marked; Reject limits shows Max HFR and Min stars; below them "Changed for this view. Edit defaults", Reset to default and Save as default. Crop: the Scoring button and its open popover. | The Scoring popover. A change applies to this view until you save it as your default. -->
+  <figure>
+    <img src="../assets/scoring-popover.jpg" alt="Scoring popover with HFR rise at 150 percent and Star loss at 50 percent, marked Changed for this view." width="564" height="698" loading="lazy" style="max-width:420px">
+    <figcaption>HFR rise and Star loss have changed for this view. Save as default would apply them to future views; Reset to default restores the saved settings.</figcaption>
+  </figure>
 
   <h3 id="scoring-defaults">Defaults and the current view</h3>
   <p>Every view starts from your scoring defaults, set in <strong>Settings › Review › Sequence scoring</strong>. Each field shows its built-in value. <strong>Save defaults</strong> stores your changes, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
