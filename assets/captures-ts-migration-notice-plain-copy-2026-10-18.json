@@ -1,0 +1,81 @@
+{
+  "source_commit": "21711bab3b84b0f80ab22fc46dc3a3fc3e9ac6df",
+  "url": "http://127.0.0.1:21083/docs/new-in-0.12.html",
+  "reshoot": "Serve the repository root on localhost. Open /docs/new-in-0.12.html in the Codex in-app browser. Set the recorded CSS viewport, keep scroll at 0 and phone navigation collapsed, capture the viewport, then reset the viewport. Save the returned JPEG bytes as .jpg. No app, catalog or account state is involved.",
+  "captures": [
+    {
+      "device_scale_factor": 1,
+      "horizontal_overflow": false,
+      "notice_rect_css": {
+        "height": 203.5546875,
+        "width": 824,
+        "x": 372,
+        "y": 287.8984375
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "viewport_css": {
+        "height": 720,
+        "width": 1280
+      },
+      "file": "ts-migration-notice-desktop-plain-copy.jpg",
+      "source_commit": "21711bab3b84b0f80ab22fc46dc3a3fc3e9ac6df",
+      "time_utc": "2026-10-18T19:53:49.232253+00:00",
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "height": 720,
+        "width": 1280
+      },
+      "pixels": [
+        1280,
+        720
+      ],
+      "sha256": "c3a2cddb46fe3647bcedc9b5438fd2d4c6923538e612077c4b5396be2228af2e",
+      "format": "JPEG",
+      "capture_method": "Codex in-app browser screenshot, full viewport, unchanged returned bytes.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "state": "New in 0.12 at page top. Informational notice with the approved title and two paragraphs. Desktop sidebar visible; phone navigation collapsed. The entire notice fits in both captures."
+    },
+    {
+      "device_scale_factor": 1,
+      "horizontal_overflow": false,
+      "notice_rect_css": {
+        "height": 330.234375,
+        "width": 350,
+        "x": 20,
+        "y": 474.3671875
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "viewport_css": {
+        "height": 844,
+        "width": 390
+      },
+      "file": "ts-migration-notice-mobile-plain-copy.jpg",
+      "source_commit": "21711bab3b84b0f80ab22fc46dc3a3fc3e9ac6df",
+      "time_utc": "2026-10-18T19:54:05.959198+00:00",
+      "crop_css": {
+        "x": 0,
+        "y": 0,
+        "height": 844,
+        "width": 390
+      },
+      "pixels": [
+        390,
+        844
+      ],
+      "sha256": "3d31fa06f1124e5c015088d33124ff97cca3d08bf44396ae542d98ed1c9dedfa",
+      "format": "JPEG",
+      "capture_method": "Codex in-app browser screenshot, full viewport, unchanged returned bytes.",
+      "browser": "Codex in-app browser; exact browser version not recorded.",
+      "theme": "Dark site theme",
+      "state": "New in 0.12 at page top. Informational notice with the approved title and two paragraphs. Desktop sidebar visible; phone navigation collapsed. The entire notice fits in both captures."
+    }
+  ]
+}

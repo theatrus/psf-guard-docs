@@ -1987,3 +1987,36 @@ or catalog data changed. The temporary viewport override was reset afterward.
 - **State and reshoot:** New in 0.12 at page top. Direct Target Scheduler notice uses callout info. Desktop sidebar open; phone navigation collapsed. The lower part of the notice continues below the phone viewport. Serve the recorded docs checkout, open that URL and leave page scroll at `(0, 0)`.
 - **Composition:** viewport 390 × 844 CSS px, DPR 1; full viewport, no crop, image editing or annotations.
 - **Verification:** desktop notice, heading and both paragraphs visible. Phone has no horizontal overflow; its notice continues below the viewport.
+
+## 2026-10-18: approved catalog notice wording
+
+Source: local preview of commit `21711bab3b84b0f80ab22fc46dc3a3fc3e9ac6df`, served from this worktree
+on port 21083. [Capture manifest](captures-ts-migration-notice-plain-copy-2026-10-18.json).
+The earlier images and records remain unchanged.
+
+### assets/ts-migration-notice-desktop-plain-copy.jpg
+
+- Page: `/docs/new-in-0.12.html`, scroll 0, 0; default desktop navigation.
+- Viewport and crop: 1280 × 720 CSS px, DPR 1; 1280 × 720 image pixels.
+- State: informational catalog notice, with the approved title and two paragraphs.
+  The complete notice is visible. Dark site theme; no app or catalog state.
+- Method: Codex in-app browser viewport screenshot. The tool returned JPEG bytes;
+  the file preserves them without edits. Exact browser version was not recorded.
+- Reshoot: serve the recorded source, open the page, set this viewport, stay at the
+  top, capture, then reset the viewport.
+
+### assets/ts-migration-notice-mobile-plain-copy.jpg
+
+- Page and content state: as above, with phone navigation collapsed.
+- Viewport and crop: 390 × 844 CSS px, DPR 1; 390 × 844 image pixels.
+- The complete notice is visible, with no horizontal overflow.
+- Method and reshoot: as above, using this phone viewport.
+
+### Correction to the earlier notice capture metadata
+
+The earlier `ts-migration-notice-desktop.png` and
+`ts-migration-notice-mobile.png` files contain JPEG bytes despite their names.
+Their recorded pixel arrays came from reading those bytes as a PNG header and
+are invalid. The actual image sizes are 1280 × 720 and 390 × 844 pixels.
+The original files and entries stay in the record; use this reshoot for the
+current wording and its verified dimensions.
