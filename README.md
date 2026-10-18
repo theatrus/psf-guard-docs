@@ -41,7 +41,9 @@ Follow the [documentation writing guide](CONTRIBUTING.md). It covers direct
 instructions, natural wording, technical accuracy and checks before committing.
 
 - Screenshots come from a live PSF Guard server or the main repository's
-  `docs/` folder. Refresh one by replacing its file in `assets/`.
+  `docs/` folder. Refresh one by replacing its file in `assets/`. Record each
+  capture's source, UI state and reshoot steps in the
+  [capture record](assets/screenshot-captures.md), alongside the image change.
 - Run `npm run build` after modifying the shared top bar or documentation
   navigation, then commit the generated HTML files along with the template
   changes.

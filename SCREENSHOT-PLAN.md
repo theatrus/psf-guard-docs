@@ -226,8 +226,11 @@ and progress/Stop shots. No builds or settings changes were started during scout
 Every entry comes from a comment in the pages: `<!-- RESHOOT: file | what -->`
 above an image to redo, `<!-- SHOT: file | what | caption -->` where a new
 image goes. Edit the comment, not this list, then run `npm run shots`. When an
-image is captured, replace its `SHOT` comment with the `<figure>`, or delete
-its `RESHOOT` comment. Delete this file once no comments remain.
+image is captured, first add its actual state and reshoot steps to the
+[permanent capture record](assets/screenshot-captures.md). Commit that entry
+with the image, then replace its `SHOT` comment with the `<figure>`, or delete
+its `RESHOOT` comment. Delete this plan once no comments remain; keep the
+capture record and its history.
 
 ## Redo (existing images) (55)
 

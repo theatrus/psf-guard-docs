@@ -99,6 +99,12 @@ Keep guides focused on one task or subject. When splitting a guide, preserve
 its content, update links and navigation, and keep old section bookmarks
 working. Keep screenshot instructions with the section they describe.
 
+For every screenshot capture or reshoot, add its actual source, UI state,
+build, viewport, crop and reshoot steps to the
+[capture record](assets/screenshot-captures.md). Commit the entry with the
+image. Keep earlier entries when replacing an image. Planned shots and
+scouting notes are not capture records.
+
 Before committing:
 
 - Run `npm run build` after changing shared navigation or adding pages.
