@@ -1510,3 +1510,41 @@ SHA-256 hashes, dimensions and page references match the saved files. Both helpe
 scripts compile. `npm run shots`, `npm run build`, `npm run check` and
 `git diff --check` passed; the checks covered 35 pages and 26 old calibration
 bookmarks. The 11 remaining shots and their prerequisites stay in the shot plan.
+
+## Satellite follow-up — October 17, 2026
+
+### assets/satellite-pixel-match.png
+
+#### 2026-10-18 02:36:39 UTC — replacement for the California overlay
+
+- **File:** 3138 × 2166 px, PNG; SHA-256 `0683cd969d69006cb73282ac367045a8eb5f5ef37d235852897bf9bffce6b524`.
+- **Used by:** `docs/satellites.html`, opening figure. Replaces the old
+  `satellite-california-overlay.png`; the target is SNR G132.
+- **Build/environment:** same live-server session as the full guide pass,
+  `psf-guard.atpn.co`; version last observed as 0.11.0, deployed commit unknown.
+  macOS 27.0.1, Chrome 155.0.8059.82, English, dark theme, 90% browser zoom.
+  Viewport 1744 × 1204 CSS px; effective DPR 1.8.
+- **Source:** starfront-ultracat131, database `db-93617230`, SNR G132, project 6,
+  target 6, frame 1166, R, 300 s. Displayed capture time October 8, 2026,
+  2:21:19 AM; displayed time zone was not independently checked. The numeric
+  frame ID is verified; the source filename and GUID were not read.
+- **URL:** https://psf-guard.atpn.co/#/detail/1166?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence
+- **UI state:** Image Information, Quality analysis, Calibration and Sky context
+  collapsed. Sky overlay off. Satellite tracks expanded, Track identifiers on.
+  Fit zoom (65%), Color enabled. Cached result; no scan started.
+- **Observed state:** Accepted grade, 99% quality score; five crossings, two
+  high-risk predictions, one pixel match. BREEZE-M DEB (TANK) [40366] is marked
+  pixel match, possible risk, 53%. The other four are prediction only. Element
+  source Seiza mirror; Elements for 10/8/2026, 5:00:00 AM as displayed. The UI
+  states that pixel corridor evidence supports one orbital candidate and that
+  identity remains a candidate association. The score and grade are observations,
+  not a new grading recommendation.
+- **Reshoot:** open the URL; wait for the preview and cached satellite results.
+  Turn off Sky overlay before collapsing Sky context. Collapse the other three
+  panels, expand Satellite tracks, enable Track identifiers, then click Fit.
+  Check that the green fitted path and all five candidate rows are visible.
+  Do not press Identify satellite tracks or change the stored grade.
+- **Composition:** full viewport; CSS crop (0, 0, 1744, 1204), CDP clip
+  (0, 0, 1569.6, 1083.6), scale 1. Direct browser PNG; no retouching or redaction.
+- **Verification:** inspected the saved image: target heading, green matched
+  path, candidate label, counts and identity qualification are legible.

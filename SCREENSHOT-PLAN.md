@@ -1,13 +1,14 @@
 # Screenshot plan — docs site, next release
 
-The October 17 capture passes now cover **104 assets**: ten from the earlier
-batches and 94 from the full-guide pass (93 screenshots and one rebuilt collage).
+The October 17 capture passes now cover **105 assets**: ten from the earlier
+batches, 94 from the full-guide pass (93 screenshots and one rebuilt collage),
+and the SNR G132 satellite follow-up.
 Captures include the available live-server views and settings, phone layouts,
 calibration comparisons, planning states, queued processing and local import and
 grading examples. Every image has a state, source and reshoot record in
 [assets/screenshot-captures.md](assets/screenshot-captures.md).
 
-The generated lists below contain the **11 remaining shots**. They remain pending;
+The generated lists below contain the **10 remaining shots**. They remain pending;
 their prerequisites must be met before replacing the old image or adding a figure.
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
@@ -17,7 +18,6 @@ and differences from the original plan.
 | Shot | What still prevents the planned capture |
 |---|---|
 | `astrobin-filter-map.png` | The current filter-map dialog clips its rightmost controls. Reproduced on both the live server and local build; fix the layout before reshooting. Unsaved rows were discarded. |
-| `satellite-california-overlay.png` | The California candidate has no verified cached pixel match. A prediction alone is not enough. Find a cached matched trail or process a suitable frame in a disposable catalog. |
 | `settings-server.png` | The installed desktop app uses the old setup dialog. A current native build with an isolated registry is needed; the browser server has no Server tab. |
 | `header-transfers.png` | No contribution transfer is active; the inspected visit has no accepted files to send. |
 | `plan-send-again.png` | No remote peers are configured. Needs a disposable peer and an activation that has not reached it. |
@@ -31,6 +31,14 @@ and differences from the original plan.
 For reshoots that require writes, use the disposable fixture or a disposable copy
 with the required real inputs. Do not stage grades, repairs, transfers, activations
 or processing jobs on the live catalogs. Never fabricate a measured finding.
+
+## Satellite overlay: captured October 17
+
+The user supplied SNR G132 frame 1166 in `db-93617230`, project and target 6.
+The 300-second R exposure shows five crossings and one pixel match for the
+BREEZE-M debris candidate (40366). The saved figure includes the green fitted
+path and the complete Satellite tracks panel. Its caption distinguishes the
+pixel match from proof of identity. No scan or grading change was needed.
 
 ## 0.12 highlights: captured October 17
 
@@ -190,10 +198,9 @@ another California Nebula project in the library, so choose the rig explicitly.
   Compare the frame with other nights before deciding whether to keep it.”
 - **G · All sessions (106)** also shows **11 cloud events**. Use it as an
   alternative issue-list example; the expanded list still needs inspection.
-- Keep California for `satellite-california-overlay.png`. The October 17–20,
-  2025 G sessions exist, but frame 561 is only a candidate: a pixel-aligned
-  satellite match has not been verified. Inspect cached satellite results
-  before choosing the exact frame. Do not label a prediction as pixel evidence.
+- California frame 561 remained unverified. The completed satellite shot now
+  uses SNR G132 frame 1166 on starfront-ultracat131, with one cached pixel match.
+  See `satellite-pixel-match.png` in the capture record.
 - Library context at inspection: 997 accepted, 1,195 rejected, no pending,
   with captures from October 17, 2025 through October 16, 2026.
 
@@ -247,12 +254,10 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (2)
+## Redo (existing images) (1)
 
 - `astrobin-filter-map.png` — pages: exporting
   - Settings › Databases in the new card layout, one rig's catalog › AstroBin filters (pick a catalog with a filter that changed between nights, or add a dated second G entry): the filter map with name, AstroBin id linked to its page, description, and first and last nights; crop to the filter map
-- `satellite-california-overlay.png` — pages: satellites
-  - Image detail of a frame with pixel-aligned satellite trails: California Nebula on ultra cat, project 4, has G sessions on October 17–20, 2025. Inspect cached results to choose a frame with a verified pixel match; frame 561 is a starting candidate, not a confirmed match. See SCREENSHOT-PLAN.md. If no cached match exists, prepare this shot in a disposable local catalog. Track identifiers on, dashed predictions and solid green fitted paths on the frame. Side panels with their fold chevrons: the other panels folded to one line each, Satellite tracks open with its Pixel aligned badge, Track identifiers on, Crossings, Bright risk, Pixel matches, Exposure, Element source and the track list. Crop: the frame and the side panel.
 
 ## New screenshots (9)
 
