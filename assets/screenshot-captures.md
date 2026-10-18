@@ -1614,3 +1614,21 @@ counts or flat-change notes requested by the original shot plan.
 `<value> free at start.` in the app source. The saved progress image still shows
 the live server's earlier wording. Replace it after that UI change is deployed;
 keep these entries as the record of the current image.
+
+## Homepage hero review — October 17, 2026
+
+Re-rendered `hero-flow.jpg` at 2400 × 1500 with `scripts/screenshot-hero.py`.
+The wider mosaic selection and full California preview replace the planning
+overview and portrait color card. The four steps remain in reading order.
+
+- Sources: `release-012-mosaic-editing.jpg`, `activation-preview.png`,
+  `sequence-session.jpg`, `stack-foraxx-california.jpg`.
+- Activation crop: (0, 0) to (1642, 1120). It includes the first rig's planned
+  exposures and complete Turns off warning. The guide retains the full dialog.
+- Other sources fit without cropping. No UI text or image content was retouched.
+- These show four projects, not one project's capture history.
+- Review covered the three release highlights, the hero sources, Iris grid,
+  the pixel-matched satellite capture and WBPP setup/progress. The selected
+  sources have no loading placeholders. Detailed UI text belongs in the guides;
+  the hero shows the four tasks and their results.
+- SHA-256: `db3a8bc75443a2b55bcfd1b29eef52576d0bcab58498543a06996c661093150d`.
