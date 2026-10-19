@@ -287,6 +287,26 @@ Check the deployed UI in the browser before any capture. Color composition
 queue text also requires #923 (`7b80f3e8`). Keep captures pending until the
 server includes the changes the screenshot needs.
 
+## Live follow-up — October 18, 2026
+
+Verified the updated WBPP cards and Server information dialog in signed-in
+Chrome on psf-guard.atpn.co. The page reports build `d0d649b7c615f7f7` and the
+server reports version 0.12.0; the deployed Git commit is unknown. Added the
+WBPP card comparison, the top and scrolled Server information states, and the
+channel-copy control. The [capture record](assets/screenshot-captures.md)
+and [manifest](assets/captures-live-followup-2026-10-18.json) record their actual
+state and reshoot steps.
+
+The channel-copy image shows the existing Sh2 119 HOO editor before copying,
+with each channel's available steps listed. It does not claim that different
+settings were copied or applied. Only the disclosure was opened.
+
+No transfer or RC-Astro color composition was running in the jobs list. Heart
+and Soul was not activated; the M31 NINA TEST COLLAB plan was activated without
+a resend notice. No finished export summary was visible in the Library. These
+four state-dependent shots remain pending. No export, transfer, activation,
+stack build or processing was started to stage an image.
+
 ## How to update this plan
 
 Every entry comes from a comment in the pages: `<!-- RESHOOT: file | what -->`
@@ -301,7 +321,7 @@ capture record and its history.
 ## Redo (existing images) (0)
 
 
-## New screenshots (7)
+## New screenshots (4)
 
 - `export-left-out.png` — pages: exporting
   - Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
@@ -309,11 +329,5 @@ capture record and its history.
   - Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
 - `plan-send-again.png` — pages: rigs
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
-- `server-information-scroll.png` — pages: configuration
-  - Wait for the main server build with the Server information dialog fix. Open Menu, Server information with enough configured databases to scroll. Capture the separate version, cache folder, database ID, database file and image-folder labels, with the heading and Done still visible after scrolling. Record deployed build and scroll position; redact private server paths before publishing.
 - `stack-color-progress.png` — pages: stacking
   - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
-- `stack-copy-channel-processing.png` — pages: stacking
-  - In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot.
-- `wbpp-color-card.png` — pages: stacking
-  - Wait for the main server build containing #919. Open Heart and Soul on askar107 (db-a01c581c, project 20) in Stacks. Show the WBPP card under Combine channel stacks beside PSF Guard exposure cards and a source label such as R (WBPP, 300 s). Verify the deployed source and actual labels before capture. Do not start a build solely for the screenshot.

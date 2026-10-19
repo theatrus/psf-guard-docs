@@ -1,0 +1,185 @@
+{
+  "captures": [
+    {
+      "filename": "server-information.jpg",
+      "dimensions": [
+        1412,
+        1412
+      ],
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=20&target=26",
+      "css_crop": [
+        480,
+        179,
+        785,
+        785
+      ],
+      "cdp_clip": [
+        432,
+        161.1,
+        706.5,
+        706.5
+      ],
+      "dialog_scroll_top": 0,
+      "observed": "Server information, version 0.12.0, cache ./cache, five catalogs; first two database entries and start of askar107phq visible. Heading, close button and Done visible.",
+      "redactions": "Replaced server mount prefixes in Database file and Image folders with [server path hidden] in the capture tab only; original text restored afterward.",
+      "sha256": "07a2008af17586edb540c2418f6991836b17d8bcdbfdf69fb3591fcde513793e",
+      "captured_utc": "2026-10-19T01:44:03.486912+00:00",
+      "captured_local": "2026-10-18T18:44:03.486912-07:00",
+      "format": "JPEG",
+      "environment": {
+        "os": "macOS 27.0.1",
+        "browser": "Chrome 155.0.8059.82",
+        "locale": "en-US",
+        "timezone": "America/Los_Angeles",
+        "theme": "dark",
+        "viewport_css": {
+          "width": 1744,
+          "height": 1142
+        },
+        "device_pixel_ratio": 1.7999999523162842,
+        "browser_zoom": 0.9,
+        "visual_viewport_scale": 1,
+        "frontend_build": "d0d649b7c615f7f7",
+        "server_version": "0.12.0",
+        "deployed_git_commit": "unknown",
+        "method": "Chrome Page.captureScreenshot, JPEG quality 95, fromSurface true, captureBeyondViewport false, clip scale 1"
+      }
+    },
+    {
+      "filename": "server-information-scroll.jpg",
+      "dimensions": [
+        1412,
+        1412
+      ],
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=20&target=26",
+      "css_crop": [
+        480,
+        179,
+        785,
+        785
+      ],
+      "cdp_clip": [
+        432,
+        161.1,
+        706.5,
+        706.5
+      ],
+      "dialog_scroll_top": 717.2222290039062,
+      "observed": "Server details focused and Page Down pressed. Last two database names c925-scheduler and ultra cat visible; end of askar107phq entry above. Heading, close button and Done remain visible. Body clientHeight 656, scrollHeight 1373.",
+      "redactions": "Same path-prefix replacement as the first image; original text restored before closing the dialog.",
+      "sha256": "c3e93ec5fd4a0229c527597bdccef32950edc90a2e9be73cb759b0219ea40e62",
+      "captured_utc": "2026-10-19T01:44:28.493239+00:00",
+      "captured_local": "2026-10-18T18:44:28.493239-07:00",
+      "format": "JPEG",
+      "environment": {
+        "os": "macOS 27.0.1",
+        "browser": "Chrome 155.0.8059.82",
+        "locale": "en-US",
+        "timezone": "America/Los_Angeles",
+        "theme": "dark",
+        "viewport_css": {
+          "width": 1744,
+          "height": 1142
+        },
+        "device_pixel_ratio": 1.7999999523162842,
+        "browser_zoom": 0.9,
+        "visual_viewport_scale": 1,
+        "frontend_build": "d0d649b7c615f7f7",
+        "server_version": "0.12.0",
+        "deployed_git_commit": "unknown",
+        "method": "Chrome Page.captureScreenshot, JPEG quality 95, fromSurface true, captureBeyondViewport false, clip scale 1"
+      }
+    },
+    {
+      "filename": "wbpp-color-card.jpg",
+      "dimensions": [
+        2036,
+        1336
+      ],
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=20&target=26&cardsize=550",
+      "css_crop": [
+        306,
+        365,
+        1132,
+        743
+      ],
+      "cdp_clip": [
+        275.4,
+        328.5,
+        1018.8,
+        668.7
+      ],
+      "scroll_top": "not recorded; crop was measured from the visible cards",
+      "observed": "Heart and Soul Nebula, askar107phq (db-a01c581c), project 20, target 26. Separate exposure groups on, card size 550. Completed RGB 10 s and WBPP RGB cards. Own preview out of date, 291 integrated inputs, 49m, 308 calibration stars, R gain 1.32/B 0.99. WBPP sources R/G/B (WBPP, 10 s); color calibration skipped because reference frame not plate solved. Both show 24/24 steps. Background subtract, deconvolution off, RC-Astro off, color calibration on.",
+      "redactions": "none",
+      "sha256": "9453923682cc85e6afac58641565e752af977338c700f1a3124e11aafdcb9bea",
+      "captured_utc": "2026-10-19T01:45:58.538027+00:00",
+      "captured_local": "2026-10-18T18:45:58.538027-07:00",
+      "format": "JPEG",
+      "environment": {
+        "os": "macOS 27.0.1",
+        "browser": "Chrome 155.0.8059.82",
+        "locale": "en-US",
+        "timezone": "America/Los_Angeles",
+        "theme": "dark",
+        "viewport_css": {
+          "width": 1744,
+          "height": 1142
+        },
+        "device_pixel_ratio": 1.7999999523162842,
+        "browser_zoom": 0.9,
+        "visual_viewport_scale": 1,
+        "frontend_build": "d0d649b7c615f7f7",
+        "server_version": "0.12.0",
+        "deployed_git_commit": "unknown",
+        "method": "Chrome Page.captureScreenshot, JPEG quality 95, fromSurface true, captureBeyondViewport false, clip scale 1"
+      }
+    },
+    {
+      "filename": "stack-copy-channel-processing.jpg",
+      "dimensions": [
+        1004,
+        324
+      ],
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=5&target=5&cardsize=550",
+      "css_crop": [
+        310,
+        494,
+        558,
+        181
+      ],
+      "cdp_clip": [
+        279,
+        444.6,
+        502.2,
+        162.9
+      ],
+      "scroll_top": 386.6666870117187,
+      "observed": "Sh2 119, starfront-redcat61 (db-49b9f973), project/target 5. Existing HOO 600 s color composition, Processing stack expanded. Summary: background subtract, deconvolution off, RC-Astro 4, H-alpha/OIII one stretch each, RGB zero stages. Channel cards helper lists BlurXTerminator and NoiseXTerminator for both H-alpha and OIII. Both channel cards show RC-Astro x2 applied to the previous stack. This is before copying, not an after-copy example; no copy or Apply action was performed.",
+      "redactions": "none",
+      "sha256": "37f23d0852e02c63c598b36d03b98de8cf74fc3c395a4a246fb7d65016ee36ac",
+      "captured_utc": "2026-10-19T01:52:17.474688+00:00",
+      "captured_local": "2026-10-18T18:52:17.474688-07:00",
+      "format": "JPEG",
+      "environment": {
+        "os": "macOS 27.0.1",
+        "browser": "Chrome 155.0.8059.82",
+        "locale": "en-US",
+        "timezone": "America/Los_Angeles",
+        "theme": "dark",
+        "viewport_css": {
+          "width": 1744,
+          "height": 1142
+        },
+        "device_pixel_ratio": 1.7999999523162842,
+        "browser_zoom": 0.9,
+        "visual_viewport_scale": 1,
+        "frontend_build": "d0d649b7c615f7f7",
+        "server_version": "0.12.0",
+        "deployed_git_commit": "unknown",
+        "method": "Chrome Page.captureScreenshot, JPEG quality 95, fromSurface true, captureBeyondViewport false, clip scale 1"
+      }
+    }
+  ],
+  "data_changes": "No builds, processing, transfers, exports or activation were started for these images. No grades, catalog settings or plans changed. Card size changed only through URL state. Browser-only path redactions were restored."
+}

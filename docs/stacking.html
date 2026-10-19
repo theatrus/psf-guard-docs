@@ -684,7 +684,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   without exposure groups, you can also use the card's source menus.</p>
   <p>PSF Guard does not automatically mix its stacks with WBPP masters. Choose
   each input yourself when you want a mixed combination.</p>
-  <!-- SHOT: wbpp-color-card.png | Wait for the main server build containing #919. Open Heart and Soul on askar107 (db-a01c581c, project 20) in Stacks. Show the WBPP card under Combine channel stacks beside PSF Guard exposure cards and a source label such as R (WBPP, 300 s). Verify the deployed source and actual labels before capture. Do not start a build solely for the screenshot. | Combine imported WBPP masters in their own color card, or choose individual inputs in Custom combination. -->
+  <figure>
+    <img src="../assets/wbpp-color-card.jpg" alt="Heart and Soul RGB cards from PSF Guard stacks and WBPP masters, with separate sources labelled by their 10 second sub-exposure" width="2036" height="1336" loading="lazy">
+    <figcaption>The <strong>WBPP</strong> card (right) keeps imported 10 s masters
+    separate from PSF Guard's stacks (left). The left preview is out of date;
+    WBPP color calibration was skipped because its reference frame was not solved.</figcaption>
+  </figure>
 
 
   <figure>
@@ -799,7 +804,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   while unchanged H-alpha and SII results are reused. Changing the reference stack
   reruns every channel: red for RGB, L for LRGB, or H-alpha for narrowband. With
   background extraction on, all channels rerun because they share a background model.</p>
-  <!-- SHOT: stack-copy-channel-processing.png | In a disposable local catalog, open a color composition's Processing stack with at least two channel cards showing different deconvolution or RC-Astro settings. Show Use each channel's processing and the per-input settings after clicking it, with enough of the channel cards to compare the copied choices. Do not Apply processing or save a setup solely for this screenshot. | Copy each channel card's deconvolution and RC-Astro settings into the color composition. -->
+  <figure>
+    <img src="../assets/stack-copy-channel-processing.jpg" alt="Use each channel's processing lists BlurXTerminator and NoiseXTerminator for both H-alpha and OIII" width="1004" height="324" loading="lazy">
+    <figcaption>The editor lists the steps each channel card would supply.
+    Here, Hα and OIII each list BlurXTerminator and NoiseXTerminator. This shows
+    the control before copying; no processing was applied for the screenshot.</figcaption>
+  </figure>
 
   <h3 id="setups">Save processing setups</h3>
   <p><strong>Setups</strong> at the top of <strong>View processing</strong> and the

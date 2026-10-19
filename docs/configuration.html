@@ -178,7 +178,16 @@ function gtag_report_demo() {
   <p>Loading or connection errors appear separately for server information and
   the database list. Use <strong>Retry server information</strong> or
   <strong>Retry databases</strong> for the failed request.</p>
-  <!-- SHOT: server-information-scroll.png | Wait for the main server build with the Server information dialog fix. Open Menu, Server information with enough configured databases to scroll. Capture the separate version, cache folder, database ID, database file and image-folder labels, with the heading and Done still visible after scrolling. Record deployed build and scroll position; redact private server paths before publishing. | Server information keeps its heading and close controls visible while the database details scroll. -->
+  <div class="shot-pair">
+    <figure>
+      <img src="../assets/server-information.jpg" alt="Server information with version, cache folder and separate database file and image-folder labels" width="1412" height="1412" loading="lazy">
+      <figcaption>Version, cache folder and database details. Server path prefixes are redacted.</figcaption>
+    </figure>
+    <figure>
+      <img src="../assets/server-information-scroll.jpg" alt="The database list scrolled to its last entries while Server information and Done remain visible" width="1412" height="1412" loading="lazy">
+      <figcaption>The heading and <strong>Done</strong> stay visible while the details scroll.</figcaption>
+    </figure>
+  </div>
 
   <h2 id="settings">Settings tabs</h2>
   <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> The
