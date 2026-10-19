@@ -261,6 +261,12 @@ function gtag_report_demo() {
     selection. Each filter's All sessions tab now starts its row with a distinct
     color bar, tint, bold label and date-range icon. Toolbar pills open their lists
     when clicked on the label or chevron as well.</li>
+    <li><strong>Keep Sequence charts in view.</strong> The summary, suspect pills
+    and score chart stay below the toolbar as you scroll. On short windows they
+    scroll with the page to leave room for frames. Click a <strong>Solved pointing</strong>
+    point, or focus it and press Enter, to move to its frame without changing your
+    selection. Collapse or expand the chart from its heading; PSF Guard remembers
+    the choice in this browser.</li>
     <li><strong>Review recent captures first.</strong> Choose <strong>Newest
     first</strong>; keyboard navigation, Compare and the detail view follow that order.
     New frames have a dot until your next visit from the Library. Images and Sequence
@@ -366,6 +372,19 @@ function gtag_report_demo() {
 
   <h2 id="stacks">Build, process and export stacks</h2>
   <ul>
+    <li><strong>Start builds without waiting for preparation.</strong>
+    <strong>Build stacks</strong>, <strong>Build current set</strong> and
+    <strong>Build</strong> on a channel card appear immediately as <strong>Preparing stack
+    build</strong>, with <strong>Preparing…</strong> on the button. PSF Guard
+    prepares frames in the background, then shows one build per channel. You can
+    stop preparation before channel builds are queued. If the server restarts
+    during preparation, start the build again.</li>
+    <li><strong>Check calibration and start exports sooner.</strong> Stack
+    preparation reads each calibration file's header once per request instead of
+    once per light, while other catalog requests can continue. The uncalibrated-lights
+    check, calibration report, AstroBin export and <strong>Export</strong> also read
+    the library once per request. <strong>Export</strong> skips the full image-folder
+    rescan before starting.</li>
     <li><strong>Choose new stretch modes.</strong> <a href="stacking.html#stretch-modes">Median
     anchor and Layered</a> add background, highlight and local-contrast controls.
     Layered also adjusts saturation while preserving color balance. Auto MTF remains
@@ -386,7 +405,9 @@ function gtag_report_demo() {
     of date, <strong>Build current set</strong> refreshes the card preview from the
     saved FITS. The card and jobs list show <strong>Waiting to render preview</strong>
     and <strong>Rendering preview</strong>; processing and downloads stay available.
-    Stopping preserves the stack, and a failure keeps the old preview.</li>
+    Stopping preserves the stack, and a failure keeps the old preview. A successful
+    refresh saves the new preview before reporting completion, so the card shows it
+    immediately.</li>
     <li><strong>Compose WBPP masters in their own card.</strong> <strong>Combine
     channel stacks</strong> shows a <strong>WBPP</strong> card alongside PSF Guard's
     stacks, including exposure groups. Source labels show the sub-exposure when
@@ -417,7 +438,10 @@ function gtag_report_demo() {
     <li><strong>Reapply processing after a rebuild.</strong> Refreshed stacks use the
     same stretch, deconvolution and RC-Astro choices automatically. The previous
     result stays visible with a progress label until processing finishes.
-    <strong>Re-apply processing when a stack refreshes</strong> is on by default.</li>
+    <strong>Re-apply processing when a stack refreshes</strong> is on by default.
+    After a build you start or take over, each channel's processing runs next,
+    ahead of your other queued builds. Processing after an automatic refresh
+    still waits for other work.</li>
     <li><strong>Map catalog filters to AstroBin.</strong> The filter editor offers
     missing catalog filters, fills in server-wide default IDs, and uses date pickers.
     Fields wrap to fit narrow windows.</li>

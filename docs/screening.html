@@ -209,18 +209,33 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>CLI screening reports <strong>OK</strong>, <strong>WARN</strong> and <strong>REJECT</strong> verdicts. A scan you start from the app may download the orbital elements it needs for satellite checks; opening Sequence and CLI regrades use the cache only. See <a href="satellites.html">Satellite Tracks</a>.</p>
 
   <h2 id="sequence">Work in Sequence</h2>
-  <p>Sequence, Images and the Calibration page share one compact toolbar: filter pills, the thumbnail size slider and the tools, with display settings under <strong>View</strong> and rarely used tools under <strong>⋯</strong>. In Sequence it holds <strong>Cutoff</strong>, <strong>Scoring</strong> and <strong>Select</strong>, and once frames are selected, the row below it offers <strong>Review rejection</strong>.</p>
+  <p>Sequence, Images and the Calibration page share one compact toolbar: filter pills, the thumbnail size slider and the tools, with display settings under <strong>View</strong> and rarely used tools under <strong>⋯</strong>. In Sequence it includes <strong>Cutoff</strong>, <strong>Scoring</strong> and <strong>Select</strong>, and once frames are selected, the row below it offers <strong>Review rejection</strong>.</p>
   <p>Images and Sequence mark where frames cross into another night or hour, with the night's date before its first frame. Nights split at each rig's local noon, not at midnight. <strong>Marks</strong> in the View panel, or <strong>Night and hour marks</strong> in Settings › Review, shows nights and hours, nights only, or no marks. <a href="grader.html#marks">Library &amp; Grader</a> covers the toolbar and the marks.</p>
 
   <p>Each filter's <strong>All sessions</strong> tab starts its row, with a bold
   label, bar, tint and date-range icon in the filter's color. Click anywhere on a
   toolbar pill with a list, including its label or chevron, to open the list.</p>
 
+  <p>The summary and score chart stay below the toolbar as you scroll through
+  frames. An open suspect list overlays the chart and scrolls independently, so
+  opening or closing it does not move the page. PSF Guard keeps the current frame
+  visible below the toolbar and open list. On short windows, such as a phone in
+  landscape, the summary and chart scroll with the page to leave room for frames.</p>
+
+  <h3 id="solved-pointing">Find a frame from its solved position</h3>
+  <p><strong>Solved pointing</strong> plots solved frame centers around the target
+  and marks the current frame with a ring. Click a point, or focus it and press
+  Enter, to move to that frame without changing your selection. Arrow-key navigation
+  continues from that frame. Click the chart heading to collapse or expand it.
+  The collapsed heading shows counts for solved frames and pointing issues.
+  PSF Guard remembers the collapsed state in the current browser.</p>
+  <!-- SHOT: sequence-docked-review.png | After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection. | Keep scores visible while browsing frames and use Solved pointing to find a frame. -->
+
   <h3 id="issues">Find frames with a specific issue</h3>
   <p>Click a suspect pill in the Sequence summary—cloud events, focus drift,
   tracking issues, off target or unsolved—to list its frames in strip order, with
   their times and scores. Click a frame to move to it in the strip without changing
-  your selection. Click the pill again to close the list.</p>
+  your selection. Click the pill again or press Escape to close the list.</p>
   <figure>
     <img src="../assets/sequence-issue-frames.jpg" alt="Golf of Mexico G all-sessions chart with seven likely-cloud frames, the 02:09 AM frame highlighted, and zero selected." width="3138" height="1016" loading="lazy">
     <figcaption>Open an issue to find its frames without changing your selection. The highlighted frame scores 65 across the 612 G frames.</figcaption>

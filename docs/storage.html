@@ -359,9 +359,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   its own counts:</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Heading</th><th>Holds</th></tr>
-      <tr><td><strong>Started by you</strong></td><td>Stack builds and processing runs, quality scans and duplicate checks you asked for, WBPP runs, a catalog refresh you asked for, and backups and transfers started by hand</td></tr>
-      <tr><td><strong>Automatic</strong></td><td>Quality backfill and the analysis of new frames, automatic scans, <strong>Measuring flats</strong>, <strong>Reading frame sites</strong>, catalog refreshes on expiry or at start, automatic stack refreshes and re-applies of processing, scheduled backups, and transfers a connection's policy queued</td></tr>
+      <tr><th>Heading</th><th>Jobs</th></tr>
+      <tr><td><strong>Started by you</strong></td><td>Stack preparation, builds and processing runs you start, reprocessing after your builds, quality scans and duplicate checks you asked for, WBPP runs, a catalog refresh you asked for, and backups and transfers started by hand</td></tr>
+      <tr><td><strong>Automatic</strong></td><td>Quality backfill and the analysis of new frames, automatic scans, <strong>Measuring flats</strong>, <strong>Reading frame sites</strong>, catalog refreshes on expiry or at start, automatic stack refreshes and reprocessing after those refreshes, scheduled backups, and transfers a connection's policy queued</td></tr>
     </table>
   </div>
   <p>Under each heading, jobs that need your attention come first, then running work,
@@ -372,6 +372,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
   </figure>
   <ul>
+    <li><strong>Preparing stack build.</strong> A build request appears immediately
+    while PSF Guard reads the frames and matches calibration. You can stop it
+    before channel builds are queued. Preparation does not survive a restart;
+    start the build again if the server restarts at this stage.</li>
     <li><strong>Queued.</strong> Stack builds, channel-processing runs and color
     compositions that need new tool results share one line; WBPP runs have another.
     Automatic color compositions and those waiting for another job to prepare the
@@ -384,7 +388,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     the arrow-to-top button (<strong>Move to top</strong>) moves a task to the
     front of its queue, including past automatic tasks. It runs after the
     current task finishes. The button is disabled when the task is already
-    next.</li>
+    next. With automatic reprocessing enabled, processing for a channel you
+    just built runs before your next queued build. See
+    <a href="stacking.html#reapply">Re-apply processing</a>.</li>
     <li><strong>Short color compositions.</strong> Compositions you start can run
     alongside stack builds when they reuse prepared channels, or need no
     deconvolution or RC-Astro and no other composition is preparing the same
@@ -394,7 +400,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     ahead</strong>. See <a href="stacking.html#color-during-builds">Compose color
     while stacks build</a>.</li>
     <li><strong>Waiting.</strong> Automatic work steps aside whenever yours runs. A
-    database quality analysis, an automatic stack refresh or a processing re-apply that
+    database quality analysis, an automatic stack refresh or automatic reprocessing that
     pauses shows which job it is waiting for and keeps its progress bar at the point
     where it paused. Waiting is normal, so these rows are drawn muted.</li>
     <li><strong>Needs you.</strong> Only jobs that need your attention use the warning
@@ -487,6 +493,8 @@ curl -X POST localhost:3000/api/stack-activity/&lt;job_id&gt;/cancel</code></pre
   and once more when the server stops cleanly. On start it puts the queue back
   before the automatic scheduler starts anything:</p>
   <ul>
+    <li>A request still at <strong>Preparing stack build</strong> is not restored.
+      Start it again after the server restarts.</li>
     <li>Stack builds, color compositions and channel-processing runs return
       from the journal, each prepared again from the current catalog. Color
       compositions use the same queue rules as new requests. A job whose database is

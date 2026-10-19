@@ -194,8 +194,18 @@ function gtag_report_demo() {
   <p>Click <strong>Build stacks</strong>. PSF Guard queues one build per target
   and filter, registers the frames with Seiza, and integrates them. It never
   mixes targets or filters. A channel already built from the same frames and
-  settings comes back at once. A channel with fewer than two frames is
+  settings reuses its saved result. A channel with fewer than two frames is
   skipped. <strong>Build</strong> on one card builds that channel alone.</p>
+  <p>The jobs list shows <strong>Preparing stack build</strong> immediately, and
+  the button shows <strong>Preparing…</strong>. Within each catalog, PSF Guard
+  prepares requests in the order received: it reads and scores the frames, then
+  matches calibration data.
+  Each calibration file's header is read once per request, while other catalog
+  requests can continue. Once preparation finishes, the panel and jobs list show
+  the channel builds, including matching builds already queued, running or complete.</p>
+  <p>You can stop preparation before channel builds are queued. A preparation
+  failure shows the reason. If the server restarts during preparation, start the
+  build again.</p>
   <p>Once the project has stacks, the button reads <strong>Build current
   set</strong>, and <strong>Rebuild current set</strong> builds every channel
   again even when nothing changed. Each card keeps its channel's last good
@@ -443,8 +453,8 @@ function gtag_report_demo() {
   as <code>H-alpha: BlurXTerminator (42%)</code>.</p>
   <!-- SHOT: stack-color-progress.png | Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
 
-  <p>The line survives a restart: queued and running builds and processing
-  runs come back in order. A server stop lets a running build checkpoint the
+  <p>Once preparation finishes, the build queue survives a restart. Queued and
+  running builds and processing runs return in order. A server stop lets a running build checkpoint the
   frames it has integrated, and the build resumes after the restart. See
   <a href="storage.html#stop">Storage &amp; Performance</a> for how the server
   stops, the job journal, and the share of processor cores each kind of work
@@ -861,11 +871,20 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <strong>Settings &rarr; Stacking &rarr; Stack previews &rarr;
   Processing</strong>, is on by default.</p>
   <ul>
-    <li>The re-apply waits until no refresh of its project is still settling,
-      then for the stack worker: anything you start and every stack build go
-      first. Meanwhile the header lists it under <strong>Automatic</strong> as
-      <strong>Re-applying processing</strong>, waiting, with what it waits
-      for.</li>
+    <li>After a build you start or take over, processing appears under
+      <strong>Started by you</strong> and runs next, ahead of your other queued
+      builds. For an R, G and B rebuild, the order is R build, R processing,
+      G build, G processing, then B build and processing. PSF Guard reserves the
+      next queue position for up to one minute while it checks the tools. New
+      work does not interrupt this processing once it starts.</li>
+    <li>After an automatic refresh, processing waits for the project's refresh
+      delay and for other builds and work you start to finish. The header lists
+      it under <strong>Automatic</strong> as <strong>Re-applying processing</strong>
+      and explains what it is waiting for. Work you start, or another automatic
+      refresh that is due, can interrupt it. It resumes when the worker is free.</li>
+    <li>If you stop a build, its completed channels wait for automatic reprocessing.
+      Stopping does not immediately start RC-Astro. Stopping a processing run lets
+      the next waiting run start.</li>
     <li>Until processing finishes, the card shows the previous stack's result, marked
       <code>From the previous stack · reprocessing</code> with the run's
       status. The new result then becomes the card's processing.</li>
@@ -876,8 +895,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       on its own.</li>
     <li>Your own <strong>Apply processing</strong> or <strong>Revert
       processing</strong> on the new stack replaces the re-apply.</li>
-    <li>Turning the setting off drops re-applies that have not started.</li>
+    <li>Turning the setting off cancels reprocessing that has not started. A
+      running job finishes, unless other work interrupts it; it then stays stopped.</li>
   </ul>
+  <p>Reprocessing survives restarts and keeps its priority as work started by you
+  or automatic work. A run interrupted by two consecutive restarts, or one that
+  cannot be restored, stays stopped and shows the reason.</p>
   <figure>
     <img src="../assets/stack-reprocessing.jpg" loading="lazy" alt="The card keeps the previous processed image visible while reprocessing waits." width="996" height="982">
     <figcaption>The card keeps the previous processed image visible while reprocessing waits.</figcaption>

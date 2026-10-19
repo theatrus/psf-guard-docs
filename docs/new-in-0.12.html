@@ -245,6 +245,10 @@ function gtag_report_demo() {
   select by score, star count or HFR. Save scoring defaults and tune the new HFR rise
   and Star loss penalties. Compact layouts use more of the screen, and signed-in
   users keep their view choices across browsers.</p>
+  <p>The Sequence summary and score chart stay below the toolbar as you scroll.
+  Click a <strong>Solved pointing</strong> point to move to its frame, or collapse
+  the chart from its heading. PSF Guard remembers the collapsed state in this browser.
+  On short windows, the charts scroll with the page to leave room for frames.</p>
   <p><a href="grader.html">Review images →</a> ·
   <a href="screening.html">Score and select frames →</a></p>
 
@@ -261,8 +265,13 @@ function gtag_report_demo() {
   and tool, supports Stop, and reuses unchanged channel results. Improved resampling removes
   cross-hatched bands from slightly rotated frames. Stacks, WBPP and exports use
   the same calibration settings and flat groups.</p>
-  <p>Engine updates reuse completed stacks and masters when their output is
-  unchanged. If only the display stretch or an OSC stack's color calibration
+  <p>Build requests appear immediately as <strong>Preparing stack build</strong>
+  while PSF Guard prepares the frames in the background. Calibration checks and
+  exports reuse one library read per request. With automatic reprocessing enabled,
+  each channel's saved processing runs after a build you start, ahead of your
+  other queued builds.</p>
+  <p>From 0.12 onward, engine updates reuse completed stacks and masters when
+  their output is unchanged. If only the display stretch or an OSC stack's color calibration
   needs an update, <strong>Build current set</strong> refreshes the card preview
   from the saved FITS. The stack and its processing stay available.</p>
   <h3>Adjust color while stacks build</h3>
@@ -310,8 +319,9 @@ function gtag_report_demo() {
     health pass reads every light's header. Frame-site discovery, calibration grading
     and flat measurements can add work, especially on a NAS. Jobs report progress
     and yield to work you start.</li>
-    <li><strong>Allow affected results to rebuild.</strong> Changes to stacking
-    output and dark grading can rebuild affected stacks and masters once. Later
+    <li><strong>Allow results to rebuild after upgrading from 0.11.</strong>
+    Stacks and masters rebuild once when you next use them. PSF Guard also
+    recalculates plate solves and satellite predictions from 0.11. Later
     engine updates reuse results when their output is unchanged. A display-only
     update refreshes card previews from the saved FITS. Updated noise measurement
     can lower reported SNR without a loss of signal.</li>
