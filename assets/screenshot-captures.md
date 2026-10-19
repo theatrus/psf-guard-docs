@@ -2045,3 +2045,146 @@ The earlier captures and records remain unchanged.
 - Scroll: x=0, y=418. Clicking the final notice paragraph brought it into
   view. All notice text is visible below the fixed header; no horizontal overflow.
 - Method: as above. Reshoot with this phone viewport and scroll, then reset it.
+
+## Live follow-up — October 18, 2026
+
+These four images use the updated, signed-in UI at
+`https://psf-guard.atpn.co`. The browser showed the separate WBPP color cards
+and the new Server information dialog before capture. Server information
+reported **0.12.0**, and the page's frontend build stamp was
+`d0d649b7c615f7f7`. The deployed Git commit is unknown; the build stamp is not
+a Git commit. The user reported that the server was up to date. No short color
+composition was active during this pass, so its new queue text was not captured.
+
+Shared environment: macOS 27.0.1, Chrome 155.0.8059.82, English (`en-US`),
+America/Los_Angeles, dark app theme. Viewport **1744 × 1142 CSS px**, effective
+DPR **1.7999999523162842**, browser zoom **90%**, visual viewport scale 1.
+Chrome's layout metrics confirmed the zoom. No viewport override was used.
+
+Method: Chrome `Page.captureScreenshot`, JPEG quality 95, `fromSurface: true`,
+`captureBeyondViewport: false`, clip scale 1. CDP clips below are 0.9 times the
+CSS crops. Files preserve the returned JPEG bytes without resizing, image
+editing, annotations or compositing. The cursor is absent. The
+[capture manifest](captures-live-followup-2026-10-18.json) records exact times,
+dimensions, hashes, crops and observed state.
+
+No stack build, processing run, export, transfer or activation was started.
+No grades, catalog settings or saved plans changed. Card size changed through
+URL state only. The only page-text changes were the server path redactions
+described below; the original text was restored before the dialog closed.
+
+### assets/server-information.jpg
+
+#### 2026-10-18 18:44 PDT — initial capture
+
+- **File:** 1412 × 1412 px, JPEG; SHA-256
+  `07a2008af17586edb540c2418f6991836b17d8bcdbfdf69fb3591fcde513793e`.
+- **Used by:** `docs/configuration.html#server-information`; the left image
+  in the pair shows the version, cache folder and database fields.
+- **Build/environment:** shared environment above.
+- **Source/URL:** Server information for all five configured catalogs, opened
+  over `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=20&target=26`.
+- **Observed state:** version 0.12.0; cache folder `./cache`; Databases (5).
+  The first two entries are starfront-redcat61 (`db-49b9f973`) and
+  starfront-ultracat131 (`db-93617230`); the start of askar107phq is below them.
+  Database ID, Database file and Image folders have separate labels.
+- **Preparation/reshoot:** open the URL, dismiss What's new if it appears
+  without checking Don't show again, then Menu → Server information. Wait for
+  both requests. Start with the dialog body at scrollTop 0. Redact private
+  server mount prefixes in the capture tab only, keeping the database IDs,
+  relative folders and filenames. Restore the original text after capture.
+- **Composition:** CSS crop `(480, 179, 785, 785)`; CDP clip
+  `(432, 161.1, 706.5, 706.5)`. The mount prefix in all 20 Database file and
+  Image folders values was replaced with `[server path hidden]` before capture;
+  the unchanged suffixes still wrap naturally. Cache folder was unchanged.
+- **Verification:** inspected the saved image. Title, close button, all top
+  fields, two database entries and Done are complete. Paths are redacted;
+  credentials, personal home paths and site coordinates are absent.
+
+### assets/server-information-scroll.jpg
+
+#### 2026-10-18 18:44 PDT — initial capture
+
+- **File:** 1412 × 1412 px, JPEG; SHA-256
+  `c3e93ec5fd4a0229c527597bdccef32950edc90a2e9be73cb759b0219ea40e62`.
+- **Used by:** `docs/configuration.html#server-information`; the right image
+  shows the fixed heading and Done after scrolling.
+- **Build, source and URL:** same dialog and environment as the preceding image.
+- **UI state:** Server details focused, Page Down pressed. Body scrollTop
+  **717.2222290039062 CSS px**, clientHeight 656, scrollHeight 1373. The end of
+  askar107phq's entry and the c925-scheduler (`db-d6eaaf55`) and ultra cat
+  (`db-e075b4ec`) entries are visible. The title, close button and Done stay in place.
+- **Preparation/reshoot:** follow the previous entry, then focus Server details
+  and press Page Down. Wait for scrolling to stop before measuring and capturing.
+  Redact paths as above; restore the text, then close with Done. Future font or
+  path changes can alter the final scroll offset, so recheck the visible entries.
+- **Composition:** same CSS crop and CDP clip as the preceding image. Same
+  browser-only path-prefix redaction; no bitmap edits.
+- **Verification:** inspected the saved image. The last two database names and
+  fields are readable, and both close controls remain visible. The focus ring
+  belongs to Server details; no database entry was selected or changed.
+
+### assets/wbpp-color-card.jpg
+
+#### 2026-10-18 18:45 PDT — initial capture
+
+- **File:** 2036 × 1336 px, JPEG; SHA-256
+  `9453923682cc85e6afac58641565e752af977338c700f1a3124e11aafdcb9bea`.
+- **Used by:** `docs/stacking.html#wbpp-color` and `docs/wbpp.html#stacks`;
+  separate WBPP and PSF Guard RGB cards with sub-exposure labels.
+- **Build/environment:** shared environment above.
+- **Source:** askar107phq (`db-a01c581c`), project 20 Heart and Soul, target 26
+  Heart and Soul Nebula. WBPP run basename
+  `Heart_and_Soul_Nebula-20261018-185244`; the R/G/B masters have names matching
+  `masterLight_BIN-1_6248x4176_EXPOSURE-10.00s_FILTER-{R,G,B}_mono_autocrop.xisf`.
+- **URL:** https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=20&target=26&cardsize=550
+- **UI state:** Separate exposure groups on; Accepted only off; card size
+  550 px. The first row contains RGB 10 s and RGB WBPP. Both use Keep blank
+  edges, background subtraction, deconvolution off, RC-Astro off, color
+  calibration on, one stretch per input and no RGB output stages.
+- **Observed state:** both cards completed, 24/24 steps. The PSF Guard preview
+  is **Out of date**, with 291 integrated inputs, 49 m, and its saved calibration
+  result of 308 stars, R ×1.32 and B ×0.99. The WBPP preview shows R/G/B
+  `(WBPP, 10 s)` and **Not color calibrated: reference frame not plate solved**.
+  The WBPP input frame count is not shown; do not infer it from the other card.
+- **Preparation/reshoot:** open the URL and wait for both preview images.
+  Set Card size to 550 through the range control if needed. Keep the processing
+  editors collapsed. Do not Build, Rebuild, Apply processing or solve a reference
+  merely to reproduce the image. Preserve and caption any current warnings.
+- **Composition:** CSS crop `(306, 365, 1132, 743)`; CDP clip
+  `(275.4, 328.5, 1018.8, 668.7)`. It includes the two cards from their headers
+  through source labels and Masters. ScrollTop was not recorded; remeasure card
+  positions on reshoot. No redactions or bitmap edits.
+- **Verification:** inspected the saved image. Both badges, previews, warning
+  messages, source labels and Masters buttons are complete. This is a UI example,
+  not a comparison of two equally calibrated, current processing results.
+
+### assets/stack-copy-channel-processing.jpg
+
+#### 2026-10-18 18:52 PDT — initial capture
+
+- **File:** 1004 × 324 px, JPEG; SHA-256
+  `37f23d0852e02c63c598b36d03b98de8cf74fc3c395a4a246fb7d65016ee36ac`.
+- **Used by:** `docs/stacking.html#channel-processing`; the copy control and
+  its description of what each channel card supplies.
+- **Build/environment:** shared environment above.
+- **Source/URL:** starfront-redcat61 (`db-49b9f973`), project/target 5 Sh2 119;
+  https://psf-guard.atpn.co/#/stacks?db=db-49b9f973&project=5&target=5&cardsize=550
+- **UI and observed state:** existing HOO 600 s color composition with its
+  Processing stack expanded. Summary: BG subtract, DC off, RC-Astro 4, Hα 1,
+  OIII 1, RGB 0. The helper lists BlurXTerminator and NoiseXTerminator for both
+  channels. Both channel cards show RC-Astro ×2 applied to the previous stack.
+  This is the state **before copying**; it does not demonstrate different
+  channel settings or a newly applied result.
+- **Preparation/reshoot:** open the URL, expand the HOO card's Processing stack,
+  and bring Channel cards into view. Read the helper to verify the current
+  channel choices. The capture used keyboard focus/Tab to bring the control
+  into view. Do not click the copy, Apply, reset or setup controls. Close the
+  disclosure afterward. No processing parameters changed in this capture.
+- **Composition:** CSS crop `(310, 494, 558, 181)`; CDP clip
+  `(279, 444.6, 502.2, 162.9)`. App-main scrollTop 386.6666870117187 CSS px.
+  The crop includes Processing stack, Setups and Channel cards. No redactions
+  or bitmap edits.
+- **Verification:** inspected the saved image. The button label and complete
+  per-channel mapping are readable. The caption states that copying and
+  processing were not performed.

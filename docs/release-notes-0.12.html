@@ -391,8 +391,18 @@ function gtag_report_demo() {
     stacks, including exposure groups. Source labels show the sub-exposure when
     known. Use <strong>Custom combination</strong> to choose between several masters
     of one filter or to mix WBPP and PSF Guard sources.</li>
+    <li><strong>Adjust color while stacks build.</strong> Short compositions you
+    start can run alongside stack builds when they reuse prepared channels, or
+    need no deconvolution or RC-Astro and no other composition is preparing the
+    same inputs. After a build you start, each target's color can compose once
+    its own channels finish. Only one short composition runs at a time; queued
+    rows show <strong>Waiting for the composition ahead</strong> without a
+    build-queue position. Automatic compositions and work that needs new tool
+    results still use the build queue. An older composition cannot replace the
+    latest preview after a channel rebuilds. See
+    <a href="stacking.html#color-during-builds">Compose color while stacks build</a>.</li>
     <li><strong>Track processing as a job.</strong> Stretch, deconvolution and
-    RC-Astro processing share the build queue, report what they are waiting for,
+    RC-Astro runs on individual channel cards use the build queue, report what they are waiting for,
     and show progress. Runs survive server restarts and resume after the last
     completed tool step. Stack status updates also transfer less data.</li>
     <li><strong>Control color processing.</strong> Stop a running color composition
