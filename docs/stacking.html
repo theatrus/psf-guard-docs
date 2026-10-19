@@ -406,11 +406,11 @@ function gtag_report_demo() {
   <a href="calibration.html">Calibration Libraries</a>.</p>
 
   <h2 id="queue">Queue builds</h2>
-  <p>Build buttons stay live while a build runs. Each click queues another
-  build behind it. One stack build runs at a time on the server, across every
-  database, so memory use does not grow with the line. Color compositions and
-  <a href="#processing-runs">processing runs</a> wait in the same line. Cards
-  show <code>queued</code> or live progress.</p>
+  <p>Build buttons stay available while a build runs. Each click queues another
+  build behind it. Stack builds and <a href="#processing-runs">channel-processing
+  runs</a> share one worker across databases. <a href="#color-during-builds">Short
+  color compositions</a> can run alongside it. Cards show <code>queued</code> or
+  live progress.</p>
   <p><strong>Stop</strong> appears while a build is queued or running, and
   reads <strong>Stop all</strong> with a count when more than one is waiting.
   The build stops between frames, channels, or master input frames. Nothing
@@ -642,6 +642,34 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   lists its missing channels. <strong>Custom combination</strong>, below the target's
   cards, lets you choose sources for mixed exposures or ambiguous filters.</p>
 
+  <h3 id="color-during-builds">Compose color while stacks build</h3>
+  <p>A color composition you start can run alongside queued or running stack
+  builds when either condition holds:</p>
+  <ul>
+    <li>PSF Guard has cached the prepared channels, including any deconvolution
+    and RC-Astro results, with the same inputs and preparation settings.</li>
+    <li>The composition needs no deconvolution or RC-Astro, and no other queued
+    or running composition is preparing the same inputs.</li>
+  </ul>
+  <p>For example, change a color card's stretch, color calibration or crop and
+  click <strong>Apply processing stack</strong>. PSF Guard reuses compatible
+  prepared channels. After <strong>Build current set</strong> or <strong>Build
+  channel</strong>, the same rule lets a target's color compose once its own
+  channels finish, while other targets' stacks build.</p>
+  <p>Only one such composition runs at a time; further compositions in this
+  separate queue run in request order. In the jobs list, <strong>Composing
+  color</strong> has no build-queue position or reorder controls. While queued,
+  it shows <strong>Waiting for the composition ahead</strong>. The composition
+  and stack build share CPU and memory.</p>
+  <p>Compositions that need new deconvolution or RC-Astro results still use the
+  build queue. So do compositions whose inputs are not cached when another job
+  is preparing those same inputs, and all compositions after automatic stack
+  refreshes. Starting an automatic composition yourself while it is queued
+  keeps its existing place.</p>
+  <p>After a server restart, PSF Guard applies the same rules to restored color
+  jobs. If a source channel rebuilds while a composition runs, that composition
+  keeps its saved result but does not replace the latest color preview.</p>
+
   <h3 id="wbpp-color">Compose WBPP masters</h3>
   <p>When WBPP masters cover the channels a preview needs, <strong>Combine
   channel stacks</strong> shows a card marked <strong>WBPP</strong>. This works
@@ -786,10 +814,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   need an editor.</p>
 
   <h2 id="processing-runs">Processing runs</h2>
-  <p>Every <strong>Apply processing</strong>, whether a stretch, deconvolution or
-  RC-Astro tools, runs on the server as a processing run, apart from the page that asked
-  for it. A plain stretch usually finishes at once. A run needs the same stack worker as
-  builds and color compositions, so it joins their line at the back. While it waits, the
+  <p>On a channel card, <strong>Apply processing</strong> starts a server-side
+  processing run for a stretch, deconvolution or RC-Astro tools. The run continues
+  if you leave the page. It uses the same worker as stack builds and joins the
+  build queue. <a href="#color-during-builds">Short color compositions</a> can
+  run alongside that worker. While a channel-processing run waits, the
   button shows which job is using the worker and how many runs are ahead, such as
   <code>Waiting for the stack build of M44 · Ha to finish</code>. Once it runs, the
   button shows its progress and the step under way: <code>Applying… 42% ·

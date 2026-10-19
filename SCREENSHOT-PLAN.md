@@ -283,6 +283,10 @@ build and visible labels, then record the actual state in the capture record.
 Local browser checks can test these changes without saving documentation
 screenshots.
 
+Check the deployed UI in the browser before any capture. Color composition
+queue text also requires #923 (`7b80f3e8`). Keep captures pending until the
+server includes the changes the screenshot needs.
+
 ## How to update this plan
 
 Every entry comes from a comment in the pages: `<!-- RESHOOT: file | what -->`
