@@ -348,7 +348,8 @@ function gtag_report_demo() {
     <li><strong>Exclude unwanted files.</strong> Include and exclude patterns, header
     and exposure filters, and <code>.psfguardignore</code> apply to every import,
     including scans started inside excluded folders. Unchanged excluded lights are
-    not read repeatedly.</li>
+    not read repeatedly. The import preview explains that <strong>Skip processed
+    files</strong> also skips calibrated and registered copies when pairing is off.</li>
     <li><strong>Preserve capture plans.</strong> In projects it did not create,
     automatic import adds images only to existing exposure plans and leaves requested
     counts alone. Frames needing a new plan wait for Review. Matching respects filter,
@@ -511,6 +512,9 @@ function gtag_report_demo() {
 
   <h2 id="fixes">Other fixes</h2>
   <ul>
+    <li>Import settings, satellite results, planning help and collaboration messages
+    explain what PSF Guard does and what you can do next. Upgrade notices keep
+    deprecations prominent in a neutral panel with an accent border.</li>
     <li>Planning no longer mistakes a cached survey image for a server update after
     every reload.</li>
     <li>Links to groups that no longer exist open the default groups instead of an
@@ -540,8 +544,8 @@ function gtag_report_demo() {
   backups, background checks, rebuilt results, saved links, activation changes and
   downgrade limits.</p>
 
-  <p>For the source changes, see the
-  <a href="https://github.com/theatrus/psf-guard/blob/eb61c41e/docs/releases/unreleased.md">development changelog used for these notes</a>.
+  <p>For the complete change list, see the
+  <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/v0.12.0.md">0.12 notes in the repository</a>.
   See the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/releases/v0.11.0.md">0.11 release notes</a>
   for the previous release.</p>
   <nav class="next-prev" aria-label="Documentation pages">
