@@ -469,6 +469,12 @@ function gtag_report_demo() {
 
   <h2 id="job-updates">More control over queued work</h2>
   <ul>
+    <li>When preview pre-generation is enabled on the server, the header shows
+    <strong>Generating previews</strong> for each database with previews to write,
+    with a count of images processed. <strong>Stop</strong> disables further
+    pre-generation for that database until the server restarts. Previews you open
+    still generate as needed. When you start a job, pre-generation finishes the
+    images already rendering, waits for your job, then continues from where it paused.</li>
         <li>Quality scans you start now queue when another scan runs on the same database. They run
     before database-wide quality analysis, which pauses and repeats its interrupted target
     afterwards.</li>

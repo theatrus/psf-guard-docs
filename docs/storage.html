@@ -269,9 +269,11 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   the lowest of their limits. A full stack volume never deletes previews from a
   cache on another disk.</p>
   <ul>
-    <li>Background preview pre-generation stops two points under the cache
-      volume's limit, so it never makes previews the next pass would delete.
-      Previews someone opens are still made.</li>
+    <li>Background preview pre-generation checks disk use before each batch
+      and stops when use reaches two percentage points below the cache
+      volume’s limit. A batch already rendering can exceed that threshold;
+      the next cleanup may delete those previews. Previews you open still
+      generate as needed.</li>
     <li>A volume still over its limit once nothing more may go shows in
       red.</li>
     <li>Sizes are measured at most hourly, and after a cull.</li>
@@ -377,12 +379,20 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p>Under each heading, jobs that need your attention come first, then running work,
   then queued work, then waiting work.</p>
 
-  <!-- RESHOOT: header-jobs.png | After verifying PR #943 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration or import progress row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop. | Follow progress and queue order for work you start and automatic jobs. -->
+  <!-- RESHOOT: header-jobs.png | After verifying PR #946 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop. | Follow progress and queue order for work you start and automatic jobs. -->
   <figure>
     <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
     <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
   </figure>
   <ul>
+    <li><strong>Generating previews.</strong> When the server has preview
+    pre-generation enabled, each database with previews to write shows a job
+    and a count of images processed. <strong>Stop</strong> disables further
+    pre-generation for that database until the server restarts. Previews you
+    open still generate as needed. When you start a job, pre-generation
+    finishes the images already rendering, waits for your job, then continues
+    from where it paused. The row explains what it is waiting for. A pass
+    with no previews to write has no row.</li>
     <li><strong>Preparing stack build.</strong> A build request appears immediately
     while PSF Guard reads the frames and matches calibration. You can stop it
     before channel builds are queued. After a restart, the request keeps its

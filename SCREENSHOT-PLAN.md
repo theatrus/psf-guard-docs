@@ -42,7 +42,7 @@ includes the disposable fixture script, real input identities and exact crops.
 | `stack-color-progress.png` | No color composition with RC-Astro is running. Needs a configured, licensed local processing setup and suitable channel stacks. |
 | `sequence-docked-review.png` | Verify the deployed build includes #935; use a real Sequence with solved frames. |
 | `settings-stacking.png` (reshoot) | Verify the deployed build includes #939 and the current help text; show the saved margin without changing it. |
-| `header-jobs.png` (reshoot) | Verify #943 is deployed and suitable jobs already exist, or use a disposable local catalog. |
+| `header-jobs.png` (reshoot) | Verify #946 is deployed and suitable jobs already exist, or use a disposable local catalog. |
 
 For reshoots that require writes, use the disposable fixture or a disposable copy
 with the required real inputs. Do not stage grades, repairs, transfers, activations
@@ -322,7 +322,7 @@ capture record and its history.
 ## Redo (existing images) (2)
 
 - `header-jobs.png` — pages: storage
-  - After verifying PR #943 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration or import progress row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
+  - After verifying PR #946 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
 - `settings-stacking.png` — pages: stacking
   - After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record.
 
