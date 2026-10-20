@@ -9,7 +9,7 @@ calibration comparisons, planning states, queued processing and local import and
 grading examples. Every image has a state, source and reshoot record in
 [assets/screenshot-captures.md](assets/screenshot-captures.md).
 
-The generated lists below contain the **5 remaining shots**. They remain pending;
+The generated lists below contain the **7 remaining shots**. They remain pending;
 their prerequisites must be met before replacing the old image or adding a figure.
 Captions on completed figures describe the actual capture, including empty states
 and differences from the original plan.
@@ -21,8 +21,7 @@ image folders, automatic sync, reviewed transfer, plugin setup and pairing.
 They use PSF Guard 0.12.0 on merged PR #911 with disposable catalogs. The import,
 plugin and release guides now use them. See the
 [capture record](assets/screenshot-captures.md#owned-catalog-import-flow--october-18-2026)
-for states and the repeatable capture command. The five pending shots below
-need different fixtures and remain pending.
+for states and the repeatable capture command. The pending shots below need suitable UI states and remain pending.
 
 ## Native desktop follow-up: captured October 18
 
@@ -41,7 +40,9 @@ includes the disposable fixture script, real input identities and exact crops.
 | `plan-send-again.png` | No remote peers are configured. Needs a disposable peer and an activation that has not reached it. |
 | `export-left-out.png` | The native fixture now has six real lights with a missing matching-flat finding. The completed export summary still needs capture, with exclusion enabled and a disposable output folder. |
 | `stack-color-progress.png` | No color composition with RC-Astro is running. Needs a configured, licensed local processing setup and suitable channel stacks. |
-| `stack-copy-channel-processing.png` | Needs at least two completed channel stacks with distinct processing settings in a disposable catalog. The local fixture contains only B lights. |
+| `sequence-docked-review.png` | Verify the deployed build includes #935; use a real Sequence with solved frames. |
+| `settings-stacking.png` (reshoot) | Verify the deployed build includes #939 and the current help text; show the saved margin without changing it. |
+| `header-jobs.png` (reshoot) | Verify #943 is deployed and suitable jobs already exist, or use a disposable local catalog. |
 
 For reshoots that require writes, use the disposable fixture or a disposable copy
 with the required real inputs. Do not stage grades, repairs, transfers, activations
@@ -318,8 +319,12 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (0)
+## Redo (existing images) (2)
 
+- `header-jobs.png` — pages: storage
+  - After verifying PR #943 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration or import progress row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
+- `settings-stacking.png` — pages: stacking
+  - After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record.
 
 ## New screenshots (5)
 

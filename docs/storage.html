@@ -172,7 +172,7 @@ function gtag_report_demo() {
   slug folder per database in each:</p>
   <div class="table-wrap">
     <table>
-      <tr><th>Folder</th><th>Holds</th><th>Set with</th></tr>
+      <tr><th>Folder</th><th>Contents</th><th>Set with</th></tr>
       <tr><td><strong>Cache</strong></td><td>Image previews, star lists, plate solves, quality scans and other per-image results</td><td><code>--cache-dir</code>, <code>[cache] directory</code></td></tr>
       <tr><td><strong>Stacks</strong></td><td>Stacks, color previews, WBPP stacks, saved processing, and WBPP runs that have no runs folder of their own</td><td><code>--stack-dir</code>, <code>[cache] stack_directory</code></td></tr>
       <tr><td><strong>Calibration masters</strong></td><td>Masters built from your calibration frames</td><td><code>--calibration-dir</code>, <code>[cache] calibration_directory</code></td></tr>
@@ -364,9 +364,20 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       <tr><td><strong>Automatic</strong></td><td>Quality backfill and the analysis of new frames, automatic scans, <strong>Measuring flats</strong>, <strong>Reading frame sites</strong>, catalog refreshes on expiry or at start, automatic stack refreshes and reprocessing after those refreshes, scheduled backups, and transfers a connection's policy queued</td></tr>
     </table>
   </div>
+  <p>The list also shows previews, imports, exports, artifact searches and
+  planning transfers to remote sites. Calibration grading, health checks,
+  light-header reads, flat matching and catalog upkeep show their progress here.
+  When you add or change a database, PSF Guard builds its query indexes and
+  reads older calibration frames’ readout modes without waiting for a restart.</p>
+  <p>Previews, imports, exports, artifact searches and star catalog installations
+  have <strong>Stop</strong>. Stopping an import rolls it back. Stopping an export
+  keeps completed files, which the next export skips. Quality scans you start
+  queue behind the current scan and run before database-wide analysis; that
+  analysis pauses and repeats its interrupted target afterwards.</p>
   <p>Under each heading, jobs that need your attention come first, then running work,
   then queued work, then waiting work.</p>
 
+  <!-- RESHOOT: header-jobs.png | After verifying PR #943 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration or import progress row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop. | Follow progress and queue order for work you start and automatic jobs. -->
   <figure>
     <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
     <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
@@ -374,13 +385,13 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <ul>
     <li><strong>Preparing stack build.</strong> A build request appears immediately
     while PSF Guard reads the frames and matches calibration. You can stop it
-    before channel builds are queued. Preparation does not survive a restart;
-    start the build again if the server restarts at this stage.</li>
+    before channel builds are queued. After a restart, the request keeps its
+    queue position and PSF Guard prepares it again.</li>
     <li><strong>Queued.</strong> Stack builds, channel-processing runs and color
     compositions that need new tool results share one line; WBPP runs have another.
     Automatic color compositions and those waiting for another job to prepare the
-    same uncached inputs also use the build queue. Both headings share each line, since an
-    automatic refresh's build can wait ahead of yours, so each queued row shows its
+    same uncached inputs also use the build queue. New builds you start join ahead of
+    automatic builds. Each queued row shows its
     position in the queue and how many wait ahead of it: <code>queued · 4 · 3
     ahead</code>, or <code>queued · 1 · next</code>. <strong>↑</strong> and
     <strong>↓</strong> move it within the whole line, past rows under the other heading,
