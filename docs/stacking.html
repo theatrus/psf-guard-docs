@@ -204,8 +204,8 @@ function gtag_report_demo() {
   requests can continue. Once preparation finishes, the panel and jobs list show
   the channel builds, including matching builds already queued, running or complete.</p>
   <p>You can stop preparation before channel builds are queued. A preparation
-  failure shows the reason. If the server restarts during preparation, start the
-  build again.</p>
+  failure shows the reason. If the server restarts during preparation, the request returns
+  to its place in the queue and PSF Guard prepares it again.</p>
   <p>Once the project has stacks, the button reads <strong>Build current
   set</strong>, and <strong>Rebuild current set</strong> builds every channel
   again even when nothing changed. Each card keeps its channel's last good
@@ -304,6 +304,15 @@ function gtag_report_demo() {
       flattest sky among frames within 70% of the best. Scores are cached, so
       a rebuild reads only new frames. Best graded uses PSF Guard's quality
       grade.</li>
+    <li><strong>Orientation group margin.</strong> With <strong>Chosen by Seiza</strong>,
+      PSF Guard uses plate solves, or header WCS when needed, to find the largest
+      group within Seiza’s 10° rotation limit, allowing for meridian flips.
+      Seiza chooses a reference from that group. The margin narrows the angle
+      used to count frames: the default 1° counts frames within 9°. Set 0° to 5°.
+      Increase it if registration still rejects frames near the limit. This
+      setting does not affect <strong>Best graded</strong>. Existing stacks keep
+      their reference until frames change or you click <strong>Rebuild</strong>;
+      changing the margin marks affected stacks out of date.</li>
     <li><strong>Registration.</strong> Quadratic follows a wide field's lens
       distortion. A frame with too few paired stars keeps the similarity
       fit.</li>
@@ -325,6 +334,7 @@ function gtag_report_demo() {
   </figure>
 
 
+  <!-- RESHOOT: settings-stacking.png | After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record. | Set the stacking method and choose how much margin to leave inside the rotation limit. -->
   <figure>
     <img src="../assets/settings-stacking.png" loading="lazy" alt="The Recommended preset combines reintegration, local background normalization and noise weighting." width="1878" height="1332">
     <figcaption>The Recommended preset combines reintegration, local background normalization and noise weighting.</figcaption>
@@ -415,14 +425,21 @@ function gtag_report_demo() {
   Matching rules, flats-only pedestals and master caching are on
   <a href="calibration.html">Calibration Libraries</a>.</p>
 
+  <p>When grading leaves fewer than two usable frames, the channel card stops
+  showing its old stack and color compositions stop offering that stack as a
+  source. Missing files or missing calibration alone do not remove it.</p>
+
   <h2 id="queue">Queue builds</h2>
+  <p>Queued builds read frames, grades and calibration again when they start,
+  so they use changes made while waiting. Artifact searches share the stack
+  queue and run before automatic work.</p>
   <p>Build buttons stay available while a build runs. Each click queues another
-  build behind it. Stack builds and <a href="#processing-runs">channel-processing
+  build. New builds you start join ahead of automatic builds. Stack builds and <a href="#processing-runs">channel-processing
   runs</a> share one worker across databases. <a href="#color-during-builds">Short
   color compositions</a> can run alongside it. Cards show <code>queued</code> or
   live progress.</p>
-  <p><strong>Stop</strong> appears while a build is queued or running, and
-  reads <strong>Stop all</strong> with a count when more than one is waiting.
+  <p><strong>Stop</strong> appears while a build is queued or running. When
+  several builds are waiting, <strong>Stop all</strong> shows their count.
   The build stops between frames, channels, or master input frames. Nothing
   partial is published: a channel stopped before its FITS is written leaves no
   stack, and channels already finished keep theirs.</p>
@@ -453,7 +470,7 @@ function gtag_report_demo() {
   as <code>H-alpha: BlurXTerminator (42%)</code>.</p>
   <!-- SHOT: stack-color-progress.png | Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
 
-  <p>Once preparation finishes, the build queue survives a restart. Queued and
+  <p>The build queue survives a restart, including requests still being prepared. Queued and
   running builds and processing runs return in order. A server stop lets a running build checkpoint the
   frames it has integrated, and the build resumes after the restart. See
   <a href="storage.html#stop">Storage &amp; Performance</a> for how the server
@@ -498,11 +515,10 @@ function gtag_report_demo() {
   database holds it back, the header lists it under
   <strong>Automatic</strong> as <strong>Refreshing stacks</strong>, waiting,
   with what it waits for and how many channels it will stack.</p>
-  <p>A build you start stops a running automatic build. Its refresh then
-  waits, with the progress the build had made, and starts again once your work has
-  been quiet for 30 seconds: from where it stopped when no frame or grade
-  changed meanwhile, else restacking what changed. Its row then turns into
-  the running build; it is never listed twice. An automatic build you stop
+  <p>A build you start pauses a running automatic build, which returns to the
+  queue behind your work. It resumes from its checkpoint when your builds
+  finish. If frames or grades changed, PSF Guard rebuilds the affected results.
+  The header lists queued automatic builds under <strong>Automatic</strong>. An automatic build you stop
   yourself stays stopped. A refresh never changes grades, files or the
   calibration library. A refreshed stack gets its card's processing again;
   see <a href="#reapply">Re-apply processing</a>.</p>
@@ -653,6 +669,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   cards, lets you choose sources for mixed exposures or ambiguous filters.</p>
 
   <h3 id="color-during-builds">Compose color while stacks build</h3>
+  <p>A color request appears immediately as <strong>Preparing color preview</strong>.
+  If its target’s channels are preparing, queued or building, the card shows
+  <strong>Waiting for the channel builds to finish</strong>. PSF Guard then reads
+  the latest frames, grades and calibration and uses the new stacks. You can
+  stop it while it waits. The composition survives a server restart.</p>
   <p>A color composition you start can run alongside queued or running stack
   builds when either condition holds:</p>
   <ul>
@@ -878,7 +899,8 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
       next queue position for up to one minute while it checks the tools. New
       work does not interrupt this processing once it starts.</li>
     <li>After an automatic refresh, processing waits for the project's refresh
-      delay and for other builds and work you start to finish. The header lists
+      delay, then queues behind work you start and builds of its own target.
+      It does not wait for every other target’s builds. The header lists
       it under <strong>Automatic</strong> as <strong>Re-applying processing</strong>
       and explains what it is waiting for. Work you start, or another automatic
       refresh that is due, can interrupt it. It resumes when the worker is free.</li>

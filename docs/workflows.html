@@ -423,9 +423,13 @@ psf-guard sync grades --from my-db --to telescope.sqlite --dry-run</code></pre>
       again, after the destination changed.</li>
     <li><strong>Discard</strong> deletes the preview and changes nothing.</li>
   </ul>
-  <p>Nothing changes until you click Apply. The server builds a large preview
-  in the background while the page polls for progress, so a reverse proxy
-  never times out.</p>
+  <p>Nothing changes until you click <strong>Apply</strong>. The server prepares
+  large previews in the background while the page checks progress.</p>
+  <p>In <strong>Data Transfer</strong> and <strong>Remote PSF Guard</strong>,
+  you can change options while a preview runs. PSF Guard stops that preview;
+  click <strong>Preview changes</strong> to check the new choices. A newer
+  preview replaces one still running. You can also stop previews from the
+  header’s jobs list.</p>
 
   <h2 id="remote">Sync with another PSF Guard</h2>
   <p>One PSF Guard can sync with another over HTTP: no shared file system, and

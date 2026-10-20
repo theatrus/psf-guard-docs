@@ -259,7 +259,30 @@ function gtag_report_demo() {
   The app remembers the scale on this device. Image zoom stays separate.</p>
   <p><a href="install.html#desktop-zoom">Change the UI scale →</a></p>
 
+  <h2 id="job-updates">Control queued work</h2>
+  <p>The header now shows progress for previews, imports, exports, calibration
+  checks and catalog upkeep. Stop an import to roll it back, or stop an export
+  and keep completed files. Quality scans you start queue behind the current
+  scan and run before database-wide analysis.</p>
+  <p>When preview pre-generation is enabled, <strong>Generating previews</strong>
+  shows progress for each database. <strong>Stop</strong> disables it for that
+  database until restart; previews you open still generate as needed.
+  Pre-generation waits for jobs you start, then continues from where it paused.</p>
+  <p>Builds you start pause automatic builds, which resume from their checkpoints.
+  Build requests survive a restart even during preparation. Queued builds use
+  the latest frames, grades and calibration when they start. Start a color
+  preview before its channels finish; it waits and uses their new stacks.</p>
+  <p>In <strong>Data Transfer</strong> and <strong>Remote PSF Guard</strong>,
+  change options while a preview runs, then preview the new choices. PSF Guard
+  stops the old preview. Read <a href="storage.html#jobs">Background jobs</a>.</p>
+
   <h2 id="stacks">Keep stacks through updates and restarts</h2>
+  <p><strong>Chosen by Seiza</strong> now selects a reference from the largest
+  orientation group when frames have different rotator angles. Adjust
+  <strong>Orientation group margin</strong> in <strong>Settings → Stacking</strong>
+  if frames near the rotation limit are still rejected. When grading leaves
+  fewer than two usable frames, the channel’s old stack disappears from its
+  card and from color source choices.</p>
   <p>Processing runs show their queue position and progress, survive restarts, and
   reapply your choices after a stack refreshes. Color processing reports each channel
   and tool, supports Stop, and reuses unchanged channel results. Improved resampling removes
