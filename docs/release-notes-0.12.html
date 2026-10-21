@@ -228,7 +228,7 @@ function gtag_report_demo() {
     or delete files.</li>
     <li><strong>Keep calibration current.</strong> Grading and flat measurements
     follow imports, syncs and uploads in the background. Flat measuring reports its
-    progress and supports Stop and Resume. Unchanged sessions are not measured again;
+    progress and supports <strong>Pause</strong> and <strong>Resume</strong>. Unchanged sessions are not measured again;
     missing or unreadable files are retried when their availability changes.
     Calibration health updates as lights arrive or missing files return.</li>
   </ul>
@@ -469,10 +469,20 @@ function gtag_report_demo() {
 
   <h2 id="job-updates">More control over queued work</h2>
   <ul>
+    <li><strong>Pause automatic jobs.</strong> From the header's jobs list, pause
+    <strong>Analyzing database quality</strong>, <strong>Generating previews</strong>,
+    <strong>Measuring flats</strong> or <strong>Reading frame sites</strong> for a
+    database. Completed work is kept, and the row stays <strong>paused</strong>
+    until <strong>Resume</strong> or a server restart. New automatic work waits too.
+    Settings offers Resume for quality analysis; Calibration offers it for flat
+    measuring and frame sites. Quality scans you start still run, and automatic
+    stack refreshes do not wait for paused analysis. The header counts paused jobs
+    separately from jobs waiting for your work.</li>
     <li>When preview pre-generation is enabled on the server, the header shows
     <strong>Generating previews</strong> for each database with previews to write,
-    with a count of images processed. <strong>Stop</strong> disables further
-    pre-generation for that database until the server restarts. Previews you open
+    with a count of images processed. <strong>Pause</strong> keeps completed work
+    and prevents further pre-generation until <strong>Resume</strong> or a server
+    restart. Previews you open
     still generate as needed. When you start a job, pre-generation finishes the
     images already rendering, waits for your job, then continues from where it paused.</li>
         <li>Quality scans you start now queue when another scan runs on the same database. They run
@@ -537,8 +547,8 @@ function gtag_report_demo() {
     resume after restart. Desktop restarts wait for the old server to finish saving
     its queue. Catalog writes wait for competing writes instead of failing at once
     with a database-lock error.</li>
-    <li><strong>Protect unsaved settings.</strong> Settings confirms before closing
-    over unsaved edits. Rig and site forms retain edits when collapsed or switched,
+    <li><strong>Protect unsaved settings.</strong> Settings asks before discarding
+    unsaved changes when you close it. Rig and site forms retain edits when collapsed or switched,
     and reload warns before discarding them. Panels and fields have consistent
     layout and contrast; form controls follow the dark theme. Library project-state
     changes also ask for confirmation.</li>
@@ -560,8 +570,12 @@ function gtag_report_demo() {
   <ul>
     <li><strong>More MCP tools.</strong> Agents can inspect flat groups, changes,
     dust and project calibration; split or join groups; assign lights across changes;
-    override suspect frames; check and repair duplicates; pause or resume measurements;
-    and create backups. Job queries include all background jobs. Tools use the app's
+    override suspect frames; check and repair duplicates; and create backups.
+    Use <code>pause_job</code> and <code>resume_job</code> for quality analysis,
+    preview pre-generation, flat measuring and frame-site reading. These replace
+    <code>cancel_flat_measuring</code>, <code>resume_flat_measuring</code>,
+    <code>cancel_frame_sites</code> and <code>resume_frame_sites</code>.
+    Job queries include all background jobs and identify paused jobs. Tools use the app's
     access checks; MCP backups exclude secrets and do not return the archive.</li>
     <li><strong>Deliver collaboration files.</strong> In the collaboration beta,
     send accepted raw lights with matched calibration inputs, or an existing PSF Guard

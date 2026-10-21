@@ -376,10 +376,10 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   keeps completed files, which the next export skips. Quality scans you start
   queue behind the current scan and run before database-wide analysis; that
   analysis pauses and repeats its interrupted target afterwards.</p>
-  <p>Under each heading, jobs that need your attention come first, then running work,
-  then queued work, then waiting work.</p>
+  <p>Under each heading, jobs that need your attention come first, then running,
+  queued, waiting and paused work. The header counts each state separately.</p>
 
-  <!-- RESHOOT: header-jobs.png | After verifying PR #946 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop. | Follow progress and queue order for work you start and automatic jobs. -->
+  <!-- RESHOOT: header-jobs.png | After verifying PR #947 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row, and a paused automatic job with Resume if one is already paused. Do not start, stop, pause, resume or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop. | Follow progress and queue order for work you start and automatic jobs. -->
   <figure>
     <img src="../assets/header-jobs.png" loading="lazy" alt="The jobs list shows the running automatic stack build and the jobs queued behind it." width="770" height="946">
     <figcaption>The jobs list shows the running automatic stack build and the jobs queued behind it.</figcaption>
@@ -387,9 +387,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <ul>
     <li><strong>Generating previews.</strong> When the server has preview
     pre-generation enabled, each database with previews to write shows a job
-    and a count of images processed. <strong>Stop</strong> disables further
-    pre-generation for that database until the server restarts. Previews you
-    open still generate as needed. When you start a job, pre-generation
+    and a count of images processed. <strong>Pause</strong> keeps completed work
+    and prevents further pre-generation until <strong>Resume</strong> or a server
+    restart. Previews you open still generate as needed. When you start a job, pre-generation
     finishes the images already rendering, waits for your job, then continues
     from where it paused. The row explains what it is waiting for. A pass
     with no previews to write has no row.</li>
@@ -424,6 +424,15 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     database quality analysis, an automatic stack refresh or automatic reprocessing that
     pauses shows which job it is waiting for and keeps its progress bar at the point
     where it paused. Waiting is normal, so these rows are drawn muted.</li>
+    <li><strong>Paused.</strong> Choose <strong>Pause</strong> on
+    <strong>Analyzing database quality</strong>, <strong>Generating previews</strong>,
+    <strong>Measuring flats</strong> or <strong>Reading frame sites</strong> to pause
+    that automatic job for the database. Completed work is kept, so Pause needs no
+    confirmation. The row stays visible with <strong>Resume</strong>, and newly
+    queued work waits until you resume it or restart the server. Settings also
+    offers Resume for quality analysis; Calibration offers it for flat measuring
+    and frame sites. Quality scans you start still run while analysis is paused,
+    and automatic stack refreshes do not wait for paused analysis.</li>
     <li><strong>Needs you.</strong> Only jobs that need your attention use the warning
     color, such as a collaboration transfer held for review, before
       upload or after it failed. A transfer row carries its own Pause, Resume,
@@ -431,11 +440,8 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
     <li><strong>Stop</strong> ends running work after asking once:
       <strong>Stop it</strong> or <strong>Keep</strong>. It is offered on a
       running stack build, a color composition, an RC-Astro processing run, a WBPP run, a duplicate
-      check or repair, a backup, <strong>Measuring flats</strong> and
-      <strong>Reading frame sites</strong>. Stop pauses flat measuring until
-      those flats change, and frame sites until frames are imported, or either
-      until the server starts again; the Calibration page offers
-      <strong>Resume now</strong>. A color composition stops at its next channel or step and ends a running
+      check or repair, or a backup. A color composition stops at its next channel
+      or step and ends a running
       RC-Astro tool immediately, keeping completed steps cached. A standalone stretch
       or deconvolution has no Stop and finishes in moments.</li>
     <li>When the server knows what work remains, the row shows it, such as <code>1 more

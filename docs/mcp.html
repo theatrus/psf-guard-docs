@@ -345,8 +345,7 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
       <tr><td><code>set_calibration_frame_choice</code></td><td>Use anyway, keep out, or clear the choice on calibration frames; masters already built stay as they are</td><td>write</td></tr>
       <tr><td><code>set_flat_group_override</code></td><td>Split a flat family's groups at a session, join two neighbouring groups, or reset the choice</td><td>management</td></tr>
       <tr><td><code>set_light_flat_choice</code></td><td>Put lights before or after a change, give them one group's flats, or reset their choices</td><td>management</td></tr>
-      <tr><td><code>cancel_flat_measuring</code>, <code>resume_flat_measuring</code></td><td>Pause flat measuring, or take up what was paused</td><td>write</td></tr>
-      <tr><td><code>cancel_frame_sites</code>, <code>resume_frame_sites</code></td><td>Pause reading frame sites, or take it up again</td><td>write</td></tr>
+      <tr><td><code>pause_job</code>, <code>resume_job</code></td><td>Pause or resume a database's quality analysis, preview pre-generation, flat measuring or frame-site reading. A pause keeps completed work and lasts until Resume or a server restart. Quality scans you request still run.</td><td>write</td></tr>
       <tr><td><code>check_calibration_duplicates</code></td><td>Check the library for exposures recorded more than once; writes nothing</td><td>read</td></tr>
       <tr><td><code>repair_calibration_duplicates</code></td><td>Merge them, with the token of a check; applies nothing if the library changed since</td><td>management</td></tr>
       <tr><td><code>cancel_calibration_duplicates</code></td><td>Stop the check or repair; a repair rolls back whole</td><td>write</td></tr>
