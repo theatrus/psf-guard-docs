@@ -322,7 +322,7 @@ capture record and its history.
 ## Redo (existing images) (2)
 
 - `header-jobs.png` — pages: storage
-  - After verifying PR #946 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row too. Do not start, stop or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
+  - After verifying PR #947 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row, and a paused automatic job with Resume if one is already paused. Do not start, stop, pause, resume or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
 - `settings-stacking.png` — pages: stacking
   - After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record.
 
