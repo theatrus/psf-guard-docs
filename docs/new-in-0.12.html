@@ -169,6 +169,25 @@ function gtag_report_demo() {
   grades in sync with Target Scheduler.</p>
   <p>Separate catalogs let us add features to PSF Guard and support new Target
   Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
+  <h2 id="patch-0123">New in 0.12.3</h2>
+  <p>Reopen archived projects, move targets with a preview, and delete projects
+  or plans you no longer need. Project deletion keeps image files on disk and
+  carries across syncs when the destination has no captured frames or collaboration
+  work. <a href="grader.html#project-removal">Manage projects</a> or
+  <a href="planning.html#reopen-delete">clean up plans</a>.</p>
+  <p>You can <a href="collaboration.html#leave">leave a collaboration</a> while
+  keeping your local plan and images. Send pending reports first: leaving deletes
+  unsent reports.</p>
+  <p>New color previews follow each channel card's tools and reuse their results.
+  You can also run BlurXTerminator and NoiseXTerminator on the aligned color
+  channels together. The final stacking pass uses less memory, clipped star cores
+  stay neutral after color calibration, and RC-Astro keeps WBPP masters the right
+  way up. Read <a href="stacking.html#channel-processing">Color processing</a>.</p>
+  <p><strong>Allow time for rebuilds:</strong> each stack rebuilds once when next
+  opened or refreshed. Existing color previews keep their own tool choices.
+  Read the <a href="release-notes-0.12.html#v0-12-3">0.12.3 release and upgrade notes</a>,
+  including N.I.N.A. plugin requirements for project deletion.</p>
+
   <h2 id="catalogs">Keep your catalog separate from Target Scheduler</h2>
   <p>Import a local TS database into a PSF Guard-owned catalog, or create a catalog
   and pair the PSF Guard Sync plugin without a local TS file. Choose automatic capture

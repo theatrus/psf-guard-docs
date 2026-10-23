@@ -339,6 +339,33 @@ function gtag_report_demo() {
   minute. Target names and pointing stay private, and old status never shows as
   current.</p>
 
+  <h2 id="leave">Leave a collaboration</h2>
+  <p>You need an editor account and database management enabled on the server.
+  Open the imported plan, choose <strong>Activation</strong>, then click
+  <strong>Leave collaboration</strong> under <strong>Collaboration assignments</strong>.
+  Review the affected rigs and assignments before confirming.</p>
+  <p><strong>Send pending reports with Check in first.</strong> Leaving deletes
+  unsent reports and the local record of sent reports. The coordinator keeps
+  reports it has already received.</p>
+  <ul>
+    <li>Open assignments end in writable rig databases. Imported assignments are
+      removed, unfinished file transfers are cancelled, and nightly intake stops
+      importing the project. If it was the rig's only intake project,
+      <strong>Pull tonight automatically</strong> turns off.</li>
+    <li>PSF Guard declines coordinator tasks for signed-in rigs. Check the result;
+      leave or decline the project on the coordinator's site for any rig whose
+      tasks could not be declined, including rigs that are not signed in.</li>
+    <li>If a linked database is missing or not writable, its assignments stay open.
+      Register it again in Settings and activate the plan to end them.</li>
+    <li>Your local plan, framing, exposure plans, rig projects, frames and grades
+      stay. Reported frames lose their protection from reject removal and project
+      deletion. Deleting a project still keeps image files on disk.</li>
+  </ul>
+  <p><strong>Target Scheduler targets stay scheduled until you change them.</strong>
+  The next activation uses your plan's framing instead of the collaboration panels.
+  You can now edit the plan as your own. Joining and importing the project again
+  later rejoins the same plan.</p>
+
   <h2 id="credentials">Credentials</h2>
   <p>The server keeps each rig's agent token in
   <code>collaboration-credentials.json</code> beside the registry, readable only by

@@ -219,6 +219,25 @@ function gtag_report_demo() {
     <figcaption>Expand a project to see its filters, progress and target actions. This is Golf of Mexico.</figcaption>
   </figure>
 
+  <h3 id="project-removal">Reopen or delete a project</h3>
+  <p>Under <strong>Archived projects</strong>, click <strong>Reopen</strong> to
+  return a project to the Library as <strong>Inactive</strong>. Set it
+  <strong>Active</strong> when you want Target Scheduler to schedule it again.</p>
+  <p>To delete a project, you need an editor account and a server started with
+  <code>--allow-database-management</code>. Open <strong>Edit project</strong>,
+  then <strong>Delete project...</strong>, or click <strong>Delete</strong> beside
+  an archived project. Review the targets, exposure plans and frame counts.
+  If the project has frames, type its name to confirm.</p>
+  <p>Deletion removes catalog records, grades and measurements.
+  <strong>Image files stay on disk.</strong> A linked plan keeps its framing and
+  other databases but stops planning work for that rig. Restoring removed
+  rejects does not put frames back into a deleted project.</p>
+  <p>Imports and sync skip the project until you choose <strong>Allow again</strong>
+  under <strong>Deleted projects</strong>. A deleted project without frames appears
+  there once a sync has skipped it. When a project returns, it gets its own plan;
+  use <strong>Attach a project from another database</strong> to rejoin the old plan.
+  See <a href="importing.html#deleted-projects">How deletion carries across syncs</a>.</p>
+
   <h3 id="library-calibration">Calibration pills</h3>
   <p>A <strong>🧪 Poor</strong> or <strong>🧪 Check</strong> pill marks a project whose
   lights have calibration issues: Poor when some lights can't be calibrated properly,

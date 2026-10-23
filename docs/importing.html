@@ -532,6 +532,23 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   Files, grades and image GUIDs never change. These edits need an editor account, not
   database management.</p>
 
+  <h3 id="move-target">Move a target to another project</h3>
+  <ol>
+    <li>In Library, click <strong>Edit</strong> beside the target, then
+      <strong>Move to another project...</strong>.</li>
+    <li>Choose a project in the same database, or create one. A new project copies
+      the current project's settings and starts <strong>Inactive</strong>.</li>
+    <li>Click <strong>Preview move</strong>, review the changes, then
+      <strong>Apply move</strong>. Exposures, exposure plans and stack previews
+      move together.</li>
+  </ol>
+  <p>A target without captured exposures can move between Target Scheduler profiles;
+  its plans use matching templates or copies in the destination profile. A target
+  with exposures must stay within its profile. If the destination already has a
+  target with the same name, use <strong>Merge target</strong>.</p>
+  <p>Restored rejects return to the target's current project, including after a
+  target merge. Merging removes the old target's stack previews.</p>
+
   <h2 id="plan">Correct the imported plan</h2>
   <p>Choose <strong>⚙</strong> (or <strong>Planning</strong> on a card) in the Library.
   The plan's workspace opens. Its <strong>Rigs</strong> tab holds each database's
@@ -566,6 +583,21 @@ psf-guard sync planning --from archive.sqlite --to telescope.sqlite --dry-run
 psf-guard sync grades --from archive.sqlite --to telescope.sqlite --dry-run</code></pre>
   <div class="callout"><strong>Back up both files before the first sync write.</strong>
   Pull captures first, then push plans and grades back.</div>
+
+  <h3 id="deleted-projects">How deletion carries across syncs</h3>
+  <p>A pull, planning push or sync with another PSF Guard server running 0.12.3
+  or later carries project deletions. The preview and result show how many
+  projects will be deleted. A destination project with captured frames or
+  collaboration work stays; the preview shows its exposure count. A pull from
+  another server deletes only projects listed in its preview.</p>
+  <p>Imports and uploads also skip files for deleted projects. In Library,
+  <strong>Deleted projects → Allow again</strong> permits the project to return.
+  That choice carries across syncs, so a catalog that received your deletion
+  does not delete the project again.</p>
+  <p>Deleting a project on a rig needs a N.I.N.A. plugin version with project
+  deletion support. Older plugins keep the rig's project. See
+  <a href="sync-plugin.html#refused-uploads">Recover refused uploads</a> for files
+  held after project deletion or reject removal.</p>
 
   <nav class="next-prev">
     <a href="grader.html">← Library &amp; Grader</a>
