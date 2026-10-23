@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>0.12 Release Notes — PSF Guard</title>
-  <meta name="description" content="What’s new in PSF Guard 0.12: calibration grading, flat matching, mosaic editing, backups, review improvements and upgrade notes since 0.11.">
+  <meta name="description" content="PSF Guard 0.12.3 release notes: project and plan cleanup, leaving collaborations, color-stack processing, and upgrade notes for the 0.12 series.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -159,6 +159,9 @@ function gtag_report_demo() {
 
   <nav aria-label="On this page">
     <ul>
+      <li><a href="#v0-12-3">0.12.3: projects, collaboration and color processing</a></li>
+      <li><a href="#v0-12-2">0.12.2: desktop startup and previews</a></li>
+      <li><a href="#v0-12-1">0.12.1: macOS updates and HTTPS</a></li>
       <li><a href="#calibration">Review calibration and match flats</a></li>
       <li><a href="#review">Review images and score sessions</a></li>
       <li><a href="#planning">Edit mosaics and activate plans</a></li>
@@ -179,6 +182,105 @@ function gtag_report_demo() {
   grades in sync with Target Scheduler.</p>
   <p>Separate catalogs let us add features to PSF Guard and support new Target
   Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
+
+  <h2 id="v0-12-3">0.12.3 — October 23, 2026</h2>
+
+  <p>PSF Guard 0.12.3 adds project and plan cleanup, lets you leave collaborations, and improves color-stack processing, star colors and large-file downloads.</p>
+
+  <h3>Upgrading</h3>
+
+  <ul>
+    <li><strong>Allow time for rebuilds.</strong> The stacking engine changed, so each stack rebuilds once when next opened or refreshed. Color previews that use deconvolution or RC-Astro also become out of date; build them again to use the corrected processing order and orientation. If a channel card still shows an upside-down RC-Astro result, apply its processing again.</li>
+    <li><strong>Existing color previews keep their settings.</strong> New previews follow each channel card&#x27;s deconvolution and RC-Astro choices. To use that behavior in an existing preview, choose <strong>From each channel card</strong> under <strong>Deconvolution and RC-Astro</strong>.</li>
+    <li><strong>Update the N.I.N.A. plugin for project deletion.</strong> Deleting a project on a rig needs a plugin version with project deletion support. Older plugins keep the rig&#x27;s project. Sync keeps projects with captured frames or collaboration assignments in the destination.</li>
+    <li><strong>Upgrading from 0.11:</strong> read the <a href="https://github.com/theatrus/psf-guard/blob/v0.12.3/docs/releases/v0.12.0.md#upgrading-from-011">0.12 upgrade notes</a>, including the Target Scheduler deprecation. Your current connection still works in 0.12. For new databases, use <strong>Settings → Databases → Import from Target Scheduler</strong>. A later update will create a PSF Guard catalog for you and keep captures, plans and grades in sync with Target Scheduler.</li>
+  </ul>
+
+  <h3>Organize projects and targets</h3>
+
+  <ul>
+    <li>Move a target to another project in its database, or create a project for it. In Library, click <strong>Edit</strong> beside the target, then <strong>Move to another project...</strong> and <strong>Preview move</strong>. Exposures, exposure plans and stack previews move together. A new project copies the original project&#x27;s settings and starts <strong>Inactive</strong>.</li>
+    <li>A target without captured exposures can move between Target Scheduler profiles. Its exposure plans use matching templates in the destination profile or copies of their existing templates. Targets with exposures must stay in the same profile. Use <strong>Merge target</strong> if the destination already has a target with the same name.</li>
+    <li>Under <strong>Archived projects</strong>, <strong>Reopen</strong> returns a project to the Library as <strong>Inactive</strong>. Set it <strong>Active</strong> when you want Target Scheduler to use it. A plan with nothing captured also has <strong>Reopen</strong> when it is Closed on any rig; it sets the project Inactive on each of those rigs.</li>
+    <li><strong>Edit project → Delete project...</strong> previews the records to remove. Type the project&#x27;s name to confirm if it has frames. Deleting removes catalog records, grades and measurements; <strong>image files stay on disk</strong>. A linked plan keeps its framing and other databases but stops planning for that rig. Deletion needs an editor account and a server started with <code>--allow-database-management</code>.</li>
+    <li>Imports and sync skip deleted projects until you choose <strong>Allow again</strong> under <strong>Deleted projects</strong>. A deleted project with no frames appears there once a sync has skipped it. A returning project gets its own plan; use <strong>Attach a project from another database</strong> to rejoin its previous plan.</li>
+    <li>Under <strong>Plans with nothing captured yet</strong>, the delete button previews the linked projects. <strong>Delete plan</strong> removes those projects, the plan and its framing. For a plan with captured frames, delete its projects in Library first. Deleting a collaboration plan also leaves the collaboration.</li>
+  </ul>
+
+  <p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.3/docs/DIRECTOR.md">Planning and the Library</a>.</p>
+
+  <h3>Sync deleted projects and recover refused uploads</h3>
+
+  <ul>
+    <li>Pulls, planning pushes and sync with another PSF Guard server running this version now carry project deletions. The preview and result show the deletion count. A destination project with frames or collaboration work stays; the preview shows its captured exposure count. A peer pull deletes only projects listed in its preview.</li>
+    <li><strong>Allow again</strong> also carries across syncs. A catalog that received your deletion no longer deletes the project again after you allow it back.</li>
+    <li>Uploads for deleted projects or removed rejects are refused with recovery instructions. An updated N.I.N.A. plugin holds them without retrying. After allowing the project back or restoring the reject, choose <strong>Retry refused uploads</strong>. <strong>Forget refused uploads</strong> removes those queue entries while keeping image files. Older plugins show blocked jobs. Another capture with the same file name can still upload.</li>
+  </ul>
+
+  <p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.3/docs/IMPORTING.md">Importing and sync</a>.</p>
+
+  <h3>Leave a collaboration</h3>
+
+  <ul>
+    <li>In an imported plan&#x27;s <strong>Activation → Collaboration assignments</strong>, click <strong>Leave collaboration</strong>. PSF Guard ends open assignments in writable rig databases, removes imported assignments, cancels unfinished file transfers and stops nightly intake for that project.</li>
+    <li><strong>Send pending reports with Check in first.</strong> Leaving deletes unsent reports. Reported frames lose their protection from reject removal and project deletion. Project deletion still keeps image files on disk.</li>
+    <li>Your local plan, framing, exposure plans, rig projects, frames and grades stay. Target Scheduler targets remain scheduled until you change them. The next activation uses your plan&#x27;s framing instead of collaboration panels. You can edit the plan as your own. Joining and importing again later rejoins the same plan.</li>
+    <li>PSF Guard declines coordinator tasks for signed-in rigs. The dialog lists rigs that are not signed in; leave or decline their project on the coordinator&#x27;s site too. If a linked database is missing or not writable, its assignments stay open until you register it again and activate the plan.</li>
+    <li>A plan with frames in collaboration reports cannot be deleted until you leave the collaboration.</li>
+  </ul>
+
+  <p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.3/docs/DIRECTOR.md#leave-a-collaboration">Collaboration</a>.</p>
+
+  <h3>Process channel and color stacks</h3>
+
+  <ul>
+    <li>New color previews follow each channel card&#x27;s deconvolution and RC-Astro settings, including after automatic rebuilds. Input lanes list the steps used, and changes on a card mark the color preview out of date. Choose <strong>Set in this build</strong> to set tools per input instead; it starts from the cards&#x27; current choices.</li>
+    <li>Each input&#x27;s tools run on its own stack before background extraction and alignment. Channel cards and color previews reuse matching results. Changing background extraction or a stretch no longer reruns those tools.</li>
+    <li>In <strong>Processing stack</strong>, <strong>RC-Astro on the color channels together</strong> runs BlurXTerminator and NoiseXTerminator on aligned channels before color calibration and stretching. It is off by default. BlurXTerminator starts in <strong>Correct only</strong> mode to correct star shapes and color fringes without sharpening; NoiseXTerminator reduces color noise. Changes to calibration, crop or stretch reuse the results. All BlurXTerminator sections now offer <strong>Correct only</strong>.</li>
+    <li>BlurXTerminator, NoiseXTerminator and StarXTerminator keep stacks without row-order metadata, including WBPP masters, the right way up.</li>
+    <li>Returning to <strong>Stacks</strong> restores a mono processing run&#x27;s progress. <strong>Apply processing</strong> stays disabled until it finishes.</li>
+    <li>Color build failures explain the problem, such as a missing RC-Astro installation or license. The message appears beside <strong>Apply processing stack</strong> when you started the build there, and at the top of the card otherwise.</li>
+  </ul>
+
+  <p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.3/docs/STACKING_PREVIEWS.md#deconvolution-and-rc-astro-on-color-inputs">Stack processing</a>.</p>
+
+  <h3>Build stacks and download files</h3>
+
+  <ul>
+    <li>The final <strong>Rejecting transients</strong> pass reads each frame once instead of three times and uses less memory. Temporary files in <code>stack-scratch</code> below the stack folder need four bytes per sample per frame and are removed afterward. With too little disk space, the pass uses the previous three-read method. Progress shows reading and integrating stages.</li>
+    <li>Color calibration keeps clipped star cores neutral instead of tinting them cyan or blue, in one-shot-color, RGB, LRGB and narrowband stacks. Existing stacks gain the clipping data when they rebuild.</li>
+    <li>Large-file downloads, including stack FITS, calibration masters, backups and WBPP files, use larger reads to reduce streaming overhead.</li>
+  </ul>
+
+  <h3>Other fixes</h3>
+
+  <ul>
+    <li>Restoring a reject returns it to its target&#x27;s current project. If the target was merged, the frame returns to the destination target. Restoring rejects does not recreate frames in a deleted project.</li>
+    <li><strong>Merge target</strong> removes the old target&#x27;s stack previews.</li>
+    <li>An invalid target edit, such as an RA of 25 hours, leaves every field unchanged instead of saving the name alone.</li>
+    <li>With no grace period, a reject recorded during a removal preview is eligible immediately instead of briefly appearing too new to remove.</li>
+  </ul>
+
+  <h2 id="v0-12-2">0.12.2 — October 22, 2026</h2>
+  <ul>
+    <li>The Windows app starts instead of remaining on <strong>Checking access…</strong>.</li>
+    <li>Completed stacks appear on the desktop Sky map when <strong>Stacks when zoomed</strong>
+      is on and you zoom past 3×. Existing stacks need no rebuild for this fix.</li>
+    <li>Previews accept duplicate copies of the same capture during file transfers,
+      using the largest copy with matching capture headers. Different captures still produce an error.</li>
+    <li>Fresh solves more than 5° from the planned rotation show <strong>Rotation off plan</strong>,
+      cap the score at 0.30 and exclude the frame from stack previews. Meridian flips match.
+      If the plan changed after capture, set its rotation to the intended angle before analyzing quality.</li>
+  </ul>
+
+  <h2 id="v0-12-1">0.12.1 — October 21, 2026</h2>
+  <p>The first 0.12 release with a macOS app and automatic updates. The 0.12.0
+  release has Windows and Linux downloads only and was not offered to installed copies.</p>
+  <p>HTTPS connections no longer trust emSign intermediate certificates that browsers
+  stopped trusting. This covers update checks, remote sync, catalog and satellite
+  downloads, and other outgoing connections. Upgrading from 0.12.0 needs no extra steps.</p>
+
+  <h2 id="v0-12-0">0.12.0 — Changes since 0.11</h2>
 
   <h2 id="calibration">Review calibration and match flats</h2>
   <p>The new <a href="calibration.html">Calibration page</a> replaces the library

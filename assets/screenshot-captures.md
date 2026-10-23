@@ -2188,3 +2188,111 @@ described below; the original text was restored before the dialog closed.
 - **Verification:** inspected the saved image. The button label and complete
   per-channel mapping are readable. The caption states that copying and
   processing were not performed.
+
+### Shared environment — October 23, 2026
+
+- **Build:** signed-in Chrome at `https://psf-guard.atpn.co` after the user
+  confirmed the server update. Server Information reports **0.12.2**; the
+  new channel-card and combined-color controls are present. Frontend script:
+  `/assets/index-CLubH4_H.js`. Deployed commit and frontend/backend match are
+  unknown. These are not verified 0.12.3 release-build captures.
+- **Environment:** macOS, Chrome (exact versions not recorded); dark theme,
+  English UI, displayed local time America/Los_Angeles. Viewport 1744 × 1142
+  CSS px; device pixel ratio 1.8; browser zoom 90%, read from CDP layout metrics.
+- **Source for all four shots:** `starfront-ultracat131`, database
+  `db-93617230`, SNR G132, project 6, target 6. Settings are server-wide.
+- **URL:** `https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=6&target=6&cardsize=1200`
+- **Capture method:** Chrome `Page.captureScreenshot`, JPEG quality 95,
+  `fromSurface: true`, `captureBeyondViewport: false`, clip scale 1. Rectangles
+  below use CDP DIP. No resizing, annotations or redactions were applied.
+- **Preparation:** read-only inspection of existing state. No saved settings,
+  grades, catalogs or jobs were changed. Existing processing continued during
+  capture, so previews and queue counts may differ between images.
+
+### assets/stack-channel-processing-0123.jpg
+
+#### 2026-10-23 21:16 UTC — initial capture
+
+- **File:** SHA-256 `99b744eb0421b5b0b5cf0e81251dae3b9a9de0dd5165b3a8c5c6a93589b8759a`; 2158 × 126 pixels; JPEG.
+- **Used by:** `docs/stacking.html#channel-processing`.
+- **Build, environment, source and URL:** October 23 shared environment above.
+- **UI and observed state:** Processing stack expanded on the existing SHO preview; From each channel card selected. Hα and OIII list BXT; SII lists BXT and NXT. The preview used 385 inputs, 64 h 10 m. Source channels later changed while existing background work ran.
+- **Preparation and reshoot steps:** Open the URL, find the SHO preview, expand Processing stack, and scroll to Deconvolution and RC-Astro. Do not change the selection or start a build.
+- **Composition:** CDP DIP x=245.5, y=596.5, width=1079, height=63. Control strip only; no pointer or private paths.
+- **Verification:** inspected the saved image for readable controls, complete
+  labels and private data. Observations describe this capture only. Recheck
+  the build and current values before a reshoot.
+
+### assets/stack-color-rc-astro-0123.jpg
+
+#### 2026-10-23 21:18 UTC — initial capture
+
+- **File:** SHA-256 `47289c9b9312fb823b32b206d26e80172b80dd0574c5756dc38e8b019244a580`; 2138 × 642 pixels; JPEG.
+- **Used by:** `docs/stacking.html#combined-rc-astro`.
+- **Build, environment, source and URL:** October 23 shared environment above.
+- **UI and observed state:** Existing SHO preview with combined BlurXTerminator and NoiseXTerminator enabled. Correct only and Automatic PSF checked; sharpen stars, halos, PSF diameter and sharpen nonstellar all 0. BXT model 5, RC-Astro 2.6.6, CPU. NXT denoise values 0.9, HF/LF scale 5, iterations 2; both tile overlaps 0.2. These are saved choices, not the defaults for a new preview.
+- **Preparation and reshoot steps:** Open the URL, expand the SHO Processing stack and RC-Astro on the color channels together. Scroll until the controls, explanation and Processed color channels FITS link fit. Do not change tools or run processing.
+- **Composition:** CDP DIP x=250.3594, y=479.5859, width=1069.2813, height=321.0234. Full tool section and download link; no pointer or private paths.
+- **Verification:** inspected the saved image for readable controls, complete
+  labels and private data. Observations describe this capture only. Recheck
+  the build and current values before a reshoot.
+
+### assets/settings-stacking-0123.jpg
+
+#### 2026-10-23 21:21 UTC — initial capture
+
+- **File:** SHA-256 `99efed7abbcbe0c24b17563110ac2be20f57068d93b0ec083c564d3bde5a9cea`; 1780 × 920 pixels; JPEG.
+- **Used by:** `docs/stacking.html#method`.
+- **Build, environment, source and URL:** October 23 shared environment above.
+- **UI and observed state:** Settings → Stacking. Recommended preset, By noise, Chosen by Seiza, orientation margin 1°, Quadratic registration. The crop includes the four relevant groups. The deployed Final pass help still said three more reads; that stale sentence is outside the crop and corrected in the release PR.
+- **Preparation and reshoot steps:** Open Menu → Settings → Stacking. Scroll the settings panel down about 489 CSS px so Frame weights, Reference frame, Orientation group margin and Registration fit. Close with Done without changing values.
+- **Composition:** CDP DIP x=214.2, y=167.4, width=890.1, height=460.8. No pointer or private paths; pageY=0.
+- **Verification:** inspected the saved image for readable controls, complete
+  labels and private data. Observations describe this capture only. Recheck
+  the build and current values before a reshoot.
+
+### assets/header-jobs-0123.jpg
+
+#### 2026-10-23 21:21 UTC — initial capture
+
+- **File:** SHA-256 `a6ff45b4654d6b56a5425d0ce8d75be7da8c0ace7b9ecff0dfdd3a14052bd132`; 746 × 856 pixels; JPEG.
+- **Used by:** `docs/storage.html#jobs`.
+- **Build, environment, source and URL:** October 23 shared environment above.
+- **UI and observed state:** Automatic group only: 1 running and 4 queued. BlurXTerminator on SNR G132 HA was 62%, started 02:18 PM. SHO, FORAXX-SHO and RGB compositions were queued, followed by SII BXT + NXT. The last row extends below the scrollable panel. No user-started or paused jobs were present; this does not demonstrate both priority groups.
+- **Preparation and reshoot steps:** Open the jobs chip while suitable work already runs. Capture the Automatic group without stopping, moving, pausing or starting work. Counts and progress will differ on a later capture.
+- **Composition:** CDP DIP x=1027.1109, y=49.9625, width=373.9500, height=428.6610. Cropped job popover; no pointer or private paths.
+- **Verification:** inspected the saved image for readable controls, complete
+  labels and private data. Observations describe this capture only. Recheck
+  the build and current values before a reshoot.
+
+### assets/library-delete-project-0123.jpg
+
+#### 2026-10-23 21:24 UTC — initial capture
+
+- **File:** SHA-256 `39a047c350143b30df066f3766252601c574a815c2ee1cb035b4da6a5401b2ca`; 994 × 844 pixels; JPEG.
+- **Used by:** `docs/grader.html#project-removal`.
+- **Build, environment and source:** October 23 shared environment above;
+  SNR G132, database `db-93617230`, project 6, target 6.
+- **URL:** `https://psf-guard.atpn.co/#/?db=db-93617230&project=6&target=6&cardsize=1200`
+- **UI and observed state:** 1 target, 8 exposure plans, 828 frames (642 accepted, 79 rejected, 107 pending). Active project linked to the SNR G132 plan. Confirmation field blank and Delete project disabled.
+- **Preparation and reshoot steps:** Expand SNR G132 in Library, click Edit project, then Delete project.... Wait for the preview. Leave confirmation blank, capture, then Cancel the preview and project editor. Do not submit deletion.
+- **Composition:** complete dialog, CDP DIP x=536.1031, y=302.5485, width=497.7938, height=422.9032, scale 1.
+  No resizing, annotations, pointer or redactions. No private paths appear.
+- **Verification:** inspected the saved image; labels and consequences are
+  readable. Closed the preview without applying it. No catalog records changed.
+
+### assets/library-move-target-0123.jpg
+
+#### 2026-10-23 21:25 UTC — initial capture
+
+- **File:** SHA-256 `683e49bd56257bbcb2f0145e592b8b9f9f910d9a7c99167e8f79f2a4a3e83448`; 994 × 1254 pixels; JPEG.
+- **Used by:** `docs/importing.html#move-target`.
+- **Build, environment and source:** October 23 shared environment above;
+  SNR G132, database `db-93617230`, project 6, target 6.
+- **URL:** `https://psf-guard.atpn.co/#/?db=db-93617230&project=6&target=6&cardsize=1200`
+- **UI and observed state:** 828 exposures and 8 exposure plans would move to a new Inactive project. The current Planning plan would stop managing the target; its next activation could recreate the panel. The destination name was a temporary preview input, not a created project.
+- **Preparation and reshoot steps:** Expand SNR G132 in Library, click Edit beside its target, then Move to another project.... Choose New project..., enter SNR G132 follow-up, and click Preview move. Capture, then Cancel; never click Apply move. Confirm the dialog closed.
+- **Composition:** complete dialog, CDP DIP x=536.1031, y=200.0719, width=497.7938, height=627.8485, scale 1.
+  No resizing, annotations, pointer or redactions. No private paths appear.
+- **Verification:** inspected the saved image; labels and consequences are
+  readable. Closed the preview without applying it. No catalog records changed.

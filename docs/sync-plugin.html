@@ -520,6 +520,19 @@ function gtag_report_demo() {
       it.</li>
   </ul>
 
+  <h3 id="refused-uploads">Recover refused uploads</h3>
+  <p>PSF Guard refuses uploads for a deleted project or a removed reject and
+  explains how to recover. A plugin version with this support holds the upload
+  without retrying; older versions show a blocked job. Another capture that
+  shares the same file name can still upload.</p>
+  <ol>
+    <li>In PSF Guard, allow the deleted project back or restore the rejected frame.</li>
+    <li>In the plugin settings, choose <strong>Retry refused uploads</strong>.</li>
+  </ol>
+  <p>To stop trying to upload those files, choose <strong>Forget refused uploads</strong>.
+  This removes the held queue entries; image files stay on disk. Sending project
+  deletions to the rig also needs a plugin version with project deletion support.</p>
+
   <h2 id="troubleshooting">Fix common problems</h2>
   <div class="table-wrap">
     <table>

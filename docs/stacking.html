@@ -284,7 +284,7 @@ function gtag_report_demo() {
   </div>
   <ul>
     <li><strong>Final pass.</strong> Reintegrate reads every admitted frame
-      three more times and rejects outliers against all the others, so a
+      again and rejects outliers against all the others, so a
       satellite trail in the reference or an early frame goes too. Draft
       publishes the live stack as it stands: much faster, but such a trail can
       stay.</li>
@@ -334,10 +334,10 @@ function gtag_report_demo() {
   </figure>
 
 
-  <!-- RESHOOT: settings-stacking.png | After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record. | Set the stacking method and choose how much margin to leave inside the rotation limit. -->
   <figure>
-    <img src="../assets/settings-stacking.png" loading="lazy" alt="The Recommended preset combines reintegration, local background normalization and noise weighting." width="1878" height="1332">
-    <figcaption>The Recommended preset combines reintegration, local background normalization and noise weighting.</figcaption>
+    <img src="../assets/settings-stacking-0123.jpg" loading="lazy" alt="Stacking settings with Chosen by Seiza selected and an Orientation group margin of 1 degree" width="1780" height="920">
+    <figcaption>Chosen by Seiza selects a reference from the largest orientation
+    group. The 1° margin keeps that group within 9° of the reference.</figcaption>
   </figure>
 
   <p>The stack panel shows the method in use beside <strong>Method:</strong>;
@@ -353,6 +353,13 @@ function gtag_report_demo() {
   refresh. Within a channel it prepares several frames at once while it
   integrates earlier ones. See <a href="storage.html#processor">Processor
   use</a>.</p>
+  <h3 id="final-pass">Final rejection pass and scratch space</h3>
+  <p>The final <strong>Rejecting transients</strong> pass reads each frame once
+  and integrates it in sections to use less memory. Temporary files under
+  <code>stack-scratch</code> in the stack folder need four bytes per sample per
+  frame and are removed when the pass ends. Progress shows reading and integrating.
+  If scratch space is unavailable, PSF Guard reads each frame three times instead.</p>
+
   <h3 id="engine-updates">Keep stacks through engine updates</h3>
   <p>A Seiza update keeps completed stacks, checkpoints and calibration masters
   when its calculated output is unchanged. <strong>Build current set</strong>
@@ -373,6 +380,12 @@ function gtag_report_demo() {
   smoothed that noise without gaining signal.</p>
   <p>On the command line, <code>psf-guard stack-snr --weight-by-noise</code>
   applies the same noise weights; see <a href="#cli">below</a>.</p>
+
+  <div class="callout info"><strong>Upgrading to 0.12.3</strong>
+  <p>Each stack rebuilds once when next opened or refreshed. Color previews using
+  deconvolution or RC-Astro also become out of date; rebuild them for the corrected
+  processing order and orientation. If a channel card still shows an upside-down
+  RC-Astro result, apply its processing again.</p></div>
 
   <h2 id="calibration">Calibrate each channel</h2>
   <p>Stacks match each light against the catalog's calibration library and
@@ -605,6 +618,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     </figure>
   </div>
 
+  <p>If you leave <strong>Stacks</strong> during mono processing and return,
+  the card restores its progress. <strong>Apply processing</strong> stays disabled
+  until the run ends. A color build that fails to prepare shows the reason beside
+  <strong>Apply processing stack</strong> when started there, or at the top of
+  the card otherwise.</p>
+
   <h3 id="stretch-modes">Choose a stretch</h3>
   <p>Open <strong>View processing</strong> on a stack card and choose a stretch
   model. Click <strong>Apply processing</strong> to render the preview.
@@ -768,6 +787,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <strong>Color calibration</strong> in the composition's <strong>Processing stack</strong>
   editor or the one-shot-color stack's <strong>View processing</strong>.</p>
 
+  <p>Stacks built with 0.12.3 record where source frames clipped. Color calibration
+  keeps those star cores neutral instead of tinting them cyan or blue. Existing
+  stacks gain this data when rebuilt. Imported WBPP masters and stacks without
+  clipping data keep the previous behavior. Starless results do not apply this
+  correction because the star cores have been replaced.</p>
+
   <h3 id="edges">Trim registration edges</h3>
   <p>Registering one channel onto another leaves blank edges where it did not
   reach. Each color card's <strong>Edges</strong> picker chooses what to
@@ -824,22 +849,51 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   beside the button you pressed.</p>
 
   <h3 id="channel-processing">Use channel processing in a color composition</h3>
-  <p>In the color editor, click <strong>Use each channel's processing</strong> to
-  copy the deconvolution and RC-Astro settings shown on each channel card into that
-  color input. This copies settings, not processed pixels: the composition runs the
-  steps on the registered channel.</p>
-  <p>A card with only deconvolution clears that input's RC-Astro steps; a card with
-  only RC-Astro steps clears its deconvolution. If the card shows neither, the input
-  keeps its current settings.</p>
-  <p>PSF Guard caches tool results per channel. New frames in OIII rerun its tools
-  while unchanged H-alpha and SII results are reused. Changing the reference stack
-  reruns every channel: red for RGB, L for LRGB, or H-alpha for narrowband. With
-  background extraction on, all channels rerun because they share a background model.</p>
+  <p>In <strong>Processing stack → Deconvolution and RC-Astro</strong>,
+  <strong>From each channel card</strong> is the default for new color previews.
+  Each input follows the tools applied on its channel card, including after an
+  automatic rebuild. A card with only a stretch supplies no deconvolution or
+  RC-Astro steps. Input lanes list the steps used; changing a card marks the
+  color preview out of date.</p>
+  <p>Choose <strong>Set in this build</strong> to set tools per input instead.
+  It starts with the cards' current choices. Color previews made before 0.12.3
+  keep their own settings until you change this choice.</p>
+  <p>Tools run on each channel's own stack before background extraction and
+  alignment. A channel card and color preview with matching settings reuse the
+  same results. Changing background extraction, alignment or a stretch does not
+  rerun those tools; new frames rerun the affected channel's tools.</p>
+  <p>If <strong>Re-apply processing when a stack refreshes</strong> is off,
+  refreshed cards have no processing for the color preview to follow. Apply the
+  card's tools again, then rebuild the color preview.</p>
   <figure>
-    <img src="../assets/stack-copy-channel-processing.jpg" alt="Use each channel's processing lists BlurXTerminator and NoiseXTerminator for both H-alpha and OIII" width="1004" height="324" loading="lazy">
-    <figcaption>The editor lists the steps each channel card would supply.
-    Here, Hα and OIII each list BlurXTerminator and NoiseXTerminator. This shows
-    the control before copying; no processing was applied for the screenshot.</figcaption>
+    <img src="../assets/stack-channel-processing-0123.jpg" loading="lazy" alt="From each channel card selected, with BlurXTerminator on H-alpha and OIII and BlurXTerminator plus NoiseXTerminator on SII" width="2158" height="126">
+    <figcaption>The color preview follows each channel card's applied tools.
+    The summary lists the tools for each input.</figcaption>
+  </figure>
+
+  <h3 id="combined-rc-astro">Process color channels together</h3>
+  <p>With RC-Astro installed and licensed on the server, open
+  <strong>RC-Astro on the color channels together</strong> in
+  <strong>Processing stack</strong>. It is off by default. BlurXTerminator and
+  NoiseXTerminator run on the aligned channels before color calibration and
+  stretching.</p>
+  <ul>
+    <li>BlurXTerminator starts in <strong>Correct only</strong> mode to correct
+      star shapes and color fringes without sharpening. Sharpen individual
+      channels on their cards or in their input lanes.</li>
+    <li>NoiseXTerminator reduces color noise. StarXTerminator remains available
+      on individual channel stacks.</li>
+  </ul>
+  <p>LRGB uses R, G and B here, without luminance. Narrowband uses its emission-line
+  channels. Changes to calibration, crop or stretch reuse these tool results.
+  Download them with <strong>Processed color channels FITS</strong>.
+  Every BlurXTerminator section also offers <strong>Correct only</strong>.</p>
+
+  <figure>
+    <img src="../assets/stack-color-rc-astro-0123.jpg" loading="lazy" alt="Combined-color RC-Astro controls with BlurXTerminator in Correct only mode and NoiseXTerminator enabled" width="2138" height="642">
+    <figcaption>This SHO preview uses BlurXTerminator in Correct only mode and
+    NoiseXTerminator on the aligned channels. Download the result before color
+    calibration and stretching with Processed color channels FITS.</figcaption>
   </figure>
 
   <h3 id="setups">Save processing setups</h3>
