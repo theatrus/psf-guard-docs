@@ -319,24 +319,20 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (2)
+## Redo (existing images) (0)
 
-- `header-jobs.png` — pages: storage
-  - After verifying PR #947 or later is deployed in the browser, capture existing jobs with Started by you above Automatic and queued automatic builds behind user-started builds. Prefer a calibration, import or Generating previews row, and a paused automatic job with Resume if one is already paused. Do not start, stop, pause, resume or reorder live work for a screenshot. If no suitable work is active, use a disposable catalog. Record the build, source, URL, job states, viewport, zoom and crop.
-- `settings-stacking.png` — pages: stacking
-  - After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record.
 
 ## New screenshots (6)
 
 - `export-left-out.png` — pages: exporting
   - Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
+- `header-jobs-priorities.png` — pages: storage
+  - Capture existing work with both Started by you and Automatic headings. Do not start, stop, pause, resume or reorder live jobs to stage the shot. The current automatic-only example is recorded in assets/screenshot-captures.md.
 - `header-transfers.png` — pages: collaboration
   - Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
 - `plan-send-again.png` — pages: rigs
   - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
 - `sequence-docked-review.png` — pages: screening
   - After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection.
-- `stack-channel-processing-0123.png` — pages: stacking
-  - Wait for the server to run 0.12.3 or later. Show Processing stack with From each channel card selected and the input tool summaries. Record the target, build, settings and viewport. Do not start processing for a screenshot.
 - `stack-color-progress.png` — pages: stacking
   - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.

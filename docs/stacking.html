@@ -334,10 +334,10 @@ function gtag_report_demo() {
   </figure>
 
 
-  <!-- RESHOOT: settings-stacking.png | After verifying the current main build is deployed in the browser, open Settings → Stacking and show Orientation group margin with Chosen by Seiza selected. Do not change live settings. Record the build, URL, current method, margin, viewport, zoom and crop in the capture record. | Set the stacking method and choose how much margin to leave inside the rotation limit. -->
   <figure>
-    <img src="../assets/settings-stacking.png" loading="lazy" alt="The Recommended preset combines reintegration, local background normalization and noise weighting." width="1878" height="1332">
-    <figcaption>The Recommended preset combines reintegration, local background normalization and noise weighting.</figcaption>
+    <img src="../assets/settings-stacking-0123.jpg" loading="lazy" alt="Stacking settings with Chosen by Seiza selected and an Orientation group margin of 1 degree" width="1780" height="920">
+    <figcaption>Chosen by Seiza selects a reference from the largest orientation
+    group. The 1° margin keeps that group within 9° of the reference.</figcaption>
   </figure>
 
   <p>The stack panel shows the method in use beside <strong>Method:</strong>;
@@ -865,7 +865,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>If <strong>Re-apply processing when a stack refreshes</strong> is off,
   refreshed cards have no processing for the color preview to follow. Apply the
   card's tools again, then rebuild the color preview.</p>
-  <!-- SHOT: stack-channel-processing-0123.png | Wait for the server to run 0.12.3 or later. Show Processing stack with From each channel card selected and the input tool summaries. Record the target, build, settings and viewport. Do not start processing for a screenshot. | New color previews follow each channel card's applied tools. -->
+  <figure>
+    <img src="../assets/stack-channel-processing-0123.jpg" loading="lazy" alt="From each channel card selected, with BlurXTerminator on H-alpha and OIII and BlurXTerminator plus NoiseXTerminator on SII" width="2158" height="126">
+    <figcaption>The color preview follows each channel card's applied tools.
+    The summary lists the tools for each input.</figcaption>
+  </figure>
 
   <h3 id="combined-rc-astro">Process color channels together</h3>
   <p>With RC-Astro installed and licensed on the server, open
@@ -884,6 +888,13 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   channels. Changes to calibration, crop or stretch reuse these tool results.
   Download them with <strong>Processed color channels FITS</strong>.
   Every BlurXTerminator section also offers <strong>Correct only</strong>.</p>
+
+  <figure>
+    <img src="../assets/stack-color-rc-astro-0123.jpg" loading="lazy" alt="Combined-color RC-Astro controls with BlurXTerminator in Correct only mode and NoiseXTerminator enabled" width="2138" height="642">
+    <figcaption>This SHO preview uses BlurXTerminator in Correct only mode and
+    NoiseXTerminator on the aligned channels. Download the result before color
+    calibration and stretching with Processed color channels FITS.</figcaption>
+  </figure>
 
   <h3 id="setups">Save processing setups</h3>
   <p><strong>Setups</strong> at the top of <strong>View processing</strong> and the
