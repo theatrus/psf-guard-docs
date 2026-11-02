@@ -2548,3 +2548,50 @@ remote worker tokens and no active stack build during this pass.
 - State: ultra cat Database & files. Database and three image folders; links to Import,Quality analysis,Calibrated-copy pairing;2944calibrationframes2326masters. No maintenance action. This deployed page has no Merge renamed lights button.
 - SHA-256: `f1d23ccaf672b03ad13c4435e7c88465788b09b80273b8fffcc083a166a342c5`
 - Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+## 0.13 worker setup — November 1, 2026
+
+The user authorized registering this Mac, creating and saving its worker token,
+and starting the menu-bar worker. The token is absent from these files and
+records. Server dispatch policies were unchanged. No processing job was
+started to stage the captures. The native app was built locally from 5d7102fc
+and installed in the user’s Applications folder. Opening the app also opened
+its existing local catalog and ran its normal startup background work.
+
+### workers-connected-013.png
+
+- **Captured at:** 2026-11-02T02:25:08.217Z
+- **Source:** https://psf-guard.atpn.co/
+- **Pixel dimensions:** [1768, 1784]
+- **Viewport css:** [1522, 1003]
+- **Device pixel ratio:** 2
+- **Clip css:** {"x": 244, "y": 76, "width": 884, "height": 892}
+- **Browser:** Chrome 155
+- **Browser zoom:** not independently recorded
+- **Server version:** 0.13.0
+- **Frontend build:** 81e04f9707fc9166
+- **Deployed commit:** unknown
+- **Method:** Chrome Page.captureScreenshot, PNG, scale 1; no resizing or pixel edits
+- **State:** Mac desktop connected; RC-Astro BlurXTerminator, NoiseXTerminator and StarXTerminator 2.6.10; Stack builds (Seiza stacking 0.51.0) as reported by the UI; PSF Guard 0.13.0, 16 threads, one task at a time. Files transfer through the server. RC-Astro Workers first; stack builds This server only. No processing task was started for verification.
+- **Repeat:** Open Settings > Performance > Workers on the remote server. Confirm the Mac worker is connected. Dismiss the one-time token display before capture. Capture connections and both dispatch policies.
+- **Os:** macOS 27.0.1
+- **Theme:** dark
+- **Sha256:** 529e6e0b89a9205891845df0ade6b77f5e553a1280ede66903fd4ab51632755a
+
+### worker-desktop-013.jpg
+
+- **Captured at:** 2026-11-02T02:25:33.222Z
+- **Source:** Native PSF Guard.app, tauri://localhost
+- **Pixel dimensions:** [2400, 1600]
+- **Window points:** [1200, 800]
+- **Display scale:** 2
+- **Ui zoom percent:** 80
+- **App version:** 0.13.0
+- **Source commit:** 5d7102fc
+- **Build:** Local cargo tauri build --debug --bundles app; ad-hoc signed
+- **Method:** Native app screenshot API, original JPEG bytes; full window, no cropping, resizing or pixel edits
+- **State:** Worker on this computer connected to https://psf-guard.atpn.co as Mac desktop. Stack builds and RC-Astro tools enabled, one concurrent task, Start worker at login off, Task files collapsed (default transfers). Worker token field is empty with Saved token placeholder. Pause, Restart and Stop controls visible; Save disabled. UI zoom restored to 100% after capture.
+- **Repeat:** Open the native app, temporarily set UI zoom to 80%, then Settings > Performance > Workers. Confirm the saved token input is blank and the worker is connected. Capture the full window. Restore UI zoom to 100%.
+- **Os:** macOS 27.0.1
+- **Theme:** dark
+- **Sha256:** 365f36de81e5778984e5e6bff5f889ef6fe802d7bc423298f93e6c5459d6ff03

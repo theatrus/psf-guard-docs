@@ -165,19 +165,21 @@ function gtag_report_demo() {
 <ol>
 <li>On the server, open <strong>Settings → Performance → Workers</strong> and click <strong>+ Add a worker</strong>.</li>
 <li>Enter a worker name and click <strong>Create token</strong>. Copy the token; PSF Guard shows it only once.</li>
-<li>On the worker, run the shell or PowerShell command shown by Settings. Replace <code>THIS-SERVER:PORT</code> with the server's network address when the command contains that placeholder.</li>
+<li>Keep the token for <a href="#desktop">setup in the desktop app</a>, or copy the generated command for <a href="#terminal">a terminal worker</a>.</li>
 </ol>
+<h2 id="terminal">Run a worker from a terminal</h2>
+<p>On the worker computer, run the shell or PowerShell command shown by the server’s Settings. Replace <code>THIS-SERVER:PORT</code> with the server’s network address when the command contains that placeholder. For example:</p>
 <pre><code>PSF_GUARD_WORKER_TOKEN=psfw_… psf-guard worker --server http://192.168.1.10:3000</code></pre>
 <p>Leave the process running. Ctrl-C stops the worker and returns unfinished tasks to the server's queue. <code>--work stack</code> accepts stack builds only; <code>--slots N</code> allows 1–16 concurrent tasks. Start with one for GPU work. Workers that only stack need no RC-Astro installation.</p>
 <h2 id="dispatch">Choose where work runs</h2>
 <p>Under <strong>Where work runs</strong>, choose stack-build and RC-Astro policies independently: <strong>Workers first</strong>, <strong>Workers only</strong> or <strong>This server only</strong>. With <strong>Workers first</strong>, this server handles a task when no suitable worker is connected. With <strong>Workers only</strong>, the task fails if no connected worker can run it. Stack builds stay on the server unless you change this choice. The channel card shows which worker stacked it; its <strong>Live stack</strong> image follows the worker's progress.</p>
 <p>Task files transfer through the server by default. A worker can use shared storage with <code>--files shared</code> when both computers can access the required folders. Each worker uses its own CPU and memory limits. Changing the server’s limits does not change those limits on workers.</p>
 <figure>
-<img src="../assets/workers-dispatch-013.png" alt="Worker dispatch policies with only this server connected" width="1768" height="1684" loading="lazy">
-<figcaption>Choose where RC-Astro tools and stack builds run independently. Only this server is connected in this example; no remote worker is shown.</figcaption>
+<img src="../assets/workers-connected-013.png" alt="Mac desktop connected with RC-Astro tools, stack builds and one concurrent task" width="1768" height="1784" loading="lazy">
+<figcaption>Mac desktop is connected and can run stack builds and all three RC-Astro tools. This server sends RC-Astro work to workers first; stack builds still run on the server until you change their policy.</figcaption>
 </figure>
-<!-- SHOT: workers-connected-013.png | P1. Include the server dispatch policies and a connected worker with actual available tasks and status. Reuse the release-overview shot. Keep credentials out of the crop and do not alter policies or worker state. | A connected worker lists the work it can accept. -->
 <h2 id="desktop">Run a worker from the app</h2>
+<p>First <a href="#add">create a worker token on the server</a>. Then configure the app on the worker computer:</p>
 <ol>
 <li>On macOS or Windows, open <strong>Settings → Performance → Workers → Worker on this computer</strong>.</li>
 <li>Enter <strong>Server address</strong> and <strong>Worker token</strong>. Leave <strong>Worker name</strong> blank to use the computer's host name.</li>
@@ -185,7 +187,11 @@ function gtag_report_demo() {
 <li>Optionally select <strong>Start worker at login</strong>. Click <strong>Save worker settings</strong>, then <strong>Start worker</strong>.</li>
 </ol>
 <p>The worker continues in the menu bar or system tray after you close the window. <strong>Pause worker</strong> stops new requests while current tasks finish; <strong>Stop worker</strong> returns unfinished tasks to the queue. After editing settings, save and click <strong>Restart worker</strong>. Leave <strong>Worker token</strong> blank to keep its saved value.</p>
-<!-- SHOT: worker-desktop-013.png | P2. Native macOS or Windows PSF Guard app, Settings > Performance > Workers > Worker on this computer. Show saved server address, task types, concurrent tasks, connection status and start/pause controls, with the token input blank or masked by the app. Do not reveal or rotate a token, save settings, toggle login startup or start/stop a worker. This panel is desktop-only; a Chrome server page cannot replace it. | The desktop app controls the worker on this computer. -->
+<figure>
+<img src="../assets/worker-desktop-013.jpg" alt="Native Mac app connected to a remote server with both task types enabled" width="2400" height="1600" loading="lazy">
+<figcaption>The Mac app controls the worker on this computer. This connected worker accepts both task types, runs one task at a time and has login startup off. The saved token stays hidden.</figcaption>
+</figure>
+<p>After closing the app window, open the worker’s menu-bar or tray icon to check its status. Choose <strong>Pause worker</strong> or <strong>Resume worker</strong> to control new tasks, <strong>Open PSF Guard</strong> to return to the app, or <strong>Quit worker</strong> to stop the worker and remove its icon.</p>
 <h2 id="services">Start a worker before login</h2>
 <p><strong>Windows:</strong> save settings in <strong>Worker on this computer</strong>, turn off desktop login startup and stop the desktop worker, then run <code>psf-guard-cli worker-service install</code> in an administrator PowerShell. Run it again after saving new settings or updating PSF Guard. The service uses its own copies of the app and settings; desktop controls do not control it.</p>
 <p><strong>Linux:</strong> the RPM and Debian packages install a <code>psf-guard-worker</code> systemd service without enabling it. Set the address and token in <code>/etc/psf-guard/worker.conf</code>. On Debian, first copy <code>/usr/share/doc/psf-guard/worker.conf.example</code> there with permissions that only root can read. Start it with:</p>

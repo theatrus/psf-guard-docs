@@ -1,5 +1,20 @@
 # Screenshot plan — 0.13 release preparation
 
+## November 1 worker follow-up
+
+The Mac app is now connected to the remote server, and both worker screenshots
+are complete. There are 22 captures across the two November 1 passes; five of
+six P1 illustrations are complete. The live-stack image still needs an active
+build. The native screenshot is `worker-desktop-013.jpg`, preserving the native
+capture API’s original JPEG rather than converting it to the planned PNG.
+
+The user authorized creating a worker token, saving it in the Mac app and
+starting the worker. The token is absent from all screenshots and capture
+records. Both task types are enabled with one concurrent task; login startup
+is off. Server dispatch policies were unchanged. The connection was verified
+on both sides and after closing the app window; no processing task was started
+for this check. See the [worker capture manifest](assets/captures-worker-013-2026-11-01.json).
+
 ## November 1 capture pass
 
 Twenty Chrome captures are complete: four of six P1 illustrations, the mosaic
@@ -437,7 +452,7 @@ capture record and its history.
 - `stack-color-rc-astro-0123.jpg` — pages: stacking
   - P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing.
 
-## New screenshots (10)
+## New screenshots (8)
 
 - `export-left-out.png` — pages: exporting
   - P3. Carried from 0.12; capture only when its prerequisites are available. Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
@@ -456,8 +471,3 @@ capture record and its history.
 - `stack-live-013.png` — pages: new-in-0.13, stacking
   - P1. Capture a channel already building with Live stack, accepted-frame count and progress visible. Show the same card once the live image replaces the placeholder. Record worker attribution if present. Do not start a live-catalog build to stage this; use a disposable catalog if needed.
   - P1. Show an existing channel build's Live stack image, accepted count and progress with no second placeholder. Reuse the overview capture.
-- `worker-desktop-013.png` — pages: workers
-  - P2. Native macOS or Windows PSF Guard app, Settings > Performance > Workers > Worker on this computer. Show saved server address, task types, concurrent tasks, connection status and start/pause controls, with the token input blank or masked by the app. Do not reveal or rotate a token, save settings, toggle login startup or start/stop a worker. This panel is desktop-only; a Chrome server page cannot replace it.
-- `workers-connected-013.png` — pages: new-in-0.13, workers
-  - P1. Settings > Performance > Workers on the server: show Where work runs for stack builds and RC-Astro plus a connected worker, its available task types and current status. Hide no content by pixel edits; keep tokens, pairing codes and credentials out of the viewport. Do not create a token, change dispatch policies or start tasks for the capture. An idle connected worker is valid; caption its actual state.
-  - P1. Include the server dispatch policies and a connected worker with actual available tasks and status. Reuse the release-overview shot. Keep credentials out of the crop and do not alter policies or worker state.
