@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html" class="active" aria-current="page">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -192,10 +195,10 @@ stack_directory = "/mnt/nas/psf-guard/stacks"
 calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
 
   <h3 id="choose-folders">Choose folders in Settings</h3>
-  <p>Open <strong>Settings &rarr; Storage &rarr; Folders</strong>, in the
+  <p>Open <strong>Settings → Storage &amp; backups → Folders &amp; limits → Folders</strong>, in the
   desktop app too. Type or browse to a folder for <strong>Cache</strong>,
   <strong>Stacks</strong> or <strong>Calibration masters</strong>, then click
-  <strong>Save folders</strong>. Leave Stacks or Calibration masters empty to
+  <strong>Save storage settings</strong>. Leave Stacks or Calibration masters empty to
   use the cache. A folder the server's config file fixes reads <em>Set by the
   server config file</em> and cannot change here. Choosing folders needs
   database management. Settings asks before closing if you have unsaved folder changes.</p>
@@ -230,7 +233,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   </div>
 
   <h2 id="disk-use">Disk use</h2>
-  <p><strong>Settings &rarr; Storage &rarr; Disk use</strong> shows every
+  <p><strong>Settings → Storage &amp; backups → Folders &amp; limits → Limits</strong> shows every
   volume the three folders sit on: how full it is, its limit, which folders and
   databases it holds, and how much of it is stacks, calibration masters and
   image previews.</p>
@@ -301,7 +304,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       <tr><td>Stack resume checkpoints</td><td>After 30 days with no build writing or resuming from them. At once when no build could resume from them, such as one from an older stacking pipeline.</td></tr>
       <tr><td>Calibration masters a newer master built from the same frames replaced</td><td>Once unused for a day and no stack refers to them</td></tr>
       <tr><td>Half-written masters a stopped build left</td><td>A day old</td></tr>
-      <tr><td>WBPP run folders</td><td>Never: a run's output may exist nowhere else</td></tr>
+      <tr><td>WBPP work files</td><td>Separate retention for intermediates and masters; active runs, downloads and master copies are protected. See <a href="#wbpp-retention">WBPP retention</a>.</td></tr>
     </table>
   </div>
   <p>Masters are swept only while no stack build runs. An index that cannot be read
@@ -311,8 +314,17 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   space rejected frames take, <a href="workflows.html#remove-rejects">remove
   old rejects</a>.</p>
 
-  <h2 id="processor">Processor use</h2>
-  <p><strong>Settings &rarr; Performance &rarr; Processor use</strong> sets how
+<h2 id="wbpp-retention">Keep WBPP files for a chosen time</h2>
+<p>Open <strong>Settings → Storage &amp; backups → Folders &amp; limits</strong>. WBPP shares <strong>Folders</strong> and <strong>Limits</strong> with the other storage options. Choose a dedicated WBPP folder and volume usage limit, then set retention for intermediates and masters. Click <strong>Save storage settings</strong> to save folders, limits and retention together.</p>
+<p>Intermediates default to seven days and masters to 90 days. <strong>Keep WBPP masters forever</strong> protects masters from cleanup. Intermediates are removed before masters; active runs, downloads and master copies are protected. Saved process masters and imported stacks remain separate. Volume limits accept whole percentages from 0% through 100%.</p>
+<!-- RESHOOT: settings-storage-folders.png | P2. Settings > Storage & backups > Folders & limits. Include WBPP's folder and Save storage settings, with actual saved paths. Do not save folder changes or restart. -->
+<!-- RESHOOT: settings-storage-disk-use.png | P2. Same page, Limits with volume usage and WBPP retention, including Keep WBPP masters forever. Record saved values. Do not change limits or trigger cleanup. -->
+<h2 id="processing-memory">Set the processing memory budget</h2>
+<p>Open <strong>Settings → Performance → CPU &amp; memory → Processing memory</strong>. <strong>Memory budget</strong> ranges from 5% to 100% and starts at 50%; the panel shows GiB. macOS uses installed memory, while Linux and Windows use available memory. Releasing the slider, pressing Enter or moving focus saves the setting. A larger budget leaves less memory for other work and applies to new jobs.</p>
+<p>Color and stretch errors show their estimate and current budget. Color estimates count source channels plus the largest processing step, including an RC-Astro tool's own memory when it runs on the server. A worker can reduce server memory use for that step. The estimate is a planning limit, not a reservation.</p>
+<!-- SHOT: settings-memory-013.png | P2. Performance > CPU & memory, showing Processing memory, Memory budget percentage, GiB and memory basis. Do not move the slider: release or blur saves immediately. A genuine budget error can be a second crop only if already present. | Choose how much memory new processing jobs may use. -->
+<h2 id="processor">Processor use</h2>
+  <p><strong>Settings → Performance → CPU &amp; memory → Processor use</strong> sets how
   many cores each kind of work may use, as a share of the logical cores. A
   change applies to work that starts after it, without a restart.</p>
 
@@ -379,7 +391,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <p>Under each heading, jobs that need your attention come first, then running,
   queued, waiting and paused work. The header counts each state separately.</p>
 
-  <!-- SHOT: header-jobs-priorities.png | Capture existing work with both Started by you and Automatic headings. Do not start, stop, pause, resume or reorder live jobs to stage the shot. The current automatic-only example is recorded in assets/screenshot-captures.md. | Jobs started by a person take priority over automatic work. -->
+  <!-- SHOT: header-jobs-priorities.png | P3. Carried from 0.12; capture only when its prerequisites are available. Capture existing work with both Started by you and Automatic headings. Do not start, stop, pause, resume or reorder live jobs to stage the shot. The current automatic-only example is recorded in assets/screenshot-captures.md. | Jobs started by a person take priority over automatic work. -->
   <figure>
     <img src="../assets/header-jobs-0123.jpg" loading="lazy" alt="Automatic jobs with BlurXTerminator running on SNR G132 H-alpha and four processing jobs queued" width="746" height="856">
     <figcaption>Automatic processing on SNR G132: BlurXTerminator is running on

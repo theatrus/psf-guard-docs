@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New in 0.13 — PSF Guard</title>
+  <meta name="description" content="Preview PSF Guard 0.13: GPU stacking, integrated mosaics, remote workers, color processing, image inspection and grouped Settings.">
+  <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html" class="active" aria-current="page">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+<h1>New in 0.13</h1>
+<p class="lede">Build integrated mosaics, watch stacks form on the GPU, and send processing to another computer. New color controls and image-inspection tools help you review the result.</p>
+<div class="callout info"><strong>Preparing 0.13.</strong> These notes describe the release being prepared. Download links still open the latest published release.</div>
+<p><a href="release-notes-0.13.html#upgrading">Read before upgrading</a> · <a href="release-notes-0.13.html">All changes in 0.13</a> · <a href="new-in-0.12.html">New in 0.12</a></p>
+<h2 id="gpu">Build faster and watch the stack form</h2>
+<p>Supported GPUs accelerate debayering, star detection, resampling, live stacking and the final pass. A channel's <strong>Live stack</strong> image updates about every five seconds while frames are integrated. Computers without a supported GPU keep using the CPU.</p>
+<!-- SHOT: stack-live-013.png | P1. Capture a channel already building with Live stack, accepted-frame count and progress visible. Show the same card once the live image replaces the placeholder. Record worker attribution if present. Do not start a live-catalog build to stage this; use a disposable catalog if needed. | Watch accepted frames accumulate before the final preview is ready. -->
+<p><a href="stacking.html#gpu">Choose GPU passes</a> · <a href="stacking.html#live-stack">Follow a live stack</a></p>
+<h2 id="mosaics">Integrate mosaic panels into one image</h2>
+<p>Build one FITS mosaic per channel, preserving each frame's calibration. Compose RGB, LRGB or narrowband color from the integrated channels. Local background normalization matches panel backgrounds; color calibration solves the integrated canvas itself.</p>
+<figure>
+<img src="../assets/release-013-sho-rgb-stars.jpg" alt="Heart and Soul integrated four-panel SHO mosaic with RGB stars" width="1600" height="1015" loading="lazy">
+<figcaption>Heart and Soul: balanced SHO with RGB stars from integrated channel mosaics. This recorded example uses source panel stacks binned 4× per axis, with Gaia color calibration skipped; it is not a full-resolution capture of the Stacks interface.</figcaption>
+</figure>
+<!-- SHOT: stack-integrated-mosaic-013.png | P1. On a verified current build open a completed real mosaic in Stacks. Include one integrated channel or color card and its mosaic identity, with the full single-canvas preview and panel coverage. Prefer Heart Mosaic or Heart and Soul after checking availability. Record channels, panels, accepted counts, calibration and solve state. Do not substitute the old grid of separate panel previews. | Integrated channel mosaics can feed the same RGB and narrowband color combinations as single fields. -->
+<p><a href="stacking.html#mosaic">Build a mosaic</a></p>
+<h2 id="workers">Use another computer's GPU or RC-Astro tools</h2>
+<p>Workers can build stacks, including mosaics, and run BlurXTerminator, NoiseXTerminator and StarXTerminator. Choose where stack builds and RC-Astro run separately. Desktop workers continue in the menu bar or tray after you close the window; Windows and Linux services can run before login.</p>
+<p>Stack builds stay on the server until you choose otherwise. Install the same PSF Guard release on the server and workers. WBPP stays on the server.</p>
+<!-- SHOT: workers-connected-013.png | P1. Settings > Performance > Workers on the server: show Where work runs for stack builds and RC-Astro plus a connected worker, its available task types and current status. Hide no content by pixel edits; keep tokens, pairing codes and credentials out of the viewport. Do not create a token, change dispatch policies or start tasks for the capture. An idle connected worker is valid; caption its actual state. | Choose independently where stack builds and RC-Astro tools run. -->
+<p><a href="workers.html">Set up workers</a></p>
+<h2 id="color">Control the nebula and stars separately</h2>
+<p>Color processing follows numbered, expandable steps. Inspect the color and RGB-star branches separately, fit and subtract continuum for emission combinations, and adjust RGB-star sharpening, stretching and reduction. Automatic SHO/HOO recipes can restore RGB stars when the sources and StarXTerminator are available, with an explained fallback.</p>
+<p>Existing previews keep their processing choices. New previews start from the default Color setup under <strong>Settings → Presets → Processing setups</strong>.</p>
+<!-- SHOT: stack-color-pipeline-013.png | P1. Open a completed real narrowband card's Processing stack; show numbered steps, the selected star policy and the resolved RGB-star or narrowband fallback explanation. Expand Process linear color and Combine and restore stars as space permits. Record recipe, RGB sources, SXT availability and saved versus unsaved settings. Open disclosures only; do not apply changes. | Follow the color and RGB-star branches through numbered processing steps. -->
+<p><a href="stacking.html#color-pipeline">Process color and stars</a></p>
+<h2 id="inspection">Inspect the stack's pixels and sky position</h2>
+<p>The stack inspector uses the image viewer's full-window layout and a narrower details sidebar. Stacks offer <strong>Sky context</strong>, HFR star labels and a PSF view. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <kbd>M</kbd> or <kbd>R</kbd>, for a readout beside the pointer.</p>
+<!-- SHOT: stack-inspector-013.png | P1. Inspect a completed real stack at a useful zoom with its details sidebar and FITS downloads visible. Enable Value and, only with an existing solve, RA/Dec, then place the pointer over the image so the linear-value readout is visible. Show existing Sky context when available; do not start a solve on a live catalog. Record file, channels, zoom, solve provenance, pointer position and readout values. Do not claim embedded WCS proves a pixel solve. | Inspect linear pixel values beside the pointer while keeping stack details visible. -->
+<p><a href="stacking.html#inspect">Inspect and download stacks</a></p>
+<h2 id="settings">Find a setting by task or database</h2>
+<p>Settings groups processing, performance, storage, exports and review in a sidebar or a compact phone selector. Open a database by name for <strong>Rig setup</strong>, <strong>Database &amp; files</strong>, <strong>Import</strong> and <strong>Sync</strong>. New databases inherit shared quality-analysis and calibrated-copy defaults; existing databases keep their choices as explicit overrides.</p>
+<figure>
+<img src="../assets/settings-overview-013.png" alt="Settings grouped by task, with C925 and Ultra Cat directly in database navigation" width="1280" height="900" loading="lazy">
+<figcaption>Open a database directly from Settings. This recorded fixture shows the grouped navigation with disposable C925 and Ultra Cat databases.</figcaption>
+</figure>
+<p><a href="configuration.html#settings">Find moved settings</a> · <a href="release-notes-0.13.html#upgrading">Review upgrade changes</a></p>
+
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

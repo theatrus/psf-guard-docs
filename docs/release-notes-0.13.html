@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>0.13 Release Notes — PSF Guard</title>
+  <meta name="description" content="PSF Guard 0.13 release preparation: GPU stacking, integrated mosaics, remote workers, color processing, stack inspection and upgrade notes.">
+  <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html" class="active" aria-current="page">0.13 Release Notes</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+<h1>0.13 Release Notes</h1>
+<div class="callout info"><strong>Preparing 0.13.</strong> These notes describe the release being prepared. Download links still open the latest published release.</div>
+<p><a href="new-in-0.13.html">0.13 overview</a> · <a href="release-notes-0.12.html">0.12 release history</a></p>
+<p>PSF Guard 0.13 builds integrated mosaics, accelerates stacking on the GPU, runs stack builds and RC-Astro tools on workers, and adds new color-processing and image-inspection tools.</p>
+<h2 id="upgrading">Upgrading</h2>
+<ul>
+<li><strong>Allow time for rebuilds.</strong> The stacking engine changed, so each stack rebuilds once when next opened or refreshed. Older mosaic color previews without a solve of the integrated canvas are marked out of date; <strong>Build current set</strong> refreshes them from cached stacks.</li>
+<li><strong>Scoring defaults are shared on the server.</strong> The first editor to open PSF Guard after the update saves their own scoring defaults there, including built-in values. Everyone on the server then sees the same defaults, and only an editor can change them. A viewer's defaults are not copied. Review the defaults under <strong>Settings → Review → Grading &amp; display</strong>.</li>
+<li><strong>Existing color previews keep their processing choices.</strong> New color previews use the Color setup marked as the default. New automatic narrowband recipes use an independent Star Stretch for RGB stars; saved setups keep their existing Auto MTF rendering until you switch.</li>
+<li><strong>Existing database choices become explicit overrides.</strong> Quality-analysis and calibrated-copy settings keep their previous values. New databases inherit the shared defaults. Review them under <strong>Review → Grading &amp; display</strong> and <strong>Processing → Calibration</strong>.</li>
+<li><strong>Update workers with the server.</strong> Install the same PSF Guard release on each worker. Stack builds stay on the server until you choose otherwise. WBPP runs stay on the server.</li>
+<li><strong>Direct Target Scheduler access remains deprecated.</strong> Existing direct connections still work in 0.13. For a new connection, open <strong>Settings → Databases &amp; rigs → New / import</strong> and choose <strong>Import from Target Scheduler</strong>, or pair the PSF Guard Sync plugin. No automatic conversion of existing direct connections is included in this release. If you are upgrading from 0.11, also read the <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/releases/v0.12.0.md#upgrading-from-011">0.12 upgrade notes</a>.</li>
+</ul>
+<h2 id="stack-on-the-gpu-and-follow-builds">Stack on the GPU and follow builds</h2>
+<ul>
+<li>Watch a channel's in-progress stack in <strong>Stacks</strong>, with a live preview updated about every five seconds. The finished preview replaces it when processing completes; completed FITS downloads remain separate during a rebuild.</li>
+<li>Stack previews now run on the GPU when your computer has one: Metal on a Mac, Vulkan on Linux and Direct3D 12 on Windows. Debayering, star detection, resampling, the live stack and the final pass run there. On an Apple M4 Max, 35 frames of 26 megapixels stacked in 5–6 seconds instead of 12. Computers without a supported GPU, and frames under about a million pixels, stack on the CPU as before. To choose which passes run on the GPU, open <strong>Settings → Performance → GPU</strong>. With <strong>Use the GPU</strong> off, all stacking work stays on the CPU, including artifact searches and the channel alignment of color previews.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/STACKING_PREVIEWS.md">Stack previews</a>.</p>
+<h2 id="build-integrated-mosaics">Build integrated mosaics</h2>
+<ul>
+<li>Mosaic color calibration now solves the integrated canvas instead of looking for a single reference-frame solve. RGB, LRGB, RGB-star and OSC calibration reuse that pixel solve. Older uncalibrated previews are marked out of date; <strong>Build current set</strong> refreshes them from the cached stacks.</li>
+<li>Mosaic stacks prepare several frames at once on machines with less memory. Each frame in preparation is sized for the frame and the part of the canvas it covers, instead of the whole canvas. With a 12.8 GiB budget, a four-panel mosaic of 88 megapixels prepares three frames at once instead of one.</li>
+<li>Mosaic SNR plots report canvas coverage and mean pixel depth. They keep each checkpoint's measured signal and no longer apply same-field forecasts or plateau/degrading verdicts to frames covering different sky areas. Saved mosaic plots use the corrected interpretation without rebuilding.</li>
+<li>A live stack image replaces the waiting placeholder, so mosaic previews no longer display a second, full-height spinner area beneath the image.</li>
+<li>Build one integrated mosaic per channel in <strong>Stacks</strong>, then compose RGB, LRGB and narrowband color from those mosaics. Frames keep their calibration sessions and align against overlapping panels. Incomplete mosaics identify panels with no aligned frames. Local background normalization also matches panel backgrounds through Seiza to reduce seam lines.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/STACKING_PREVIEWS.md#build-a-mosaic">Mosaic builds</a>.</p>
+<h2 id="run-processing-on-workers">Run processing on workers</h2>
+<ul>
+<li>Windows worker services can now read their saved settings and start successfully. Reinstalling the service also repairs permissions left by an earlier installation and waits for the stopped worker process before replacing its executable.</li>
+<li>Run a worker from the PSF Guard app on macOS or Windows. Open <strong>Settings › Performance › Workers › Worker on this computer</strong>, enter the <strong>Server address</strong> and <strong>Worker token</strong>, then click <strong>Save worker settings</strong> and <strong>Start worker</strong>. The worker continues running in the menu bar or system tray after you close the window. <strong>Start worker at login</strong> starts it when you log in. Opening PSF Guard while its window is open brings that window forward instead of starting a second copy.</li>
+<li>Run a worker as a Windows service to process tasks before anyone logs in. Open <strong>Settings › Performance › Workers › Worker on this computer</strong>, click <strong>Save worker settings</strong>, then run <code>psf-guard-cli worker-service install</code> in PowerShell opened as administrator. Run the command again after changing settings or updating PSF Guard to update and restart the service. Desktop worker controls do not control the service.</li>
+<li>Run a worker as a Linux service. The Fedora RPM and the Debian package install a <code>psf-guard-worker</code> systemd service, not enabled. Enter the server's address and a worker token in <code>/etc/psf-guard/worker.conf</code>, then run <code>sudo systemctl enable --now psf-guard-worker</code>. On Debian, copy <code>/usr/share/doc/psf-guard/worker.conf.example</code> to that file first.</li>
+<li>Stack builds on another computer. Start a worker with <code>--work stack</code>, then choose <strong>Workers first</strong> or <strong>Workers only</strong> for stack builds in <strong>Settings › Performance › Workers</strong>. Each channel stacks there from the frames, masters, checkpoint and settings the server would use. Mosaics stack there too. Each channel's card shows which worker stacked it, and its <strong>Live stack</strong> preview shows the worker's running image. Stack builds stay on the server unless you choose otherwise.</li>
+<li>Run RC-Astro tools on another computer. Add a worker in <strong>Settings › Performance › Workers</strong>, then run <code>psf-guard worker --server …</code> there with its token. The worker runs BlurXTerminator, NoiseXTerminator and StarXTerminator for stack previews, color previews and narrowband stars, and the processing panel shows where each tool runs. A worker accepts every tool it has, or the ones <code>--work</code> lists, and runs up to <code>--slots</code> steps at once. Choose under <strong>Where work runs</strong> whether RC-Astro runs on workers first with this server as the fallback, on workers only, or on this server only. Files go through the server, or, with <code>--files shared</code>, through a folder the worker and the server share. See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/REMOTE_WORKERS.md">Workers</a>.</li>
+<li>Worker settings distinguish the worker on this computer from workers connected to the server. Labels explain task types, concurrent tasks, temporary files and saved tokens; tray status distinguishes waiting for a connection from waiting for tasks.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/REMOTE_WORKERS.md">Workers</a>.</p>
+<h2 id="compose-color-and-control-stars">Compose color and control stars</h2>
+<ul>
+<li>Color composition memory estimates now follow what a composition uses. The estimate counts each source channel and the composition's largest step, instead of adding every step. It includes an RC-Astro tool's own memory when the tool runs on this server. SHO with RGB stars on a 90-megapixel mosaic is estimated at 22 GiB instead of 26 GiB with StarXTerminator on this server, about what the two use together, and at 12 GiB when a worker runs StarXTerminator. RC-Astro on the color channels is estimated higher than before when it runs on this server, because its memory is now counted.</li>
+<li>Color processing now follows numbered, expandable steps from input preparation to RGB finishing. See color and RGB-star branches separately, inspect the resolved star policy, and edit saved setups with consistent field fonts and spacing. Emission amounts and star reduction appear where they run in the pipeline; closing a step preserves its edits.</li>
+<li>Narrowband previews can reduce the restored RGB stars independently of BXT. Adjust <strong>Processing stack → Combine and restore stars → RGB star reduction</strong> to make stars smaller and fainter while preserving their color and the starless nebula. Zero preserves the current result. BXT sharpening and halo controls remain configurable.</li>
+<li>Combined color previews validate held-out stellar pixel profiles and can explicitly match continuum PSFs with Gaussian broadening. Reports show core/halo errors and the changed resolution. Narrowband controls also offer star exclusions for balance statistics and green-excess reduction before RGB stars are restored. Optional calibrated-response exports retain signed line flux, exact source provenance and uncertainty assumptions.</li>
+<li>RGB-star previews now honor the selected Gaia settings and separate their SXT caches by those settings. Natural RGB/LRGB emission builds explain when an inherited SXT step cannot run. Clearing the optional OIII B/G ratio returns to measured photometry.</li>
+<li>Narrowband previews can sharpen their RGB star branch with BlurXTerminator before star extraction. Open <strong>Processing stack → Process linear color → RGB star processing</strong>.</li>
+<li>Custom <strong>RGB + emission</strong>, <strong>LRGB + emission</strong>, and <strong>Narrowband + broadband structure</strong> cards fit and subtract continuum on aligned linear inputs. Automatic, Manual and Off controls retain signed residual downloads and show per-line fit results. Failed natural-color lines are omitted with a warning; a failed mapped line keeps the previous preview available.</li>
+<li>New narrowband color cards offer automatic SHO/HOO selection, a shared H-alpha stretch, and background-protected OIII/SII balance. Choose <strong>Stars → Automatic</strong> to use RGB stars when the sources and StarXTerminator are available, with an explained fallback to narrowband stars. Exact RGB sources can use different exposures under the card's <strong>Custom combination</strong>. Existing previews keep their saved palette and processing.</li>
+<li>Automatic stack refreshes now compose a target's first color preview once its channels are stacked, as a build you start does. New color previews start from the Color setup marked as the default. PSF Guard adds one named <strong>Default</strong> with the current pipeline. To use another pipeline, open <strong>Settings → Presets → Processing setups</strong> and click <strong>Make default</strong> on a Color setup, or save your changes over <strong>Default</strong>. Color previews you already have are not changed.</li>
+<li>New automatic narrowband recipes stretch the linear RGB stars independently with a SetiAstro-style Star Stretch. Lower the amount in <strong>Combine and restore stars</strong> to keep stars fainter. Saved setups keep their existing Auto MTF rendering until you switch.</li>
+<li>Narrowband cards show a visible ✨ Stars label beside the star-policy selector.</li>
+<li>Configure StarXTerminator separately for the linear nebula and RGB-star branches in <strong>Process linear color</strong>. Finished compositions retain the cached linear starless/stars outputs, and display blend amounts reuse the SXT runs.</li>
+<li>Set the processing memory budget in <strong>Settings → Performance → CPU &amp; memory → Processing memory</strong>. Color and stretch errors show the estimate and current budget, with the setting to adjust it.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/STACKING_PREVIEWS.md">Color processing</a>.</p>
+<h2 id="inspect-stacks-and-measure-pixels">Inspect stacks and measure pixels</h2>
+<ul>
+<li>The stack inspector fills the browser or app window, with the image beside a sidebar for details, available FITS downloads, <strong>Sky context</strong>, artifact search, shortcuts and zoom controls. The calibration master inspector uses the same layout. Both sidebars are narrower to leave more room for the image.</li>
+<li>Stacks now offer the image viewer's analysis tools. <strong>Sky context</strong> plate-solves the stack's own pixels, starting from its frames, and draws objects in the field over the image. <strong>S</strong> marks stars with their HFR, and <strong>P</strong> opens the PSF view.</li>
+<li>The image viewer and the stack inspector can show the pixel under the pointer. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <strong>M</strong> or <strong>R</strong>, to see the pixel's position, its linear value from the file (one per channel of a colour stack), and its right ascension and declination from the plate solution, in a box that follows the pointer. PSF Guard reads only the pixels near the pointer, so a large stack does not have to load.</li>
+<li>In the desktop app on Windows and Linux, F11 puts the window into full screen and back. On macOS, use <strong>View → Enter Full Screen</strong> or the window's green button.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/STACKING_PREVIEWS.md">Stack inspection</a>.</p>
+<h2 id="find-settings-and-share-defaults">Find settings and share defaults</h2>
+<ul>
+<li>Settings lists databases directly in the left pane, with <strong>New / import</strong> for adding a database. Select a database to open <strong>Rig setup</strong>, <strong>Database &amp; files</strong>, <strong>Import</strong> or <strong>Sync</strong> in the same navigation. Shared <strong>Sites</strong> are under <strong>Presets</strong>. Sync consistently calls its local and remote stores databases.</li>
+<li>Quality analysis is under <strong>Review → Grading &amp; display</strong>; calibrated-copy pairing is under <strong>Processing → Calibration</strong>. Both offer shared defaults and database overrides. Your configured databases keep their choices as overrides; newly added databases inherit shared defaults. AstroBin filter maps are beside shared AstroBin defaults under <strong>Exports &amp; integrations → AstroBin</strong>.</li>
+<li>Database overrides use the same controls as Calibration rig overrides. Inherited values align with their override buttons. Each database has an <strong>Import</strong> page with directly editable scan rules, automatic-import settings and previews. Creating a database from image folders offers the same exclusion patterns and scan filters before the first import.</li>
+<li>Import uses saved filters by default. Expand <strong>Scan rules</strong> to edit them; saving closes the editor again. New-database filters start collapsed too. Long folder paths wrap within the manual import preview on phones.</li>
+<li>Settings uses a compact header with <strong>Close</strong> and, in the desktop app, <strong>Open logs</strong>, leaving more room for the selected page. Each form keeps its own Save controls. <strong>Restart server</strong> appears with a saved port change or server startup error; folder changes keep <strong>Restart now</strong> beside the folders. Restart controls stay disabled while forms have unsaved edits.</li>
+<li>Settings groups related pages in a desktop sidebar and a compact phone selector. Find GPU controls under <strong>Performance</strong>, exposure templates and processing setups under <strong>Presets</strong>, and export defaults, PixInsight and AstroBin under <strong>Exports &amp; integrations</strong>. Existing settings and shortcuts are preserved. Settings asks before switching pages with unsaved edits. See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/SETTINGS.md">Settings navigation</a>.</li>
+<li>In the Settings sections <strong>Exports &amp; integrations → PixInsight</strong>, <strong>Processing → Stacking → Stack previews</strong>, <strong>Performance → CPU &amp; memory → Processor use</strong> and, in the desktop app, <strong>Server &amp; access → Server</strong>, fields no longer appear blank, or show an Automatic port, for a moment while Settings loads. When the server reports new values, fields you have not edited update to match, and a field you are editing keeps what you typed. In PixInsight, <strong>Check again</strong> now updates the executable and WBPP runs folder.</li>
+<li>A plan's scheduling limits on its <strong>Rigs</strong> tab, and a rig's planning site and Target Scheduler limits under <strong>Rigs</strong>, no longer appear empty or marked unsaved for a moment when they load. A collaboration connection's <strong>Automation</strong> tab shows the saved choices at once instead of unticked boxes. <strong>Stack with WBPP</strong> shows the project's process folder at once. Fields you have not edited now follow newer values from the server; your edits stay until you save or discard them.</li>
+<li>When someone else changes a rig's planning site or Target Scheduler limits while you edit them, <strong>Save rig profile</strong> no longer overwrites their change. PSF Guard saves the rest of the rig profile and explains that the planning site and Target Scheduler limits changed. Click <strong>Reload</strong> to load their values in place of your planning site and Target Scheduler limit edits. <strong>Reload rig profile</strong> keeps those edits when nothing changed on the server.</li>
+<li>Automatic stack refreshes now score with the server's scoring defaults, the same values every view starts from. Stacks that showed <strong>Out of date — scoring settings changed</strong> after an automatic refresh are rebuilt with the defaults on the next automatic refresh, and stop showing it. Saving new defaults in <strong>Settings → Review → Grading &amp; display</strong> rebuilds stacks scored another way when automatic previews are on.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/SETTINGS.md">Settings navigation and scope</a>.</p>
+<h2 id="calibration-and-image-compatibility">Calibration and image compatibility</h2>
+<ul>
+<li><strong>External flat masters at another gain</strong>, a new setting in <strong>Settings › Processing › Calibration › Matching</strong> and in each rig's settings, lets a flat master from other software calibrate lights shot at another gain or offset. Use it for a master whose own flat darks were subtracted, such as one built from gain-0 flats for gain-100 lights. It is off by default, and a master refused only for its gain and offset now identifies the setting.</li>
+<li>A multi-session stack keeps lights that use different external masters in separate calibration sessions, even when they match the same raw frames. Existing masters, grades, flat groups and stacks keep their results through the calibration-library update and do not rebuild because of that update.</li>
+<li>Plate solving starts from the solution PixInsight stores in an XISF frame. PixInsight keeps a plate solution as the file's own properties, not as FITS WCS keywords, so PSF Guard missed it and started from the frame's other pointing headers. It now reads the solution as it reads a solved FITS frame's WCS.</li>
+</ul>
+<p>See <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/CALIBRATION_LIBRARY.md">Calibration libraries</a>.</p>
+<h2 id="storage-and-reliability">Storage and reliability</h2>
+<ul>
+<li>FITS downloads in stack processing use compact controls with a download icon and explicit labels. Long labels wrap to fit narrow panels.</li>
+<li>Save storage limits, folders, and WBPP retention together with <strong>Save storage settings</strong>. WBPP shares the <strong>Limits</strong> and <strong>Folders</strong> sections with the other storage options.</li>
+<li>Manage WBPP work files under <strong>Settings → Storage &amp; backups → Folders &amp; limits</strong>: choose a dedicated folder and volume usage limit, remove intermediates before masters, and set separate retention periods. Intermediates default to seven days and masters to 90 days; <strong>Keep WBPP masters forever</strong> protects masters from cleanup. Active runs, downloads, and master copies are protected, and saved process masters and imported stacks remain separate.</li>
+<li>Volume usage limits now accept every whole percentage from 0% through 100%, including values below 50%, for the cache, stacks, calibration masters, and WBPP.</li>
+</ul>
+<h2 id="fixes-already-shipped-in-0-12">Fixes already shipped in 0.12</h2>
+<p>This release includes the <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/releases/v0.12.4.md">0.12.4 fixes</a> and the <a href="https://github.com/theatrus/psf-guard/blob/v0.13.0/docs/releases/v0.12.5.md">0.12.5 renamed-file fixes</a>. Those updates let the server start with missing image folders, keep renamed files matched to their frames in standalone and synced catalogs, add <strong>Merge renamed lights</strong>, check flat age against the nearest contributing flat, fix stale processing results and Settings scrolling, and update zstd for four memory-safety advisories.</p>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>

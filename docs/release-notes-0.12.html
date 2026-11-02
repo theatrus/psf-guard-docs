@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>0.12 Release Notes — PSF Guard</title>
-  <meta name="description" content="PSF Guard 0.12.3 release notes: project and plan cleanup, leaving collaborations, color-stack processing, and upgrade notes for the 0.12 series.">
+  <meta name="description" content="PSF Guard 0.12 release history through 0.12.5, including renamed-file fixes, missing folders, calibration coverage, security updates and upgrade notes.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
 <!-- google-tag:start -->
@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html" class="active" aria-current="page">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -159,6 +162,8 @@ function gtag_report_demo() {
 
   <nav aria-label="On this page">
     <ul>
+      <li><a href="#v0-12-5">0.12.5: renamed files in synced catalogs</a></li>
+      <li><a href="#v0-12-4">0.12.4: missing folders, calibration and security fixes</a></li>
       <li><a href="#v0-12-3">0.12.3: projects, collaboration and color processing</a></li>
       <li><a href="#v0-12-2">0.12.2: desktop startup and previews</a></li>
       <li><a href="#v0-12-1">0.12.1: macOS updates and HTTPS</a></li>
@@ -183,6 +188,27 @@ function gtag_report_demo() {
   <p>Separate catalogs let us add features to PSF Guard and support new Target
   Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
 
+  <h2 id="v0-12-5">0.12.5</h2>
+<p>PSF Guard 0.12.5 keeps renamed files' frames in catalogs that a sync writes, and lets you merge frames imported twice there too.</p>
+<h3>Fixes</h3>
+<ul>
+<li>A catalog that syncs from Target Scheduler, or that rigs sync their lights into, now keeps a renamed file's frame too. 0.12.4 left such catalogs out, because every sync sends the name N.I.N.A. wrote again: an import there still added a renamed file as a second frame, and <strong>Settings</strong> did not offer <strong>Merge renamed lights</strong> for them. PSF Guard now remembers the names it changed. A sync that sends the old name leaves the new one in place, and a peer that pulls the catalog gets the old name, which its own copy of the file has. When a sync sends some other name, the file was renamed where it came from, and that name is used. To clean up frames imported twice, open the database in <strong>Settings</strong> and click <strong>Merge renamed lights</strong>. PSF Guard copies the database first. See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.5/docs/IMPORTING.md#renamed-files">Renamed files</a>. (<a href="https://github.com/theatrus/psf-guard/issues/1020">#1020</a>)</li>
+<li>While one of a database's image folders is missing, <strong>Settings</strong> names the folder under the database. The renamed-lights check waits until the folder is back. Before, the check stayed hidden without saying why.</li>
+</ul>
+  <h2 id="v0-12-4">0.12.4</h2>
+<p>PSF Guard 0.12.4 starts when an image folder is missing, keeps the frame of a file renamed after it was imported, fixes flat coverage for masters with older flats, and updates zstd for four security advisories.</p>
+<h3>Fixes</h3>
+<ul>
+<li>PSF Guard starts when one of a database's image folders is missing, for example after you move the folder or before its drive is mounted. Before, the server stopped with "Image directory not found" until the folder was removed from the configuration by hand. Frames in a missing folder show as not found until the folder is back, and you can change the database's folders in <strong>Settings</strong>. Imports skip a missing folder and import the others. Remote image uploads to a missing folder are refused, and the upload setting stays on. (<a href="https://github.com/theatrus/psf-guard/issues/1019">#1019</a>)</li>
+<li>A file renamed after it was imported keeps its frame. Before, an automatic import added the renamed file as a second frame, and the first frame showed <strong>Catalog only</strong>. The frame keeps its grade and history and uses the new name. To clean up frames imported twice by earlier versions, open the database in <strong>Settings</strong> and click <strong>Merge renamed lights</strong>. PSF Guard copies the database first. A catalog that syncs from Target Scheduler, or that rigs sync their lights into, keeps the old behavior. See <a href="https://github.com/theatrus/psf-guard/blob/v0.12.4/docs/IMPORTING.md#renamed-files">Renamed files</a>. (<a href="https://github.com/theatrus/psf-guard/issues/1020">#1020</a>)</li>
+<li>A fresh flat that contributes to a light's master now provides coverage even when older flats in the same master move the median capture time beyond the <strong>Flat age limit</strong>. Age checks and the calibration report use the nearest contributing flat; a 1-day limit includes exactly 24 hours on either side.</li>
+<li>A stack page reloaded just as a processing run finished could show the previous result. It now shows the finished one.</li>
+<li>Settings no longer shows a second scrollbar when you open it from the Stacks page. Before, with a stack's <strong>Exact measurements</strong> table open, scrolling in Settings could also scroll the Stacks page behind it, and the page could be out of view when Settings closed.</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>PSF Guard's zstd library is updated for memory-safety advisories in its stream and context handling. PSF Guard uses zstd to read and write compressed XISF files and saved stacking contexts, and to decompress HTTP responses. It fixes RUSTSEC-2026-0391, RUSTSEC-2026-0398, RUSTSEC-2026-0403 and RUSTSEC-2026-0410.</li>
+</ul>
   <h2 id="v0-12-3">0.12.3 — October 23, 2026</h2>
 
   <p>PSF Guard 0.12.3 adds project and plan cleanup, lets you leave collaborations, and improves color-stack processing, star colors and large-file downloads.</p>

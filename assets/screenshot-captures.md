@@ -2296,3 +2296,54 @@ described below; the original text was restored before the dialog closed.
   No resizing, annotations, pointer or redactions. No private paths appear.
 - **Verification:** inspected the saved image; labels and consequences are
   readable. Closed the preview without applying it. No catalog records changed.
+
+## 0.13 release preparation — November 1, 2026
+
+These are exact copies of existing recorded artifacts, not new Chrome captures.
+[Reuse manifest](reused-013.json) lists source paths, source commit and SHA-256.
+The files were visually inspected before reuse and were not resized or edited.
+
+### settings-overview-013.png
+
+- Source: PSF Guard `docs/images/rig-database-settings/rig-databases-desktop.png`
+  as stored at main `5d7102fc`. Original capture: October 27, 2026.
+- Build: implementation `2b86e78a0ad0b33b576918d761db66f5b8542fa3`;
+  fresh fixture backend `775ef6a8ed3e6ef1109de2c34b425792b6bc6278`, reporting
+  0.12.3. This shows features prepared for 0.13, not a tagged 0.13 binary.
+- State: shared Settings Overview, disposable C925 and Ultra Cat databases.
+  Planning availability is stubbed off; processing and database APIs use
+  the real backend. No live catalogs or acquisition client.
+- Environment/crop: macOS, Playwright Chromium, dark theme, 1280 × 900 CSS px,
+  full viewport, output 1280 × 900. No cropping or pixel edits.
+- Complete source record: [fixture captures](settings-fixture-captures-013.json),
+  including backend/frontend hashes, timestamp and PNG hash.
+- Reshoot: build matching frontend/backend and run
+  `static/e2e/rig-database-navigation.spec.ts` through the main repo's
+  `scripts/e2e-local.mjs`, one run at a time, using disposable fixtures.
+  Follow `docs/images/rig-database-settings/README.md` for companion views.
+
+### release-013-sho-rgb-stars.jpg
+
+- Source: PSF Guard `docs/examples/heart-and-soul/images/sho-rgb-stars.jpg`
+  as stored at main `5d7102fc`; processing build `50e2d76f`.
+- This is a generated astronomy example, not a screenshot. Output 1600 ×
+  1015 pixels; exact copy, with no further crop or resize for the site.
+- Inputs: four existing panel stacks per filter, mean-binned 4× per axis
+  with matching FITS/WCS changes, integrated on an expanded canvas with local
+  background normalization. Across R/G/B/HA/OIII/SII: 1,243 accepted source
+  exposures, 45 h 35 min. Narrowband sources calibrated, RGB uncalibrated.
+- Processing: balanced SHO, RGB stars, paired star stretch; automatic
+  background extraction; Auto MTF target median 0.2, shadows clip −2.8;
+  inscribed common-coverage crop. SXT through licensed RC-Astro CLI 2.6.10;
+  no BXT or NXT. Gaia calibration skipped: no fresh reference solve.
+- Seiza 0.44.0 / stacking 0.51.0. Isolated tracked-job fixture; no source
+  catalog or original panel stacks modified. The [example manifest](mosaic-examples-013.json)
+  preserves source jobs, calibration, requests and checksums.
+- Reproduce using the main repo's Heart and Soul example workflow and
+  recorded inputs. Do not describe it as an unbinned or Gaia-calibrated result,
+  a seam-free reference, or a measured continuum-subtraction example.
+
+No fresh Chrome captures were taken in this preparation pass: after access
+was enabled, computer use failed with a native-pipe startup error and no
+Chrome browser connection was available. Planned replacements remain in
+SCREENSHOT-PLAN.md until a capture agent records their actual state.

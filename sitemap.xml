@@ -85,6 +85,9 @@
     <lastmod>2026-10-23</lastmod>
   </url>
   <url>
+    <loc>https://psf-guard.com/docs/new-in-0.13.html</loc>
+  </url>
+  <url>
     <loc>https://psf-guard.com/docs/pixinsight.html</loc>
     <lastmod>2026-10-18</lastmod>
   </url>
@@ -95,6 +98,9 @@
   <url>
     <loc>https://psf-guard.com/docs/release-notes-0.12.html</loc>
     <lastmod>2026-10-23</lastmod>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/release-notes-0.13.html</loc>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/rigs.html</loc>
@@ -127,6 +133,9 @@
   <url>
     <loc>https://psf-guard.com/docs/wbpp.html</loc>
     <lastmod>2026-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://psf-guard.com/docs/workers.html</loc>
   </url>
   <url>
     <loc>https://psf-guard.com/docs/workflows.html</loc>

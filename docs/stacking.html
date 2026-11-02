@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -190,7 +193,15 @@ function gtag_report_demo() {
   <p>Click the panel's <strong>Stacks</strong> title to fold the whole panel. A
   collapsed panel shows the channel count, or that a build is running.</p>
 
-  <h2 id="mono">Build stacks</h2>
+  <h2 id="gpu">Choose GPU passes</h2>
+<p>Open <strong>Settings → Performance → GPU</strong>. Supported computers use Metal on macOS, Vulkan on Linux or Direct3D 12 on Windows for debayering, star detection, resampling, live stacking and the final pass. Computers without a supported GPU, and frames under about a million pixels, use the CPU.</p>
+<p>Choose which passes may use the GPU. With <strong>Use the GPU</strong> off, all stacking stays on the CPU, including artifact searches and color-channel alignment. <a href="workers.html">Workers</a> can run stack builds on another computer.</p>
+<!-- SHOT: settings-gpu-013.png | P1. Settings > Performance > GPU on a computer that reports a supported GPU. Include detected backend/device, Use the GPU and pass controls. Record actual enabled choices; do not toggle or save. If the host has no supported GPU, capture that honest state for the guide and keep the release feature shot pending. | Choose which stacking passes may use this computer's GPU. -->
+<h3 id="live-stack">Follow a live stack</h3>
+<p>While a channel builds, its <strong>Live stack</strong> image updates about every five seconds between batches. The accepted-frame count belongs to that temporary image. Slow frames can delay updates, and the last live image stays visible during final rejection. The progress bar remains below it.</p>
+<p>During a rebuild, <strong>Inspect completed stack</strong> and <strong>Download completed linear FITS</strong> still use the previous result. The live image cannot feed a color composition or FITS download. The finished preview replaces it; stopping a rebuild restores the previous preview.</p>
+<!-- SHOT: stack-live-013.png | P1. Show an existing channel build's Live stack image, accepted count and progress with no second placeholder. Reuse the overview capture. | A live preview is temporary; completed FITS downloads remain separate. -->
+<h2 id="mono">Build stacks</h2>
   <p>Click <strong>Build stacks</strong>. PSF Guard queues one build per target
   and filter, registers the frames with Seiza, and integrates them. It never
   mixes targets or filters. A channel already built from the same frames and
@@ -332,6 +343,8 @@ function gtag_report_demo() {
     <figcaption>Frame decisions on a noise-weighted H-alpha stack. The reference weighs
     1.00; noisier frames count for less. Rejected and rotation-skewed frames stay out.</figcaption>
   </figure>
+  <!-- RESHOOT: settings-stacking-0123.jpg | P2. Processing > Stacking with current reference selection and saved Orientation group margin. Include sidebar and current help. Do not change the margin. -->
+
 
 
   <figure>
@@ -481,7 +494,7 @@ function gtag_report_demo() {
   next channel or step and ends a running RC-Astro tool immediately. Completed tool
   steps stay cached. The job row shows the current channel, tool and progress, such
   as <code>H-alpha: BlurXTerminator (42%)</code>.</p>
-  <!-- SHOT: stack-color-progress.png | Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
+  <!-- SHOT: stack-color-progress.png | P3. Carried from 0.12; capture only when its prerequisites are available. Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot. | Follow color processing by channel and tool, or stop it from the jobs list. -->
 
   <p>The build queue survives a restart, including requests still being prepared. Queued and
   running builds and processing runs return in order. A server stop lets a running build checkpoint the
@@ -594,11 +607,11 @@ psf-guard stack-snr /path/to/lights --order quality --csv curve.csv --json curve
 psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 
   <h2 id="inspect">Inspect and download a stack</h2>
-  <p><strong>Inspect</strong> opens the full-resolution stack in the image
-  inspector: scroll to zoom, drag to pan, <kbd>F</kbd> or <kbd>0</kbd> to fit,
-  <kbd>1</kbd> for one image pixel per screen pixel. <strong>FITS</strong>
-  downloads the linear, unstretched 32-bit float integration with its WCS and
-  Seiza's frame counters, ready for other processing software.</p>
+<p><strong>Inspect</strong> opens the full-resolution stack in a full-window image viewer. The narrower sidebar shows details, available FITS files, <strong>Sky context</strong>, artifact search, shortcuts and zoom controls. Scroll to zoom, drag to pan, press <kbd>F</kbd> or <kbd>0</kbd> to fit, or <kbd>1</kbd> for one image pixel per screen pixel. Calibration masters use the same layout.</p>
+<p><strong>Sky context</strong> solves the stack's own pixels, using its frames as starting hints. <kbd>S</kbd> marks stars with HFR; <kbd>P</kbd> opens the PSF view. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <kbd>M</kbd> or <kbd>R</kbd>, for a pointer-following readout of position, linear file values and solved sky coordinates. Color stacks show one value per channel. The server reads only nearby pixels.</p>
+<p><strong>Download linear FITS</strong> retrieves the unstretched 32-bit float integration. Available processed FITS files stay separate in the sidebar.</p>
+<!-- SHOT: stack-inspector-013.png | P1. Full-window real stack with sidebar, downloads and pointer-following linear pixel readout; include RA/Dec only when an existing solve enables it. Open no new live solve or artifact search. Record exact zoom, pointer values and solve provenance. | Read the original linear pixel values while inspecting the stack. -->
+<!-- RESHOOT: stack-preview-inspection.png | P2. Replace the older inspector illustration with the current full-window layout after stack-inspector-013.png is captured. Retain the record of the earlier image; use actual dimensions and a caption matched to the new state. -->
   <p><strong>View processing</strong> on a card sets a display stretch,
   optional deconvolution and, where the server has them, RC-Astro tools.
   <strong>Apply processing</strong> renders new previews from the cached FITS
@@ -681,13 +694,22 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   whose channels did not change is left alone. A target with no color preview
   yet gets its first after a build started from Stacks: LRGB when it has L, R,
   G and B, else RGB, else the first narrowband palette its channels allow.
-  Automatic refreshes compose only what was composed before.</p>
+  Automatic refreshes also create the first color preview once its channels are stacked. New previews use the Color setup marked as the default; existing previews keep their choices.</p>
   <p>With exposure groups on, each card matches channels of one exposure band,
   so 30&nbsp;s and 300&nbsp;s RGB give two cards. A band missing a channel
   lists its missing channels. <strong>Custom combination</strong>, below the target's
   cards, lets you choose sources for mixed exposures or ambiguous filters.</p>
 
-  <h3 id="color-during-builds">Compose color while stacks build</h3>
+  <h3 id="color-pipeline">Process color and stars separately</h3>
+<p><strong>Processing stack</strong> follows numbered steps from input preparation to RGB finishing. Expand a step to edit it; closing the step preserves edits. Color and RGB-star branches show their own tools, with emission amounts and star reduction where they run.</p>
+<p>New narrowband cards offer automatic SHO/HOO selection, a shared H-alpha stretch and background-protected OIII/SII balance. <strong>Stars → Automatic</strong> uses RGB stars when the sources and StarXTerminator are available, with an explained fallback. Under <strong>Process linear color → RGB star processing</strong>, BlurXTerminator can sharpen RGB stars before extraction. Configure StarXTerminator independently for the nebula and RGB-star branches.</p>
+<p>In <strong>Combine and restore stars</strong>, adjust the independent Star Stretch and <strong>RGB star reduction</strong>. Zero reduction preserves the current stars. Saved setups retain their Auto MTF rendering until you switch.</p>
+<!-- SHOT: stack-color-pipeline-013.png | P1. Show a real completed card's numbered Processing stack, star policy and actual resolved star branch. Open sections only; do not apply processing. Reuse the release-overview shot. | Inspect the color and RGB-star branches in processing order. -->
+<h3 id="continuum">Subtract continuum from emission inputs</h3>
+<p>Custom <strong>RGB + emission</strong>, <strong>LRGB + emission</strong> and <strong>Narrowband + broadband structure</strong> combinations fit and subtract continuum on aligned linear inputs. Automatic, Manual and Off controls keep signed residual FITS downloads and per-line fit reports. Failed natural-color lines are omitted with a warning; a failed mapped line keeps the previous preview.</p>
+<p>Reports can validate held-out stellar profiles and show core/halo error, PSF broadening and changed resolution. Optional calibrated-response exports retain signed line flux and provenance. A failed or missing measurement is not evidence of a successful fit.</p>
+<!-- SHOT: stack-continuum-report-013.png | P2. Open a completed real emission combination with continuum subtraction enabled and a genuine fit report, per-line result and signed residual download. Record mode, inputs, fit status and warnings. Do not describe the Heart and Soul broadband-structure example as a continuum fit: its continuum subtraction was Off. If no real report exists, leave pending rather than generate one on live data. | Inspect the measured continuum fit before using an emission result. -->
+<h3 id="color-during-builds">Compose color while stacks build</h3>
   <p>A color request appears immediately as <strong>Preparing color preview</strong>.
   If its target’s channels are preparing, queued or building, the card shows
   <strong>Waiting for the channel builds to finish</strong>. PSF Guard then reads
@@ -865,6 +887,8 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>If <strong>Re-apply processing when a stack refreshes</strong> is off,
   refreshed cards have no processing for the color preview to follow. Apply the
   card's tools again, then rebuild the color preview.</p>
+  <!-- RESHOOT: stack-channel-processing-0123.jpg | P2. Current numbered Processing stack > input preparation, showing From each channel card and actual inherited tools. Open only; do not apply. -->
+
   <figure>
     <img src="../assets/stack-channel-processing-0123.jpg" loading="lazy" alt="From each channel card selected, with BlurXTerminator on H-alpha and OIII and BlurXTerminator plus NoiseXTerminator on SII" width="2158" height="126">
     <figcaption>The color preview follows each channel card's applied tools.
@@ -888,6 +912,8 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   channels. Changes to calibration, crop or stretch reuse these tool results.
   Download them with <strong>Processed color channels FITS</strong>.
   Every BlurXTerminator section also offers <strong>Correct only</strong>.</p>
+  <!-- RESHOOT: stack-color-rc-astro-0123.jpg | P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing. -->
+
 
   <figure>
     <img src="../assets/stack-color-rc-astro-0123.jpg" loading="lazy" alt="Combined-color RC-Astro controls with BlurXTerminator in Correct only mode and NoiseXTerminator enabled" width="2138" height="642">
@@ -904,7 +930,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   extraction, per-channel processing and output stretches, and matches channels by name
   on another target.</p>
   <p>Setups serve every database on the server. <strong>Settings &rarr;
-  Setups</strong> lists, deletes, imports and exports them. On a server with
+  Presets → Processing setups</strong> lists, deletes, imports and exports them. Choose <strong>Make default</strong> on a Color setup to use it for new color previews; PSF Guard initially adds a setup named <strong>Default</strong>. On a server with
   accounts, viewers can list, apply and export; saving, deleting and importing
   need an editor.</p>
 
@@ -981,6 +1007,8 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     <img src="../assets/stack-reprocessing.jpg" loading="lazy" alt="The card keeps the previous processed image visible while reprocessing waits." width="996" height="982">
     <figcaption>The card keeps the previous processed image visible while reprocessing waits.</figcaption>
   </figure>
+  <!-- RESHOOT: settings-stack-previews.png | P2. Processing > Stacking > Stack previews. Include saved automatic refresh and reapply-processing options. Do not change schedules or start refreshes. -->
+
   <figure>
     <img src="../assets/settings-stack-previews.png" loading="lazy" alt="Choose when to refresh stack previews and whether to reapply their processing." width="1878" height="1354">
     <figcaption>Choose when to refresh stack previews and whether to reapply their processing.</figcaption>
@@ -1004,20 +1032,16 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   sits in the same registered place on every frame, since that becomes the
   baseline. The box must be at least 8 pixels a side and stops at 512.</p>
 
-  <h2 id="mosaic">Mosaic panels</h2>
-  <p>When a project's targets are one mosaic, the header's target switcher
-  offers the mosaic as one choice, such as <strong>M31 mosaic (4
-  panels)</strong>. In Stacks it lays each panel's latest stack out as the
-  mosaic's grid, and beside it places every solved stack on the sky by its
-  plate solve, north up. Nothing is stitched: each panel still stacks, grades
-  and calibrates on its own. The caption lists panels with no stack or no
-  solve yet.</p>
-
-
-  <figure>
-    <img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Compare the four SHO panel stacks with their solved, north-up placement." width="3138" height="1584">
-    <figcaption>Compare the four SHO panel stacks with their solved, north-up placement.</figcaption>
-  </figure>
+  <h2 id="mosaic">Build integrated mosaics</h2>
+<p>Select the project's mosaic in the header and choose <strong>Build stacks</strong>. PSF Guard integrates source frames into one FITS image per filter and exposure group. Each frame keeps its calibration masters, and Seiza aligns it against overlapping panels. Local background normalization matches panel backgrounds across the canvas.</p>
+<p>Every panel must have eligible frames in the channel and contribute aligned frames. An incomplete mosaic identifies missing panel targets; inspect frame decisions for registration failures. Mosaic builds replan the canvas when inputs change rather than extending a saved accumulator. Bayer drizzle is not supported.</p>
+<p>Compose RGB, LRGB or narrowband color from the integrated channels. Gaia calibration solves the integrated canvas instead of borrowing a single source frame's solve. Older uncalibrated previews are marked out of date; <strong>Build current set</strong> refreshes them from cached stacks.</p>
+<p>Mosaic SNR plots show canvas coverage and mean pixel depth. They retain measured checkpoint signal and do not apply same-field forecasts or plateau/degrading verdicts to frames that cover different sky areas.</p>
+<!-- SHOT: stack-integrated-mosaic-013.png | P1. Completed integrated mosaic with mosaic identity, channel or color card and panel coverage. Capture one canvas, not the separate panel grid. Reuse the release-overview shot. | Build channel mosaics, then combine them into color. -->
+<!-- SHOT: stack-mosaic-snr-013.png | P2. Open an existing mosaic SNR plot with canvas coverage and mean pixel depth visible. Include the mosaic name, checkpoint measurements and labels. Do not claim a same-field forecast or plateau/degrading verdict. No build is needed if the plot is cached. | Mosaic depth follows coverage across the canvas. -->
+<h3 id="panel-coverage">Check individual panel coverage</h3>
+<p>Panel coverage below the integrated stacks still shows existing panel previews. A mosaic build does not replace those panel stacks. The older illustration below shows the separate-panel layout, not an integrated result.</p>
+<figure><img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Earlier separate-panel comparison of four SHO stacks and their solved positions" width="3138" height="1584"><figcaption>Separate panel previews remain useful for coverage checks. This earlier view does not show an integrated mosaic.</figcaption></figure>
 
   <h2 id="takeout">Export for other stackers</h2>
   <p>Once the stacks look right, export the accepted lights and their matched

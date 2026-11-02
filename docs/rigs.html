@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -298,7 +301,7 @@ function gtag_report_demo() {
   activation of each plan, never one the site already applied. A pull that writes does
   not send, since the site's rows may have replaced the ones here; the plan may then ask
   to be activated again first. The server log records what it sent and what failed.</p>
-  <!-- SHOT: plan-send-again.png | Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
+  <!-- SHOT: plan-send-again.png | P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
 
   <h2 id="live">Live</h2>
   <p>Rigs that run the <a href="#director">Director plugin</a> report what they
