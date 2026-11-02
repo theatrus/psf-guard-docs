@@ -1,0 +1,18 @@
+[
+  {
+    "file": "settings-overview-013.png",
+    "source_repository": "theatrus/psf-guard",
+    "source_commit": "5d7102fc",
+    "source_path": "docs/images/rig-database-settings/rig-databases-desktop.png",
+    "sha256": "b619895f86923c5bb55a4a2d8f264515cf762054c59a428fde22369e22de9aa1",
+    "method": "Exact file copy. No resizing, cropping, annotations or pixel edits."
+  },
+  {
+    "file": "release-013-sho-rgb-stars.jpg",
+    "source_repository": "theatrus/psf-guard",
+    "source_commit": "5d7102fc",
+    "source_path": "docs/examples/heart-and-soul/images/sho-rgb-stars.jpg",
+    "sha256": "1b5e0c735bf0691dc5599e3c6d56ca8d9d483a7a2c0d48ab6165e650ef1e71d4",
+    "method": "Exact file copy. No resizing, cropping, annotations or pixel edits."
+  }
+]

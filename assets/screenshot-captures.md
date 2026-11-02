@@ -2296,3 +2296,302 @@ described below; the original text was restored before the dialog closed.
   No resizing, annotations, pointer or redactions. No private paths appear.
 - **Verification:** inspected the saved image; labels and consequences are
   readable. Closed the preview without applying it. No catalog records changed.
+
+## 0.13 release preparation — November 1, 2026
+
+These are exact copies of existing recorded artifacts, not new Chrome captures.
+[Reuse manifest](reused-013.json) lists source paths, source commit and SHA-256.
+The files were visually inspected before reuse and were not resized or edited.
+
+### settings-overview-013.png
+
+- Source: PSF Guard `docs/images/rig-database-settings/rig-databases-desktop.png`
+  as stored at main `5d7102fc`. Original capture: October 27, 2026.
+- Build: implementation `2b86e78a0ad0b33b576918d761db66f5b8542fa3`;
+  fresh fixture backend `775ef6a8ed3e6ef1109de2c34b425792b6bc6278`, reporting
+  0.12.3. This shows features prepared for 0.13, not a tagged 0.13 binary.
+- State: shared Settings Overview, disposable C925 and Ultra Cat databases.
+  Planning availability is stubbed off; processing and database APIs use
+  the real backend. No live catalogs or acquisition client.
+- Environment/crop: macOS, Playwright Chromium, dark theme, 1280 × 900 CSS px,
+  full viewport, output 1280 × 900. No cropping or pixel edits.
+- Complete source record: [fixture captures](settings-fixture-captures-013.json),
+  including backend/frontend hashes, timestamp and PNG hash.
+- Reshoot: build matching frontend/backend and run
+  `static/e2e/rig-database-navigation.spec.ts` through the main repo's
+  `scripts/e2e-local.mjs`, one run at a time, using disposable fixtures.
+  Follow `docs/images/rig-database-settings/README.md` for companion views.
+
+### release-013-sho-rgb-stars.jpg
+
+- Source: PSF Guard `docs/examples/heart-and-soul/images/sho-rgb-stars.jpg`
+  as stored at main `5d7102fc`; processing build `50e2d76f`.
+- This is a generated astronomy example, not a screenshot. Output 1600 ×
+  1015 pixels; exact copy, with no further crop or resize for the site.
+- Inputs: four existing panel stacks per filter, mean-binned 4× per axis
+  with matching FITS/WCS changes, integrated on an expanded canvas with local
+  background normalization. Across R/G/B/HA/OIII/SII: 1,243 accepted source
+  exposures, 45 h 35 min. Narrowband sources calibrated, RGB uncalibrated.
+- Processing: balanced SHO, RGB stars, paired star stretch; automatic
+  background extraction; Auto MTF target median 0.2, shadows clip −2.8;
+  inscribed common-coverage crop. SXT through licensed RC-Astro CLI 2.6.10;
+  no BXT or NXT. Gaia calibration skipped: no fresh reference solve.
+- Seiza 0.44.0 / stacking 0.51.0. Isolated tracked-job fixture; no source
+  catalog or original panel stacks modified. The [example manifest](mosaic-examples-013.json)
+  preserves source jobs, calibration, requests and checksums.
+- Reproduce using the main repo's Heart and Soul example workflow and
+  recorded inputs. Do not describe it as an unbinned or Gaia-calibrated result,
+  a seam-free reference, or a measured continuum-subtraction example.
+
+No fresh Chrome captures were taken in this preparation pass: after access
+was enabled, computer use failed with a native-pipe startup error and no
+Chrome browser connection was available. Planned replacements remain in
+SCREENSHOT-PLAN.md until a capture agent records their actual state.
+
+## 0.13 Chrome captures — November 1, 2026
+
+Twenty genuine browser captures were taken on the existing server at
+`https://psf-guard.atpn.co/`. Server information reported **0.13.0**; the
+frontend meta build was **81e04f9707fc9166**. The deployed commit was not
+available. Chrome reported version 155 on macOS; dark theme was in use.
+Browser zoom was not independently recorded. Desktop viewport and DPR
+changed when a fresh tab was needed; each entry below records the actual
+viewport. Phone emulation was reset afterward.
+
+Captures use Chrome `Page.captureScreenshot`, PNG, `scale: 1`, with the
+listed CSS crop. No resizing, retouching or compositing was applied.
+[Machine-readable manifest](captures-release-013-2026-11-01.json) records
+timestamps, URLs, source states, dimensions and SHA-256 checksums. Earlier
+entries for replaced images remain historical records.
+
+No live settings, grades or catalog contents were changed. No import, build,
+solve, scan, transfer, catalog install or backup was started. Inspector Value
+was turned off again; temporary card size returned to Fit. The server had no
+remote worker tokens and no active stack build during this pass.
+
+### `settings-gpu-013.png`
+
+- Source: `https://psf-guard.atpn.co/`
+- Captured: `2026-11-02T00:48:11.409Z`; viewport 1522 × 947 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1044, height=810 CSS px; output 2088 × 1620 pixels.
+- State: Performance > GPU. Use the GPU and all five passes on; Frames at once 3; Log GPU timings off. No settings changed. This page does not show a detected device or prove GPU use.
+- SHA-256: `e6773d6e66425aaef90e58c3f46de7ab81ad7331431aa87d0d33670ebda72c95`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `workers-dispatch-013.png`
+
+- Source: `https://psf-guard.atpn.co/`
+- Captured: `2026-11-02T00:50:45.332Z`; viewport 1522 × 947 CSS px, DPR 2.
+- Crop: x=244, y=76, width=884, height=842 CSS px; output 1768 × 1684 pixels.
+- State: Workers for this server. Only This server connected; no remote worker tokens. RC-Astro Workers first; Stack builds This server only. No changes.
+- SHA-256: `69b9ee0bb66c82463ed7376aaf959214406379e8f22828ede45e79f8dd1c861b`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-memory-013.png`
+
+- Source: `https://psf-guard.atpn.co/`
+- Captured: `2026-11-02T00:50:56.459Z`; viewport 1522 × 947 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=526 CSS px; output 2096 × 1052 pixels.
+- State: CPU & memory. Interactive 75%, Background 70%, Processing memory 70%, 31.6 of 45.1 GiB available. Sliders not touched.
+- SHA-256: `b88021a73b7387728abe5ba48ea70fda581c21d59d5606d941392c175549b8a4`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `stack-inspector-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-e075b4ec&project=4&target=4&current=561&cardsize=600`
+- Captured: `2026-11-02T00:51:53.011Z`; viewport 1522 × 947 CSS px, DPR 2.
+- Crop: x=0, y=0, width=1522, height=947 CSS px; output 3044 × 1894 pixels.
+- State: California Nebula RGB 60 s; db-e075b4ec/project4/target4. Cached color ec7f6e2dd7899e1cd02e9e087ae47bc32d6e4e6eeda431734b6740a24b7d60db. 120 inputs, 2h, 9576x6388 at 12%. Value on; RA/Dec off; Nearby catalog only, no pixel solve. Pointer CSS670,450 = x5419 y2689; R0.36816 G0.26312 B0.19877. No build/solve started.
+- SHA-256: `af0fe8dd6225ae6937baf2924f708ea89aa426783b6e8050a95a9db1b28e7254`
+- Repeat: open the recorded project and mosaic/target scope. Use the completed card identified above; open only its inspection or processing disclosures, or scroll to the recorded coverage plot. Recheck cached status and counts before capturing. For the inspector, turn on Value, position the pointer as recorded, then turn Value off again.
+
+### `stack-integrated-mosaic-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1&cardsize=600`
+- Captured: `2026-11-02T00:56:21.873Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=0, y=0, width=1466, height=997 CSS px; output 2932 × 1994 pixels.
+- State: Heart Mosaic, askar107phq db-a01c581c project21 mosaic=1; 4 panels. Completed RGB 10s (720 inputs/2h,1001 calibration stars) and cached SHO300s with RGB10s stars (1243 inputs/45h35m,999 calibration stars). HA163,OIII180,SII180,R/G/B240each. Keep blank edges; automaticSHO,automatic stars resolvedRGB. UI reports cached47/45steps. No rebuild/solve requested.
+- SHA-256: `205ab50432e239ef412432f5c88438183a6cf4f0a1f176cb4092fa3bb83aa4b6`
+- Repeat: open the recorded project and mosaic/target scope. Use the completed card identified above; open only its inspection or processing disclosures, or scroll to the recorded coverage plot. Recheck cached status and counts before capturing. For the inspector, turn on Value, position the pointer as recorded, then turn Value off again.
+
+### `stack-color-pipeline-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1&cardsize=600`
+- Captured: `2026-11-02T00:56:37.848Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=766, y=244, width=612, height=733 CSS px; output 1224 × 1466 pixels.
+- State: Heart Mosaic SHO300s completed cached color, Applied settings. Five numbered steps, Combine and restore stars expanded. Automatic resolvesRGB stars; Gaia on before SXT; Star Stretch5, RGB reduction0. No edits applied.
+- SHA-256: `2560b9876c4e3ce1c029d1e871eebfdf2d65ac6bd4b879536cf65331abae7744`
+- Repeat: open the recorded project and mosaic/target scope. Use the completed card identified above; open only its inspection or processing disclosures, or scroll to the recorded coverage plot. Recheck cached status and counts before capturing. For the inspector, turn on Value, position the pointer as recorded, then turn Value off again.
+
+### `stack-mosaic-snr-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1&cardsize=600`
+- Captured: `2026-11-02T00:56:52.002Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=153, y=420, width=600, height=539 CSS px; output 1200 × 1078 pixels.
+- State: Heart Mosaic HA300s mosaic. 169/169 processed,163 integrated,6 stack rejects,18 quality excluded,13h35m. Canvas96.1%,mean48.1 frames per covered pixel. Reference-first capture;8 checkpoints; no square-root forecast. Calibration applied:0bias,3dark,0dark-flat,0flat. Cached; no build started.
+- SHA-256: `ff16c518851a8cd00cb5b6cd7cefa570cbe37645734c9146cb0d3282d729f01e`
+- Repeat: open the recorded project and mosaic/target scope. Use the completed card identified above; open only its inspection or processing disclosures, or scroll to the recorded coverage plot. Recheck cached status and counts before capturing. For the inspector, turn on Value, position the pointer as recorded, then turn Value off again.
+
+### `stack-mosaic-panels-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1&cardsize=600`
+- Captured: `2026-11-02T00:57:22.353Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=32, y=92, width=1458, height=690 CSS px; output 2916 × 1380 pixels.
+- State: Heart Mosaic four panel coverage. Latest separate panel stacks and sky positions from existing plate solves, north up. This is coverage, not the integrated canvas.
+- SHA-256: `6f1ed324e96ef05a8bcd4d4e3f0c3f04728ef13e274dc07951d5d175debd9db5`
+- Repeat: open the recorded project and mosaic/target scope. Use the completed card identified above; open only its inspection or processing disclosures, or scroll to the recorded coverage plot. Recheck cached status and counts before capturing. For the inspector, turn on Value, position the pointer as recorded, then turn Value off again.
+
+### `settings-import-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:57:40.166Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=0, y=0, width=1522, height=574 CSS px; output 3044 × 1148 pixels.
+- State: Settings > ultra cat > Import. Saved Scan rules collapsed, automatic import off, Save disabled. No preview/import started.
+- SHA-256: `539e3d9313a61ce324221b90eaca5d3f7bdb5df00f760073cc3d8624d94083e0`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-phone-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:57:52.659Z`; viewport 390 × 844 CSS px, DPR 1.
+- Crop: x=0, y=0, width=390, height=844 CSS px; output 390 × 844 pixels.
+- State: Phone viewport390x844. Settings section selected ultra cat / Import; saved scan rules collapsed, automatic importoff,Save disabled. No edits.
+- SHA-256: `36feb9de9d97b04a1f1873d9883023fbd26d60c3f0f281e1c6dd95855bef6ff5`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-overrides-013.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:58:08.892Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=260, y=29, width=1010, height=784 CSS px; output 2020 × 1568 pixels.
+- State: Review > Grading & display > Quality analysis. Global both Off. ultra cat overrides Analyze new frames On and calibrated-copy measurement Off. Both are explicit overrides; no inherited field in this example. Save disabled. No settings or jobs changed.
+- SHA-256: `5d12aff8870682e74f0adf1bd28d9e0e16b09f661070fc7133ed4b98fab2e105`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-storage-disk-use.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:58:49.633Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=727 CSS px; output 2096 × 1454 pixels.
+- State: Storage & backups > Folders & limits, Disk use and Limits. Volume70%,separate limitsoff,WBPP90%. Saved values unchanged. WBPP retention shown in companion folders capture.
+- SHA-256: `c0edf6ae70ae535bbc0867d9ba1c7ac35842b71f1982a3515ab306d4d56d9899`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-storage-folders.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:59:05.657Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=260, y=135, width=1012, height=839 CSS px; output 2024 × 1678 pixels.
+- State: Folders and WBPP retention. Config-controlled cache; dedicated stack,master,WBPP paths. Intermediates7days,masters90days,keepforeveroff. Save storage settings disabled,0WBPP runs. No changes or cleanup.
+- SHA-256: `90a237b030a71be100cdf5cb8ebe796f3caaf828f3377d42e33e83de07601e20`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-stack-previews.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T00:59:29.789Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=232, width=1048, height=756 CSS px; output 2096 × 1512 pixels.
+- State: Processing > Stacking > Stack previews. Automatic refresh on,5minarrival,15mingrade,missingchannels on,oldchannels on,reapply on. Saved server choices, no toggles.
+- SHA-256: `5ffd6ebeef4d774efc1351f5930c7d07d3109190bd1f4733e88c72d8a43590a4`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-calibration.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:00:18.235Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=0, y=80, width=1295, height=728 CSS px; output 2590 × 1456 pixels.
+- State: Processing > Calibration > Matching. External masters Whenever one matches; External flat masters at another gain Off. Blank numeric inputs show defaults2deg,1mm,3C,24h. No settings changed.
+- SHA-256: `2a1d20352cc608fef64de38e0d6cc56cf2cd75a0b7b9ea8057e1aa40ff3ecd42`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-pixinsight.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:00:48.685Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=482 CSS px; output 2096 × 964 pixels.
+- State: Exports & integrations > PixInsight. WBPP3.1.1 configured at/opt/PixInsight/bin/PixInsight.sh,headless xvfb-run,WBPPfolder/mnt/barium/astrobin/_PsfGuard/wbpp,6.3TiBfree. Save disabled; no Check again or build.
+- SHA-256: `579c54e3d9b9a9f4f9f7f6086d5010a38b7596a1c7695fbb36e0b6a042ca23af`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-backups.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:00:58.130Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=500 CSS px; output 2096 × 1000 pixels.
+- State: Storage & backups > Backups > Back up now. Settings and catalogs selected,about890.4MB. Download destination blank; Include secrets disabled. No backup started.
+- SHA-256: `be804edcac720159b0c1d1e2f3d7543586b85eb27b2b4ae847b68d32af512b89`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-catalogs.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:01:08.140Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=558 CSS px; output 2096 × 1116 pixels.
+- State: Reference catalogs. Overlays,hinted solve,blind solve,color calibration ready. Gaia454MiB installed; Blind solving recommended selected. No install/update/validate.
+- SHA-256: `7529cfe92bc7ab9edc56a60ceb4121bb0ed0bedd643e33bd90056b7f8887020c`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-autoimport-scan-rules.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:01:16.583Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=244, y=76, width=1048, height=882 CSS px; output 2096 × 1764 pixels.
+- State: ultra cat Import. Scan rules expanded. Exclude and Include only empty (examples are placeholders); RequireLIGHToff,targetnameoff,positionon,minexposureblank,automaticimportoff,Save disabled. No edits.
+- SHA-256: `a32f4e87bd4fa06c0f7e714d625aefb876aae05c57b22abeffe41fc2c7c5ba34`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+### `settings-database-options.png`
+
+- Source: `https://psf-guard.atpn.co/#/stacks?db=db-a01c581c&project=21&mosaic=1`
+- Captured: `2026-11-02T01:01:25.956Z`; viewport 1522 × 1003 CSS px, DPR 2.
+- Crop: x=0, y=0, width=1522, height=514 CSS px; output 3044 × 1028 pixels.
+- State: ultra cat Database & files. Database and three image folders; links to Import,Quality analysis,Calibrated-copy pairing;2944calibrationframes2326masters. No maintenance action. This deployed page has no Merge renamed lights button.
+- SHA-256: `f1d23ccaf672b03ad13c4435e7c88465788b09b80273b8fffcc083a166a342c5`
+- Repeat: open Menu → Settings and the page identified above. For database pages, expand ultra cat first. Scroll to the recorded section and open only the named disclosure. Preserve the saved values. For the phone image, use a 390 × 844 CSS viewport and reset it afterward.
+
+## 0.13 worker setup — November 1, 2026
+
+The user authorized registering this Mac, creating and saving its worker token,
+and starting the menu-bar worker. The token is absent from these files and
+records. Server dispatch policies were unchanged. No processing job was
+started to stage the captures. The native app was built locally from 5d7102fc
+and installed in the user’s Applications folder. Opening the app also opened
+its existing local catalog and ran its normal startup background work.
+
+### workers-connected-013.png
+
+- **Captured at:** 2026-11-02T02:25:08.217Z
+- **Source:** https://psf-guard.atpn.co/
+- **Pixel dimensions:** [1768, 1784]
+- **Viewport css:** [1522, 1003]
+- **Device pixel ratio:** 2
+- **Clip css:** {"x": 244, "y": 76, "width": 884, "height": 892}
+- **Browser:** Chrome 155
+- **Browser zoom:** not independently recorded
+- **Server version:** 0.13.0
+- **Frontend build:** 81e04f9707fc9166
+- **Deployed commit:** unknown
+- **Method:** Chrome Page.captureScreenshot, PNG, scale 1; no resizing or pixel edits
+- **State:** Mac desktop connected; RC-Astro BlurXTerminator, NoiseXTerminator and StarXTerminator 2.6.10; Stack builds (Seiza stacking 0.51.0) as reported by the UI; PSF Guard 0.13.0, 16 threads, one task at a time. Files transfer through the server. RC-Astro Workers first; stack builds This server only. No processing task was started for verification.
+- **Repeat:** Open Settings > Performance > Workers on the remote server. Confirm the Mac worker is connected. Dismiss the one-time token display before capture. Capture connections and both dispatch policies.
+- **Os:** macOS 27.0.1
+- **Theme:** dark
+- **Sha256:** 529e6e0b89a9205891845df0ade6b77f5e553a1280ede66903fd4ab51632755a
+
+### worker-desktop-013.jpg
+
+- **Captured at:** 2026-11-02T02:25:33.222Z
+- **Source:** Native PSF Guard.app, tauri://localhost
+- **Pixel dimensions:** [2400, 1600]
+- **Window points:** [1200, 800]
+- **Display scale:** 2
+- **Ui zoom percent:** 80
+- **App version:** 0.13.0
+- **Source commit:** 5d7102fc
+- **Build:** Local cargo tauri build --debug --bundles app; ad-hoc signed
+- **Method:** Native app screenshot API, original JPEG bytes; full window, no cropping, resizing or pixel edits
+- **State:** Worker on this computer connected to https://psf-guard.atpn.co as Mac desktop. Stack builds and RC-Astro tools enabled, one concurrent task, Start worker at login off, Task files collapsed (default transfers). Worker token field is empty with Saved token placeholder. Pause, Restart and Stop controls visible; Save disabled. UI zoom restored to 100% after capture.
+- **Repeat:** Open the native app, temporarily set UI zoom to 80%, then Settings > Performance > Workers. Confirm the saved token input is blank and the worker is connected. Capture the full window. Restore UI zoom to 100%.
+- **Os:** macOS 27.0.1
+- **Theme:** dark
+- **Sha256:** 365f36de81e5778984e5e6bff5f889ef6fe802d7bc423298f93e6c5459d6ff03

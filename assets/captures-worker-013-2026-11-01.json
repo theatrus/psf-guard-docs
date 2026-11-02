@@ -1,0 +1,57 @@
+[
+  {
+    "file": "workers-connected-013.png",
+    "captured_at": "2026-11-02T02:25:08.217Z",
+    "source": "https://psf-guard.atpn.co/",
+    "pixel_dimensions": [
+      1768,
+      1784
+    ],
+    "viewport_css": [
+      1522,
+      1003
+    ],
+    "device_pixel_ratio": 2,
+    "clip_css": {
+      "x": 244,
+      "y": 76,
+      "width": 884,
+      "height": 892
+    },
+    "browser": "Chrome 155",
+    "browser_zoom": "not independently recorded",
+    "server_version": "0.13.0",
+    "frontend_build": "81e04f9707fc9166",
+    "deployed_commit": "unknown",
+    "method": "Chrome Page.captureScreenshot, PNG, scale 1; no resizing or pixel edits",
+    "state": "Mac desktop connected; RC-Astro BlurXTerminator, NoiseXTerminator and StarXTerminator 2.6.10; Stack builds (Seiza stacking 0.51.0) as reported by the UI; PSF Guard 0.13.0, 16 threads, one task at a time. Files transfer through the server. RC-Astro Workers first; stack builds This server only. No processing task was started for verification.",
+    "repeat": "Open Settings > Performance > Workers on the remote server. Confirm the Mac worker is connected. Dismiss the one-time token display before capture. Capture connections and both dispatch policies.",
+    "os": "macOS 27.0.1",
+    "theme": "dark",
+    "sha256": "529e6e0b89a9205891845df0ade6b77f5e553a1280ede66903fd4ab51632755a"
+  },
+  {
+    "file": "worker-desktop-013.jpg",
+    "captured_at": "2026-11-02T02:25:33.222Z",
+    "source": "Native PSF Guard.app, tauri://localhost",
+    "pixel_dimensions": [
+      2400,
+      1600
+    ],
+    "window_points": [
+      1200,
+      800
+    ],
+    "display_scale": 2,
+    "ui_zoom_percent": 80,
+    "app_version": "0.13.0",
+    "source_commit": "5d7102fc",
+    "build": "Local cargo tauri build --debug --bundles app; ad-hoc signed",
+    "method": "Native app screenshot API, original JPEG bytes; full window, no cropping, resizing or pixel edits",
+    "state": "Worker on this computer connected to https://psf-guard.atpn.co as Mac desktop. Stack builds and RC-Astro tools enabled, one concurrent task, Start worker at login off, Task files collapsed (default transfers). Worker token field is empty with Saved token placeholder. Pause, Restart and Stop controls visible; Save disabled. UI zoom restored to 100% after capture.",
+    "repeat": "Open the native app, temporarily set UI zoom to 80%, then Settings > Performance > Workers. Confirm the saved token input is blank and the worker is connected. Capture the full window. Restore UI zoom to 100%.",
+    "os": "macOS 27.0.1",
+    "theme": "dark",
+    "sha256": "365f36de81e5778984e5e6bff5f889ef6fe802d7bc423298f93e6c5459d6ff03"
+  }
+]

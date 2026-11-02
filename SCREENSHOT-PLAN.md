@@ -1,18 +1,136 @@
-# Screenshot plan — docs site, next release
+# Screenshot plan — 0.13 release preparation
 
-The October 17 capture passes now cover **106 assets**: ten from the earlier
-batches, 94 from the full-guide pass (93 screenshots and one rebuilt collage),
-the SNR G132 satellite follow-up, and WBPP progress. The WBPP setup image
-was also reshot for the same run.
-Captures include the available live-server views and settings, phone layouts,
-calibration comparisons, planning states, queued processing and local import and
-grading examples. Every image has a state, source and reshoot record in
-[assets/screenshot-captures.md](assets/screenshot-captures.md).
+## November 1 worker follow-up
 
-The generated lists below contain the **7 remaining shots**. They remain pending;
-their prerequisites must be met before replacing the old image or adding a figure.
-Captions on completed figures describe the actual capture, including empty states
-and differences from the original plan.
+The Mac app is now connected to the remote server, and both worker screenshots
+are complete. There are 22 captures across the two November 1 passes; five of
+six P1 illustrations are complete. The live-stack image still needs an active
+build. The native screenshot is `worker-desktop-013.jpg`, preserving the native
+capture API’s original JPEG rather than converting it to the planned PNG.
+
+The user authorized creating a worker token, saving it in the Mac app and
+starting the worker. The token is absent from all screenshots and capture
+records. Both task types are enabled with one concurrent task; login startup
+is off. Server dispatch policies were unchanged. The connection was verified
+on both sides and after closing the app window; no processing task was started
+for this check. See the [worker capture manifest](assets/captures-worker-013-2026-11-01.json).
+
+## November 1 capture pass
+
+Twenty Chrome captures are complete: four of six P1 illustrations, the mosaic
+coverage and SNR plots, phone and database settings, memory, and nine focused
+settings reshoots. The release overview and guides now use the captured files.
+See the [capture record](assets/screenshot-captures.md#013-chrome-captures--november-1-2026)
+and [manifest](assets/captures-release-013-2026-11-01.json).
+
+The two remaining P1 states were unavailable: no stack build was running, and
+no remote worker was connected (no worker tokens existed). A separate dispatch
+figure shows only This server and does not stand in for a connected worker.
+The GPU page exposes settings, not a detected device: its caption makes no
+hardware-verification claim. Native worker controls, a genuine continuum fit,
+disposable write-dependent examples and the older backlog remain in the
+generated lists below. The earlier capture priorities are retained as the
+brief; only items still in those generated lists need captures.
+
+Chrome visual checks covered the release overview at desktop and 390 px phone
+widths, image lightboxes at both widths, the configuration guide on a phone,
+and the redirect from `docs/calibration.html#matching`. Capture dimensions and
+SHA-256 values were verified for all 20 files.
+
+## 0.13 capture priorities
+
+Work in the `release/prep-0.13` branch of `theatrus/psf-guard-docs`.
+The prepared local worktree is `/private/tmp/psf-guard-docs-release-0.13`;
+PSF Guard's matching release-prep worktree is
+`/private/tmp/psf-guard-release-0.13`, based on main `5d7102fc`.
+The two worktrees are independent; capture images into this site's `assets/`.
+The release is being prepared, not published. Keep the preview wording until
+release publication. Do not tag, publish or change update feeds for this work.
+
+Start with the six P1 shots. P2 updates the focused guides; P3 is the older
+state-dependent backlog and does not block the six feature illustrations.
+The generated lists at the end are the authoritative filename/destination
+inventory; counts come from page comments, not the historical notes below.
+
+| Priority | Filename | Required view and prerequisite | Destinations |
+|---|---|---|---|
+| P1 | `stack-integrated-mosaic-013.png` | Completed real mosaic: one integrated canvas, mosaic identity, channel/color card and panel coverage. Include panel coverage separately. | 0.13 overview, Stacks |
+| P1 | `stack-live-013.png` | Already-running channel build: Live stack image, accepted count and progress. A worker attribution is useful if already present. | 0.13 overview, Stacks |
+| P1 | `stack-color-pipeline-013.png` | Completed narrowband card: numbered Processing stack, actual star policy and resolved RGB-star branch or fallback. Open steps without applying. | 0.13 overview, Stacks |
+| P1 | `stack-inspector-013.png` | Completed stack: full-window inspector, sidebar/downloads, pointer-following Value readout. Add RA/Dec and Sky context only with existing solve evidence. | 0.13 overview, Stacks |
+| P1 | `settings-gpu-013.png` | Performance → GPU with Use the GPU and pass controls. The page does not identify detected hardware. Preserve saved choices. | Stacks |
+| P1 | `workers-connected-013.png` | Performance → Workers: dispatch choices and a connected worker's actual capabilities/status. No token creation or policy change. Idle is valid. | 0.13 overview, Workers |
+| P2 | `worker-desktop-013.png` | Native macOS/Windows app, Worker on this computer with task types, status and controls. Chrome cannot show this desktop-only panel. Keep token blank/masked. | Workers |
+| P2 | `stack-continuum-report-013.png` | Genuine completed continuum fit and per-line diagnostics, warnings and signed residual download. No suitable result means this remains pending. | Stacks |
+| P2 | `stack-mosaic-snr-013.png` | Existing mosaic SNR plot with canvas coverage and mean pixel depth. No same-field forecast or plateau verdict. | Stacks |
+| P2 | `settings-memory-013.png` | CPU & memory → Processing memory: budget percentage, GiB and memory basis. Do not touch the slider; release/blur saves. | Storage & Performance |
+| P2 | `settings-import-013.png`, `settings-overrides-013.png`, `settings-phone-013.png` | Scoped Import, global versus database overrides, and phone section selector. Recorded fixtures may already cover these; verify before reshooting. | Configuration |
+| P2 | Existing settings and processing images in **Redo** | Refresh changed navigation, storage Save action/WBPP retention, calibration gain option, processing steps, import forms and current unsaved-edit labels. | Listed per image below |
+| P3 | Six older pending shots in **New screenshots** | Export summary, job priorities, contribution transfer, activation resend, docked Sequence and RC-Astro progress. Meet each existing prerequisite first. | Existing guides |
+
+### Reuse already complete
+
+- `settings-overview-013.png` is an exact copy of the recorded October 27
+  database-navigation fixture. It is already on the overview and configuration
+  guide. No new desktop Settings overview is required unless current labels
+  differ. The source backend reports 0.12.3; do not call it a tagged 0.13 build.
+- `release-013-sho-rgb-stars.jpg` is the recorded Heart and Soul example from
+  main. It illustrates integrated mosaic output, not the Stacks interface.
+  Sources were binned 4× per axis; Gaia calibration was skipped.
+- [Reuse manifest](assets/reused-013.json) records exact source paths and hashes.
+  [Capture record](assets/screenshot-captures.md#013-release-preparation--november-1-2026)
+  records scope and limitations. Preserve both when adding captures.
+
+### Capture procedure and handoff
+
+1. Inspect local Chrome's signed-in PSF Guard tab, normally
+   `https://psf-guard.atpn.co`. Check Server information and visible labels
+   against the needed feature before taking images. Main's current development
+   version alone does not prove the deployed frontend/backend includes it.
+   Record the actual version, deployed commit if available and frontend build.
+2. Prefer the existing Heart Mosaic / Heart and Soul field for mosaics and
+   California narrowband for color. These are scouting candidates, not verified
+   current states. The older route and database records below help locate them.
+   Recheck inputs, counts, source names and solved state.
+3. Use a desktop viewport around 1440 CSS px wide at 2× when practical. Record
+   the actual viewport, DPR and browser zoom. Crop only enough to make labels
+   readable at the site's 824 CSS px content width. Full-window inspectors may
+   need their own wide image. Use the documented browser screenshot API;
+   record any crop. Do not resize, annotate, composite or invent results.
+4. Use existing data and cached results on the live server. Open disclosures,
+   navigate and change view-only inspection controls as needed, then restore
+   temporary preferences. Do not start live imports, syncs, quality scans,
+   stack builds, solves, artifact searches, transfers or activation to stage a
+   shot. Use a disposable local fixture with real inputs for write-dependent
+   states. Do not change grades, save settings, install catalogs or clean files.
+5. Keep credentials, tokens, pairing codes and precise site coordinates out of
+   the captured UI. Choose an honest viewport/crop before capture rather than
+   editing pixels afterward. Desktop worker controls require the native app.
+6. Save each file under its exact planned name. Append its actual URL, source
+   identifiers, build, timestamp, OS/browser, theme, viewport/DPR/zoom, UI state,
+   crop, pixel dimensions, SHA-256 and repeat steps to
+   `assets/screenshot-captures.md`. Preserve earlier records. A plan or a
+   scouting note is not a capture record.
+7. Replace each completed `SHOT` marker with a figure and an actual-state
+   caption on every listed destination, or remove the `RESHOOT` marker after
+   replacing its file. Use the image's real width/height. One captured asset
+   may serve several pages; leave incomplete slots as comments.
+8. Run `npm run build`, `npm run shots`, `npm run check` and
+   `git diff --check`. Inspect the release overview and affected guides at
+   desktop and phone widths, check image lightboxes and an older bookmark such
+   as `docs/calibration.html#matching`. Commit images with their records and
+   generated plan updates. Report exactly which captures remain blocked.
+
+The earlier November 1 preparation pass did not take new Chrome screenshots. After
+Chrome permission was enabled, computer use failed with a native-pipe startup
+error and no Chrome browser connection was available. The user assigned
+fresh captures to a separate agent. The subsequent capture pass is recorded at the top of this plan. No live catalog was changed.
+
+## Previous capture sessions and scouting
+
+The following notes preserve the 0.12 capture history. Their readiness checks,
+counts, labels and deployment versions are historical; use the current P1/P2/P3
+inventory and recheck the running build before following an old route.
 
 ## TS import follow-up: captured October 18
 
@@ -319,20 +437,37 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (0)
+## Redo (existing images) (6)
 
+- `import-image-folders.png` — pages: importing
+  - P2. New / import > image-folder form with the current collapsed Scan rules and background-analysis choice. Use disposable paths and do not confirm an import. Keep its recorded 0.12 capture in release-history pages.
+- `import-reviewed-transfer.png` — pages: importing
+  - P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures.
+- `settings-stacking-0123.jpg` — pages: stacking
+  - P2. Processing > Stacking with current reference selection and saved Orientation group margin. Include sidebar and current help. Do not change the margin.
+- `settings-unsaved-close.png` — pages: configuration
+  - P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog.
+- `stack-channel-processing-0123.jpg` — pages: stacking
+  - P2. Current numbered Processing stack > input preparation, showing From each channel card and actual inherited tools. Open only; do not apply.
+- `stack-color-rc-astro-0123.jpg` — pages: stacking
+  - P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing.
 
-## New screenshots (6)
+## New screenshots (8)
 
 - `export-left-out.png` — pages: exporting
-  - Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
+  - P3. Carried from 0.12; capture only when its prerequisites are available. Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
 - `header-jobs-priorities.png` — pages: storage
-  - Capture existing work with both Started by you and Automatic headings. Do not start, stop, pause, resume or reorder live jobs to stage the shot. The current automatic-only example is recorded in assets/screenshot-captures.md.
+  - P3. Carried from 0.12; capture only when its prerequisites are available. Capture existing work with both Started by you and Automatic headings. Do not start, stop, pause, resume or reorder live jobs to stage the shot. The current automatic-only example is recorded in assets/screenshot-captures.md.
 - `header-transfers.png` — pages: collaboration
-  - Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
+  - P3. Carried from 0.12; capture only when its prerequisites are available. Any view, the header's background jobs chip opened while a collaboration transfer runs or waits (starfront-redcat61): crop to the job list showing a "Transfers" row with its catalog · label, state, "N/M files · X MiB" and its pause, resume or retry, and cancel buttons, under Started by you or Automatic.
 - `plan-send-again.png` — pages: rigs
-  - Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
+  - P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
 - `sequence-docked-review.png` — pages: screening
-  - After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection.
+  - P3. Carried from 0.12; capture only when its prerequisites are available. After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection.
 - `stack-color-progress.png` — pages: stacking
-  - Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
+  - P3. Carried from 0.12; capture only when its prerequisites are available. Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
+- `stack-continuum-report-013.png` — pages: stacking
+  - P2. Open a completed real emission combination with continuum subtraction enabled and a genuine fit report, per-line result and signed residual download. Record mode, inputs, fit status and warnings. Do not describe the Heart and Soul broadband-structure example as a continuum fit: its continuum subtraction was Off. If no real report exists, leave pending rather than generate one on live data.
+- `stack-live-013.png` — pages: new-in-0.13, stacking
+  - P1. Capture a channel already building with Live stack, accepted-frame count and progress visible. Show the same card once the live image replaces the placeholder. Record worker attribution if present. Do not start a live-catalog build to stage this; use a disposable catalog if needed.
+  - P1. Show an existing channel build's Live stack image, accepted count and progress with no second placeholder. Reuse the overview capture.

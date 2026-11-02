@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -197,10 +200,11 @@ function gtag_report_demo() {
   </table></div>
   <p>Quality scans measure <a href="screening.html#snr">SNR</a> only against a Gaia catalog. Tycho-2 mixes two bands and is not used for it.</p>
 
+
   <figure>
-    <img src="../assets/settings-catalogs.png" loading="lazy" alt="Installed catalog packages support overlays, hinted solves and blind solves." width="1878" height="778">
-    <figcaption>Installed catalog packages support overlays, hinted solves and blind solves.</figcaption>
-  </figure>
+<img src="../assets/settings-catalogs.png" alt="Installed reference catalogs and catalog package choices" width="2096" height="1116" loading="lazy">
+<figcaption>This server has catalogs ready for overlays, hinted and blind solving, and color calibration. Choose a package before installing or updating catalogs.</figcaption>
+</figure>
   <p>For a manual or headless install, get the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a> or with Cargo, then download a bundle:</p>
   <pre><code>cargo install seiza-cli --version 0.24.0
 

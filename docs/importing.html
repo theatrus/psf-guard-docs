@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -278,6 +281,8 @@ function gtag_report_demo() {
     <li>Choose <strong>Create &amp; Import</strong>. Progress survives closing or
       reloading the page.</li>
   </ol>
+  <!-- RESHOOT: import-image-folders.png | P2. New / import > image-folder form with the current collapsed Scan rules and background-analysis choice. Use disposable paths and do not confirm an import. Keep its recorded 0.12 capture in release-history pages. -->
+
 
   <figure>
     <img src="../assets/import-image-folders.png" alt="Name the catalog, add image folders and choose whether to queue quality analysis." width="2048" height="1524">
@@ -453,10 +458,11 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Analyze quality of the new frames in the background</strong> and
       <strong>Include frames from other rigs</strong> work as for a manual import.</li>
   </ul>
+
   <figure>
-    <img src="../assets/settings-autoimport-scan-rules.png" loading="lazy" alt="Set scan exclusions, target matching and review rules before enabling automatic import." width="1724" height="1620">
-    <figcaption>Set scan exclusions, target matching and review rules before enabling automatic import.</figcaption>
-  </figure>
+<img src="../assets/settings-autoimport-scan-rules.png" alt="Saved import scan rules expanded" width="2096" height="1764" loading="lazy">
+<figcaption>Review scan rules before enabling automatic import. The dim examples in Exclude and Include only are placeholders; both fields are empty here.</figcaption>
+</figure>
   <p>Under Ask first, a run attaches frames for targets the catalog has and writes
   nothing for the rest. The database's status line then says, for example,
   "11 held: no matching project", with a <strong>Review</strong> button that opens the
@@ -509,10 +515,11 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
       by default.</li>
   </ul>
 
+
   <figure>
-    <img src="../assets/settings-database-options.png" loading="lazy" alt="Each database has its own image folders, calibration library and analysis options." width="1800" height="946">
-    <figcaption>Each database has its own image folders, calibration library and analysis options.</figcaption>
-  </figure>
+<img src="../assets/settings-database-options.png" alt="Database and image folders with links to related settings" width="3044" height="1028" loading="lazy">
+<figcaption>Database &amp; files shows the database’s folders and calibration library, with links to Import, Quality analysis and Calibrated-copy pairing.</figcaption>
+</figure>
   <p>The scan uses the N.I.N.A. Fast detector, so star counts and HFR compare with
   Target Scheduler's. When it finds no stars, HocusFocus measures the frame instead. A
   file still being copied is measured again later rather than scored as empty. Jobs
@@ -584,6 +591,8 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Send reviewed grades</strong> sends Accepted and Rejected grades for
       matching image GUIDs.</li>
   </ul>
+  <!-- RESHOOT: import-reviewed-transfer.png | P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures. -->
+
 
   <figure>
     <img src="../assets/import-reviewed-transfer.png" loading="lazy" alt="Choose the TS connection and working catalog, then review the changes before Apply." width="2048" height="1120">

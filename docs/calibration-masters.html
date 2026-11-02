@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -253,12 +256,13 @@ function gtag_report_demo() {
       master into its cache once, on the same 16-bit scale as every other
       frame. PSF Guard leaves the original unchanged.</li>
   </ul>
-  <p><strong>External masters</strong>, under Settings › Calibration › Matching, decides
+  <p><strong>External masters</strong>, under Settings › Processing › Calibration › Matching, decides
   how they take part, globally or for one rig: <strong>Whenever one matches</strong>
   (default), <strong>Only if raw frames can't build one</strong>, or
   <strong>Never</strong>.</p>
 
-  <h2 id="stacking">Calibration in stacks</h2>
+<p><strong>External flat masters at another gain</strong>, under <strong>Settings → Processing → Calibration → Matching</strong> or a rig's calibration settings, allows an externally built flat master at a different gain or offset. Use it only when that master’s own flat darks were subtracted (recorded as <code>DARKSUB</code>) and the camera’s normalized flat does not change with gain. Suitable gain-0 flats for gain-100 lights are one example. It is off by default; other compatibility checks still apply. A master refused only for gain or offset identifies this setting.</p>
+<h2 id="stacking">Calibration in stacks</h2>
   <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
   has three modes:</p>
   <div class="table-wrap">
@@ -353,9 +357,9 @@ function gtag_report_demo() {
   <p>Layouts, options and the WBPP runner are on
   <a href="exporting.html">Export &amp; AstroBin</a>.</p>
 
-  <h2 id="settings">Settings › Calibration</h2>
+  <h2 id="settings">Settings › Processing › Calibration</h2>
   <p>Calibration limits are settings under <strong>Settings ›
-  Calibration</strong>. Values apply to every database on the server from the
+  Processing → Calibration</strong>. Values apply to every database on the server from the
   next match, check and stack. The defaults are the limits PSF Guard used
   before, so an untuned library behaves as it did. Anyone can read them;
   saving needs an editor account.</p>
@@ -387,9 +391,9 @@ function gtag_report_demo() {
 
 
   <figure>
-    <img src="../assets/settings-calibration.png" loading="lazy" alt="Global matching limits control which calibration frames can serve a light." width="1800" height="1508">
-    <figcaption>Global matching limits control which calibration frames can serve a light.</figcaption>
-  </figure>
+<img src="../assets/settings-calibration.png" alt="Calibration matching controls including external flat masters at another gain" width="2590" height="1456" loading="lazy">
+<figcaption>Matching controls include External flat masters at another gain, shown Off. Review the camera and master requirements before enabling it.</figcaption>
+</figure>
   <figure>
     <img src="../assets/settings-calibration-flat-groups.png" loading="lazy" alt="Flat-group limits separate nights when dust or illumination changes." width="1800" height="1620">
     <figcaption>Flat-group limits separate nights when dust or illumination changes.</figcaption>

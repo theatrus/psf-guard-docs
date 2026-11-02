@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13 (preview)</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
     <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
     <li><a href="install.html">Installation</a></li>
@@ -109,6 +111,7 @@ function gtag_report_demo() {
   <h4>Operate</h4>
   <ul>
     <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
     <li><a href="backups.html">Backups</a></li>
   </ul>
   <h4>Server</h4>
@@ -189,66 +192,44 @@ function gtag_report_demo() {
     </figure>
   </div>
 
-  <h2 id="settings">Settings tabs</h2>
-  <div class="callout info"><strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> The
-  <strong>Server</strong> and <strong>Backups</strong> tabs, and a prompt
-  before closing Settings with unsaved edits.</div>
-  <p>Open <strong>Settings</strong> from the menu at the right of the header,
-  beside <strong>Keyboard shortcuts</strong>, <strong>Server
-  information</strong> and, on a server with accounts, <strong>Sign
-  out</strong>. Only editors can open Settings.</p>
-  <figure>
-    <img src="../assets/header-menu.png" loading="lazy" alt="Open the menu for Settings, keyboard shortcuts and server information." width="762" height="458">
-    <figcaption>Open the menu for Settings, keyboard shortcuts and server information.</figcaption>
-  </figure>
-  <p>Every tab has the same layout: cards share a consistent width, related fields appear
-  in named groups, and controls sit beside their labels.
-  Settings opens on <strong>Databases</strong>. A tab shows only when it
-  applies:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Tab</th><th>Holds</th><th>See</th></tr>
-      <tr><td><strong>Databases</strong></td><td>Catalogs, imports, quality backfill, per-database options, <strong>Purge Rejects</strong>, <strong>Open Calibration</strong>, N.I.N.A. pairing. Adding or editing a catalog needs database management.</td><td><a href="importing.html">Import Images</a></td></tr>
-      <tr><td><strong>Server</strong></td><td>The desktop app's localhost port. Desktop app only.</td><td><a href="install.html#desktop-port">Installation</a></td></tr>
-      <tr><td><strong>Catalogs</strong></td><td>Seiza data packages</td><td><a href="astrometry.html#install">Sky Context &amp; Solver</a></td></tr>
-      <tr><td><strong>Sync</strong></td><td>Data Transfer, staged previews, Remote PSF Guard. Shows once a catalog exists.</td><td><a href="workflows.html#sync">Rejects &amp; Sync</a></td></tr>
-      <tr><td><strong>Setups</strong></td><td>Processing setups, export defaults, PixInsight, AstroBin filter IDs. The PixInsight program and runs folder need database management.</td><td><a href="exporting.html">Export</a>, <a href="wbpp.html#setup">WBPP</a></td></tr>
-      <tr><td><strong>Calibration</strong></td><td>Matching, dark and flat masters, flat groups, light checks, frame grades, which lights stacks and exports keep, and settings for one rig</td><td><a href="calibration-masters.html#matching">Calibration</a></td></tr>
-      <tr><td><strong>Stacking</strong></td><td>Stacking method and automatic previews</td><td><a href="stacking.html#method">Stacks</a></td></tr>
-      <tr><td><strong>Storage</strong></td><td>Folders and disk limits. Changes need database management.</td><td><a href="storage.html">Storage</a></td></tr>
-      <tr><td><strong>Backups</strong></td><td><strong>Back up now</strong> and scheduled backups. Needs database management.</td><td><a href="backups.html">Backups</a></td></tr>
-      <tr><td><strong>Performance</strong></td><td>Processor use</td><td><a href="storage.html#processor">Processor use</a></td></tr>
-      <tr><td><strong>Review</strong></td><td>Grading, score chips, Sequence scoring defaults, night and hour marks, the project list and Library views. Signed in, they follow your account; otherwise this browser keeps them.</td><td><a href="grader.html#review-preferences">Library &amp; Grader</a>, <a href="authentication.html#preferences">Server Accounts</a></td></tr>
-      <tr><td><strong>Rigs</strong>, <strong>Exposure templates</strong></td><td>Planning's rigs, sites and template library</td><td><a href="rigs.html">Rigs</a>, <a href="activation.html#templates">Templates</a></td></tr>
-      <tr><td><strong>Users</strong></td><td>Accounts and API tokens, on a server with accounts</td><td><a href="authentication.html">Server Accounts</a></td></tr>
-      <tr><td><strong>Agents</strong></td><td>MCP setup, on the desktop app or a server without accounts</td><td><a href="mcp.html">MCP for Agents</a></td></tr>
-    </table>
-  </div>
-
-  <p><strong>Databases</strong> offers image-folder import, a local TS file and
-  the Sync plugin in one setup form. New TS file imports create an owned catalog
-  and keep the source connected. Review automatic sync and grade writeback on the
-  catalog's card. For new Target Scheduler databases, choose <strong>Import from
-  Target Scheduler</strong> to import the database and set up sync.
-  Your current Target Scheduler setup will keep working in 0.12.
-  A later update will create a PSF Guard catalog for you and keep captures, plans
-  and grades in sync with Target Scheduler. We plan to remove direct database
-  access in 0.13 or later. See
-  <a href="importing.html#target-scheduler">Import from Target Scheduler</a>.</p>
-
-  <h3 id="unsaved">Unsaved edits</h3>
-  <p>Settings asks before discarding unsaved edits when you click <strong>Done</strong>,
-  <strong>×</strong> or outside the dialog. It checks changes to a rig's setup, a site,
-  calibration, scoring defaults, storage folders, PixInsight, the desktop server port or
-  the backup schedule. The prompt lists the forms with unsaved changes and offers
-  <strong>Keep editing</strong> or <strong>Close without saving</strong>. The rig and
-  site forms say <strong>Unsaved changes</strong> beside Save; folding a rig's setup or
-  opening another site keeps its edits, and the browser asks before a reload drops
-  them.</p>
-  <figure>
-    <img src="../assets/settings-unsaved-close.png" loading="lazy" alt="Settings asks before discarding unsaved changes." width="3002" height="242">
-    <figcaption>Settings asks before discarding unsaved changes.</figcaption>
-  </figure>
+  <h2 id="settings">Find a setting</h2>
+<p>Open <strong>Settings</strong> from the header menu. Choose a page in the grouped sidebar, or use <strong>Settings section</strong> on a phone. Each form has its own Save control. <strong>Close</strong> leaves Settings without saving.</p>
+<div class="table-wrap"><table>
+<tr><th>Group</th><th>Pages</th></tr>
+<tr><td>Databases &amp; rigs</td><td>Overview, each database, New / import</td></tr>
+<tr><td>Presets</td><td>Processing setups, Exposure templates, Sites</td></tr>
+<tr><td>Processing</td><td>Calibration, Stacking</td></tr>
+<tr><td>Performance</td><td>CPU &amp; memory, GPU, Workers</td></tr>
+<tr><td>Storage &amp; backups</td><td>Folders &amp; limits, Backups, Reference catalogs</td></tr>
+<tr><td>Exports &amp; integrations</td><td>Export defaults, PixInsight, AstroBin</td></tr>
+<tr><td>Review</td><td>Grading &amp; display</td></tr>
+<tr><td>Server &amp; access</td><td>Server, Users, Agents (MCP)</td></tr>
+</table></div>
+<p>Pages appear when the connection, planning features and your permissions allow them. Saved setups, settings and shortcuts keep their values and scope. The desktop app offers <strong>Open logs</strong> in the header.</p>
+<figure><img src="../assets/settings-overview-013.png" alt="Grouped Settings navigation with databases listed directly" width="1280" height="900" loading="lazy"><figcaption>Choose a database by name or a shared page by task. This fixture uses disposable databases.</figcaption></figure>
+<figure>
+<img src="../assets/settings-phone-013.png" alt="Phone Settings with ultra cat / Import selected" width="390" height="844" loading="lazy" style="max-width:390px">
+<figcaption>The phone selector includes the database name, so you can see which Import page you are editing.</figcaption>
+</figure>
+<h3 id="database-settings">Open a database</h3>
+<p>Choose its name for the overview, then <strong>Rig setup</strong>, <strong>Database &amp; files</strong>, <strong>Import</strong> or <strong>Sync</strong> beneath it. Shared observing sites are under <strong>Presets → Sites</strong>. To add a database or connect N.I.N.A., choose <strong>New / import</strong>.</p>
+<p>Each database's <strong>Import</strong> page opens with saved scan rules collapsed. Expand <strong>Scan rules</strong> to edit filters, save them, then use <strong>Preview import</strong> before confirming. <a href="importing.html">Import Images</a> explains matching and sync.</p>
+<figure>
+<img src="../assets/settings-import-013.png" alt="Ultra cat Import page with saved scan rules collapsed" width="3044" height="1148" loading="lazy">
+<figcaption>Open a database’s Import page to preview an import or review its saved rules. Automatic import is off in this example.</figcaption>
+</figure>
+<h3 id="shared-defaults">Shared defaults and database overrides</h3>
+<p><strong>Review → Grading &amp; display → Quality analysis</strong> controls automatic quality analysis and its image source. <strong>Processing → Calibration → Calibrated copies</strong> controls pairing processed copies with lights. Existing databases keep their prior choices as overrides; new databases inherit shared defaults.</p>
+<p>Expand a database, turn on <strong>Override global setting</strong>, choose its value, then click <strong>Save database</strong>. Turn the override off and save to inherit the shared value. A shared change affects only databases that inherit that value.</p>
+<figure>
+<img src="../assets/settings-overrides-013.png" alt="Global quality defaults and two explicit ultra cat overrides" width="2020" height="1568" loading="lazy">
+<figcaption>Ultra cat overrides the global setting to analyze new frames. Its calibrated-copy choice is also an explicit override, even though both values are Off.</figcaption>
+</figure>
+<h3 id="unsaved">Keep unsaved edits</h3>
+<p>Settings asks before discarding edits when you change pages or databases, or close the dialog. <strong>Keep editing</strong> returns to the form; <strong>Discard changes and switch</strong> opens the requested page without saving. Save or discard edits before restarting.</p>
+<!-- RESHOOT: settings-unsaved-close.png | P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog. -->
+<figure><img src="../assets/settings-unsaved-close.png" loading="lazy" alt="Earlier Settings close warning for unsaved changes" width="3002" height="242"><figcaption>Earlier close-warning layout. The current Settings also asks before switching pages or databases; its action labels depend on the requested navigation.</figcaption></figure>
+<p>After saving a desktop server port change, use <strong>Restart server</strong> on <strong>Server &amp; access → Server</strong>. Saved storage-folder changes offer <strong>Restart now</strong> beside the folders. Restart controls stay disabled while forms have unsaved edits. See <a href="storage.html#choose-folders">Storage folders</a>.</p>
 
   <h2 id="registry">Catalog registry</h2>
   <p>The server can serve many catalogs, each a database with Target Scheduler's
