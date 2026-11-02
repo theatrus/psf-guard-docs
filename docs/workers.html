@@ -168,10 +168,14 @@ function gtag_report_demo() {
 <li>On the worker, run the shell or PowerShell command shown by Settings. Replace <code>THIS-SERVER:PORT</code> with the server's network address when the command contains that placeholder.</li>
 </ol>
 <pre><code>PSF_GUARD_WORKER_TOKEN=psfw_… psf-guard worker --server http://192.168.1.10:3000</code></pre>
-<p>Leave the process running. Ctrl-C stops it and returns unfinished tasks to the server's queue. <code>--work stack</code> accepts stack builds only; <code>--slots N</code> allows 1–16 concurrent tasks. Start with one for GPU work. Workers that only stack need no RC-Astro installation.</p>
+<p>Leave the process running. Ctrl-C stops the worker and returns unfinished tasks to the server's queue. <code>--work stack</code> accepts stack builds only; <code>--slots N</code> allows 1–16 concurrent tasks. Start with one for GPU work. Workers that only stack need no RC-Astro installation.</p>
 <h2 id="dispatch">Choose where work runs</h2>
-<p>Under <strong>Where work runs</strong>, choose stack-build and RC-Astro policies independently: <strong>Workers first</strong>, <strong>Workers only</strong> or <strong>This server only</strong>. Stack builds stay on the server unless you change this choice. The channel card shows which worker stacked it; its <strong>Live stack</strong> image follows the worker's progress.</p>
-<p>Task files transfer through the server by default. A worker can use shared storage with <code>--files shared</code> when both computers can access the required folders. A worker has its own CPU and memory allocation; server limits are not per-worker limits.</p>
+<p>Under <strong>Where work runs</strong>, choose stack-build and RC-Astro policies independently: <strong>Workers first</strong>, <strong>Workers only</strong> or <strong>This server only</strong>. With <strong>Workers first</strong>, this server handles a task when no suitable worker is connected. With <strong>Workers only</strong>, the task fails if no connected worker can run it. Stack builds stay on the server unless you change this choice. The channel card shows which worker stacked it; its <strong>Live stack</strong> image follows the worker's progress.</p>
+<p>Task files transfer through the server by default. A worker can use shared storage with <code>--files shared</code> when both computers can access the required folders. Each worker uses its own CPU and memory limits. Changing the server’s limits does not change those limits on workers.</p>
+<figure>
+<img src="../assets/workers-dispatch-013.png" alt="Worker dispatch policies with only this server connected" width="1768" height="1684" loading="lazy">
+<figcaption>Choose where RC-Astro tools and stack builds run independently. Only this server is connected in this example; no remote worker is shown.</figcaption>
+</figure>
 <!-- SHOT: workers-connected-013.png | P1. Include the server dispatch policies and a connected worker with actual available tasks and status. Reuse the release-overview shot. Keep credentials out of the crop and do not alter policies or worker state. | A connected worker lists the work it can accept. -->
 <h2 id="desktop">Run a worker from the app</h2>
 <ol>

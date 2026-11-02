@@ -458,12 +458,11 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
     <li><strong>Analyze quality of the new frames in the background</strong> and
       <strong>Include frames from other rigs</strong> work as for a manual import.</li>
   </ul>
-  <!-- RESHOOT: settings-autoimport-scan-rules.png | P2. Database > Import, expanded Scan rules, current filters and automatic-import controls. Open disclosures only and discard edits. Consider exact reuse of the recorded October 27 scan-rule fixture if labels match. -->
 
   <figure>
-    <img src="../assets/settings-autoimport-scan-rules.png" loading="lazy" alt="Set scan exclusions, target matching and review rules before enabling automatic import." width="1724" height="1620">
-    <figcaption>Set scan exclusions, target matching and review rules before enabling automatic import.</figcaption>
-  </figure>
+<img src="../assets/settings-autoimport-scan-rules.png" alt="Saved import scan rules expanded" width="2096" height="1764" loading="lazy">
+<figcaption>Review scan rules before enabling automatic import. The dim examples in Exclude and Include only are placeholders; both fields are empty here.</figcaption>
+</figure>
   <p>Under Ask first, a run attaches frames for targets the catalog has and writes
   nothing for the rest. The database's status line then says, for example,
   "11 held: no matching project", with a <strong>Review</strong> button that opens the
@@ -515,13 +514,12 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
       one finishes. At startup, the server also finds frames that arrived while it was stopped. Off
       by default.</li>
   </ul>
-  <!-- RESHOOT: settings-database-options.png | P2. Database > Database & files with image folders and maintenance controls. Do not move paths or run Merge renamed lights. Quality analysis now belongs to Review > Grading & display, so remove the old claim that it lives here. -->
 
 
   <figure>
-    <img src="../assets/settings-database-options.png" loading="lazy" alt="Each database has its own image folders, calibration library and analysis options." width="1800" height="946">
-    <figcaption>Each database has its own image folders, calibration library and analysis options.</figcaption>
-  </figure>
+<img src="../assets/settings-database-options.png" alt="Database and image folders with links to related settings" width="3044" height="1028" loading="lazy">
+<figcaption>Database &amp; files shows the database’s folders and calibration library, with links to Import, Quality analysis and Calibrated-copy pairing.</figcaption>
+</figure>
   <p>The scan uses the N.I.N.A. Fast detector, so star counts and HFR compare with
   Target Scheduler's. When it finds no stars, HocusFocus measures the frame instead. A
   file still being copied is measured again later rather than scored as empty. Jobs

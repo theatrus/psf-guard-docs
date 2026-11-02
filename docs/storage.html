@@ -204,9 +204,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   database management. Settings asks before closing if you have unsaved folder changes.</p>
 
   <figure>
-    <img src="../assets/settings-storage-folders.png" loading="lazy" alt="The cache, stacks and calibration masters can use separate folders." width="1800" height="710">
-    <figcaption>The cache, stacks and calibration masters can use separate folders.</figcaption>
-  </figure>
+<img src="../assets/settings-storage-folders.png" alt="Storage folders and WBPP retention with Save storage settings" width="2024" height="1678" loading="lazy">
+<figcaption>Save folders and WBPP retention together. This server keeps intermediates for seven days and masters for 90 days; Keep WBPP masters forever is off.</figcaption>
+</figure>
   <p>A folder saved in Settings takes effect at the next start, which moves the
   files there first. Until then the field shows the folder still in use. In
   the desktop app, <strong>Restart now</strong> restarts the whole app to
@@ -239,9 +239,9 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   image previews.</p>
 
   <figure>
-    <img src="../assets/settings-storage-disk-use.png" loading="lazy" alt="Review disk use and the cleanup rules. The volume usage limit includes other files on the disk." width="1044" height="540">
-    <figcaption>Review disk use and the cleanup rules. The volume usage limit includes other files on the disk.</figcaption>
-  </figure>
+<img src="../assets/settings-storage-disk-use.png" alt="Disk usage and volume limits including WBPP" width="2096" height="1454" loading="lazy">
+<figcaption>Review disk usage and saved limits. The volume limit includes other files; this server uses 70% for storage and 90% for WBPP.</figcaption>
+</figure>
   <p><strong>Volume usage limit</strong> (90% by default) is the highest
   share of the whole volume, other files included, that PSF Guard lets it
   reach, as <code>df</code> counts it. 100% disables automatic cleanup. Changing the
@@ -317,12 +317,13 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
 <h2 id="wbpp-retention">Keep WBPP files for a chosen time</h2>
 <p>Open <strong>Settings → Storage &amp; backups → Folders &amp; limits</strong>. WBPP shares <strong>Folders</strong> and <strong>Limits</strong> with the other storage options. Choose a dedicated WBPP folder and volume usage limit, then set retention for intermediates and masters. Click <strong>Save storage settings</strong> to save folders, limits and retention together.</p>
 <p>Intermediates default to seven days and masters to 90 days. <strong>Keep WBPP masters forever</strong> protects masters from cleanup. Intermediates are removed before masters; active runs, downloads and master copies are protected. Saved process masters and imported stacks remain separate. Volume limits accept whole percentages from 0% through 100%.</p>
-<!-- RESHOOT: settings-storage-folders.png | P2. Settings > Storage & backups > Folders & limits. Include WBPP's folder and Save storage settings, with actual saved paths. Do not save folder changes or restart. -->
-<!-- RESHOOT: settings-storage-disk-use.png | P2. Same page, Limits with volume usage and WBPP retention, including Keep WBPP masters forever. Record saved values. Do not change limits or trigger cleanup. -->
 <h2 id="processing-memory">Set the processing memory budget</h2>
 <p>Open <strong>Settings → Performance → CPU &amp; memory → Processing memory</strong>. <strong>Memory budget</strong> ranges from 5% to 100% and starts at 50%; the panel shows GiB. macOS uses installed memory, while Linux and Windows use available memory. Releasing the slider, pressing Enter or moving focus saves the setting. A larger budget leaves less memory for other work and applies to new jobs.</p>
 <p>Color and stretch errors show their estimate and current budget. Color estimates count source channels plus the largest processing step, including an RC-Astro tool's own memory when it runs on the server. A worker can reduce server memory use for that step. The estimate is a planning limit, not a reservation.</p>
-<!-- SHOT: settings-memory-013.png | P2. Performance > CPU & memory, showing Processing memory, Memory budget percentage, GiB and memory basis. Do not move the slider: release or blur saves immediately. A genuine budget error can be a second crop only if already present. | Choose how much memory new processing jobs may use. -->
+<figure>
+<img src="../assets/settings-memory-013.png" alt="CPU shares and processing memory budget" width="2096" height="1052" loading="lazy">
+<figcaption>The server’s saved memory budget is 70%, or 31.6 GiB of the available 45.1 GiB in this example. Changes apply to new jobs.</figcaption>
+</figure>
 <h2 id="processor">Processor use</h2>
   <p><strong>Settings → Performance → CPU &amp; memory → Processor use</strong> sets how
   many cores each kind of work may use, as a share of the logical cores. A
@@ -335,7 +336,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   <div class="table-wrap">
     <table>
       <tr><th>Share</th><th>Covers</th><th>Default</th></tr>
-      <tr><td><strong>Work you wait on</strong></td><td>Stack builds, color and stretches you start, quality scans you start, previews being looked at</td><td>50%, or <code>scan_worker_ratio</code></td></tr>
+      <tr><td><strong>Interactive work</strong></td><td>Stack builds, color and stretches you start, quality scans you start, previews being looked at</td><td>50%, or <code>scan_worker_ratio</code></td></tr>
       <tr><td><strong>Background work</strong></td><td>Automatic stack refreshes, quality backfill and new-frame analysis in every database, calibration grading, flat measuring, preview pre-generation</td><td>25%, or <code>background_worker_ratio</code></td></tr>
     </table>
   </div>

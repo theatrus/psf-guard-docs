@@ -196,7 +196,10 @@ function gtag_report_demo() {
   <h2 id="gpu">Choose GPU passes</h2>
 <p>Open <strong>Settings → Performance → GPU</strong>. Supported computers use Metal on macOS, Vulkan on Linux or Direct3D 12 on Windows for debayering, star detection, resampling, live stacking and the final pass. Computers without a supported GPU, and frames under about a million pixels, use the CPU.</p>
 <p>Choose which passes may use the GPU. With <strong>Use the GPU</strong> off, all stacking stays on the CPU, including artifact searches and color-channel alignment. <a href="workers.html">Workers</a> can run stack builds on another computer.</p>
-<!-- SHOT: settings-gpu-013.png | P1. Settings > Performance > GPU on a computer that reports a supported GPU. Include detected backend/device, Use the GPU and pass controls. Record actual enabled choices; do not toggle or save. If the host has no supported GPU, capture that honest state for the guide and keep the release feature shot pending. | Choose which stacking passes may use this computer's GPU. -->
+<figure>
+<img src="../assets/settings-gpu-013.png" alt="GPU controls with all five passes enabled" width="2088" height="1620" loading="lazy">
+<figcaption>Choose which passes may use the GPU. These settings do not identify a detected device or confirm that a build used it.</figcaption>
+</figure>
 <h3 id="live-stack">Follow a live stack</h3>
 <p>While a channel builds, its <strong>Live stack</strong> image updates about every five seconds between batches. The accepted-frame count belongs to that temporary image. Slow frames can delay updates, and the last live image stays visible during final rejection. The progress bar remains below it.</p>
 <p>During a rebuild, <strong>Inspect completed stack</strong> and <strong>Download completed linear FITS</strong> still use the previous result. The live image cannot feed a color composition or FITS download. The finished preview replaces it; stopping a rebuild restores the previous preview.</p>
@@ -232,15 +235,15 @@ function gtag_report_demo() {
       slipped. See <a href="screening.html">Quality Screening</a>.</li>
     <li>Lights the calibration library can't calibrate, only when
       <strong>Leave out lights that can't be calibrated</strong> is on under
-      <strong>Settings &rarr; Calibration &rarr; Stacks and exports</strong>. The
+      <strong>Settings &rarr; Processing &rarr; Calibration &rarr; Stacks and exports</strong>. The
       card counts them under <strong>can't calibrate</strong>. See
       <a href="calibration-grading.html#uncalibrated">Calibration Libraries</a>.</li>
   </ul>
-  <p>Sequence analysis scores frames with your defaults from
-  <strong>Settings &rarr; Review &rarr; Sequence scoring</strong>. When
+  <p>Sequence analysis starts with the server’s shared defaults from
+  <strong>Settings &rarr; Review &rarr; Grading &amp; display &rarr; Sequence scoring</strong>. When
   Sequence's <strong>Scoring</strong> was changed for this project,
-  <strong>Scoring (changed)</strong> beside the build buttons says that builds
-  use the changed values, with <strong>Reset to default</strong>.</p>
+  <strong>Scoring (changed)</strong> beside the build buttons shows that builds
+  use those values. Click <strong>Reset to default</strong> to use the server’s defaults.</p>
   <p>The server log lists each frame a build leaves out or Seiza rejects, and
   why. The desktop app writes this log to a daily file; <strong>Open
   logs</strong> in Settings opens the folder.</p>
@@ -268,7 +271,7 @@ function gtag_report_demo() {
   grouping, not grades or Target Scheduler plans.</p>
 
   <h2 id="method">Choose the stacking method</h2>
-  <p><strong>Settings &rarr; Stacking &rarr; Stacking method</strong> sets how
+  <p><strong>Settings &rarr; Processing &rarr; Stacking &rarr; Stacking method</strong> sets how
   every stack on the server integrates its frames. Three presets fill in the
   choices below; each choice can also be changed on its own.</p>
   <ul>
@@ -608,10 +611,12 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 
   <h2 id="inspect">Inspect and download a stack</h2>
 <p><strong>Inspect</strong> opens the full-resolution stack in a full-window image viewer. The narrower sidebar shows details, available FITS files, <strong>Sky context</strong>, artifact search, shortcuts and zoom controls. Scroll to zoom, drag to pan, press <kbd>F</kbd> or <kbd>0</kbd> to fit, or <kbd>1</kbd> for one image pixel per screen pixel. Calibration masters use the same layout.</p>
-<p><strong>Sky context</strong> solves the stack's own pixels, using its frames as starting hints. <kbd>S</kbd> marks stars with HFR; <kbd>P</kbd> opens the PSF view. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <kbd>M</kbd> or <kbd>R</kbd>, for a pointer-following readout of position, linear file values and solved sky coordinates. Color stacks show one value per channel. The server reads only nearby pixels.</p>
+<p>In <strong>Sky context</strong>, click <strong>Solve field</strong> to solve the stack's own pixels, using its frames as starting hints. <kbd>S</kbd> marks stars with HFR; <kbd>P</kbd> opens the PSF view. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <kbd>M</kbd> or <kbd>R</kbd>, for a pointer-following readout of position, linear file values and solved sky coordinates. Color stacks show one value per channel. The server reads only nearby pixels.</p>
 <p><strong>Download linear FITS</strong> retrieves the unstretched 32-bit float integration. Available processed FITS files stay separate in the sidebar.</p>
-<!-- SHOT: stack-inspector-013.png | P1. Full-window real stack with sidebar, downloads and pointer-following linear pixel readout; include RA/Dec only when an existing solve enables it. Open no new live solve or artifact search. Record exact zoom, pointer values and solve provenance. | Read the original linear pixel values while inspecting the stack. -->
-<!-- RESHOOT: stack-preview-inspection.png | P2. Replace the older inspector illustration with the current full-window layout after stack-inspector-013.png is captured. Retain the record of the earlier image; use actual dimensions and a caption matched to the new state. -->
+<figure>
+<img src="../assets/stack-inspector-013.png" alt="California Nebula RGB stack with FITS downloads and a pixel-value readout" width="3044" height="1894" loading="lazy">
+<figcaption>Inspect the California RGB stack and read a value for each channel beside the pointer. Sky context shows nearby catalog objects here; this view has no pixel-derived plate solution.</figcaption>
+</figure>
   <p><strong>View processing</strong> on a card sets a display stretch,
   optional deconvolution and, where the server has them, RC-Astro tools.
   <strong>Apply processing</strong> renders new previews from the cached FITS
@@ -619,11 +624,7 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   processing</strong> returns to the original. The stack itself is never
   rewritten.</p>
   <div class="shot-pair">
-    <figure>
-      <img src="../assets/stack-preview-inspection.png" alt="Native-resolution stack inspection with zoom and pan" loading="lazy">
-      <figcaption>The inspector: zoom, pan, fit and 1:1, with Find source
-      artifact and the FITS download.</figcaption>
-    </figure>
+
     <figure>
       <img src="../assets/stack-preview-stretch.png" alt="View processing with deconvolution and Auto MTF stretch on a stack card" loading="lazy">
       <figcaption>View processing with deconvolution and an Auto MTF
@@ -704,7 +705,10 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 <p><strong>Processing stack</strong> follows numbered steps from input preparation to RGB finishing. Expand a step to edit it; closing the step preserves edits. Color and RGB-star branches show their own tools, with emission amounts and star reduction where they run.</p>
 <p>New narrowband cards offer automatic SHO/HOO selection, a shared H-alpha stretch and background-protected OIII/SII balance. <strong>Stars → Automatic</strong> uses RGB stars when the sources and StarXTerminator are available, with an explained fallback. Under <strong>Process linear color → RGB star processing</strong>, BlurXTerminator can sharpen RGB stars before extraction. Configure StarXTerminator independently for the nebula and RGB-star branches.</p>
 <p>In <strong>Combine and restore stars</strong>, adjust the independent Star Stretch and <strong>RGB star reduction</strong>. Zero reduction preserves the current stars. Saved setups retain their Auto MTF rendering until you switch.</p>
-<!-- SHOT: stack-color-pipeline-013.png | P1. Show a real completed card's numbered Processing stack, star policy and actual resolved star branch. Open sections only; do not apply processing. Reuse the release-overview shot. | Inspect the color and RGB-star branches in processing order. -->
+<figure>
+<img src="../assets/stack-color-pipeline-013.png" alt="Five applied processing steps with RGB star stretch and reduction controls" width="1224" height="1466" loading="lazy">
+<figcaption>Heart Mosaic’s applied SHO pipeline uses RGB stars, Star Stretch 5 and no star reduction. Expand a numbered step to inspect its controls.</figcaption>
+</figure>
 <h3 id="continuum">Subtract continuum from emission inputs</h3>
 <p>Custom <strong>RGB + emission</strong>, <strong>LRGB + emission</strong> and <strong>Narrowband + broadband structure</strong> combinations fit and subtract continuum on aligned linear inputs. Automatic, Manual and Off controls keep signed residual FITS downloads and per-line fit reports. Failed natural-color lines are omitted with a warning; a failed mapped line keeps the previous preview.</p>
 <p>Reports can validate held-out stellar profiles and show core/halo error, PSF broadening and changed resolution. Optional calibrated-response exports retain signed line flux and provenance. A failed or missing measurement is not evidence of a successful fit.</p>
@@ -1007,12 +1011,11 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     <img src="../assets/stack-reprocessing.jpg" loading="lazy" alt="The card keeps the previous processed image visible while reprocessing waits." width="996" height="982">
     <figcaption>The card keeps the previous processed image visible while reprocessing waits.</figcaption>
   </figure>
-  <!-- RESHOOT: settings-stack-previews.png | P2. Processing > Stacking > Stack previews. Include saved automatic refresh and reapply-processing options. Do not change schedules or start refreshes. -->
 
   <figure>
-    <img src="../assets/settings-stack-previews.png" loading="lazy" alt="Choose when to refresh stack previews and whether to reapply their processing." width="1878" height="1354">
-    <figcaption>Choose when to refresh stack previews and whether to reapply their processing.</figcaption>
-  </figure>
+<img src="../assets/settings-stack-previews.png" alt="Automatic stack refresh and reprocessing settings" width="2096" height="1512" loading="lazy">
+<figcaption>Saved refresh choices include five minutes after new frames, 15 minutes after grade changes, and reapplying processing after a refresh.</figcaption>
+</figure>
 
   <h2 id="artifact">Find which frame made a defect</h2>
   <p>A stack can make a trail, reflection, dust shadow or hot pixel easier to
@@ -1037,8 +1040,18 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
 <p>Every panel must have eligible frames in the channel and contribute aligned frames. An incomplete mosaic identifies missing panel targets; inspect frame decisions for registration failures. Mosaic builds replan the canvas when inputs change rather than extending a saved accumulator. Bayer drizzle is not supported.</p>
 <p>Compose RGB, LRGB or narrowband color from the integrated channels. Gaia calibration solves the integrated canvas instead of borrowing a single source frame's solve. Older uncalibrated previews are marked out of date; <strong>Build current set</strong> refreshes them from cached stacks.</p>
 <p>Mosaic SNR plots show canvas coverage and mean pixel depth. They retain measured checkpoint signal and do not apply same-field forecasts or plateau/degrading verdicts to frames that cover different sky areas.</p>
-<!-- SHOT: stack-integrated-mosaic-013.png | P1. Completed integrated mosaic with mosaic identity, channel or color card and panel coverage. Capture one canvas, not the separate panel grid. Reuse the release-overview shot. | Build channel mosaics, then combine them into color. -->
-<!-- SHOT: stack-mosaic-snr-013.png | P2. Open an existing mosaic SNR plot with canvas coverage and mean pixel depth visible. Include the mosaic name, checkpoint measurements and labels. Do not claim a same-field forecast or plateau/degrading verdict. No build is needed if the plot is cached. | Mosaic depth follows coverage across the canvas. -->
+<figure>
+<img src="../assets/stack-integrated-mosaic-013.png" alt="Completed four-panel Heart Mosaic RGB and SHO previews" width="2932" height="1994" loading="lazy">
+<figcaption>Heart Mosaic combines four panels into RGB and SHO canvases. The SHO preview restores RGB stars and uses 1,243 integrated inputs across its six source channels.</figcaption>
+</figure>
+<figure>
+<img src="../assets/stack-mosaic-snr-013.png" alt="H-alpha mosaic SNR plot with 96.1 percent canvas coverage and 48.1 mean frames per covered pixel" width="1200" height="1078" loading="lazy">
+<figcaption>The H-alpha mosaic integrates 163 frames. Coverage reaches 96.1% of the canvas, with a mean depth of 48.1 frames per covered pixel; the plot does not predict a same-field improvement.</figcaption>
+</figure>
+<figure>
+<img src="../assets/stack-mosaic-panels-013.png" alt="Four Heart Mosaic panel previews and their solved sky positions" width="2916" height="1380" loading="lazy">
+<figcaption>Panel coverage shows each panel’s latest stack and its position on the sky. The integrated RGB and SHO canvases are shown separately.</figcaption>
+</figure>
 <h3 id="panel-coverage">Check individual panel coverage</h3>
 <p>Panel coverage below the integrated stacks still shows existing panel previews. A mosaic build does not replace those panel stacks. The older illustration below shows the separate-panel layout, not an integrated result.</p>
 <figure><img src="../assets/stacks-mosaic.jpg" loading="lazy" alt="Earlier separate-panel comparison of four SHO stacks and their solved positions" width="3138" height="1584"><figcaption>Separate panel previews remain useful for coverage checks. This earlier view does not show an integrated mosaic.</figcaption></figure>

@@ -199,13 +199,12 @@ function gtag_report_demo() {
     <tr><td><strong>Deepest blind solving</strong></td><td>G≤20 Gaia data plus the blind index. About 9 GB more.</td></tr>
   </table></div>
   <p>Quality scans measure <a href="screening.html#snr">SNR</a> only against a Gaia catalog. Tycho-2 mixes two bands and is not used for it.</p>
-  <!-- RESHOOT: settings-catalogs.png | P2. Storage & backups > Reference catalogs with current readiness, package choice and install/validate actions. Do not install or validate packages for the capture. -->
 
 
   <figure>
-    <img src="../assets/settings-catalogs.png" loading="lazy" alt="Installed catalog packages support overlays, hinted solves and blind solves." width="1878" height="778">
-    <figcaption>Installed catalog packages support overlays, hinted solves and blind solves.</figcaption>
-  </figure>
+<img src="../assets/settings-catalogs.png" alt="Installed reference catalogs and catalog package choices" width="2096" height="1116" loading="lazy">
+<figcaption>This server has catalogs ready for overlays, hinted and blind solving, and color calibration. Choose a package before installing or updating catalogs.</figcaption>
+</figure>
   <p>For a manual or headless install, get the <code>seiza</code> CLI from the <a href="https://github.com/theatrus/seiza/releases">Seiza releases</a> or with Cargo, then download a bundle:</p>
   <pre><code>cargo install seiza-cli --version 0.24.0
 

@@ -171,21 +171,34 @@ function gtag_report_demo() {
 <img src="../assets/release-013-sho-rgb-stars.jpg" alt="Heart and Soul integrated four-panel SHO mosaic with RGB stars" width="1600" height="1015" loading="lazy">
 <figcaption>Heart and Soul: balanced SHO with RGB stars from integrated channel mosaics. This recorded example uses source panel stacks binned 4× per axis, with Gaia color calibration skipped; it is not a full-resolution capture of the Stacks interface.</figcaption>
 </figure>
-<!-- SHOT: stack-integrated-mosaic-013.png | P1. On a verified current build open a completed real mosaic in Stacks. Include one integrated channel or color card and its mosaic identity, with the full single-canvas preview and panel coverage. Prefer Heart Mosaic or Heart and Soul after checking availability. Record channels, panels, accepted counts, calibration and solve state. Do not substitute the old grid of separate panel previews. | Integrated channel mosaics can feed the same RGB and narrowband color combinations as single fields. -->
+<figure>
+<img src="../assets/stack-integrated-mosaic-013.png" alt="Completed four-panel Heart Mosaic RGB and SHO previews" width="2932" height="1994" loading="lazy">
+<figcaption>Heart Mosaic combines four panels into RGB and SHO canvases. The SHO preview restores RGB stars and uses 1,243 integrated inputs across its six source channels.</figcaption>
+</figure>
 <p><a href="stacking.html#mosaic">Build a mosaic</a></p>
 <h2 id="workers">Use another computer's GPU or RC-Astro tools</h2>
 <p>Workers can build stacks, including mosaics, and run BlurXTerminator, NoiseXTerminator and StarXTerminator. Choose where stack builds and RC-Astro run separately. Desktop workers continue in the menu bar or tray after you close the window; Windows and Linux services can run before login.</p>
 <p>Stack builds stay on the server until you choose otherwise. Install the same PSF Guard release on the server and workers. WBPP stays on the server.</p>
+<figure>
+<img src="../assets/workers-dispatch-013.png" alt="Worker dispatch policies with only this server connected" width="1768" height="1684" loading="lazy">
+<figcaption>Choose where RC-Astro tools and stack builds run independently. Only this server is connected in this example; no remote worker is shown.</figcaption>
+</figure>
 <!-- SHOT: workers-connected-013.png | P1. Settings > Performance > Workers on the server: show Where work runs for stack builds and RC-Astro plus a connected worker, its available task types and current status. Hide no content by pixel edits; keep tokens, pairing codes and credentials out of the viewport. Do not create a token, change dispatch policies or start tasks for the capture. An idle connected worker is valid; caption its actual state. | Choose independently where stack builds and RC-Astro tools run. -->
 <p><a href="workers.html">Set up workers</a></p>
 <h2 id="color">Control the nebula and stars separately</h2>
 <p>Color processing follows numbered, expandable steps. Inspect the color and RGB-star branches separately, fit and subtract continuum for emission combinations, and adjust RGB-star sharpening, stretching and reduction. Automatic SHO/HOO recipes can restore RGB stars when the sources and StarXTerminator are available, with an explained fallback.</p>
 <p>Existing previews keep their processing choices. New previews start from the default Color setup under <strong>Settings → Presets → Processing setups</strong>.</p>
-<!-- SHOT: stack-color-pipeline-013.png | P1. Open a completed real narrowband card's Processing stack; show numbered steps, the selected star policy and the resolved RGB-star or narrowband fallback explanation. Expand Process linear color and Combine and restore stars as space permits. Record recipe, RGB sources, SXT availability and saved versus unsaved settings. Open disclosures only; do not apply changes. | Follow the color and RGB-star branches through numbered processing steps. -->
+<figure>
+<img src="../assets/stack-color-pipeline-013.png" alt="Five applied processing steps with RGB star stretch and reduction controls" width="1224" height="1466" loading="lazy">
+<figcaption>Heart Mosaic’s applied SHO pipeline uses RGB stars, Star Stretch 5 and no star reduction. Expand a numbered step to inspect its controls.</figcaption>
+</figure>
 <p><a href="stacking.html#color-pipeline">Process color and stars</a></p>
 <h2 id="inspection">Inspect the stack's pixels and sky position</h2>
 <p>The stack inspector uses the image viewer's full-window layout and a narrower details sidebar. Stacks offer <strong>Sky context</strong>, HFR star labels and a PSF view. Turn on <strong>Value</strong> or <strong>RA/Dec</strong>, or press <kbd>M</kbd> or <kbd>R</kbd>, for a readout beside the pointer.</p>
-<!-- SHOT: stack-inspector-013.png | P1. Inspect a completed real stack at a useful zoom with its details sidebar and FITS downloads visible. Enable Value and, only with an existing solve, RA/Dec, then place the pointer over the image so the linear-value readout is visible. Show existing Sky context when available; do not start a solve on a live catalog. Record file, channels, zoom, solve provenance, pointer position and readout values. Do not claim embedded WCS proves a pixel solve. | Inspect linear pixel values beside the pointer while keeping stack details visible. -->
+<figure>
+<img src="../assets/stack-inspector-013.png" alt="California Nebula RGB stack with FITS downloads and a pixel-value readout" width="3044" height="1894" loading="lazy">
+<figcaption>Inspect the California RGB stack and read a value for each channel beside the pointer. Sky context shows nearby catalog objects here; this view has no pixel-derived plate solution.</figcaption>
+</figure>
 <p><a href="stacking.html#inspect">Inspect and download stacks</a></p>
 <h2 id="settings">Find a setting by task or database</h2>
 <p>Settings groups processing, performance, storage, exports and review in a sidebar or a compact phone selector. Open a database by name for <strong>Rig setup</strong>, <strong>Database &amp; files</strong>, <strong>Import</strong> and <strong>Sync</strong>. New databases inherit shared quality-analysis and calibrated-copy defaults; existing databases keep their choices as explicit overrides.</p>

@@ -261,8 +261,7 @@ function gtag_report_demo() {
   (default), <strong>Only if raw frames can't build one</strong>, or
   <strong>Never</strong>.</p>
 
-<p><strong>External flat masters at another gain</strong>, under <strong>Settings → Processing → Calibration → Matching</strong> or a rig's calibration settings, allows an externally built flat master at a different gain or offset. Use it only when that master's own flat darks were subtracted, such as gain-0 flats for gain-100 lights. It is off by default; other compatibility checks still apply. A master refused only for gain or offset identifies this setting.</p>
-<!-- RESHOOT: settings-calibration.png | P2. Settings > Processing > Calibration > Matching, showing External masters and External flat masters at another gain with current values and help. Do not enable the new option for a capture. Include the task navigation. -->
+<p><strong>External flat masters at another gain</strong>, under <strong>Settings → Processing → Calibration → Matching</strong> or a rig's calibration settings, allows an externally built flat master at a different gain or offset. Use it only when that master’s own flat darks were subtracted (recorded as <code>DARKSUB</code>) and the camera’s normalized flat does not change with gain. Suitable gain-0 flats for gain-100 lights are one example. It is off by default; other compatibility checks still apply. A master refused only for gain or offset identifies this setting.</p>
 <h2 id="stacking">Calibration in stacks</h2>
   <p>The <strong>Calibration</strong> control in <a href="stacking.html#calibration">Stacks</a>
   has three modes:</p>
@@ -392,9 +391,9 @@ function gtag_report_demo() {
 
 
   <figure>
-    <img src="../assets/settings-calibration.png" loading="lazy" alt="Global matching limits control which calibration frames can serve a light." width="1800" height="1508">
-    <figcaption>Global matching limits control which calibration frames can serve a light.</figcaption>
-  </figure>
+<img src="../assets/settings-calibration.png" alt="Calibration matching controls including external flat masters at another gain" width="2590" height="1456" loading="lazy">
+<figcaption>Matching controls include External flat masters at another gain, shown Off. Review the camera and master requirements before enabling it.</figcaption>
+</figure>
   <figure>
     <img src="../assets/settings-calibration-flat-groups.png" loading="lazy" alt="Flat-group limits separate nights when dust or illumination changes." width="1800" height="1620">
     <figcaption>Flat-group limits separate nights when dust or illumination changes.</figcaption>
