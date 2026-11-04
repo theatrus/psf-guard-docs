@@ -1,0 +1,249 @@
+{
+  "captured_date": "2026-11-04",
+  "server": "https://psf-guard.atpn.co",
+  "server_version_observed": "0.13.0",
+  "deployed_commit": null,
+  "frontend_asset": null,
+  "release_status": "upcoming; version label is not proof of a published release",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "chrome": "156.0.8078.80",
+    "zoom_percent": 90,
+    "raw_window_pixels": [
+      3956,
+      2570
+    ],
+    "css_viewport": null,
+    "device_pixel_ratio": null,
+    "timezone": "America/Los_Angeles",
+    "theme": "dark"
+  },
+  "method": "Native Chrome window capture through cua_repl; rectangular crops at original pixel resolution, JPEG quality 95. Nights is a lossless PNG after opaque coordinate masks. Browser tab API unavailable.",
+  "privacy": "No browser chrome, exact site coordinates or credentials in published crops. Native CoreGraphics masks cover rounded site coordinates in Nights. All pixels outside the masks exactly match the same native-decoded original. Generative editor output was rejected because it altered schedule text; it is not committed.",
+  "live_changes": "No catalog edits, settings saves, grades, imports, scans or processing jobs initiated. Existing automatic stack observed. Framing canvas zoom changed only the view; no plan saved.",
+  "captures": [
+    {
+      "file": "rigs-live-013.jpg",
+      "captured_at": "2026-11-04T18:33:32.663204+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs",
+      "crop_pixels": [
+        930,
+        245,
+        3510,
+        930
+      ],
+      "width": 2580,
+      "height": 685,
+      "sha256": "4a49b2743b7e335fd96dbda9ee42530669a9a26532a480f4f0571e78d7b5b368",
+      "state": "Rigs > Live. Five rigs, all Never seen / No report yet. Tonight links are visible; this does not demonstrate an online rig.",
+      "reshoot": "Open Rigs > Live; keep all rig rows visible.",
+      "redactions": []
+    },
+    {
+      "file": "rigs-nights-013.png",
+      "captured_at": "2026-11-04T18:33:46.588166+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        930,
+        245,
+        3510,
+        1590
+      ],
+      "width": 2580,
+      "height": 1345,
+      "sha256": "5ae1ddd1206a424e2fb09645ba47d4f5b25029b287f08084dc2dcbc944f1d890",
+      "state": "Five rigs; two nearby-site groups; From 11/04/2026, seven nights, columns November 3–9 because capture was before local noon. Updated 10:32 AM. Shared Cloud · Moon rows use saved Open-Meteo forecasts.",
+      "reshoot": "Open Rigs > Nights. Select November 4, 2026 and seven nights. Record fresh computation and forecast times; mask all site coordinates after capture.",
+      "redactions": [
+        {
+          "rect_xywh": [
+            397,
+            351,
+            204,
+            38
+          ],
+          "reason": "Site coordinates"
+        },
+        {
+          "rect_xywh": [
+            101,
+            881,
+            193,
+            39
+          ],
+          "reason": "Site coordinates"
+        }
+      ]
+    },
+    {
+      "file": "rigs-night-schedule-013.jpg",
+      "captured_at": "2026-11-04T18:33:58.440646+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        955,
+        375,
+        3480,
+        2180
+      ],
+      "width": 2525,
+      "height": 1805,
+      "sha256": "22433d0db4983fc4b223b68cb49c6ca411ee8f2a99665606d1bc4cbc3aea2a8f",
+      "state": "starfront-redcat61, rig 7ba3e9a6-938c-4237-b864-3be4740d0c03, Wednesday November 4. Target Scheduler mode. IC 447 selected, 23:36–03:24, 35 frames (R 27, HA 8). R: Moon 77° away, 6° up; HA: 79° away, 23° up. Not this night expanded. Forecast fetched 10:20 AM, threshold 30%. Grid computation 10:32 AM.",
+      "reshoot": "Select the RedCat November 4 cell, then IC 447. Expand Not this night. Scroll to include schedule, filter details and excluded targets. Do not mark or edit the night.",
+      "redactions": []
+    },
+    {
+      "file": "settings-review-scoring-013.jpg",
+      "captured_at": "2026-11-04T18:35:30.687873+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        1210,
+        450,
+        3070,
+        2490
+      ],
+      "width": 1860,
+      "height": 2040,
+      "sha256": "9c2691b3022bebc23195df286f5cc8049015a4dc6f28a632f20cd0ffa71264cd",
+      "state": "Settings > Review > Grading & display > Sequence scoring. Measured by PSF Guard; satellite penalty 0%, others 100%; fixed limits blank/off. Save defaults disabled.",
+      "reshoot": "Open Settings, Review, Grading & display. Scroll to Sequence scoring without changing fields.",
+      "redactions": []
+    },
+    {
+      "file": "settings-star-detection-013.jpg",
+      "captured_at": "2026-11-04T18:36:08.064021+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        1210,
+        260,
+        3070,
+        2550
+      ],
+      "width": 1860,
+      "height": 2290,
+      "sha256": "037a25a559712dc2f27f37a1417bbbf83070e71ab0fd965f6707979e26c64110",
+      "state": "Defaults Auto / High / None / Hocus Focus 4. Profiles 713cd923, daacea0c, 8f8e9c44, 46d7a6e3 and ea4f9634 have no settings recorded. First visible rig uses the defaults. These are current settings, not proof of a historical scan’s detector.",
+      "reshoot": "Open Settings > Review > Grading & display > Star detection. Include defaults, profile cards and first rig. Do not import, reset or save.",
+      "redactions": []
+    },
+    {
+      "file": "site-forecast-013.jpg",
+      "captured_at": "2026-11-04T18:36:26.482506+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        1250,
+        1740,
+        3040,
+        2260
+      ],
+      "width": 1790,
+      "height": 520,
+      "sha256": "475140331f8153901ee457a7dc69f49059f6e81ea70b6bd9ee81ca70435aaef9",
+      "state": "Settings > Presets > Sites > Edit sfro. Open-Meteo, clear at or under 30%. Fetched November 4 at 10:20 AM; coverage through November 19, 4 PM; valid until November 4, 10:20 PM; next refresh 1:20 PM. Location timezone was This browser’s (America/Los_Angeles); location fields are outside crop.",
+      "reshoot": "Edit the existing site and scroll to Cloud forecast. Crop below all location fields. Do not click Fetch now or Save.",
+      "redactions": []
+    },
+    {
+      "file": "settings-stacking-013.jpg",
+      "captured_at": "2026-11-04T18:36:40.495930+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?rigsTab=nights",
+      "crop_pixels": [
+        760,
+        210,
+        3070,
+        2490
+      ],
+      "width": 2310,
+      "height": 2280,
+      "sha256": "657c4df11fdab3854549b7d9f7babde0906f0a43d11510b5865f8270b6f2e2d4",
+      "state": "Settings > Processing > Stacking. Reintegrate, Local background, By noise, Chosen by Seiza; orientation group margin 1°; Quadratic interpolation, Lanczos 3 resampling, Bayer drizzle off.",
+      "reshoot": "Open Settings > Processing > Stacking, include navigation and current saved settings. Do not change controls.",
+      "redactions": []
+    },
+    {
+      "file": "star-measurements-013.jpg",
+      "captured_at": "2026-11-04T18:37:09.240100+00:00",
+      "url": "https://psf-guard.atpn.co/#/detail/1166?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence",
+      "crop_pixels": [
+        3360,
+        245,
+        3940,
+        740
+      ],
+      "width": 580,
+      "height": 495,
+      "sha256": "c3113a64498ce79e95d9fead76b544ba0d6aeb58a3f90d6ed7707acd2d58ee47",
+      "state": "Frame 1166, db-93617230, project/target 6 SNRG132, R. October 8 at 02:21:19 browser local time. HFR 1.42 from both sources, stars N 26215 / P 26216. Existing accepted grade unchanged. Scoring source PSF Guard. Current profile ea4f9634 has no settings recorded; historical detector not verified.",
+      "reshoot": "Open the recorded detail URL and crop Image Information with N/P markers. Do not grade, rescan or identify satellites.",
+      "redactions": []
+    },
+    {
+      "file": "scoring-popover-013.jpg",
+      "captured_at": "2026-11-04T18:38:08.874844+00:00",
+      "url": "https://psf-guard.atpn.co/#/sequence?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence",
+      "crop_pixels": [
+        1640,
+        225,
+        2210,
+        1050
+      ],
+      "width": 570,
+      "height": 825,
+      "sha256": "2c302842105d006fe184b1978013504536d2aa7fde6d69a483ea85576d29a64c",
+      "state": "SNRG132 R, all sessions, 129 frames. PSF Guard measurement source; satellite penalty off, other penalties 100%, no limits. Saved defaults, no temporary change.",
+      "reshoot": "Open Sequence for the recorded scope, then Scoring. Capture source choice, penalties and footer without moving sliders.",
+      "redactions": []
+    },
+    {
+      "file": "framing-visibility-013.jpg",
+      "captured_at": "2026-11-04T18:39:46.721743+00:00",
+      "url": "https://psf-guard.atpn.co/#/plan?db=db-93617230&project=6&current=1154&scoreScope=target-filter%3AR&target=6&plan=7c177ae7-6cdc-43c0-b753-42816af0cb59",
+      "crop_pixels": [
+        630,
+        630,
+        3135,
+        1070
+      ],
+      "width": 2505,
+      "height": 440,
+      "sha256": "63090f3fd5f5a65e3434bca796f5e66abe278a3e38832d0a33482d204694473d",
+      "state": "Activated SNRG132 plan 7c177ae7-6cdc-43c0-b753-42816af0cb59, starfront-ultracat131. Visible 11.4 h, peak 59°, Moon 16%, 109° away, up 2.6 h. 30 h left, about six nights by clear hours. Target Scheduler does not finish within 14 nights (823 frames planned). No competing-plan row shown.",
+      "reshoot": "Open the existing activated plan, select its rig in Visibility, and include chart and completion result. Do not activate, save or change plan settings.",
+      "redactions": []
+    },
+    {
+      "file": "framing-nights-013.jpg",
+      "captured_at": "2026-11-04T18:39:46.721743+00:00",
+      "url": "https://psf-guard.atpn.co/#/plan?db=db-93617230&project=6&current=1154&scoreScope=target-filter%3AR&target=6&plan=7c177ae7-6cdc-43c0-b753-42816af0cb59",
+      "crop_pixels": [
+        2260,
+        1080,
+        3135,
+        2470
+      ],
+      "width": 875,
+      "height": 1390,
+      "sha256": "48830530a1ef8356f34c2aff9521acc7c70f763292490b10e0e2f45b343e24d3",
+      "state": "Same plan/rig as Visibility. Legend and the next 7 nights expanded, November 4–10, with up-and-clear hours and marks. Open-Meteo fetched 10:20 AM.",
+      "reshoot": "Expand Legend and the next 7 nights beneath Visibility. Capture all seven rows without changing marks.",
+      "redactions": []
+    },
+    {
+      "file": "stack-live-013.jpg",
+      "captured_at": "2026-11-04T18:41:06.739408+00:00",
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&target=1",
+      "crop_pixels": [
+        950,
+        490,
+        3480,
+        2530
+      ],
+      "width": 2530,
+      "height": 2040,
+      "sha256": "86dc1ac36d6d47fbd15f7f1612b4f179ed36751244ee663f98ad74035a9e1c47",
+      "state": "NGC 7023 / Iris Nebula, R 300 s, automatic rebuild already running. 160/160 accepted frames; final pass Rejecting transients: pass 1/2, frame 25/160, overall 54%. Full restack: calibration changed. Worker attribution not shown.",
+      "reshoot": "Open the recorded target’s Stacks while an automatic channel rebuild is already active. Include image, accepted count and final-pass progress. Do not start a job for a capture.",
+      "redactions": []
+    }
+  ]
+}

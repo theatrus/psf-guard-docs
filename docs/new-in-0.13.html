@@ -162,15 +162,26 @@ function gtag_report_demo() {
 <div class="callout info"><strong>Preparing 0.13.</strong> These notes describe the release being prepared. Download links still open the latest published release.</div>
 <p><a href="release-notes-0.13.html#upgrading">Read before upgrading</a> · <a href="release-notes-0.13.html">All changes in 0.13</a> · <a href="new-in-0.12.html">New in 0.12</a></p>
 <h2 id="nights">Plan the work each rig can finish</h2>
-<p>Open <strong>Rigs › Nights</strong> for predicted Target Scheduler and Director schedules. Compare clear dark hours, mark unavailable nights and use optional cloud forecasts. For activated plans, Visibility estimates completion alongside the rig's other work.</p>
+<p>Open <strong>Rigs › Nights</strong> for predicted Target Scheduler and Director schedules. Compare clear dark hours, mark unavailable nights and use optional cloud forecasts. Nearby sites share a Cloud · Moon row, and each scheduled filter run shows the Moon’s closest angle to its target. For activated plans, Visibility estimates completion alongside the rig's other work.</p>
 <p>Review Director overrides for one night or Target Scheduler priorities that persist until changed. Night planning is in early beta. Availability marks and forecasts change estimates; they do not control a rig.</p>
 <p><a href="rigs.html#nights">Plan a night</a> · <a href="framing.html#completion">Estimate completion</a></p>
+<figure>
+    <img src="../assets/rigs-nights-013.png" alt="Five rigs grouped by site, with clear hours, target dots and shared Cloud · Moon rows." width="2580" height="1345" loading="lazy">
+    <figcaption>Compare clear hours and planned work across nearby sites. Site coordinates are covered for privacy.</figcaption>
+  </figure>
 <h2 id="stars">Choose the star measurements used for grading</h2>
 <p>Match detection to each rig or import its N.I.N.A. profile. Image Information shows both capture and scan measurements, marked N and P. Choose <strong>Stars and HFR</strong> in Scoring to select the source for limits and comparisons. PSF Guard remains the default.</p>
 <p><a href="screening.html#star-source">Choose a measurement source</a> · <a href="screening.html#profile-import">Import detection settings</a></p>
+<figure>
+    <img src="../assets/star-measurements-013.jpg" alt="Image Information with separate N and P markers for HFR and detected stars." width="580" height="495" loading="lazy" style="max-width:420px">
+    <figcaption>N.I.N.A. and PSF Guard both measured HFR 1.42 for this frame; their star counts differ by one. N and P identify the sources.</figcaption>
+  </figure>
 <h2 id="gpu">Build faster and watch the stack form</h2>
 <p>Supported GPUs accelerate debayering, star detection, resampling, live stacking and the final pass. A channel's <strong>Live stack</strong> image updates about every five seconds while frames are integrated. Computers without a supported GPU keep using the CPU.</p>
-<!-- SHOT: stack-live-013.png | P1. Capture a channel already building with Live stack, accepted-frame count and progress visible. Show the same card once the live image replaces the placeholder. Record worker attribution if present. Do not start a live-catalog build to stage this; use a disposable catalog if needed. | Watch accepted frames accumulate before the final preview is ready. -->
+<figure>
+    <img src="../assets/stack-live-013.jpg" alt="Iris Nebula live stack with 160 frames and final rejection progress." width="2530" height="2040" loading="lazy">
+    <figcaption>An automatic R-channel rebuild has integrated 160 frames. Its last live image remains visible while the final pass rejects transients; the completed result is still pending.</figcaption>
+  </figure>
 <p><a href="stacking.html#gpu">Choose GPU passes</a> · <a href="stacking.html#live-stack">Follow a live stack</a></p>
 <h2 id="mosaics">Integrate mosaic panels into one image</h2>
 <p>Build one FITS mosaic per channel, preserving each frame's calibration. Compose RGB, LRGB or narrowband color from the integrated channels. Local background normalization matches panel backgrounds; color calibration solves the integrated canvas itself.</p>

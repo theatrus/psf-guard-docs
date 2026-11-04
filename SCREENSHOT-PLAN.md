@@ -1,5 +1,24 @@
 # Screenshot plan — 0.13 release preparation
 
+## November 4 captures
+
+Twelve new captures are embedded in the guides and 0.13 overview. They cover
+Rigs Live, Nights site groups and Moon details, a selected schedule, forecast
+settings, both measurement sources, star detection, scoring, stacking settings,
+Visibility and its completion limit, and an already-running live stack. All six
+priority feature illustrations from the November 1 list now have captures.
+
+The [capture record](assets/screenshot-captures.md#013-chrome-captures--november-4-2026)
+and [manifest](assets/captures-release-013-2026-11-04.json) record actual state
+and reshoot steps. Site coordinates are either outside the crop or covered
+with opaque image masks; never commit an unredacted source.
+
+Chrome's native window became unavailable before the two color-processing
+reshoots. Those remain pending. Night-edit and profile-import examples need
+disposable fixtures; a continuum report needs a genuine completed fit. The
+partial Sequence capture did not meet its chart-state requirement and was not
+published. The generated lists below track these and the older backlog.
+
 ## November 3 review: new features and changed screens
 
 This pass identifies captures; it does not add or replace images. Preserve the
@@ -463,22 +482,12 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (11)
+## Redo (existing images) (6)
 
-- `framing-nights.png` — pages: framing
-  - P2. Current Visibility with clear hours, availability marks or forecast and the selected rig. Record date and time zone. Keep unsaved plan and framing unchanged.
-- `framing-visibility.png` — pages: framing
-  - P2. Current Visibility with clear hours, availability marks or forecast and the selected rig. Record date and time zone. Keep unsaved plan and framing unchanged.
 - `import-image-folders.png` — pages: importing
   - P2. New / import > image-folder form with the current collapsed Scan rules and background-analysis choice. Use disposable paths and do not confirm an import. Keep its recorded 0.12 capture in release-history pages.
 - `import-reviewed-transfer.png` — pages: importing
   - P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures.
-- `scoring-popover.jpg` — pages: screening
-  - P1. Current scoring controls including Stars and HFR or Measured by and saved defaults. Show N.I.N.A./PSF Guard source choice. Do not save defaults or change grades; record selected source.
-- `settings-review-scoring.png` — pages: screening
-  - P1. Current scoring controls including Stars and HFR or Measured by and saved defaults. Show N.I.N.A./PSF Guard source choice. Do not save defaults or change grades; record selected source.
-- `settings-stacking-0123.jpg` — pages: stacking
-  - P2. Processing > Stacking with current reference selection and saved Orientation group margin. Include sidebar and current help. Do not change the margin.
 - `settings-unsaved-close.png` — pages: configuration
   - P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog.
 - `sky-live.jpg` — pages: sky
@@ -488,7 +497,7 @@ capture record and its history.
 - `stack-color-rc-astro-0123.jpg` — pages: stacking
   - P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing.
 
-## New screenshots (18)
+## New screenshots (10)
 
 - `export-left-out.png` — pages: exporting
   - P3. Carried from 0.12; capture only when its prerequisites are available. Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
@@ -500,30 +509,13 @@ capture record and its history.
   - P2. Disposable fixture only: Director Edit night with a moved block, pin, hold and unsaved summary. Show Save changes and Discard changes. Record mode, date and time zone; discard the draft. Do not edit a live rig to stage this.
 - `night-ts-settings-013.png` — pages: rigs
   - P2. Disposable Target Scheduler fixture with database management enabled: Change settings with a draft priority or active-state change and its predicted schedule. Record which files Save changes would write. Discard the draft; do not edit a live catalog.
-- `plan-completion-013.png` — pages: framing
-  - P2. Existing activated plan with a genuine completion projection and competing plans, or a clearly recorded reason no projection is available. Include rig, remaining hours, forecast or marks and date range. Do not activate or change plans.
 - `plan-send-again.png` — pages: rigs
   - P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
-- `rigs-live-013.png` — pages: rigs
-  - P1. Rigs > Live with real reporting status and Tonight links. Record whether rigs are online, quiet or never seen. No pairing or acquisition changes. Replaces the former Sky table illustration.
-- `rigs-night-schedule-013.png` — pages: rigs
-  - P1. Select an existing Target Scheduler night and a target block. Show the timeline, selection explanation and Not this night reasons. Record rig, date, time zone, computation time and forecast age. Do not change settings.
-- `rigs-nights-013.png` — pages: rigs
-  - P1. Rigs > Nights on a current 0.13 build. Show at least two configured rigs, dates, clear dark hours, Moon, plan dots and Updated. Record sites and time zones. Use existing marks and forecasts; do not change live availability.
 - `sequence-docked-review.png` — pages: screening
   - P3. Carried from 0.12; capture only when its prerequisites are available. After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection.
-- `settings-star-detection-013.png` — pages: screening
-  - P1. Star detection with the Default row, a rig row and exact Detector, Sensitivity, Noise reduction and Hocus Focus version controls. Show saved state only; do not save or reset settings.
-- `site-forecast-013.png` — pages: rigs
-  - P2. Settings > Presets > Sites with an existing enabled forecast, provider, clear threshold, time zone and receipt time. Do not enable a provider or fetch a forecast on a live site for a capture.
 - `stack-color-progress.png` — pages: stacking
   - P3. Carried from 0.12; capture only when its prerequisites are available. Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
 - `stack-continuum-report-013.png` — pages: stacking
   - P2. Open a completed real emission combination with continuum subtraction enabled and a genuine fit report, per-line result and signed residual download. Record mode, inputs, fit status and warnings. Do not describe the Heart and Soul broadband-structure example as a continuum fit: its continuum subtraction was Off. If no real report exists, leave pending rather than generate one on live data.
-- `stack-live-013.png` — pages: new-in-0.13, stacking
-  - P1. Capture a channel already building with Live stack, accepted-frame count and progress visible. Show the same card once the live image replaces the placeholder. Record worker attribution if present. Do not start a live-catalog build to stage this; use a disposable catalog if needed.
-  - P1. Show an existing channel build's Live stack image, accepted count and progress with no second placeholder. Reuse the overview capture.
-- `star-measurements-013.png` — pages: screening
-  - P1. Image Information for a real frame with both N.I.N.A. and PSF Guard measurements and N/P source markers. Record frame, detector/profile and selected scoring source. Do not grade or rescan live data.
 - `star-profile-import-013.png` — pages: screening
   - P2. Disposable fixture: Read file preview of a real N.I.N.A. profile with Applies to and any later records that remain effective. Record profile provenance and dates, omit secrets and do not click Import profile on live data.

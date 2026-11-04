@@ -310,7 +310,10 @@ function gtag_report_demo() {
   quiet rig is drawn dashed red. A rig that reports no mount position is placed
   at its planned target, dotted and labeled <em>at target</em>.</p>
 
-  <!-- SHOT: rigs-live-013.png | P1. Rigs > Live with real reporting status and Tonight links. Record whether rigs are online, quiet or never seen. No pairing or acquisition changes. Replaces the former Sky table illustration. | Follow a rig from its live status to tonight's schedule. -->
+  <figure>
+    <img src="../assets/rigs-live-013.jpg" alt="Rigs Live with five rigs and Tonight links." width="2580" height="685" loading="lazy">
+    <figcaption>None of these five rigs has reported yet. Tonight links open the available schedules.</figcaption>
+  </figure>
   <p>The Live table has one row per rig:</p>
   <div class="table-wrap">
     <table>
@@ -334,10 +337,18 @@ function gtag_report_demo() {
 
   <h2 id="nights">Plan each rig's nights</h2>
   <p><strong>Early beta.</strong> Open <strong>Rigs › Nights</strong> to compare your rigs across 7, 14 or 31 nights. Each rig needs a site. Choose <strong>From</strong> for a starting date or <strong>Tonight</strong> for the current observing night. Each cell shows clear dark hours, the Moon and the plans the rig would shoot. A red cell has no clear dark hours, even if the forecast leaves daylight hours clear.</p>
+  <p>The grid groups rigs whose sites are within one degree in latitude and longitude. Each group has a <strong>Cloud · Moon</strong> row: the cloud bar has a red edge where cloud cover exceeds the site's threshold; the Moon bar is brighter when the Moon is higher or more fully lit. Hover for cloud cover, moonrise, the Moon's highest point and moonset. A group without a forecast has no cloud bar.</p>
+  <p>Each filter run shows the Moon's closest angle to the target, dimmed when the Moon stays below the horizon. Select a block to see each filter's closest angle and highest Moon altitude. The Moon strip below the cloud band shows its rise, highest point and set.</p>
   <p>Select a cell to open its schedule. Choose a target block to see why Target Scheduler or Director would select it. <strong>Not this night</strong> lists excluded targets and their reasons. Tonight's schedule starts from now; future nights include frames planned on earlier nights. Times include estimated overheads and are predictions, not a guarantee of what the rig will capture.</p>
   <p><strong>Updated</strong> shows when the displayed plans were computed. The server saves those plans and refreshes them when their inputs change. <strong>Compute again</strong> requests a fresh calculation, shown in the header's job list.</p>
-  <!-- SHOT: rigs-nights-013.png | P1. Rigs > Nights on a current 0.13 build. Show at least two configured rigs, dates, clear dark hours, Moon, plan dots and Updated. Record sites and time zones. Use existing marks and forecasts; do not change live availability. | Compare the nights available to each rig. -->
-  <!-- SHOT: rigs-night-schedule-013.png | P1. Select an existing Target Scheduler night and a target block. Show the timeline, selection explanation and Not this night reasons. Record rig, date, time zone, computation time and forecast age. Do not change settings. | Inspect the predicted schedule and why a target was selected. -->
+  <figure>
+    <img src="../assets/rigs-nights-013.png" alt="Five rigs grouped by site, with clear hours, target dots and shared Cloud · Moon rows." width="2580" height="1345" loading="lazy">
+    <figcaption>Compare clear hours and planned work across nearby sites. Site coordinates are covered for privacy.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/rigs-night-schedule-013.jpg" alt="RedCat night schedule with IC 447 selected, filter Moon angles and excluded targets." width="2525" height="1805" loading="lazy">
+    <figcaption>The November 4 schedule shows why IC 447 was selected, each filter’s closest Moon angle and targets excluded from this night.</figcaption>
+  </figure>
 
   <h3 id="availability">Mark available hours</h3>
   <p>With editor access, select a night and use <strong>Mark this night</strong>. Choose <strong>Available</strong>, <strong>Not available</strong> or <strong>Limited</strong>. For limited hours, a blank <strong>From</strong> starts at dusk and a blank <strong>To</strong> ends at dawn. Under <strong>For</strong>, choose one rig or every rig at its site, then click <strong>Save mark</strong>. Shift-click another night in the same rig's row to mark a range.</p>
@@ -348,7 +359,10 @@ function gtag_report_demo() {
   <p>Open <strong>Settings › Presets › Sites</strong>, click <strong>Edit</strong> for a site with latitude and longitude, and choose <strong>Open-Meteo</strong> or <strong>MET Norway</strong> under <strong>Cloud forecast → Forecast</strong>. Set <strong>Clear at or under</strong> to the maximum cloud cover, in percent, that counts as clear (30% by default). Click <strong>Save site</strong>.</p>
   <p>Forecasts are off by default. Enabling one sends the site's coordinates, rounded to about 1 km, to the provider. The server requests updates every three hours; <strong>Fetch now</strong> requests one subject to the displayed retry time. A manual site mark overrides the forecast for that night; a rig's own mark still applies.</p>
   <p>The grid marks forecast-based nights with a cloud, and the timeline shows hourly cloud cover. Night plans use a forecast for 12 hours after receipt. After it expires, or beyond its covered dates, the forecast no longer restricts availability: those hours count as clear for planning, not as a prediction of clear weather.</p>
-  <!-- SHOT: site-forecast-013.png | P2. Settings > Presets > Sites with an existing enabled forecast, provider, clear threshold, time zone and receipt time. Do not enable a provider or fetch a forecast on a live site for a capture. | Review a site's forecast and the threshold used for clear hours. -->
+  <figure>
+    <img src="../assets/site-forecast-013.jpg" alt="Cloud forecast settings with Open-Meteo, a 30 percent threshold and receipt time." width="1790" height="520" loading="lazy">
+    <figcaption>This site uses Open-Meteo and a 30% cloud threshold. Receipt, coverage and expiry times show when the forecast can restrict planning.</figcaption>
+  </figure>
 
   <h3 id="edit-night">Override a Director rig's night</h3>
   <p><strong>Mode</strong> in rig setup chooses whether Target Scheduler or Director runs the rig. Until set, PSF Guard infers the mode from reports; pairing Director sets it to Director.</p>
