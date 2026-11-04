@@ -432,7 +432,13 @@ psf-guard move-rejects --db my-db-slug</code></pre>
 
   <h3 id="profile-import">Import a N.I.N.A. profile</h3>
   <p>A profile also supplies the autofocus crop, brightest-star count, autostretch and Hocus Focus options. Under <strong>Import N.I.N.A. profile</strong>, choose the <strong>Profile file</strong> and its <strong>Hocus Focus version</strong>. Set <strong>Applies to</strong> to <strong>All frames</strong> or <strong>Frames from</strong> a date. Click <strong>Read file</strong> to review the settings, then <strong>Import profile</strong> to save them.</p>
-  <p>Sync and Director plugins record these settings during capture too. A frame uses its profile's settings set by hand first, then its rig override, then the profile record in effect at capture, then the shared default. Frames before the first profile record use that earliest record.</p>
+  <p>Sync and Director plugins record these settings during capture too. PSF Guard uses the first available settings in this order:</p>
+  <ol>
+    <li>The profile's settings chosen with <strong>Set by hand</strong>.</li>
+    <li>The rig's override.</li>
+    <li>The profile record in effect at capture. Frames before the first record use that earliest record.</li>
+    <li>The shared default.</li>
+  </ol>
   <p>An <strong>All frames</strong> import does not replace later dated records. <strong>Read file</strong> lists records that will still apply. To correct historical settings, import the profile from the date those settings began. <strong>History</strong> lists saved records; <strong>Set by hand</strong> overrides a profile with the four manual choices.</p>
   <!-- SHOT: star-profile-import-013.png | P2. Disposable fixture: Read file preview of a real N.I.N.A. profile with Applies to and any later records that remain effective. Record profile provenance and dates, omit secrets and do not click Import profile on live data. | Review a profile and the frames its settings apply to. -->
 
@@ -458,12 +464,12 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   </figure>
 
   <h3 id="scoring-defaults">Defaults and the current view</h3>
-  <p>Every view starts from the server’s shared scoring defaults, set in <strong>Settings › Review › Grading &amp; display › Sequence scoring</strong>. Each field shows its built-in value. For an editor, <strong>Save defaults</strong> stores changes for everyone on the server, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
+  <p>Every view starts from the server’s shared scoring defaults, set in <strong>Settings › Review › Grading &amp; display › Sequence scoring</strong>. Each field shows its built-in value. Editors can use <strong>Save defaults</strong> to save changes for everyone on the server, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
   <figure>
     <img src="../assets/settings-review-scoring-013.jpg" alt="Sequence scoring defaults with Measured by set to PSF Guard." width="1860" height="2040" loading="lazy">
     <figcaption>Choose the measurement source and shared scoring defaults under Review › Grading &amp; display. This server has satellite penalties off and no fixed limits.</figcaption>
   </figure>
-  <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>, and its popover offers <strong>Save as default</strong>, which lets an editor save the view's values as the server's defaults, and <strong>Reset to default</strong>, which returns the view to them. For an editor, <strong>Edit defaults</strong> in the popover opens Settings.</p>
+  <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>. Choose <strong>Reset to default</strong> to restore the shared defaults. Editors can choose <strong>Save as default</strong> to save the view's values for everyone on the server, or <strong>Edit defaults</strong> to open Settings.</p>
   <p>Once a value differs from the shared defaults, the URL stores all scoring values:
   <code>penaltySatellite</code>, <code>penaltyPointing</code>,
   <code>penaltyTemporal</code>, <code>penaltyHfrRise</code>,
