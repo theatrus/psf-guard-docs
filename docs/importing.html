@@ -520,8 +520,7 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
 <img src="../assets/settings-database-options.png" alt="Database and image folders with links to related settings" width="3044" height="1028" loading="lazy">
 <figcaption>Database &amp; files shows the database’s folders and calibration library, with links to Import, Quality analysis and Calibrated-copy pairing.</figcaption>
 </figure>
-  <p>The scan uses the N.I.N.A. Fast detector, so star counts and HFR compare with
-  Target Scheduler's. When it finds no stars, HocusFocus measures the frame instead. A
+  <p>The scan uses <a href="screening.html#star-detection">each rig’s detector and profile settings</a> to make star counts and HFR comparable with its capture measurements. A
   file still being copied is measured again later rather than scored as empty. Jobs
   yield to anything you are waiting on, and plate solves run several frames at once
   within the processor share in <a href="storage.html#processor">Settings →
@@ -529,6 +528,11 @@ psf-guard import archive ./night --exclude '**/Hocus Focus/**'</code></pre>
   <p><strong>Write star count and HFR into image metadata</strong>, on by default, fills
   empty star fields in the catalog. N.I.N.A.'s own values are never replaced, and FITS
   and XISF files are never changed.</p>
+
+  <h3 id="masters-and-stacks">Import calibration masters, not stacks</h3>
+  <p>Imports recognize Seiza calibration masters, including older masters identified only by <code>SEIZAMST</code>, and add them to the calibration library. Stacks, including files with <code>NCOMBINE = 40</code>, are skipped and counted in the import result. Remote uploads refuse stacks. Existing stack records remain in your catalog.</p>
+  <p>To repair Seiza masters previously imported as lights, select the database in <strong>Settings</strong>, open <strong>Import</strong>, then click <strong>Preview import</strong> and <strong>Import N frame(s)</strong>. Automatic import does not reread these files. Once the masters appear in the calibration library, open each <strong>Unknown Target</strong> project containing only those masters in the Library, open <strong>Edit project</strong>, and click <strong>Delete project...</strong>. This removes the light records and keeps the files. Deletion requires an editor account and a server started with <code>--allow-database-management</code>.</p>
+  <p>An empty <strong>Include only</strong> scan rule shows <strong>All files</strong> and does not restrict frame type.</p>
 
   <h2 id="organize">Organize projects and targets</h2>
   <p>The Library's <strong>Edit project</strong> renames projects and targets, moves a
