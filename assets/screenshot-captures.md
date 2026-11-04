@@ -2714,3 +2714,52 @@ chart state and was not published.
 - **State:** NGC 7023 / Iris Nebula, R 300 s, automatic rebuild already running. 160/160 accepted frames; final pass Rejecting transients: pass 1/2, frame 25/160, overall 54%. Full restack: calibration changed. Worker attribution not shown.
 - **Reshoot:** Open the recorded target’s Stacks while an automatic channel rebuild is already active. Include image, accepted count and final-pass progress. Do not start a job for a capture.
 - **File:** 2530 × 2040 pixels; SHA-256 `86dc1ac36d6d47fbd15f7f1612b4f179ed36751244ee663f98ad74035a9e1c47`.
+
+## 0.13 Chrome follow-up — November 4, 2026
+
+Chrome controls worked after the restart. Five more images cover the import
+form, both color-processing steps and two Sequence views. These are separate
+views of actual state: Solved pointing scrolls away while the score summary
+and chart stay visible. No settings, grades or catalog data changed.
+
+Server Information again showed 0.13.0; deployed SHA and frontend asset remain
+unknown. Chrome 156.0.8078.80, macOS 27.0.1, dark theme, 90% zoom,
+1931 × 1313 CSS viewport, DPR 1.8, America/Los_Angeles. The
+[follow-up manifest](captures-release-013-followup-2026-11-04.json) records
+URLs, timestamps, pixel crops and hashes. These crops contain no site coordinates
+or private paths. The earlier coordinate masks remain unchanged.
+
+### stack-channel-processing-013.jpg
+
+- **Captured:** 2026-11-04T19:13:03.193295+00:00.
+- **State:** Iris Nebula LRGB 300 s, completed, 660 inputs / 55 h. Prepare inputs expanded. From each channel card; no inherited deconvolution or RC-Astro tools. Background extraction on, Subtract strength 1, Automatic maximum degree 2, Protect catalog emission on.
+- **Reshoot:** Open the recorded Stacks URL, expand Processing stack and Prepare inputs. Keep the inherited-tool summary and all four background fit cards visible; do not apply processing.
+- **File:** 1380 × 470 pixels; SHA-256 `b0b3f4b8a3ad80b9df79d2c36c9962bd644bd3cb097271acdecca43fafecc625`.
+
+### stack-color-rc-astro-013.jpg
+
+- **Captured:** 2026-11-04T19:13:03.193295+00:00.
+- **State:** Same completed LRGB preview. Process linear color expanded; BlurXTerminator and NoiseXTerminator off, Gaia color calibration on. Correct only control is hidden while BlurXTerminator is off. Apply processing stack and Revert edits disabled.
+- **Reshoot:** Open Process linear color. Capture the whole step, including both unchecked RC-Astro tools and Gaia color calibration. Do not change or apply settings.
+- **File:** 1380 × 265 pixels; SHA-256 `bd034626bdc8b1e898807a9e0785e03eacfd2c8092c9c3821628befafd55c7e6`.
+
+### import-image-folders-013.jpg
+
+- **Captured:** 2026-11-04T19:18:41.662413+00:00.
+- **State:** Settings > Databases & rigs > New / import > New Database from Images. Image folders selected; display name and folder path empty. Custom database path and background quality analysis off. Scan rules collapsed. Create & Import disabled.
+- **Reshoot:** Open Settings > New / import and the image-folder form. Keep fields empty. Capture the full form and breadcrumb; close with Cancel without starting an import.
+- **File:** 1045 × 970 pixels; SHA-256 `274401f13bc64a1557a95b901d82ef070f04132c0c920c168dd5292724f8f4d3`.
+
+### sequence-docked-review-013.jpg
+
+- **Captured:** 2026-11-04T19:18:51.491283+00:00.
+- **State:** SNR G132, R All sessions (129). Current frame 1166, zero selected, newest first, 150 px cards, cutoff Score 50, Select By hand. Score bins 110 / 11 / 5 / 3 / 0; 33 cloud events. Scrolled to the older R cards; summary at y168 and chart at y227 stay below the toolbar. Solved pointing is above the viewport.
+- **Reshoot:** Open the recorded Sequence URL and R All sessions (129). Scroll to frame 1166 with the summary and score chart docked below the toolbar. Do not select or grade frames.
+- **File:** 1931 × 1060 pixels; SHA-256 `4f00a33fa0ab284c0ea1019f030ba08e96d85dcf4caf84c315401203115aa41e`.
+
+### sequence-solved-pointing-013.jpg
+
+- **Captured:** 2026-11-04T19:19:02.813948+00:00.
+- **State:** Same R sequence and current frame 1166. Solved pointing expanded, current point ringed, chart range ±33 arcsec. Score chart highlights the same frame. View scrolled back to the pointing panel; current frame card is below the crop.
+- **Reshoot:** Scroll back to Solved pointing and expand it. Include the R session selector, summary, score chart, pointing plot and first row of cards. This separate image shows pointing; the companion image shows the docked chart and current card.
+- **File:** 1850 × 732 pixels; SHA-256 `6546dc0d7d15a4813ce96ec4085c36eba5c5585da6fed27d03f3d895060e4942`.

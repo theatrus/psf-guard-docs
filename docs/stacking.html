@@ -892,18 +892,15 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   <p>If <strong>Re-apply processing when a stack refreshes</strong> is off,
   refreshed cards have no processing for the color preview to follow. Apply the
   card's tools again, then rebuild the color preview.</p>
-  <!-- RESHOOT: stack-channel-processing-0123.jpg | P2. Current numbered Processing stack > input preparation, showing From each channel card and actual inherited tools. Open only; do not apply. -->
-
   <figure>
-    <img src="../assets/stack-channel-processing-0123.jpg" loading="lazy" alt="From each channel card selected, with BlurXTerminator on H-alpha and OIII and BlurXTerminator plus NoiseXTerminator on SII" width="2158" height="126">
-    <figcaption>The color preview follows each channel card's applied tools.
-    The summary lists the tools for each input.</figcaption>
+    <img src="../assets/stack-channel-processing-013.jpg" loading="lazy" alt="Prepare inputs with From each channel card selected and background extraction enabled" width="1380" height="470">
+    <figcaption>This LRGB preview follows each channel card. None of these cards has deconvolution or RC-Astro processing applied. Background extraction shows the fitted samples for L, R, G and B.</figcaption>
   </figure>
 
   <h3 id="combined-rc-astro">Process color channels together</h3>
   <p>With RC-Astro installed and licensed on the server, open
-  <strong>RC-Astro on the color channels together</strong> in
-  <strong>Processing stack</strong>. It is off by default. BlurXTerminator and
+  <strong>RC-Astro on the color channels together</strong> under
+  <strong>Processing stack › Process linear color</strong>. It is off by default. BlurXTerminator and
   NoiseXTerminator run on the aligned channels before color calibration and
   stretching.</p>
   <ul>
@@ -917,14 +914,9 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
   channels. Changes to calibration, crop or stretch reuse these tool results.
   Download them with <strong>Processed color channels FITS</strong>.
   Every BlurXTerminator section also offers <strong>Correct only</strong>.</p>
-  <!-- RESHOOT: stack-color-rc-astro-0123.jpg | P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing. -->
-
-
   <figure>
-    <img src="../assets/stack-color-rc-astro-0123.jpg" loading="lazy" alt="Combined-color RC-Astro controls with BlurXTerminator in Correct only mode and NoiseXTerminator enabled" width="2138" height="642">
-    <figcaption>This SHO preview uses BlurXTerminator in Correct only mode and
-    NoiseXTerminator on the aligned channels. Download the result before color
-    calibration and stretching with Processed color channels FITS.</figcaption>
+    <img src="../assets/stack-color-rc-astro-013.jpg" loading="lazy" alt="Process linear color with both RC-Astro tools off and Gaia color calibration on" width="1380" height="265">
+    <figcaption>Open Process linear color to choose tools for the aligned color channels. In this LRGB preview, BlurXTerminator and NoiseXTerminator are off, and Gaia color calibration is on.</figcaption>
   </figure>
 
   <h3 id="setups">Save processing setups</h3>

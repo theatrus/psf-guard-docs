@@ -2,22 +2,26 @@
 
 ## November 4 captures
 
-Twelve new captures are embedded in the guides and 0.13 overview. They cover
+Seventeen new captures are embedded in the guides and 0.13 overview. They cover
 Rigs Live, Nights site groups and Moon details, a selected schedule, forecast
 settings, both measurement sources, star detection, scoring, stacking settings,
-Visibility and its completion limit, and an already-running live stack. All six
-priority feature illustrations from the November 1 list now have captures.
+Visibility and its completion limit, and an already-running live stack. The
+follow-up adds the import form, both color-processing steps and two Sequence
+views. All six priority feature illustrations from the November 1 list now have captures.
 
 The [capture record](assets/screenshot-captures.md#013-chrome-captures--november-4-2026)
 and [manifest](assets/captures-release-013-2026-11-04.json) record actual state
 and reshoot steps. Site coordinates are either outside the crop or covered
 with opaque image masks; never commit an unredacted source.
 
-Chrome's native window became unavailable before the two color-processing
-reshoots. Those remain pending. Night-edit and profile-import examples need
-disposable fixtures; a continuum report needs a genuine completed fit. The
-partial Sequence capture did not meet its chart-state requirement and was not
-published. The generated lists below track these and the older backlog.
+Chrome controls recovered after the restart. The color-processing and import
+reshoots are complete. Sequence uses two images: one for the docked score
+chart and one for Solved pointing. See the
+[follow-up record](assets/screenshot-captures.md#013-chrome-follow-up--november-4-2026)
+and [manifest](assets/captures-release-013-followup-2026-11-04.json).
+Night-edit and profile-import examples still need disposable fixtures; other
+shots need live activity or a genuine completed result. The generated lists
+below record those prerequisites.
 
 ## November 3 review: new features and changed screens
 
@@ -482,22 +486,16 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (6)
+## Redo (existing images) (3)
 
-- `import-image-folders.png` — pages: importing
-  - P2. New / import > image-folder form with the current collapsed Scan rules and background-analysis choice. Use disposable paths and do not confirm an import. Keep its recorded 0.12 capture in release-history pages.
 - `import-reviewed-transfer.png` — pages: importing
   - P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures.
 - `settings-unsaved-close.png` — pages: configuration
   - P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog.
 - `sky-live.jpg` — pages: sky
   - P2. Current Sky with Live enabled and actual pointing reports; table now lives in Rigs. Record whether mount position is measured or an at-target fallback. Update the caption to the captured state.
-- `stack-channel-processing-0123.jpg` — pages: stacking
-  - P2. Current numbered Processing stack > input preparation, showing From each channel card and actual inherited tools. Open only; do not apply.
-- `stack-color-rc-astro-0123.jpg` — pages: stacking
-  - P2. Current numbered Processing stack > Process linear color, combined-channel RC-Astro controls and actual Correct only state. Do not change or apply processing.
 
-## New screenshots (10)
+## New screenshots (9)
 
 - `export-left-out.png` — pages: exporting
   - P3. Carried from 0.12; capture only when its prerequisites are available. Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
@@ -511,8 +509,6 @@ capture record and its history.
   - P2. Disposable Target Scheduler fixture with database management enabled: Change settings with a draft priority or active-state change and its predicted schedule. Record which files Save changes would write. Discard the draft; do not edit a live catalog.
 - `plan-send-again.png` — pages: rigs
   - P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
-- `sequence-docked-review.png` — pages: screening
-  - P3. Carried from 0.12; capture only when its prerequisites are available. After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection.
 - `stack-color-progress.png` — pages: stacking
   - P3. Carried from 0.12; capture only when its prerequisites are available. Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
 - `stack-continuum-report-013.png` — pages: stacking
