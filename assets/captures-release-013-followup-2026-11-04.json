@@ -1,0 +1,110 @@
+{
+  "captured_date": "2026-11-04",
+  "server": "https://psf-guard.atpn.co",
+  "server_version_observed": "0.13.0",
+  "deployed_commit": null,
+  "frontend_asset": null,
+  "release_status": "upcoming; UI version does not prove publication",
+  "environment": {
+    "os": "macOS 27.0.1",
+    "chrome": "156.0.8078.80",
+    "zoom_percent": 90,
+    "css_viewport": [
+      1931,
+      1313
+    ],
+    "device_pixel_ratio": 1.7999999523162842,
+    "timezone": "America/Los_Angeles",
+    "theme": "dark"
+  },
+  "method": "Chrome tab screenshot through cua_repl after browser controls recovered. Full viewport JPEG; rectangular pixel crops at original resolution, saved at JPEG quality 95 without EXIF. No content edits.",
+  "privacy": "No site coordinates, credentials or private filesystem paths in these crops.",
+  "live_changes": "Only view navigation and expansion state changed. No settings, grades, plans or catalog records saved; no jobs started.",
+  "captures": [
+    {
+      "file": "stack-channel-processing-013.jpg",
+      "captured_at": "2026-11-04T19:13:03.193295+00:00",
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&target=1",
+      "crop_pixels": [
+        275,
+        200,
+        1655,
+        670
+      ],
+      "width": 1380,
+      "height": 470,
+      "sha256": "b0b3f4b8a3ad80b9df79d2c36c9962bd644bd3cb097271acdecca43fafecc625",
+      "state": "Iris Nebula LRGB 300 s, completed, 660 inputs / 55 h. Prepare inputs expanded. From each channel card; no inherited deconvolution or RC-Astro tools. Background extraction on, Subtract strength 1, Automatic maximum degree 2, Protect catalog emission on.",
+      "reshoot": "Open the recorded Stacks URL, expand Processing stack and Prepare inputs. Keep the inherited-tool summary and all four background fit cards visible; do not apply processing.",
+      "redactions": []
+    },
+    {
+      "file": "stack-color-rc-astro-013.jpg",
+      "captured_at": "2026-11-04T19:13:03.193295+00:00",
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&target=1",
+      "crop_pixels": [
+        275,
+        675,
+        1655,
+        940
+      ],
+      "width": 1380,
+      "height": 265,
+      "sha256": "bd034626bdc8b1e898807a9e0785e03eacfd2c8092c9c3821628befafd55c7e6",
+      "state": "Same completed LRGB preview. Process linear color expanded; BlurXTerminator and NoiseXTerminator off, Gaia color calibration on. Correct only control is hidden while BlurXTerminator is off. Apply processing stack and Revert edits disabled.",
+      "reshoot": "Open Process linear color. Capture the whole step, including both unchecked RC-Astro tools and Gaia color calibration. Do not change or apply settings.",
+      "redactions": []
+    },
+    {
+      "file": "import-image-folders-013.jpg",
+      "captured_at": "2026-11-04T19:18:41.662413+00:00",
+      "url": "https://psf-guard.atpn.co/#/stacks?db=db-93617230&project=1&target=1",
+      "crop_pixels": [
+        400,
+        75,
+        1445,
+        1045
+      ],
+      "width": 1045,
+      "height": 970,
+      "sha256": "274401f13bc64a1557a95b901d82ef070f04132c0c920c168dd5292724f8f4d3",
+      "state": "Settings > Databases & rigs > New / import > New Database from Images. Image folders selected; display name and folder path empty. Custom database path and background quality analysis off. Scan rules collapsed. Create & Import disabled.",
+      "reshoot": "Open Settings > New / import and the image-folder form. Keep fields empty. Capture the full form and breadcrumb; close with Cancel without starting an import.",
+      "redactions": []
+    },
+    {
+      "file": "sequence-docked-review-013.jpg",
+      "captured_at": "2026-11-04T19:18:51.491283+00:00",
+      "url": "https://psf-guard.atpn.co/#/sequence?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence",
+      "crop_pixels": [
+        0,
+        0,
+        1931,
+        1060
+      ],
+      "width": 1931,
+      "height": 1060,
+      "sha256": "4f00a33fa0ab284c0ea1019f030ba08e96d85dcf4caf84c315401203115aa41e",
+      "state": "SNR G132, R All sessions (129). Current frame 1166, zero selected, newest first, 150 px cards, cutoff Score 50, Select By hand. Score bins 110 / 11 / 5 / 3 / 0; 33 cloud events. Scrolled to the older R cards; summary at y168 and chart at y227 stay below the toolbar. Solved pointing is above the viewport.",
+      "reshoot": "Open the recorded Sequence URL and R All sessions (129). Scroll to frame 1166 with the summary and score chart docked below the toolbar. Do not select or grade frames.",
+      "redactions": []
+    },
+    {
+      "file": "sequence-solved-pointing-013.jpg",
+      "captured_at": "2026-11-04T19:19:02.813948+00:00",
+      "url": "https://psf-guard.atpn.co/#/sequence?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence",
+      "crop_pixels": [
+        40,
+        425,
+        1890,
+        1157
+      ],
+      "width": 1850,
+      "height": 732,
+      "sha256": "6546dc0d7d15a4813ce96ec4085c36eba5c5585da6fed27d03f3d895060e4942",
+      "state": "Same R sequence and current frame 1166. Solved pointing expanded, current point ringed, chart range \u00b133 arcsec. Score chart highlights the same frame. View scrolled back to the pointing panel; current frame card is below the crop.",
+      "reshoot": "Scroll back to Solved pointing and expand it. Include the R session selector, summary, score chart, pointing plot and first row of cards. This separate image shows pointing; the companion image shows the docked chart and current card.",
+      "redactions": []
+    }
+  ]
+}

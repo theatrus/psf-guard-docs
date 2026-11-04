@@ -327,6 +327,8 @@ bearer_token_env_var = "PSF_GUARD_TOKEN"</code></pre>
     </table>
   </div>
 
+  <p><code>get_night_plans</code> reads the server's saved night plans: dark and clear hours, availability marks, forecasts, Moon conditions and targets that fit the available hours. Request <code>schedule</code> to include what Target Scheduler or Director would capture and when. These are the same estimates shown in <a href="rigs.html#nights">Rigs › Nights</a>; reading them does not change a rig's program.</p>
+
   <h3 id="tools-changes">Change things</h3>
   <p>These need a token that may write, unless marked <em>read</em>. The
   ones marked <em>management</em> also need a server started with

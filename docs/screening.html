@@ -225,6 +225,11 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   visible below the toolbar and open list. On short windows, such as a phone in
   landscape, the summary and chart scroll with the page to leave room for frames.</p>
 
+  <figure>
+    <img src="../assets/sequence-docked-review-013.jpg" loading="lazy" alt="SNR G132 R frames beneath the docked score summary and chart" width="1931" height="1060">
+    <figcaption>The summary and score chart stay below the toolbar while you browse the frames. The active sequence contains 129 R frames across sessions, with frame 1166 current and no frames selected.</figcaption>
+  </figure>
+
   <h3 id="solved-pointing">Find a frame from its solved position</h3>
   <p><strong>Solved pointing</strong> plots solved frame centers around the target
   and marks the current frame with a ring. Click a point, or focus it and press
@@ -232,7 +237,10 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   continues from that frame. Click the chart heading to collapse or expand it.
   The collapsed heading shows counts for solved frames and pointing issues.
   PSF Guard remembers the collapsed state in the current browser.</p>
-  <!-- SHOT: sequence-docked-review.png | P3. Carried from 0.12; capture only when its prerequisites are available. After verifying main PR #935 is deployed on psf-guard.atpn.co, open a real Sequence with solved frames and scroll until the summary and score chart stay below the toolbar. Show Solved pointing expanded with the current frame ringed and its card visible below the charts. Record the database, project, target, filter, session, URL, scroll position and chart state. Navigate without grading or changing selection. | Keep scores visible while browsing frames and use Solved pointing to find a frame. -->
+  <figure>
+    <img src="../assets/sequence-solved-pointing-013.jpg" loading="lazy" alt="SNR G132 R frames with Solved pointing expanded and the current frame ringed" width="1850" height="732">
+    <figcaption>Solved pointing plots the frame centers around the target. The ring marks the current frame; the score chart highlights the same frame.</figcaption>
+  </figure>
 
   <h3 id="issues">Find frames with a specific issue</h3>
   <p>Click a suspect pill in the Sequence summary—cloud events, focus drift,
@@ -404,6 +412,36 @@ psf-guard move-rejects --db my-db-slug</code></pre>
     <li><strong>Changed files.</strong> A scan taken from a file that has changed since is measured again the next time the target is scanned, and the values it wrote back are replaced.</li>
   </ul>
 
+  <h2 id="star-source">Choose the star measurements used for grading</h2>
+  <p>A frame can have star counts and HFR from both N.I.N.A. at capture and PSF Guard's quality scan. <strong>Image Information</strong> shows both. Cards show the value scoring uses, marked <strong>N</strong> for N.I.N.A. or <strong>P</strong> for PSF Guard.</p>
+  <p>Choose <strong>Stars and HFR</strong> in <strong>Scoring</strong>, or <strong>Measured by</strong> under <strong>Settings › Review › Grading &amp; display › Sequence scoring</strong>. PSF Guard is the default. This choice controls <strong>Max HFR</strong>, <strong>Min stars</strong>, the zero-star cap, relative comparisons and Sequence's Stars and HFR cutoff. Reject reasons identify the source.</p>
+  <p>An absolute limit uses the other source if the chosen value is missing. For relative comparisons, PSF Guard uses one source across a target and filter, separately for HFR and star count. It uses the preferred source when at least as many frames have it as have only the other source; otherwise it uses the other. Frames missing the comparison source are left unmeasured, and scoring adjusts for the missing evidence. Values PSF Guard wrote into imported metadata still count as PSF Guard measurements.</p>
+  <figure>
+    <img src="../assets/star-measurements-013.jpg" alt="Image Information with separate N and P markers for HFR and detected stars." width="580" height="495" loading="lazy" style="max-width:420px">
+    <figcaption>N.I.N.A. and PSF Guard both measured HFR 1.42 for this frame; their star counts differ by one. N and P identify the sources.</figcaption>
+  </figure>
+
+  <h2 id="star-detection">Match detection to a rig</h2>
+  <p>Open <strong>Settings › Review › Grading &amp; display › Star detection</strong>. The <strong>Default</strong> row applies unless a profile or rig overrides it. To set a rig's choices, clear <strong>Use the default</strong> in its row. Choose <strong>Detector</strong>, <strong>Sensitivity</strong>, <strong>Noise reduction</strong> and <strong>Hocus Focus version</strong>, then click <strong>Save star detection</strong>.</p>
+  <p>Defaults are <strong>Auto</strong>, <strong>High</strong>, <strong>None</strong> and <strong>4</strong>. Auto uses Hocus Focus when N.I.N.A. 3.2 or earlier recorded an FWHM; otherwise it uses N.I.N.A.'s detector. Sensitivity and noise reduction apply only to N.I.N.A.'s detector. The Hocus Focus version applies only to Hocus Focus.</p>
+  <p>After updating or changing detection settings, the next quality scan or quality backfill remeasures affected frames. Until then, scoring excludes their outdated scan values.</p>
+  <figure>
+    <img src="../assets/settings-star-detection-013.jpg" alt="Star detection defaults, N.I.N.A. profiles and a rig using the default settings." width="1860" height="2290" loading="lazy">
+    <figcaption>The shared defaults are Auto, High, None and Hocus Focus version 4. These profiles have no settings recorded; the visible rig uses the defaults.</figcaption>
+  </figure>
+
+  <h3 id="profile-import">Import a N.I.N.A. profile</h3>
+  <p>A profile also supplies the autofocus crop, brightest-star count, autostretch and Hocus Focus options. Under <strong>Import N.I.N.A. profile</strong>, choose the <strong>Profile file</strong> and its <strong>Hocus Focus version</strong>. Set <strong>Applies to</strong> to <strong>All frames</strong> or <strong>Frames from</strong> a date. Click <strong>Read file</strong> to review the settings, then <strong>Import profile</strong> to save them.</p>
+  <p>Sync and Director plugins record these settings during capture too. PSF Guard uses the first available settings in this order:</p>
+  <ol>
+    <li>The profile's settings chosen with <strong>Set by hand</strong>.</li>
+    <li>The rig's override.</li>
+    <li>The profile record in effect at capture. Frames before the first record use that earliest record.</li>
+    <li>The shared default.</li>
+  </ol>
+  <p>An <strong>All frames</strong> import does not replace later dated records. <strong>Read file</strong> lists records that will still apply. To correct historical settings, import the profile from the date those settings began. <strong>History</strong> lists saved records; <strong>Set by hand</strong> overrides a profile with the four manual choices.</p>
+  <!-- SHOT: star-profile-import-013.png | P2. Disposable fixture: Read file preview of a real N.I.N.A. profile with Applies to and any later records that remain effective. Record profile provenance and dates, omit secrets and do not click Import profile on live data. | Review a profile and the frames its settings apply to. -->
+
   <h2 id="limits">Penalties and reject limits</h2>
   <p>The <strong>Scoring</strong> control in the Sequence toolbar sets how hard evidence hits the score, and optional fixed reject limits like N.I.N.A.'s subframe selection.</p>
   <div class="table-wrap"><table>
@@ -421,28 +459,28 @@ psf-guard move-rejects --db my-db-slug</code></pre>
   <p>One limit is always on: <strong>Sensor Temperature</strong>. A frame whose sensor ran more than 10 °C warmer than the median of its session, or more than 20 °C above the cooler's set point, is capped and recommended for rejection. Dark current and hot pixels climb steeply with temperature, and no dark shot at the set point removes them. Colder never flags, and a frame with no temperature reading is exempt.</p>
   <p>The zero-star cap does not scale. The CLI takes <code>--ignore-satellites</code>, <code>--max-hfr</code> and <code>--min-stars</code>; API callers pass <code>penalty_satellite</code>, <code>penalty_pointing</code>, <code>penalty_temporal</code>, <code>penalty_hfr_rise</code>, <code>penalty_star_loss</code>, <code>hfr_reject_above</code>, <code>star_count_reject_below</code> or <code>sensor_temp_tolerance_c</code>.</p>
   <figure>
-    <img src="../assets/scoring-popover.jpg" alt="Scoring popover with HFR rise at 150 percent and Star loss at 50 percent, marked Changed for this view." width="564" height="698" loading="lazy" style="max-width:420px">
-    <figcaption>HFR rise and Star loss have changed for this view. Save as default would apply them to future views; Reset to default restores the saved settings.</figcaption>
+    <img src="../assets/scoring-popover-013.jpg" alt="Scoring with PSF Guard selected, satellite penalties off and other penalties at 100 percent." width="570" height="825" loading="lazy" style="max-width:420px">
+    <figcaption>This view uses the saved defaults: PSF Guard measurements, satellite penalties off, other penalties at 100%, and no fixed HFR or star-count limits.</figcaption>
   </figure>
 
   <h3 id="scoring-defaults">Defaults and the current view</h3>
-  <p>Every view starts from your scoring defaults, set in <strong>Settings › Review › Sequence scoring</strong>. Each field shows its built-in value. <strong>Save defaults</strong> stores your changes, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
+  <p>Every view starts from the server’s shared scoring defaults, set in <strong>Settings › Review › Grading &amp; display › Sequence scoring</strong>. Each field shows its built-in value. Editors can use <strong>Save defaults</strong> to save changes for everyone on the server, and <strong>Reset to built-in defaults</strong> brings back the calibrated scoring: every penalty at 100% and no limits.</p>
   <figure>
-    <img src="../assets/settings-review-scoring.png" loading="lazy" alt="Adjust Sequence scoring defaults and optional HFR and star-count limits." width="1878" height="1602">
-    <figcaption>Adjust Sequence scoring defaults and optional HFR and star-count limits.</figcaption>
+    <img src="../assets/settings-review-scoring-013.jpg" alt="Sequence scoring defaults with Measured by set to PSF Guard." width="1860" height="2040" loading="lazy">
+    <figcaption>Choose the measurement source and shared scoring defaults under Review › Grading &amp; display. This server has satellite penalties off and no fixed limits.</figcaption>
   </figure>
-  <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>, and its popover offers <strong>Save as default</strong>, which makes the view's values your defaults, and <strong>Reset to default</strong>, which returns the view to them. For an editor, <strong>Edit defaults</strong> in the popover opens Settings.</p>
-  <p>Once a value differs from your defaults, the URL stores all scoring values:
+  <p>A change in the toolbar applies to that view only. The control then reads <strong>Scoring (changed)</strong>. Choose <strong>Reset to default</strong> to restore the shared defaults. Editors can choose <strong>Save as default</strong> to save the view's values for everyone on the server, or <strong>Edit defaults</strong> to open Settings.</p>
+  <p>Once a value differs from the shared defaults, the URL stores all scoring values:
   <code>penaltySatellite</code>, <code>penaltyPointing</code>,
   <code>penaltyTemporal</code>, <code>penaltyHfrRise</code>,
-  <code>penaltyStarLoss</code> (1 is 100%), <code>maxHfr</code> and
-  <code>minStars</code>, with <code>off</code> for a limit turned off. A link therefore
+  <code>penaltyStarLoss</code> (1 is 100%), <code>maxHfr</code>,
+  <code>minStars</code> and <code>starSource</code>, with <code>off</code> for a limit turned off. A link therefore
   scores the same for whoever opens it. A reload, the project's other targets, Images,
   the image detail and Stacks keep the view's scoring, so a frame scores the same
   everywhere in the project. Those views show <strong>Scoring (changed)</strong> with
   <strong>Reset</strong>, and Stacks shows the values used for the build beside
-  <strong>Build</strong>. Another project or database starts from your defaults.</p>
-  <p>Signed in to a server with user accounts, your defaults follow you to any browser, like your other view choices; otherwise the browser keeps them. The values an earlier version's Scoring control remembered become your defaults. See <a href="authentication.html">Server Accounts</a>.</p>
+  <strong>Build</strong>. Another project or database starts from the shared defaults.</p>
+  <p>The first editor to open PSF Guard after the update saves their scoring defaults on the server, including built-in values. Viewer defaults are not copied. Everyone then starts from the shared defaults; only editors can change them. View-specific changes remain in the URL.</p>
 
   <h2 id="diagnostics">Read the annotated diagnostics</h2>
   <p><code>--annotate</code> renders each flagged frame with the analysis grid on top. Cells are marked by the signal that fired, and the caption strip gives the verdict, score, frame metrics and the classifier's explanation.</p>
@@ -520,7 +558,7 @@ psf-guard move-rejects --db my-db-slug</code></pre>
 
   <h2 id="limitations">Limitations</h2>
   <ul>
-    <li>The server scan uses N.I.N.A. Fast for star count and HFR, which matches a rig running N.I.N.A.'s built-in detector. A rig on HocusFocus counts on another scale, which is why a target is scored from one source at a time. The same full-resolution aperture gives the flux for photometry. <code>screen-fits</code> does flux photometry with either detector.</li>
+    <li>The server scan uses the <a href="#star-detection">detector settings for each rig and profile</a>. Missing or different capture settings can still produce different star counts and HFR. Compare the two sources before choosing limits. <code>screen-fits</code> supports flux photometry with either detector.</li>
     <li>The photometric reference needs stars present in at least half of a session's frames, so it cannot see regions blocked for most of a sequence. The dead-cell metric covers that case.</li>
     <li>Raw one-shot-color FITS or XISF files need a recognized <code>BAYERPAT</code> header. PSF Guard debayers them to luminance for measurement, and the diagnostics stay luminance views.</li>
     <li>The glow ADU floor depends on the rig and exposure profile.</li>

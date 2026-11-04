@@ -2595,3 +2595,171 @@ its existing local catalog and ran its normal startup background work.
 - **Os:** macOS 27.0.1
 - **Theme:** dark
 - **Sha256:** 365f36de81e5778984e5e6bff5f889ef6fe802d7bc423298f93e6c5459d6ff03
+
+## 0.13 Chrome captures — November 4, 2026
+
+Twelve captures now illustrate Rigs Live, site groups, the Moon in night schedules,
+forecasts, star measurements, detection and scoring settings, Visibility and an
+already-running live stack. The server reported **0.13.0** and showed the new
+site-group and per-filter Moon controls from app PR #1057. The deployed commit
+and frontend asset were not readable; this version label does not prove a
+published 0.13 release.
+
+Chrome 156.0.8078.80 on macOS 27.0.1, dark theme, 90% browser zoom,
+America/Los_Angeles time. Native window captures were 3956 × 2570 pixels.
+The browser tab API failed, so CSS viewport and effective device pixel ratio
+are unknown. Native Chrome controls supplied the captures. Images retain their
+original cropped resolution; JPEG crops use quality 95. The redacted Nights
+image uses lossless PNG. No browser chrome or exact site coordinates appear.
+
+The Sites crop excludes all location fields. Nights also covers rounded site
+coordinates with opaque rectangles. The image-generation editor changed other
+text, so its result was rejected. Native CoreGraphics applied the final masks;
+a pixel comparison against the same native-decoded source found no changes
+outside the masks. Original and rejected images are not committed. Reshoots
+must repeat the privacy check and masks before staging.
+
+No live settings, catalog records, grades or plans were saved; no imports, scans
+or processing jobs were started. The Iris Nebula stack was already rebuilding
+automatically. Framing canvas zoom changed only the view.
+
+The [manifest](captures-release-013-2026-11-04.json) records exact timestamps,
+URLs, crop rectangles, dimensions, hashes and reshoot steps without storing
+site coordinates. The native Chrome window became unavailable before the two
+older color-processing reshoots. Those remain pending, along with disposable
+night-edit/profile-import examples, a genuine continuum report and the older
+state-dependent backlog. The partial Sequence capture did not show all required
+chart state and was not published.
+
+### rigs-live-013.jpg
+
+- **Captured:** 2026-11-04T18:33:32.663204+00:00.
+- **State:** Rigs > Live. Five rigs, all Never seen / No report yet. Tonight links are visible; this does not demonstrate an online rig.
+- **Reshoot:** Open Rigs > Live; keep all rig rows visible.
+- **File:** 2580 × 685 pixels; SHA-256 `4a49b2743b7e335fd96dbda9ee42530669a9a26532a480f4f0571e78d7b5b368`.
+
+### rigs-nights-013.png
+
+- **Captured:** 2026-11-04T18:33:46.588166+00:00.
+- **State:** Five rigs; two nearby-site groups; From 11/04/2026, seven nights, columns November 3–9 because capture was before local noon. Updated 10:32 AM. Shared Cloud · Moon rows use saved Open-Meteo forecasts.
+- **Reshoot:** Open Rigs > Nights. Select November 4, 2026 and seven nights. Record fresh computation and forecast times; mask all site coordinates after capture.
+- **File:** 2580 × 1345 pixels; SHA-256 `5ae1ddd1206a424e2fb09645ba47d4f5b25029b287f08084dc2dcbc944f1d890`.
+
+### rigs-night-schedule-013.jpg
+
+- **Captured:** 2026-11-04T18:33:58.440646+00:00.
+- **State:** starfront-redcat61, rig 7ba3e9a6-938c-4237-b864-3be4740d0c03, Wednesday November 4. Target Scheduler mode. IC 447 selected, 23:36–03:24, 35 frames (R 27, HA 8). R: Moon 77° away, 6° up; HA: 79° away, 23° up. Not this night expanded. Forecast fetched 10:20 AM, threshold 30%. Grid computation 10:32 AM.
+- **Reshoot:** Select the RedCat November 4 cell, then IC 447. Expand Not this night. Scroll to include schedule, filter details and excluded targets. Do not mark or edit the night.
+- **File:** 2525 × 1805 pixels; SHA-256 `22433d0db4983fc4b223b68cb49c6ca411ee8f2a99665606d1bc4cbc3aea2a8f`.
+
+### settings-review-scoring-013.jpg
+
+- **Captured:** 2026-11-04T18:35:30.687873+00:00.
+- **State:** Settings > Review > Grading & display > Sequence scoring. Measured by PSF Guard; satellite penalty 0%, others 100%; fixed limits blank/off. Save defaults disabled.
+- **Reshoot:** Open Settings, Review, Grading & display. Scroll to Sequence scoring without changing fields.
+- **File:** 1860 × 2040 pixels; SHA-256 `9c2691b3022bebc23195df286f5cc8049015a4dc6f28a632f20cd0ffa71264cd`.
+
+### settings-star-detection-013.jpg
+
+- **Captured:** 2026-11-04T18:36:08.064021+00:00.
+- **State:** Defaults Auto / High / None / Hocus Focus 4. Profiles 713cd923, daacea0c, 8f8e9c44, 46d7a6e3 and ea4f9634 have no settings recorded. First visible rig uses the defaults. These are current settings, not proof of a historical scan’s detector.
+- **Reshoot:** Open Settings > Review > Grading & display > Star detection. Include defaults, profile cards and first rig. Do not import, reset or save.
+- **File:** 1860 × 2290 pixels; SHA-256 `037a25a559712dc2f27f37a1417bbbf83070e71ab0fd965f6707979e26c64110`.
+
+### site-forecast-013.jpg
+
+- **Captured:** 2026-11-04T18:36:26.482506+00:00.
+- **State:** Settings > Presets > Sites > Edit sfro. Open-Meteo, clear at or under 30%. Fetched November 4 at 10:20 AM; coverage through November 19, 4 PM; valid until November 4, 10:20 PM; next refresh 1:20 PM. Location timezone was This browser’s (America/Los_Angeles); location fields are outside crop.
+- **Reshoot:** Edit the existing site and scroll to Cloud forecast. Crop below all location fields. Do not click Fetch now or Save.
+- **File:** 1790 × 520 pixels; SHA-256 `475140331f8153901ee457a7dc69f49059f6e81ea70b6bd9ee81ca70435aaef9`.
+
+### settings-stacking-013.jpg
+
+- **Captured:** 2026-11-04T18:36:40.495930+00:00.
+- **State:** Settings > Processing > Stacking. Reintegrate, Local background, By noise, Chosen by Seiza; orientation group margin 1°; Quadratic interpolation, Lanczos 3 resampling, Bayer drizzle off.
+- **Reshoot:** Open Settings > Processing > Stacking, include navigation and current saved settings. Do not change controls.
+- **File:** 2310 × 2280 pixels; SHA-256 `657c4df11fdab3854549b7d9f7babde0906f0a43d11510b5865f8270b6f2e2d4`.
+
+### star-measurements-013.jpg
+
+- **Captured:** 2026-11-04T18:37:09.240100+00:00.
+- **State:** Frame 1166, db-93617230, project/target 6 SNRG132, R. October 8 at 02:21:19 browser local time. HFR 1.42 from both sources, stars N 26215 / P 26216. Existing accepted grade unchanged. Scoring source PSF Guard. Current profile ea4f9634 has no settings recorded; historical detector not verified.
+- **Reshoot:** Open the recorded detail URL and crop Image Information with N/P markers. Do not grade, rescan or identify satellites.
+- **File:** 580 × 495 pixels; SHA-256 `c3113a64498ce79e95d9fead76b544ba0d6aeb58a3f90d6ed7707acd2d58ee47`.
+
+### scoring-popover-013.jpg
+
+- **Captured:** 2026-11-04T18:38:08.874844+00:00.
+- **State:** SNRG132 R, all sessions, 129 frames. PSF Guard measurement source; satellite penalty off, other penalties 100%, no limits. Saved defaults, no temporary change.
+- **Reshoot:** Open Sequence for the recorded scope, then Scoring. Capture source choice, penalties and footer without moving sliders.
+- **File:** 570 × 825 pixels; SHA-256 `2c302842105d006fe184b1978013504536d2aa7fde6d69a483ea85576d29a64c`.
+
+### framing-visibility-013.jpg
+
+- **Captured:** 2026-11-04T18:39:46.721743+00:00.
+- **State:** Activated SNRG132 plan 7c177ae7-6cdc-43c0-b753-42816af0cb59, starfront-ultracat131. Visible 11.4 h, peak 59°, Moon 16%, 109° away, up 2.6 h. 30 h left, about six nights by clear hours. Target Scheduler does not finish within 14 nights (823 frames planned). No competing-plan row shown.
+- **Reshoot:** Open the existing activated plan, select its rig in Visibility, and include chart and completion result. Do not activate, save or change plan settings.
+- **File:** 2505 × 440 pixels; SHA-256 `63090f3fd5f5a65e3434bca796f5e66abe278a3e38832d0a33482d204694473d`.
+
+### framing-nights-013.jpg
+
+- **Captured:** 2026-11-04T18:39:46.721743+00:00.
+- **State:** Same plan/rig as Visibility. Legend and the next 7 nights expanded, November 4–10, with up-and-clear hours and marks. Open-Meteo fetched 10:20 AM.
+- **Reshoot:** Expand Legend and the next 7 nights beneath Visibility. Capture all seven rows without changing marks.
+- **File:** 875 × 1390 pixels; SHA-256 `48830530a1ef8356f34c2aff9521acc7c70f763292490b10e0e2f45b343e24d3`.
+
+### stack-live-013.jpg
+
+- **Captured:** 2026-11-04T18:41:06.739408+00:00.
+- **State:** NGC 7023 / Iris Nebula, R 300 s, automatic rebuild already running. 160/160 accepted frames; final pass Rejecting transients: pass 1/2, frame 25/160, overall 54%. Full restack: calibration changed. Worker attribution not shown.
+- **Reshoot:** Open the recorded target’s Stacks while an automatic channel rebuild is already active. Include image, accepted count and final-pass progress. Do not start a job for a capture.
+- **File:** 2530 × 2040 pixels; SHA-256 `86dc1ac36d6d47fbd15f7f1612b4f179ed36751244ee663f98ad74035a9e1c47`.
+
+## 0.13 Chrome follow-up — November 4, 2026
+
+Chrome controls worked after the restart. Five more images cover the import
+form, both color-processing steps and two Sequence views. These are separate
+views of actual state: Solved pointing scrolls away while the score summary
+and chart stay visible. No settings, grades or catalog data changed.
+
+Server Information again showed 0.13.0; deployed SHA and frontend asset remain
+unknown. Chrome 156.0.8078.80, macOS 27.0.1, dark theme, 90% zoom,
+1931 × 1313 CSS viewport, DPR 1.8, America/Los_Angeles. The
+[follow-up manifest](captures-release-013-followup-2026-11-04.json) records
+URLs, timestamps, pixel crops and hashes. These crops contain no site coordinates
+or private paths. The earlier coordinate masks remain unchanged.
+
+### stack-channel-processing-013.jpg
+
+- **Captured:** 2026-11-04T19:13:03.193295+00:00.
+- **State:** Iris Nebula LRGB 300 s, completed, 660 inputs / 55 h. Prepare inputs expanded. From each channel card; no inherited deconvolution or RC-Astro tools. Background extraction on, Subtract strength 1, Automatic maximum degree 2, Protect catalog emission on.
+- **Reshoot:** Open the recorded Stacks URL, expand Processing stack and Prepare inputs. Keep the inherited-tool summary and all four background fit cards visible; do not apply processing.
+- **File:** 1380 × 470 pixels; SHA-256 `b0b3f4b8a3ad80b9df79d2c36c9962bd644bd3cb097271acdecca43fafecc625`.
+
+### stack-color-rc-astro-013.jpg
+
+- **Captured:** 2026-11-04T19:13:03.193295+00:00.
+- **State:** Same completed LRGB preview. Process linear color expanded; BlurXTerminator and NoiseXTerminator off, Gaia color calibration on. Correct only control is hidden while BlurXTerminator is off. Apply processing stack and Revert edits disabled.
+- **Reshoot:** Open Process linear color. Capture the whole step, including both unchecked RC-Astro tools and Gaia color calibration. Do not change or apply settings.
+- **File:** 1380 × 265 pixels; SHA-256 `bd034626bdc8b1e898807a9e0785e03eacfd2c8092c9c3821628befafd55c7e6`.
+
+### import-image-folders-013.jpg
+
+- **Captured:** 2026-11-04T19:18:41.662413+00:00.
+- **State:** Settings > Databases & rigs > New / import > New Database from Images. Image folders selected; display name and folder path empty. Custom database path and background quality analysis off. Scan rules collapsed. Create & Import disabled.
+- **Reshoot:** Open Settings > New / import and the image-folder form. Keep fields empty. Capture the full form and breadcrumb; close with Cancel without starting an import.
+- **File:** 1045 × 970 pixels; SHA-256 `274401f13bc64a1557a95b901d82ef070f04132c0c920c168dd5292724f8f4d3`.
+
+### sequence-docked-review-013.jpg
+
+- **Captured:** 2026-11-04T19:18:51.491283+00:00.
+- **State:** SNR G132, R All sessions (129). Current frame 1166, zero selected, newest first, 150 px cards, cutoff Score 50, Select By hand. Score bins 110 / 11 / 5 / 3 / 0; 33 cloud events. Scrolled to the older R cards; summary at y168 and chart at y227 stay below the toolbar. Solved pointing is above the viewport.
+- **Reshoot:** Open the recorded Sequence URL and R All sessions (129). Scroll to frame 1166 with the summary and score chart docked below the toolbar. Do not select or grade frames.
+- **File:** 1931 × 1060 pixels; SHA-256 `4f00a33fa0ab284c0ea1019f030ba08e96d85dcf4caf84c315401203115aa41e`.
+
+### sequence-solved-pointing-013.jpg
+
+- **Captured:** 2026-11-04T19:19:02.813948+00:00.
+- **State:** Same R sequence and current frame 1166. Solved pointing expanded, current point ringed, chart range ±33 arcsec. Score chart highlights the same frame. View scrolled back to the pointing panel; current frame card is below the crop.
+- **Reshoot:** Scroll back to Solved pointing and expand it. Include the R session selector, summary, score chart, pointing plot and first row of cards. This separate image shows pointing; the companion image shows the docked chart and current card.
+- **File:** 1850 × 732 pixels; SHA-256 `6546dc0d7d15a4813ce96ec4085c36eba5c5585da6fed27d03f3d895060e4942`.

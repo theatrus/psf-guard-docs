@@ -247,6 +247,8 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
   reach, as <code>df</code> counts it. 100% disables automatic cleanup. Changing the
   limit needs database management.</p>
 
+  <p>On macOS, PSF Guard can save masters, stacks, uploads, WBPP work files, backups and settings on SMB shares that refuse a full sync. It falls back to a plain sync instead of failing with <code>Operation not supported (os error 45)</code>.</p>
+
   <h3 id="cull-order">What PSF Guard deletes when a volume exceeds its limit</h3>
   <p>Every five minutes, and right after a limit changes, PSF Guard reads each
   volume. When one is over its limit, PSF Guard deletes only what lives on that
@@ -284,8 +286,7 @@ calibration_directory = "/mnt/nas/psf-guard/masters"</code></pre>
       until the snapshot goes.</li>
     <li>PSF Guard records when a preview or master is used, because many
       mounts, NFS among them, do not record reads.</li>
-    <li>Windows servers do not read their volumes, so the limit does not apply
-      there.</li>
+    <li>Volume usage limits apply on Windows, macOS and Linux. <strong>Disk use</strong> shows the volumes and their limits.</li>
     <li>To make previews smaller on disk, set <code>preview_format = "jpeg"</code>;
       see <a href="configuration.html#preview-format">Configuration &amp; API</a>.</li>
   </ul>

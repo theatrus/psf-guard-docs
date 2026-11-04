@@ -160,8 +160,8 @@ function gtag_report_demo() {
   <h1>Rigs, Sites &amp; Live</h1>
   <p class="lede">
     Every registered database is a rig. Give each rig its optics, site and
-    limits, give sites a horizon, and watch rigs that run the Director plugin on
-    the Sky.
+    limits, compare upcoming nights in <strong>Rigs › Nights</strong>, and
+    check reporting rigs in <strong>Rigs › Live</strong>.
   </p>
 
   <div class="callout info">
@@ -172,9 +172,9 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="list">The rig list</h2>
-  <p><strong>Settings › Rigs</strong> lists every registered database as a rig:
-  its field of view and pixel scale, whether the N.I.N.A. plugin has reported
-  its camera, the peer its plans push to, and the plugin's last status. A new
+  <p><strong>Settings › Databases &amp; rigs › Overview</strong> lists registered databases and their rigs. Each entry shows the rig’s field of
+  view and pixel scale, whether its plugin has reported a camera, its remote
+  planning destination and its latest plugin status. A new
   database becomes a rig once the Library opens.
   <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
   opens its catalog.</p>
@@ -304,22 +304,17 @@ function gtag_report_demo() {
   <!-- SHOT: plan-send-again.png | P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
 
   <h2 id="live">Live</h2>
-  <p>Rigs that run the <a href="#director">Director plugin</a> report what they
-  do. The header's
-  <strong>Live</strong> chip counts them: <code>2 rigs · 1 exposing</code>, or
-  <code>2 rigs · 1 online</code> when none is exposing. It turns red when a rig
-  that used to talk goes quiet, and opens <strong>Live on the Sky</strong> from any
-  view.</p>
+  <p>Open <strong>Rigs › Live</strong> for reports from rigs running the <a href="#director">Director plugin</a>. The header's <strong>Rigs</strong> control opens this view and shows the fleet's status. The <strong>Tonight</strong> column links each rig to its predicted schedule on <strong>Nights</strong>.</p>
   <p>On the Sky, each reporting rig is drawn on the coverage map where it points
   now. A list of rigs sits beside the map; choosing one turns the map to it. A
   quiet rig is drawn dashed red. A rig that reports no mount position is placed
   at its planned target, dotted and labeled <em>at target</em>.</p>
 
   <figure>
-    <img src="../assets/sky-live.jpg" loading="lazy" alt="Live lists the rigs and their latest reports. These five rigs have not reported yet." width="3138" height="1854">
-    <figcaption>Live lists the rigs and their latest reports. These five rigs have not reported yet.</figcaption>
+    <img src="../assets/rigs-live-013.jpg" alt="Rigs Live with five rigs and Tonight links." width="2580" height="685" loading="lazy">
+    <figcaption>None of these five rigs has reported yet. Tonight links open the available schedules.</figcaption>
   </figure>
-  <p>The Live table under the map has one row per rig:</p>
+  <p>The Live table has one row per rig:</p>
   <div class="table-wrap">
     <table>
       <tr><th>Column</th><th>Shows</th></tr>
@@ -337,8 +332,49 @@ function gtag_report_demo() {
     </table>
   </div>
   <p>The table refreshes every fifteen seconds. A read-only account cannot open
-  Settings, so Live on the Sky shows rig setup and the template library read only
+  Settings, so Rigs › Live shows rig setup and the template library read only
   under the table.</p>
+
+  <h2 id="nights">Plan each rig's nights</h2>
+  <p><strong>Early beta.</strong> Open <strong>Rigs › Nights</strong> to compare your rigs across 7, 14 or 31 nights. Each rig needs a site. Choose <strong>From</strong> for a starting date or <strong>Tonight</strong> for the current observing night. Each cell shows clear dark hours, the Moon and the plans the rig would shoot. A red cell has no clear dark hours, even if the forecast leaves daylight hours clear.</p>
+  <p>The grid groups rigs whose sites are within one degree in latitude and longitude. Each group has a <strong>Cloud · Moon</strong> row: the cloud bar has a red edge where cloud cover exceeds the site's threshold; the Moon bar is brighter when the Moon is higher or more fully lit. Hover for cloud cover, moonrise, the Moon's highest point and moonset. A group without a forecast has no cloud bar.</p>
+  <p>Each filter run shows the minimum separation between the Moon and its target. The angle is dimmed when the Moon stays below the horizon. Select a block to see each filter's minimum Moon separation and highest Moon altitude. The Moon strip below the cloud band shows its rise, highest point and set.</p>
+  <p>Select a cell to open its schedule. Choose a target block to see why Target Scheduler or Director would select it. <strong>Not this night</strong> lists excluded targets and their reasons. Tonight's schedule starts from now. Future-night schedules account for frames planned on earlier nights. Times include estimated overheads and are predictions, not a guarantee of what the rig will capture.</p>
+  <p><strong>Updated</strong> shows when the displayed plans were computed. The server saves those plans and refreshes them when their inputs change. <strong>Compute again</strong> requests a fresh calculation, shown in the header's job list.</p>
+  <figure>
+    <img src="../assets/rigs-nights-013.png" alt="Five rigs grouped by site, with clear hours, target dots and shared Cloud · Moon rows." width="2580" height="1345" loading="lazy">
+    <figcaption>Compare clear hours and planned work across nearby sites. Site coordinates are covered for privacy.</figcaption>
+  </figure>
+  <figure>
+    <img src="../assets/rigs-night-schedule-013.jpg" alt="RedCat night schedule with IC 447 selected, filter Moon angles and excluded targets." width="2525" height="1805" loading="lazy">
+    <figcaption>The November 4 schedule shows why IC 447 was selected, each filter’s minimum Moon separation and targets excluded from this night.</figcaption>
+  </figure>
+
+  <h3 id="availability">Mark available hours</h3>
+  <p>With editor access, select a night and use <strong>Mark this night</strong>. Choose <strong>Available</strong>, <strong>Not available</strong> or <strong>Limited</strong>. For limited hours, a blank <strong>From</strong> starts at dusk and a blank <strong>To</strong> ends at dawn. Under <strong>For</strong>, choose one rig or every rig at its site, then click <strong>Save mark</strong>. Shift-click another night in the same rig's row to mark a range.</p>
+  <p>Set the site's <strong>Time zone</strong> in <strong>Settings › Presets › Sites</strong>. Without one, entry times use the browser's zone; the form shows the zone in use. A rig is available only during hours allowed by both its own mark and the site's availability. <strong>Clear mark</strong> removes the manual mark; a site forecast can still apply.</p>
+  <p>Marks and forecasts change planning estimates only. They do not start, stop or block a rig. N.I.N.A. and the rig's safety monitor still control acquisition.</p>
+
+  <h3 id="forecasts">Use a cloud forecast</h3>
+  <p>Open <strong>Settings › Presets › Sites</strong>, click <strong>Edit</strong> for a site with latitude and longitude, and choose <strong>Open-Meteo</strong> or <strong>MET Norway</strong> under <strong>Cloud forecast → Forecast</strong>. Set <strong>Clear at or under</strong> to the maximum cloud cover, in percent, that counts as clear (30% by default). Click <strong>Save site</strong>.</p>
+  <p>Forecasts are off by default. Enabling one sends the site's coordinates, rounded to about 1 km, to the provider. The server requests updates every three hours; <strong>Fetch now</strong> requests one subject to the displayed retry time. A manual site mark overrides the forecast for that night; a rig's own mark still applies.</p>
+  <p>The grid marks forecast-based nights with a cloud, and the timeline shows hourly cloud cover. Night plans use a forecast for 12 hours after receipt. After it expires, or beyond its covered dates, the forecast no longer restricts availability: those hours count as clear for planning, not as a prediction of clear weather.</p>
+  <figure>
+    <img src="../assets/site-forecast-013.jpg" alt="Cloud forecast settings with Open-Meteo, a 30 percent threshold and receipt time." width="1790" height="520" loading="lazy">
+    <figcaption>This site uses Open-Meteo and a 30% cloud threshold. Receipt, coverage and expiry times show when the forecast can restrict planning.</figcaption>
+  </figure>
+
+  <h3 id="edit-night">Override a Director rig's night</h3>
+  <p><strong>Mode</strong> in rig setup chooses whether Target Scheduler or Director runs the rig. Until set, PSF Guard infers the mode from reports; pairing Director sets it to Director.</p>
+  <p>For a Director rig, click <strong>Edit night</strong>. Drag a block to move it, or select it and use the arrow keys in 15-minute steps. Moving a block pins the target at its new time and prevents it from running during the original time slot. The block menu also offers pins and exclusions. Drag a pin's edges to change its duration, drag the hold line from the right to hold the rig, or choose <strong>Set a plan order</strong>.</p>
+  <p>Review the predicted schedule, then click <strong>Save changes</strong> or <strong>Discard changes</strong>. A running session finishes its exposure and follows saved overrides at its next check-in. Overrides only restrict the existing program: they cannot relax altitude, Moon or meridian limits. They expire at the end of the observing night, at noon. Another editor's conflicting save requires reloading the night.</p>
+  <!-- SHOT: night-overrides-013.png | P2. Disposable fixture only: Director Edit night with a moved block, pin, hold and unsaved summary. Show Save changes and Discard changes. Record mode, date and time zone; discard the draft. Do not edit a live rig to stage this. | Review a night override before saving. -->
+
+  <h3 id="target-scheduler-settings">Change Target Scheduler priorities</h3>
+  <p>For a Target Scheduler rig, expand <strong>Target Scheduler settings</strong> and click <strong>Change settings</strong>. Set projects or targets active or inactive, or change a project's <strong>Priority</strong>. The schedule previews the changes before you click <strong>Save changes</strong>.</p>
+  <p>Saving requires editor access and a server with database management enabled. PSF Guard updates the rig's database and, for a synced catalog, its Target Scheduler file too. These changes apply to every night until changed again. Only projects in the rig's N.I.N.A. profile are edited. If another edit changed a row after you loaded it, PSF Guard refuses to save that row and explains the conflict.</p>
+  <p>If PSF Guard updates the rig database but cannot write the Target Scheduler file, the panel explains the failure. Use <strong>Sync → Data Transfer → Send planning</strong> to send the saved change. If the files disagree before saving, review them in Data Transfer: <strong>Merge databases</strong> uses Target Scheduler's settings, while <strong>Send planning</strong> sends the rig database's settings.</p>
+  <!-- SHOT: night-ts-settings-013.png | P2. Disposable Target Scheduler fixture with database management enabled: Change settings with a draft priority or active-state change and its predicted schedule. Record which files Save changes would write. Discard the draft; do not edit a live catalog. | Preview persistent Target Scheduler changes before saving. -->
 
   <h2 id="director">Early beta: the upcoming Director plugin</h2>
   <div class="callout info">
