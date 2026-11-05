@@ -165,10 +165,10 @@ function gtag_report_demo() {
   </p>
 
   <div class="callout info">
-    <strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Each catalog in Settings › Rigs links to its
-    rigs' calibration settings, and the rig and site forms say <strong>Unsaved
-    changes</strong>. A remote site that missed an activation gets it again on
-    its own once it answers.
+    <strong><a href="new-in-0.12.html">New in 0.12</a>.</strong> Each catalog in <strong>Settings › Databases &amp; rigs › Overview</strong> links to its
+    rigs' calibration settings. Rig and site forms show <strong>Unsaved
+    changes</strong> until you save. PSF Guard sends a missed activation again
+    when the remote site responds.
   </div>
 
   <h2 id="list">The rig list</h2>
@@ -179,10 +179,10 @@ function gtag_report_demo() {
   <strong>Setup</strong> opens the rig's setup in place; <strong>Library</strong>
   opens its catalog.</p>
   <p>Under <strong>Calibration:</strong>, each row lists the calibration rigs its
-  catalog records, with how many values each sets for itself. A calibration rig is a
+  catalog records, with the number of settings each overrides. A calibration rig is a
   telescope, camera, frame size and binning, as the calibration library records it. Each
   name opens that rig's settings under <a
-  href="calibration-masters.html#matching">Settings › Calibration</a>, and the note
+  href="calibration-masters.html#matching">Settings › Processing › Calibration</a>, and the note
   above Calibration's rig list links back here.</p>
 
   <figure>
@@ -191,17 +191,17 @@ function gtag_report_demo() {
   </figure>
 
   <h2 id="setup">Rig setup</h2>
-  <p>The selected rig's header stays above its setup. Sections sit in a rail on
-  the left on a desktop and in a strip on a narrow screen:
+  <p>The selected rig's header stays above its setup. Choose a section from
+  the sidebar on a desktop or the tabs on a narrow screen:
   <strong>Optics</strong>, <strong>Site</strong>, <strong>Limits and
   delivery</strong> and <strong>Collaboration</strong>. Edits stay in the form
-  while you switch sections, and while the setup is folded;
+  while you switch sections or collapse the setup;
   <strong>Save rig profile</strong> saves them, and <strong>Unsaved
-  changes</strong> beside it says when there is something to save.</p>
-  <p>Settings asks before <strong>Done</strong>, <strong>×</strong> or a click
-  outside closes it over edits a form has not saved: <strong>Keep
-  editing</strong> or <strong>Close without saving</strong>. The browser asks
-  before a reload drops them.</p>
+  changes</strong> appears beside it until you save.</p>
+  <p>If you close Settings with unsaved changes, choose <strong>Keep
+  editing</strong> or <strong>Close without saving</strong>. This applies to
+  <strong>Done</strong>, <strong>×</strong> and clicking outside the dialog.
+  The browser also asks before reloading a page with unsaved changes.</p>
 
   <figure>
     <img src="../assets/rig-setup-optics.png" loading="lazy" alt="The rig&#x27;s sensor and optics determine its field of view and pixel scale." width="1800" height="1136">
@@ -209,19 +209,19 @@ function gtag_report_demo() {
   </figure>
 
   <h3 id="optics">Optics</h3>
-  <p>Optics hold the unbinned sensor size in pixels, pixel size in micrometres,
+  <p>Under <strong>Optics</strong>, enter the unbinned sensor size in pixels, pixel size in micrometres,
   effective focal length and aperture in millimetres, and how the camera angle
   changes: a rotator, turned by hand between sessions, or fixed. The field of
   view and pixel scale update as you type.</p>
   <p><strong>Use frame headers</strong> copies sensor size, pixel size, focal length,
-  aperture and site from the newest frame the server can find, and says which file.
-  Headers from N.I.N.A. record binned values; PSF Guard folds them back to the sensor.
+  aperture and site from the newest frame the server can find. The form shows the source file.
+  Headers from N.I.N.A. record binned values; PSF Guard converts them to unbinned sensor values.
   Each section shows the source of its values: frame headers, set by hand, or reported
   by the plugin.</p>
 
   <h3 id="sites">Sites and horizons</h3>
   <p>A site defines a location (latitude, east-positive longitude, elevation) and a
-  horizon. Add and edit sites under <strong>Settings › Rigs › Sites</strong>. Each rig
+  horizon. Add and edit sites under <strong>Settings › Presets › Sites</strong>. Each rig
   picks its <strong>Planning site</strong> and takes the site's location and horizon,
   unless its own fields say otherwise: a location typed into the rig, or a horizon
   pasted there or reported by the plugin.</p>
@@ -337,13 +337,13 @@ function gtag_report_demo() {
 
   <h2 id="nights">Plan each rig's nights</h2>
   <p><strong>Early beta.</strong> Open <strong>Rigs › Nights</strong> to compare your rigs across 7, 14 or 31 nights. Each rig needs a site. Choose <strong>From</strong> for a starting date or <strong>Tonight</strong> for the current observing night. Each cell shows clear dark hours, the Moon and the plans the rig would shoot. A red cell has no clear dark hours, even if the forecast leaves daylight hours clear.</p>
-  <p>The grid groups rigs whose sites are within one degree in latitude and longitude. Each group has a <strong>Cloud · Moon</strong> row: the cloud bar has a red edge where cloud cover exceeds the site's threshold; the Moon bar is brighter when the Moon is higher or more fully lit. Hover for cloud cover, moonrise, the Moon's highest point and moonset. A group without a forecast has no cloud bar.</p>
-  <p>Each filter run shows the minimum separation between the Moon and its target. The angle is dimmed when the Moon stays below the horizon. Select a block to see each filter's minimum Moon separation and highest Moon altitude. The Moon strip below the cloud band shows its rise, highest point and set.</p>
+  <p>The grid groups rigs whose sites are within one degree in latitude and longitude. Each group has <strong>Cloud</strong>, <strong>Dew</strong> and <strong>Moon</strong> bars. A red edge marks hours above the cloud threshold or at or within the dew limit. Brighter dew shading means a smaller gap between air temperature and dew point; brighter Moon shading means a higher or more fully lit Moon. Hover for details. A group without a forecast has no cloud or dew bar; a forecast without dew point data has no dew bar.</p>
+  <p>Each filter run shows the minimum separation between the Moon and its target. The angle is dimmed when the Moon stays below the horizon. Select a block to see each filter's minimum Moon separation and highest Moon altitude. The Moon strip below the weather bands shows its rise, highest point and set.</p>
   <p>Select a cell to open its schedule. Choose a target block to see why Target Scheduler or Director would select it. <strong>Not this night</strong> lists excluded targets and their reasons. Tonight's schedule starts from now. Future-night schedules account for frames planned on earlier nights. Times include estimated overheads and are predictions, not a guarantee of what the rig will capture.</p>
   <p><strong>Updated</strong> shows when the displayed plans were computed. The server saves those plans and refreshes them when their inputs change. <strong>Compute again</strong> requests a fresh calculation, shown in the header's job list.</p>
   <figure>
-    <img src="../assets/rigs-nights-013.png" alt="Five rigs grouped by site, with clear hours, target dots and shared Cloud · Moon rows." width="2580" height="1345" loading="lazy">
-    <figcaption>Compare clear hours and planned work across nearby sites. Site coordinates are covered for privacy.</figcaption>
+    <img src="../assets/rigs-dew-grid-013.jpg" alt="Two rigs with Cloud, Dew and Moon bars below their night plans." width="1025" height="199" loading="lazy">
+    <figcaption>November 4–10, 2026, from left to right. The drop on November 9 marks a night shortened by the dew limit. Site coordinates are outside the crop.</figcaption>
   </figure>
   <figure>
     <img src="../assets/rigs-night-schedule-013.jpg" alt="RedCat night schedule with IC 447 selected, filter Moon angles and excluded targets." width="2525" height="1805" loading="lazy">
@@ -355,13 +355,20 @@ function gtag_report_demo() {
   <p>Set the site's <strong>Time zone</strong> in <strong>Settings › Presets › Sites</strong>. Without one, entry times use the browser's zone; the form shows the zone in use. A rig is available only during hours allowed by both its own mark and the site's availability. <strong>Clear mark</strong> removes the manual mark; a site forecast can still apply.</p>
   <p>Marks and forecasts change planning estimates only. They do not start, stop or block a rig. N.I.N.A. and the rig's safety monitor still control acquisition.</p>
 
-  <h3 id="forecasts">Use a cloud forecast</h3>
-  <p>Open <strong>Settings › Presets › Sites</strong>, click <strong>Edit</strong> for a site with latitude and longitude, and choose <strong>Open-Meteo</strong> or <strong>MET Norway</strong> under <strong>Cloud forecast → Forecast</strong>. Set <strong>Clear at or under</strong> to the maximum cloud cover, in percent, that counts as clear (30% by default). Click <strong>Save site</strong>.</p>
-  <p>Forecasts are off by default. Enabling one sends the site's coordinates, rounded to about 1 km, to the provider. The server requests updates every three hours; <strong>Fetch now</strong> requests one subject to the displayed retry time. A manual site mark overrides the forecast for that night; a rig's own mark still applies.</p>
-  <p>The grid marks forecast-based nights with a cloud, and the timeline shows hourly cloud cover. Night plans use a forecast for 12 hours after receipt. After it expires, or beyond its covered dates, the forecast no longer restricts availability: those hours count as clear for planning, not as a prediction of clear weather.</p>
+  <h3 id="forecasts">Use cloud and dew forecasts</h3>
+  <p>Open <strong>Settings › Presets › Sites</strong> and click <strong>Edit</strong> for a site with latitude and longitude. Under <strong>Weather forecast → Forecast</strong>, choose <strong>Open-Meteo</strong> or <strong>MET Norway</strong>. Set <strong>Clear at or under</strong> to the maximum cloud cover, in percent, that counts as clear (30% by default).</p>
+  <p>To exclude hours close to the dew point, set <strong>No imaging within</strong> to a whole number from 0 to 20 °C. For example, 2 °C excludes hours when air temperature is 2 °C or less above the dew point. Leave the field blank to ignore dew. If the forecast lacks temperature or dew point for an hour, only cloud cover counts. Click <strong>Save site</strong>.</p>
+  <p>Despite the label <strong>No imaging within</strong>, this setting changes planning estimates only. It does not stop a rig or close a roof. Forecasts do not confirm dew on your equipment; use the observatory's own safety monitor to control acquisition.</p>
   <figure>
-    <img src="../assets/site-forecast-013.jpg" alt="Cloud forecast settings with Open-Meteo, a 30 percent threshold and receipt time." width="1790" height="520" loading="lazy">
-    <figcaption>This site uses Open-Meteo and a 30% cloud threshold. Receipt, coverage and expiry times show when the forecast can restrict planning.</figcaption>
+    <img src="../assets/site-weather-forecast-013.jpg" alt="Weather forecast settings with Open-Meteo, a 30% cloud threshold and a 2 °C dew limit." width="983" height="379" loading="lazy">
+    <figcaption>This site excludes hours above 30% cloud cover or within 2 °C of the dew point. Receipt, coverage and expiry times show when the forecast can restrict planning.</figcaption>
+  </figure>
+  <p>Forecasts are off by default. Enabling one sends the site's coordinates, rounded to about 1 km, to the provider. The server requests updates every three hours. If a site has a dew limit but its stored forecast lacks dew points, the server requests an update after 30 minutes, subject to the provider's retry time. <strong>Fetch now</strong> requests an update subject to the displayed retry time. A manual site mark overrides the forecast for that night; a rig's own mark still applies.</p>
+  <p>The grid uses a cloud icon when cloud cover removes dark hours from a plan, and a drop when the dew limit removes hours that pass the cloud threshold. Both icons appear when both limits remove hours. A cloud icon also identifies a forecast that leaves all dark hours clear. The timeline shows hourly cloud and dew bands; its legend lists hours excluded by each limit. Hover a dew hour for temperature, dew point and humidity.</p>
+  <p>Night plans use a forecast for 12 hours after receipt. After it expires, or beyond its covered dates, the forecast no longer restricts availability: those hours count as clear for planning, not as a prediction of clear weather.</p>
+  <figure>
+    <img src="../assets/night-dew-schedule-013.jpg" alt="November 9 night schedule with clear hours ending at 4 AM and a dew limit from 4 AM to 7 AM." width="1401" height="455" loading="lazy">
+    <figcaption>The 2 °C dew limit ends this night's clear hours at 4 AM. Cloud cover stays within the 30% threshold throughout the night.</figcaption>
   </figure>
 
   <h3 id="edit-night">Override a Director rig's night</h3>

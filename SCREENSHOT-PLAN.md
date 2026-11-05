@@ -1,5 +1,15 @@
 # Screenshot plan — 0.13 release preparation
 
+## November 4 cloud and dew follow-up
+
+Three new captures show the Cloud/Dew/Moon bars, a night shortened by the dew
+limit, and saved weather settings. They replace older forecast illustrations
+in the guide and 0.13 overview. All geographic coordinates are outside the
+final crops. The [capture record](assets/screenshot-captures.md#013-cloud-and-dew-captures--november-4-2026)
+and [manifest](assets/captures-weather-013-2026-11-04.json) record the observed
+state and reshoot steps. The older state-dependent shots below remain pending.
+
+
 ## November 4 captures
 
 Seventeen new captures are embedded in the guides and 0.13 overview. They cover

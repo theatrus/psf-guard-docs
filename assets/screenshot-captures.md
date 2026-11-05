@@ -2763,3 +2763,40 @@ or private paths. The earlier coordinate masks remain unchanged.
 - **State:** Same R sequence and current frame 1166. Solved pointing expanded, current point ringed, chart range ±33 arcsec. Score chart highlights the same frame. View scrolled back to the pointing panel; current frame card is below the crop.
 - **Reshoot:** Scroll back to Solved pointing and expand it. Include the R session selector, summary, score chart, pointing plot and first row of cards. This separate image shows pointing; the companion image shows the docked chart and current card.
 - **File:** 1850 × 732 pixels; SHA-256 `6546dc0d7d15a4813ce96ec4085c36eba5c5585da6fed27d03f3d895060e4942`.
+
+## 0.13 cloud and dew captures — November 4, 2026
+
+Three Chrome captures document the weather changes in app PR #1059. The server
+showed 0.13.0 and frontend asset `index-DQ0OvZFj.js`; its exact deployed commit
+was not exposed. The controls matched source commit `469cad36`. This does not
+mark 0.13 as released.
+
+The [manifest](captures-weather-013-2026-11-04.json) records capture times, URLs,
+state, dimensions, crop rectangles, hashes and reshoot steps. All final images
+exclude geographic coordinates. Raw screenshots remain outside the repos;
+no coordinates appear in this record. No settings or plans changed, and no
+jobs or forecast requests were started. Each final crop was visually checked.
+
+### rigs-dew-grid-013.jpg
+
+- **Capture:** 2026-11-05T02:56:51.514036+00:00; 1025 × 199 px.
+- **SHA-256:** `fada768978b54bef5aaf946d27b48f9a90dbe26cf2925fbdfa849b686469193c`.
+- **State:** From November 4, seven nights through November 10, all five rig filters on; Updated 06:55 PM. Crop shows only the two sfro rigs, starfront-redcat61 and starfront-ultracat131, and Cloud/Dew/Moon bars. November 9 has 9.4 clear hours of 11.5 dark hours, with a dew drop; RedCat has 8.4 planned hours and UltraCat 8.3. November 7 shows cloud and dew icons. Saved cloud threshold 30%, dew limit 2 °C.
+- **Reshoot:** Open Rigs > Nights at the recorded URL. Set From to 2026-11-04 and seven nights; leave all rig filters on. Capture the two sfro rows and Cloud/Dew/Moon bars. Exclude the site heading and coordinates. Dates will need to be stated in the caption because they are outside the crop. Forecast values will change; do not change the forecast to reproduce these numbers.
+- **Privacy:** Geographic coordinates excluded by crop; no EXIF.
+
+### night-dew-schedule-013.jpg
+
+- **Capture:** 2026-11-05T02:57:48.387740+00:00; 1401 × 455 px.
+- **SHA-256:** `2c4a7d86c513fd4062db76c759bb2448d929c87c947efdda42fed04c62a667c3`.
+- **State:** starfront-redcat61, Monday November 9; Target Scheduler decides. Site time zone America/Chicago. Dark 06:37 PM–06:07 AM, 11.5 h; clear until 04:00 AM, 9.4 h. Open-Meteo fetched 06:53 PM (browser local time). Sh2 119 SII 07:06 PM–01:09 AM, 35 frames; IC 447 G 01:09 AM–03:56 AM, 31 frames. Legend: Cloud none over 30%; Dew within 2 °C 04:00 AM–07:00 AM. No target block selected and no tooltip visible.
+- **Reshoot:** Open Rigs > Nights, choose From 2026-11-04 and seven nights, then select starfront-redcat61 on November 9. The URL does not store this selection. Scroll to show the title, forecast summary, whole schedule and legend. Exclude all site headings above the panel. Do not mark or edit the night.
+- **Privacy:** Geographic coordinates excluded by crop; no EXIF.
+
+### site-weather-forecast-013.jpg
+
+- **Capture:** 2026-11-05T02:58:38.873326+00:00; 983 × 379 px.
+- **SHA-256:** `a31c0357b9ea0e624266f7d3179b05a8a9b2aba67a04b0254a370813f86bc426`.
+- **State:** Settings > Presets > Sites > Edit sfro, Weather forecast fieldset. Saved Open-Meteo, Clear at or under 30% cloud, No imaging within 2 °C of dew point. Fetched Nov 4 06:53 PM; covers until Nov 20 11:00 AM; Plans use it until Nov 5 06:53 AM; next refresh Nov 4 09:53 PM (browser local times). Fetch now focused for scrolling, not clicked. Location and Horizon above this crop are excluded.
+- **Reshoot:** Open Settings > Presets > Sites > Edit sfro. Scroll to Weather forecast. Capture the entire fieldset, status and provider attribution. Exclude latitude, longitude, horizon and Save site. Do not edit values, click Fetch now or save. Close Settings after capture.
+- **Privacy:** Geographic coordinates excluded by crop; no EXIF.
