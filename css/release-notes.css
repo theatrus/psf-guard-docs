@@ -1,0 +1,6 @@
+/* Keep linked headings below the fixed site header. */
+.docs-main :is(h2, h3) { scroll-margin-top: 6rem; }
+
+/* Separate steps without making each one a full paragraph. */
+.docs-main li + li { margin-top: .5rem; }
+.docs-main li > p { margin-block: .5rem; }
