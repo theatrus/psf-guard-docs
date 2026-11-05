@@ -1,0 +1,87 @@
+{
+  "captured_date": "2026-11-04",
+  "server": "https://psf-guard.atpn.co",
+  "server_version_observed": "0.13.0",
+  "deployed_commit": null,
+  "source_review_commit": "469cad36a34876bca20b935d1391df0e7bec2e2d",
+  "frontend_asset": "https://psf-guard.atpn.co/assets/index-DQ0OvZFj.js",
+  "release_status": "upcoming; UI version does not prove publication",
+  "environment": {
+    "browser": "Chrome",
+    "css_viewport": [
+      1931,
+      1313
+    ],
+    "source_image_pixels": [
+      1931,
+      1313
+    ],
+    "timezone": "America/Los_Angeles",
+    "theme": "dark",
+    "zoom_percent": null,
+    "device_pixel_ratio": null,
+    "note": "Zoom and DPR were not rechecked in this capture pass."
+  },
+  "method": "Chrome tab full-viewport JPEG through cua_repl; rectangular pixel crops saved at JPEG quality 95 without EXIF. No synthetic content or data edits.",
+  "privacy": "All actual geographic coordinates are outside the final crops. Raw screenshots remain outside both repositories. Each final crop was visually checked before commit.",
+  "live_changes": "Navigation, expansion and scroll only. No settings, marks, plans or grades saved; no jobs or forecast requests started.",
+  "captures": [
+    {
+      "file": "rigs-dew-grid-013.jpg",
+      "captured_at": "2026-11-05T02:56:51.514036+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence&rigsTab=nights",
+      "crop_pixels": [
+        265,
+        605,
+        1290,
+        804
+      ],
+      "width": 1025,
+      "height": 199,
+      "sha256": "fada768978b54bef5aaf946d27b48f9a90dbe26cf2925fbdfa849b686469193c",
+      "state": "From November 4, seven nights through November 10, all five rig filters on; Updated 06:55 PM. Crop shows only the two sfro rigs, starfront-redcat61 and starfront-ultracat131, and Cloud/Dew/Moon bars. November 9 has 9.4 clear hours of 11.5 dark hours, with a dew drop; RedCat has 8.4 planned hours and UltraCat 8.3. November 7 shows cloud and dew icons. Saved cloud threshold 30%, dew limit 2 °C.",
+      "reshoot": "Open Rigs > Nights at the recorded URL. Set From to 2026-11-04 and seven nights; leave all rig filters on. Capture the two sfro rows and Cloud/Dew/Moon bars. Exclude the site heading and coordinates. Dates will need to be stated in the caption because they are outside the crop. Forecast values will change; do not change the forecast to reproduce these numbers.",
+      "redactions": [
+        "Geographic coordinates excluded by crop."
+      ]
+    },
+    {
+      "file": "night-dew-schedule-013.jpg",
+      "captured_at": "2026-11-05T02:57:48.387740+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence&rigsTab=nights",
+      "crop_pixels": [
+        257,
+        640,
+        1658,
+        1095
+      ],
+      "width": 1401,
+      "height": 455,
+      "sha256": "2c4a7d86c513fd4062db76c759bb2448d929c87c947efdda42fed04c62a667c3",
+      "state": "starfront-redcat61, Monday November 9; Target Scheduler decides. Site time zone America/Chicago. Dark 06:37 PM–06:07 AM, 11.5 h; clear until 04:00 AM, 9.4 h. Open-Meteo fetched 06:53 PM (browser local time). Sh2 119 SII 07:06 PM–01:09 AM, 35 frames; IC 447 G 01:09 AM–03:56 AM, 31 frames. Legend: Cloud none over 30%; Dew within 2 °C 04:00 AM–07:00 AM. No target block selected and no tooltip visible.",
+      "reshoot": "Open Rigs > Nights, choose From 2026-11-04 and seven nights, then select starfront-redcat61 on November 9. The URL does not store this selection. Scroll to show the title, forecast summary, whole schedule and legend. Exclude all site headings above the panel. Do not mark or edit the night.",
+      "redactions": [
+        "Geographic coordinates excluded by crop."
+      ]
+    },
+    {
+      "file": "site-weather-forecast-013.jpg",
+      "captured_at": "2026-11-05T02:58:38.873326+00:00",
+      "url": "https://psf-guard.atpn.co/#/rigs?db=db-93617230&project=6&current=1166&scoreScope=target-filter%3AR&target=6&returnTo=sequence&rigsTab=nights",
+      "crop_pixels": [
+        432,
+        790,
+        1415,
+        1169
+      ],
+      "width": 983,
+      "height": 379,
+      "sha256": "a31c0357b9ea0e624266f7d3179b05a8a9b2aba67a04b0254a370813f86bc426",
+      "state": "Settings > Presets > Sites > Edit sfro, Weather forecast fieldset. Saved Open-Meteo, Clear at or under 30% cloud, No imaging within 2 °C of dew point. Fetched Nov 4 06:53 PM; covers until Nov 20 11:00 AM; Plans use it until Nov 5 06:53 AM; next refresh Nov 4 09:53 PM (browser local times). Fetch now focused for scrolling, not clicked. Location and Horizon above this crop are excluded.",
+      "reshoot": "Open Settings > Presets > Sites > Edit sfro. Scroll to Weather forecast. Capture the entire fieldset, status and provider attribution. Exclude latitude, longitude, horizon and Save site. Do not edit values, click Fetch now or save. Close Settings after capture.",
+      "redactions": [
+        "Geographic coordinates excluded by crop."
+      ]
+    }
+  ]
+}
