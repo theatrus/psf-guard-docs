@@ -23,7 +23,7 @@ const docsNavigation = [
     label: "Start",
     pages: [
       ["index.html", "Getting Started"],
-      ["new-in-0.13.html", "New in 0.13 (preview)"],
+      ["new-in-0.13.html", "New in 0.13"],
       ["release-notes-0.13.html", "0.13 Release Notes"],
       ["new-in-0.12.html", "New in 0.12"],
       ["release-notes-0.12.html", "0.12 Release Notes"],
