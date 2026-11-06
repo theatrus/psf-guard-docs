@@ -343,12 +343,20 @@ function gtag_report_demo() {
     <li>A night with no flats shows the nearest flat the match refused only for
       its rotator angle, how far off it is, and the limit: the usual cause when a
       rotator moved.</li>
-    <li>Each night lists the masters from other software that fit its lights:
-      used, matching but not used, or not used with the readings that
-      disagree, such as <code>rotation light=92.6deg master=94.7deg</code>.</li>
+    <li>Each night lists masters from other software as used, matching but not
+      used, or not used with the readings that disagree, such as
+      <code>rotation light=92.6deg master=94.7deg</code>. When a stack uses an
+      external flat master, the report uses that master's flat date and age.</li>
+    <li>A night without same-night flats lists up to three nearer raw-flat groups
+      that were not used, with reasons such as a different rotator angle or too
+      few flats to build a master.</li>
     <li>For each night and filter with lights that cannot be calibrated, the report
     explains why. Click the entry to open those lights in Images.</li>
   </ul>
+  <p>A matching master from the light's own night keeps the light eligible even
+  when raw flats are older. Stacks use that master, and exports include it
+  instead of the older raw flats. The report checks one representative light
+  per night and filter using the same rules as a stack.</p>
   <p>Warnings list kinds with no matches, nights without same-night flats, and
   flats more than a month from their lights. The report leaves rejected
   lights out, so a night rejected for cloud does not show as lacking flats;
@@ -356,6 +364,7 @@ function gtag_report_demo() {
 
 
   <figure>
+    <!-- RESHOOT: calibration-coverage-report.png | P2. After the main server includes the adopted-master coverage fix, open an existing project report showing a used external flat master or reasons nearer raw flats were not used. Record the project, night, filter and selected masters. Do not import frames or start processing to stage the shot. -->
     <img src="../assets/calibration-coverage-report.png" loading="lazy" alt="The report separates Poor calibration from findings that need review and lists the affected lights." width="1240" height="1414">
     <figcaption>The report separates Poor calibration from findings that need review and lists the affected lights.</figcaption>
   </figure>

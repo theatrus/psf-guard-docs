@@ -197,6 +197,23 @@ function gtag_report_demo() {
 <p><strong>Linux:</strong> the RPM and Debian packages install a <code>psf-guard-worker</code> systemd service without enabling it. Set the address and token in <code>/etc/psf-guard/worker.conf</code>. On Debian, first copy <code>/usr/share/doc/psf-guard/worker.conf.example</code> there with permissions that only root can read. Start it with:</p>
 <pre><code>sudo systemctl enable --now psf-guard-worker
 journalctl -u psf-guard-worker -f</code></pre>
+<h2 id="proxy-uploads">Fix an upload rejected by a proxy</h2>
+<p>A reverse proxy can refuse a worker's result before it reaches PSF Guard. The failed run and worker log identify an upload refused as too large, including the file and the limit to check.</p>
+<ol>
+<li>Read the failed run or worker log for the refused file and upload path.</li>
+<li>Raise the proxy's upload limit for <code>/api/workers/v1/</code>, including any prefix in the server URL. For nginx, set <code>client_max_body_size</code> to allow the result file.</li>
+<li>Reload the proxy configuration and run the processing again.</li>
+</ol>
+<p>PSF Guard accepts worker results up to 16 GiB. For nginx, this example permits that size and streams the request to PSF Guard:</p>
+<pre><code>location /api/workers/v1/ {
+    client_max_body_size 16g;
+    proxy_request_buffering off;
+    proxy_read_timeout 600s;
+    proxy_pass http://127.0.0.1:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+}</code></pre>
+<p>Adjust the route and upstream address for your server. A connection failure alone does not prove that the upload limit caused it; check the proxy log.</p>
 <p>For shared storage, path mappings, service accounts, GPU setup and recovery, read the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/REMOTE_WORKERS.md">full worker guide</a>.</p>
 
 </main>

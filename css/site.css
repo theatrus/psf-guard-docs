@@ -73,6 +73,7 @@ pre .p { color: var(--teal); } /* prompt/binary */
 h1, h2, h3 { line-height: 1.25; letter-spacing: -0.015em; }
 h2 { font-size: 1.7rem; margin-top: 2.6rem; }
 h3 { font-size: 1.2rem; margin-top: 2rem; }
+.docs-main :is(h2, h3)[id] { scroll-margin-top: 6rem; }
 
 table {
   border-collapse: collapse;
