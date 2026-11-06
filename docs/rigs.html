@@ -194,7 +194,7 @@ function gtag_report_demo() {
   <p>The selected rig's header stays above its setup. Choose a section from
   the sidebar on a desktop or the tabs on a narrow screen:
   <strong>Optics</strong>, <strong>Site</strong>, <strong>Limits and
-  delivery</strong> and <strong>Collaboration</strong>. Edits stay in the form
+  delivery</strong>, <strong>Weather</strong> and <strong>Collaboration</strong>. Edits stay in the form
   while you switch sections or collapse the setup;
   <strong>Save rig profile</strong> saves them, and <strong>Unsaved
   changes</strong> appears beside it until you save.</p>
@@ -311,6 +311,7 @@ function gtag_report_demo() {
   at its planned target, dotted and labeled <em>at target</em>.</p>
 
   <figure>
+    <!-- RESHOOT: rigs-live-013.jpg | P2. After the main server includes weather support, capture Rigs Live with the Weather column and current contact labels. Record whether rigs have reported; do not fabricate telemetry. Redact any site coordinates with an image edit tool before committing. -->
     <img src="../assets/rigs-live-013.jpg" alt="Rigs Live with five rigs and Tonight links." width="2580" height="685" loading="lazy">
     <figcaption>None of these five rigs has reported yet. Tonight links open the available schedules.</figcaption>
   </figure>
@@ -321,19 +322,43 @@ function gtag_report_demo() {
       <tr><td>Link</td><td><em>Online</em> within three minutes of any plugin call,
         <em>Quiet</em> within thirty, <em>Offline</em> beyond, <em>Never seen</em>
         before the first.</td></tr>
-      <tr><td>Doing</td><td>Phase, target, current operation and how long, wait
+      <tr><td>Now</td><td>Phase, target, current operation and how long, wait
         reason, safety, queue depth and errors, from the last status report. A
         report older than its stated lifetime is marked stale.</td></tr>
-      <tr><td>Contact</td><td>How long since the rig pulled its program, checked in,
-        and reported status.</td></tr>
-      <tr><td>Frames</td><td>Saved frames grading has not accepted yet.</td></tr>
-      <tr><td>Plans</td><td>Activated plans the rig is assigned to, each a link to
-        its workspace.</td></tr>
+      <tr><td>Weather</td><td>N.I.N.A. reported weather and the site's forecast,
+        shown separately with missing or stale data marked.</td></tr>
+      <tr><td>Program pull</td><td>Time since the rig last pulled its program,
+        with the revision when available.</td></tr>
+      <tr><td>Check-in</td><td>Time since the rig last checked in, plus saved frames
+        awaiting grading.</td></tr>
+      <tr><td>Status report</td><td>Time since the rig last reported status.</td></tr>
+      <tr><td>Assigned</td><td>Activated plans assigned to the rig, linked to
+        their workspaces.</td></tr>
+      <tr><td>Tonight</td><td>The rig's predicted night schedule, with a link
+        to open it.</td></tr>
     </table>
   </div>
   <p>The table refreshes every fifteen seconds. A read-only account cannot open
   Settings, so Rigs › Live shows rig setup and the template library read only
   under the table.</p>
+
+  <!-- SHOT: rig-weather-013.png | P2. After the main server includes weather support, open a rig Weather tab with its cached site forecast. Record missing NINA reports honestly until a compatible plugin supplies real reports. Redact latitude and longitude with an image edit tool before committing. Do not change the site or trigger acquisition to stage the shot. | Compare reported weather and the site forecast separately. -->
+  <h3 id="weather">Check a rig's weather</h3>
+  <div class="callout info"><strong>Plugin update required.</strong> 0.13 includes server support for weather reports and optional holds between exposures. The published Director 0.1.0.3 Beta 1 does not include these controls; weather reporting and holds need a later plugin update.</div>
+  <ol>
+    <li>Open <strong>Rigs › Live</strong> to compare <strong>NINA reported</strong> weather and the site's <strong>Forecast</strong>.</li>
+    <li>Open the rig's <strong>Weather</strong> tab for supported readings and forecast details.</li>
+    <li>Expand <strong>Reported weather history (24 hours)</strong> for earlier reports once a compatible plugin sends them.</li>
+  </ol>
+  <p>Missing readings stay blank. <strong>Refresh weather</strong> reads the server's cached data; it does not request a fresh forecast from the provider. N.I.N.A.'s source can be a sensor or a weather service. Reports do not change image grades.</p>
+  <p>With the later plugin update, enable <strong>Send NINA weather telemetry to PSF Guard</strong> in its settings to send readings. To use weather holds:</p>
+  <ol>
+    <li>Open <strong>Director Session › Session › Weather and roof</strong>.</li>
+    <li>Choose <strong>Hold and resume</strong>.</li>
+    <li>Enable <strong>Use PSF Guard site forecast</strong>, <strong>Use NINA reported cloud cover</strong>, or both. Both are off by default.</li>
+  </ol>
+  <p>Every selected source must be fresh and clear before imaging can resume. Forecast holds use the site's cloud threshold and optional dew limit, including a paid source configured on the server. Missing cloud values, gaps, stale data or a forecast for the wrong location cannot clear a hold. Check the <strong>Weather</strong> tab for the problem and the rig's <strong>Site</strong> tab for its planning site and coordinates.</p>
+  <p>A weather hold lets the current exposure finish saving. The physical safety monitor and enclosure interlocks still govern immediate interruption and safe shutdown. See the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/DIRECTOR.md#weather-telemetry-and-director-holds">weather timing and recovery limits</a>.</p>
 
   <h2 id="nights">Plan each rig's nights</h2>
   <p><strong>Early beta.</strong> Open <strong>Rigs › Nights</strong> to compare your rigs across 7, 14 or 31 nights. Each rig needs a site. Choose <strong>From</strong> for a starting date or <strong>Tonight</strong> for the current observing night. Each cell shows clear dark hours, the Moon and the plans the rig would shoot. A red cell has no clear dark hours, even if the forecast leaves daylight hours clear.</p>
@@ -353,12 +378,12 @@ function gtag_report_demo() {
   <h3 id="availability">Mark available hours</h3>
   <p>With editor access, select a night and use <strong>Mark this night</strong>. Choose <strong>Available</strong>, <strong>Not available</strong> or <strong>Limited</strong>. For limited hours, a blank <strong>From</strong> starts at dusk and a blank <strong>To</strong> ends at dawn. Under <strong>For</strong>, choose one rig or every rig at its site, then click <strong>Save mark</strong>. Shift-click another night in the same rig's row to mark a range.</p>
   <p>Set the site's <strong>Time zone</strong> in <strong>Settings › Presets › Sites</strong>. Without one, entry times use the browser's zone; the form shows the zone in use. A rig is available only during hours allowed by both its own mark and the site's availability. <strong>Clear mark</strong> removes the manual mark; a site forecast can still apply.</p>
-  <p>Marks and forecasts change planning estimates only. They do not start, stop or block a rig. N.I.N.A. and the rig's safety monitor still control acquisition.</p>
+  <p>Marks change planning estimates only. Forecasts also change estimates by default; optional <a href="#weather">Director weather holds</a> need a separate opt-in and a later plugin update. N.I.N.A. and the rig's safety monitor still control acquisition.</p>
 
   <h3 id="forecasts">Use cloud and dew forecasts</h3>
   <p>Open <strong>Settings › Presets › Sites</strong> and click <strong>Edit</strong> for a site with latitude and longitude. Under <strong>Weather forecast → Forecast</strong>, choose <strong>Open-Meteo</strong> or <strong>MET Norway</strong>. Set <strong>Clear at or under</strong> to the maximum cloud cover, in percent, that counts as clear (30% by default).</p>
   <p>To exclude hours close to the dew point, set <strong>No imaging within</strong> to a whole number from 0 to 20 °C. For example, 2 °C excludes hours when air temperature is 2 °C or less above the dew point. Leave the field blank to ignore dew. If the forecast lacks temperature or dew point for an hour, only cloud cover counts. Click <strong>Save site</strong>.</p>
-  <p>Despite the label <strong>No imaging within</strong>, this setting changes planning estimates only. It does not stop a rig or close a roof. Forecasts do not confirm dew on your equipment; use the observatory's own safety monitor to control acquisition.</p>
+  <p>By default, <strong>No imaging within</strong> changes planning estimates only. With a compatible plugin update, a Director Session can also use this limit for optional <a href="#weather">weather holds</a>. Forecasts do not confirm dew on your equipment or replace the observatory's safety monitor and enclosure interlocks.</p>
   <figure>
     <img src="../assets/site-weather-forecast-013.jpg" alt="Weather forecast settings with Open-Meteo, a 30% cloud threshold and a 2 °C dew limit." width="983" height="379" loading="lazy">
     <figcaption>This site excludes hours above 30% cloud cover or within 2 °C of the dew point. Receipt, coverage and expiry times show when the forecast can restrict planning.</figcaption>
@@ -383,9 +408,9 @@ function gtag_report_demo() {
   <p>If PSF Guard updates the rig database but cannot write the Target Scheduler file, the panel explains the failure. Use <strong>Sync → Data Transfer → Send planning</strong> to send the saved change. If the files disagree before saving, review them in Data Transfer: <strong>Merge databases</strong> uses Target Scheduler's settings, while <strong>Send planning</strong> sends the rig database's settings.</p>
   <!-- SHOT: night-ts-settings-013.png | P2. Disposable Target Scheduler fixture with database management enabled: Change settings with a draft priority or active-state change and its predicted schedule. Record which files Save changes would write. Discard the draft; do not edit a live catalog. | Preview persistent Target Scheduler changes before saving. -->
 
-  <h2 id="director">Early beta: the upcoming Director plugin</h2>
+  <h2 id="director">Try the Director plugin (early beta)</h2>
   <div class="callout info">
-    <strong>Director is in early beta; direct acquisition is upcoming.</strong> Target Scheduler with
+    <strong>Director capture is in early beta.</strong> Target Scheduler with
     the <a href="sync-plugin.html">PSF Guard Sync plugin</a> is the recommended
     way to run a rig.
   </div>

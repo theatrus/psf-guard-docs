@@ -496,16 +496,20 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (3)
+## Redo (existing images) (5)
 
+- `calibration-coverage-report.png` — pages: calibration-grading
+  - P2. After the main server includes the adopted-master coverage fix, open an existing project report showing a used external flat master or reasons nearer raw flats were not used. Record the project, night, filter and selected masters. Do not import frames or start processing to stage the shot.
 - `import-reviewed-transfer.png` — pages: importing
   - P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures.
+- `rigs-live-013.jpg` — pages: rigs
+  - P2. After the main server includes weather support, capture Rigs Live with the Weather column and current contact labels. Record whether rigs have reported; do not fabricate telemetry. Redact any site coordinates with an image edit tool before committing.
 - `settings-unsaved-close.png` — pages: configuration
   - P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog.
 - `sky-live.jpg` — pages: sky
   - P2. Current Sky with Live enabled and actual pointing reports; table now lives in Rigs. Record whether mount position is measured or an at-target fallback. Update the caption to the captured state.
 
-## New screenshots (9)
+## New screenshots (10)
 
 - `export-left-out.png` — pages: exporting
   - P3. Carried from 0.12; capture only when its prerequisites are available. Library on psf-guard.atpn.co with a server export directory set and Leave out lights that can't be calibrated on: after Export → Start export on a project with lights that lack flats (rig c925-scheduler or starfront-redcat61), the finished export line reading "Exported …: N file(s) placed, M lights that can't be calibrated left out (<light>: <reason>) → <folder>"; crop the line with the project row it sits under
@@ -519,6 +523,8 @@ capture record and its history.
   - P2. Disposable Target Scheduler fixture with database management enabled: Change settings with a draft priority or active-state change and its predicted schedule. Record which files Save changes would write. Discard the draft; do not edit a live catalog.
 - `plan-send-again.png` — pages: rigs
   - P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it.
+- `rig-weather-013.png` — pages: rigs
+  - P2. After the main server includes weather support, open a rig Weather tab with its cached site forecast. Record missing NINA reports honestly until a compatible plugin supplies real reports. Redact latitude and longitude with an image edit tool before committing. Do not change the site or trigger acquisition to stage the shot.
 - `stack-color-progress.png` — pages: stacking
   - P3. Carried from 0.12; capture only when its prerequisites are available. Capture an already running color composition with RC-Astro from the header's background jobs list. Show the target, channel and tool progress, such as H-alpha: BlurXTerminator (42%), its progress bar and Stop. Do not stop the job. If no suitable job is running, use a disposable local catalog for a test run instead of starting work on the live server for a screenshot.
 - `stack-continuum-report-013.png` — pages: stacking
