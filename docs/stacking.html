@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -856,19 +858,28 @@ psf-guard stack-snr /path/to/lights --weight-by-noise</code></pre>
     sample points, and rejected those on noise or nebula.</figcaption>
   </figure>
 
+<h3 id="processing-tools">Choose processing tools</h3>
+<p>Tools are grouped by <strong>Sharpening</strong>, <strong>Noise reduction</strong> and <strong>Star removal</strong>. One available provider has a checkbox. With several providers, choose <strong>Off</strong> or one provider. Saved processing setups keep their choices.</p>
+<p>For the <strong>Seiza noise model</strong>, open <strong>Settings › Processing › Stacking › Processing tools</strong> and click <strong>Download both</strong> to install its model and ONNX Runtime. Downloads start only when requested. No RC-Astro license is needed. Adjust <strong>Grain</strong> and <strong>Mottle</strong> in the processing controls. CPU processing of a 60-megapixel stack can take tens of minutes.</p>
+<figure>
+<img src="../assets/processing-tools-014.jpg" alt="Processing tools with ready RC-Astro providers and optional Seiza downloads." loading="lazy" width="1056" height="783">
+<figcaption>RC-Astro is available on the connected Mac desktop worker. The Seiza model and runtime have not been downloaded.</figcaption>
+</figure>
+
+<p>You can enter an existing ONNX Runtime library or folder instead; leave the path blank to use the downloaded copy. Restart PSF Guard after changing the path of a runtime that has already run. To process on another computer, <a href="workers.html#noise-model">install the worker's model</a>.</p>
+
   <h3 id="deconvolution">Deconvolution and RC-Astro tools</h3>
   <p>Seiza deconvolution is off by default. Turn it on in <strong>View
   processing</strong> or per color input, and give the measured star FWHM in
   pixels. It is a view setting: the stack stays linear and unchanged, and the
   inspector offers the deconvolved FITS while it is on.</p>
-  <p>When the server has RC-Astro's <code>rc-astro</code> CLI installed and
-  licensed, <strong>RC-Astro tools</strong> offers BlurXTerminator,
+  <p>When RC-Astro is installed and licensed on the server or a connected worker,
+  the processing categories offer BlurXTerminator,
   NoiseXTerminator and StarXTerminator on the linear data, before the stretch,
   in <strong>View processing</strong> and on each color input.
   Star removal keeps both halves, with a <strong>Starless</strong> /
-  <strong>Stars</strong> switch and a stars FITS. Set
-  <code>PSF_GUARD_RC_ASTRO</code> when the CLI is not on the server's
-  <code>PATH</code>.</p>
+  <strong>Stars</strong> switch and a stars FITS. PSF Guard searches RC-Astro's installer folders as well as <code>PATH</code>.
+  Set <code>PSF_GUARD_RC_ASTRO</code> to select a different executable.</p>
   <p>Each field takes the range the installed tool accepts. A value outside it
   is marked with that range, and <strong>Apply processing</strong> or
   <strong>Apply processing stack</strong> stops and says which field is wrong.

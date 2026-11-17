@@ -2800,3 +2800,74 @@ jobs or forecast requests were started. Each final crop was visually checked.
 - **State:** Settings > Presets > Sites > Edit sfro, Weather forecast fieldset. Saved Open-Meteo, Clear at or under 30% cloud, No imaging within 2 °C of dew point. Fetched Nov 4 06:53 PM; covers until Nov 20 11:00 AM; Plans use it until Nov 5 06:53 AM; next refresh Nov 4 09:53 PM (browser local times). Fetch now focused for scrolling, not clicked. Location and Horizon above this crop are excluded.
 - **Reshoot:** Open Settings > Presets > Sites > Edit sfro. Scroll to Weather forecast. Capture the entire fieldset, status and provider attribution. Exclude latitude, longitude, horizon and Save site. Do not edit values, click Fetch now or save. Close Settings after capture.
 - **Privacy:** Geographic coordinates excluded by crop; no EXIF.
+
+## 0.14 Chrome captures — November 17, 2026
+
+Seven new captures illustrate Live, Sync setup, the Director beta card, server pairing, processing tools, offline maps and seasonal framing. The server reports **0.13.0**; its deployed commit and frontend/backend match are unknown. These are development-UI captures for 0.14 documentation, not proof of a released 0.14 binary. The locally prepared Live beta-badge removal and shorter sky-overlay key are not deployed in these images. The Live crop contains the table, excluding the old page-wide badge.
+
+Source: signed-in Chrome at `https://psf-guard.atpn.co/`, on macOS. Dark theme; viewport 1931 × 1375 CSS pixels; measured browser zoom 90%. Browser version and device pixel ratio were not exposed. Captures use the browser screenshot API. The recorded clip arguments account for 90% zoom; their rendered pixel dimensions are recorded separately. Six initial crops were replaced after review found cut-off labels. JPEG files are unedited; no compositing, resizing, masks or annotations. All crops exclude site coordinates and credentials. No settings, plans, grades or credentials were saved; no downloads, processing jobs or acquisitions were started. Four background jobs appeared during the session. The temporary framing view was returned to Now and fitted to its footprint.
+
+The machine-readable [capture manifest](captures-release-014-2026-11-17.json) records source URLs, timestamps, crops, dimensions and hashes. All final files were visually inspected.
+
+### rigs-live-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:09:35.295Z
+- **State:** Five rigs; all offline or never seen. Sync contacts and one stale stopped sequence; forecast unknown or stale.
+- **Reshoot:** Open Rigs > Live and wait for all five rows. Crop the table and provider attribution.
+- **Screenshot API clip:** `{"x": 225, "y": 172, "width": 1295, "height": 350}`.
+- **File:** 1439 × 389 JPEG; SHA-256 `db658c770053dee038855581cfa16db0d16f0e3b8c6e1ddba5df098b18238374`.
+
+### offline-sky-maps-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:09:50.749Z
+- **State:** DSS and both NSNS sets installed in the old cache folder; Move offered. No download, move, removal or save performed.
+- **Reshoot:** Open Settings > Storage & backups > Offline sky maps. Capture the three sets and folder controls.
+- **Screenshot API clip:** `{"x": 350, "y": 65, "width": 950, "height": 710}`.
+- **File:** 1056 × 789 JPEG; SHA-256 `522e364a6051e58913fd41dfe520f466f82748fecaa32c7c44a1c585a6db61c9`.
+
+### processing-tools-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:11:08.934Z
+- **State:** RC-Astro 2.6.10 ready on Mac desktop; Seiza model and ONNX Runtime not installed. No downloads or online license checks requested.
+- **Reshoot:** Settings > Processing > Stacking; scroll to Processing tools at the bottom.
+- **Screenshot API clip:** `{"x": 350, "y": 520, "width": 950, "height": 705}`.
+- **File:** 1056 × 783 JPEG; SHA-256 `fb4699abb20a088a184d5624e10e35c87a6fd9615e0df1175e1d7753654db326`.
+
+### rig-plugins-sync-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:10:35.303Z
+- **State:** starfront-redcat61: Sync on, paired 0.4.0.22; image uploads off; Director unpaired. No credentials generated or settings changed.
+- **Reshoot:** Settings > starfront-redcat61 > Rig setup > Plugins; capture the overview, Sync and Image uploads cards.
+- **Screenshot API clip:** `{"x": 380, "y": 340, "width": 890, "height": 840}`.
+- **File:** 989 × 933 JPEG; SHA-256 `f7e8ebd1dbfb277dbb13c7a359c67c2a319c2d560eac56b6b9db0a1a13e5e1a4`.
+
+### rig-director-beta-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:10:41.602Z
+- **State:** Director early beta: unpaired, equipment not reported, work not allowed, no open work.
+- **Reshoot:** On the same Plugins tab, scroll to the PSF Guard Director card. Do not generate a code or allow work.
+- **Screenshot API clip:** `{"x": 565, "y": 688, "width": 700, "height": 460}`.
+- **File:** 778 × 511 JPEG; SHA-256 `e253607b9b8c1a867bc25d69539f10e2f3da90e4cd1c70fe5a457604b6b91004`.
+
+### server-pairing-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/rigs
+- **Time:** 2026-11-17T18:11:02.134Z
+- **State:** No peer paired and no remote API key; server sync switch on. No pairing code or credential generated.
+- **Reshoot:** Settings > starfront-redcat61 > Sync; scroll to Other PSF Guard servers.
+- **Screenshot API clip:** `{"x": 350, "y": 790, "width": 950, "height": 435}`.
+- **File:** 1056 × 483 JPEG; SHA-256 `b077a77eeaa23d10c09e82b99d3983b087cbcf752150be6e6d1a7ee1ccbf3d40`.
+
+### framing-season-014.jpg
+
+- **Source:** https://psf-guard.atpn.co/#/plan?db=db-a01c581c&project=21&plan=051751d1-6b05-444e-9485-afbc6177dd5b
+- **Time:** 2026-11-17T18:03:31.064Z
+- **State:** Heart Mosaic, askar107phq; NSNS SHO offline; Season, 30 minutes, Nov 17–Dec 17 2026; target visible all 31 nights. Stage 132.82 degrees across; four locked panels; no framing saved.
+- **Reshoot:** Open Heart Mosaic > Framing. Expand Sky in view, select Season, keep 30 minutes, zoom out twice from 110-degree input, and scroll the right panel to the sky controls.
+- **Screenshot API clip:** `{"x": 85, "y": 210, "width": 1760, "height": 960}`.
+- **File:** 1956 × 1067 JPEG; SHA-256 `1eeef5752e98add06c084b9b292b92ce669c1b1a82132ffc68c16721c4bc1d24`.

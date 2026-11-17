@@ -1,4 +1,23 @@
-# Screenshot plan — 0.13 release preparation
+# Screenshot plan — 0.14 release preparation
+
+## November 17 — 0.14 release captures
+
+Seven Chrome captures now illustrate the changed 0.14 workflows. See the
+[capture record](assets/screenshot-captures.md#014-chrome-captures--november-17-2026)
+and [manifest](assets/captures-release-014-2026-11-17.json).
+
+The installed server reports 0.13.0 with an unknown deployed commit. Captions
+state the real conditions: all rigs offline or never seen, Director unpaired,
+noise model not installed, and older maps still in the cache. No data or
+settings were saved. The local wording pass has not been deployed.
+
+Still needed when genuine states are available: an active Sync exposure,
+a populated Needs activating Library filter (the live filter returned none),
+a completed Seiza noise-model result, and Director flat replacement with the
+matching beta plugin. Do not manufacture these states on the live catalog.
+Existing 0.13 captures remain historical examples; the older backlog below
+retains its prerequisites.
+
 
 ## November 4 cloud and dew follow-up
 
@@ -496,14 +515,12 @@ with the image, then replace its `SHOT` comment with the `<figure>`, or delete
 its `RESHOOT` comment. Delete this plan once no comments remain; keep the
 capture record and its history.
 
-## Redo (existing images) (5)
+## Redo (existing images) (4)
 
 - `calibration-coverage-report.png` — pages: calibration-grading
   - P2. After the main server includes the adopted-master coverage fix, open an existing project report showing a used external flat master or reasons nearer raw flats were not used. Record the project, night, filter and selected masters. Do not import frames or start processing to stage the shot.
 - `import-reviewed-transfer.png` — pages: importing
   - P2. Database > Sync > Data Transfer in a disposable fixture: show explicit Source and Destination and the preview before Apply. Never apply a transfer on live catalogs for a shot. Refresh guide usage; preserve 0.12 release-history figures.
-- `rigs-live-013.jpg` — pages: rigs
-  - P2. After the main server includes weather support, capture Rigs Live with the Weather column and current contact labels. Record whether rigs have reported; do not fabricate telemetry. Redact any site coordinates with an image edit tool before committing.
 - `settings-unsaved-close.png` — pages: configuration
   - P2. In a disposable local form, make a harmless unsaved edit and navigate to another Settings page. Capture the current warning, affected form and exact action labels. Keep editing, then discard the edit after capture. Never save test changes to a live catalog.
 - `sky-live.jpg` — pages: sky

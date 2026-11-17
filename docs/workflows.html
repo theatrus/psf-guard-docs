@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -169,6 +171,14 @@ function gtag_report_demo() {
     <div class="workflow-copy"><strong>Use the Sync plugin for N.I.N.A.</strong><p>The plugin transfers captures, plans and grades between the telescope and PSF Guard. Use the database transfer steps below when you need to copy between separate database files by hand.</p></div>
     <a class="workflow-link" href="sync-plugin.html">Connect N.I.N.A. →</a>
   </div>
+
+<h2 id="server-pairing">Pair another PSF Guard server</h2>
+<ol><li>On the receiving server, choose the database in Settings, open <strong>Sync › Other PSF Guard servers</strong>, and click <strong>Generate server pairing code</strong>.</li><li>On the sending server, choose <strong>Remote PSF Guard › Add peer</strong> and enter the URL and code.</li><li>Preview a transfer before applying it.</li></ol>
+<p>Each peer has its own credential. The receiver lists its pairing date and last sync; <strong>Remove</strong> revokes only that peer. Existing API-key peers keep working. The <strong>Remote API key</strong> and server-sync switch now live in this card, separate from the Sync plugin's <strong>Scheduler sync</strong>.</p>
+<figure>
+<img src="../assets/server-pairing-014.jpg" alt="Server pairing and remote API key controls." loading="lazy" width="1056" height="483">
+<figcaption>No server is paired and no API key exists in this example. The enabled switch alone permits no incoming sync.</figcaption>
+</figure>
 
   <h2 id="rejects">Archive rejected files</h2>
   <div class="workflow-note cli">
@@ -269,12 +279,11 @@ psf-guard empty-reject-trash --db my-db    <span class="c"># files past their ti
 psf-guard purge-removed --db my-db         <span class="c"># saved rows of emptied batches</span></code></pre>
 
   <h2 id="existing-database">Direct database access (deprecated)</h2>
-  <p>Your current Target Scheduler setup will keep working in 0.12, including
-  direct CLI/API access. A later update will create a PSF Guard catalog for you
-  and keep captures, plans and grades in sync with Target Scheduler. Separate
-  catalogs let us add features to PSF Guard and support new Target Scheduler
-  versions. We plan to remove direct database access in 0.13 or later.</p>
-  <p>For new Target Scheduler databases, choose <strong>Settings → Databases →
+  <p>Your current direct Target Scheduler connection keeps working in 0.14,
+  including direct CLI/API access. Direct access is deprecated; this release does
+  not automatically replace it. For a new connection, import the database into
+  a PSF Guard catalog and keep the source connected, or use PSF Guard Sync.</p>
+  <p>For new Target Scheduler databases, choose <strong>Settings › Databases &amp; rigs › New / import ›
   Import from Target Scheduler</strong> to import the database and set up sync.</p>
   <p><a href="importing.html#target-scheduler">Import a local TS file</a> and
   keep the source connected, or choose the

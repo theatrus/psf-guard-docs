@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -194,34 +196,21 @@ function gtag_report_demo() {
   </div>
 
   <h2 id="server">Pair N.I.N.A. with a catalog</h2>
-  <p>For a new catalog in 0.12, open <strong>Settings → Databases → Import from
-  Target Scheduler</strong> and choose <strong>Use the PSF Guard Sync plugin</strong>.
-  Add a shared image folder or an empty folder for uploads, then click
-  <strong>Create catalog for plugin</strong>. The pairing controls open automatically;
-  no local TS database file is required. For an existing catalog, click its
-  <strong>Edit</strong> button instead.</p>
-  <figure>
-    <img src="../assets/import-plugin-pairing.png" alt="Generate a one-use pairing code for the newly created plugin catalog." loading="lazy" width="1872" height="306">
-    <figcaption>Generate a fresh code for each client. This example uses a disposable test catalog.</figcaption>
-  </figure>
-  <ol>
-    <li>In PSF Guard, open <strong>Settings &rarr; Databases</strong> and edit
-      the destination catalog.</li>
-    <li>To receive image files, tick <strong>Accept remote image
-      uploads</strong>, choose a <strong>Receive directory</strong> from the
-      catalog's image folders, and pick a <strong>Folder layout</strong>:
-      <strong>Receive directory</strong> keeps every upload in that folder;
-      <strong>Match catalog</strong> files each one into folders laid out like
-      the rest of the catalog. Save the catalog.</li>
-    <li>Click <strong>Generate pairing code</strong> under <strong>Connect PSF Guard Sync in N.I.N.A.</strong>, and copy the code.</li>
-    <li>In N.I.N.A., open <strong>Plugins &rarr; Installed &rarr; PSF Guard
-      Sync</strong>. Enter the <strong>Server URL</strong>, paste the code into
-      <strong>One-time pairing code</strong>, and click <strong>Pair</strong>.
-      The server returns the catalog ID, shown under <strong>Catalog
-      ID</strong>, and a credential for this N.I.N.A. profile.</li>
-    <li>Click <strong>Test connection</strong>, then choose what to upload and
-      sync.</li>
-  </ol>
+<p>For a new catalog, open <strong>Settings › Databases &amp; rigs › New / import</strong> and choose <strong>Use the PSF Guard Sync plugin</strong>. Add a shared image folder or an empty folder for uploads, then click <strong>Create catalog for plugin</strong>. No local Target Scheduler file is required.</p>
+<ol>
+<li>Choose the destination database in Settings, then open <strong>Rig setup › Plugins</strong>.</li>
+<li>Under <strong>PSF Guard Sync › Pair</strong>, click <strong>Generate Sync pairing code</strong>.</li>
+<li>In N.I.N.A., open <strong>Plugins › Installed › PSF Guard Sync</strong>. Enter the <strong>Server URL</strong> and <strong>One-time pairing code</strong>, then click <strong>Pair</strong>.</li>
+<li>Click <strong>Test connection</strong> in N.I.N.A. and choose what to sync.</li>
+<li>To receive files, choose a <strong>Receive folder</strong> and <strong>Folder layout</strong> in PSF Guard's <strong>Image uploads</strong> card, then click <strong>Turn on image uploads</strong>. <strong>All in the receive folder</strong> uses one folder; <strong>Folders like the database's</strong> follows the catalog's layout.</li>
+</ol>
+<p>Pair each N.I.N.A. profile with its own database. The updated Sync plugin adds new projects to the profile currently open in N.I.N.A. Older plugins use the last profile they reported.</p>
+<figure>
+<img src="../assets/rig-plugins-sync-014.jpg" alt="Sync pairing and shared image-upload controls." loading="lazy" width="989" height="933">
+<figcaption>Sync is paired and scheduler sync is on. Image uploads remain off until a receive folder is chosen and uploads are enabled.</figcaption>
+</figure>
+
+
   <p>A remote server needs an <code>https://</code> URL. Plain
   <code>http://</code> works only for a loopback address such as
   <code>http://127.0.0.1:3000</code>.</p>
@@ -231,14 +220,9 @@ function gtag_report_demo() {
   belongs to one N.I.N.A. profile and one server URL; change either and pair
   again. Pairing turns on scheduler sync for the catalog. It does not turn on
   image uploads or choose the receive directory.</p>
-  <p><strong>Paired clients</strong>, in the same editor, lists each paired
-  profile by machine and profile name. <strong>Revoke</strong> cuts off one
-  and leaves the others alone.</p>
-  <div class="callout info">
-    Only editors can generate pairing codes or revoke clients. In Settings
-    they sit in the catalog's editor, which needs database management because it lets you set the catalog's folders. See
-    <a href="authentication.html#sync">Server Accounts</a>.
-  </div>
+<p><strong>Pair</strong> lists each client, plugin version and last contact. <strong>Remove</strong> revokes that client without affecting others. <strong>Scheduler sync</strong> and <strong>Image uploads</strong> have independent controls that apply immediately. The same upload settings serve Director.</p>
+<p>Only editors can pair or remove clients. Folder changes require database-management access. See <a href="authentication.html#sync">Server Accounts</a>.</p>
+
 
   <figure class="feature-shot">
     <img src="../assets/nina-sync-settings-pairing.png" alt="PSF Guard Sync settings in N.I.N.A., showing the server URL, pairing controls and capture automation options." loading="lazy">

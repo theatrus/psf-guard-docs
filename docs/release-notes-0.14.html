@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>0.14 Release Notes — PSF Guard</title>
+  <meta name="description" content="PSF Guard 0.14: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
+  <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+  <link rel="stylesheet" href="../css/release-notes.css?v=1">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html" class="active" aria-current="page">0.14 Release Notes</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+<h1>0.14 Release Notes</h1>
+<p><a href="new-in-0.14.html">0.14 overview</a> · <a href="release-notes-0.13.html">0.13 release notes</a></p>
+<p>PSF Guard 0.14 shows what your N.I.N.A. rigs are doing, helps you find plans that need activation, and adds seasonal sky visibility, offline sky maps and Seiza noise reduction.</p>
+<p><strong>Start with:</strong> <a href="#upgrading">Upgrading</a> · <a href="#follow-your-rigs-on-live">Live</a> · <a href="#find-and-activate-plans">Planning</a> · <a href="#see-which-sky-your-rig-can-reach">Framing</a> · <a href="#choose-processing-tools">Processing</a> · <a href="#connect-and-maintain-catalogs">Sync</a></p>
+<h2 id="upgrading">Upgrading</h2>
+<ul>
+<li><strong>Back up your planning data before updating.</strong> After 0.14 upgrades the planning store, older PSF Guard versions cannot open it. Keep a pre-upgrade backup if you may need to return to 0.13. See the <a href="backups.html">backup guide</a>.</li>
+<li><strong>Update stack workers with the server.</strong> Stack builds require the same PSF Guard release. Workers on the previous release can still run RC-Astro processing steps, but need 0.14 for remote license checks and the noise model.</li>
+<li><strong>Allow time for stack and master rebuilds.</strong> Seiza 0.52 changes the stacking output version from 0.58.0 to 0.59.0. PSF Guard rebuilds stacks and calibration masters when next needed. Saved processing choices remain unchanged; compatible cached processing results are reused. PSF Guard already used quadratic registration, so the new Seiza default should not change those pixels.</li>
+<li><strong>Update the N.I.N.A. plugins for their new features.</strong> Detailed Sync sequence status and new-project profile assignment need the matching Sync plugin. Director uploads, replacement flats, transit limits and recovery changes need the matching Director plugin. <strong>Director remains early beta.</strong> Live monitoring with Target Scheduler and PSF Guard Sync does not require Director.</li>
+<li><strong>Keep SQLite companion files with a running catalog.</strong> Local-disk catalogs now use a write-ahead log. The <code>-wal</code> and <code>-shm</code> files beside a catalog are part of its active database state. Network-share catalogs keep their previous mode.</li>
+</ul>
+<p>Your saved pairings, processing setups and sync connections keep working. Direct access to a Target Scheduler database remains deprecated but supported; 0.14 does not automatically replace it. For a new connection, use <strong>Settings › Databases &amp; rigs › New / import</strong> to import a local TS file or connect the PSF Guard Sync plugin. If you skipped 0.13, also read its <a href="release-notes-0.13.html#upgrading">upgrade notes</a>.</p>
+<h2 id="follow-your-rigs-on-live">Follow your rigs on Live</h2>
+<p>Open <strong>Rigs › Live</strong> to see each rig&#x27;s connection, current activity, weather, plugins, active projects and tonight&#x27;s predicted work. Target Scheduler rigs appear through PSF Guard Sync, without opening Planning first.</p>
+<ul>
+<li><strong>Now</strong> shows the exposure and count, autofocus, slews and waits reported by the updated Sync plugin. It also shows the last frame, dither and autofocus. Old reports are marked stale. A rig with no report is not shown as exposing.</li>
+<li><strong>Plugins</strong> lists the plugins that have contacted PSF Guard. Open <strong>History</strong> for their recent actions and last contact. A failed or refused Sync action stays visible until that same action succeeds; successful uploads do not hide it.</li>
+<li><strong>Projects</strong> links to that rig&#x27;s active projects in the Library.</li>
+<li><strong>Weather</strong> separates <strong>Observed</strong> conditions from the site&#x27;s <strong>Forecast</strong>. Freshness no longer flickers when the browser and server clocks differ. Forecast providers are credited below the table.</li>
+</ul>
+<p>Sync-reported exposures also count in the header&#x27;s rig summary, appear on <strong>Sky › Live</strong>, and show in <strong>Night details</strong>. Rig polling now uses cached summaries instead of opening each database every 15 seconds.</p>
+<p><strong>Live with Sync is a regular monitoring feature. Director acquisition remains an early beta</strong>, with warnings on its controls rather than on the entire Live view. Night schedules remain estimates.</p>
+<h2 id="set-up-both-nina-plugins-in-one-place">Set up both N.I.N.A. plugins in one place</h2>
+<p>Open a database in <strong>Settings › Databases &amp; rigs</strong>, then choose <strong>Rig setup › Plugins</strong>. Separate cards show <strong>PSF Guard Sync</strong>, <strong>Image uploads</strong> and <strong>PSF Guard Director</strong>. <strong>Plugins on this rig</strong> shows which are on and what each does. Without planning enabled, Rig setup shows only the Sync plugin.</p>
+<ul>
+<li>Pair Sync with <strong>Generate Sync pairing code</strong>. Each paired client shows its plugin version and last connection; older clients get an explanation when they cannot assign new projects to the open N.I.N.A. profile.</li>
+<li><strong>Scheduler sync</strong> and <strong>Image uploads</strong> have <strong>Turn on</strong> and <strong>Turn off</strong> controls that apply immediately. The former combined receive-and-pairing form is gone. The page refreshes when you return to it.</li>
+<li>Both plugins use the same image receive folder, folder layout, import and calibration matching. A Director-only rig can enable uploads without pairing Sync. Director uploads also appear in Live&#x27;s History.</li>
+<li><strong>Settings › Sync</strong> keeps transfers and Target Scheduler sync. Its <strong>Open Rig setup</strong> link opens plugin setup.</li>
+</ul>
+<p>Under <strong>Rig setup › Optics › Filters</strong>, enter the rig&#x27;s filter names or copy names from its templates and frames. Planning and activation warn about a filter that the rig does not have. No Director plugin is needed for this check. <strong>Rig setup › Weather › Edit site weather</strong> opens the site&#x27;s forecast settings.</p>
+<p><strong>Remove</strong> is available beside a database and in Rig setup. It permanently deletes rig settings, Director history and pairing, and removes the rig from plans. The database file and images stay on disk. A rig with open work must close that work first; the confirmation dialog lists what will be removed.</p>
+<h2 id="find-and-activate-plans">Find and activate plans</h2>
+<p>In the Library, choose <strong>Show › Needs activating</strong> to find saved plans whose rigs do not have the current plan. Click a plan&#x27;s <strong>Activate</strong> button to review its activation preview without leaving the Library.</p>
+<p>This includes new plans, saved framing or exposure changes, added rigs, remote sites that missed an activation, and Target Scheduler rows edited in N.I.N.A. Plans imported from Target Scheduler and left unedited are excluded. For plans activated before 0.14, checking for later Target Scheduler changes starts after their next activation.</p>
+<p>Plans assigned to a rig with no frames now appear under that database&#x27;s <strong>Plans with nothing captured yet</strong> section, even if another rig has captured frames for the same plan. The header&#x27;s <strong>Plans waiting for frames</strong> section opens these plans from any page and includes plans without a database.</p>
+<p>Database, Show, search and Sort stay in the URL and survive a trip to Planning and back. Opening an unfiltered Library restores the last filters in that browser tab, except when returning to a specific project. The header and the Library&#x27;s Database filter stay in sync.</p>
+<p>A plan can activate on a new rig before any frames or plugin reports arrive. The updated Sync plugin places its project in the N.I.N.A. profile you have open on the next pull. Older plugins use the last reported profile. Pair each N.I.N.A. profile with its own PSF Guard database. Activation also tolerates leftover rows from deleted projects without failing a foreign-key check.</p>
+<h2 id="see-which-sky-your-rig-can-reach">See which sky your rig can reach</h2>
+<p>In <strong>Planning › Framing</strong>, use <strong>Sky in view</strong> to check the rig&#x27;s horizon and altitude limits before choosing a target. Open <strong>Time range and overlay key</strong> to set a minimum uninterrupted time above those limits while the Sun is more than 12° below the horizon.</p>
+<ul>
+<li><strong>Now</strong> covers tonight and the next 30 nights.</li>
+<li><strong>Year</strong> shows sky available on at least seven nights over the coming year; those nights need not be consecutive.</li>
+<li><strong>Season</strong> shows a 31-night window. Drag <strong>Time of year</strong> to compare seasons.</li>
+</ul>
+<p>Shading marks sky that falls short of the selected period&#x27;s threshold; hatching marks sky never in view. The solid line marks the threshold and the dashed line marks sky reachable on at least one night. Year estimates the nights between weekly samples; its boundary is within about 1° of a calculation using every night. Season follows the coarser 2° grid. These are visibility estimates, not weather predictions or proof of captured coverage.</p>
+<h3 id="install-offline-sky-maps">Install offline sky maps</h3>
+<p>Open <strong>Settings › Storage &amp; backups › Offline sky maps</strong>. Choose one of N.I.N.A.&#x27;s three whole-sky image sets by size and license, then click <strong>Install</strong>. PSF Guard checks the download&#x27;s size and SHA-256 before installing it. Progress appears in Settings and the job list, where <strong>Stop</strong> cancels the job. Nothing downloads until you ask, including the first-use offer in Framing.</p>
+<p>Maps now live outside the cache, so clearing or moving the cache leaves them in place. Older maps still work; use <strong>Move</strong> to move one out of the cache. <strong>Remove</strong> deletes the selected map&#x27;s files. The CLI installs into the same folder with <code>psf-guard sky-maps install</code>; use <code>--dir</code> instead of <code>--cache-dir</code>.</p>
+<h2 id="choose-processing-tools">Choose processing tools</h2>
+<p>Stack processing groups tools under <strong>Sharpening</strong>, <strong>Noise reduction</strong> and <strong>Star removal</strong>. A single available provider has a checkbox. Where several are available, choose <strong>Off</strong> or a provider.</p>
+<p>The new <strong>Seiza noise model</strong> needs no RC-Astro license. Adjust <strong>Grain</strong> and <strong>Mottle</strong> to control noise reduction. To install its model and ONNX Runtime, open <strong>Settings › Processing › Stacking › Processing tools</strong> and click <strong>Download both</strong>. Neither is bundled or downloaded automatically. You can instead enter the path to an ONNX Runtime you installed.</p>
+<p>On a worker, run <code>psf-guard-cli noise-model download</code>, or use <strong>Download noise model</strong> in the desktop app&#x27;s <strong>Worker on this computer</strong>, then restart the worker. The server sends processing only to a worker with the matching provider version. CPU processing of a 60-megapixel stack can take tens of minutes.</p>
+<p><strong>Settings › Performance › Workers › Where work runs</strong> now calls the policy <strong>Processing steps</strong>, replacing <strong>RC-Astro tools</strong>. It preserves your selection and applies to every provider.</p>
+<h3 id="find-rc-astro-and-check-its-license">Find RC-Astro and check its license</h3>
+<p>The desktop app and workers now find RC-Astro in its installer folders, including <code>/Applications/RC-Astro/CLI</code> and <code>C:\Program Files\RC-Astro\CLI</code>, even when those folders are absent from <code>PATH</code>.</p>
+<p><strong>Check license</strong>, under Processing tools or on a worker row, requests the current RC-Astro license report. It identifies the computer and operating-system account, the registered RC-Astro account, product status and any command needed to resolve a problem. It does not activate or deactivate licenses. Online checks run only when requested. The CLI equivalent is <code>psf-guard-cli rc-astro license</code>.</p>
+<p>On Windows, <code>psf-guard-cli worker-service install</code> now installs the service under your Windows account so it can use your RC-Astro license and network shares. It checks your password first. Reinstalling an older service moves it from the virtual account and removes that account&#x27;s old access, task files and profile. After changing your password, run the command with <code>--new-password</code>. Use <code>--account NAME</code> for another account or <code>--virtual-account</code> for the former service account.</p>
+<h2 id="connect-and-maintain-catalogs">Connect and maintain catalogs</h2>
+<h3 id="pair-another-psf-guard-server">Pair another PSF Guard server</h3>
+<p>On the receiving server, open <strong>Settings › Sync › Other PSF Guard servers</strong> and click <strong>Generate server pairing code</strong>. On the sending server, choose <strong>Remote PSF Guard › Add peer</strong> and enter the URL and code. Each peer gets its own credential. The receiver lists pairing dates and last syncs; <strong>Remove</strong> revokes one peer without disconnecting the others.</p>
+<p>Existing peers using a <strong>Remote API key</strong> keep working. That key now lives in <strong>Other PSF Guard servers</strong>, with its last use and <strong>Remove key</strong> control. Server sync has its own switch, separate from the plugin&#x27;s <strong>Scheduler sync</strong>. Where scheduler sync was enabled, both switches start enabled. New plugin pairings enable only plugin sync; server pairings enable only server sync.</p>
+<h3 id="merge-repeated-catalog-records">Merge repeated catalog records</h3>
+<p><strong>Merge imported copies</strong> joins frames imported separately from their Target Scheduler records. It keeps the Target Scheduler record, project, target and exposure plan so acquired and accepted counts do not drop. It can take a copy&#x27;s grade when the retained record has none. Empty projects created by the import are removed unless active or used by a Director plan.</p>
+<p><strong>Merge renamed lights</strong> now handles several old-name records and targets renamed in N.I.N.A. It keeps Target Scheduler&#x27;s record where available, otherwise the record in the renamed file&#x27;s target. The retained record gets the new path and compatible grades; sync does not recreate the removed copies. Matching across renamed targets also requires the recorded airmass and focuser position to agree.</p>
+<p>Conflicting grades prevent a merge until you resolve them. The merge backs up the database and refuses to apply a stale preview. New imports and sync also recognize these cases to avoid creating more copies.</p>
+<p><strong>Send planning</strong> and <strong>Pull planning</strong> transfer only exposure templates used by the plans. An identical destination template can adopt the source GUID; one that differs in any setting is preserved. Repeated identical templates within a N.I.N.A. profile are merged during a planning write, with their exposure plans retained. The preview counts the merged copies. Affected Director plans may show <strong>Needs activating</strong> once.</p>
+<p>Local-disk catalogs now allow reads alongside writes, reducing delays during grading, imports and Sync. Reading the planning store during a write no longer produces a false corruption error.</p>
+<h2 id="improve-calibration-and-night-planning">Improve calibration and night planning</h2>
+<p>When all external flat masters exceed the <strong>Flat age limit</strong>, a night with its own raw flats now builds a master from those flats. An external master within the limit still takes priority under <strong>Whenever one matches</strong>.</p>
+<p><strong>Calibration › Flat coverage</strong>, formerly <strong>Scheduler flats</strong>, lists Director batches alongside Target Scheduler batches. Invalidating a suspect batch asks for replacement flats while keeping its image files. Director support requires the matching plugin&#x27;s <strong>Director Flats</strong> feature, including flats for plans whose light frames are complete.</p>
+<p><strong>Rigs › Nights</strong>, <strong>Night details</strong> and Live&#x27;s <strong>Tonight</strong> load faster by reusing each night&#x27;s sky calculations. In the measured four-rig example, a cached week fell from about 11 seconds to 0.5 seconds and a month from 45 seconds to 1.5 seconds. The first request takes longer. The predicted schedules are unchanged. Director estimates count only activated plans and show <strong>Full</strong> when overlapping targets fill the night.</p>
+<h2 id="try-director-acquisition-early-beta">Try Director acquisition — early beta</h2>
+<p>Target Scheduler with PSF Guard Sync remains the main way to run a rig. The Director plugin is an optional early beta. Pair it and manage its equipment, work permission and session under <strong>Rig setup › Plugins</strong>.</p>
+<ul>
+<li>Sync and Director can remain paired together. Changing the rig&#x27;s <strong>Mode</strong> preserves pairings, accepted equipment and work permission. Pairing Director does not switch a Target Scheduler rig&#x27;s mode.</li>
+<li>Equipment reports apply automatically without resetting work permission or selected plans. Only a plugin permitted to take work updates the equipment.</li>
+<li>Templates with gain or offset <code>-1</code> use the camera defaults reported by the updated plugin. For a database with several N.I.N.A. profiles, Director uses the profile reported by its plugin.</li>
+<li>The Plugins tab explains why work is off or no activated plan can run. Updated plugins retire interrupted assignments after confirming idle equipment; new work uses current image counts. Saved images and receipts remain available. <strong>Close work</strong> recovers work held by a removed plugin; previously reported attempts remain spent.</li>
+<li>A plan can set separate transit-avoidance minutes before and after transit. Blank inherits the default; zero disables that side. N.I.N.A. meridian flips remain separate.</li>
+<li>Local safety and recovery checks tolerate clock offsets between the rig and server. Assignment windows still follow the server clock; safety freshness and shutdown deadlines keep their limits.</li>
+</ul>
+<p>See <a href="rigs.html#director">Director setup and limits</a> for the complete workflow and plugin requirements.</p>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
