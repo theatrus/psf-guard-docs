@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -172,7 +174,7 @@ function gtag_report_demo() {
 <pre><code>PSF_GUARD_WORKER_TOKEN=psfw_… psf-guard worker --server http://192.168.1.10:3000</code></pre>
 <p>Leave the process running. Ctrl-C stops the worker and returns unfinished tasks to the server's queue. <code>--work stack</code> accepts stack builds only; <code>--slots N</code> allows 1–16 concurrent tasks. Start with one for GPU work. Workers that only stack need no RC-Astro installation.</p>
 <h2 id="dispatch">Choose where work runs</h2>
-<p>Under <strong>Where work runs</strong>, choose stack-build and RC-Astro policies independently: <strong>Workers first</strong>, <strong>Workers only</strong> or <strong>This server only</strong>. With <strong>Workers first</strong>, this server handles a task when no suitable worker is connected. With <strong>Workers only</strong>, the task fails if no connected worker can run it. Stack builds stay on the server unless you change this choice. The channel card shows which worker stacked it; its <strong>Live stack</strong> image follows the worker's progress.</p>
+<p>Under <strong>Where work runs</strong>, choose <strong>Stack builds</strong> and <strong>Processing steps</strong> policies independently: <strong>Workers first</strong>, <strong>Workers only</strong> or <strong>This server only</strong>. With <strong>Workers first</strong>, this server handles a task when no suitable worker is connected. With <strong>Workers only</strong>, the task fails if no connected worker can run it. Stack builds stay on the server unless you change this choice. The channel card shows which worker stacked it; its <strong>Live stack</strong> image follows the worker's progress.</p>
 <p>Task files transfer through the server by default. A worker can use shared storage with <code>--files shared</code> when both computers can access the required folders. Each worker uses its own CPU and memory limits. Changing the server’s limits does not change those limits on workers.</p>
 <figure>
 <img src="../assets/workers-connected-013.png" alt="Mac desktop connected with RC-Astro tools, stack builds and one concurrent task" width="1768" height="1784" loading="lazy">
@@ -183,7 +185,7 @@ function gtag_report_demo() {
 <ol>
 <li>On macOS or Windows, open <strong>Settings → Performance → Workers → Worker on this computer</strong>.</li>
 <li>Enter <strong>Server address</strong> and <strong>Worker token</strong>. Leave <strong>Worker name</strong> blank to use the computer's host name.</li>
-<li>Select <strong>Stack builds</strong>, <strong>RC-Astro tools</strong> or both under <strong>Task types</strong>, and choose <strong>Concurrent tasks</strong>.</li>
+<li>Select <strong>Stack builds</strong>, <strong>Processing steps</strong> or both under <strong>Task types</strong>, and choose <strong>Concurrent tasks</strong>.</li>
 <li>Optionally select <strong>Start worker at login</strong>. Click <strong>Save worker settings</strong>, then <strong>Start worker</strong>.</li>
 </ol>
 <p>The worker continues in the menu bar or system tray after you close the window. <strong>Pause worker</strong> stops new requests while current tasks finish; <strong>Stop worker</strong> returns unfinished tasks to the queue. After editing settings, save and click <strong>Restart worker</strong>. Leave <strong>Worker token</strong> blank to keep its saved value.</p>
@@ -215,6 +217,15 @@ journalctl -u psf-guard-worker -f</code></pre>
 }</code></pre>
 <p>Adjust the route and upstream address for your server. A connection failure alone does not prove that the upload limit caused it; check the proxy log.</p>
 <p>For shared storage, path mappings, service accounts, GPU setup and recovery, read the <a href="https://github.com/theatrus/psf-guard/blob/main/docs/REMOTE_WORKERS.md">full worker guide</a>.</p>
+
+<h2 id="noise-model">Install the noise model on a worker</h2>
+<p>Run <code>psf-guard-cli noise-model download</code>, or choose <strong>Download noise model</strong> under <strong>Worker on this computer</strong> in the desktop app. Restart the worker afterward. The server sends a processing step only to a worker with the same provider version. Stack builds require the same PSF Guard release.</p>
+<h2 id="licenses">Check RC-Astro licenses</h2>
+<p>Open <strong>Settings › Performance › Workers</strong> to see the executable and tool licenses found on each worker. <strong>Check license</strong> requests an online report identifying the computer, operating-system account, registered RC-Astro account and each product's status. It does not activate or deactivate licenses. On the worker, use <code>psf-guard-cli rc-astro license</code>.</p>
+<p>The app, CLI and service search RC-Astro's installer folders as well as PATH. An app opened from Finder or the Dock can therefore find RC-Astro without a shell PATH setting.</p>
+<h2 id="windows-account">Run the Windows service as your account</h2>
+<p><code>psf-guard-cli worker-service install</code> uses your Windows account so the service can access your RC-Astro license and network shares. It checks your password before making changes. Reinstalling an older service moves it from its virtual account and removes that account's old access, task files and profile.</p>
+<p>After changing your Windows password, run the command with <code>--new-password</code>. Use <code>--account NAME</code> for another account or <code>--virtual-account</code> for the former service account.</p>
 
 </main>
 </div>

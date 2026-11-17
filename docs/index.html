@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./" class="active" aria-current="page">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -162,7 +164,9 @@ function gtag_report_demo() {
   open it in a browser. Both give you the same tools to review images, plan captures
   and build calibrated stacks.</p>
 
-  <div class="callout info"><strong>New in 0.13.</strong> See <a href="new-in-0.13.html">New in 0.13</a> for GPU stacking, integrated mosaics, remote workers and new inspection tools. Read the <a href="release-notes-0.13.html#upgrading">upgrade notes</a> before installing. The <a href="release-notes-0.12.html">0.12 release history</a> remains available.</div>
+  <div class="callout info"><strong>New in 0.14.</strong> See <a href="new-in-0.14.html">New in 0.14</a> for Live with Sync, plugin setup, seasonal framing, offline maps and noise reduction. Read the <a href="release-notes-0.14.html#upgrading">upgrade notes</a> before installing.
+
+</div>
 
 
   <figure class="feature-shot">
@@ -197,14 +201,12 @@ function gtag_report_demo() {
   <h3 id="first-catalog">Import your images</h3>
   <p>Already use Target Scheduler? Choose <strong>Import from Target Scheduler</strong>
   to create an owned working catalog and keep the source connected. Review the
-  automatic sync and grade writeback settings after import. Your current Target
-  Scheduler setup will keep working in 0.12. A later update will create a PSF
-  Guard catalog for you and keep captures, plans and grades in sync with Target
-  Scheduler. Separate catalogs let us add features to PSF Guard and support new
-  Target Scheduler versions. We plan to remove direct database access in 0.13 or
-  later. See
+  automatic sync and grade writeback settings after import. Your current direct
+  Target Scheduler connection keeps working in 0.14. Direct access is deprecated;
+  this release does not automatically replace it. For a new connection, import
+  the database into a PSF Guard catalog or use PSF Guard Sync. See
   <a href="importing.html#target-scheduler">Import from Target Scheduler</a>.</p>
-  <p>Open <strong>Settings → Databases → New Database from Images</strong>, add your
+  <p>Open <strong>Settings › Databases &amp; rigs › New / import › New Database from Images</strong>, add your
   image folders, and choose <strong>Create &amp; Import</strong>. PSF Guard groups
   frames into projects, targets and exposure plans from their headers. Turn on
   <strong>Automatic import</strong> to check for new frames on a schedule. For frames
@@ -279,12 +281,11 @@ function gtag_report_demo() {
   <a href="sync-plugin.html">N.I.N.A. Sync plugin</a> with a server.</p>
 
   <h3 id="existing-database">Existing Target Scheduler databases</h3>
-  <p>For new Target Scheduler databases, choose <strong>Settings → Databases →
+  <p>For new Target Scheduler databases, choose <strong>Settings › Databases &amp; rigs › New / import ›
   Import from Target Scheduler</strong> to import the database and set up sync.</p>
-  <p>Your current Target Scheduler setup will keep working in 0.12, including
-  saving grades and plans. A later update will create a PSF Guard catalog for you
-  and keep captures, plans and grades in sync with Target Scheduler. We plan to
-  remove direct database access in 0.13 or later. For the steps and backup
+  <p>Your current direct Target Scheduler connection keeps working in 0.14,
+  including saving grades and plans. Direct access is deprecated; this release
+  does not automatically replace it. For the steps and backup
   requirements, see <a href="workflows.html#existing-database">Direct database access</a>.</p>
 
   <h3 id="manual-transfer">Transfer between separate databases</h3>
@@ -295,10 +296,9 @@ function gtag_report_demo() {
   to the N.I.N.A. Sync plugin.</p>
 
   <h2 id="beta">Early beta: Director and collaboration</h2>
-  <p>The upcoming <a href="rigs.html#director">N.I.N.A. Director plugin</a> is a
+  <p>The <a href="rigs.html#director">N.I.N.A. Director plugin</a> is a
   separate integration for plan execution and live rig status. Its early beta can
-  retrieve an activated program, report status and check in saved captures. Direct
-  acquisition is still upcoming, and pairing alone does not start a sequence or grant
+  retrieve an activated program, report status and check in saved captures. Director acquisition remains early beta, and pairing alone does not start a sequence or grant
   equipment control. Use Target Scheduler with PSF Guard Sync for imaging today.</p>
   <p><a href="collaboration.html">Collaboration</a> is also in early beta. It connects
   rigs to shared imaging projects on services such as Starfront, imports assigned work

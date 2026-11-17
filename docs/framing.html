@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -240,22 +242,29 @@ function gtag_report_demo() {
   seen works offline. Survey imagery is a composition aid, not pointing
   evidence.</p>
 
-  <h2 id="offline-maps">Offline sky maps</h2>
-  <p>N.I.N.A. publishes its framing assistant's whole-sky caches. Install one
-  into the server's cache and the framing view renders any view from its tiles
-  with no network:</p>
-  <pre><code>psf-guard sky-maps install full --cache-dir /path/to/cache              <span class="c"># DSS plates, 3.3 GB</span>
-psf-guard sky-maps install nsns-ohs --cache-dir /path/to/cache          <span class="c"># NSNS SHO with stars, 1.4 GB</span>
-psf-guard sky-maps install nsns-ohs-starless --cache-dir /path/to/cache <span class="c"># NSNS SHO starless, 0.5 GB</span>
-psf-guard sky-maps list --cache-dir /path/to/cache</code></pre>
-  <p>A folder copied from a rig's own <code>%LOCALAPPDATA%\NINA\FramingAssistantCache</code>
-  works too: drop it under <code>&lt;cache&gt;/director/sky-maps/</code>. A running
-  server offers a new folder within half a minute.</p>
-  <p>An offline map is preferred wherever it can stand in for an online survey:
-  the DSS set for DSS2 color, the SHO set for the online NSNS SHO layer. A new
-  framing starts on the offline DSS map. The online layer stays a click away.
-  The NSNS sets are CC BY-NC-SA; the attribution line under the view says
-  so.</p>
+<h2 id="sky-in-view">Check which sky your rig can reach</h2>
+<p>In Framing, turn on <strong>Sky in view</strong>. The overlay uses the rig selected in Visibility, its site or rig horizon, and its altitude limits. It counts uninterrupted observing time while the Sun is below −12°. It does not predict weather.</p>
+<p>Open <strong>Time range and overlay key</strong> and set <strong>In view for</strong> in minutes. <strong>Use rig's 30 min</strong> restores the rig's configured minimum; the number reflects your rig's setting.</p>
+<ul><li><strong>Now:</strong> tonight and the next 30 nights.</li><li><strong>Year:</strong> the coming 365 nights, estimated from weekly samples. Unshaded sky is available on at least seven nights, which need not be consecutive.</li><li><strong>Season:</strong> a 31-night window. Drag <strong>Time of year</strong>; arrow keys move a week, Page Up/Down four weeks, and Home/End to either end.</li></ul>
+<p>Shading marks sky below the selected threshold; hatching marks sky never available. The solid line marks the threshold and the dashed line marks availability on at least one night. Year boundaries are accurate to about 1°; Season follows a coarser 2° grid. The panel reports the target's night count even when you pan elsewhere.</p>
+<figure>
+<img src="../assets/framing-season-014.jpg" alt="Seasonal sky visibility over the NSNS survey, with a 31-night window and 30-minute minimum." loading="lazy" width="1956" height="1067">
+<figcaption>Heart Mosaic from askar107phq, November 17–December 17, 2026. The target is in view on all 31 nights. Hatching marks unreachable sky; the four captured panels remain locked. Survey imagery is a framing aid.</figcaption>
+</figure>
+<h2 id="offline-maps">Install offline sky maps</h2>
+<p>Open <strong>Settings › Storage &amp; backups › Offline sky maps</strong>. Choose a set by coverage, size and license, then click <strong>Install</strong>. PSF Guard checks its size and SHA-256 before installation. Follow progress in Settings or the job list; <strong>Stop</strong> cancels the download. The first-use offer in Framing also waits for your click.</p>
+<figure>
+<img src="../assets/offline-sky-maps-014.jpg" alt="Installed sky maps with controls to move or remove them." loading="lazy" width="1056" height="789">
+<figcaption>All three sets are installed under the old cache folder in this example. Move keeps them outside future cache cleanup.</figcaption>
+</figure>
+
+<p>Maps now have their own folder outside the cache. Older maps still work; click <strong>Move</strong> to move one to the new folder. <strong>Remove</strong> deletes a map's files. Changing the folder does not move existing maps: copy their folders or install them again. A blank folder uses the default.</p>
+<pre><code>psf-guard sky-maps install full --dir /path/to/sky-maps
+psf-guard sky-maps install nsns-ohs --dir /path/to/sky-maps
+psf-guard sky-maps install nsns-ohs-starless --dir /path/to/sky-maps
+psf-guard sky-maps list --dir /path/to/sky-maps</code></pre>
+<p>A N.I.N.A. <code>FramingAssistantCache</code> copied into the sky-map folder also works. The server discovers it within half a minute. Offline DSS and NSNS maps are preferred for their corresponding surveys; online layers remain selectable. NSNS maps use CC BY-NC-SA 4.0.</p>
+
 
   <h2 id="marks">Marks</h2>
   <p>Buttons at the top of the stage switch the layers drawn over the

@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -177,19 +179,23 @@ function gtag_report_demo() {
     <figcaption>Start with image folders, a local TS file or the Sync plugin. The TS import form includes all three choices.</figcaption>
   </figure>
 
+<h2 id="merge-copies">Merge repeated frames</h2>
+<p>Open the database in Settings. <strong>Merge imported copies</strong> joins imported frames with their Target Scheduler records. <strong>Merge renamed lights</strong> joins old paths with renamed files, including multiple old copies and renamed targets.</p>
+<p>PSF Guard keeps Target Scheduler's record and plan counts where available, and compatible grades. Conflicting grades require review first. The merge backs up the database and refuses a stale preview. Empty import-created projects are removed only when inactive and unused by a Director plan. Source images stay on disk.</p>
+
   <h2 id="target-scheduler">Import from Target Scheduler</h2>
   <div class="callout info"><strong>PSF Guard is moving to its own catalogs</strong>
-  <p>For new Target Scheduler databases, choose <strong>Settings → Databases →
+  <p>For new Target Scheduler databases, choose <strong>Settings › Databases &amp; rigs › New / import ›
   Import from Target Scheduler</strong> to import the database and set up sync.</p>
-  <p>Your current Target Scheduler setup will keep working in 0.12. A later
-  update will create a PSF Guard catalog for you and keep captures, plans and
-  grades in sync with Target Scheduler.</p>
-  <p>Separate catalogs let us add features to PSF Guard and support new Target
-  Scheduler versions. We plan to remove direct database access in 0.13 or later.</p></div>
+  <p>Your current direct Target Scheduler connection keeps working in 0.14,
+  including saving grades and plans. Direct access is deprecated; this release
+  does not automatically replace it. For a new setup, import the database into
+  a PSF Guard catalog and keep the source connected, or use PSF Guard Sync.</p>
+  <p>Separate catalogs let us add features and support new Target Scheduler versions.</p></div>
   <p>The desktop app allows database management. A browser server needs
   <code>--allow-database-management</code>; see <a href="#create">server setup</a>.</p>
   <ol>
-    <li>Open <strong>Settings → Databases → Import from Target Scheduler</strong>.</li>
+    <li>Open <strong>Settings › Databases &amp; rigs › New / import › Import from Target Scheduler</strong>.</li>
     <li>Choose <strong>Import a local TS file</strong>, enter the source file and an
     optional display name, then add the folders containing your images. The source
     needs Target Scheduler schema 22 or newer, with stable GUIDs.</li>

@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -303,44 +305,25 @@ function gtag_report_demo() {
   to be activated again first. The server log records what it sent and what failed.</p>
   <!-- SHOT: plan-send-again.png | P3. Carried from 0.12; capture only when its prerequisites are available. Planning workspace for a plan whose rig has Remote site set to a Sync peer that was offline at the last activation (any rig and peer; the peer name shows in the text): crop to the bar at the top reading "<peer> hasn't received this activation" with the "Send to <peer> again" button, and the plan summary under it. | A remote site missed the activation: the bar says so and offers to send it again. -->
 
-  <h2 id="live">Live</h2>
-  <p>Open <strong>Rigs › Live</strong> for reports from rigs running the <a href="#director">Director plugin</a>. The header's <strong>Rigs</strong> control opens this view and shows the fleet's status. The <strong>Tonight</strong> column links each rig to its predicted schedule on <strong>Nights</strong>.</p>
-  <p>On the Sky, each reporting rig is drawn on the coverage map where it points
-  now. A list of rigs sits beside the map; choosing one turns the map to it. A
-  quiet rig is drawn dashed red. A rig that reports no mount position is placed
-  at its planned target, dotted and labeled <em>at target</em>.</p>
+  <h2 id="live">Follow your rigs on Live</h2>
+<p>Open <strong>Rigs › Live</strong> to monitor Target Scheduler rigs through PSF Guard Sync, or rigs using the optional Director plugin. Detailed N.I.N.A. activity needs an updated Sync plugin. <strong>Live with Sync is not beta; Director acquisition remains early beta.</strong></p>
+<figure>
+<img src="../assets/rigs-live-014.jpg" alt="Live table with five rigs, Sync contacts and stale weather." loading="lazy" width="1439" height="389">
+<figcaption>Five rigs with their recorded contacts. All are offline or have never reported; ultra cat has a stale stopped sequence. Tonight opens each predicted schedule.</figcaption>
+</figure>
 
-  <figure>
-    <!-- RESHOOT: rigs-live-013.jpg | P2. After the main server includes weather support, capture Rigs Live with the Weather column and current contact labels. Record whether rigs have reported; do not fabricate telemetry. Redact any site coordinates with an image edit tool before committing. -->
-    <img src="../assets/rigs-live-013.jpg" alt="Rigs Live with five rigs and Tonight links." width="2580" height="685" loading="lazy">
-    <figcaption>None of these five rigs has reported yet. Tonight links open the available schedules.</figcaption>
-  </figure>
-  <p>The Live table has one row per rig:</p>
-  <div class="table-wrap">
-    <table>
-      <tr><th>Column</th><th>Shows</th></tr>
-      <tr><td>Link</td><td><em>Online</em> within three minutes of any plugin call,
-        <em>Quiet</em> within thirty, <em>Offline</em> beyond, <em>Never seen</em>
-        before the first.</td></tr>
-      <tr><td>Now</td><td>Phase, target, current operation and how long, wait
-        reason, safety, queue depth and errors, from the last status report. A
-        report older than its stated lifetime is marked stale.</td></tr>
-      <tr><td>Weather</td><td>N.I.N.A. reported weather and the site's forecast,
-        shown separately with missing or stale data marked.</td></tr>
-      <tr><td>Program pull</td><td>Time since the rig last pulled its program,
-        with the revision when available.</td></tr>
-      <tr><td>Check-in</td><td>Time since the rig last checked in, plus saved frames
-        awaiting grading.</td></tr>
-      <tr><td>Status report</td><td>Time since the rig last reported status.</td></tr>
-      <tr><td>Assigned</td><td>Activated plans assigned to the rig, linked to
-        their workspaces.</td></tr>
-      <tr><td>Tonight</td><td>The rig's predicted night schedule, with a link
-        to open it.</td></tr>
-    </table>
-  </div>
-  <p>The table refreshes every fifteen seconds. A read-only account cannot open
-  Settings, so Rigs › Live shows rig setup and the template library read only
-  under the table.</p>
+<div class="table-wrap"><table>
+<tr><th>Column</th><th>What to check</th></tr>
+<tr><td>Rig</td><td>Connection state beneath the rig's name. Any plugin call, including uploads, keeps it Online. Quiet, Offline and Never seen distinguish old or absent contact.</td></tr>
+<tr><td>Now</td><td>The reported exposure and count, autofocus, slew or wait; recent frame, dither and autofocus times. Stale reports are marked.</td></tr>
+<tr><td>Weather</td><td>Observed conditions from N.I.N.A. and the site's Forecast. Missing or stale data is identified separately.</td></tr>
+<tr><td>Plugins</td><td>Plugins that contacted the server. History lists recent actions. A failed action remains visible until the same work succeeds.</td></tr>
+<tr><td>Projects</td><td>Active projects in the rig's database. Click to open the filtered Library.</td></tr>
+<tr><td>Tonight</td><td>Predicted work and clear hours. Click to open Night details.</td></tr>
+</table></div>
+<p>The table refreshes every fifteen seconds. The header counts Sync-reported exposures as well as Director exposures. <strong>Sky › Live</strong> places reporting rigs at their mount position, or at the target when no position is reported; predicted positions remain labeled. No report is evidence of missing telemetry, not an equipment failure.</p>
+<p>A read-only account can inspect rig setup and templates beneath Live without editing Settings. Night schedules are estimates, not acquisition commands.</p>
+
 
   <!-- SHOT: rig-weather-013.png | P2. After the main server includes weather support, open a rig Weather tab with its cached site forecast. Record missing NINA reports honestly until a compatible plugin supplies real reports. Redact latitude and longitude with an image edit tool before committing. Do not change the site or trigger acquisition to stage the shot. | Compare reported weather and the site forecast separately. -->
   <h3 id="weather">Check a rig's weather</h3>
@@ -414,15 +397,16 @@ function gtag_report_demo() {
     the <a href="sync-plugin.html">PSF Guard Sync plugin</a> is the recommended
     way to run a rig.
   </div>
-  <p>A paired Director plugin pulls its rig's program from the last activation over
-  HTTP, keeps running on it through a network outage, checks in each saved frame, and
-  reports live status. Saved frames count as pending credit until grading accepts them;
-  a receipt is evidence a frame was taken, not that it passed. Pairing uses one-use
-  codes an operator issues over the API; there is no pairing screen yet. Pairing does
-  not start a sequence or grant equipment control. The Director plugin is separate from
-  PSF Guard Sync, which transfers database changes and image files.</p>
-  <p>Without the plugin, activation still writes ordinary Target Scheduler rows,
-  and the Target Scheduler plugin runs them as before.</p>
+<p>Open <strong>Settings › Databases &amp; rigs</strong>, choose the database, then <strong>Rig setup › Plugins</strong>. In <strong>PSF Guard Director</strong>, generate a pairing code and enter it in N.I.N.A. Pairing does not start acquisition or allow work.</p>
+<p>Equipment reports apply automatically when Director starts. Review its equipment and work permission, then activate the plans the rig should run. The card explains why work is off or no plan can run. Sync and Director can stay paired together; changing Mode keeps both pairings and equipment settings.</p>
+<figure>
+<img src="../assets/rig-director-beta-014.jpg" alt="Director card labeled Early beta with pairing and work controls." loading="lazy" width="778" height="511">
+<figcaption>Director is unpaired here, so equipment is not reported and work is not allowed. This capture does not demonstrate acquisition.</figcaption>
+</figure>
+
+<p>With the matching plugin, Director uploads captures through the shared <strong>Image uploads</strong> card and can request replacement flats. Camera-default gain and offset come from N.I.N.A. Updated plugins retire interrupted work after confirming idle equipment; saved frames and receipts remain available. If a removed plugin still holds work, <strong>Close work</strong> releases it without restoring spent attempts.</p>
+<p>For per-plan transit limits, blank inherits the default and zero disables that side. Meridian flips remain controlled by N.I.N.A. Local recovery tolerates clock offsets, while assignment windows follow the server clock.</p>
+
 
   <nav class="next-prev">
     <a href="activation.html">← Exposures &amp; Activation</a>

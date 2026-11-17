@@ -74,6 +74,8 @@ function gtag_report_demo() {
   <h4>Start</h4>
   <ul>
     <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
     <li><a href="new-in-0.13.html">New in 0.13</a></li>
     <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
     <li><a href="new-in-0.12.html">New in 0.12</a></li>
@@ -159,6 +161,9 @@ function gtag_report_demo() {
 <main class="docs-main">
   <h1>Calibration Masters &amp; Settings</h1>
   <p class="lede">See how PSF Guard matches calibration frames, builds masters and applies them to lights. Set matching limits for the server or one rig.</p>
+
+<h2 id="same-night-flats">Use a night's own flats</h2>
+<p>With external masters set to <strong>Whenever one matches</strong>, a matching external flat master within the <strong>Flat age limit</strong> takes priority. When every external master is too old and the night has raw flats, PSF Guard builds a master from those flats instead.</p>
 
   <h2>Calibration guides</h2>
   <ul>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New in 0.14 — PSF Guard</title>
+  <meta name="description" content="PSF Guard 0.14: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
+  <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/site.css?v=7">
+<!-- google-tag:start -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WPLWLB7B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1059723840');
+  gtag('config', 'GT-WPLWLB7B');
+</script>
+<!-- Event snippets for Outbound click conversions (call from a link's onclick). -->
+<!-- gtag_report_conversion: Download + GitHub links (same-tab; navigates after the beacon). -->
+<!-- gtag_report_demo: the Live demo link (target=_blank; fire-and-forget so the new tab still opens). -->
+<script>
+function gtag_report_conversion(url) {
+  var done = false;
+  var go = function () {
+    if (done) return;
+    done = true;
+    if (typeof(url) !== 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/lLNaCJjDgdccEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': go
+  });
+  setTimeout(go, 1000);
+  return false;
+}
+function gtag_report_demo() {
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18350447582/haZMCIXZ6dYcEN63lq5E',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+</script>
+<!-- google-tag:end -->
+</head>
+<body>
+
+<!-- site-header:start -->
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""> PSF Guard</a>
+    <div class="nav-links">
+      <a href="./" class="keep">Docs</a>
+      <a href="install.html">Install</a>
+      <a class="demo-link" href="https://demo.psf-guard.com/" target="_blank" rel="noopener" aria-label="Open the live PSF Guard demo in a new tab" onclick="gtag_report_demo()">Live demo</a>
+      <a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a>
+      <a class="cta" href="https://github.com/theatrus/psf-guard/releases/latest" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases/latest')">Download</a>
+    </div>
+  </nav>
+</header>
+<!-- site-header:end -->
+
+<div class="docs-wrap">
+<!-- docs-nav:start -->
+<aside class="docs-nav">
+<details class="docs-menu" open>
+  <summary>Browse documentation</summary>
+  <div class="docs-nav-sections">
+  <h4>Start</h4>
+  <ul>
+    <li><a href="./">Getting Started</a></li>
+    <li><a href="new-in-0.14.html" class="active" aria-current="page">New in 0.14</a></li>
+    <li><a href="release-notes-0.14.html">0.14 Release Notes</a></li>
+    <li><a href="new-in-0.13.html">New in 0.13</a></li>
+    <li><a href="release-notes-0.13.html">0.13 Release Notes</a></li>
+    <li><a href="new-in-0.12.html">New in 0.12</a></li>
+    <li><a href="release-notes-0.12.html">0.12 Release Notes</a></li>
+    <li><a href="install.html">Installation</a></li>
+    <li><a href="grader.html">Library & Grader</a></li>
+    <li><a href="importing.html">Import Images</a></li>
+  </ul>
+  <h4>Review</h4>
+  <ul>
+    <li><a href="screening.html">Quality Screening</a></li>
+    <li><a href="astrometry.html">Sky Context & Solver</a></li>
+    <li><a href="astrometry-quality.html">Astrometry Quality</a></li>
+    <li><a href="satellites.html">Satellite Tracks</a></li>
+    <li><a href="sky.html">Sky Coverage</a></li>
+  </ul>
+  <h4>Stack</h4>
+  <ul>
+    <li><a href="stacking.html">Stacks</a></li>
+    <li><a href="wbpp.html">WBPP Runs</a></li>
+    <li><a href="calibration.html">Calibration Libraries</a></li>
+    <li><a href="calibration-grading.html">Calibration Grades & Coverage</a></li>
+    <li><a href="calibration-flats.html">Flats & Dust Changes</a></li>
+    <li><a href="calibration-masters.html">Calibration Masters & Settings</a></li>
+    <li><a href="exporting.html">Export & AstroBin</a></li>
+  </ul>
+  <h4>Plan</h4>
+  <ul>
+    <li><a href="planning.html">Planning</a></li>
+    <li><a href="framing.html">Framing</a></li>
+    <li><a href="activation.html">Exposures & Activation</a></li>
+    <li><a href="rigs.html">Rigs, Sites & Live</a></li>
+    <li><a href="collaboration.html">Collaboration</a></li>
+  </ul>
+  <h4>Operate</h4>
+  <ul>
+    <li><a href="storage.html">Storage & Performance</a></li>
+    <li><a href="workers.html">Workers</a></li>
+    <li><a href="backups.html">Backups</a></li>
+  </ul>
+  <h4>Server</h4>
+  <ul>
+    <li><a href="configuration.html">Configuration & API</a></li>
+    <li><a href="authentication.html">Server Accounts</a></li>
+    <li><a href="sync-plugin.html">Connect N.I.N.A.</a></li>
+    <li><a href="mcp.html">MCP for Agents</a></li>
+  </ul>
+  <h4>Advanced workflows</h4>
+  <ul>
+    <li><a href="workflows.html">Rejects & Database Transfer</a></li>
+    <li><a href="cli.html">CLI Reference</a></li>
+  </ul>
+  <h4>PixInsight</h4>
+  <ul>
+    <li><a href="pixinsight.html">PixInsight Scripts</a></li>
+  </ul>
+  <h4>Project</h4>
+  <ul>
+    <li><a href="https://github.com/theatrus/psf-guard" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard')">GitHub</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/releases" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/releases')">Releases</a></li>
+    <li><a href="https://github.com/theatrus/psf-guard/issues" onclick="return gtag_report_conversion('https://github.com/theatrus/psf-guard/issues')">Report an issue</a></li>
+    <li><a href="https://theatr.us/software">More at theatr.us</a></li>
+  </ul>
+  </div>
+</details>
+<script>
+  (() => {
+    const menu = document.currentScript.previousElementSibling;
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { menu.open = !narrow.matches; };
+    sync();
+    narrow.addEventListener("change", sync);
+    const nav = menu.parentElement;
+    const active = menu.querySelector("a.active");
+    if (active && nav.scrollHeight > nav.clientHeight) {
+      nav.scrollTop = active.offsetTop - nav.clientHeight / 2;
+    }
+  })();
+</script>
+</aside>
+<!-- docs-nav:end -->
+
+<main class="docs-main">
+<h1>New in 0.14</h1>
+<p class="lede">Follow your N.I.N.A. rigs with Sync, find plans that need activation, check seasonal visibility and choose how to reduce noise in your stacks.</p>
+<p><a href="release-notes-0.14.html#upgrading">Read before upgrading</a> · <a href="release-notes-0.14.html">All changes in 0.14</a></p>
+<h2 id="live">Follow your rigs with Sync</h2>
+<p><strong>Rigs › Live</strong> shows connection state, exposures, autofocus, slews and waits from the updated Sync plugin. Weather, plugin history, active projects and tonight's schedule share one table. Sync exposures also appear in the header and on Sky.</p>
+<p>Live with Sync does not require Director. <strong>The Director acquisition plugin remains early beta.</strong> Its warnings stay on the Director controls.</p>
+<figure>
+<img src="../assets/rigs-live-014.jpg" alt="Five rigs in Live with Sync contacts, weather and project links." loading="lazy" width="1439" height="389">
+<figcaption>The captured rigs are offline or have never reported. The stopped sequence and forecasts are marked stale; this is a view of recorded status, not an active exposure.</figcaption>
+</figure>
+
+<p><a href="rigs.html#live">Read Live status</a></p>
+<h2 id="plugins">Set up both plugins together</h2>
+<p>Open a database's <strong>Rig setup › Plugins</strong> to pair Sync or Director and manage image uploads. Each card explains its own state. Existing pairings keep working.</p>
+<figure>
+<img src="../assets/rig-plugins-sync-014.jpg" alt="Sync pairing and shared image-upload controls on Rig setup." loading="lazy" width="989" height="933">
+<figcaption>This rig has Sync enabled and image uploads off. Director is not paired. No settings were changed for the capture.</figcaption>
+</figure>
+
+<p><a href="sync-plugin.html#server">Pair Sync</a> · <a href="rigs.html#director">Try Director (early beta)</a></p>
+<h2 id="plans">Find plans that need activation</h2>
+<p>Choose <strong>Show › Needs activating</strong> in the Library, then open a plan's activation preview there. Plans assigned to a rig with no frames now appear under that rig. Database, Show, search and Sort survive navigation.</p>
+<p><a href="activation.html#library-activation">Review activation from the Library</a></p>
+<h2 id="framing">Check what your rig can reach</h2>
+<p><strong>Sky in view</strong> overlays the rig's horizon and altitude limits on Framing. Choose <strong>Now</strong>, <strong>Year</strong> or <strong>Season</strong> and a minimum uninterrupted observing time. Year leaves unshaded the sky available on at least seven nights; Season compares 31-night windows.</p>
+<figure>
+<img src="../assets/framing-season-014.jpg" alt="Seasonal sky visibility over the NSNS survey, with a 31-night window and 30-minute minimum." loading="lazy" width="1956" height="1067">
+<figcaption>Heart Mosaic from askar107phq, November 17–December 17, 2026. The target is in view on all 31 nights. Hatching marks unreachable sky; the four captured panels remain locked. Survey imagery is a framing aid.</figcaption>
+</figure>
+<p><a href="framing.html#sky-in-view">Read the visibility overlay</a></p>
+<h2 id="maps">Install offline sky maps in Settings</h2>
+<p>Choose a whole-sky image set under <strong>Storage &amp; backups › Offline sky maps</strong>. Downloads are checked before installation. Maps now live outside the cache; older maps can be moved there.</p>
+<figure>
+<img src="../assets/offline-sky-maps-014.jpg" alt="Three installed offline sky maps with Move and Remove controls." loading="lazy" width="1056" height="789">
+<figcaption>These maps were installed under the old cache folder. Move is available; no map was moved, downloaded or removed for the capture.</figcaption>
+</figure>
+
+<p><a href="framing.html#offline-maps">Install or move a sky map</a></p>
+<h2 id="processing">Choose a noise-reduction provider</h2>
+<p>Processing groups tools under <strong>Sharpening</strong>, <strong>Noise reduction</strong> and <strong>Star removal</strong>. The Seiza noise model needs no RC-Astro license; download its model and ONNX Runtime when you choose to use it. Existing processing choices keep their meaning.</p>
+<figure>
+<img src="../assets/processing-tools-014.jpg" alt="RC-Astro providers on a worker and optional Seiza model downloads." loading="lazy" width="1056" height="783">
+<figcaption>RC-Astro is ready on the Mac desktop worker. The Seiza model and ONNX Runtime are not installed in this capture.</figcaption>
+</figure>
+
+<p><a href="stacking.html#processing-tools">Choose processing tools</a> · <a href="workers.html#licenses">Check worker licenses</a></p>
+<h2 id="catalogs">Keep catalogs connected and consistent</h2>
+<p>Pair another PSF Guard server with a code and revoke each peer separately. Merge imported or renamed copies while retaining Target Scheduler's record and plan counts. Local-disk catalogs allow reads alongside writes; Nights reuses sky calculations for faster schedules.</p>
+<p><a href="workflows.html#server-pairing">Pair servers</a> · <a href="importing.html#merge-copies">Merge repeated frames</a></p>
+<h2 id="upgrade">Before upgrading</h2>
+<p>Back up planning data: older versions cannot open the upgraded planning store. Update stack workers with the server and allow time for stacks and calibration masters to rebuild. See the <a href="release-notes-0.14.html#upgrading">upgrade notes</a> for plugin requirements and database companion files.</p>
+</main>
+</div>
+
+<script src="../js/lightbox.js?v=1" defer></script>
+</body>
+</html>
