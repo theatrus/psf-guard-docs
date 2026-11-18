@@ -172,11 +172,14 @@ function gtag_report_demo() {
   <div class="table-wrap">
     <table>
       <tr><th>Platform</th><th>Asset</th></tr>
-      <tr><td>Windows x64</td><td><code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code>, or the NSIS <code>-setup.exe</code></td></tr>
+      <tr><td>Windows x64</td><td><code>PSF-Guard-&lt;version&gt;-windows-x64-setup.exe</code>, or <code>PSF.Guard_&lt;version&gt;_x64_en-US.msi</code></td></tr>
       <tr><td>macOS (Apple Silicon)</td><td><code>PSF.Guard_&lt;version&gt;_aarch64.dmg</code></td></tr>
-      <tr><td>Linux x64</td><td><code>PSF.Guard_&lt;version&gt;_amd64.deb</code> or <code>.AppImage</code></td></tr>
+      <tr><td>Linux x64</td><td><code>PSF-Guard-&lt;version&gt;-linux-x86_64.AppImage</code>, or <code>PSF.Guard_&lt;version&gt;_amd64.deb</code></td></tr>
     </table>
   </div>
+  <p>For a manual macOS install, choose the DMG. The <code>.app.tar.gz</code>,
+  <code>.sig</code> and JSON files support automatic updates; you do not need
+  to download them yourself.</p>
   <p>The NSIS installer also installs <code>psf-guard-cli.exe</code> and adds it
   to your user <code>PATH</code>, so the full CLI runs from any terminal.</p>
   <p>Launch the app, then go to <a href="./#choose">Getting Started</a> to build
