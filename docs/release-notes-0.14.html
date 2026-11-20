@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>0.14 Release Notes — PSF Guard</title>
-  <meta name="description" content="PSF Guard 0.14: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
+  <meta name="description" content="PSF Guard 0.14 through 0.14.1: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
   <link rel="stylesheet" href="../css/release-notes.css?v=1">
@@ -162,9 +162,19 @@ function gtag_report_demo() {
 <main class="docs-main">
 <h1>0.14 Release Notes</h1>
 <p><a href="new-in-0.14.html">0.14 overview</a> · <a href="release-notes-0.13.html">0.13 release notes</a></p>
-<p>PSF Guard 0.14 adds live rig monitoring, clearer plan activation status and seasonal sky visibility.</p>
-<p><strong>Download:</strong> <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.0/PSF-Guard-0.14.0-windows-x64-setup.exe">Windows setup EXE</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.0/PSF.Guard_0.14.0_x64_en-US.msi">Windows MSI</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.0/PSF.Guard_0.14.0_aarch64.dmg">macOS DMG</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.0/PSF-Guard-0.14.0-linux-x86_64.AppImage">Linux AppImage</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.0/PSF.Guard_0.14.0_amd64.deb">Debian/Ubuntu package</a></p>
+<p>PSF Guard 0.14 adds live rig monitoring, clearer plan activation status and seasonal sky visibility. The current release is 0.14.1; see <a href="#v0-14-1">0.14.1 fixes</a>.</p>
+<p><strong>Download:</strong> <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF-Guard-0.14.1-windows-x64-setup.exe">Windows setup EXE</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_x64_en-US.msi">Windows MSI</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_aarch64.dmg">macOS DMG</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF-Guard-0.14.1-linux-x86_64.AppImage">Linux AppImage</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_amd64.deb">Debian/Ubuntu package</a></p>
 <p><strong>Start with:</strong> <a href="#upgrading">Upgrading</a> · <a href="#follow-your-rigs-on-live">Live</a> · <a href="#find-and-activate-plans">Planning</a> · <a href="#see-which-sky-your-rig-can-reach">Framing</a> · <a href="#choose-processing-tools">Processing</a> · <a href="#connect-and-maintain-catalogs">Sync</a></p>
+<h2 id="v0-14-1">0.14.1</h2>
+<p>PSF Guard 0.14.1 gives each rig the right exposure templates when rigs share a Target Scheduler database, reads more horizon files, and lets Run now wait for other import work.</p>
+<ul>
+<li>When one Target Scheduler database serves several N.I.N.A. profiles, a rig now offers only its own profile&#x27;s exposure templates. Before, the plan editor could give a plan another profile&#x27;s template of the same name, with that profile&#x27;s gain and exposure, and <strong>Copy from</strong> on <strong>Settings → Presets → Exposure templates</strong> listed each name once per profile. <strong>Copy from</strong> now shows how many templates from other profiles it leaves out. When the library has a template of the same name with other settings, the rig&#x27;s template is marked <strong>differs from the library</strong>; click it to replace the library&#x27;s settings with the rig&#x27;s. (<a href="https://github.com/theatrus/psf-guard/issues/1098">#1098</a>)</li>
+<li>PSF Guard now reads a N.I.N.A. horizon file that lists one azimuth on several lines, as a file may do to draw the upright edge of a building, in <strong>Rig setup</strong> and <strong>Settings → Presets → Sites</strong>. Before, it refused the file. PSF Guard uses the highest altitude listed for that azimuth, so a target must clear every line. (<a href="https://github.com/theatrus/psf-guard/issues/1126">#1126</a>)</li>
+<li>Horizon files are now read as N.I.N.A. reads them in two more ways: commas, semicolons and tabs separate the columns, and when a file has neither 0° nor 360°, both ends get the altitude of the point nearest north. Before, PSF Guard drew a line across north between the last and first points, so its horizon near north could differ from N.I.N.A.&#x27;s by a few degrees. A horizon already saved keeps its curve until you paste or upload the file again.</li>
+<li><strong>Run now</strong> no longer fails with &quot;an import is already running for this database&quot; while PSF Guard receives a remote upload or finishes other work on the catalog. The run waits for that work and then starts.</li>
+<li><strong>Folders &amp; limits</strong> heads each disk with the folder that holds its storage folders, such as <code>./cache</code>. Before, it showed one database&#x27;s folder inside the cache, such as <code>./cache/db-e075b4ec</code>, though the disk&#x27;s use and limit cover every database on it.</li>
+<li>Release downloads omit duplicate installers and the extra macOS app ZIP. Windows MSI installers remain available. Update notices keep dotted names such as N.I.N.A. within the first sentence.</li>
+</ul>
 <h2 id="upgrading">Upgrading</h2>
 <ul>
 <li><strong>Back up your planning data before updating.</strong> After 0.14 upgrades the planning store, older PSF Guard versions cannot open it. Keep a pre-upgrade backup if you may need to return to 0.13. See the <a href="backups.html">backup guide</a>.</li>
