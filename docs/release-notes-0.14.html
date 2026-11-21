@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>0.14 Release Notes — PSF Guard</title>
-  <meta name="description" content="PSF Guard 0.14 through 0.14.1: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
+  <meta name="description" content="PSF Guard 0.14 through 0.14.2: Live monitoring with Sync, rig setup, activation review, seasonal framing, offline maps and noise reduction.">
   <link class="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/site.css?v=7">
   <link rel="stylesheet" href="../css/release-notes.css?v=1">
@@ -162,9 +162,16 @@ function gtag_report_demo() {
 <main class="docs-main">
 <h1>0.14 Release Notes</h1>
 <p><a href="new-in-0.14.html">0.14 overview</a> · <a href="release-notes-0.13.html">0.13 release notes</a></p>
-<p>PSF Guard 0.14 adds live rig monitoring, clearer plan activation status and seasonal sky visibility. The current release is 0.14.1; see <a href="#v0-14-1">0.14.1 fixes</a>.</p>
-<p><strong>Download:</strong> <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF-Guard-0.14.1-windows-x64-setup.exe">Windows setup EXE</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_x64_en-US.msi">Windows MSI</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_aarch64.dmg">macOS DMG</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF-Guard-0.14.1-linux-x86_64.AppImage">Linux AppImage</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.1/PSF.Guard_0.14.1_amd64.deb">Debian/Ubuntu package</a></p>
+<p>PSF Guard 0.14 adds live rig monitoring, clearer plan activation status and seasonal sky visibility. The current release is 0.14.2; see <a href="#v0-14-2">0.14.2 fixes</a>.</p>
+<p><strong>Download:</strong> <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.2/PSF-Guard-0.14.2-windows-x64-setup.exe">Windows setup EXE</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.2/PSF.Guard_0.14.2_x64_en-US.msi">Windows MSI</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.2/PSF.Guard_0.14.2_aarch64.dmg">macOS DMG</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.2/PSF-Guard-0.14.2-linux-x86_64.AppImage">Linux AppImage</a> · <a href="https://github.com/theatrus/psf-guard/releases/download/v0.14.2/PSF.Guard_0.14.2_amd64.deb">Debian/Ubuntu package</a></p>
 <p><strong>Start with:</strong> <a href="#upgrading">Upgrading</a> · <a href="#follow-your-rigs-on-live">Live</a> · <a href="#find-and-activate-plans">Planning</a> · <a href="#see-which-sky-your-rig-can-reach">Framing</a> · <a href="#choose-processing-tools">Processing</a> · <a href="#connect-and-maintain-catalogs">Sync</a></p>
+<h2 id="v0-14-2">0.14.2</h2>
+<p>PSF Guard 0.14.2 downloads ONNX Runtime for the Seiza noise model again, and lets you start a plan with no images and add its first rig.</p>
+<ul>
+<li><strong>Download both</strong> in <strong>Settings › Processing › Stacking</strong> and <code>psf-guard-cli noise-model download</code> work again. Microsoft&#x27;s GitHub repository for ONNX Runtime has been offline since about 18 November, so the download failed with a 404. PSF Guard now downloads a copy of the same ONNX Runtime 1.31.1 archive from its own <a href="https://github.com/theatrus/psf-guard/releases/tag/onnxruntime-1.31.1">GitHub release</a>, checked against the same SHA-256 as before, and tries Microsoft&#x27;s address second. A source that stops sending for a minute no longer holds the download open. (<a href="https://github.com/theatrus/psf-guard/pull/1136">#1136</a>)</li>
+<li>You can start a plan with no images or database from <strong>New plan</strong> in the Library&#x27;s toolbar or <strong>New plan...</strong> at the top of the header&#x27;s project picker. <strong>Create plan</strong> opens the plan on <strong>Framing</strong> with <strong>Object name</strong> ready for the target. Before, <strong>New plan</strong> was only at the bottom of the Library, and saving left you in the list. (<a href="https://github.com/theatrus/psf-guard/pull/1135">#1135</a>)</li>
+<li><strong>Rigs</strong> and <strong>Framing</strong> show an <strong>Add objective</strong> button for a plan with no objectives. A rig joins a plan by shooting its objectives, so <strong>Add a rig</strong> and the rig switches on <strong>Framing</strong> stay disabled until the plan has one; before, only a tooltip and a grey line explained why. The new objective starts on a band that a rig or the template library has a template for, so a rig can join. (<a href="https://github.com/theatrus/psf-guard/pull/1135">#1135</a>)</li>
+</ul>
 <h2 id="v0-14-1">0.14.1</h2>
 <p>PSF Guard 0.14.1 gives each rig the right exposure templates when rigs share a Target Scheduler database, reads more horizon files, and lets Run now wait for other import work.</p>
 <ul>
